@@ -20,7 +20,6 @@ export default defineEventHandler(async (event) => {
       status: 'active',
       expiresAt: Date.now() + 30 * 24 * 60 * 60 * 1000 // 30 ngày
     }))
-    console.log(`Premium activated for ${username}`)
   }
 
   return { status: 'OK' }

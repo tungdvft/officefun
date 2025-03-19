@@ -1,15 +1,11 @@
 <template>
-  <div class="flex flex-col min-h-screen">
-    <!-- Header -->
-    <Header />
-
-    <!-- Main content -->
-    <main class="flex-1">
+  <div>
+    <NuxtLayout>
       <NuxtPage />
-    </main>
+    </NuxtLayout>
   </div>
 </template>
 
 <script setup>
-import Header from '~/components/Header.vue'
+// Không cần script vì layout được quản lý qua NuxtLayout
 </script>

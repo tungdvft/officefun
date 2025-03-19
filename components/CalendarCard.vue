@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-yellow-500">
+  <div class="bg-white rounded-xl shadow-lg p-6">
     <h2 class="text-xl font-semibold text-yellow-700 mb-3 flex items-center">
       <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -17,11 +17,16 @@
 
     <!-- Form nhập sự kiện -->
     <div class="mb-4">
-      <label for="eventDate" class="block text-gray-700 mb-1">Ngày:</label>
-      <input type="date" id="eventDate" v-model="newEvent.date" class="w-full p-2 border rounded-lg mb-2" />
-
-      <label for="eventTime" class="block text-gray-700 mb-1">Giờ:</label>
-      <input type="time" id="eventTime" v-model="newEvent.time" class="w-full p-2 border rounded-lg mb-2" />
+      <label for="eventDatetime" class="block text-gray-700 mb-1">Ngày và giờ:</label>
+      <VueDatePicker
+        v-model="newEvent.datetime"
+        id="eventDatetime"
+        placeholder="Chọn ngày và giờ"
+        class="w-full mb-2"
+        :min-date="new Date()"
+        :enable-time-picker="true"
+        format="yyyy-MM-dd HH:mm"
+      />
 
       <label for="eventDesc" class="block text-gray-700 mb-1">Mô tả:</label>
       <textarea id="eventDesc" v-model="newEvent.description" placeholder="Nhập công việc, họp..." class="w-full p-2 border rounded-lg mb-2" rows="3"></textarea>
@@ -36,7 +41,7 @@
       <h3 class="text-gray-800 font-semibold mb-2">Sự kiện hôm nay:</h3>
       <ul class="space-y-2">
         <li v-for="(event, index) in filteredEvents" :key="index" class="flex justify-between items-center p-2 bg-gray-100 rounded-lg">
-          <span>{{ event.date }} {{ event.time }} - {{ event.description }}</span>
+          <span>{{ formatEventDatetime(event.datetime) }} - {{ event.description }}</span>
           <button @click="removeEvent(index)" class="text-red-500 hover:text-red-700">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -50,135 +55,151 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { google } from 'googleapis'
+import { ref, computed, onMounted } from 'vue';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
 
-const CLIENT_ID = 'YOUR_CLIENT_ID' // Thay bằng Client ID từ Google
-const CLIENT_SECRET = 'YOUR_CLIENT_SECRET' // Thay bằng Client Secret
-const REDIRECT_URI = 'http://localhost:3000/oauth2callback' // Thay nếu khác
-
-// State cho sự kiện mới
 const newEvent = ref({
-  date: new Date().toISOString().split('T')[0],
-  time: '09:00',
-  description: ''
-})
+  datetime: new Date(), // Mặc định là thời điểm hiện tại
+  description: '',
+});
 
-const events = ref([])
-const isAuthenticated = ref(false)
-const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+const events = ref([]);
+const isAuthenticated = ref(false);
+const googleTokens = ref(null);
 
-// Lấy token từ localStorage
+// Lấy dữ liệu từ localStorage
 onMounted(() => {
-  const storedEvents = localStorage.getItem('calendarEvents')
-  if (storedEvents) events.value = JSON.parse(storedEvents)
-
-  const tokens = localStorage.getItem('googleTokens')
-  if (tokens) {
-    oauth2Client.setCredentials(JSON.parse(tokens))
-    isAuthenticated.value = true
+  const storedEvents = localStorage.getItem('calendarEvents');
+  if (storedEvents) {
+    events.value = JSON.parse(storedEvents).map(event => ({
+      ...event,
+      datetime: new Date(event.datetime), // Chuyển string thành Date object
+    }));
   }
-})
+
+  const tokens = localStorage.getItem('googleTokens');
+  if (tokens) {
+    googleTokens.value = JSON.parse(tokens);
+    isAuthenticated.value = true;
+  }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get('code');
+  if (code) {
+    handleOAuthCallback(code);
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+});
 
 // Lọc sự kiện hôm nay
 const filteredEvents = computed(() => {
-  const today = new Date().toISOString().split('T')[0]
-  return events.value.filter(event => event.date === today)
-})
+  const today = new Date().toISOString().split('T')[0];
+  return events.value.filter(event => {
+    const eventDate = new Date(event.datetime).toISOString().split('T')[0];
+    return eventDate === today;
+  });
+});
+
+// Format datetime để hiển thị
+function formatEventDatetime(datetime) {
+  const date = new Date(datetime);
+  return `${date.toISOString().split('T')[0]} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+}
 
 // Xác thực Google
 async function authenticateGoogle() {
-  const authUrl = oauth2Client.generateAuthUrl({
-    access_type: 'offline',
-    scope: ['https://www.googleapis.com/auth/calendar']
-  })
-  window.location.href = authUrl // Chuyển hướng để lấy code
+  const { authUrl } = await $fetch('/api/calendar?action=auth');
+  window.location.href = authUrl;
 }
 
-// Callback xử lý token (tạo route riêng nếu cần)
+// Xử lý callback từ Google
 async function handleOAuthCallback(code) {
-  const { tokens } = await oauth2Client.getToken(code)
-  oauth2Client.setCredentials(tokens)
-  localStorage.setItem('googleTokens', JSON.stringify(tokens))
-  isAuthenticated.value = true
-  await syncWithGoogleCalendar() // Sync ngay sau khi auth
+  const { tokens } = await $fetch(`/api/calendar?action=callback&code=${code}`);
+  googleTokens.value = tokens;
+  localStorage.setItem('googleTokens', JSON.stringify(tokens));
+  isAuthenticated.value = true;
+  await syncWithGoogleCalendar();
 }
 
 // Thêm sự kiện
 async function addEvent() {
   if (!newEvent.value.description) {
-    alert('Vui lòng nhập mô tả sự kiện!')
-    return
+    alert('Vui lòng nhập mô tả sự kiện!');
+    return;
   }
-  events.value.push({ ...newEvent.value })
-  localStorage.setItem('calendarEvents', JSON.stringify(events.value))
-  if (isAuthenticated.value) await pushToGoogleCalendar(newEvent.value)
-  newEvent.value.description = ''
+
+  const formattedDatetime = newEvent.value.datetime.toISOString(); // ISO string: "2025-03-20T14:00:00.000Z"
+  const event = {
+    datetime: formattedDatetime,
+    description: newEvent.value.description,
+  };
+
+  events.value.push(event);
+  localStorage.setItem('calendarEvents', JSON.stringify(events.value));
+  if (isAuthenticated.value) {
+    const { googleId } = await $fetch('/api/calendar?action=add', {
+      method: 'POST',
+      body: { tokens: googleTokens.value, event },
+    });
+    event.googleId = googleId;
+    localStorage.setItem('calendarEvents', JSON.stringify(events.value));
+  }
+  newEvent.value.description = '';
+  newEvent.value.datetime = new Date(); // Reset về hiện tại
 }
 
 // Xóa sự kiện
 async function removeEvent(index) {
-  const event = events.value[index]
-  events.value.splice(index, 1)
-  localStorage.setItem('calendarEvents', JSON.stringify(events.value))
-  if (isAuthenticated.value) await deleteFromGoogleCalendar(event)
+  const event = events.value[index];
+  events.value.splice(index, 1);
+  localStorage.setItem('calendarEvents', JSON.stringify(events.value));
+  if (isAuthenticated.value && event.googleId) {
+    await $fetch('/api/calendar?action=delete', {
+      method: 'POST',
+      body: { tokens: googleTokens.value, googleId: event.googleId },
+    });
+  }
 }
 
 // Đồng bộ với Google Calendar
 async function syncWithGoogleCalendar() {
-  const calendar = google.calendar({ version: 'v3', auth: oauth2Client })
+  const googleEvents = await $fetch('/api/calendar?action=sync', {
+    method: 'POST',
+    body: { tokens: googleTokens.value },
+  });
 
-  // Lấy sự kiện từ Google Calendar
-  const res = await calendar.events.list({
-    calendarId: 'primary',
-    timeMin: new Date().toISOString(),
-    singleEvents: true,
-    orderBy: 'startTime'
-  })
-
-  const googleEvents = res.data.items || []
   googleEvents.forEach(ge => {
-    const event = {
-      date: ge.start.dateTime.split('T')[0],
-      time: ge.start.dateTime.split('T')[1].slice(0, 5),
-      description: ge.summary,
-      googleId: ge.id // Lưu ID để xóa sau
+    if (!events.value.some(e => e.googleId === ge.googleId)) {
+      events.value.push({ ...ge, datetime: new Date(ge.datetime) });
     }
-    if (!events.value.some(e => e.googleId === event.googleId)) {
-      events.value.push(event)
-    }
-  })
-  localStorage.setItem('calendarEvents', JSON.stringify(events.value))
+  });
+  localStorage.setItem('calendarEvents', JSON.stringify(events.value));
 
-  // Push sự kiện local chưa có trên Google
   for (const event of events.value) {
-    if (!event.googleId) await pushToGoogleCalendar(event)
+    if (!event.googleId) {
+      const { googleId } = await $fetch('/api/calendar?action=add', {
+        method: 'POST',
+        body: { tokens: googleTokens.value, event },
+      });
+      event.googleId = googleId;
+    }
   }
-}
-
-// Push sự kiện lên Google Calendar
-async function pushToGoogleCalendar(event) {
-  const calendar = google.calendar({ version: 'v3', auth: oauth2Client })
-  const googleEvent = {
-    summary: event.description,
-    start: { dateTime: `${event.date}T${event.time}:00` },
-    end: { dateTime: `${event.date}T${event.time}:00` } // Thêm 1h nếu cần
-  }
-  const res = await calendar.events.insert({
-    calendarId: 'primary',
-    resource: googleEvent
-  })
-  event.googleId = res.data.id // Lưu ID để quản lý
-  localStorage.setItem('calendarEvents', JSON.stringify(events.value))
-}
-
-// Xóa sự kiện khỏi Google Calendar
-async function deleteFromGoogleCalendar(event) {
-  if (!event.googleId) return
-  const calendar = google.calendar({ version: 'v3', auth: oauth2Client })
-  await calendar.events.delete({
-    calendarId: 'primary',
-    eventId: event.googleId
-  })
+  localStorage.setItem('calendarEvents', JSON.stringify(events.value));
 }
 </script>
+
+<style scoped>
+/* Tùy chỉnh style cho VueDatePicker */
+.dp__input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  outline: none;
+}
+.dp__input:focus {
+  border-color: #eab308;
+  box-shadow: 0 0 0 2px rgba(234, 179, 8, 0.5);
+}
+</style>

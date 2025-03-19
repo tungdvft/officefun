@@ -3,7 +3,6 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   const lat = query.lat ? parseFloat(query.lat) : 22.2871 // Vĩ độ Mộc Châu
   const lon = query.lon ? parseFloat(query.lon) : 104.6167 // Kinh độ Mộc Châu
-  console.log('Tọa độ yêu cầu:', { lat, lon })
 
   // Bước 1: Tìm location ID từ Tripadvisor dựa trên tọa độ
   let locationId
@@ -25,7 +24,6 @@ export default defineEventHandler(async (event) => {
     }
 
     const locationData = await locationResponse.json()
-    console.log('Dữ liệu location từ API:', JSON.stringify(locationData, null, 2))
 
     locationId = locationData.data?.[0]?.result_object?.location_id
     if (!locationId) {
@@ -34,7 +32,7 @@ export default defineEventHandler(async (event) => {
         homestaySuggestion: [{ name: `Không tìm thấy địa điểm gần tọa độ (${lat}, ${lon})`, rating: 0, reviews: 0, amenities: [], priceRange: 'N/A' }]
       }
     }
-    console.log('Location ID:', locationId)
+
   } catch (error) {
     console.error('Lỗi khi tìm location ID:', error.message)
     return {
@@ -61,7 +59,6 @@ export default defineEventHandler(async (event) => {
     }
 
     const homestayData = await homestayResponse.json()
-    console.log('Dữ liệu homestay từ API:', JSON.stringify(homestayData, null, 2))
 
     const homestays = homestayData.data || []
 

@@ -57,7 +57,8 @@ const router = useRouter()
 async function submitForm() {
     // Lưu vào localStorage
     if (process.client) {
-        localStorage.setItem('username', form.username)
+      localStorage.setItem('username', form.username)
+      localStorage.setItem('birthdate', form.birthdate)
   }
   
   
@@ -67,5 +68,6 @@ async function submitForm() {
     body: form
   })
   
+  router.push('/')
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500">
+  <div class="bg-white rounded-xl shadow-lg p-6">
     <h2 class="text-xl font-semibold text-green-700 mb-3 flex items-center">
       <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
@@ -10,7 +10,7 @@
     <!-- Dropdown chọn vibe -->
     <div class="mb-4">
       <label for="vibe" class="block text-gray-700 mb-2">Chọn vibe:</label>
-      <select id="vibe" v-model="selectedVibe" @change="fetchMusic" class="w-full p-2 border rounded-lg">
+     <select id="vibe" v-model="selectedVibe" @change="fetchMusic" class="w-full p-2 border rounded-lg">
         <option value="">{{ todayPlaylist }}</option>
         <option value="chill">Chill Vibes</option>
         <option value="party">Party Mode</option>
@@ -19,6 +19,19 @@
         <option value="romantic">Romantic Mood</option>
         <option value="relax">Relax & Unwind</option>
         <option value="happy">Happy Tunes</option>
+        <option value="nostalgia">Nostalgic Hits</option>
+        <option value="work">Work Mode</option>
+        <option value="sleep">Sleep Sounds</option>
+        <option value="adventure">Adventure Awaits</option>
+        <option value="motivation">Motivation Boost</option>
+        <option value="sad">Melancholy Moments</option>
+        <option value="dance">Dance Fever</option>
+        <option value="retro">Retro Rewind</option>
+        <option value="nature">Nature Harmony</option>
+        <option value="gaming">Gaming Vibes</option>
+        <option value="study">Study Session</option>
+        <option value="travel">Travel Tunes</option>
+        <option value="uplifting">Uplifting Spirit</option>
       </select>
     </div>
 
