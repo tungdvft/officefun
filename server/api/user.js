@@ -1,3 +1,4 @@
+// api/user.js
 import { defineEventHandler, readBody, getQuery } from 'h3';
 import { setupDatabase } from '../db/sqlite';
 
@@ -7,25 +8,24 @@ export default defineEventHandler(async (event) => {
   try {
     const db = await setupDatabase();
 
-    // Tạo bảng users nếu chưa có, bao gồm cột gender
+    // Tạo bảng users nếu chưa có
     await db.run(`
       CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE,
         birthdate TEXT,
         gender TEXT,
-        profession TEXT,
+        profession TEXT,  -- Cột này không bắt buộc
         displayName TEXT
       )
     `);
 
     if (method === 'POST') {
       const body = await readBody(event);
-
       const { username, birthdate, gender, profession, displayName } = body;
 
-      // Kiểm tra các trường bắt buộc
-      if (!username || !birthdate || !gender || !profession) {
+      // Kiểm tra các trường bắt buộc (bỏ profession)
+      if (!username || !birthdate || !gender) {
         return { error: 'Missing required fields' };
       }
 
@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
 
       const result = await db.run(
         'INSERT INTO users (username, birthdate, gender, profession, displayName) VALUES (?, ?, ?, ?, ?)',
-        [username, birthdate, gender, profession, displayName || username] // displayName optional, mặc định là username
+        [username, birthdate, gender, profession || null, displayName || username] // profession có thể là null
       );
       return { success: true, id: result.lastID };
     } else if (method === 'GET') {
@@ -58,7 +58,7 @@ export default defineEventHandler(async (event) => {
         username: user.username,
         birthdate: user.birthdate,
         gender: user.gender,
-        profession: user.profession,
+        profession: user.profession, // Có thể là null
         displayName: user.displayName,
       };
     }

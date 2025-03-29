@@ -1,25 +1,8 @@
 import { defineEventHandler, getQuery, createError } from 'h3';
-import sqlite3 from 'sqlite3';
-import { open } from 'sqlite';
-
-async function getDb() {
-  try {
-    const db = await open({
-      filename: './database.db',
-      driver: sqlite3.Database,
-    });
-    return db;
-  } catch (error) {
-    console.error('Error opening database:', error.message);
-    throw createError({
-      statusCode: 500,
-      message: 'Không thể kết nối database!',
-    });
-  }
-}
+import { setupDatabase } from '../db/sqlite.js'; // Điều chỉnh đường dẫn nếu cần
 
 export default defineEventHandler(async (event) => {
-  const query = getQuery(event); // Lấy query params đúng cách trong H3
+  const query = getQuery(event);
   const user_id = query.user_id;
 
   if (!user_id) {
@@ -30,28 +13,23 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-
   try {
-    const db = await getDb();
+    const db = await setupDatabase();
     const result = await db.get(
       'SELECT data FROM tarot_last_draw WHERE user_id = ?',
       [user_id]
     );
 
-    if (!result) {
+    if (!result || !result.data) {
       return { data: null };
     }
-
 
     try {
       const parsedData = JSON.parse(result.data);
       return { data: parsedData };
     } catch (parseError) {
       console.error(`Error parsing JSON data for user_id ${user_id}:`, parseError.message);
-      throw createError({
-        statusCode: 500,
-        message: 'Dữ liệu Tarot cuối cùng không hợp lệ!',
-      });
+      return { data: null }; // Trả về null thay vì throw error
     }
   } catch (error) {
     console.error(`Error fetching last tarot draw for user_id ${user_id}:`, error.message);

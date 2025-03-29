@@ -17,34 +17,38 @@
 
       <!-- Menu desktop (căn giữa, ẩn trên mobile) -->
       <nav class="hidden md:flex space-x-6 flex-1 justify-center">
-        <NuxtLink
-          to="/"
-          class="text-gray-600 hover:text-blue-500 transition-colors font-medium"
-          :class="{ 'text-blue-600 border-b-2 border-blue-500 pb-1': $route.path === '/' }"
-        >
-          Trang Chủ
-        </NuxtLink>
-        <NuxtLink
-          to="/premium"
-          class="text-gray-600 hover:text-blue-500 transition-colors font-medium"
-          :class="{ 'text-blue-600 border-b-2 border-blue-500 pb-1': $route.path === '/premium' }"
-        >
-          Premium Member
-        </NuxtLink>
-        <NuxtLink
-          to="/about"
-          class="text-gray-600 hover:text-blue-500 transition-colors font-medium"
-          :class="{ 'text-blue-600 border-b-2 border-blue-500 pb-1': $route.path === '/about' }"
-        >
-          Về Offitify
-        </NuxtLink>
-        <NuxtLink
-          to="/contact"
-          class="text-gray-600 hover:text-blue-500 transition-colors font-medium"
-          :class="{ 'text-blue-600 border-b-2 border-blue-500 pb-1': $route.path === '/contact' }"
-        >
-          Liên hệ
-        </NuxtLink>
+         <NuxtLink
+            to="/"
+            class="text-gray-600 hover:text-blue-500 transition-colors font-medium"
+            :class="{ 'text-blue-600': $route.path === '/' }"
+            @click="toggleMobileMenu"
+          >
+            Bói tarot
+          </NuxtLink>
+          <NuxtLink
+            to="/career"
+            class="text-gray-600 hover:text-blue-500 transition-colors font-medium"
+            :class="{ 'text-blue-600': $route.path === '/career' }"
+            @click="toggleMobileMenu"
+          >
+             Định hướng nghề nghiệp
+          </NuxtLink>
+          <NuxtLink
+            to="/numerology"
+            class="text-gray-600 hover:text-blue-500 transition-colors font-medium"
+            :class="{ 'text-blue-600': $route.path === '/numerology' }"
+            @click="toggleMobileMenu"
+          >
+            Bói thần số học
+          </NuxtLink>
+            <NuxtLink
+            to="/baby"
+            class="text-gray-600 hover:text-blue-500 transition-colors font-medium"
+            :class="{ 'text-blue-600': $route.path === '/baby' }"
+            @click="toggleMobileMenu"
+          >
+            Đặt tên con
+          </NuxtLink>
       </nav>
 
       <!-- Nút Hamburger cho mobile + User menu desktop -->
@@ -122,21 +126,37 @@
             Trang Chủ
           </NuxtLink>
           <NuxtLink
-            to="/premium"
+            to="/career"
             class="text-gray-600 hover:text-blue-500 transition-colors font-medium"
-            :class="{ 'text-blue-600': $route.path === '/premium' }"
+            :class="{ 'text-blue-600': $route.path === '/career' }"
             @click="toggleMobileMenu"
           >
-            Premium Member
+             Dịnh hướng nghề nghiệp
           </NuxtLink>
           <NuxtLink
+            to="/numerology"
+            class="text-gray-600 hover:text-blue-500 transition-colors font-medium"
+            :class="{ 'text-blue-600': $route.path === '/numerology' }"
+            @click="toggleMobileMenu"
+          >
+            Bói thần số học
+          </NuxtLink>
+            <NuxtLink
+            to="/baby"
+            class="text-gray-600 hover:text-blue-500 transition-colors font-medium"
+            :class="{ 'text-blue-600': $route.path === '/baby' }"
+            @click="toggleMobileMenu"
+          >
+            Đặt tên con
+          </NuxtLink>
+          <!-- <NuxtLink
             to="/about"
             class="text-gray-600 hover:text-blue-500 transition-colors font-medium"
             :class="{ 'text-blue-600': $route.path === '/about' }"
             @click="toggleMobileMenu"
           >
             Về Offitify
-          </NuxtLink>
+          </NuxtLink> -->
           <NuxtLink
             to="/contact"
             class="text-gray-600 hover:text-blue-500 transition-colors font-medium"

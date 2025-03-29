@@ -7,13 +7,17 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "start": "nuxt start"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.0",
     "@vuepic/vue-datepicker": "^11.0.2",
+    "axios": "^1.8.4",
     "chart.js": "^4.4.8",
     "googleapis": "^146.0.0",
+    "jspdf": "^3.0.1",
+    "marked": "^15.0.7",
     "nuxt": "^3.16.0",
     "ofetch": "^1.4.1",
     "sqlite": "^5.1.1",
@@ -22,7 +26,6 @@
     "vue-router": "^4.5.0",
     "vue3-toastify": "^0.2.8"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.13.2",
     "autoprefixer": "^10.4.21",

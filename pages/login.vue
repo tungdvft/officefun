@@ -9,20 +9,21 @@
       ></div>
 
       <!-- Logo -->
-    <div class="flex items-center justify-center mb-3">
-          <svg class="w-8 h-8 text-blue-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-          <span
-            class="text-xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text"
-          >
-            Offitify
-          </span>
-        </div>
+      <div class="flex items-center justify-center mb-3">
+        <svg class="w-8 h-8 text-blue-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+        <span
+          class="text-xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text"
+        >
+          Offitify
+        </span>
+      </div>
 
       <!-- Welcome message -->
-     
-      <p class="text-center text-gray-600 mb-6">Vui lòng nhập tên đăng nhập để khám phá vô vàn những điều thú vị và bất ngờ với Offitify nhé!</p>
+      <p class="text-center text-gray-600 mb-6">
+        Vui lòng nhập tên đăng nhập để khám phá vô vàn những điều thú vị và bất ngờ với Offitify nhé!
+      </p>
 
       <!-- Form đăng nhập -->
       <form @submit.prevent="submitForm">
@@ -62,14 +63,13 @@ const router = useRouter();
 const username = ref('');
 const loading = ref(false);
 const isSubmitted = ref(false);
-const loadingProgress = ref(0); // Tiến trình loading bar
+const loadingProgress = ref(0);
 
 async function submitForm() {
   loading.value = true;
   isSubmitted.value = false;
   loadingProgress.value = 0;
 
-  // Giả lập tiến trình loading bar
   const progressInterval = setInterval(() => {
     if (loadingProgress.value < 90) {
       loadingProgress.value += 10;
@@ -78,10 +78,12 @@ async function submitForm() {
 
   try {
     const formattedUsername = username.value.toLowerCase().replace(/\s/g, '');
+
     const { data: userResponse } = await useFetch('/api/user', {
       method: 'GET',
       query: { username: formattedUsername },
     });
+
 
     if (!userResponse.value || userResponse.value.error) {
       toast.error('Username chưa tồn tại. Vui lòng đăng ký trước!', {
@@ -92,14 +94,14 @@ async function submitForm() {
     }
 
     if (process.client) {
-      localStorage.setItem('username', formattedUsername); // Sửa lỗi typo từ 'aptationame'
+      localStorage.setItem('username', formattedUsername);
       toast.success('Đăng nhập thành công!', {
         position: 'top-center',
       });
-      isSubmitted.value = true; // Disable button
-      loadingProgress.value = 100; // Hoàn thành loading bar
+      isSubmitted.value = true;
+      loadingProgress.value = 100;
       clearInterval(progressInterval);
-      setTimeout(() => router.push('/'), 1000); // Chuyển sang index.vue sau 1 giây
+      setTimeout(() => router.push('/'), 1000);
     }
   } catch (error) {
     console.error('Error during login:', error);

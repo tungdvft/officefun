@@ -29,22 +29,25 @@
             id="username"
             placeholder="VD: nguyenvan"
             class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            :class="{ 'border-red-500': usernameError }"
             required
+            @input="validateUsername"
           />
+          <p v-if="usernameError" class="text-red-500 text-sm mt-1">{{ usernameError }}</p>
         </div>
         <div class="mb-4">
           <label for="birthdate" class="block text-gray-700 mb-2">Ngày sinh</label>
-          <VueDatePicker
+          <input
             v-model="birthdate"
+            type="text"
             id="birthdate"
-            :max-date="new Date()"
-            :enable-time-picker="false"
-            placeholder="Chọn ngày sinh"
-            format="dd-MM-yyyy" 
-            :parse="parseDate" 
-            class="w-full"
+            placeholder="Nhập đúng định dạng DD-MM-YYYY (VD: 01-01-1990)"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            :class="{ 'border-red-500': birthdateError }"
             required
+            @input="validateBirthdate"
           />
+          <p v-if="birthdateError" class="text-red-500 text-sm mt-1">{{ birthdateError }}</p>
         </div>
         <div class="mb-4">
           <label for="gender" class="block text-gray-700 mb-2">Giới tính</label>
@@ -60,25 +63,6 @@
             <option value="Other">Khác</option>
           </select>
         </div>
-        <div class="mb-4">
-          <label for="profession" class="block text-gray-700 mb-2">Ngành nghề</label>
-          <select
-            v-model="profession"
-            id="profession"
-            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          >
-            <option value="" disabled>Chọn ngành nghề</option>
-            <option value="KeToan">Kế toán</option>
-            <option value="NhanSu">Nhân sự</option>
-            <option value="Marketing">Marketing</option>
-            <option value="KinhDoanh">Kinh doanh</option>
-            <option value="CongNgheThongTin">Công nghệ thông tin</option>
-            <option value="HanhChinh">Hành chính</option>
-            <option value="ThietKe">Thiết kế</option>
-            <option value="LuatSu">Luật sư</option>
-          </select>
-        </div>
         
         <button
           type="submit"
@@ -87,6 +71,9 @@
         >
           {{ loading ? 'Đang xử lý...' : 'Đăng ký' }}
         </button>
+
+        <!-- Thông báo lỗi chung -->
+        <p v-if="formError" class="text-red-500 text-sm mt-4 text-center">{{ formError }}</p>
       </form>
 
       <div class="mt-4 text-center">
@@ -100,38 +87,85 @@
 <script setup>
 import { ref } from 'vue';
 import { toast } from 'vue3-toastify';
-import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css';
 
 const username = ref('');
-const birthdate = ref(''); // Giá trị sẽ là Date object từ VueDatePicker
+const birthdate = ref('');
 const gender = ref('');
-const profession = ref('');
 const loading = ref(false);
 const isSubmitted = ref(false);
 const loadingProgress = ref(0);
+const usernameError = ref('');
+const birthdateError = ref('');
+const formError = ref(''); // Thêm biến để lưu lỗi chung
 
-// Hàm parse khi người dùng nhập tay
-function parseDate(dateStr) {
-  const parts = dateStr.split('-');
-  if (parts.length === 3) {
-    const [day, month, year] = parts;
-    return new Date(`${year}-${month}-${day}`); // Chuyển DD-MM-YYYY về Date object
+// Validate username: chỉ chứa chữ cái và số, không dấu, không khoảng trắng
+function validateUsername() {
+  const usernamePattern = /^[a-z0-9]+$/;
+  if (!username.value) {
+    usernameError.value = 'Username không được để trống.';
+  } else if (!usernamePattern.test(username.value)) {
+    usernameError.value = 'Username chỉ được chứa chữ cái thường và số, không dấu, không khoảng trắng.';
+  } else {
+    usernameError.value = '';
   }
-  return null; // Trả về null nếu sai định dạng
 }
 
-// Hàm format Date thành DD-MM-YYYY
-function formatDateToDDMMYYYY(date) {
-  if (!date) return '';
-  const d = new Date(date);
-  const day = String(d.getDate()).padStart(2, '0');
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const year = d.getFullYear();
-  return `${day}-${month}-${year}`;
+// Validate birthdate: phải đúng định dạng DD-MM-YYYY, ngày hợp lệ, không trong tương lai
+function validateBirthdate() {
+  const birthdatePattern = /^\d{2}-\d{2}-\d{4}$/;
+  if (!birthdate.value) {
+    birthdateError.value = 'Ngày sinh không được để trống.';
+    return;
+  }
+
+  if (!birthdatePattern.test(birthdate.value)) {
+    birthdateError.value = 'Ngày sinh phải đúng định dạng DD-MM-YYYY (VD: 01-01-1990).';
+    return;
+  }
+
+  const [day, month, year] = birthdate.value.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+  const today = new Date();
+
+  // Kiểm tra ngày hợp lệ
+  if (
+    isNaN(date.getTime()) ||
+    date.getDate() !== day ||
+    date.getMonth() + 1 !== month ||
+    date.getFullYear() !== year
+  ) {
+    birthdateError.value = 'Ngày sinh không hợp lệ.';
+    return;
+  }
+
+  // Kiểm tra ngày không trong tương lai
+  if (date > today) {
+    birthdateError.value = 'Ngày sinh không được trong tương lai.';
+    return;
+  }
+
+  birthdateError.value = '';
 }
 
 async function register() {
+  // Reset lỗi chung
+  formError.value = '';
+
+  // Kiểm tra các trường required
+  if (!username.value || !birthdate.value || !gender.value) {
+    formError.value = 'Vui lòng điền đầy đủ các trường bắt buộc (Username, Ngày sinh, Giới tính).';
+    return;
+  }
+
+  // Kiểm tra validate username và birthdate
+  validateUsername();
+  validateBirthdate();
+
+  if (usernameError.value || birthdateError.value) {
+    formError.value = 'Vui lòng sửa các lỗi trong form trước khi đăng ký.';
+    return;
+  }
+
   loading.value = true;
   isSubmitted.value = false;
   loadingProgress.value = 0;
@@ -157,16 +191,12 @@ async function register() {
       return;
     }
 
-    // Format birthdate thành DD-MM-YYYY trước khi gửi API
-    const formattedBirthdate = formatDateToDDMMYYYY(birthdate.value);
-
     await $fetch('/api/user', {
       method: 'POST',
       body: {
         username: formattedUsername,
-        birthdate: formattedBirthdate, // Gửi dạng DD-MM-YYYY
+        birthdate: birthdate.value,
         gender: gender.value,
-        profession: profession.value,
       },
     });
 
@@ -196,17 +226,5 @@ definePageMeta({
 <style scoped>
 .animate-loading-bar {
   transition: width 0.3s ease-in-out;
-}
-
-.dp__input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
-  outline: none;
-}
-.dp__input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 </style>

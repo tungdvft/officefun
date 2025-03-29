@@ -1,132 +1,108 @@
+<!-- pages/about.vue -->
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-gray-50 to-gray-200 py-12">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Header -->
-      <div class="text-center mb-12">
-        <h1
-          class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 animate-gradient"
-        >
-          Về Offitify
-        </h1>
-        <p class="mt-4 text-lg text-gray-600 italic">
-          Nơi biến văn phòng thành không gian của niềm vui và sáng tạo
-        </p>
-      </div>
-
-      <!-- Nội dung chính -->
-      <div class="bg-white rounded-xl shadow-2xl p-8 md:p-12">
-        <div class="space-y-8 text-gray-700 leading-relaxed">
-          <!-- Phần 1 -->
-          <div class="flex flex-col md:flex-row items-center gap-6">
-            <div class="flex-1">
-              <p class="text-lg">
-                <span class="font-semibold text-blue-600">Offitify</span> ra đời từ một ý tưởng đơn
-                giản: văn phòng không chỉ là nơi đầy ắp deadline, áp lực công việc và những buổi họp
-                căng thẳng. Chúng tôi tin rằng, giữa nhịp sống hối hả ấy, vẫn có chỗ cho
-                <span class="font-semibold text-pink-500">niềm vui</span>,
-                <span class="font-semibold text-purple-500">sự sáng tạo</span> và những khoảnh khắc
-                thư giãn để làm mới bản thân.
-              </p>
-            </div>
-            <div class="flex-shrink-0 relative">
-              <img
-                src="/images/office-fun-team.jpg"
-                alt="Office Fun Team"
-                class="w-40 h-40 md:w-48 md:h-48 rounded-full shadow-md object-cover"
-              />
-              <div
-                class="absolute inset-0 rounded-full bg-gradient-to-t from-gray-900/40 to-transparent"
-              ></div>
-            </div>
+  <div class="min-h-screen bg-gray-100 p-6">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-3xl md:text-4xl font-bold text-teal-800 mb-6 text-center">Thần số học - Người bạn đồng hành của bạn</h1>
+      
+      <section class="mb-10">
+        <h2 class="text-2xl font-semibold text-teal-700 mb-4">Thần số học: Hiểu mình, hiểu đời</h2>
+        <p class="text-gray-600 leading-relaxed">Thần số học không phải điều gì quá xa vời - nó giống như một người bạn, giúp bạn nhìn rõ hơn về bản thân, gia đình, và những bước đi trong cuộc sống. Ứng dụng của chúng tôi mang thần số học đến gần bạn hơn, với những gợi ý đơn giản, dễ áp dụng, để bạn tự tin hơn mỗi ngày.</p>
+      </section>
+      
+      <section class="mb-10">
+        <h2 class="text-2xl font-semibold text-teal-700 mb-4">Thần số học giúp gì cho bạn?</h2>
+        <div class="space-y-8">
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-teal-600 mb-2">Đặt tên con - Gửi gắm yêu thương</h3>
+            <p class="text-gray-600">Bạn sắp có bé yêu? Chúng tôi dùng ngày sinh của bố mẹ để gợi ý cái tên hợp năng lượng gia đình, giúp bé lớn lên trong sự hòa hợp, khỏe mạnh và tràn đầy may mắn.</p>
+            <p class="text-purple-700 mt-2 italic">Ví dụ: Bố mẹ sinh 15/03/1990 và 20/04/1992, tên "Bảo Anh" mang số định mệnh 6 - gắn kết yêu thương gia đình!</p>
           </div>
-
-          <!-- Phần 2 -->
-          <div class="bg-gray-50 p-6 rounded-lg">
-            <p>
-              Với Offitify, chúng tôi muốn biến mỗi ngày làm việc của bạn thành một trải nghiệm
-              đáng nhớ. Không chỉ là những con số hay báo cáo, mà còn là những bản nhạc chill để xoa
-              dịu tâm hồn, hay những mini game vui vẻ. Văn
-              phòng không chỉ là nơi làm việc, mà còn là nơi bạn tìm thấy cảm hứng và kết nối.
-            </p>
+          
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-teal-600 mb-2">Tạo nickname - Thể hiện chính mình</h3>
+            <p class="text-gray-600">Muốn một cái tên thật "chất" trên mạng? App gợi ý nickname dựa trên số linh hồn và số định mệnh, để bạn nổi bật theo cách riêng của mình.</p>
+            <p class="text-purple-700 mt-2 italic">Ví dụ: "MiaPhan" (số linh hồn 5) - dành cho người thích tự do và luôn sáng tạo!</p>
           </div>
-
-          <!-- Phần 3 -->
-          <div class="flex flex-col md:flex-row-reverse items-center gap-6">
-            <div class="flex-1">
-              <p>
-                Chúng tôi hiểu rằng, đôi khi, áp lực công việc có thể khiến bạn quên mất rằng cuộc
-                sống còn nhiều điều thú vị khác. Offitify ở đây để nhắc bạn: một ngày làm việc
-                hiệu quả không cần phải khô khan. Hãy để chúng tôi đồng hành cùng bạn, mang đến
-                những gợi ý nhỏ nhưng ý nghĩa – từ một câu quote truyền động lực, một lá bài tarot
-                đầy bất ngờ, đến những mẹo vui để văn phòng bớt nhàm chán.
-              </p>
-            </div>
-            <div class="flex-shrink-0 relative">
-              <img
-                src="/images/office-chill-vibe.jpg"
-                alt="Office Chill Vibe"
-                class="w-40 h-40 md:w-48 md:h-48 rounded-full shadow-md object-cover"
-              />
-              <div
-                class="absolute inset-0 rounded-full bg-gradient-to-t from-gray-900/40 to-transparent"
-              ></div>
-            </div>
+          
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-teal-600 mb-2">Đặt tên thương hiệu - Bắt đầu giấc mơ</h3>
+            <p class="text-gray-600">Bạn đang ấp ủ một ý tưởng kinh doanh? Chúng tôi gợi ý tên thương hiệu hợp với bạn và ngành nghề, để hành trình khởi nghiệp của bạn thêm thuận lợi.</p>
+            <p class="text-purple-700 mt-2 italic">Ví dụ: "NovaTech9" (số định mệnh 9) - tên công nghệ mang năng lượng lớn, sẵn sàng vươn xa!</p>
+            <nuxt-link to="/numerology-brand" class="text-teal-500 hover:underline mt-2 inline-block">Thử ngay</nuxt-link>
           </div>
-
-          <!-- Phần 4 -->
-          <div class="bg-gray-50 p-6 rounded-lg">
-            <p>
-              Offitify không chỉ là một ứng dụng – nó là một người bạn. Chúng tôi hy vọng mỗi khi
-              bạn mở app, bạn sẽ mỉm cười và nghĩ rằng: "Ừ, hôm nay cũng không tệ đâu nhỉ!" Dù là
-              Thứ Hai bận rộn hay Thứ Sáu nhẹ nhàng, chúng tôi luôn ở đây để giúp bạn tìm thấy niềm
-              vui trong từng khoảnh khắc.
-            </p>
+          
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-teal-600 mb-2">Kiểm tra mức độ hợp nhau - Gắn kết yêu thương</h3>
+            <p class="text-gray-600">Bạn đang phân vân về mối quan hệ với người yêu, bạn bè, hay đồng nghiệp? App phân tích con số của cả hai để giúp bạn hiểu rõ hơn và xây dựng tình cảm bền chặt.</p>
+            <p class="text-purple-700 mt-2 italic">Ví dụ: Số chủ đạo 9 và 3 - hai tâm hồn sáng tạo, dễ đồng điệu!</p>
           </div>
-
-          <!-- Kết thúc -->
-          <p
-            class="text-center text-2xl font-semibold text-gray-800 mt-10 bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text"
-          >
-            Offitify – Bởi vì văn phòng cũng có thể là nơi để chill, để vui, và để sống đúng với
-            chính mình!
-          </p>
+          
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-teal-600 mb-2">Thần số học trọn đời - Hành trình của bạn</h3>
+            <p class="text-gray-600">Muốn biết cuộc đời mình sẽ ra sao? App đưa ra báo cáo chi tiết qua từng giai đoạn, từ những năm đầu đời đến tuổi về hưu, để bạn luôn sẵn sàng cho mọi điều phía trước.</p>
+            <p class="text-purple-700 mt-2 italic">Ví dụ: Số chủ đạo 1 - 30-40 tuổi là thời điểm bạn tỏa sáng rực rỡ!</p>
+            <nuxt-link to="/numerology-full" class="text-teal-500 hover:underline mt-2 inline-block">Khám phá ngay</nuxt-link>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-teal-600 mb-2">Giải đáp thắc mắc - Lắng nghe câu hỏi của bạn</h3>
+            <p class="text-gray-600">Có điều gì khiến bạn băn khoăn? Chỉ cần nhập câu hỏi, app sẽ phân tích dựa trên con số của bạn để đưa ra lời khuyên gần gũi, dễ hiểu, giúp bạn quyết định đúng lúc.</p>
+            <p class="text-purple-700 mt-2 italic">Ví dụ: "Tôi có nên sinh em bé trong năm nay không?" - Với số chủ đạo 6, năm nay là thời điểm tốt để gia đình thêm yêu thương!</p>
+          </div>
         </div>
+      </section>
+      
+      <section class="mb-10">
+        <h2 class="text-2xl font-semibold text-teal-700 mb-4">Case Study: Khi Thần số học dẫn lối</h2>
+        <div class="space-y-6">
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-teal-600 mb-2">Elon Musk (Quốc tế) - Người mơ lớn</h3>
+            <p class="text-gray-600">Ngày sinh: 28/06/1971 - Số chủ đạo: 7, Số linh hồn: 5 (từ "Elon"), Số định mệnh: 9 (từ "Elon Musk"). Số 7 thích tìm tòi, số 5 khao khát tự do, số 9 mang lý tưởng lớn. Từ một kỹ sư, Elon đã xây dựng Tesla và SpaceX, đưa ước mơ vũ trụ thành hiện thực.</p>
+            <p class="text-purple-700 mt-2 italic">"Số 7 khơi dậy trí tò mò, số 5 phá bỏ giới hạn, số 9 giúp Elon viết nên câu chuyện cho cả nhân loại!"</p>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-teal-600 mb-2">Oprah Winfrey (Quốc tế) - Người lan tỏa yêu thương</h3>
+            <p class="text-gray-600">Ngày sinh: 29/01/1954 - Số chủ đạo: 4, Số linh hồn: 7 (từ "Oprah"), Số định mệnh: 3 (từ "Oprah Winfrey"). Số 4 bền bỉ, số 7 tìm ý nghĩa, số 3 lan tỏa cảm hứng. Oprah vượt qua khó khăn để trở thành người dẫn chương trình truyền hình ảnh hưởng nhất thế giới.</p>
+            <p class="text-purple-700 mt-2 italic">"Số 4 xây đắp từng bước, số 7 tìm ánh sáng trong tâm hồn, số 3 giúp Oprah chạm đến trái tim triệu người!"</p>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-teal-600 mb-2">Phạm Nhật Vượng (Việt Nam) - Người mở đường</h3>
+            <p class="text-gray-600">Ngày sinh: 05/08/1968 - Số chủ đạo: 1, Số linh hồn: 1 (từ "Vượng"), Số định mệnh: 5 (từ "Phạm Nhật Vượng"). Số 1 mạnh mẽ, số 5 đổi mới. Từ một người bán mì gói, ông xây dựng Vingroup, đưa VinFast ra thế giới.</p>
+            <p class="text-purple-700 mt-2 italic">"Số 1 dẫn lối kiên định, số 5 mở ra chân trời mới, Vượng là minh chứng cho giấc mơ không giới hạn!"</p>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-teal-600 mb-2">Nguyễn Thị Phương Thảo (Việt Nam) - Người bay cao</h3>
+            <p class="text-gray-600">Ngày sinh: 07/06/1970 - Số chủ đạo: 3, Số linh hồn: 6 (từ "Thảo"), Số định mệnh: 9 (từ "Nguyễn Thị Phương Thảo"). Số 3 sáng tạo, số 6 ấm áp, số 9 mơ lớn. Bà Thảo đưa VietJet bay khắp bầu trời với những ý tưởng táo bạo.</p>
+            <p class="text-purple-700 mt-2 italic">"Số 3 thắp sáng ý tưởng, số 6 chăm sóc gia đình lớn, số 9 đưa Thảo đến đỉnh cao của bầu trời Việt!"</p>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-teal-600 mb-2">Đặng Lê Nguyên Vũ (Việt Nam) - Người kể chuyện cà phê</h3>
+            <p class="text-gray-600">Ngày sinh: 10/02/1971 - Số chủ đạo: 3, Số linh hồn: 5 (từ "Vũ"), Số định mệnh: 7 (từ "Đặng Lê Nguyên Vũ"). Số 3 sáng tạo, số 5 tự do, số 7 sâu sắc. Ông Vũ biến Trung Nguyên thành câu chuyện cà phê đầy cảm hứng.</p>
+            <p class="text-purple-700 mt-2 italic">"Số 3 vẽ nên đam mê, số 5 bay xa, số 7 giúp Vũ kể câu chuyện cà phê chạm đến từng tâm hồn!"</p>
+          </div>
+        </div>
+      </section>
+      
+      <section class="mb-10">
+        <h2 class="text-2xl font-semibold text-teal-700 mb-4">Tại sao chọn chúng tôi?</h2>
+        <p class="text-gray-600 leading-relaxed">Chúng tôi không chỉ là một ứng dụng, mà là người bạn luôn sẵn sàng lắng nghe và đồng hành cùng bạn. Thần số học với chúng tôi là cách để bạn hiểu mình hơn, đưa ra lựa chọn tốt hơn, từ những điều nhỏ bé đến những quyết định lớn trong đời.</p>
+      </section>
+      
+      <div class="text-center">
+        <nuxt-link to="/dashboard" class="bg-teal-500 text-white px-6 py-3 rounded-lg hover:bg-teal-600 text-lg font-semibold">
+          Khám phá ngay
+        </nuxt-link>
       </div>
-
-      <!-- Nút quay lại -->
-      <!-- <div class="mt-10 text-center">
-        <NuxtLink
-          to="/"
-          class="inline-block px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors shadow-md"
-        >
-          Quay lại trang chủ
-        </NuxtLink>
-      </div> -->
     </div>
   </div>
 </template>
 
 <script setup>
 definePageMeta({
-  layout: 'default',
+  layout: 'default'
 });
 </script>
-
-<style scoped>
-.animate-gradient {
-  animation: gradient 3s ease infinite;
-  background-size: 200% 200%;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-</style>
