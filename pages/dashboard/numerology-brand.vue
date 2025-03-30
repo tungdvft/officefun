@@ -7,4 +7,8 @@
 
 <script setup>
 import NumerologyBrandName from '~/components/NumerologyBrandName.vue';
+definePageMeta({
+  layout: 'dashboard'
+});
+
 </script>

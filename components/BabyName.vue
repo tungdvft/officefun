@@ -132,15 +132,15 @@ const parsedResult = computed(() => {
   return result.value ? marked(result.value) : '';
 });
 
-onMounted(() => {
-  if (process.client) {
-    const username = localStorage.getItem('username');
-    if (!username) {
-      navigateTo('/login');
-      return;
-    }
-  }
-});
+// onMounted(() => {
+//   if (process.client) {
+//     const username = localStorage.getItem('username');
+//     if (!username) {
+//       navigateTo('/login');
+//       return;
+//     }
+//   }
+// });
 
 const suggestBabyName = async () => {
   if (!formData.value.motherName) {

@@ -314,10 +314,10 @@ const saveResult = async (username, type, result) => {
 onMounted(async () => {
   if (process.client) {
     const username = localStorage.getItem('username');
-    if (!username) {
-      navigateTo('/login');
-      return;
-    }
+    // if (!username) {
+    //   navigateTo('/login');
+    //   return;
+    // }
     userData.value.username = username;
 
     try {
