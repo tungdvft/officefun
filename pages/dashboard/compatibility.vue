@@ -9,6 +9,24 @@
     </h2>
 
     <div class="space-y-6">
+      <!-- Tabs -->
+      <div class="flex space-x-4 border-b">
+        <button
+          v-for="tab in tabs"
+          :key="tab.value"
+          @click="formData.relationshipType = tab.value"
+          :class="[
+            'py-2 px-4 font-medium',
+            formData.relationshipType === tab.value
+              ? 'border-b-2 border-purple-500 text-purple-700'
+              : 'text-gray-500 hover:text-purple-700'
+          ]"
+        >
+          {{ tab.label }}
+        </button>
+      </div>
+
+      <!-- Form -->
       <div>
         <label for="person1Name" class="block text-gray-700 font-medium mb-2">Họ và tên người 1</label>
         <input
@@ -57,7 +75,7 @@
         {{ loading ? 'Đang kiểm tra...' : 'Kiểm tra ngay' }}
       </button>
 
-      <!-- Hiển thị kết quả với Markdown -->
+      <!-- Hiển thị kết quả -->
       <div v-if="result" class="mt-4 p-6 bg-purple-50 rounded-lg">
         <p class="text-purple-800 font-semibold text-lg mb-2">Kết quả mức độ hợp nhau</p>
         <div v-html="parsedResult" class="text-gray-700 whitespace-pre-line"></div>
@@ -79,12 +97,19 @@ const formData = ref({
   person1Name: '',
   person1Birthdate: '',
   person2Name: '',
-  person2Birthdate: ''
+  person2Birthdate: '',
+  relationshipType: 'lover' // Mặc định là người yêu
 });
+
+const tabs = [
+  { label: 'Người yêu', value: 'lover' },
+  { label: 'Bạn bè', value: 'friend' },
+  { label: 'Đối tác', value: 'partner' }
+];
+
 const result = ref('');
 const loading = ref(false);
 
-// Parse Markdown để hiển thị kết quả
 const parsedResult = computed(() => {
   return result.value ? marked(result.value) : '';
 });
@@ -121,13 +146,14 @@ const checkCompatibility = async () => {
         person1Name: formData.value.person1Name,
         person1Birthdate: formData.value.person1Birthdate,
         person2Name: formData.value.person2Name,
-        person2Birthdate: formData.value.person2Birthdate
+        person2Birthdate: formData.value.person2Birthdate,
+        relationshipType: formData.value.relationshipType // Gửi loại quan hệ
       }),
     });
 
     if (response.ok) {
       const data = await response.json();
-      result.value = data.answer || 'Kết quả kiểm tra hợp nhau đang được phát triển...'; // Placeholder
+      result.value = data.answer || 'Kết quả kiểm tra hợp nhau đang được phát triển...';
       toast.success('Kiểm tra hoàn tất!', { position: 'top-center' });
     } else {
       toast.error('Không thể kiểm tra hợp nhau!', { position: 'top-center' });
