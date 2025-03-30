@@ -8,12 +8,18 @@
         <p class="text-sm opacity-75">Khám phá con số của bạn</p>
       </div>
       <nav class="flex-1 p-4 space-y-2">
-        <!-- <NuxtLink to="/" class="flex items-center p-3 rounded-lg hover:bg-purple-700">
+        <NuxtLink to="/dashboard" class="flex items-center p-3 rounded-lg hover:bg-purple-700">
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M3 6h18M3 18h18" />
           </svg>
           Tổng quan
-        </NuxtLink> -->
+        </NuxtLink>
+        <NuxtLink to="/dashboard/success-map" class="flex items-center p-3 rounded-lg hover:bg-purple-700">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Bản đồ thành công
+        </NuxtLink>
         <NuxtLink to="/dashboard/baby-name" class="flex items-center p-3 rounded-lg hover:bg-purple-700">
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
