@@ -49,22 +49,43 @@
     <div v-if="!userInfo.name" class="text-center text-gray-600">
       <p>Nhập thông tin để khám phá bản đồ thành công của bạn!</p>
     </div>
-    <div v-else-if="successMap" class="mt-4 p-4 bg-purple-50 rounded-lg space-y-4">
+    <div v-else-if="successMap" class="mt-4 p-4 bg-purple-50 rounded-lg space-y-6">
       <div>
-        <p class="text-purple-700 font-semibold">Mục tiêu lớn (Số Đường đời: {{ successMap.lifePathNumber }})</p>
+        <p class="text-purple-700 font-semibold text-lg">Mục tiêu lớn (Số Đường đời: {{ successMap.lifePathNumber }})</p>
         <p class="text-gray-700 mt-2">{{ successMap.goal }}</p>
       </div>
       <div>
-        <p class="text-purple-700 font-semibold">Điểm mạnh (Số Tên: {{ successMap.expressionNumber }})</p>
+        <p class="text-purple-700 font-semibold text-lg">Điểm mạnh (Số Tên: {{ successMap.expressionNumber }})</p>
         <p class="text-gray-700 mt-2">{{ successMap.strengths }}</p>
       </div>
       <div>
-        <p class="text-purple-700 font-semibold">Điểm cần lưu ý (Số Linh hồn: {{ successMap.soulUrgeNumber }})</p>
+        <p class="text-purple-700 font-semibold text-lg">Điểm cần lưu ý (Số Linh hồn: {{ successMap.soulUrgeNumber }})</p>
         <p class="text-gray-700 mt-2">{{ successMap.notes }}</p>
       </div>
       <div>
-        <p class="text-purple-700 font-semibold">Chiến lược năm {{ currentYear }} (Số Cá nhân: {{ successMap.personalYearNumber }})</p>
+        <p class="text-purple-700 font-semibold text-lg">Chiến lược năm {{ currentYear }} (Số Cá nhân: {{ successMap.personalYearNumber }})</p>
         <p class="text-gray-700 mt-2">{{ successMap.strategy }}</p>
+      </div>
+      <div>
+        <p class="text-purple-700 font-semibold text-lg">Các cột mốc thành công</p>
+        <div class="space-y-4 mt-2">
+          <div>
+            <p class="text-purple-600 font-semibold">Cột mốc ngắn hạn (Dựa trên Số Linh hồn)</p>
+            <p class="text-gray-700">{{ successMap.milestones.shortTerm }}</p>
+          </div>
+          <div>
+            <p class="text-purple-600 font-semibold">Cột mốc trung hạn (Dựa trên Số Tên)</p>
+            <p class="text-gray-700">{{ successMap.milestones.mediumTerm }}</p>
+          </div>
+          <div>
+            <p class="text-purple-600 font-semibold">Cột mốc dài hạn (Dựa trên Số Đường đời)</p>
+            <p class="text-gray-700">{{ successMap.milestones.longTerm }}</p>
+          </div>
+          <div>
+            <p class="text-purple-600 font-semibold">Cột mốc năm {{ currentYear }} (Dựa trên Số Cá nhân)</p>
+            <p class="text-gray-700">{{ successMap.milestones.currentYear }}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
