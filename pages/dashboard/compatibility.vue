@@ -76,18 +76,43 @@
       </button>
 
       <!-- Hiển thị kết quả -->
-      <div v-if="result" class="mt-4 p-6 bg-purple-50 rounded-lg">
-        <p class="text-purple-800 font-semibold text-lg mb-2">Kết quả mức độ hợp nhau</p>
-        <div v-html="parsedResult" class="text-gray-700 whitespace-pre-line"></div>
+      <div v-if="result" class="mt-4 p-6 bg-purple-50 rounded-lg space-y-4">
+        <div>
+          <p class="text-purple-800 font-semibold text-lg mb-2">Tổng quan</p>
+          <p class="text-gray-700 whitespace-pre-wrap">{{ result.overview }}</p>
+        </div>
+        <div>
+          <p class="text-purple-800 font-semibold text-lg mb-2">Điểm mạnh</p>
+          <p class="text-gray-700 whitespace-pre-wrap">{{ result.strengths }}</p>
+        </div>
+        <div>
+          <p class="text-purple-800 font-semibold text-lg mb-2">Điểm yếu</p>
+          <p class="text-gray-700 whitespace-pre-wrap">{{ result.weaknesses }}</p>
+        </div>
+        <div>
+          <p class="text-purple-800 font-semibold text-lg mb-2">Tiềm năng</p>
+          <p class="text-gray-700 whitespace-pre-wrap">{{ result.potential }}</p>
+        </div>
+        <div>
+          <p class="text-purple-800 font-semibold text-lg mb-2">Thách thức</p>
+          <p class="text-gray-700 whitespace-pre-wrap">{{ result.challenges }}</p>
+        </div>
+        <div>
+          <p class="text-purple-800 font-semibold text-lg mb-2">Mức độ hợp nhau</p>
+          <p class="text-gray-700 whitespace-pre-wrap">{{ result.compatibility }}</p>
+        </div>
+        <div>
+          <p class="text-purple-800 font-semibold text-lg mb-2">Gợi ý phát triển</p>
+          <p class="text-gray-700 whitespace-pre-wrap">{{ result.advice }}</p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { toast } from 'vue3-toastify';
-import { marked } from 'marked';
 
 definePageMeta({
   layout: 'dashboard'
@@ -98,21 +123,18 @@ const formData = ref({
   person1Birthdate: '',
   person2Name: '',
   person2Birthdate: '',
-  relationshipType: 'lover' // Mặc định là người yêu
+  relationshipType: 'lover' // Mặc định là "Người yêu"
 });
 
 const tabs = [
   { label: 'Người yêu', value: 'lover' },
+  { label: 'Vợ chồng', value: 'spouse' },
   { label: 'Bạn bè', value: 'friend' },
   { label: 'Đối tác', value: 'partner' }
 ];
 
-const result = ref('');
+const result = ref(null);
 const loading = ref(false);
-
-const parsedResult = computed(() => {
-  return result.value ? marked(result.value) : '';
-});
 
 const checkCompatibility = async () => {
   if (!formData.value.person1Name) {
@@ -144,16 +166,16 @@ const checkCompatibility = async () => {
       },
       body: JSON.stringify({
         person1Name: formData.value.person1Name,
-        person1Birthdate: formData.value.person1Birthdate,
         person2Name: formData.value.person2Name,
+        person1Birthdate: formData.value.person1Birthdate,
         person2Birthdate: formData.value.person2Birthdate,
-        relationshipType: formData.value.relationshipType // Gửi loại quan hệ
+        relationshipType: formData.value.relationshipType
       }),
     });
 
     if (response.ok) {
       const data = await response.json();
-      result.value = data.answer || 'Kết quả kiểm tra hợp nhau đang được phát triển...';
+      result.value = data;
       toast.success('Kiểm tra hoàn tất!', { position: 'top-center' });
     } else {
       toast.error('Không thể kiểm tra hợp nhau!', { position: 'top-center' });
