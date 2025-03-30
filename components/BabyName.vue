@@ -8,6 +8,7 @@
     </h2>
 
     <div class="space-y-6">
+      <!-- Các input giữ nguyên -->
       <div>
         <label for="motherName" class="block text-gray-700 font-medium mb-2">Họ và tên mẹ</label>
         <input
@@ -100,17 +101,29 @@
         {{ loading ? 'Đang đề xuất...' : 'Đề xuất tên con' }}
       </button>
 
-      <!-- Hiển thị kết quả với Markdown -->
+      <!-- Hiển thị kết quả -->
       <div v-if="result" class="mt-4 p-6 bg-purple-50 rounded-lg">
-        <p class="text-purple-800 font-semibold text-lg mb-2">Tên con đề xuất</p>
-        <div v-html="parsedResult" class="text-gray-700 whitespace-pre-line"></div>
+        <p class="text-purple-800 font-semibold text-lg mb-2">Phân tích và tên đề xuất</p>
+        <div class="text-gray-700 whitespace-pre-wrap">
+          <p class="mb-4">{{ result.analysis }}</p>
+          <div class="space-y-4">
+            <div v-for="(name, index) in result.names" :key="index">
+              <p v-html="marked(name.name)" class="font-bold"></p>
+              <p>{{ name.meaning }}</p>
+            </div>
+          </div>
+          <p class="mt-4 font-semibold">Lời khuyên:</p>
+          <ul class="list-disc pl-5">
+            <li v-for="(tip, index) in result.tips" :key="index">{{ tip }}</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref } from 'vue';
 import { toast } from 'vue3-toastify';
 import { marked } from 'marked';
 
@@ -119,28 +132,13 @@ const formData = ref({
   motherBirthdate: '',
   fatherName: '',
   fatherBirthdate: '',
-  babyBirthdate: '', // Thêm trường ngày sinh bé
+  babyBirthdate: '',
   gender: 'neutral',
   babyBirthMonth: null,
   additionalRequest: ''
 });
-const result = ref('');
+const result = ref(null);
 const loading = ref(false);
-
-// Parse Markdown để hiển thị tên in đậm
-const parsedResult = computed(() => {
-  return result.value ? marked(result.value) : '';
-});
-
-// onMounted(() => {
-//   if (process.client) {
-//     const username = localStorage.getItem('username');
-//     if (!username) {
-//       navigateTo('/login');
-//       return;
-//     }
-//   }
-// });
 
 const suggestBabyName = async () => {
   if (!formData.value.motherName) {
@@ -175,7 +173,7 @@ const suggestBabyName = async () => {
         motherBirthdate: formData.value.motherBirthdate,
         fatherName: formData.value.fatherName,
         fatherBirthdate: formData.value.fatherBirthdate,
-        babyBirthdate: formData.value.babyBirthdate || '', // Gửi ngày sinh bé (có thể rỗng)
+        babyBirthdate: formData.value.babyBirthdate || '',
         gender: formData.value.gender,
         babyBirthMonth: formData.value.babyBirthMonth || null,
         additionalRequest: formData.value.additionalRequest || ''
@@ -184,10 +182,11 @@ const suggestBabyName = async () => {
 
     if (response.ok) {
       const data = await response.json();
-      result.value = data.answer;
+      result.value = data;
       toast.success('Đề xuất tên con đã hoàn tất!', { position: 'top-center' });
     } else {
-      toast.error('Không thể đề xuất tên con!', { position: 'top-center' });
+      const errorData = await response.json();
+      toast.error(`Không thể đề xuất tên con: ${errorData.statusMessage || 'Lỗi không xác định'}`, { position: 'top-center' });
     }
   } catch (error) {
     console.error('Error suggesting baby name:', error);
