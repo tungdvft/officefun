@@ -1,4 +1,4 @@
-import { defineEventHandler } from 'h3';
+import { defineEventHandler, createError } from 'h3';
 
 function getLifePathNumber(birthdate) {
   const [day, month, year] = birthdate.split('/').map(Number);
@@ -69,9 +69,9 @@ export default defineEventHandler(async (event) => {
     const prompt = `Dựa trên thần số học với số chủ đạo ${dominantNumber}, số linh hồn ${soulNumber}, số nhân cách ${personalityNumber}, số định mệnh ${destinyNumber}, sinh ngày ${birthdate}, tên ${name}, giới tính "${gender}". Trả về JSON hợp lệ với phần sau: ` +
       `"answer": Một đoạn văn ngắn (6-8 câu) gợi ý danh xưng quốc tế cho người trưởng thành. Đề xuất 3 danh xưng cụ thể, mỗi tên in đậm bằng **tên**, kèm lý do ngắn gọn (1-2 câu mỗi tên), cách nhau bằng "\\n\\n". ` +
       `Tên phải theo phong cách quốc tế, ngắn gọn, dễ gọi, và giữ đúng họ "${lastName}" từ "${name}". ` +
-      `Nếu giới tính là "male", dùng tên nam tính (ví dụ: **David ${lastName}**, **Alex ${lastName}**, **James ${lastName}**); nếu là "female", dùng tên nữ tính (ví dụ: **Emma ${lastName}**, **Sophia ${lastName}**, **Olivia ${lastName}**). ` +
+      `Nếu giới tính là "male", dùng tên nam tính; nếu là "female", dùng tên nữ tính. ` +
       `Với mỗi tên, thêm thông tin về một người nổi tiếng có cùng tên (ví dụ: "David Beckham - cầu thủ bóng đá nổi tiếng" cho David), đặt trong dấu ngoặc sau lý do. ` +
-      `Kết thúc bằng 1-2 câu khuyên dùng "bạn" về cách sử dụng danh xưng (ví dụ: dùng trong công việc, mạng xã hội). Không dùng Markdown trong JSON, chỉ trả về chuỗi JSON thuần túy!`;
+      `Kết thúc bằng 1-2 câu khuyên dùng "bạn" về cách sử dụng danh xưng. Không dùng Markdown trong JSON, chỉ trả về chuỗi JSON thuần túy!`;
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
@@ -84,7 +84,11 @@ export default defineEventHandler(async (event) => {
       }
     );
 
-    if (!response.ok) throw new Error(`Gemini API lỗi: ${response.status}`);
+    if (!response.ok) {
+      console.error('Gemini API lỗi:', response.status, await response.text());
+      throw new Error(`Gemini API lỗi: ${response.status}`);
+    }
+
     const data = await response.json();
     let rawText = data.candidates[0].content.parts[0].text;
 
@@ -95,27 +99,41 @@ export default defineEventHandler(async (event) => {
       return parsedData;
     } catch (parseError) {
       console.error('Lỗi parse JSON từ Gemini:', parseError, 'Raw text:', rawText);
-      return getFallbackNickname(dominantNumber, soulNumber, personalityNumber, destinyNumber, lastName, gender);
+      return getDynamicNickname(dominantNumber, soulNumber, personalityNumber, destinyNumber, lastName, gender);
     }
   } catch (error) {
     console.error('Lỗi gọi Gemini:', error);
-    return getFallbackNickname(dominantNumber, soulNumber, personalityNumber, destinyNumber, lastName, gender);
+    return getDynamicNickname(dominantNumber, soulNumber, personalityNumber, destinyNumber, lastName, gender);
   }
 });
 
-function getFallbackNickname(dominantNumber, soulNumber, personalityNumber, destinyNumber, lastName, gender) {
-  let answer = `Dựa trên thần số học, đây là 3 gợi ý danh xưng quốc tế đơn giản cho bạn:\n\n`;
+function getDynamicNickname(dominantNumber, soulNumber, personalityNumber, destinyNumber, lastName, gender) {
+  const maleNames = [
+    { name: 'Ethan', reason: 'Thể hiện sự mạnh mẽ và thông minh', famous: 'Ethan Hawke - diễn viên nổi tiếng' },
+    { name: 'Liam', reason: 'Gợi sự năng động và sáng tạo', famous: 'Liam Hemsworth - diễn viên người Úc' },
+    { name: 'Noah', reason: 'Phù hợp với sự tinh tế và bình yên', famous: 'Noah Centineo - diễn viên trẻ nổi tiếng' },
+    { name: 'Mason', reason: 'Tượng trưng cho sự vững chắc', famous: 'Mason Mount - cầu thủ bóng đá Anh' },
+  ];
   
-  if (gender === 'male') {
-    answer += `**David ${lastName}**: Phù hợp với năng lượng mạnh mẽ từ số chủ đạo ${dominantNumber} và hình ảnh quốc tế từ số nhân cách ${personalityNumber}. (David Beckham - cầu thủ bóng đá nổi tiếng)\n\n` +
-             `**Alex ${lastName}**: Thể hiện sự năng động từ số linh hồn ${soulNumber}, dễ nhớ và hợp số định mệnh ${destinyNumber}. (Alex Turner - ca sĩ chính ban nhạc Arctic Monkeys)\n\n` +
-             `**James ${lastName}**: Gợi sự tinh tế từ số chủ đạo ${dominantNumber}, phong cách quốc tế rõ nét. (James Bond - nhân vật điệp viên hư cấu nổi tiếng)\n\n`;
-  } else {
-    answer += `**Emma ${lastName}**: Phù hợp với sự thanh lịch từ số linh hồn ${soulNumber} và hình ảnh quốc tế từ số nhân cách ${personalityNumber}. (Emma Watson - diễn viên nổi tiếng từ Harry Potter)\n\n` +
-             `**Sophia ${lastName}**: Thể hiện sự tinh tế từ số chủ đạo ${dominantNumber}, dễ nhớ và hợp số định mệnh ${destinyNumber}. (Sophia Loren - nữ diễn viên huyền thoại người Ý)\n\n` +
-             `**Olivia ${lastName}**: Gợi sự năng động từ số linh hồn ${soulNumber}, phong cách quốc tế nổi bật. (Olivia Rodrigo - ca sĩ kiêm nhạc sĩ trẻ nổi tiếng)\n\n`;
-  }
+  const femaleNames = [
+    { name: 'Ava', reason: 'Thể hiện sự thanh lịch và quyến rũ', famous: 'Ava Gardner - nữ diễn viên huyền thoại' },
+    { name: 'Luna', reason: 'Gợi sự bí ẩn và sáng tạo', famous: 'Luna Lovegood - nhân vật trong Harry Potter' },
+    { name: 'Zoe', reason: 'Phù hợp với sự năng động và tươi mới', famous: 'Zoe Saldana - diễn viên nổi tiếng' },
+    { name: 'Mia', reason: 'Ngắn gọn, dễ nhớ và hiện đại', famous: 'Mia Hamm - cầu thủ bóng đá nữ nổi tiếng' },
+  ];
 
-  answer += `Bạn có thể dùng danh xưng này trong công việc hoặc mạng xã hội để tạo ấn tượng. Chọn tên phù hợp với phong cách cá nhân của bạn.`;
+  const nameList = gender === 'male' ? maleNames : femaleNames;
+  
+  // Chọn tên dựa trên các số
+  const name1 = nameList[dominantNumber % nameList.length];
+  const name2 = nameList[soulNumber % nameList.length];
+  const name3 = nameList[personalityNumber % nameList.length];
+
+  let answer = `Dựa trên thần số học với các con số chủ đạo ${dominantNumber}, linh hồn ${soulNumber}, nhân cách ${personalityNumber}, và định mệnh ${destinyNumber}, đây là 3 gợi ý danh xưng quốc tế cho bạn:\n\n` +
+    `**${name1.name} ${lastName}**: ${name1.reason}, rất hợp với năng lượng từ số chủ đạo ${dominantNumber}. (${name1.famous})\n\n` +
+    `**${name2.name} ${lastName}**: ${name2.reason}, phản ánh sự sâu sắc từ số linh hồn ${soulNumber}. (${name2.famous})\n\n` +
+    `**${name3.name} ${lastName}**: ${name3.reason}, nổi bật với số nhân cách ${personalityNumber}. (${name3.famous})\n\n` +
+    `Bạn có thể dùng các danh xưng này trong công việc hoặc mạng xã hội để tạo dấu ấn riêng. Hãy chọn cái phù hợp nhất với phong cách của bạn!`;
+
   return { answer };
 }
