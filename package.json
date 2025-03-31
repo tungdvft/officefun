@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.0",
+    "@nuxt/image": "^1.10.0",
     "@vuepic/vue-datepicker": "^11.0.2",
     "axios": "^1.8.4",
     "chart.js": "^4.4.8",
