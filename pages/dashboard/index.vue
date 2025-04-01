@@ -5,27 +5,7 @@
     <div class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-8 rounded-xl shadow-lg">
       <h1 class="text-4xl font-bold mb-2">Chào mừng đến với Thần số học</h1>
       <p class="text-lg opacity-90">Khám phá năng lượng của bạn qua con số!</p>
-      <!-- <NuxtLink
-        to="/baby-name"
-        class="mt-4 inline-block bg-white text-purple-600 px-6 py-2 rounded-full font-semibold hover:bg-purple-100 transition"
-      >
-        Đặt tên con ngay
-      </NuxtLink> -->
     </div>
-
-    <!-- Grid các tính năng -->
-    <!-- <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
-        <div class="flex items-center mb-4">
-          <svg class="w-8 h-8 text-purple-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <h2 class="text-xl font-semibold text-purple-700">Đặt tên con</h2>
-        </div>
-        <p class="text-gray-600">Tìm tên hoàn hảo cho bé yêu dựa trên năng lượng số học.</p>
-        <NuxtLink to="/baby-name" class="mt-4 inline-block text-purple-500 hover:underline">Thử ngay</NuxtLink>
-      </div>
-    </div> -->
 
     <!-- Thần số học với 4 tab -->
     <div class="bg-white p-6 rounded-xl shadow-lg">
@@ -163,12 +143,17 @@ const shouldAvoidTitle = computed(() => {
     : 'Nên tránh trong năm';
 });
 
-// Kiểm tra tuần hiện tại
+// Hàm lấy ngày hiện tại theo múi giờ Việt Nam
+const getVietnamDate = () => {
+  return new Date().toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' });
+};
+
+// Hàm tính số tuần theo múi giờ Việt Nam
 const getWeekNumber = (date) => {
-  const d = new Date(date);
+  const d = new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }));
   d.setHours(0, 0, 0, 0);
   d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-  const yearStart = new Date(d.getFullYear(), 0, 1);
+  const yearStart = new Date(d.getFullYear(), 0, 1, 0, 0, 0, 0, { timeZone: 'Asia/Ho_Chi_Minh' });
   return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
 };
 
@@ -178,7 +163,7 @@ onMounted(() => {
   if (storedData) {
     const { userInfo: storedUserInfo, results: storedResults, timestamp } = JSON.parse(storedData);
     const storedDate = new Date(timestamp);
-    const currentDate = new Date('2025-03-30'); // Ngày hiện tại theo hệ thống
+    const currentDate = new Date(getVietnamDate());
     const storedWeek = getWeekNumber(storedDate);
     const currentWeek = getWeekNumber(currentDate);
 
@@ -215,11 +200,11 @@ const submitForm = async () => {
     results.value = response.numerology;
     editing.value = false;
 
-    // Lưu vào localStorage với timestamp
+    // Lưu vào localStorage với timestamp theo múi giờ Việt Nam
     localStorage.setItem('numerologyData', JSON.stringify({
       userInfo: userInfo.value,
       results: results.value,
-      timestamp: new Date('2025-03-30').toISOString()
+      timestamp: new Date(getVietnamDate()).toISOString()
     }));
     toast.success('Phân tích hoàn tất!', { position: 'top-center' });
   } catch (error) {
