@@ -63,12 +63,12 @@ export default defineEventHandler(async (event) => {
   const soulNumber = getSoulNumber(name);
   const personalityNumber = getPersonalityNumber(name);
   const destinyNumber = getDestinyNumber(name);
-  const lastName = name.split(' ')[0];
+  const lastName = name.split(' ')[0]; // Lấy họ (từ đầu tiên)
 
   try {
     const prompt = `Dựa trên thần số học với số chủ đạo ${dominantNumber}, số linh hồn ${soulNumber}, số nhân cách ${personalityNumber}, số định mệnh ${destinyNumber}, sinh ngày ${birthdate}, tên ${name}, giới tính "${gender}". Trả về JSON hợp lệ với phần sau: ` +
       `"answer": Một đoạn văn ngắn (6-8 câu) gợi ý danh xưng quốc tế cho người trưởng thành. Đề xuất 3 danh xưng cụ thể, mỗi tên in đậm bằng **tên**, kèm lý do ngắn gọn (1-2 câu mỗi tên), cách nhau bằng "\\n\\n". ` +
-      `Tên phải theo phong cách quốc tế, ngắn gọn, dễ gọi, và giữ đúng họ "${lastName}" từ "${name}". ` +
+      `Tên phải theo phong cách quốc tế, ngắn gọn, dễ gọi, định dạng "Tên biệt danh + Họ" với họ là "${lastName}" từ "${name}". ` +
       `Nếu giới tính là "male", dùng tên nam tính; nếu là "female", dùng tên nữ tính. ` +
       `Với mỗi tên, thêm thông tin về một người nổi tiếng có cùng tên (ví dụ: "David Beckham - cầu thủ bóng đá nổi tiếng" cho David), đặt trong dấu ngoặc sau lý do. ` +
       `Kết thúc bằng 1-2 câu khuyên dùng "bạn" về cách sử dụng danh xưng. Không dùng Markdown trong JSON, chỉ trả về chuỗi JSON thuần túy!`;
