@@ -2,15 +2,13 @@ import { defineEventHandler, createError } from 'h3';
 import { callGeminiApi } from '../utils/commonApi';
 
 function getCurrentDateInfo() {
-  // Lấy ngày hiện tại theo múi giờ Việt Nam (Asia/Ho_Chi_Minh)
   const today = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }));
   const day = today.getDate();
-  const month = today.getMonth() + 1; // Tháng bắt đầu từ 0 nên +1
+  const month = today.getMonth() + 1;
   const year = today.getFullYear();
 
-  // Tính ngày bắt đầu tuần (thứ Hai)
   const startOfWeek = new Date(today);
-  const dayOfWeek = today.getDay() || 7; // Chủ nhật = 0 -> 7
+  const dayOfWeek = today.getDay() || 7;
   startOfWeek.setDate(day - (dayOfWeek - 1));
   const startDay = startOfWeek.getDate();
   const startMonth = startOfWeek.getMonth() + 1;
@@ -34,7 +32,7 @@ function calculateNumber(birthDate, period) {
     sum = birthDay + birthMonth + day + month + year;
   } else if (period === 'week') {
     const [startDay] = currentWeek.split(' - ')[0].split('/').map(Number);
-    sum = birthDay + birthMonth + startDay + 3 + 2025; // Giữ logic cũ nhưng có thể cần điều chỉnh
+    sum = birthDay + birthMonth + startDay + 3 + 2025;
   } else if (period === 'month') {
     const [month, year] = currentMonth.split('/').map(Number);
     sum = birthDay + birthMonth + month + year;
@@ -66,23 +64,27 @@ export default defineEventHandler(async (event) => {
     year: { number: calculateNumber(birthDate, 'year'), text: `năm ${currentYear}` }
   };
 
-  const prompt = `Dựa trên thần số học, phân tích cho "${name}" với ngày sinh ${birthDate} cho các khoảng thời gian sau: 
+  const randomSeed = Math.floor(Math.random() * 10000);
+  const timestamp = new Date().toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' });
+  const prompt = `Dựa trên thần số học, phân tích cho "${name}" (sinh ${birthDate}) tại ${timestamp}, random seed ${randomSeed}:
     1. Ngày ${currentDate} (số ${periods.day.number})
     2. Tuần ${currentWeek} (số ${periods.week.number})
     3. Tháng ${currentMonth} (số ${periods.month.number})
     4. Năm ${currentYear} (số ${periods.year.number})
-    Trả về JSON hợp lệ với cấu trúc: { "day": {}, "week": {}, "month": {}, "year": {} }, mỗi object chứa:
+    Trả về JSON: { "day": {}, "week": {}, "month": {}, "year": {} }, mỗi object chứa:
     - "number": Số cá nhân.
-    - "description": Diễn giải chung (5-6 câu) về năng lượng của khoảng thời gian, nhắc tên "${name}" ở câu đầu.
-    - "shouldDo": Những việc nên làm (4-5 câu), phù hợp với năng lượng số.
-    - "shouldAvoid": Những việc nên tránh (3-4 câu), không hợp với năng lượng số.
-    - "lunchSuggestion": Chỉ thêm cho "day" (2-3 câu), gợi ý món ăn trưa thực tế.
-    Giọng điệu tự nhiên, khách quan, tránh "nên" quá cứng nhắc. Chỉ trả về JSON thuần túy, không markdown trong JSON!`;
+    - "description": Diễn giải 5-6 câu về năng lượng thời gian, bắt đầu bằng "${name}", giọng điệu tự nhiên như trò chuyện, không cứng nhắc.
+    - "shouldDo": 4-5 câu gợi ý việc làm, thoải mái như lời khuyên bạn bè, tránh "nên" khô khan.
+    - "shouldAvoid": 3-4 câu về việc tránh, nhẹ nhàng, không ra lệnh.
+    - "lunchSuggestion": Chỉ cho "day", 2-3 câu, món ăn trưa thực tế, ngẫu nhiên dựa trên seed ${randomSeed} và số ${periods.day.number}, không lặp "bún chả Hà Nội".
+    Chỉ trả JSON, không markdown!`;
 
   try {
+    console.log('Sending prompt to Gemini:', prompt);
     const data = await callGeminiApi(prompt);
+    console.log('Parsed Gemini Response:', JSON.stringify(data, null, 2));
     if (!data || !data.day || !data.week || !data.month || !data.year) {
-      throw new Error('Gemini API không trả về dữ liệu đầy đủ');
+      throw new Error('Gemini API không trả về cấu trúc dữ liệu đầy đủ');
     }
     return { numerology: data };
   } catch (error) {
@@ -100,34 +102,40 @@ function getFallbackResponse(name, birthDate) {
     year: { number: calculateNumber(birthDate, 'year'), text: `năm này (${currentYear})` }
   };
 
+  const lunchOptions = [
+    `Hôm nay, một tô phở bò tái với rau thơm hợp với năng lượng số ${periods.day.number} lắm đấy. Món này nhẹ mà đủ chất để tiếp tục ngày dài.`,
+    `Một đĩa cơm tấm sườn nướng với trứng ốp la nghe hấp dẫn phết cho trưa nay, hợp với số ${periods.day.number}. Hương vị đậm đà này khá đồng điệu với vibe của bạn.`,
+    `Hôm nay thử bánh xèo giòn rụm với nước mắm chua ngọt đi, hợp năng lượng số ${periods.day.number} luôn. Món này vui miệng, ăn là thấy tươi mới ngay.`,
+    `Một bát bún riêu cua kèm rau sống là lựa chọn ngon lành cho trưa nay với số ${periods.day.number}. Thanh mát, dễ chịu, đúng kiểu cân bằng ngày dài.`,
+  ];
+  const randomLunch = lunchOptions[Math.floor(Math.random() * lunchOptions.length)];
+
   return {
     numerology: {
       day: {
         number: periods.day.number,
-        description: `Số ${periods.day.number} mang đến năng lượng đặc trưng cho ${periods.day.text} của "${name}". Đây là thời điểm tràn đầy sức sống, thôi thúc khám phá những điều mới mẻ. Sự linh hoạt và tò mò dẫn dắt qua những trải nghiệm bất ngờ. Một ngày lý tưởng để thoát khỏi sự nhàm chán và đón nhận sự đa dạng. Năng lượng này khuyến khích tìm kiếm sự phong phú trong cuộc sống.`,
-        shouldDo: `Thử sức với những hoạt động mới hoặc khám phá nơi chưa từng đến sẽ rất thú vị hôm nay. Giao tiếp với những người khác biệt có thể mang lại cảm hứng. Giải quyết vấn đề một cách sáng tạo cũng là cách tận dụng tốt năng lượng này. Ra ngoài và vận động nhiều hơn sẽ giúp cảm thấy tràn đầy sức sống.`,
-        shouldAvoid: `Đừng bám vào thói quen cũ hoặc ở yên một chỗ quá lâu hôm nay, vì năng lượng này không hợp với sự cứng nhắc. Tránh cam kết dài hạn nếu chưa chắc chắn, vì tâm trạng có thể thay đổi. Hạn chế phân tâm quá mức để tránh mất tập trung.`,
-        lunchSuggestion: periods.day.number === 1 ? `Một bữa trưa với gà nướng và salad rau xanh sẽ phù hợp với năng lượng ngày hiện tại. Món ăn nhẹ nhàng, giàu protein này giúp duy trì sự tập trung và tỉnh táo suốt cả ngày.` 
-          : periods.day.number === 5 ? `Một phần bánh mì kẹp thịt bò nướng và rau tươi là lựa chọn lý tưởng cho trưa nay. Món ăn nhanh gọn này đồng điệu với năng lượng linh hoạt hôm nay.` 
-          : `Cơm gạo lứt với cá hồi áp chảo và rau luộc sẽ là bữa trưa tuyệt vời hôm nay. Món ăn giàu dinh dưỡng này hỗ trợ sự thanh lọc cơ thể và tinh thần.`
+        description: `"${name}" hôm nay mang năng lượng của số ${periods.day.number}, cảm giác như một ngày đầy trách nhiệm nhưng cũng cần chút thư giãn. Có thể bạn sẽ gặp vài tình huống cần sự khéo léo, kiểu như làm hòa hay giữ mọi thứ ổn thỏa. Quan hệ với mọi người quanh bạn sẽ khá quan trọng. Ngày này hợp để chăm chút cho gia đình hoặc bản thân một chút. Ai đó thân thiết có thể sẽ cho bạn một cú hích tinh thần đấy.`,
+        shouldDo: `Hôm nay, dành thời gian cho gia đình hay bạn bè thân thiết chắc chắn sẽ vui. Giải quyết mọi việc nhẹ nhàng, khéo léo một chút là mọi thứ sẽ ổn. Lắng nghe người khác, tìm cách dung hòa cũng là ý hay. Đừng quên nghỉ ngơi một chút để lấy lại sức nhé.`,
+        shouldAvoid: `Đừng sa vào mấy cuộc tranh cãi căng thẳng hay quyết định gì vội vàng hôm nay, dễ mệt lắm. Tránh xa mấy người tiêu cực, không đáng để tâm trạng bị kéo xuống. Hạn chế vung tay quá trán, giữ ví tiền ổn một chút nhé.`,
+        lunchSuggestion: randomLunch
       },
       week: {
         number: periods.week.number,
-        description: `Số ${periods.week.number} mang đến năng lượng đặc trưng cho ${periods.week.text} của "${name}". Đây là giai đoạn tập trung vào hiệu quả và tổ chức, thúc đẩy hành động với sự quyết tâm. Sự tham vọng nổi bật, giúp dễ dàng đạt được mục tiêu lớn. Một tuần phù hợp để quản lý tài chính hoặc xây dựng nền tảng vững chắc. Năng lượng này tạo điều kiện để tiến xa nếu biết tận dụng.`,
-        shouldDo: `Tập trung vào công việc đòi hỏi sự tổ chức và lập kế hoạch sẽ mang lại kết quả tốt trong tuần này. Quản lý thời gian và tài chính một cách hiệu quả là cách tận dụng năng lượng này. Đặt mục tiêu cụ thể và hành động quyết liệt để đạt được chúng. Tìm cách cải thiện hiệu suất trong mọi lĩnh vực tham gia.`,
-        shouldAvoid: `Tránh lơ là hoặc bỏ qua các chi tiết quan trọng trong tuần này, vì năng lượng này đòi hỏi sự chính xác. Hạn chế tiêu xài phung phí hoặc hành động bốc đồng, vì điều đó có thể làm mất cân bằng. Đừng để áp lực làm mất kiên nhẫn với người khác.`
+        description: `"${name}" trong ${periods.week.text} sẽ thấy năng lượng số ${periods.week.number} khá rõ. Đây là tuần để tập trung sắp xếp mọi thứ, làm việc gì cũng cần chút quyết tâm. Tham vọng của bạn sẽ nổi lên, dễ đạt được mấy mục tiêu lớn. Quản lý tiền bạc hay xây dựng kế hoạch dài hơi cũng hợp lắm. Tận dụng tốt thì tuần này bạn sẽ tiến xa đấy.`,
+        shouldDo: `Tập trung vào mấy việc cần sắp xếp hay lên kế hoạch, tuần này hợp lắm. Quản lý thời gian, tiền bạc khéo một chút là sẽ thấy hiệu quả ngay. Đặt mục tiêu rõ ràng rồi làm tới luôn, đừng chần chừ. Tìm cách làm việc mượt hơn cũng đáng thử đấy.`,
+        shouldAvoid: `Đừng để mấy chi tiết nhỏ bị bỏ qua, tuần này cần sự cẩn thận. Hạn chế tiêu xài bốc đồng hay làm gì quá cảm tính, dễ mất cân bằng. Cũng đừng để áp lực làm bạn cáu bẩn với người khác nhé.`,
       },
       month: {
         number: periods.month.number,
-        description: `Số ${periods.month.number} mang đến năng lượng của sự khởi đầu và độc lập cho ${periods.month.text} của "${name}". Đây là thời điểm tràn đầy động lực để bắt đầu những điều mới mẻ. Sự tự tin và quyết đoán nổi bật, giúp dễ dàng đặt mục tiêu. Một giai đoạn khuyến khích sự chủ động và khẳng định bản thân. Năng lượng này tạo cơ hội để tỏa sáng nếu biết nắm bắt.`,
-        shouldDo: `Tập trung vào những việc đòi hỏi sự độc lập và sáng tạo sẽ mang lại kết quả tốt trong tháng này. Bắt đầu một dự án mới hoặc đưa ra quyết định quan trọng là lựa chọn phù hợp. Giao tiếp rõ ràng để thể hiện ý tưởng cũng rất hiệu quả. Tận dụng thời gian này để bước ra khỏi vùng an toàn và thử sức với điều mới.`,
-        shouldAvoid: `Tránh tham gia vào những tranh cãi không cần thiết trong tháng này, vì năng lượng này dễ làm nóng nảy. Hạn chế phụ thuộc quá nhiều vào người khác, vì điều đó có thể gây khó chịu. Đừng trì hoãn, vì giai đoạn này không hợp với sự do dự.`
+        description: `"${name}" trong ${periods.month.text} sẽ cảm nhận năng lượng số ${periods.month.number}, kiểu như một khởi đầu đầy hứng khởi. Đây là lúc bạn thấy động lực dâng trào, muốn làm gì đó mới mẻ. Sự tự tin và quyết đoán sẽ giúp bạn đặt mục tiêu rõ ràng. Giai đoạn này hợp để bước lên và thể hiện bản thân. Cơ hội sẽ đến nếu bạn chủ động một chút đấy.`,
+        shouldDo: `Làm mấy việc cần sự độc lập hay sáng tạo sẽ rất hợp tháng này. Bắt đầu dự án mới hay đưa ra quyết định lớn cũng là thời điểm tốt. Nói ý tưởng của mình rõ ràng, mọi người sẽ ủng hộ thôi. Thử bước ra khỏi vùng an toàn xem sao, thú vị lắm đấy.`,
+        shouldAvoid: `Đừng để mấy cuộc cãi vã nhỏ làm bạn mất hứng, tháng này dễ nóng tính chút. Hạn chế dựa vào người khác quá nhiều, tự mình làm sẽ thoải mái hơn. Đừng chần chừ, cơ hội không đợi đâu nhé.`,
       },
       year: {
         number: periods.year.number,
-        description: `Số ${periods.year.number} mang đến năng lượng đặc trưng cho ${periods.year.text} của "${name}". Đây là giai đoạn tập trung vào sức mạnh và thành tựu, thúc đẩy hành động với tham vọng lớn. Sự tổ chức và thực tế giúp xây dựng nền tảng vững chắc. Một năm phù hợp để đạt được những mục tiêu dài hạn. Năng lượng này khuyến khích sự kiên trì và quyết tâm.`,
-        shouldDo: `Tập trung vào các dự án dài hạn đòi hỏi sự tổ chức sẽ mang lại kết quả tốt trong năm này. Quản lý tài chính và thời gian hiệu quả là cách tận dụng năng lượng này. Đặt mục tiêu lớn và theo đuổi chúng với sự quyết liệt. Tìm cách cải thiện bản thân trong các lĩnh vực quan trọng.`,
-        shouldAvoid: `Tránh bỏ qua các chi tiết quan trọng trong năm này, vì năng lượng này đòi hỏi sự chính xác. Hạn chế hành động bốc đồng hoặc tiêu xài không kiểm soát, vì điều đó có thể gây mất cân bằng. Đừng để áp lực làm mất kiên nhẫn với những tiến trình chậm.`
+        description: `"${name}" trong ${periods.year.text} sẽ thấy năng lượng số ${periods.year.number} dẫn dắt. Đây là giai đoạn để tập trung vào những thành tựu lớn, kiểu như đặt dấu ấn cá nhân vậy. Sự tổ chức và thực tế sẽ giúp bạn xây dựng nền tảng vững vàng. Năm này hợp để nhắm tới mấy mục tiêu dài hạn. Kiên trì một chút, bạn sẽ thấy kết quả đáng giá đấy.`,
+        shouldDo: `Tập trung vào mấy dự án lớn, cần sự tổ chức là hợp nhất trong năm nay. Quản lý tiền bạc, thời gian khéo léo sẽ giúp bạn đi xa. Đặt mục tiêu to rồi làm tới, đừng ngại. Làm gì để bản thân tốt hơn cũng đáng đầu tư đấy.`,
+        shouldAvoid: `Đừng bỏ qua mấy chi tiết nhỏ, năm này cần sự chính xác. Hạn chế làm gì bốc đồng hay tiêu xài không kiểm soát, dễ rối lắm. Đừng để áp lực làm bạn mất kiên nhẫn với mấy thứ chậm rãi nhé.`,
       }
     }
   };
