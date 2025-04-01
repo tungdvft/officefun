@@ -1,11 +1,11 @@
-// server/api/numerology/period.js
 import { defineEventHandler, createError } from 'h3';
 import { callGeminiApi } from '../utils/commonApi';
 
 function getCurrentDateInfo() {
-  const today = new Date('2025-03-30'); // Ngày hiện tại theo hệ thống
+  // Lấy ngày hiện tại theo múi giờ Việt Nam (Asia/Ho_Chi_Minh)
+  const today = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }));
   const day = today.getDate();
-  const month = today.getMonth() + 1;
+  const month = today.getMonth() + 1; // Tháng bắt đầu từ 0 nên +1
   const year = today.getFullYear();
 
   // Tính ngày bắt đầu tuần (thứ Hai)
@@ -34,7 +34,7 @@ function calculateNumber(birthDate, period) {
     sum = birthDay + birthMonth + day + month + year;
   } else if (period === 'week') {
     const [startDay] = currentWeek.split(' - ')[0].split('/').map(Number);
-    sum = birthDay + birthMonth + startDay + 3 + 2025;
+    sum = birthDay + birthMonth + startDay + 3 + 2025; // Giữ logic cũ nhưng có thể cần điều chỉnh
   } else if (period === 'month') {
     const [month, year] = currentMonth.split('/').map(Number);
     sum = birthDay + birthMonth + month + year;

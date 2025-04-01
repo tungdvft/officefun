@@ -145,7 +145,8 @@ const shouldAvoidTitle = computed(() => {
 
 // Hàm lấy ngày hiện tại theo múi giờ Việt Nam
 const getVietnamDate = () => {
-  return new Date().toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' });
+  const now = new Date();
+  return new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }));
 };
 
 // Hàm tính số tuần theo múi giờ Việt Nam
@@ -153,25 +154,32 @@ const getWeekNumber = (date) => {
   const d = new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }));
   d.setHours(0, 0, 0, 0);
   d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-  const yearStart = new Date(d.getFullYear(), 0, 1, 0, 0, 0, 0, { timeZone: 'Asia/Ho_Chi_Minh' });
+  const yearStart = new Date(d.getFullYear(), 0, 1);
+  yearStart.setHours(0, 0, 0, 0, { timeZone: 'Asia/Ho_Chi_Minh' });
   return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
 };
 
 // Load dữ liệu từ localStorage khi vào trang
 onMounted(() => {
   const storedData = localStorage.getItem('numerologyData');
+  const currentDate = getVietnamDate();
+  console.log('Ngày hiện tại (Việt Nam):', currentDate.toLocaleDateString('vi-VN')); // Debug ngày hiện tại
+
   if (storedData) {
     const { userInfo: storedUserInfo, results: storedResults, timestamp } = JSON.parse(storedData);
     const storedDate = new Date(timestamp);
-    const currentDate = new Date(getVietnamDate());
     const storedWeek = getWeekNumber(storedDate);
     const currentWeek = getWeekNumber(currentDate);
+
+    console.log('Stored Date:', storedDate.toLocaleDateString('vi-VN')); // Debug ngày lưu
+    console.log('Stored Week:', storedWeek, 'Current Week:', currentWeek); // Debug tuần
 
     if (storedWeek === currentWeek) {
       userInfo.value = storedUserInfo;
       results.value = storedResults;
     } else {
       localStorage.removeItem('numerologyData'); // Xóa nếu sang tuần mới
+      console.log('Dữ liệu cũ bị xóa do sang tuần mới');
     }
   }
 });
@@ -201,10 +209,11 @@ const submitForm = async () => {
     editing.value = false;
 
     // Lưu vào localStorage với timestamp theo múi giờ Việt Nam
+    const currentDate = getVietnamDate();
     localStorage.setItem('numerologyData', JSON.stringify({
       userInfo: userInfo.value,
       results: results.value,
-      timestamp: new Date(getVietnamDate()).toISOString()
+      timestamp: currentDate.toISOString()
     }));
     toast.success('Phân tích hoàn tất!', { position: 'top-center' });
   } catch (error) {
