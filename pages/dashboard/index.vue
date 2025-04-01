@@ -7,10 +7,10 @@
       <p class="text-lg opacity-90">Khám phá năng lượng của bạn qua con số!</p>
     </div>
 
-    <!-- Thần số học với 4 tab -->
+    <!-- Thần số học với 5 tab -->
     <div class="bg-white p-6 rounded-xl shadow-lg">
       <h2 class="text-2xl font-semibold text-purple-700 mb-4">Thần số học cá nhân</h2>
-      
+
       <!-- Form nhập thông tin -->
       <div v-if="!userInfo.name || editing" class="space-y-4 mb-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -74,22 +74,36 @@
       <div v-if="!userInfo.name" class="text-center text-gray-600">
         <p>Nhập thông tin để khám phá thần số học của bạn!</p>
       </div>
-      <div v-else-if="results[activeTab]" class="mt-4 p-4 bg-purple-50 rounded-lg space-y-4">
+      <div v-else-if="activeTab !== 'cycles' && results.periods && results.periods[activeTab]" class="mt-4 p-4 bg-purple-50 rounded-lg space-y-4">
         <div>
-          <p class="text-purple-800 font-semibold text-lg">{{ resultTitle }}: {{ results[activeTab].number }}</p>
-          <p class="text-gray-700 mt-2">{{ results[activeTab].description }}</p>
+          <p class="text-purple-800 font-semibold text-lg">{{ resultTitle }}: {{ results.periods[activeTab].number }}</p>
+          <p class="text-gray-700 mt-2">{{ results.periods[activeTab].description }}</p>
         </div>
         <div>
           <p class="text-purple-800 font-semibold text-lg">{{ shouldDoTitle }}</p>
-          <p class="text-gray-700 mt-2">{{ results[activeTab].shouldDo }}</p>
+          <p class="text-gray-700 mt-2">{{ results.periods[activeTab].shouldDo }}</p>
         </div>
         <div>
           <p class="text-purple-800 font-semibold text-lg">{{ shouldAvoidTitle }}</p>
-          <p class="text-gray-700 mt-2">{{ results[activeTab].shouldAvoid }}</p>
+          <p class="text-gray-700 mt-2">{{ results.periods[activeTab].shouldAvoid }}</p>
         </div>
         <div v-if="activeTab === 'day'">
           <p class="text-purple-800 font-semibold text-lg">Trưa nay ăn gì</p>
-          <p class="text-gray-700 mt-2">{{ results[activeTab].lunchSuggestion }}</p>
+          <p class="text-gray-700 mt-2">{{ results.periods[activeTab].lunchSuggestion }}</p>
+        </div>
+      </div>
+      <div v-else-if="activeTab === 'cycles' && results.cycles" class="mt-4 p-4 bg-purple-50 rounded-lg space-y-4">
+        <h3 class="text-purple-800 font-semibold text-lg">Chu kỳ vận số 10 năm</h3>
+        <canvas id="numerologyChart" height="100"></canvas>
+        <div class="space-y-2">
+          <div
+            v-for="(cycle, year) in results.cycles"
+            :key="year"
+            class="p-3 bg-white rounded-lg shadow-sm"
+          >
+            <p class="text-purple-700 font-medium">Năm {{ year }} - Số cá nhân: {{ cycle.number }}</p>
+            <p class="text-gray-700">{{ cycle.description }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -97,8 +111,9 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { toast } from 'vue3-toastify';
+import Chart from 'chart.js/auto'; // Import Chart.js
 
 definePageMeta({
   layout: 'dashboard'
@@ -109,7 +124,8 @@ const tabs = [
   { label: 'Ngày hôm nay', value: 'day' },
   { label: 'Tuần này', value: 'week' },
   { label: 'Tháng này', value: 'month' },
-  { label: 'Năm này', value: 'year' }
+  { label: 'Năm này', value: 'year' },
+  { label: 'Chu kỳ vận số', value: 'cycles' }
 ];
 const activeTab = ref('day');
 
@@ -122,6 +138,7 @@ const userInfo = ref({ name: '', birthDate: '' });
 const results = ref({});
 const loading = ref(false);
 const editing = ref(false);
+let chartInstance = null; // Biến lưu instance của biểu đồ
 
 // Tiêu đề động dựa trên tab
 const resultTitle = computed(() => {
@@ -159,6 +176,72 @@ const getWeekNumber = (date) => {
   return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
 };
 
+// Vẽ biểu đồ chu kỳ vận số
+const renderChart = () => {
+  if (!results.value.cycles) return;
+
+  const ctx = document.getElementById('numerologyChart')?.getContext('2d');
+  if (!ctx) return;
+
+  // Hủy biểu đồ cũ nếu đã tồn tại
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
+
+  const years = Object.keys(results.value.cycles);
+  const numbers = years.map(year => results.value.cycles[year].number);
+
+  chartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: years,
+      datasets: [{
+        label: 'Số cá nhân',
+        data: numbers,
+        borderColor: '#8b5cf6', // Màu tím
+        backgroundColor: 'rgba(139, 92, 246, 0.2)',
+        fill: true,
+        tension: 0.4, // Đường cong mềm mại
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 22, // Giới hạn tối đa là 22 (master number)
+          title: {
+            display: true,
+            text: 'Số cá nhân'
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Năm'
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        tooltip: {
+          callbacks: {
+            label: (context) => {
+              const year = context.label;
+              const number = context.raw;
+              const description = results.value.cycles[year].description;
+              return `${year}: Số ${number} - ${description}`;
+            }
+          }
+        }
+      }
+    }
+  });
+};
+
 // Load dữ liệu từ localStorage khi vào trang
 onMounted(() => {
   const storedData = localStorage.getItem('numerologyData');
@@ -177,6 +260,9 @@ onMounted(() => {
     if (storedWeek === currentWeek) {
       userInfo.value = storedUserInfo;
       results.value = storedResults;
+      if (activeTab.value === 'cycles') {
+        renderChart(); // Vẽ biểu đồ nếu đang ở tab Chu kỳ vận số
+      }
     } else {
       localStorage.removeItem('numerologyData'); // Xóa nếu sang tuần mới
       console.log('Dữ liệu cũ bị xóa do sang tuần mới');
@@ -184,10 +270,12 @@ onMounted(() => {
   }
 });
 
-// Chuyển tab
-const switchTab = (tabValue) => {
-  activeTab.value = tabValue;
-};
+// Theo dõi thay đổi tab để vẽ biểu đồ
+watch(() => activeTab.value, (newTab) => {
+  if (newTab === 'cycles' && results.value.cycles) {
+    setTimeout(() => renderChart(), 100); // Delay để đảm bảo DOM đã sẵn sàng
+  }
+});
 
 // Gửi form và lấy kết quả
 const submitForm = async () => {
@@ -216,11 +304,21 @@ const submitForm = async () => {
       timestamp: currentDate.toISOString()
     }));
     toast.success('Phân tích hoàn tất!', { position: 'top-center' });
+
+    // Vẽ biểu đồ nếu đang ở tab Chu kỳ vận số
+    if (activeTab.value === 'cycles') {
+      setTimeout(() => renderChart(), 100);
+    }
   } catch (error) {
     console.error('Error:', error);
     toast.error('Không thể lấy phân tích!', { position: 'top-center' });
   } finally {
     loading.value = false;
   }
+};
+
+// Chuyển tab
+const switchTab = (tabValue) => {
+  activeTab.value = tabValue;
 };
 </script>
