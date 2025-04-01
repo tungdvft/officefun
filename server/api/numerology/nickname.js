@@ -66,11 +66,11 @@ export default defineEventHandler(async (event) => {
   const lastName = name.split(' ')[0]; // Lấy họ (từ đầu tiên)
 
   try {
-    const prompt = `Dựa trên thần số học với số chủ đạo ${dominantNumber}, số linh hồn ${soulNumber}, số nhân cách ${personalityNumber}, số định mệnh ${destinyNumber}, sinh ngày ${birthdate}, tên ${name}, giới tính "${gender}". Trả về JSON hợp lệ với phần sau: ` +
+    const prompt = `Dựa trên thần số học với số chủ đạo ${dominantNumber}, số linh hồn ${soulNumber}, số nhân cách ${personalityNumber}, số định mệnh ${destinyNumber}, sinh ngày ${birthdate}, giới tính "${gender}". Trả về JSON hợp lệ với phần sau: ` +
       `"answer": Một đoạn văn ngắn (6-8 câu) gợi ý danh xưng quốc tế cho người trưởng thành. Đề xuất 3 danh xưng cụ thể, mỗi tên in đậm bằng **tên**, kèm lý do ngắn gọn (1-2 câu mỗi tên), cách nhau bằng "\\n\\n". ` +
-      `Tên phải theo phong cách quốc tế, ngắn gọn, dễ gọi, định dạng "Tên biệt danh + Họ" với họ là "${lastName}" từ "${name}". ` +
+      `Tên phải theo phong cách quốc tế, ngắn gọn, dễ gọi, định dạng "Tên tiếng Anh + Họ" với họ là "${lastName}", không bao gồm tên đầy đủ tiếng Việt trong toàn bộ nội dung. ` +
       `Nếu giới tính là "male", dùng tên nam tính; nếu là "female", dùng tên nữ tính. ` +
-      `Với mỗi tên, thêm thông tin về một người nổi tiếng có cùng tên (ví dụ: "David Beckham - cầu thủ bóng đá nổi tiếng" cho David), đặt trong dấu ngoặc sau lý do. ` +
+      `Đảm bảo 3 tên khác nhau. Với mỗi tên, thêm thông tin về một người nổi tiếng có cùng tên (ví dụ: "David Beckham - cầu thủ bóng đá nổi tiếng" cho David), đặt trong dấu ngoặc sau lý do. ` +
       `Kết thúc bằng 1-2 câu khuyên dùng "bạn" về cách sử dụng danh xưng. Không dùng Markdown trong JSON, chỉ trả về chuỗi JSON thuần túy!`;
 
     const response = await fetch(
@@ -114,7 +114,7 @@ function getDynamicNickname(dominantNumber, soulNumber, personalityNumber, desti
     { name: 'Noah', reason: 'Phù hợp với sự tinh tế và bình yên', famous: 'Noah Centineo - diễn viên trẻ nổi tiếng' },
     { name: 'Mason', reason: 'Tượng trưng cho sự vững chắc', famous: 'Mason Mount - cầu thủ bóng đá Anh' },
   ];
-  
+
   const femaleNames = [
     { name: 'Ava', reason: 'Thể hiện sự thanh lịch và quyến rũ', famous: 'Ava Gardner - nữ diễn viên huyền thoại' },
     { name: 'Luna', reason: 'Gợi sự bí ẩn và sáng tạo', famous: 'Luna Lovegood - nhân vật trong Harry Potter' },
@@ -123,11 +123,39 @@ function getDynamicNickname(dominantNumber, soulNumber, personalityNumber, desti
   ];
 
   const nameList = gender === 'male' ? maleNames : femaleNames;
-  
-  // Chọn tên dựa trên các số
-  const name1 = nameList[dominantNumber % nameList.length];
-  const name2 = nameList[soulNumber % nameList.length];
-  const name3 = nameList[personalityNumber % nameList.length];
+  const usedIndexes = new Set(); // Để đảm bảo không trùng tên
+  const selectedNames = [];
+
+  // Hàm chọn tên không trùng
+  const pickUniqueName = (number) => {
+    let index = number % nameList.length;
+    let attempts = 0;
+    while (usedIndexes.has(index) && attempts < nameList.length) {
+      index = (index + 1) % nameList.length; // Chuyển sang tên tiếp theo nếu trùng
+      attempts++;
+    }
+    usedIndexes.add(index);
+    return nameList[index];
+  };
+
+  // Chọn 3 tên không trùng
+  selectedNames.push(pickUniqueName(dominantNumber));
+  selectedNames.push(pickUniqueName(soulNumber));
+  selectedNames.push(pickUniqueName(personalityNumber));
+
+  // Nếu không đủ 3 tên khác nhau, chọn ngẫu nhiên từ còn lại
+  while (selectedNames.length < 3) {
+    const remainingNames = nameList.filter((_, idx) => !usedIndexes.has(idx));
+    if (remainingNames.length > 0) {
+      const randomName = remainingNames[Math.floor(Math.random() * remainingNames.length)];
+      selectedNames.push(randomName);
+      usedIndexes.add(randomName);
+    } else {
+      break; // Thoát nếu không còn tên nào
+    }
+  }
+
+  const [name1, name2, name3] = selectedNames;
 
   let answer = `Dựa trên thần số học với các con số chủ đạo ${dominantNumber}, linh hồn ${soulNumber}, nhân cách ${personalityNumber}, và định mệnh ${destinyNumber}, đây là 3 gợi ý danh xưng quốc tế cho bạn:\n\n` +
     `**${name1.name} ${lastName}**: ${name1.reason}, rất hợp với năng lượng từ số chủ đạo ${dominantNumber}. (${name1.famous})\n\n` +
