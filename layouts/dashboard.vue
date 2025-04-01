@@ -66,6 +66,17 @@
           <span v-if="isSidebarOpen || windowWidth >= 768">Bản đồ thành công</span>
         </NuxtLink>
         <NuxtLink
+          to="/dashboard/nick-name"
+          :class="{ 'justify-center': !isSidebarOpen && windowWidth < 768, 'justify-start': isSidebarOpen || windowWidth >= 768 }"
+          class="flex items-center p-3 rounded-lg hover:bg-purple-700"
+          exact-active-class="bg-purple-900"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2zm10 0h-1m-1 0h-1m4 0h1m-1 4h-4m4 4h-4m4 4h-4" />
+          </svg>
+          <span v-if="isSidebarOpen || windowWidth >= 768">Đặt biệt danh</span>
+        </NuxtLink>
+        <NuxtLink
           to="/dashboard/baby-name"
           :class="{ 'justify-center': !isSidebarOpen && windowWidth < 768, 'justify-start': isSidebarOpen || windowWidth >= 768 }"
           class="flex items-center p-3 rounded-lg hover:bg-purple-700"
