@@ -111,9 +111,9 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { toast } from 'vue3-toastify';
-import Chart from 'chart.js/auto'; // Import Chart.js
+import Chart from 'chart.js/auto';
 
 definePageMeta({
   layout: 'dashboard'
@@ -138,7 +138,8 @@ const userInfo = ref({ name: '', birthDate: '' });
 const results = ref({});
 const loading = ref(false);
 const editing = ref(false);
-let chartInstance = null; // Biến lưu instance của biểu đồ
+let chartInstance = null;
+let intervalId = null; // Để lưu ID của setInterval
 
 // Tiêu đề động dựa trên tab
 const resultTitle = computed(() => {
@@ -183,7 +184,6 @@ const renderChart = () => {
   const ctx = document.getElementById('numerologyChart')?.getContext('2d');
   if (!ctx) return;
 
-  // Hủy biểu đồ cũ nếu đã tồn tại
   if (chartInstance) {
     chartInstance.destroy();
   }
@@ -198,10 +198,10 @@ const renderChart = () => {
       datasets: [{
         label: 'Số cá nhân',
         data: numbers,
-        borderColor: '#8b5cf6', // Màu tím
+        borderColor: '#8b5cf6',
         backgroundColor: 'rgba(139, 92, 246, 0.2)',
         fill: true,
-        tension: 0.4, // Đường cong mềm mại
+        tension: 0.4,
       }]
     },
     options: {
@@ -209,24 +209,15 @@ const renderChart = () => {
       scales: {
         y: {
           beginAtZero: true,
-          max: 22, // Giới hạn tối đa là 22 (master number)
-          title: {
-            display: true,
-            text: 'Số cá nhân'
-          }
+          max: 22,
+          title: { display: true, text: 'Số cá nhân' }
         },
         x: {
-          title: {
-            display: true,
-            text: 'Năm'
-          }
+          title: { display: true, text: 'Năm' }
         }
       },
       plugins: {
-        legend: {
-          display: true,
-          position: 'top'
-        },
+        legend: { display: true, position: 'top' },
         tooltip: {
           callbacks: {
             label: (context) => {
@@ -242,45 +233,10 @@ const renderChart = () => {
   });
 };
 
-// Load dữ liệu từ localStorage khi vào trang
-onMounted(() => {
-  const storedData = localStorage.getItem('numerologyData');
-  const currentDate = getVietnamDate();
-  console.log('Ngày hiện tại (Việt Nam):', currentDate.toLocaleDateString('vi-VN')); // Debug ngày hiện tại
-
-  if (storedData) {
-    const { userInfo: storedUserInfo, results: storedResults, timestamp } = JSON.parse(storedData);
-    const storedDate = new Date(timestamp);
-    const storedWeek = getWeekNumber(storedDate);
-    const currentWeek = getWeekNumber(currentDate);
-
-    console.log('Stored Date:', storedDate.toLocaleDateString('vi-VN')); // Debug ngày lưu
-    console.log('Stored Week:', storedWeek, 'Current Week:', currentWeek); // Debug tuần
-
-    if (storedWeek === currentWeek) {
-      userInfo.value = storedUserInfo;
-      results.value = storedResults;
-      if (activeTab.value === 'cycles') {
-        renderChart(); // Vẽ biểu đồ nếu đang ở tab Chu kỳ vận số
-      }
-    } else {
-      localStorage.removeItem('numerologyData'); // Xóa nếu sang tuần mới
-      console.log('Dữ liệu cũ bị xóa do sang tuần mới');
-    }
-  }
-});
-
-// Theo dõi thay đổi tab để vẽ biểu đồ
-watch(() => activeTab.value, (newTab) => {
-  if (newTab === 'cycles' && results.value.cycles) {
-    setTimeout(() => renderChart(), 100); // Delay để đảm bảo DOM đã sẵn sàng
-  }
-});
-
 // Gửi form và lấy kết quả
-const submitForm = async () => {
+const submitForm = async (force = false) => {
   if (!form.value.name || !form.value.birthDate) {
-    toast.error('Vui lòng nhập đầy đủ tên và ngày sinh!', { position: 'top-center' });
+    if (!force) toast.error('Vui lòng nhập đầy đủ tên và ngày sinh!', { position: 'top-center' });
     return;
   }
   loading.value = true;
@@ -296,26 +252,85 @@ const submitForm = async () => {
     results.value = response.numerology;
     editing.value = false;
 
-    // Lưu vào localStorage với timestamp theo múi giờ Việt Nam
     const currentDate = getVietnamDate();
     localStorage.setItem('numerologyData', JSON.stringify({
       userInfo: userInfo.value,
       results: results.value,
       timestamp: currentDate.toISOString()
     }));
-    toast.success('Phân tích hoàn tất!', { position: 'top-center' });
+    if (!force) toast.success('Phân tích hoàn tất!', { position: 'top-center' });
 
-    // Vẽ biểu đồ nếu đang ở tab Chu kỳ vận số
     if (activeTab.value === 'cycles') {
       setTimeout(() => renderChart(), 100);
     }
   } catch (error) {
     console.error('Error:', error);
-    toast.error('Không thể lấy phân tích!', { position: 'top-center' });
+    if (!force) toast.error('Không thể lấy phân tích!', { position: 'top-center' });
   } finally {
     loading.value = false;
   }
 };
+
+// Kiểm tra và gọi lại API nếu qua 0h
+const checkAndRefreshData = () => {
+  const storedData = localStorage.getItem('numerologyData');
+  const currentDate = getVietnamDate();
+  const currentDay = currentDate.getDate();
+
+  if (storedData) {
+    const { userInfo: storedUserInfo, results: storedResults, timestamp } = JSON.parse(storedData);
+    const storedDate = new Date(timestamp);
+    const storedDay = storedDate.getDate();
+
+    // Nếu khác ngày, gọi lại API
+    if (currentDay !== storedDay) {
+      form.value.name = storedUserInfo.name;
+      form.value.birthDate = storedUserInfo.birthDate;
+      submitForm(true); // Force gọi API mà không hiện toast
+      console.log('Đã qua 0h, gọi lại API');
+    } else {
+      userInfo.value = storedUserInfo;
+      results.value = storedResults;
+      if (activeTab.value === 'cycles') {
+        renderChart();
+      }
+    }
+  }
+};
+
+// Lên lịch kiểm tra mỗi phút
+const scheduleDailyCheck = () => {
+  intervalId = setInterval(() => {
+    const currentDate = getVietnamDate();
+    const hours = currentDate.getHours();
+    const minutes = currentDate.getMinutes();
+
+    // Kiểm tra nếu là 0h (00:00 - 00:01)
+    if (hours === 0 && minutes <= 1) {
+      checkAndRefreshData();
+    }
+  }, 60000); // Kiểm tra mỗi 60 giây
+};
+
+// Load dữ liệu và lên lịch khi vào trang
+onMounted(() => {
+  checkAndRefreshData(); // Kiểm tra ngay khi vào trang
+  scheduleDailyCheck(); // Lên lịch kiểm tra mỗi phút
+});
+
+// Hủy interval khi component bị hủy
+onUnmounted(() => {
+  if (intervalId) {
+    clearInterval(intervalId);
+  }
+});
+
+// Theo dõi thay đổi tab để vẽ biểu đồ
+watch(() => activeTab.value, (newTab) => {
+  if (newTab === 'cycles' && results.value.cycles) {
+    setTimeout(() => renderChart(), 100);
+  }
+});
 
 // Chuyển tab
 const switchTab = (tabValue) => {
