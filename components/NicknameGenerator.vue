@@ -17,6 +17,10 @@
           <label><input type="radio" v-model="formData.gender" value="female" /> Nữ</label>
         </div>
       </div>
+      <div>
+        <label for="startLetter" class="block text-gray-700 font-medium mb-2">Chữ cái đầu tiên của tên (tùy chọn)</label>
+        <input v-model="formData.startLetter" type="text" id="startLetter" maxlength="1" placeholder="Ví dụ: H" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" @input="formData.startLetter = formData.startLetter.toUpperCase()" />
+      </div>
       <button @click="generateNickname" :disabled="loading" class="bg-purple-500 text-white px-6 py-3 rounded-lg hover:bg-purple-600 disabled:bg-gray-400">
         {{ loading ? 'Đang xử lý...' : 'Tạo danh xưng' }}
       </button>
@@ -41,13 +45,13 @@ import { ref, computed } from 'vue';
 import { toast } from 'vue3-toastify';
 import { marked } from 'marked';
 
-// Chỉ import jspdf ở client-side
 const jspdf = process.client ? await import('jspdf').then(module => module.jsPDF) : null;
 
 const formData = ref({
   name: '',
   birthdate: '',
-  gender: 'male' // Mặc định là nam
+  gender: 'male',
+  startLetter: ''
 });
 const result = ref('');
 const loading = ref(false);
@@ -67,23 +71,30 @@ const generateNickname = async () => {
     toast.error('Vui lòng chọn giới tính!');
     return;
   }
+  if (formData.value.startLetter && !/^[A-Z]$/.test(formData.value.startLetter)) {
+    toast.error('Chữ cái đầu tiên phải là một chữ cái từ A-Z!');
+    return;
+  }
 
   loading.value = true;
   try {
+    console.log('Sending request with data:', formData.value); // Debug dữ liệu gửi đi
     const response = await $fetch('/api/numerology/nickname', {
       method: 'POST',
       body: {
         name: formData.value.name,
         birthdate: formData.value.birthdate,
-        gender: formData.value.gender
+        gender: formData.value.gender,
+        startLetter: formData.value.startLetter || undefined
       },
     });
-
+    console.log('Response from API:', response); // Debug dữ liệu nhận được
     result.value = response.answer;
     toast.success('Đặt danh xưng hoàn tất!');
   } catch (error) {
-    console.error('Error:', error);
-    toast.error('Không thể tạo danh xưng!');
+    console.error('Error details:', error); // Debug lỗi chi tiết
+    const errorMessage = error.data?.message || error.message || 'Không thể tạo danh xưng!';
+    toast.error(errorMessage);
   } finally {
     loading.value = false;
   }
