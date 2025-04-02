@@ -50,6 +50,12 @@
       <p>Nhập thông tin để khám phá bản đồ thành công của bạn!</p>
     </div>
     <div v-else-if="successMap" class="mt-4 p-4 bg-purple-50 rounded-lg space-y-6">
+      <!-- Biểu đồ đường -->
+      <div>
+        <h3 class="text-purple-700 font-semibold text-lg mb-2">Hành trình thành công qua thời gian</h3>
+        <canvas id="successMapChart" height="100"></canvas>
+      </div>
+
       <div>
         <p class="text-purple-700 font-semibold text-lg">Mục tiêu lớn (Số Đường đời: {{ successMap.lifePathNumber }})</p>
         <p class="text-gray-700 mt-2">{{ successMap.goal }}</p>
@@ -70,19 +76,19 @@
         <p class="text-purple-700 font-semibold text-lg">Các cột mốc thành công</p>
         <div class="space-y-4 mt-2">
           <div>
-            <p class="text-purple-600 font-semibold">Cột mốc ngắn hạn (Dựa trên Số Linh hồn)</p>
+            <p class="text-purple-600 font-semibold">Cột mốc ngắn hạn</p>
             <p class="text-gray-700">{{ successMap.milestones.shortTerm }}</p>
           </div>
           <div>
-            <p class="text-purple-600 font-semibold">Cột mốc trung hạn (Dựa trên Số Tên)</p>
+            <p class="text-purple-600 font-semibold">Cột mốc trung hạn</p>
             <p class="text-gray-700">{{ successMap.milestones.mediumTerm }}</p>
           </div>
           <div>
-            <p class="text-purple-600 font-semibold">Cột mốc dài hạn (Dựa trên Số Đường đời)</p>
+            <p class="text-purple-600 font-semibold">Cột mốc dài hạn</p>
             <p class="text-gray-700">{{ successMap.milestones.longTerm }}</p>
           </div>
           <div>
-            <p class="text-purple-600 font-semibold">Cột mốc năm {{ currentYear }} (Dựa trên Số Cá nhân)</p>
+            <p class="text-purple-600 font-semibold">Cột mốc năm {{ currentYear }}</p>
             <p class="text-gray-700">{{ successMap.milestones.currentYear }}</p>
           </div>
         </div>
@@ -92,8 +98,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { toast } from 'vue3-toastify';
+import Chart from 'chart.js/auto';
 
 const currentYear = '2025';
 
@@ -106,6 +113,97 @@ const userInfo = ref({ name: '', birthDate: '' });
 const successMap = ref(null);
 const loading = ref(false);
 const editing = ref(false);
+let chartInstance = null;
+
+// Vẽ biểu đồ hành trình thành công
+const renderChart = () => {
+  if (!successMap.value || !successMap.value.milestones) {
+    console.error('Không có dữ liệu milestones để vẽ biểu đồ');
+    return;
+  }
+
+  const ctx = document.getElementById('successMapChart')?.getContext('2d');
+  if (!ctx) {
+    console.error('Không tìm thấy canvas để vẽ biểu đồ');
+    return;
+  }
+
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
+
+  const labels = ['Ngắn hạn', 'Trung hạn', 'Dài hạn', `Năm ${currentYear}`];
+  // Dùng các số thần số học làm giá trị minh họa (vì API không trả value)
+  const data = [
+    successMap.value.soulUrgeNumber,      // Ngắn hạn
+    successMap.value.expressionNumber,    // Trung hạn
+    successMap.value.lifePathNumber,      // Dài hạn
+    successMap.value.personalYearNumber   // Năm hiện tại
+  ];
+  const descriptions = [
+    successMap.value.milestones.shortTerm,
+    successMap.value.milestones.mediumTerm,
+    successMap.value.milestones.longTerm,
+    successMap.value.milestones.currentYear
+  ];
+
+  chartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Hành trình thành công',
+        data: data,
+        borderColor: '#6d28d9',
+        backgroundColor: 'rgba(139, 92, 246, 0.3)',
+        fill: true,
+        tension: 0.5,
+        pointBackgroundColor: '#8b5cf6',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointRadius: 6,
+        pointHoverRadius: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 22, // Giới hạn tối đa là 22 (master number)
+          title: {
+            display: true,
+            text: 'Giá trị'
+          },
+          ticks: {
+            stepSize: 1
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Mốc thời gian'
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        tooltip: {
+          callbacks: {
+            label: (context) => {
+              const index = context.dataIndex;
+              const value = context.raw;
+              return `${labels[index]}: ${value} - ${descriptions[index]}`;
+            }
+          }
+        }
+      }
+    }
+  });
+};
 
 // Lấy dữ liệu bản đồ thành công
 const fetchSuccessMap = async () => {
@@ -122,15 +220,45 @@ const fetchSuccessMap = async () => {
         birthDate: form.value.birthDate
       }
     });
+    console.log('Response từ API:', response); // Debug dữ liệu API trả về
     userInfo.value = { name: form.value.name, birthDate: form.value.birthDate };
     successMap.value = response.successMap;
     editing.value = false;
     toast.success('Bản đồ thành công đã sẵn sàng!', { position: 'top-center' });
+
+    // Lưu vào localStorage
+    localStorage.setItem('successMapData', JSON.stringify({
+      userInfo: userInfo.value,
+      successMap: successMap.value
+    }));
+
+    // Vẽ biểu đồ
+    setTimeout(() => renderChart(), 100);
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Lỗi khi lấy dữ liệu:', error);
     toast.error('Không thể lấy bản đồ thành công!', { position: 'top-center' });
   } finally {
     loading.value = false;
   }
 };
+
+// Load dữ liệu từ localStorage khi mounted
+onMounted(() => {
+  const storedData = localStorage.getItem('successMapData');
+  if (storedData) {
+    const { userInfo: storedUserInfo, successMap: storedSuccessMap } = JSON.parse(storedData);
+    console.log('Dữ liệu từ localStorage:', storedSuccessMap); // Debug dữ liệu localStorage
+    userInfo.value = storedUserInfo;
+    successMap.value = storedSuccessMap;
+    renderChart();
+  }
+});
+
+// Theo dõi thay đổi successMap để vẽ lại biểu đồ
+watch(() => successMap.value, (newValue) => {
+  if (newValue) {
+    console.log('successMap thay đổi:', newValue); // Debug khi successMap cập nhật
+    setTimeout(() => renderChart(), 100);
+  }
+});
 </script>
