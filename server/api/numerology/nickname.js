@@ -1,59 +1,55 @@
 import { defineEventHandler, createError } from 'h3';
 
-function getLifePathNumber(birthdate) {
-  // Chuẩn hóa birthdate: thay - thành /
-  const normalizedBirthdate = birthdate.replace(/-/g, '/');
-  const [day, month, year] = normalizedBirthdate.split('/').map(Number);
-  if (!day || !month || !year) return 9;
-  const sum = (day + month + year).toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
-  let result = sum;
-  while (result > 9 && result !== 11 && result !== 22) {
-    result = result.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
+// Hằng số
+const MASTER_NUMBERS = [11, 22];
+const LETTER_VALUES = {
+  a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9,
+  j: 1, k: 2, l: 3, m: 4, n: 5, o: 6, p: 7, q: 8, r: 9,
+  s: 1, t: 2, u: 3, v: 4, w: 5, x: 6, y: 7, z: 8
+};
+const VOWEL_VALUES = { a: 1, e: 5, i: 9, o: 6, u: 3 };
+
+// Helper function để tính số từ chuỗi
+function calculateNumber(value, isMasterNumber = true) {
+  let sum = value;
+  while (sum > 9 && (!isMasterNumber || !MASTER_NUMBERS.includes(sum))) {
+    sum = sum.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
   }
-  return result || 9;
+  return sum || (isMasterNumber ? (value === 0 ? 9 : value) : 1);
+}
+
+// Các hàm tính toán số
+function getLifePathNumber(birthdate) {
+  const [day, month, year] = birthdate.split(/[\/-]/).map(Number);
+  if (isNaN(day) || isNaN(month) || isNaN(year)) return 9;
+  
+  const dayNum = calculateNumber(day);
+  const monthNum = calculateNumber(month);
+  const yearNum = calculateNumber(year);
+  
+  return calculateNumber(dayNum + monthNum + yearNum);
 }
 
 function getSoulNumber(name) {
-  const vowels = /[aeiou]/gi;
-  const vowelValues = { a: 1, e: 5, i: 9, o: 6, u: 3 };
-  const sum = name.toLowerCase().split('').reduce((acc, char) => {
-    return vowels.test(char) ? acc + (vowelValues[char] || 0) : acc;
-  }, 0);
-  let result = sum;
-  while (result > 9 && result !== 11 && result !== 22) {
-    result = result.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
-  }
-  return result || 1;
+  const vowels = name.toLowerCase().match(/[aeiou]/g) || [];
+  const sum = vowels.reduce((acc, vowel) => acc + (VOWEL_VALUES[vowel] || 0), 0);
+  return calculateNumber(sum);
 }
 
 function getPersonalityNumber(name) {
-  const consonants = /[^aeiou\s]/gi;
-  const letterValues = { b: 2, c: 3, d: 4, f: 6, g: 7, h: 8, j: 1, k: 2, l: 3, m: 4, n: 5, p: 7, q: 8, r: 9, s: 1, t: 2, v: 4, w: 5, x: 6, y: 7, z: 8 };
-  const sum = name.toLowerCase().split('').reduce((acc, char) => {
-    return consonants.test(char) ? acc + (letterValues[char] || 0) : acc;
-  }, 0);
-  let result = sum;
-  while (result > 9 && result !== 11 && result !== 22) {
-    result = result.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
-  }
-  return result || 1;
+  const consonants = name.toLowerCase().replace(/[aeiou\s]/g, '');
+  const sum = [...consonants].reduce((acc, char) => acc + (LETTER_VALUES[char] || 0), 0);
+  return calculateNumber(sum);
 }
 
 function getDestinyNumber(name) {
-  const letterValues = { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9, j: 1, k: 2, l: 3, m: 4, n: 5, o: 6, p: 7, q: 8, r: 9, s: 1, t: 2, u: 3, v: 4, w: 5, x: 6, y: 7, z: 8 };
-  const sum = name.toLowerCase().split('').reduce((acc, char) => acc + (letterValues[char] || 0), 0);
-  let result = sum;
-  while (result > 9 && result !== 11 && result !== 22) {
-    result = result.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
-  }
-  return result || 1;
+  const letters = name.toLowerCase().replace(/\s/g, '');
+  const sum = [...letters].reduce((acc, char) => acc + (LETTER_VALUES[char] || 0), 0);
+  return calculateNumber(sum);
 }
 
-const apiKey = process.env.GEMINI_API_KEY || '';
-
-export default defineEventHandler(async (event) => {
-  const { name, birthdate, gender, startLetter } = await readBody(event);
-
+// Validate input
+function validateInput(name, birthdate, gender) {
   if (!name || !birthdate || !gender) {
     throw createError({
       statusCode: 400,
@@ -61,7 +57,6 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  // Kiểm tra định dạng birthdate (chấp nhận cả / và -)
   if (!/^\d{2}[\/-]\d{2}[\/-]\d{4}$/.test(birthdate)) {
     throw createError({
       statusCode: 400,
@@ -69,113 +64,301 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const dominantNumber = getLifePathNumber(birthdate);
-  const soulNumber = getSoulNumber(name);
-  const personalityNumber = getPersonalityNumber(name);
-  const destinyNumber = getDestinyNumber(name);
-  const lastName = name.split(' ')[0]; // Lấy họ (từ đầu tiên)
+  if (!['male', 'female'].includes(gender.toLowerCase())) {
+    throw createError({
+      statusCode: 400,
+      message: 'Giới tính phải là "male" hoặc "female".',
+    });
+  }
+}
 
+// Tạo prompt cho Gemini
+function createGeminiPrompt(params) {
+  const { 
+    dominantNumber, 
+    soulNumber, 
+    personalityNumber, 
+    destinyNumber, 
+    birthdate, 
+    gender, 
+    startLetter, 
+    lastName 
+  } = params;
+
+  return {
+    instructions: `Bạn là chuyên gia thần số học và đặt tên quốc tế. Hãy đề xuất 3 tên tiếng Anh phù hợp dựa trên thông tin sau:`,
+    requirements: [
+      `Số chủ đạo: ${dominantNumber}`,
+      `Số linh hồn: ${soulNumber}`,
+      `Số nhân cách: ${personalityNumber}`,
+      `Số định mệnh: ${destinyNumber}`,
+      `Ngày sinh: ${birthdate}`,
+      `Giới tính: ${gender}`,
+      startLetter ? `Tên bắt đầu bằng chữ: ${startLetter.toUpperCase()}` : null,
+      `Họ: ${lastName}`
+    ].filter(Boolean).join('\n- '),
+    outputFormat: `Trả về JSON với cấu trúc:
+{
+  "analysis": "Phân tích ngắn về tính cách dựa trên các con số",
+  "suggestions": [
+    {
+      "name": "Tên đầy đủ",
+      "meaning": "Ý nghĩa tên phù hợp với các con số",
+      "personalityTraits": ["Tính cách", "Nổi bật"],
+      "famousExample": "Người nổi tiếng cùng tên"
+    }
+  ],
+  "usageTips": "Lời khuyên sử dụng tên"
+}`,
+    additionalRules: [
+      'Mỗi tên phải khác biệt và có lý do riêng',
+      'Tên phải phù hợp giới tính',
+      startLetter ? `Tất cả tên phải bắt đầu bằng "${startLetter.toUpperCase()}"` : null,
+      'Định dạng: "Tên + Họ" (ví dụ: David Nguyen)',
+      'Không bao gồm tên tiếng Việt',
+      'Giữ nội dung chuyên nghiệp và tích cực'
+    ].filter(Boolean).join('\n- ')
+  };
+}
+
+// Fallback name generator
+function generateFallbackNames(params) {
+  const { gender, lastName, startLetter, numbers } = params;
+  const { dominantNumber, soulNumber, personalityNumber, destinyNumber } = numbers;
+  
+  // Danh sách tên được phân loại theo ý nghĩa số học
+  const nameDatabase = {
+    male: {
+      1: ['Alexander', 'Max', 'Victor'],
+      2: ['Noah', 'Ethan', 'Lucas'],
+      3: ['Leo', 'Julian', 'Felix'],
+      4: ['Henry', 'George', 'Charles'],
+      5: ['Jack', 'Oliver', 'Daniel'],
+      6: ['William', 'Benjamin', 'Samuel'],
+      7: ['Gabriel', 'Theodore', 'Nathaniel'],
+      8: ['James', 'David', 'Michael'],
+      9: ['Arthur', 'Sebastian', 'Christopher'],
+      11: ['Theo', 'Elijah', 'Matthew'],
+      22: ['Anthony', 'Dominic', 'Nicholas']
+    },
+    female: {
+      1: ['Amelia', 'Ava', 'Scarlett'],
+      2: ['Sophia', 'Isabella', 'Mia'],
+      3: ['Charlotte', 'Lily', 'Chloe'],
+      4: ['Emily', 'Grace', 'Hannah'],
+      5: ['Emma', 'Olivia', 'Sophie'],
+      6: ['Ella', 'Zoe', 'Ruby'],
+      7: ['Harper', 'Aurora', 'Violet'],
+      8: ['Abigail', 'Elizabeth', 'Victoria'],
+      9: ['Eleanor', 'Penelope', 'Stella'],
+      11: ['Madison', 'Savannah', 'Brianna'],
+      22: ['Gabriella', 'Alexandra', 'Isabelle']
+    }
+  };
+
+  // Lọc tên phù hợp
+  let suggestions = [];
+  const numberPriorities = [dominantNumber, soulNumber, personalityNumber, destinyNumber];
+  
+  for (const num of numberPriorities) {
+    const availableNames = nameDatabase[gender][num] || [];
+    for (const name of availableNames) {
+      if ((!startLetter || name.startsWith(startLetter.toUpperCase())) &&
+          !suggestions.some(s => s.name === name) && suggestions.length < 3) {
+        suggestions.push({
+          name: `${name} ${lastName}`,
+          meaning: getMeaningForNumber(num),
+          personalityTraits: getTraitsForNumber(num),
+          famousExample: getFamousExample(name, gender)
+        });
+      }
+    }
+    if (suggestions.length >= 3) break;
+  }
+
+  // Nếu không đủ, lấy thêm từ các số khác
+  if (suggestions.length < 3) {
+    const allNames = Object.values(nameDatabase[gender]).flat();
+    for (const name of allNames) {
+      if ((!startLetter || name.startsWith(startLetter.toUpperCase())) && 
+          !suggestions.some(s => s.name.includes(name))) {
+        const randomNum = Math.floor(Math.random() * 9) + 1;
+        suggestions.push({
+          name: `${name} ${lastName}`,
+          meaning: getMeaningForNumber(randomNum),
+          personalityTraits: getTraitsForNumber(randomNum),
+          famousExample: getFamousExample(name, gender)
+        });
+        if (suggestions.length >= 3) break;
+      }
+    }
+  }
+
+  return {
+    analysis: `Phân tích số học: Bạn có số chủ đạo ${dominantNumber} (lãnh đạo), linh hồn ${soulNumber} (cảm xúc), nhân cách ${personalityNumber} (ấn tượng), định mệnh ${destinyNumber} (sứ mệnh).`,
+    suggestions,
+    usageTips: "Dùng các tên này trong môi trường quốc tế, hồ sơ xin việc hoặc tài khoản mạng xã hội. Chọn tên bạn cảm thấy phù hợp nhất với cá tính của mình."
+  };
+}
+
+// Helper functions
+function getMeaningForNumber(num) {
+  const meanings = {
+    1: 'Sáng tạo, độc lập',
+    2: 'Nhạy cảm, hòa hợp',
+    3: 'Truyền cảm, xã giao',
+    4: 'Thực tế, tổ chức',
+    5: 'Tự do, phiêu lưu',
+    6: 'Trách nhiệm, quan tâm',
+    7: 'Phân tích, trí tuệ',
+    8: 'Tham vọng, thành công',
+    9: 'Nhân đạo, rộng lượng',
+    11: 'Tâm linh, truyền cảm hứng',
+    22: 'Xây dựng, kiến trúc sư'
+  };
+  return meanings[num] || 'Năng động, cân bằng';
+}
+
+function getTraitsForNumber(num) {
+  const traits = {
+    1: ['Lãnh đạo', 'Độc lập'],
+    2: ['Nhạy cảm', 'Hợp tác'],
+    3: ['Sáng tạo', 'Giao tiếp'],
+    4: ['Thực tế', 'Kỷ luật'],
+    5: ['Năng động', 'Thích nghi'],
+    6: ['Chăm sóc', 'Trách nhiệm'],
+    7: ['Phân tích', 'Khôn ngoan'],
+    8: ['Tham vọng', 'Thực tế'],
+    9: ['Nhân ái', 'Rộng lượng'],
+    11: ['Trực giác', 'Tâm linh'],
+    22: ['Tầm nhìn', 'Xây dựng']
+  };
+  return traits[num] || ['Năng động', 'Cân bằng'];
+}
+
+function getFamousExample(name, gender) {
+  const examples = {
+    male: {
+      David: 'David Beckham - cầu thủ bóng đá',
+      Michael: 'Michael Jordan - vận động viên bóng rổ',
+      John: 'John Lennon - nhạc sĩ The Beatles'
+    },
+    female: {
+      Emma: 'Emma Watson - diễn viên Harry Potter',
+      Sophia: 'Sophia Loren - diễn viên huyền thoại',
+      Olivia: 'Olivia Newton-John - ca sĩ, diễn viên'
+    }
+  };
+  return examples[gender]?.[name] || `${name} - tên phổ biến trong giới nghệ sĩ quốc tế`;
+}
+
+// Main API handler
+export default defineEventHandler(async (event) => {
+  const { name, birthdate, gender, startLetter } = await readBody(event);
+  
+  // Validate input
+  validateInput(name, birthdate, gender);
+  
+  // Process names
+  const lastName = name.trim().split(/\s+/)[0];
+  const normalizedGender = gender.toLowerCase();
+  const normalizedStartLetter = startLetter?.toUpperCase();
+  
+  // Calculate numbers
+  const numbers = {
+    dominantNumber: getLifePathNumber(birthdate),
+    soulNumber: getSoulNumber(name),
+    personalityNumber: getPersonalityNumber(name),
+    destinyNumber: getDestinyNumber(name)
+  };
+  
   try {
-    const prompt = `Dựa trên thần số học với số chủ đạo ${dominantNumber}, số linh hồn ${soulNumber}, số nhân cách ${personalityNumber}, số định mệnh ${destinyNumber}, sinh ngày ${birthdate}, giới tính "${gender}"${startLetter ? `, yêu cầu tên bắt đầu bằng chữ "${startLetter}"` : ''}. Trả về JSON hợp lệ với phần sau: ` +
-      `"answer": Một đoạn văn ngắn (6-8 câu) gợi ý danh xưng quốc tế cho người trưởng thành. Đề xuất 3 danh xưng cụ thể, mỗi tên in đậm bằng **tên**, kèm lý do ngắn gọn (1-2 câu mỗi tên), cách nhau bằng "\\n\\n". ` +
-      `Tên phải theo phong cách quốc tế, ngắn gọn, dễ gọi, định dạng "Tên tiếng Anh + Họ" với họ là "${lastName}", không bao gồm tên đầy đủ tiếng Việt trong toàn bộ nội dung. ` +
-      `Nếu giới tính là "male", dùng tên nam tính; nếu là "female", dùng tên nữ tính. ` +
-      `${startLetter ? `Tất cả tên phải bắt đầu bằng chữ "${startLetter}". ` : ''}Đảm bảo 3 tên khác nhau. Với mỗi tên, thêm thông tin về một người nổi tiếng có cùng tên (ví dụ: "David Beckham - cầu thủ bóng đá nổi tiếng" cho David), đặt trong dấu ngoặc sau lý do. ` +
-      `Kết thúc bằng 1-2 câu khuyên dùng "bạn" về cách sử dụng danh xưng. Không dùng Markdown trong JSON, chỉ trả về chuỗi JSON thuần túy!`;
-
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) throw new Error('API key not configured');
+    
+    const prompt = createGeminiPrompt({
+      ...numbers,
+      birthdate,
+      gender: normalizedGender,
+      startLetter: normalizedStartLetter,
+      lastName
+    });
+    
+    const fullPrompt = `${prompt.instructions}\n\nYêu cầu:\n- ${prompt.requirements}\n\nĐịnh dạng đầu ra:\n${prompt.outputFormat}\n\nQuy tắc bổ sung:\n- ${prompt.additionalRules}`;
+    
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-        }),
+          contents: [{
+            parts: [{ text: fullPrompt }]
+          }],
+          generationConfig: {
+            temperature: 0.7,
+            topP: 0.9,
+            maxOutputTokens: 1000
+          }
+        })
       }
     );
-
+    
     if (!response.ok) {
-      console.error('Gemini API lỗi:', response.status, await response.text());
-      throw createError({
-        statusCode: 500,
-        message: `Gemini API lỗi: ${response.status}`,
-      });
+      const errorText = await response.text();
+      console.error('Gemini API error:', response.status, errorText);
+      throw new Error(`Gemini API error: ${response.status}`);
     }
-
+    
     const data = await response.json();
-    let rawText = data.candidates[0].content.parts[0].text;
-
-    rawText = rawText.replace(/```json|```/g, '').trim();
+    const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    
     try {
-      const parsedData = JSON.parse(rawText);
-      if (!parsedData || !parsedData.answer) throw new Error('Gemini API không trả về đầy đủ dữ liệu');
-      return parsedData;
+      const cleanedText = rawText.replace(/```json|```/g, '').trim();
+      const result = JSON.parse(cleanedText);
+      
+      // Validate Gemini response
+      if (!result?.suggestions || !Array.isArray(result.suggestions)) {
+        throw new Error('Invalid response format from Gemini');
+      }
+      
+      return {
+        success: true,
+        data: {
+          ...numbers,
+          lastName,
+          ...result
+        }
+      };
     } catch (parseError) {
-      console.error('Lỗi parse JSON từ Gemini:', parseError, 'Raw text:', rawText);
-      return getDynamicNickname(dominantNumber, soulNumber, personalityNumber, destinyNumber, lastName, gender, startLetter);
+      console.error('Error parsing Gemini response:', parseError);
+      // Fallback to our own generator
+      const fallbackResult = generateFallbackNames({
+        gender: normalizedGender,
+        lastName,
+        startLetter: normalizedStartLetter,
+        numbers
+      });
+      
+      return {
+        success: true,
+        data: {
+          ...numbers,
+          lastName,
+          ...fallbackResult,
+          isFallback: true
+        }
+      };
     }
   } catch (error) {
-    console.error('Lỗi gọi Gemini:', error);
+    console.error('API error:', error);
     throw createError({
       statusCode: error.statusCode || 500,
-      message: error.message || 'Lỗi không xác định từ server.',
+      message: error.message || 'Internal server error',
+      data: {
+        input: { name, birthdate, gender, startLetter },
+        numbers: numbers
+      }
     });
   }
 });
-
-function getDynamicNickname(dominantNumber, soulNumber, personalityNumber, destinyNumber, lastName, gender, startLetter) {
-  const maleNames = [
-    { name: 'Ethan', reason: 'Thể hiện sự mạnh mẽ và thông minh', famous: 'Ethan Hawke - diễn viên nổi tiếng' },
-    { name: 'Liam', reason: 'Gợi sự năng động và sáng tạo', famous: 'Liam Hemsworth - diễn viên người Úc' },
-    { name: 'Noah', reason: 'Phù hợp với sự tinh tế và bình yên', famous: 'Noah Centineo - diễn viên trẻ nổi tiếng' },
-    { name: 'Mason', reason: 'Tượng trưng cho sự vững chắc', famous: 'Mason Mount - cầu thủ bóng đá Anh' },
-    { name: 'James', reason: 'Thể hiện sự đáng tin cậy và mạnh mẽ', famous: 'James Bond - nhân vật điệp viên nổi tiếng' },
-    { name: 'Lucas', reason: 'Gợi sự ấm áp và sáng tạo', famous: 'Lucasfilm - công ty của George Lucas' },
-    { name: 'Henry', reason: 'Biểu tượng của sự quyền lực và trí tuệ', famous: 'Henry Cavill - diễn viên nổi tiếng' },
-    { name: 'Hugo', reason: 'Thể hiện sự độc lập và sáng tạo', famous: 'Hugo Chávez - chính trị gia nổi tiếng' },
-    { name: 'Hector', reason: 'Gợi sự mạnh mẽ và kiên định', famous: 'Hector Bellerin - cầu thủ bóng đá' }
-  ];
-
-  const femaleNames = [
-    { name: 'Ava', reason: 'Thể hiện sự thanh lịch và quyến rũ', famous: 'Ava Gardner - nữ diễn viên huyền thoại' },
-    { name: 'Luna', reason: 'Gợi sự bí ẩn và sáng tạo', famous: 'Luna Lovegood - nhân vật trong Harry Potter' },
-    { name: 'Zoe', reason: 'Phù hợp với sự năng động và tươi mới', famous: 'Zoe Saldana - diễn viên nổi tiếng' },
-    { name: 'Mia', reason: 'Ngắn gọn, dễ nhớ và hiện đại', famous: 'Mia Hamm - cầu thủ bóng đá nữ nổi tiếng' },
-    { name: 'Emma', reason: 'Thể hiện sự thông minh và duyên dáng', famous: 'Emma Watson - diễn viên và nhà hoạt động' },
-    { name: 'Sophie', reason: 'Gợi sự tinh tế và ấm áp', famous: 'Sophie Turner - diễn viên nổi tiếng' },
-    { name: 'Hannah', reason: 'Thể hiện sự dịu dàng và thông minh', famous: 'Hannah Arendt - triết gia nổi tiếng' },
-    { name: 'Hazel', reason: 'Gợi sự ấm áp và sáng tạo', famous: 'Hazel Grace - nhân vật trong The Fault in Our Stars' },
-    { name: 'Heidi', reason: 'Phù hợp với sự vui tươi và mạnh mẽ', famous: 'Heidi Klum - siêu mẫu nổi tiếng' }
-  ];
-
-  let nameList = gender === 'male' ? maleNames : femaleNames;
-
-  // Lọc tên theo startLetter nếu có
-  if (startLetter) {
-    nameList = nameList.filter(n => n.name.toUpperCase().startsWith(startLetter));
-    if (nameList.length < 3) {
-      throw createError({
-        statusCode: 400,
-        message: `Không đủ tên bắt đầu bằng "${startLetter}" trong danh sách. Vui lòng thử chữ cái khác!`,
-      });
-    }
-  }
-
-  // Hàm chọn ngẫu nhiên 3 tên khác nhau
-  const shuffleAndPick = (array, count) => {
-    const shuffled = [...array].sort(() => 0.5 - Math.random()); // Xáo trộn mảng
-    return shuffled.slice(0, count); // Lấy count phần tử đầu tiên
-  };
-
-  const selectedNames = shuffleAndPick(nameList, 3); // Chọn 3 tên ngẫu nhiên khác nhau
-
-  const [name1, name2, name3] = selectedNames;
-
-  let answer = `Dựa trên thần số học với các con số chủ đạo ${dominantNumber}, linh hồn ${soulNumber}, nhân cách ${personalityNumber}, và định mệnh ${destinyNumber}, đây là 3 gợi ý danh xưng quốc tế cho bạn${startLetter ? ` (bắt đầu bằng "${startLetter}")` : ''}:\n\n` +
-    `**${name1.name} ${lastName}**: ${name1.reason}, rất hợp với năng lượng từ số chủ đạo ${dominantNumber}. (${name1.famous})\n\n` +
-    `**${name2.name} ${lastName}**: ${name2.reason}, phản ánh sự sâu sắc từ số linh hồn ${soulNumber}. (${name2.famous})\n\n` +
-    `**${name3.name} ${lastName}**: ${name3.reason}, nổi bật với số nhân cách ${personalityNumber}. (${name3.famous})\n\n` +
-    `Bạn có thể dùng các danh xưng này trong công việc hoặc mạng xã hội để tạo dấu ấn riêng. Hãy chọn cái phù hợp nhất với phong cách của bạn!`;
-
-  return { answer };
-}
