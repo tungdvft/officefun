@@ -110,230 +110,191 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
-import { toast } from 'vue3-toastify';
-import Chart from 'chart.js/auto';
-
+<script>
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { toast } from 'vue3-toastify'
+import Chart from 'chart.js/auto'
 definePageMeta({
   layout: 'dashboard'
 });
+export default {
+  setup() {
+    // Tabs configuration
+    const tabs = [
+      { label: 'Ngày hôm nay', value: 'day' },
+      { label: 'Tuần này', value: 'week' },
+      { label: 'Tháng này', value: 'month' },
+      { label: 'Năm này', value: 'year' },
+      { label: 'Chu kỳ vận số', value: 'cycles' }
+    ]
 
-// Tabs
-const tabs = [
-  { label: 'Ngày hôm nay', value: 'day' },
-  { label: 'Tuần này', value: 'week' },
-  { label: 'Tháng này', value: 'month' },
-  { label: 'Năm này', value: 'year' },
-  { label: 'Chu kỳ vận số', value: 'cycles' }
-];
-const activeTab = ref('day');
+    // State
+    const activeTab = ref('day')
+    const form = ref({
+      name: '',
+      birthDate: ''
+    })
+    const userInfo = ref({})
+    const results = ref({})
+    const loading = ref(false)
+    const editing = ref(false)
+    const chartInstance = ref(null)
 
-// Form và trạng thái
-const form = ref({
-  name: '',
-  birthDate: ''
-});
-const userInfo = ref({ name: '', birthDate: '' });
-const results = ref({});
-const loading = ref(false);
-const editing = ref(false);
-let chartInstance = null;
-let intervalId = null; // Để lưu ID của setInterval
+    // Computed properties
+    const isFormValid = computed(() => {
+      return form.value.name.trim() && /^\d{2}\/\d{2}\/\d{4}$/.test(form.value.birthDate.trim())
+    })
 
-// Tiêu đề động dựa trên tab
-const resultTitle = computed(() => {
-  return activeTab.value === 'day' ? 'Số ngày cá nhân'
-    : activeTab.value === 'week' ? 'Số tuần cá nhân'
-    : activeTab.value === 'month' ? 'Số tháng cá nhân'
-    : 'Số năm cá nhân';
-});
-const shouldDoTitle = computed(() => {
-  return activeTab.value === 'day' ? 'Nên làm hôm nay'
-    : activeTab.value === 'week' ? 'Nên làm trong tuần'
-    : activeTab.value === 'month' ? 'Nên làm trong tháng'
-    : 'Nên làm trong năm';
-});
-const shouldAvoidTitle = computed(() => {
-  return activeTab.value === 'day' ? 'Nên tránh hôm nay'
-    : activeTab.value === 'week' ? 'Nên tránh trong tuần'
-    : activeTab.value === 'month' ? 'Nên tránh trong tháng'
-    : 'Nên tránh trong năm';
-});
+    const resultTitle = computed(() => {
+      const titles = {
+        day: 'Số ngày cá nhân',
+        week: 'Số tuần cá nhân',
+        month: 'Số tháng cá nhân',
+        year: 'Số năm cá nhân'
+      }
+      return titles[activeTab.value] || ''
+    })
 
-// Hàm lấy ngày hiện tại theo múi giờ Việt Nam
-const getVietnamDate = () => {
-  const now = new Date();
-  return new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }));
-};
+    // Methods
+    const getVietnamDate = () => {
+      const now = new Date()
+      return new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }))
+    }
 
-// Hàm tính số tuần theo múi giờ Việt Nam
-const getWeekNumber = (date) => {
-  const d = new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }));
-  d.setHours(0, 0, 0, 0);
-  d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-  const yearStart = new Date(d.getFullYear(), 0, 1);
-  yearStart.setHours(0, 0, 0, 0, { timeZone: 'Asia/Ho_Chi_Minh' });
-  return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-};
+    const renderChart = () => {
+      if (!results.value.cycles) return
 
-// Vẽ biểu đồ chu kỳ vận số
-const renderChart = () => {
-  if (!results.value.cycles) return;
+      // Destroy existing chart if any
+      if (chartInstance.value) {
+        chartInstance.value.destroy()
+      }
 
-  const ctx = document.getElementById('numerologyChart')?.getContext('2d');
-  if (!ctx) return;
+      const ctx = document.getElementById('numerologyChart')
+      if (!ctx) return
 
-  if (chartInstance) {
-    chartInstance.destroy();
-  }
+      const years = Object.keys(results.value.cycles)
+      const numbers = years.map(year => results.value.cycles[year].number)
 
-  const years = Object.keys(results.value.cycles);
-  const numbers = years.map(year => results.value.cycles[year].number);
-
-  chartInstance = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: years,
-      datasets: [{
-        label: 'Số cá nhân',
-        data: numbers,
-        borderColor: '#8b5cf6',
-        backgroundColor: 'rgba(139, 92, 246, 0.2)',
-        fill: true,
-        tension: 0.4,
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true,
-          max: 22,
-          title: { display: true, text: 'Số cá nhân' }
+      chartInstance.value = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: years,
+          datasets: [{
+            label: 'Số cá nhân',
+            data: numbers,
+            borderColor: '#8b5cf6',
+            backgroundColor: 'rgba(139, 92, 246, 0.2)',
+            fill: true,
+            tension: 0.4
+          }]
         },
-        x: {
-          title: { display: true, text: 'Năm' }
-        }
-      },
-      plugins: {
-        legend: { display: true, position: 'top' },
-        tooltip: {
-          callbacks: {
-            label: (context) => {
-              const year = context.label;
-              const number = context.raw;
-              const description = results.value.cycles[year].description;
-              return `${year}: Số ${number} - ${description}`;
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 22,
+              title: { display: true, text: 'Số cá nhân' }
+            },
+            x: {
+              title: { display: true, text: 'Năm' }
             }
           }
         }
+      })
+    }
+
+    const submitForm = async () => {
+      if (!isFormValid.value) {
+        toast.error('Vui lòng nhập đầy đủ thông tin hợp lệ!')
+        return
+      }
+
+      loading.value = true
+      try {
+        const response = await fetch('/api/numerology/period', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: form.value.name,
+            birthDate: form.value.birthDate
+          })
+        })
+
+        if (!response.ok) throw new Error('Network response was not ok')
+
+        const data = await response.json()
+        userInfo.value = { name: form.value.name, birthDate: form.value.birthDate }
+        results.value = data.numerology
+        editing.value = false
+
+        toast.success('Phân tích thành công!')
+      } catch (error) {
+        console.error('Error:', error)
+        toast.error('Đã xảy ra lỗi khi lấy dữ liệu')
+      } finally {
+        loading.value = false
       }
     }
-  });
-};
 
-// Gửi form và lấy kết quả
-const submitForm = async (force = false) => {
-  if (!form.value.name || !form.value.birthDate) {
-    if (!force) toast.error('Vui lòng nhập đầy đủ tên và ngày sinh!', { position: 'top-center' });
-    return;
-  }
-  loading.value = true;
-  try {
-    const response = await $fetch('/api/numerology/period', {
-      method: 'POST',
-      body: {
-        name: form.value.name,
-        birthDate: form.value.birthDate
+    // Lifecycle hooks
+    onMounted(() => {
+      // Load saved data if exists
+      const savedData = localStorage.getItem('numerologyData')
+      if (savedData) {
+        const { userInfo: savedUserInfo, results: savedResults } = JSON.parse(savedData)
+        userInfo.value = savedUserInfo
+        results.value = savedResults
       }
-    });
-    userInfo.value = { name: form.value.name, birthDate: form.value.birthDate };
-    results.value = response.numerology;
-    editing.value = false;
+    })
 
-    const currentDate = getVietnamDate();
-    localStorage.setItem('numerologyData', JSON.stringify({
-      userInfo: userInfo.value,
-      results: results.value,
-      timestamp: currentDate.toISOString()
-    }));
-    if (!force) toast.success('Phân tích hoàn tất!', { position: 'top-center' });
-
-    if (activeTab.value === 'cycles') {
-      setTimeout(() => renderChart(), 100);
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    if (!force) toast.error('Không thể lấy phân tích!', { position: 'top-center' });
-  } finally {
-    loading.value = false;
-  }
-};
-
-// Kiểm tra và gọi lại API nếu qua 0h
-const checkAndRefreshData = () => {
-  const storedData = localStorage.getItem('numerologyData');
-  const currentDate = getVietnamDate();
-  const currentDay = currentDate.getDate();
-
-  if (storedData) {
-    const { userInfo: storedUserInfo, results: storedResults, timestamp } = JSON.parse(storedData);
-    const storedDate = new Date(timestamp);
-    const storedDay = storedDate.getDate();
-
-    // Nếu khác ngày, gọi lại API
-    if (currentDay !== storedDay) {
-      form.value.name = storedUserInfo.name;
-      form.value.birthDate = storedUserInfo.birthDate;
-      submitForm(true); // Force gọi API mà không hiện toast
-      console.log('Đã qua 0h, gọi lại API');
-    } else {
-      userInfo.value = storedUserInfo;
-      results.value = storedResults;
-      if (activeTab.value === 'cycles') {
-        renderChart();
+    onUnmounted(() => {
+      // Clean up chart instance
+      if (chartInstance.value) {
+        chartInstance.value.destroy()
       }
+    })
+
+    // Watchers
+    watch(
+      () => activeTab.value,
+      (newTab) => {
+        if (newTab === 'cycles' && results.value.cycles) {
+          nextTick(() => {
+            renderChart()
+          })
+        }
+      }
+    )
+
+    watch(
+      () => results.value,
+      (newResults) => {
+        if (newResults.cycles && activeTab.value === 'cycles') {
+          nextTick(() => {
+            renderChart()
+          })
+        }
+      },
+      { deep: true }
+    )
+
+    return {
+      tabs,
+      activeTab,
+      form,
+      userInfo,
+      results,
+      loading,
+      editing,
+      isFormValid,
+      resultTitle,
+      submitForm,
+      // ... other methods and computed properties
     }
   }
-};
-
-// Lên lịch kiểm tra mỗi phút
-const scheduleDailyCheck = () => {
-  intervalId = setInterval(() => {
-    const currentDate = getVietnamDate();
-    const hours = currentDate.getHours();
-    const minutes = currentDate.getMinutes();
-
-    // Kiểm tra nếu là 0h (00:00 - 00:01)
-    if (hours === 0 && minutes <= 1) {
-      checkAndRefreshData();
-    }
-  }, 60000); // Kiểm tra mỗi 60 giây
-};
-
-// Load dữ liệu và lên lịch khi vào trang
-onMounted(() => {
-  checkAndRefreshData(); // Kiểm tra ngay khi vào trang
-  scheduleDailyCheck(); // Lên lịch kiểm tra mỗi phút
-});
-
-// Hủy interval khi component bị hủy
-onUnmounted(() => {
-  if (intervalId) {
-    clearInterval(intervalId);
-  }
-});
-
-// Theo dõi thay đổi tab để vẽ biểu đồ
-watch(() => activeTab.value, (newTab) => {
-  if (newTab === 'cycles' && results.value.cycles) {
-    setTimeout(() => renderChart(), 100);
-  }
-});
-
-// Chuyển tab
-const switchTab = (tabValue) => {
-  activeTab.value = tabValue;
-};
+}
 </script>
