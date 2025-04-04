@@ -1,95 +1,161 @@
-<!-- components/SuccessMap.vue -->
 <template>
-  <div class="bg-white p-6 rounded-xl shadow-lg">
-    <h2 class="text-2xl font-semibold text-purple-700 mb-4">Bản đồ thành công</h2>
+  <div class="success-map-container bg-white rounded-xl shadow-lg overflow-hidden">
+    <!-- Header Section -->
+    <div class="header-section bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white">
+      <h1 class="text-2xl font-bold">Bản Đồ Thành Công</h1>
+      <p class="text-purple-100">Khám phá hành trình phát triển của bạn</p>
+    </div>
 
-    <!-- Form nhập thông tin -->
-    <div v-if="!userInfo.name || editing" class="space-y-4 mb-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label for="name" class="block text-gray-700 font-medium mb-2">Họ và tên</label>
+    <!-- Form Section -->
+    <div v-if="!userInfo.name || editing" class="form-section p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="form-group">
+          <label for="name" class="form-label">Họ và tên</label>
           <input
             v-model="form.name"
             type="text"
             id="name"
             placeholder="Ví dụ: Nguyễn Văn A"
-            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+            class="form-input"
           />
         </div>
-        <div>
-          <label for="birthDate" class="block text-gray-700 font-medium mb-2">Ngày sinh (dd/mm/yyyy)</label>
+        <div class="form-group">
+          <label for="birthDate" class="form-label">Ngày sinh (dd/mm/yyyy)</label>
           <input
             v-model="form.birthDate"
             type="text"
             id="birthDate"
             placeholder="Ví dụ: 15/08/1995"
-            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+            class="form-input"
           />
         </div>
       </div>
       <button
         @click="fetchSuccessMap"
         :disabled="loading"
-        class="bg-purple-500 text-white px-6 py-2 rounded-lg hover:bg-purple-600 disabled:bg-gray-400"
+        class="submit-button"
       >
-        {{ loading ? 'Đang xử lý...' : 'Xem bản đồ' }}
-      </button>
-    </div>
-    <div v-else class="flex justify-between items-center mb-4">
-      <p class="text-gray-700">Bản đồ thành công của: <span class="font-semibold">{{ userInfo.name }}</span></p>
-      <button
-        @click="editing = true"
-        class="text-purple-500 hover:underline"
-      >
-        Cập nhật thông tin
+        <span v-if="loading" class="spinner"></span>
+        {{ loading ? 'Đang phân tích...' : 'Xem bản đồ' }}
       </button>
     </div>
 
-    <!-- Kết quả -->
-    <div v-if="!userInfo.name" class="text-center text-gray-600">
-      <p>Nhập thông tin để khám phá bản đồ thành công của bạn!</p>
+    <!-- User Info Section -->
+    <div v-else class="user-info-section p-6 border-b">
+      <div class="flex justify-between items-center">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800">Bản đồ thành công của</h3>
+          <p class="text-purple-600 font-medium">{{ userInfo.name }}</p>
+        </div>
+        <button
+          @click="editing = true"
+          class="edit-button"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+          </svg>
+        </button>
+      </div>
     </div>
-    <div v-else-if="successMap" class="mt-4 p-4 bg-purple-50 rounded-lg space-y-6">
-      <!-- Biểu đồ đường -->
-      <div>
-        <h3 class="text-purple-700 font-semibold text-lg mb-2">Hành trình thành công qua thời gian</h3>
-        <canvas id="successMapChart" height="100"></canvas>
+
+    <!-- Empty State -->
+    <div v-if="!userInfo.name && !loading" class="empty-state p-8 text-center">
+      <div class="mx-auto w-16 h-16 text-purple-200 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+        </svg>
+      </div>
+      <h3 class="text-lg font-medium text-gray-600 mb-2">Khám phá bản đồ thành công của bạn</h3>
+      <p class="text-gray-500">Nhập thông tin để xem phân tích chi tiết</p>
+    </div>
+
+    <!-- Loading State -->
+    <div v-if="loading" class="loading-state p-8 text-center">
+      <div class="spinner-large mx-auto mb-4"></div>
+      <p class="text-gray-600">Đang phân tích thông tin của bạn...</p>
+    </div>
+
+    <!-- Results Section -->
+    <div v-if="successMap && !loading" class="results-section p-6">
+      <!-- Chart Section -->
+      <div class="chart-section bg-white rounded-lg shadow-sm p-4 mb-6">
+        <h3 class="section-title">Hành trình thành công</h3>
+        <div class="chart-container h-64">
+          <canvas id="successMapChart"></canvas>
+        </div>
       </div>
 
-      <div>
-        <p class="text-purple-700 font-semibold text-lg">Mục tiêu lớn (Số Đường đời: {{ successMap.lifePathNumber }})</p>
-        <p class="text-gray-700 mt-2">{{ successMap.goal }}</p>
-      </div>
-      <div>
-        <p class="text-purple-700 font-semibold text-lg">Điểm mạnh (Số Tên: {{ successMap.expressionNumber }})</p>
-        <p class="text-gray-700 mt-2">{{ successMap.strengths }}</p>
-      </div>
-      <div>
-        <p class="text-purple-700 font-semibold text-lg">Điểm cần lưu ý (Số Linh hồn: {{ successMap.soulUrgeNumber }})</p>
-        <p class="text-gray-700 mt-2">{{ successMap.notes }}</p>
-      </div>
-      <div>
-        <p class="text-purple-700 font-semibold text-lg">Chiến lược năm {{ currentYear }} (Số Cá nhân: {{ successMap.personalYearNumber }})</p>
-        <p class="text-gray-700 mt-2">{{ successMap.strategy }}</p>
-      </div>
-      <div>
-        <p class="text-purple-700 font-semibold text-lg">Các cột mốc thành công</p>
-        <div class="space-y-4 mt-2">
-          <div>
-            <p class="text-purple-600 font-semibold">Cột mốc ngắn hạn</p>
-            <p class="text-gray-700">{{ successMap.milestones.shortTerm }}</p>
+      <!-- Core Numbers -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-white rounded-lg shadow-sm p-4">
+          <h3 class="section-title">Mục tiêu lớn</h3>
+          <div class="flex items-start">
+            <div class="number-badge bg-purple-100 text-purple-800">
+              {{ successMap.lifePathNumber }}
+            </div>
+            <p class="text-gray-700 ml-3">{{ successMap.goal }}</p>
           </div>
-          <div>
-            <p class="text-purple-600 font-semibold">Cột mốc trung hạn</p>
-            <p class="text-gray-700">{{ successMap.milestones.mediumTerm }}</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm p-4">
+          <h3 class="section-title">Điểm mạnh</h3>
+          <div class="flex items-start">
+            <div class="number-badge bg-blue-100 text-blue-800">
+              {{ successMap.expressionNumber }}
+            </div>
+            <p class="text-gray-700 ml-3">{{ successMap.strengths }}</p>
           </div>
-          <div>
-            <p class="text-purple-600 font-semibold">Cột mốc dài hạn</p>
-            <p class="text-gray-700">{{ successMap.milestones.longTerm }}</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm p-4">
+          <h3 class="section-title">Điểm cần lưu ý</h3>
+          <div class="flex items-start">
+            <div class="number-badge bg-amber-100 text-amber-800">
+              {{ successMap.soulUrgeNumber }}
+            </div>
+            <p class="text-gray-700 ml-3">{{ successMap.notes }}</p>
           </div>
-          <div>
-            <p class="text-purple-600 font-semibold">Cột mốc năm {{ currentYear }}</p>
-            <p class="text-gray-700">{{ successMap.milestones.currentYear }}</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm p-4">
+          <h3 class="section-title">Chiến lược năm {{ currentYear }}</h3>
+          <div class="flex items-start">
+            <div class="number-badge bg-green-100 text-green-800">
+              {{ successMap.personalYearNumber }}
+            </div>
+            <p class="text-gray-700 ml-3">{{ successMap.strategy }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Milestones -->
+      <div class="milestones-section bg-white rounded-lg shadow-sm p-4">
+        <h3 class="section-title">Các cột mốc thành công</h3>
+        <div class="space-y-4">
+          <div class="milestone-item">
+            <div class="milestone-header">
+              <div class="milestone-dot bg-purple-500"></div>
+              <h4 class="milestone-title">Ngắn hạn</h4>
+            </div>
+            <p class="milestone-content">{{ successMap.milestones.shortTerm }}</p>
+          </div>
+          <div class="milestone-item">
+            <div class="milestone-header">
+              <div class="milestone-dot bg-blue-500"></div>
+              <h4 class="milestone-title">Trung hạn</h4>
+            </div>
+            <p class="milestone-content">{{ successMap.milestones.mediumTerm }}</p>
+          </div>
+          <div class="milestone-item">
+            <div class="milestone-header">
+              <div class="milestone-dot bg-amber-500"></div>
+              <h4 class="milestone-title">Dài hạn</h4>
+            </div>
+            <p class="milestone-content">{{ successMap.milestones.longTerm }}</p>
+          </div>
+          <div class="milestone-item">
+            <div class="milestone-header">
+              <div class="milestone-dot bg-green-500"></div>
+              <h4 class="milestone-title">Năm {{ currentYear }}</h4>
+            </div>
+            <p class="milestone-content">{{ successMap.milestones.currentYear }}</p>
           </div>
         </div>
       </div>
@@ -133,7 +199,7 @@ const renderChart = () => {
   }
 
   const labels = ['Ngắn hạn', 'Trung hạn', 'Dài hạn', `Năm ${currentYear}`];
-  // Dùng các số thần số học làm giá trị minh họa (vì API không trả value)
+  // Dùng các số thần số học làm giá trị minh hĩa (vì API không trả value)
   const data = [
     successMap.value.soulUrgeNumber,      // Ngắn hạn
     successMap.value.expressionNumber,    // Trung hạn
@@ -167,6 +233,7 @@ const renderChart = () => {
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       scales: {
         y: {
           beginAtZero: true,
@@ -262,3 +329,83 @@ watch(() => successMap.value, (newValue) => {
   }
 });
 </script>
+
+<style scoped>
+.success-map-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.header-section {
+  background: linear-gradient(135deg, #6d28d9 0%, #4c1d95 100%);
+}
+
+.form-label {
+  @apply block text-gray-700 font-medium mb-2;
+}
+
+.form-input {
+  @apply w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all;
+}
+
+.submit-button {
+  @apply w-full md:w-auto px-6 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 disabled:bg-gray-400 transition-colors flex items-center justify-center gap-2;
+}
+
+.spinner {
+  @apply border-2 border-white border-opacity-30 rounded-full border-t-white w-5 h-5 animate-spin;
+}
+
+.user-info-section {
+  @apply border-b border-gray-200;
+}
+
+.edit-button {
+  @apply p-2 text-gray-500 hover:text-purple-600 transition-colors;
+}
+
+.empty-state {
+  @apply bg-gray-50;
+}
+
+.loading-state {
+  @apply bg-gray-50;
+}
+
+.spinner-large {
+  @apply border-4 border-purple-100 border-t-purple-600 rounded-full w-12 h-12 animate-spin mx-auto;
+}
+
+.section-title {
+  @apply text-lg font-semibold text-gray-800 mb-3 flex items-center;
+}
+
+.number-badge {
+  @apply flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm;
+}
+
+.milestone-item {
+  @apply pl-5 relative;
+}
+
+.milestone-header {
+  @apply flex items-center mb-1;
+}
+
+.milestone-dot {
+  @apply absolute left-0 w-3 h-3 rounded-full top-1;
+}
+
+.milestone-title {
+  @apply font-medium text-gray-700;
+}
+
+.milestone-content {
+  @apply text-gray-600 pl-4;
+}
+
+.chart-container {
+  position: relative;
+  height: 300px;
+}
+</style>
