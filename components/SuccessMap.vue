@@ -1,5 +1,5 @@
 <template>
-  <div class="success-map-container bg-white rounded-xl shadow-lg overflow-hidden">
+  <div class="container bg-white rounded-xl shadow-lg overflow-hidden">
     <!-- Header Section -->
     <div class="header-section bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white">
       <h1 class="text-2xl font-bold">Bản Đồ Thành Công</h1>
@@ -46,6 +46,7 @@
         <div>
           <h3 class="text-lg font-semibold text-gray-800">Bản đồ thành công của</h3>
           <p class="text-purple-600 font-medium">{{ userInfo.name }}</p>
+          <p class="text-sm text-gray-500">Ngày sinh: {{ userInfo.birthDate }}</p>
         </div>
         <button
           @click="editing = true"
@@ -66,7 +67,7 @@
         </svg>
       </div>
       <h3 class="text-lg font-medium text-gray-600 mb-2">Khám phá bản đồ thành công của bạn</h3>
-      <p class="text-gray-500">Nhập thông tin để xem phân tích chi tiết</p>
+      <p class="text-gray-500">Nhập thông tin để xem phân tích chi tiết về mục tiêu, điểm mạnh và chiến lược phát triển</p>
     </div>
 
     <!-- Loading State -->
@@ -76,84 +77,84 @@
     </div>
 
     <!-- Results Section -->
-    <div v-if="successMap && !loading" class="results-section p-6">
+    <div v-if="successMap && !loading" class="results-section p-6 space-y-8">
+      <!-- Core Numbers -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-lg shadow-sm p-6">
+          <h3 class="section-title">Mục tiêu lớn (Số Đường đời)</h3>
+          <div class="flex items-start space-x-4">
+            <div class="number-badge bg-purple-100 text-purple-800">
+              {{ successMap.lifePathNumber }}
+            </div>
+            <p class="text-gray-700">{{ successMap.goal }}</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm p-6">
+          <h3 class="section-title">Điểm mạnh (Số Tên)</h3>
+          <div class="flex items-start space-x-4">
+            <div class="number-badge bg-blue-100 text-blue-800">
+              {{ successMap.expressionNumber }}
+            </div>
+            <p class="text-gray-700">{{ successMap.strengths }}</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm p-6">
+          <h3 class="section-title">Điểm cần lưu ý (Số Linh hồn)</h3>
+          <div class="flex items-start space-x-4">
+            <div class="number-badge bg-amber-100 text-amber-800">
+              {{ successMap.soulUrgeNumber }}
+            </div>
+            <p class="text-gray-700">{{ successMap.notes }}</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm p-6">
+          <h3 class="section-title">Chiến lược năm {{ currentYear }} (Số Cá nhân)</h3>
+          <div class="flex items-start space-x-4">
+            <div class="number-badge bg-green-100 text-green-800">
+              {{ successMap.personalYearNumber }}
+            </div>
+            <p class="text-gray-700">{{ successMap.strategy }}</p>
+          </div>
+        </div>
+      </div>
+
       <!-- Chart Section -->
-      <div class="chart-section bg-white rounded-lg shadow-sm p-4 mb-6">
+      <div class="chart-section bg-white rounded-lg shadow-sm p-6">
         <h3 class="section-title">Hành trình thành công</h3>
-        <div class="chart-container h-64">
+        <div class="chart-container h-80">
           <canvas id="successMapChart"></canvas>
         </div>
       </div>
 
-      <!-- Core Numbers -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div class="bg-white rounded-lg shadow-sm p-4">
-          <h3 class="section-title">Mục tiêu lớn</h3>
-          <div class="flex items-start">
-            <div class="number-badge bg-purple-100 text-purple-800">
-              {{ successMap.lifePathNumber }}
-            </div>
-            <p class="text-gray-700 ml-3">{{ successMap.goal }}</p>
-          </div>
-        </div>
-        <div class="bg-white rounded-lg shadow-sm p-4">
-          <h3 class="section-title">Điểm mạnh</h3>
-          <div class="flex items-start">
-            <div class="number-badge bg-blue-100 text-blue-800">
-              {{ successMap.expressionNumber }}
-            </div>
-            <p class="text-gray-700 ml-3">{{ successMap.strengths }}</p>
-          </div>
-        </div>
-        <div class="bg-white rounded-lg shadow-sm p-4">
-          <h3 class="section-title">Điểm cần lưu ý</h3>
-          <div class="flex items-start">
-            <div class="number-badge bg-amber-100 text-amber-800">
-              {{ successMap.soulUrgeNumber }}
-            </div>
-            <p class="text-gray-700 ml-3">{{ successMap.notes }}</p>
-          </div>
-        </div>
-        <div class="bg-white rounded-lg shadow-sm p-4">
-          <h3 class="section-title">Chiến lược năm {{ currentYear }}</h3>
-          <div class="flex items-start">
-            <div class="number-badge bg-green-100 text-green-800">
-              {{ successMap.personalYearNumber }}
-            </div>
-            <p class="text-gray-700 ml-3">{{ successMap.strategy }}</p>
-          </div>
-        </div>
-      </div>
-
       <!-- Milestones -->
-      <div class="milestones-section bg-white rounded-lg shadow-sm p-4">
+      <div class="milestones-section bg-white rounded-lg shadow-sm p-6">
         <h3 class="section-title">Các cột mốc thành công</h3>
-        <div class="space-y-4">
+        <div class="space-y-6">
           <div class="milestone-item">
             <div class="milestone-header">
               <div class="milestone-dot bg-purple-500"></div>
-              <h4 class="milestone-title">Ngắn hạn</h4>
+              <h4 class="milestone-title">Ngắn hạn (Số Linh hồn)</h4>
             </div>
             <p class="milestone-content">{{ successMap.milestones.shortTerm }}</p>
           </div>
           <div class="milestone-item">
             <div class="milestone-header">
               <div class="milestone-dot bg-blue-500"></div>
-              <h4 class="milestone-title">Trung hạn</h4>
+              <h4 class="milestone-title">Trung hạn (Số Tên)</h4>
             </div>
             <p class="milestone-content">{{ successMap.milestones.mediumTerm }}</p>
           </div>
           <div class="milestone-item">
             <div class="milestone-header">
               <div class="milestone-dot bg-amber-500"></div>
-              <h4 class="milestone-title">Dài hạn</h4>
+              <h4 class="milestone-title">Dài hạn (Số Đường đời)</h4>
             </div>
             <p class="milestone-content">{{ successMap.milestones.longTerm }}</p>
           </div>
           <div class="milestone-item">
             <div class="milestone-header">
               <div class="milestone-dot bg-green-500"></div>
-              <h4 class="milestone-title">Năm {{ currentYear }}</h4>
+              <h4 class="milestone-title">Năm {{ currentYear }} (Số Cá nhân)</h4>
             </div>
             <p class="milestone-content">{{ successMap.milestones.currentYear }}</p>
           </div>
@@ -199,7 +200,6 @@ const renderChart = () => {
   }
 
   const labels = ['Ngắn hạn', 'Trung hạn', 'Dài hạn', `Năm ${currentYear}`];
-  // Dùng các số thần số học làm giá trị minh hĩa (vì API không trả value)
   const data = [
     successMap.value.soulUrgeNumber,      // Ngắn hạn
     successMap.value.expressionNumber,    // Trung hạn
@@ -237,10 +237,10 @@ const renderChart = () => {
       scales: {
         y: {
           beginAtZero: true,
-          max: 22, // Giới hạn tối đa là 22 (master number)
+          max: 33, // Hỗ trợ số bậc thầy (11, 22, 33)
           title: {
             display: true,
-            text: 'Giá trị'
+            text: 'Giá trị thần số'
           },
           ticks: {
             stepSize: 1
@@ -287,19 +287,17 @@ const fetchSuccessMap = async () => {
         birthDate: form.value.birthDate
       }
     });
-    console.log('Response từ API:', response); // Debug dữ liệu API trả về
+    console.log('Response từ API:', response);
     userInfo.value = { name: form.value.name, birthDate: form.value.birthDate };
     successMap.value = response.successMap;
     editing.value = false;
     toast.success('Bản đồ thành công đã sẵn sàng!', { position: 'top-center' });
 
-    // Lưu vào localStorage
     localStorage.setItem('successMapData', JSON.stringify({
       userInfo: userInfo.value,
       successMap: successMap.value
     }));
 
-    // Vẽ biểu đồ
     setTimeout(() => renderChart(), 100);
   } catch (error) {
     console.error('Lỗi khi lấy dữ liệu:', error);
@@ -314,7 +312,7 @@ onMounted(() => {
   const storedData = localStorage.getItem('successMapData');
   if (storedData) {
     const { userInfo: storedUserInfo, successMap: storedSuccessMap } = JSON.parse(storedData);
-    console.log('Dữ liệu từ localStorage:', storedSuccessMap); // Debug dữ liệu localStorage
+    console.log('Dữ liệu từ localStorage:', storedSuccessMap);
     userInfo.value = storedUserInfo;
     successMap.value = storedSuccessMap;
     renderChart();
@@ -324,7 +322,7 @@ onMounted(() => {
 // Theo dõi thay đổi successMap để vẽ lại biểu đồ
 watch(() => successMap.value, (newValue) => {
   if (newValue) {
-    console.log('successMap thay đổi:', newValue); // Debug khi successMap cập nhật
+    console.log('successMap thay đổi:', newValue);
     setTimeout(() => renderChart(), 100);
   }
 });
@@ -381,19 +379,19 @@ watch(() => successMap.value, (newValue) => {
 }
 
 .number-badge {
-  @apply flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm;
+  @apply flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-base;
 }
 
 .milestone-item {
-  @apply pl-5 relative;
+  @apply pl-6 relative;
 }
 
 .milestone-header {
-  @apply flex items-center mb-1;
+  @apply flex items-center mb-2;
 }
 
 .milestone-dot {
-  @apply absolute left-0 w-3 h-3 rounded-full top-1;
+  @apply absolute left-0 w-3 h-3 rounded-full top-2;
 }
 
 .milestone-title {
@@ -401,7 +399,7 @@ watch(() => successMap.value, (newValue) => {
 }
 
 .milestone-content {
-  @apply text-gray-600 pl-4;
+  @apply text-gray-600 pl-4 border-l-2 border-gray-200;
 }
 
 .chart-container {

@@ -1,17 +1,13 @@
-// server/api/numerology/compatibility.js
 import { defineEventHandler, createError } from 'h3';
 import { callGeminiApi } from '../utils/commonApi';
+import NUMEROLOGY_MEANINGS, { NumerologyUtils } from '../utils/numerology-meanings.js';
 
 function getLifePathNumber(birthdate) {
-  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthdate)) return 9;
-  const [day, month, year] = birthdate.split('/').map(Number);
+  if (!/^\d{2}[\/-]\d{2}[\/-]\d{4}$/.test(birthdate)) return 9;
+  const normalizedBirthdate = birthdate.replace(/-/g, '/');
+  const [day, month, year] = normalizedBirthdate.split('/').map(Number);
   if (isNaN(day) || isNaN(month) || isNaN(year) || month > 12 || day > 31) return 9;
-  const sum = (day + month + year).toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
-  let result = sum;
-  while (result > 9 && result !== 11 && result !== 22) {
-    result = result.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
-  }
-  return result || 9;
+  return NumerologyUtils.reduceToSingleDigit(day + month + year) || 9;
 }
 
 function getSoulNumber(name) {
@@ -20,21 +16,13 @@ function getSoulNumber(name) {
   const sum = name.toLowerCase().split('').reduce((acc, char) => {
     return vowels.test(char) ? acc + (vowelValues[char] || 0) : acc;
   }, 0);
-  let result = sum;
-  while (result > 9 && result !== 11 && result !== 22) {
-    result = result.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
-  }
-  return result || 1;
+  return NumerologyUtils.reduceToSingleDigit(sum) || 1;
 }
 
 function getDestinyNumber(name) {
   const letterValues = { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9, j: 1, k: 2, l: 3, m: 4, n: 5, o: 6, p: 7, q: 8, r: 9, s: 1, t: 2, u: 3, v: 4, w: 5, x: 6, y: 7, z: 8 };
   const sum = name.toLowerCase().split('').reduce((acc, char) => acc + (letterValues[char] || 0), 0);
-  let result = sum;
-  while (result > 9 && result !== 11 && result !== 22) {
-    result = result.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
-  }
-  return result || 1;
+  return NumerologyUtils.reduceToSingleDigit(sum) || 1;
 }
 
 export default defineEventHandler(async (event) => {
@@ -54,11 +42,27 @@ export default defineEventHandler(async (event) => {
   const person2Soul = getSoulNumber(person2Name);
   const person2Destiny = getDestinyNumber(person2Name);
 
-  const prompt = `Dựa trên thần số học với thông tin: Người 1 (tên "${person1Name}", sinh ${person1Birthdate}, số chủ đạo ${person1LifePath}, số linh hồn ${person1Soul}, số định mệnh ${person1Destiny}) và Người 2 (tên "${person2Name}", sinh ${person2Birthdate}, số chủ đạo ${person2LifePath}, số linh hồn ${person2Soul}, số định mệnh ${person2Destiny}). Kiểm tra mức độ hợp nhau trong mối quan hệ "${relationshipType === 'lover' ? 'người yêu' : relationshipType === 'spouse' ? 'vợ chồng' : relationshipType === 'friend' ? 'bạn bè' : 'đối tác'}". Trả về JSON hợp lệ với các trường sau:
-    1. "overview": Tổng quan (4-5 câu) so sánh trực tiếp năng lượng, cảm xúc, mục tiêu của hai người dựa trên các con số.
-    2. "strengths": Điểm mạnh (3-4 câu) so sánh trực tiếp sự tương đồng hoặc bổ trợ giữa hai người.
+  const lifePath1Data = NUMEROLOGY_MEANINGS.lifePath[person1LifePath] || NUMEROLOGY_MEANINGS.lifePath[1];
+  const soul1Data = NUMEROLOGY_MEANINGS.soulUrge[person1Soul] || NUMEROLOGY_MEANINGS.soulUrge[1];
+  const destiny1Data = NUMEROLOGY_MEANINGS.destiny?.[person1Destiny] || NUMEROLOGY_MEANINGS.destiny?.[1] || { theme: "Không xác định", strengths: ["Không xác định"] };
+  const lifePath2Data = NUMEROLOGY_MEANINGS.lifePath[person2LifePath] || NUMEROLOGY_MEANINGS.lifePath[1];
+  const soul2Data = NUMEROLOGY_MEANINGS.soulUrge[person2Soul] || NUMEROLOGY_MEANINGS.soulUrge[1];
+  const destiny2Data = NUMEROLOGY_MEANINGS.destiny?.[person2Destiny] || NUMEROLOGY_MEANINGS.destiny?.[1] || { theme: "Không xác định", strengths: ["Không xác định"] };
+
+  console.log('Numerology data:', { 
+    person1: { lifePath: person1LifePath, soul: person1Soul, destiny: person1Destiny, lifePath1Data, soul1Data, destiny1Data }, 
+    person2: { lifePath: person2LifePath, soul: person2Soul, destiny: person2Destiny, lifePath2Data, soul2Data, destiny2Data } 
+  });
+
+  const typeText = relationshipType === 'lover' ? 'người yêu' : relationshipType === 'spouse' ? 'vợ chồng' : relationshipType === 'friend' ? 'bạn bè' : 'đối tác';
+  const prompt = `Dựa trên thần số học với thông tin: 
+    - Người 1 (tên "${person1Name}", sinh ${person1Birthdate}, số chủ đạo ${person1LifePath} - ${lifePath1Data.theme || 'Không xác định'}, số linh hồn ${person1Soul} - ${soul1Data.theme || 'Không xác định'}, số định mệnh ${person1Destiny} - ${destiny1Data.theme || 'Không xác định'})
+    - Người 2 (tên "${person2Name}", sinh ${person2Birthdate}, số chủ đạo ${person2LifePath} - ${lifePath2Data.theme || 'Không xác định'}, số linh hồn ${person2Soul} - ${soul2Data.theme || 'Không xác định'}, số định mệnh ${person2Destiny} - ${destiny2Data.theme || 'Không xác định'})
+    Kiểm tra mức độ hợp nhau trong mối quan hệ "${typeText}". Trả về JSON hợp lệ với các trường sau:
+    1. "overview": Tổng quan (4-5 câu) so sánh trực tiếp năng lượng (${lifePath1Data.theme || 'Không xác định'} vs ${lifePath2Data.theme || 'Không xác định'}), cảm xúc (${soul1Data.theme || 'Không xác định'} vs ${soul2Data.theme || 'Không xác định'}), mục tiêu (${destiny1Data.theme || 'Không xác định'} vs ${destiny2Data.theme || 'Không xác định'}) của hai người.
+    2. "strengths": Điểm mạnh (3-4 câu) so sánh trực tiếp sự tương đồng hoặc bổ trợ giữa hai người dựa trên các con số.
     3. "weaknesses": Điểm yếu (3-4 câu) so sánh trực tiếp các khác biệt tiềm ẩn giữa hai người.
-    4. "potential": Tiềm năng (3-4 câu) so sánh trực tiếp khả năng phát triển của hai người trong "${relationshipType}".
+    4. "potential": Tiềm năng (3-4 câu) so sánh trực tiếp khả năng phát triển của hai người trong "${typeText}".
     5. "challenges": Thách thức (3-4 câu) so sánh trực tiếp các khó khăn giữa hai người cần chú ý.
     6. "compatibility": Mức độ hợp nhau trên thang điểm 10 (ví dụ: "Mức độ hợp nhau: 8/10"), kèm 1-2 câu giải thích.
     7. "advice": Gợi ý tự nhiên (4-5 câu) để phát triển mối quan hệ, tránh dùng "nên" hoặc giọng chủ quan.
@@ -72,30 +76,35 @@ export default defineEventHandler(async (event) => {
     return data;
   } catch (error) {
     console.error('Lỗi từ Gemini:', error.message);
-    return getFallbackResponse(person1Name, person1LifePath, person1Soul, person1Destiny, person2Name, person2LifePath, person2Soul, person2Destiny, relationshipType);
+    return getFallbackResponse(
+      person1Name, person1LifePath, person1Soul, person1Destiny, lifePath1Data, soul1Data, destiny1Data,
+      person2Name, person2LifePath, person2Soul, person2Destiny, lifePath2Data, soul2Data, destiny2Data,
+      relationshipType
+    );
   }
 });
 
-function getFallbackResponse(person1Name, person1LifePath, person1Soul, person1Destiny, person2Name, person2LifePath, person2Soul, person2Destiny, relationshipType) {
+function getFallbackResponse(person1Name, person1LifePath, person1Soul, person1Destiny, lifePath1Data, soul1Data, destiny1Data, 
+                            person2Name, person2LifePath, person2Soul, person2Destiny, lifePath2Data, soul2Data, destiny2Data, relationshipType) {
   const typeText = relationshipType === 'lover' ? 'người yêu' : relationshipType === 'spouse' ? 'vợ chồng' : relationshipType === 'friend' ? 'bạn bè' : 'đối tác';
   const lifePathDiff = Math.abs(person1LifePath - person2LifePath);
   const soulDiff = Math.abs(person1Soul - person2Soul);
   const destinyDiff = Math.abs(person1Destiny - person2Destiny);
   const compatibilityScore = Math.max(4, 10 - Math.floor((lifePathDiff + soulDiff + destinyDiff) / 3));
 
-  const overview = `"${person1Name}" mang số chủ đạo ${person1LifePath}, thể hiện năng lượng ${person1LifePath > 5 ? 'sáng tạo và linh hoạt' : 'ổn định và thực tế'}, trong khi "${person2Name}" cũng có số chủ đạo ${person2LifePath}, cho thấy sự tương đồng về cách tiếp cận cuộc sống. Về cảm xúc, số linh hồn ${person1Soul} của "${person1Name}" hướng đến ${person1Soul < 5 ? 'sự ổn định nội tại' : 'sự khám phá'}, còn số linh hồn ${person2Soul} của "${person2Name}" lại nghiêng về ${person2Soul < 5 ? 'sự hướng nội' : 'sự độc lập'}. Số định mệnh ${person1Destiny} của "${person1Name}" tập trung vào ${person1Destiny < 5 ? 'sự thực dụng' : 'tham vọng lớn'}, trong khi "${person2Name}" với số ${person2Destiny} hướng tới ${person2Destiny < 5 ? 'sự bền vững' : 'phát triển sâu sắc'}. Sự kết hợp này tạo ra một mối quan hệ ${typeText} vừa đồng điệu vừa có những khác biệt cần dung hòa.`;
+  const overview = `"${person1Name}" mang số chủ đạo ${person1LifePath} (${(lifePath1Data.theme || 'Không xác định').toLowerCase()}), thể hiện năng lượng ${(lifePath1Data.strengths?.[0] || 'sáng tạo').toLowerCase()}, trong khi "${person2Name}" với số ${person2LifePath} (${(lifePath2Data.theme || 'Không xác định').toLowerCase()}) lại nổi bật với ${(lifePath2Data.strengths?.[0] || 'ổn định').toLowerCase()}. Về cảm xúc, số linh hồn ${person1Soul} (${(soul1Data.theme || 'Không xác định').toLowerCase()}) của "${person1Name}" hướng đến ${(soul1Data.desires?.[0] || 'sự khám phá').toLowerCase()}, còn "${person2Name}" với số ${person2Soul} (${(soul2Data.theme || 'Không xác định').toLowerCase()}) nghiêng về ${(soul2Data.desires?.[0] || 'sự ổn định').toLowerCase()}. Số định mệnh ${person1Destiny} (${(destiny1Data.theme || 'Không xác định').toLowerCase()}) của "${person1Name}" tập trung vào ${(destiny1Data.strengths?.[0] || 'tham vọng').toLowerCase()}, trong khi "${person2Name}" với số ${person2Destiny} (${(destiny2Data.theme || 'Không xác định').toLowerCase()}) hướng tới ${(destiny2Data.strengths?.[0] || 'sự bền vững').toLowerCase()}. Sự kết hợp này tạo nên một mối quan hệ ${typeText} đầy màu sắc và tiềm năng.`;
 
-  const strengths = `"${person1Name}" và "${person2Name}" có sự tương đồng lớn ở số chủ đạo ${person1LifePath} và ${person2LifePath}, giúp cả hai dễ dàng tìm thấy điểm chung trong cách sống và mục tiêu lớn. Số linh hồn ${person1Soul} của "${person1Name}" bổ trợ cho số ${person2Soul} của "${person2Name}" ở chỗ một bên mang chiều sâu cảm xúc, bên còn lại mang tính độc lập. Số định mệnh ${person1Destiny} của "${person1Name}" và ${person2Destiny} của "${person2Name}" tạo nên sự cân bằng giữa tầm nhìn dài hạn và thực tế. Sự hỗ trợ lẫn nhau này là nền tảng vững chắc cho mối quan hệ ${typeText}.`;
+  const strengths = `"${person1Name}" và "${person2Name}" có sự tương đồng qua số chủ đạo ${person1LifePath} (${(lifePath1Data.theme || 'Không xác định').toLowerCase()}) và ${person2LifePath} (${(lifePath2Data.theme || 'Không xác định').toLowerCase()}), giúp cả hai dễ dàng hiểu nhau ở ${(lifePath1Data.strengths?.[1] || 'mục tiêu lớn').toLowerCase()}. Số linh hồn ${person1Soul} (${(soul1Data.theme || 'Không xác định').toLowerCase()}) của "${person1Name}" bổ trợ cho số ${person2Soul} (${(soul2Data.theme || 'Không xác định').toLowerCase()}) của "${person2Name}", tạo sự cân bằng giữa ${(soul1Data.desires?.[0] || 'sự khám phá').toLowerCase()} và ${(soul2Data.desires?.[0] || 'sự ổn định').toLowerCase()}. Số định mệnh ${person1Destiny} và ${person2Destiny} mang đến sự hỗ trợ qua ${(destiny1Data.strengths?.[0] || 'tham vọng').toLowerCase()} của "${person1Name}" và ${(destiny2Data.strengths?.[0] || 'sự bền vững').toLowerCase()} của "${person2Name}".`;
 
-  const weaknesses = `"${person1Name}" với số linh hồn ${person1Soul} có xu hướng ${person1Soul < 5 ? 'giữ cảm xúc trong lòng' : 'thể hiện rõ ràng'}, trong khi "${person2Name}" với số ${person2Soul} lại ${person2Soul < 5 ? 'hướng nội hơn' : 'quyết đoán hơn'}, dễ dẫn đến sự khác biệt trong giao tiếp cảm xúc. Số định mệnh ${person1Destiny} của "${person1Name}" thiên về ${person1Destiny < 5 ? 'sự ổn định' : 'tầm nhìn lớn'}, còn "${person2Name}" với số ${person2Destiny} tập trung vào ${person2Destiny < 5 ? 'sự thực tế' : 'sự phát triển sâu'}, có thể gây ra bất đồng về ưu tiên. Dù số chủ đạo ${person1LifePath} và ${person2LifePath} tương đồng, nhịp sống đôi lúc vẫn không hoàn toàn đồng bộ. Những khác biệt này cần được chú ý để tránh hiểu lầm.`;
+  const weaknesses = `"${person1Name}" với số linh hồn ${person1Soul} (${(soul1Data.theme || 'Không xác định').toLowerCase()}) có xu hướng ${(soul1Data.challenges?.[0] || 'giữ cảm xúc').toLowerCase()}, trong khi "${person2Name}" với số ${person2Soul} (${(soul2Data.theme || 'Không xác định').toLowerCase()}) lại ${(soul2Data.challenges?.[0] || 'hướng nội').toLowerCase()}, dễ gây khoảng cách trong giao tiếp. Số định mệnh ${person1Destiny} (${(destiny1Data.theme || 'Không xác định').toLowerCase()}) của "${person1Name}" tập trung vào ${(destiny1Data.strengths?.[0] || 'tham vọng').toLowerCase()}, còn "${person2Name}" với số ${person2Destiny} (${(destiny2Data.theme || 'Không xác định').toLowerCase()}) hướng tới ${(destiny2Data.strengths?.[0] || 'sự bền vững').toLowerCase()}, có thể khác biệt về ưu tiên. Những điểm này cần được chú ý để tránh bất đồng.`;
 
-  const potential = `Trong vai trò ${typeText}, "${person1Name}" với số chủ đạo ${person1LifePath} và "${person2Name}" với số ${person2LifePath} có thể cùng nhau xây dựng một mối quan hệ bền vững nhờ sự đồng điệu về năng lượng. Số linh hồn ${person1Soul} của "${person1Name}" và ${person2Soul} của "${person2Name}" mang đến cơ hội bổ sung lẫn nhau, tạo nên sự phong phú trong cảm xúc. Số định mệnh ${person1Destiny} và ${person2Destiny} cho phép "${person1Name}" và "${person2Name}" hỗ trợ nhau trong việc đạt được mục tiêu dài hạn. Tiềm năng này rất lớn nếu cả hai biết tận dụng sự khác biệt để phát triển.`;
+  const potential = `Trong vai trò ${typeText}, "${person1Name}" với số chủ đạo ${person1LifePath} (${(lifePath1Data.theme || 'Không xác định').toLowerCase()}) và "${person2Name}" với số ${person2LifePath} (${(lifePath2Data.theme || 'Không xác định').toLowerCase()}) có thể cùng phát triển qua ${(lifePath1Data.strengths?.[0] || 'sáng tạo').toLowerCase()} và ${(lifePath2Data.strengths?.[0] || 'ổn định').toLowerCase()}. Số linh hồn ${person1Soul} và ${person2Soul} tạo cơ hội bổ sung giữa ${(soul1Data.desires?.[0] || 'sự khám phá').toLowerCase()} của "${person1Name}" và ${(soul2Data.desires?.[0] || 'sự ổn định').toLowerCase()} của "${person2Name}". Số định mệnh ${person1Destiny} và ${person2Destiny} cho thấy tiềm năng lớn nếu kết hợp ${(destiny1Data.strengths?.[0] || 'tham vọng').toLowerCase()} và ${(destiny2Data.strengths?.[0] || 'sự bền vững').toLowerCase()}.`;
 
-  const challenges = `"${person1Name}" với số linh hồn ${person1Soul} và "${person2Name}" với số ${person2Soul} có cách thể hiện cảm xúc khác nhau, dễ gây ra khoảng cách nếu không được giải quyết. Số định mệnh ${person1Destiny} của "${person1Name}" và ${person2Destiny} của "${person2Name}" phản ánh mục tiêu sống không hoàn toàn trùng khớp, đòi hỏi sự thỏa hiệp. Dù số chủ đạo ${person1LifePath} và ${person2LifePath} giống nhau, "${person1Name}" và "${person2Name}" vẫn cần điều chỉnh để đồng điệu trong những chi tiết nhỏ. Thách thức nằm ở việc dung hòa những khác biệt này trong mối quan hệ ${typeText}.`;
+  const challenges = `"${person1Name}" với số linh hồn ${person1Soul} (${(soul1Data.theme || 'Không xác định').toLowerCase()}) và "${person2Name}" với số ${person2Soul} (${(soul2Data.theme || 'Không xác định').toLowerCase()}) khác nhau ở ${(soul1Data.challenges?.[0] || 'giữ cảm xúc').toLowerCase()} và ${(soul2Data.challenges?.[0] || 'hướng nội').toLowerCase()}, cần chú ý để tránh hiểu lầm. Số định mệnh ${person1Destiny} (${(destiny1Data.theme || 'Không xác định').toLowerCase()}) và ${person2Destiny} (${(destiny2Data.theme || 'Không xác định').toLowerCase()}) có thể không đồng bộ giữa ${(destiny1Data.strengths?.[0] || 'tham vọng').toLowerCase()} của "${person1Name}" và ${(destiny2Data.strengths?.[0] || 'sự bền vững').toLowerCase()} của "${person2Name}". Thách thức nằm ở việc tìm điểm chung trong mục tiêu dài hạn.`;
 
-  const compatibility = `Mức độ hợp nhau: ${compatibilityScore}/10. Sự tương thích này phản ánh một mối quan hệ ${compatibilityScore >= 8 ? 'rất hài hòa với tiềm năng lớn' : compatibilityScore >= 6 ? 'ổn định và đầy triển vọng với chút điều chỉnh' : 'có thể phát triển khi vượt qua khác biệt'}.`;
+  const compatibility = `Mức độ hợp nhau: ${compatibilityScore}/10. Sự tương thích này dựa trên mức độ đồng điệu giữa ${(lifePath1Data.theme || 'Không xác định').toLowerCase()} và ${(lifePath2Data.theme || 'Không xác định').toLowerCase()}, cùng khả năng bổ trợ từ ${(soul1Data.theme || 'Không xác định').toLowerCase()} và ${(soul2Data.theme || 'Không xác định').toLowerCase()}.`;
 
-  const advice = `Để mối quan hệ ${typeText} giữa "${person1Name}" và "${person2Name}" tiến xa, việc trò chuyện cởi mở về cảm xúc và mong muốn là điều rất tự nhiên. Các hoạt động chung như ${typeText === 'lover' ? 'du lịch cùng nhau' : typeText === 'spouse' ? 'xây dựng kế hoạch gia đình' : typeText === 'friend' ? 'chia sẻ sở thích' : 'lập kế hoạch công việc'} có thể tăng thêm sự gần gũi. Sự thấu hiểu sẽ dần hình thành khi cả hai trân trọng những điểm mạnh và yếu của nhau. Một chút linh hoạt trong cách tiếp cận sẽ giúp mọi thứ cân bằng hơn.`;
+  const advice = `Để mối quan hệ ${typeText} giữa "${person1Name}" và "${person2Name}" phát triển, việc chia sẻ suy nghĩ về ${(soul1Data.desires?.[0] || 'sự khám phá').toLowerCase()} và ${(soul2Data.desires?.[0] || 'sự ổn định').toLowerCase()} sẽ mang lại sự gần gũi. Các hoạt động như ${typeText === 'lover' ? 'cùng khám phá điều mới' : typeText === 'spouse' ? 'xây dựng kế hoạch chung' : typeText === 'friend' ? 'trò chuyện sâu sắc' : 'hợp tác trong công việc'} có thể tăng thêm sự kết nối. Sự thấu hiểu sẽ tự nhiên hình thành khi cả hai trân trọng ${(lifePath1Data.strengths?.[0] || 'sáng tạo').toLowerCase()} và ${(lifePath2Data.strengths?.[0] || 'ổn định').toLowerCase()}. Một chút linh hoạt sẽ giúp mọi thứ hài hòa hơn.`;
 
   return { overview, strengths, weaknesses, potential, challenges, compatibility, advice };
 }

@@ -251,7 +251,74 @@ const NUMEROLOGY_MEANINGS = {
       fulfillment: "Công việc chữa lành, giảng dạy, từ thiện"
     }
   },
-
+  personality: {
+    1: {
+      theme: "Người tự tin",
+      strengths: ["Giao tiếp", "Quyết đoán", "Năng động"],
+      challenges: ["Kiêu ngạo", "Thống trị", "Thiếu tinh tế"],
+      workStyle: "Thích dẫn dắt và làm việc độc lập"
+    },
+    2: {
+      theme: "Người nhạy cảm",
+      strengths: ["Hỗ trợ", "Thấu hiểu", "Hợp tác"],
+      challenges: ["Nhút nhát", "Dễ bị tổn thương", "Thiếu quyết đoán"],
+      workStyle: "Thích làm việc nhóm và hỗ trợ người khác"
+    },
+    3: {
+      theme: "Người biểu cảm",
+      strengths: ["Sáng tạo", "Vui vẻ", "Truyền cảm hứng"],
+      challenges: ["Lãng phí năng lượng", "Thiếu tập trung", "Tự cao"],
+      workStyle: "Thích môi trường năng động và sáng tạo"
+    },
+    4: {
+      theme: "Người thực tế",
+      strengths: ["Kỷ luật", "Tổ chức", "Đáng tin cậy"],
+      challenges: ["Cứng nhắc", "Bảo thủ", "Thiếu linh hoạt"],
+      workStyle: "Thích quy trình rõ ràng và ổn định"
+    },
+    5: {
+      theme: "Người linh hoạt",
+      strengths: ["Thích nghi", "Tò mò", "Nhanh nhẹn"],
+      challenges: ["Bồn chồn", "Thiếu kiên nhẫn", "Không cam kết"],
+      workStyle: "Thích thay đổi và thử thách mới"
+    },
+    6: {
+      theme: "Người trách nhiệm",
+      strengths: ["Chăm sóc", "Hòa nhã", "Cân bằng"],
+      challenges: ["Kiểm soát", "Hy sinh quá mức", "Lo lắng"],
+      workStyle: "Thích môi trường hài hòa và hỗ trợ lẫn nhau"
+    },
+    7: {
+      theme: "Người nội tâm",
+      strengths: ["Phân tích", "Trực giác", "Sâu sắc"],
+      challenges: ["Xa cách", "Bí ẩn", "Cô lập"],
+      workStyle: "Thích làm việc độc lập và nghiên cứu"
+    },
+    8: {
+      theme: "Người quyền lực",
+      strengths: ["Tổ chức", "Tham vọng", "Hiệu quả"],
+      challenges: ["Áp đảo", "Vật chất", "Cạnh tranh"],
+      workStyle: "Thích quản lý và đạt mục tiêu lớn"
+    },
+    9: {
+      theme: "Người lý tưởng",
+      strengths: ["Thấu hiểu", "Rộng lượng", "Nhân ái"],
+      challenges: ["Mơ mộng", "Dễ thất vọng", "Quá nhạy cảm"],
+      workStyle: "Thích làm việc vì mục tiêu cao cả"
+    },
+    11: {
+      theme: "Người nhạy bén",
+      strengths: ["Truyền cảm hứng", "Nhạy cảm", "Sáng tạo"],
+      challenges: ["Căng thẳng", "Nhạy cảm quá mức", "Thiếu thực tế"],
+      workStyle: "Thích môi trường tâm linh và sáng tạo"
+    },
+    22: {
+      theme: "Người thực hiện",
+      strengths: ["Thực tế hóa", "Tầm nhìn lớn", "Kỷ luật"],
+      challenges: ["Áp lực", "Cầu toàn", "Quá tải"],
+      workStyle: "Thích các dự án lớn và có cấu trúc"
+    }
+  },
   // ================ Ý NGHĨA NĂM CÁ NHÂN ================
   personalYear: {
     1: {
@@ -447,6 +514,7 @@ export const LifePathNumbers = NUMEROLOGY_MEANINGS.lifePath;
 export const ExpressionNumbers = NUMEROLOGY_MEANINGS.expression;
 export const SoulUrgeNumbers = NUMEROLOGY_MEANINGS.soulUrge;
 export const PersonalYearNumbers = NUMEROLOGY_MEANINGS.personalYear;
+export const PersonalityNumbers = NUMEROLOGY_MEANINGS.personality; // Thêm export cho Personality
 export const NumerologyAnalyzers = NUMEROLOGY_MEANINGS.analyzers;
 export const NumerologyUtils = {
   reduceToSingleDigit,
