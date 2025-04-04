@@ -1,114 +1,238 @@
 <!-- pages/dashboard/index.vue -->
 <template>
   <div class="space-y-8">
-    <!-- Banner chào mừng -->
-    <div class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-8 rounded-xl shadow-lg">
-      <h1 class="text-4xl font-bold mb-2">Chào mừng đến với Thần số học</h1>
-      <p class="text-lg opacity-90">Khám phá năng lượng của bạn qua con số!</p>
+    <!-- Banner chào mừng mới với hiệu ứng gradient -->
+    <div class="relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white p-8 rounded-2xl shadow-xl overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
+      <div class="relative z-10">
+        <h1 class="text-4xl font-bold mb-2 animate-fade-in">Chào mừng đến với Thần số học</h1>
+        <p class="text-lg opacity-90 mb-4">Khám phá năng lượng của bạn qua con số!</p>
+        <div class="flex items-center space-x-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          <span class="text-sm font-medium">Hôm nay là {{ currentDate }}</span>
+        </div>
+      </div>
     </div>
 
-    <!-- Thần số học với 5 tab -->
-    <div class="bg-white p-6 rounded-xl shadow-lg">
-      <h2 class="text-2xl font-semibold text-purple-700 mb-4">Thần số học cá nhân</h2>
+    <!-- Card chính với thiết kế mới -->
+    <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+          Thần số học cá nhân
+        </h2>
+        <div class="flex items-center space-x-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="text-sm text-gray-500">Cập nhật theo thời gian thực</span>
+        </div>
+      </div>
 
-      <!-- Form nhập thông tin -->
-      <div v-if="!userInfo.name || editing" class="space-y-4 mb-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label for="name" class="block text-gray-700 font-medium mb-2">Họ và tên</label>
-            <input
-              v-model="form.name"
-              type="text"
-              id="name"
-              placeholder="Ví dụ: Nguyễn Văn A"
-              class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
+      <!-- Form nhập thông tin với thiết kế mới -->
+      <div v-if="!userInfo.name || editing" class="space-y-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label for="name" class="block text-gray-700 font-medium">Họ và tên</label>
+            <div class="relative">
+              <input
+                v-model="form.name"
+                type="text"
+                id="name"
+                placeholder="Ví dụ: Nguyễn Văn A"
+                class="w-full p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+              />
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+            </div>
           </div>
-          <div>
-            <label for="birthDate" class="block text-gray-700 font-medium mb-2">Ngày sinh (dd/mm/yyyy)</label>
-            <input
-              v-model="form.birthDate"
-              type="text"
-              id="birthDate"
-              placeholder="Ví dụ: 15/08/1995"
-              class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
+          <div class="space-y-2">
+            <label for="birthDate" class="block text-gray-700 font-medium">Ngày sinh</label>
+            <div class="relative">
+              <input
+                v-model="form.birthDate"
+                type="text"
+                id="birthDate"
+                placeholder="dd/mm/yyyy (Ví dụ: 15/08/1995)"
+                class="w-full p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+              />
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
         <button
           @click="submitForm"
           :disabled="loading"
-          class="bg-purple-500 text-white px-6 py-2 rounded-lg hover:bg-purple-600 disabled:bg-gray-400"
+          class="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-medium rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 disabled:transform-none disabled:shadow-none"
         >
-          {{ loading ? 'Đang xử lý...' : 'Xem ngay' }}
-        </button>
-      </div>
-      <div v-else class="flex justify-between items-center mb-4">
-        <p class="text-gray-700">Kết quả cho: <span class="font-semibold">{{ userInfo.name }}</span></p>
-        <button
-          @click="editing = true"
-          class="text-purple-500 hover:underline"
-        >
-          Cập nhật thông tin
+          <span v-if="loading" class="flex items-center justify-center">
+            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Đang phân tích...
+          </span>
+          <span v-else class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            Xem ngay
+          </span>
         </button>
       </div>
 
-      <!-- Tabs -->
-      <div v-if="userInfo.name" class="flex space-x-4 border-b mb-4">
+      <!-- Thông tin người dùng -->
+      <div v-else class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 p-4 bg-purple-50 rounded-xl">
+        <div class="flex items-center space-x-3 mb-3 md:mb-0">
+          <div class="bg-purple-100 p-3 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <div>
+            <p class="text-gray-700">Kết quả cho:</p>
+            <p class="font-semibold text-lg text-purple-800">{{ userInfo.name }}</p>
+            <p class="text-sm text-gray-500">Ngày sinh: {{ userInfo.birthDate }}</p>
+          </div>
+        </div>
+        <button
+          @click="editing = true"
+          class="px-4 py-2 bg-white text-purple-600 font-medium rounded-lg border border-purple-200 hover:bg-purple-50 transition-colors duration-200 flex items-center"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
+          Cập nhật
+        </button>
+      </div>
+
+      <!-- Tabs mới với hiệu ứng -->
+      <div v-if="userInfo.name" class="flex overflow-x-auto pb-2 mb-6 scrollbar-hide">
         <button
           v-for="tab in tabs"
           :key="tab.value"
           @click="switchTab(tab.value)"
           :class="[
-            'py-2 px-4 font-medium',
+            'px-5 py-3 font-medium rounded-lg mr-2 whitespace-nowrap transition-all duration-200',
             activeTab === tab.value
-              ? 'border-b-2 border-purple-500 text-purple-700'
-              : 'text-gray-500 hover:text-purple-700'
+              ? 'bg-purple-100 text-purple-700 shadow-inner'
+              : 'text-gray-500 hover:bg-gray-100'
           ]"
         >
           {{ tab.label }}
         </button>
       </div>
 
-      <!-- Nội dung -->
-      <div v-if="!userInfo.name" class="text-center text-gray-600">
-        <p>Nhập thông tin để khám phá thần số học của bạn!</p>
+      <!-- Placeholder khi chưa nhập thông tin -->
+      <div v-if="!userInfo.name" class="text-center py-12">
+        <div class="mx-auto w-24 h-24 mb-4 text-gray-300">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-medium text-gray-600 mb-2">Bắt đầu khám phá thần số học</h3>
+        <p class="text-gray-500 max-w-md mx-auto">Nhập tên và ngày sinh của bạn để xem phân tích chi tiết về năng lượng ngày hôm nay, tuần này, tháng này và năm này.</p>
       </div>
-      <div v-else-if="activeTab !== 'cycles' && results.periods && results.periods[activeTab]" class="mt-4 p-4 bg-purple-50 rounded-lg space-y-4">
-        <div>
-          <p class="text-purple-800 font-semibold text-lg">{{ resultTitle }}: {{ results.periods[activeTab].number }}</p>
-          <p class="text-gray-700 mt-2">{{ results.periods[activeTab].description }}</p>
+
+      <!-- Nội dung kết quả -->
+      <div v-else>
+        <!-- Kết quả theo ngày/tuần/tháng/năm -->
+        <div v-if="activeTab !== 'cycles' && results.periods && results.periods[activeTab]" class="space-y-6">
+          <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-2xl">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-xl font-bold text-purple-800">{{ resultTitle }}: <span class="text-3xl">{{ results.periods[activeTab].number }}</span></h3>
+              <div class="bg-white p-2 rounded-full shadow-sm">
+                <span class="text-2xl font-bold text-purple-600">{{ results.periods[activeTab].number }}</span>
+              </div>
+            </div>
+            <div class="prose prose-purple max-w-none">
+              <p class="text-gray-700">{{ results.periods[activeTab].description }}</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200">
+              <div class="flex items-center mb-3">
+                <div class="bg-green-100 p-2 rounded-full mr-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h4 class="text-lg font-semibold text-gray-800">{{ shouldDoTitle }}</h4>
+              </div>
+              <div class="pl-11">
+                <p class="text-gray-700">{{ results.periods[activeTab].shouldDo }}</p>
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200">
+              <div class="flex items-center mb-3">
+                <div class="bg-red-100 p-2 rounded-full mr-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </div>
+                <h4 class="text-lg font-semibold text-gray-800">{{ shouldAvoidTitle }}</h4>
+              </div>
+              <div class="pl-11">
+                <p class="text-gray-700">{{ results.periods[activeTab].shouldAvoid }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gợi ý ăn trưa chỉ hiển thị cho tab ngày -->
+          <div v-if="activeTab === 'day'" class="bg-yellow-50 p-6 rounded-2xl border border-yellow-100">
+            <div class="flex items-center mb-4">
+              <div class="bg-yellow-100 p-2 rounded-full mr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+              </div>
+              <h4 class="text-lg font-semibold text-gray-800">Gợi ý ăn trưa</h4>
+            </div>
+            <div class="pl-11">
+              <p class="text-gray-700">{{ results.periods[activeTab].lunchSuggestion }}</p>
+            </div>
+          </div>
         </div>
-        <div>
-          <p class="text-purple-800 font-semibold text-lg">{{ shouldDoTitle }}</p>
-          <p class="text-gray-700 mt-2">{{ results.periods[activeTab].shouldDo }}</p>
-        </div>
-        <div>
-          <p class="text-purple-800 font-semibold text-lg">{{ shouldAvoidTitle }}</p>
-          <p class="text-gray-700 mt-2">{{ results.periods[activeTab].shouldAvoid }}</p>
-        </div>
-        <div v-if="activeTab === 'day'">
-          <p class="text-purple-800 font-semibold text-lg">Trưa nay ăn gì</p>
-          <p class="text-gray-700 mt-2">{{ results.periods[activeTab].lunchSuggestion }}</p>
-        </div>
-      </div>
-      <div v-else-if="activeTab === 'cycles' && results.cycles" class="mt-4 p-4 bg-purple-50 rounded-lg space-y-4">
-        <h3 class="text-purple-800 font-semibold text-lg">Chu kỳ vận số 10 năm</h3>
-        <canvas id="numerologyChart" height="100"></canvas>
-        <div class="space-y-2">
-          <div
-            v-for="(cycle, year) in results.cycles"
-            :key="year"
-            class="p-3 bg-white rounded-lg shadow-sm"
-          >
-            <p class="text-purple-700 font-medium">Năm {{ year }} - Số cá nhân: {{ cycle.number }}</p>
-            <p class="text-gray-700">{{ cycle.description }}</p>
+
+        <!-- Chu kỳ vận số -->
+       <!-- Thay thế phần chu kỳ vận số bằng đoạn code này -->
+        <div v-else-if="activeTab === 'cycles' && results.cycles" class="space-y-6">
+          <div class="bg-white p-6 rounded-2xl shadow-sm">
+            <h3 class="text-xl font-bold text-purple-800 mb-4">Biểu đồ chu kỳ vận số 10 năm</h3>
+            <div class="w-full h-80 relative">
+              <canvas id="numerologyChart" class="w-full h-full"></canvas>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div
+              v-for="(cycle, year) in results.cycles"
+              :key="year"
+              class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 hover:border-purple-200"
+            >
+              <div class="flex items-center justify-between mb-2">
+                <h4 class="font-bold text-lg text-purple-700">Năm {{ year }}</h4>
+                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">Số {{ cycle.number }}</span>
+              </div>
+              <p class="text-gray-700">{{ cycle.description }}</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
@@ -177,7 +301,6 @@ const getWeekNumber = (date) => {
   return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
 };
 
-// Vẽ biểu đồ chu kỳ vận số
 const renderChart = () => {
   if (!results.value.cycles) return;
 
@@ -200,25 +323,64 @@ const renderChart = () => {
         data: numbers,
         borderColor: '#8b5cf6',
         backgroundColor: 'rgba(139, 92, 246, 0.2)',
+        borderWidth: 3,
+        pointBackgroundColor: '#8b5cf6',
+        pointRadius: 5,
+        pointHoverRadius: 7,
         fill: true,
         tension: 0.4,
       }]
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false, // Thêm dòng này để chart có thể co giãn tự do
       scales: {
         y: {
           beginAtZero: true,
           max: 22,
-          title: { display: true, text: 'Số cá nhân' }
+          title: { 
+            display: true, 
+            text: 'Số cá nhân',
+            font: {
+              weight: 'bold'
+            }
+          },
+          grid: {
+            color: 'rgba(0, 0, 0, 0.05)'
+          }
         },
         x: {
-          title: { display: true, text: 'Năm' }
+          title: { 
+            display: true, 
+            text: 'Năm',
+            font: {
+              weight: 'bold'
+            }
+          },
+          grid: {
+            display: false
+          }
         }
       },
       plugins: {
-        legend: { display: true, position: 'top' },
+        legend: { 
+          display: true, 
+          position: 'top',
+          labels: {
+            font: {
+              size: 14
+            }
+          }
+        },
         tooltip: {
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          titleFont: {
+            size: 16,
+            weight: 'bold'
+          },
+          bodyFont: {
+            size: 14
+          },
           callbacks: {
             label: (context) => {
               const year = context.label;
@@ -232,7 +394,6 @@ const renderChart = () => {
     }
   });
 };
-
 // Gửi form và lấy kết quả
 const submitForm = async (force = false) => {
   if (!form.value.name || !form.value.birthDate) {
