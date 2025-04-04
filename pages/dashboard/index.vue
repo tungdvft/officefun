@@ -109,7 +109,7 @@
                   {{ shouldDoTitle }}
                 </p>
                 <ul class="mt-3 space-y-2 text-gray-700">
-                  <li v-for="(item, index) in results.periods[activeTab].shouldDo.split('. ')" :key="'do-'+index" class="flex items-start">
+                  <li v-for="(item, index) in results.periods[activeTab].shouldDo" :key="'do-'+index" class="flex items-start">
                     <span class="inline-block w-1.5 h-1.5 rounded-full bg-green-500 mt-2 mr-2"></span>
                     {{ item }}
                   </li>
@@ -124,7 +124,7 @@
                   {{ shouldAvoidTitle }}
                 </p>
                 <ul class="mt-3 space-y-2 text-gray-700">
-                  <li v-for="(item, index) in results.periods[activeTab].shouldAvoid.split('. ')" :key="'avoid-'+index" class="flex items-start">
+                  <li v-for="(item, index) in results.periods[activeTab].shouldAvoid" :key="'avoid-'+index" class="flex items-start">
                     <span class="inline-block w-1.5 h-1.5 rounded-full bg-red-500 mt-2 mr-2"></span>
                     {{ item }}
                   </li>
@@ -188,11 +188,9 @@
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { toast } from 'vue3-toastify'
 import Chart from 'chart.js/auto'
-
 definePageMeta({
   layout: 'dashboard'
-})
-
+});
 export default {
   setup() {
     // Tabs configuration
@@ -258,7 +256,12 @@ export default {
       const ctx = document.getElementById('numerologyChart')
       if (!ctx) return
 
-      const years = Object.keys(results.value.cycles).sort()
+      // Sắp xếp năm theo thứ tự tăng dần
+      const years = Object.keys(results.value.cycles)
+        .map(year => parseInt(year))
+        .sort((a, b) => a - b)
+        .map(year => year.toString())
+      
       const numbers = years.map(year => results.value.cycles[year].number)
 
       chartInstance.value = new Chart(ctx, {
@@ -328,6 +331,7 @@ export default {
 
       loading.value = true
       try {
+        // Gọi API thực tế
         const response = await fetch('/api/numerology/period', {
           method: 'POST',
           headers: {
@@ -344,26 +348,48 @@ export default {
         }
 
         const data = await response.json()
-        userInfo.value = { 
-          name: form.value.name, 
-          birthDate: form.value.birthDate 
-        }
         
-        // Đảm bảo dữ liệu trả về có cấu trúc đúng
-        results.value = {
-          periods: data.numerology?.periods || {},
-          cycles: data.numerology?.cycles || {}
+        // Xử lý dữ liệu từ API response
+        if (data.success && data.data) {
+          userInfo.value = { 
+            name: form.value.name, 
+            birthDate: form.value.birthDate 
+          }
+          
+          // Định dạng lại dữ liệu từ API để phù hợp với component
+          results.value = {
+            periods: data.data.periods || {},
+            cycles: data.data.cycles || {}
+          }
+
+          // Chuyển đổi shouldDo và shouldAvoid từ string sang array nếu cần
+          if (results.value.periods) {
+            Object.keys(results.value.periods).forEach(period => {
+              if (typeof results.value.periods[period].shouldDo === 'string') {
+                results.value.periods[period].shouldDo = results.value.periods[period].shouldDo
+                  .split('. ')
+                  .filter(item => item.trim())
+              }
+              if (typeof results.value.periods[period].shouldAvoid === 'string') {
+                results.value.periods[period].shouldAvoid = results.value.periods[period].shouldAvoid
+                  .split('. ')
+                  .filter(item => item.trim())
+              }
+            })
+          }
+
+          editing.value = false
+
+          // Lưu vào localStorage
+          localStorage.setItem('numerologyData', JSON.stringify({
+            userInfo: userInfo.value,
+            results: results.value
+          }))
+
+          toast.success('Phân tích thành công!')
+        } else {
+          throw new Error('Dữ liệu API không hợp lệ')
         }
-        
-        editing.value = false
-
-        // Save to localStorage
-        localStorage.setItem('numerologyData', JSON.stringify({
-          userInfo: userInfo.value,
-          results: results.value
-        }))
-
-        toast.success('Phân tích thành công!')
       } catch (error) {
         console.error('Error:', error)
         toast.error('Đã xảy ra lỗi khi lấy dữ liệu. Vui lòng thử lại sau.')
