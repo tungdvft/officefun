@@ -185,13 +185,14 @@
 </template>
 
 <script setup>
+// Import từ Nuxt
+const { $toast } = useNuxtApp()
 definePageMeta({
   layout: 'dashboard'
 });
-// Import từ Nuxt
-import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
-const { $toast } = useNuxtApp()
-import Chart from 'chart.js/auto'
+// Import Chart.js
+import { Chart, registerables } from 'chart.js'
+Chart.register(...registerables)
 
 // Tabs configuration
 const tabs = [
@@ -241,15 +242,26 @@ const switchTab = (tab) => {
 }
 
 const renderChart = () => {
-  if (!results.value.cycles || !Object.keys(results.value.cycles).length) return
-
+  // Đảm bảo hủy biểu đồ cũ trước khi tạo mới
   if (chartInstance.value) {
     chartInstance.value.destroy()
+    chartInstance.value = null
   }
 
+  // Kiểm tra DOM element tồn tại
   const ctx = document.getElementById('numerologyChart')
-  if (!ctx) return
+  if (!ctx) {
+    console.error('Không tìm thấy canvas element')
+    return
+  }
 
+  // Kiểm tra dữ liệu hợp lệ
+  if (!results.value.cycles || Object.keys(results.value.cycles).length === 0) {
+    console.error('Không có dữ liệu chu kỳ để vẽ biểu đồ')
+    return
+  }
+
+  // Chuẩn bị dữ liệu
   const years = Object.keys(results.value.cycles)
     .map(year => parseInt(year))
     .sort((a, b) => a - b)
@@ -257,6 +269,7 @@ const renderChart = () => {
   
   const numbers = years.map(year => results.value.cycles[year].number)
 
+  // Tạo biểu đồ mới
   chartInstance.value = new Chart(ctx, {
     type: 'line',
     data: {
@@ -297,7 +310,14 @@ const renderChart = () => {
           ticks: { stepSize: 1 },
           grid: { color: 'rgba(0, 0, 0, 0.05)' }
         },
-        x: { grid: { display: false } }
+        x: { 
+          grid: { display: false },
+          ticks: {
+            autoSkip: false,
+            maxRotation: 45,
+            minRotation: 45
+          }
+        }
       }
     }
   })
@@ -311,7 +331,8 @@ const submitForm = async () => {
 
   loading.value = true
   try {
-    const { data, error } = await useFetch('/api/numerology/period', {
+    // Sử dụng $fetch thay vì useFetch
+    const data = await $fetch('/api/numerology/period', {
       method: 'POST',
       body: {
         name: form.value.name,
@@ -319,19 +340,15 @@ const submitForm = async () => {
       }
     })
 
-    if (error.value) {
-      throw new Error(error.value.message || 'Request failed')
-    }
-
-    if (data.value?.success) {
+    if (data?.success) {
       userInfo.value = { 
         name: form.value.name, 
         birthDate: form.value.birthDate 
       }
       
       results.value = {
-        periods: data.value.data?.periods || {},
-        cycles: data.value.data?.cycles || {}
+        periods: data.data?.periods || {},
+        cycles: data.data?.cycles || {}
       }
 
       // Format data if needed
@@ -358,7 +375,7 @@ const submitForm = async () => {
 
       $toast.success('Phân tích thành công!')
     } else {
-      throw new Error('Dữ liệu API không hợp lệ')
+      throw new Error(data?.error?.message || 'Dữ liệu API không hợp lệ')
     }
   } catch (error) {
     console.error('API Error:', error)
@@ -390,7 +407,7 @@ onMounted(() => {
   }
 })
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
   if (chartInstance.value) {
     chartInstance.value.destroy()
   }
@@ -399,15 +416,19 @@ onUnmounted(() => {
 // Watchers
 watch(activeTab, (newTab) => {
   if (newTab === 'cycles') {
-    nextTick(renderChart)
+    nextTick(() => {
+      renderChart()
+    })
   }
 })
 
 watch(
   () => results.value.cycles,
-  () => {
-    if (activeTab.value === 'cycles') {
-      nextTick(renderChart)
+  (newVal) => {
+    if (activeTab.value === 'cycles' && newVal) {
+      nextTick(() => {
+        renderChart()
+      })
     }
   },
   { deep: true }
