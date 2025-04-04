@@ -184,304 +184,242 @@
   </div>
 </template>
 
-<script>
-import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
-import { toast } from 'vue3-toastify'
-import Chart from 'chart.js/auto'
+<script setup>
 definePageMeta({
   layout: 'dashboard'
 });
-export default {
-  setup() {
-    // Tabs configuration
-    const tabs = [
-      { label: 'Ngày hôm nay', value: 'day' },
-      { label: 'Tuần này', value: 'week' },
-      { label: 'Tháng này', value: 'month' },
-      { label: 'Năm này', value: 'year' },
-      { label: 'Chu kỳ vận số', value: 'cycles' }
-    ]
+// Import từ Nuxt
+import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
+const { $toast } = useNuxtApp()
+import Chart from 'chart.js/auto'
 
-    // State
-    const activeTab = ref('day')
-    const form = ref({
-      name: '',
-      birthDate: ''
-    })
-    const userInfo = ref({})
-    const results = ref({
-      periods: {},
-      cycles: {}
-    })
-    const loading = ref(false)
-    const editing = ref(false)
-    const chartInstance = ref(null)
+// Tabs configuration
+const tabs = [
+  { label: 'Ngày hôm nay', value: 'day' },
+  { label: 'Tuần này', value: 'week' },
+  { label: 'Tháng này', value: 'month' },
+  { label: 'Năm này', value: 'year' },
+  { label: 'Chu kỳ vận số', value: 'cycles' }
+]
 
-    // Computed properties
-    const isFormValid = computed(() => {
-      return form.value.name.trim() && /^\d{2}\/\d{2}\/\d{4}$/.test(form.value.birthDate.trim())
-    })
+// State
+const activeTab = ref('day')
+const form = ref({
+  name: '',
+  birthDate: ''
+})
+const userInfo = ref({})
+const results = ref({
+  periods: {},
+  cycles: {}
+})
+const loading = ref(false)
+const editing = ref(false)
+const chartInstance = ref(null)
 
-    const resultTitle = computed(() => {
-      const titles = {
-        day: 'Số ngày cá nhân',
-        week: 'Số tuần cá nhân',
-        month: 'Số tháng cá nhân',
-        year: 'Số năm cá nhân'
-      }
-      return titles[activeTab.value] || ''
-    })
+// Computed properties
+const isFormValid = computed(() => {
+  return form.value.name.trim() && /^\d{2}\/\d{2}\/\d{4}$/.test(form.value.birthDate.trim())
+})
 
-    const shouldDoTitle = computed(() => {
-      return 'Những việc nên làm'
-    })
+const resultTitle = computed(() => {
+  const titles = {
+    day: 'Số ngày cá nhân',
+    week: 'Số tuần cá nhân',
+    month: 'Số tháng cá nhân',
+    year: 'Số năm cá nhân'
+  }
+  return titles[activeTab.value] || ''
+})
 
-    const shouldAvoidTitle = computed(() => {
-      return 'Những việc nên tránh'
-    })
+const shouldDoTitle = computed(() => 'Những việc nên làm')
+const shouldAvoidTitle = computed(() => 'Những việc nên tránh')
 
-    // Methods
-    const switchTab = (tab) => {
-      activeTab.value = tab
-    }
+// Methods
+const switchTab = (tab) => {
+  activeTab.value = tab
+}
 
-    const renderChart = () => {
-      if (!results.value.cycles || !Object.keys(results.value.cycles).length) return
+const renderChart = () => {
+  if (!results.value.cycles || !Object.keys(results.value.cycles).length) return
 
-      // Destroy existing chart if any
-      if (chartInstance.value) {
-        chartInstance.value.destroy()
-      }
+  if (chartInstance.value) {
+    chartInstance.value.destroy()
+  }
 
-      const ctx = document.getElementById('numerologyChart')
-      if (!ctx) return
+  const ctx = document.getElementById('numerologyChart')
+  if (!ctx) return
 
-      // Sắp xếp năm theo thứ tự tăng dần
-      const years = Object.keys(results.value.cycles)
-        .map(year => parseInt(year))
-        .sort((a, b) => a - b)
-        .map(year => year.toString())
-      
-      const numbers = years.map(year => results.value.cycles[year].number)
+  const years = Object.keys(results.value.cycles)
+    .map(year => parseInt(year))
+    .sort((a, b) => a - b)
+    .map(year => year.toString())
+  
+  const numbers = years.map(year => results.value.cycles[year].number)
 
-      chartInstance.value = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: years,
-          datasets: [{
-            label: 'Số cá nhân',
-            data: numbers,
-            borderColor: '#8b5cf6',
-            backgroundColor: 'rgba(139, 92, 246, 0.1)',
-            borderWidth: 2,
-            pointBackgroundColor: '#8b5cf6',
-            pointRadius: 5,
-            pointHoverRadius: 7,
-            fill: true,
-            tension: 0.3
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false
-            },
-            tooltip: {
-              callbacks: {
-                label: (context) => {
-                  const year = years[context.dataIndex]
-                  const desc = results.value.cycles[year].description
-                  return [
-                    `Năm ${year}: Số ${context.raw}`,
-                    desc
-                  ]
-                }
-              }
-            }
-          },
-          scales: {
-            y: {
-              beginAtZero: false,
-              min: Math.max(1, Math.min(...numbers) - 2),
-              max: Math.min(22, Math.max(...numbers) + 2),
-              ticks: {
-                stepSize: 1
-              },
-              grid: {
-                color: 'rgba(0, 0, 0, 0.05)'
-              }
-            },
-            x: {
-              grid: {
-                display: false
-              }
+  chartInstance.value = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: years,
+      datasets: [{
+        label: 'Số cá nhân',
+        data: numbers,
+        borderColor: '#8b5cf6',
+        backgroundColor: 'rgba(139, 92, 246, 0.1)',
+        borderWidth: 2,
+        pointBackgroundColor: '#8b5cf6',
+        pointRadius: 5,
+        pointHoverRadius: 7,
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: (context) => {
+              const year = years[context.dataIndex]
+              const desc = results.value.cycles[year].description
+              return [`Năm ${year}: Số ${context.raw}`, desc]
             }
           }
-        }
-      })
-    }
-
-    const submitForm = async () => {
-      if (!isFormValid.value) {
-        toast.error('Vui lòng nhập đầy đủ thông tin hợp lệ!')
-        return
-      }
-
-      loading.value = true
-      try {
-        // Gọi API thực tế
-        const response = await fetch('/api/numerology/period', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            name: form.value.name,
-            birthDate: form.value.birthDate
-          })
-        })
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-
-        const data = await response.json()
-        
-        // Xử lý dữ liệu từ API response
-        if (data.success && data.data) {
-          userInfo.value = { 
-            name: form.value.name, 
-            birthDate: form.value.birthDate 
-          }
-          
-          // Định dạng lại dữ liệu từ API để phù hợp với component
-          results.value = {
-            periods: data.data.periods || {},
-            cycles: data.data.cycles || {}
-          }
-
-          // Chuyển đổi shouldDo và shouldAvoid từ string sang array nếu cần
-          if (results.value.periods) {
-            Object.keys(results.value.periods).forEach(period => {
-              if (typeof results.value.periods[period].shouldDo === 'string') {
-                results.value.periods[period].shouldDo = results.value.periods[period].shouldDo
-                  .split('. ')
-                  .filter(item => item.trim())
-              }
-              if (typeof results.value.periods[period].shouldAvoid === 'string') {
-                results.value.periods[period].shouldAvoid = results.value.periods[period].shouldAvoid
-                  .split('. ')
-                  .filter(item => item.trim())
-              }
-            })
-          }
-
-          editing.value = false
-
-          // Lưu vào localStorage
-          localStorage.setItem('numerologyData', JSON.stringify({
-            userInfo: userInfo.value,
-            results: results.value
-          }))
-
-          toast.success('Phân tích thành công!')
-        } else {
-          throw new Error('Dữ liệu API không hợp lệ')
-        }
-      } catch (error) {
-        console.error('Error:', error)
-        toast.error('Đã xảy ra lỗi khi lấy dữ liệu. Vui lòng thử lại sau.')
-        
-        // Reset về giá trị mặc định khi có lỗi
-        results.value = { 
-          periods: {}, 
-          cycles: {} 
-        }
-      } finally {
-        loading.value = false
-      }
-    }
-
-    // Lifecycle hooks
-    onMounted(() => {
-      // Load saved data if exists
-      const savedData = localStorage.getItem('numerologyData')
-      if (savedData) {
-        try {
-          const parsedData = JSON.parse(savedData)
-          if (parsedData.userInfo && parsedData.results) {
-            userInfo.value = parsedData.userInfo
-            form.value = {
-              name: parsedData.userInfo.name,
-              birthDate: parsedData.userInfo.birthDate
-            }
-            results.value = parsedData.results
-          }
-        } catch (e) {
-          console.error('Error parsing saved data:', e)
-          localStorage.removeItem('numerologyData')
-        }
-      }
-    })
-
-    onUnmounted(() => {
-      // Clean up chart instance
-      if (chartInstance.value) {
-        chartInstance.value.destroy()
-      }
-    })
-
-    // Watchers
-    watch(
-      () => activeTab.value,
-      (newTab) => {
-        if (newTab === 'cycles') {
-          nextTick(() => {
-            renderChart()
-          })
-        }
-      }
-    )
-
-    watch(
-      () => results.value.cycles,
-      (newCycles) => {
-        if (activeTab.value === 'cycles' && newCycles) {
-          nextTick(() => {
-            renderChart()
-          })
         }
       },
-      { deep: true }
-    )
-
-    return {
-      tabs,
-      activeTab,
-      form,
-      userInfo,
-      results,
-      loading,
-      editing,
-      isFormValid,
-      resultTitle,
-      shouldDoTitle,
-      shouldAvoidTitle,
-      switchTab,
-      submitForm
+      scales: {
+        y: {
+          beginAtZero: false,
+          min: Math.max(1, Math.min(...numbers) - 2),
+          max: Math.min(22, Math.max(...numbers) + 2),
+          ticks: { stepSize: 1 },
+          grid: { color: 'rgba(0, 0, 0, 0.05)' }
+        },
+        x: { grid: { display: false } }
+      }
     }
+  })
+}
+
+const submitForm = async () => {
+  if (!isFormValid.value) {
+    $toast.error('Vui lòng nhập đầy đủ thông tin hợp lệ!')
+    return
+  }
+
+  loading.value = true
+  try {
+    const { data, error } = await useFetch('/api/numerology/period', {
+      method: 'POST',
+      body: {
+        name: form.value.name,
+        birthDate: form.value.birthDate
+      }
+    })
+
+    if (error.value) {
+      throw new Error(error.value.message || 'Request failed')
+    }
+
+    if (data.value?.success) {
+      userInfo.value = { 
+        name: form.value.name, 
+        birthDate: form.value.birthDate 
+      }
+      
+      results.value = {
+        periods: data.value.data?.periods || {},
+        cycles: data.value.data?.cycles || {}
+      }
+
+      // Format data if needed
+      if (results.value.periods) {
+        Object.keys(results.value.periods).forEach(period => {
+          if (typeof results.value.periods[period].shouldDo === 'string') {
+            results.value.periods[period].shouldDo = results.value.periods[period].shouldDo
+              .split('. ')
+              .filter(item => item.trim())
+          }
+          if (typeof results.value.periods[period].shouldAvoid === 'string') {
+            results.value.periods[period].shouldAvoid = results.value.periods[period].shouldAvoid
+              .split('. ')
+              .filter(item => item.trim())
+          }
+        })
+      }
+
+      editing.value = false
+      localStorage.setItem('numerologyData', JSON.stringify({
+        userInfo: userInfo.value,
+        results: results.value
+      }))
+
+      $toast.success('Phân tích thành công!')
+    } else {
+      throw new Error('Dữ liệu API không hợp lệ')
+    }
+  } catch (error) {
+    console.error('API Error:', error)
+    $toast.error(error.message || 'Đã xảy ra lỗi khi lấy dữ liệu')
+    results.value = { periods: {}, cycles: {} }
+  } finally {
+    loading.value = false
   }
 }
+
+// Lifecycle
+onMounted(() => {
+  const savedData = localStorage.getItem('numerologyData')
+  if (savedData) {
+    try {
+      const parsedData = JSON.parse(savedData)
+      if (parsedData.userInfo && parsedData.results) {
+        userInfo.value = parsedData.userInfo
+        form.value = {
+          name: parsedData.userInfo.name,
+          birthDate: parsedData.userInfo.birthDate
+        }
+        results.value = parsedData.results
+      }
+    } catch (e) {
+      console.error('Error parsing saved data:', e)
+      localStorage.removeItem('numerologyData')
+    }
+  }
+})
+
+onUnmounted(() => {
+  if (chartInstance.value) {
+    chartInstance.value.destroy()
+  }
+})
+
+// Watchers
+watch(activeTab, (newTab) => {
+  if (newTab === 'cycles') {
+    nextTick(renderChart)
+  }
+})
+
+watch(
+  () => results.value.cycles,
+  () => {
+    if (activeTab.value === 'cycles') {
+      nextTick(renderChart)
+    }
+  },
+  { deep: true }
+)
 </script>
 
 <style scoped>
 .hide-scrollbar {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 .hide-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
 }
 </style>
