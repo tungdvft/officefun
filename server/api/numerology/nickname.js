@@ -2,11 +2,11 @@ import { defineEventHandler, createError } from 'h3';
 import NUMEROLOGY_MEANINGS, { NumerologyUtils } from '../utils/numerology-meanings.js';
 
 function getLifePathNumber(birthdate) {
+  if (!/^\d{2}[\/-]\d{2}[\/-]\d{4}$/.test(birthdate)) return 9;
   const normalizedBirthdate = birthdate.replace(/-/g, '/');
   const [day, month, year] = normalizedBirthdate.split('/').map(Number);
-  if (!day || !month || !year) return 9;
-  const sum = (day + month + year).toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
-  return NumerologyUtils.reduceToSingleDigit(sum) || 9;
+  if (isNaN(day) || isNaN(month) || isNaN(year) || month > 12 || day > 31) return 9;
+  return NumerologyUtils.reduceToSingleDigit(day + month + year) || 9;
 }
 
 function getSoulNumber(name) {
@@ -60,17 +60,28 @@ export default defineEventHandler(async (event) => {
 
   const lifePathData = NUMEROLOGY_MEANINGS.lifePath[dominantNumber] || NUMEROLOGY_MEANINGS.lifePath[1];
   const soulData = NUMEROLOGY_MEANINGS.soulUrge[soulNumber] || NUMEROLOGY_MEANINGS.soulUrge[1];
-  const personalityData = NUMEROLOGY_MEANINGS.personality?.[personalityNumber] || NUMEROLOGY_MEANINGS.personality?.[1] || { theme: "Không xác định", strengths: [] };
-  const destinyData = NUMEROLOGY_MEANINGS.destiny?.[destinyNumber] || NUMEROLOGY_MEANINGS.destiny?.[1] || { theme: "Không xác định", strengths: [] };
+  const personalityData = NUMEROLOGY_MEANINGS.personality[personalityNumber] || NUMEROLOGY_MEANINGS.personality[1];
+  const destinyData = NUMEROLOGY_MEANINGS.expression[destinyNumber] || NUMEROLOGY_MEANINGS.expression[1];
 
-  console.log('Numerology data:', { lifePathData, soulData, personalityData, destinyData });
+  console.log('Numerology data:', { 
+    dominantNumber, soulNumber, personalityNumber, destinyNumber,
+    lifePathData, soulData, personalityData, destinyData 
+  });
 
-  const prompt = `Dựa trên thần số học với số chủ đạo ${dominantNumber} (${lifePathData.theme}), số linh hồn ${soulNumber} (${soulData.theme}), số nhân cách ${personalityNumber} (${personalityData.theme}), số định mệnh ${destinyNumber} (${destinyData.theme}), sinh ngày ${birthdate}, giới tính "${gender}"${startLetter ? `, yêu cầu tên bắt đầu bằng chữ "${startLetter}"` : ''}. Trả về JSON hợp lệ với phần sau: ` +
-    `"answer": Một đoạn văn ngắn (6-8 câu) gợi ý danh xưng quốc tế cho người trưởng thành. Đề xuất 3 danh xưng cụ thể, mỗi tên in đậm bằng **tên**, kèm lý do ngắn gọn (1-2 câu mỗi tên) dựa trên ý nghĩa từ các số thần số học (${lifePathData.theme}, ${soulData.theme}, ${personalityData.theme}, ${destinyData.theme}), cách nhau bằng "\\n\\n". ` +
-    `Tên phải theo phong cách quốc tế, ngắn gọn, dễ gọi, định dạng "Tên tiếng Anh + Họ" với họ là "${lastName}", không bao gồm tên đầy đủ tiếng Việt trong toàn bộ nội dung. ` +
-    `Nếu giới tính là "male", dùng tên nam tính; nếu là "female", dùng tên nữ tính. ` +
-    `${startLetter ? `Tất cả tên phải bắt đầu bằng chữ "${startLetter}". ` : ''}Đảm bảo 3 tên khác nhau. Với mỗi tên, thêm thông tin về một người nổi tiếng có cùng tên (ví dụ: "David Beckham - cầu thủ bóng đá nổi tiếng" cho David), đặt trong dấu ngoặc sau lý do. ` +
-    `Kết thúc bằng 1-2 câu khuyên dùng "bạn" về cách sử dụng danh xưng. Không dùng Markdown trong JSON, chỉ trả về chuỗi JSON thuần túy!`;
+  const prompt = `Dựa trên thần số học với số chủ đạo ${dominantNumber} (${lifePathData.theme}), số linh hồn ${soulNumber} (${soulData.desire}), số nhân cách ${personalityNumber} (${personalityData.theme}), số định mệnh ${destinyNumber} (${destinyData.theme}), sinh ngày ${birthdate}, giới tính "${gender}"${startLetter ? `, yêu cầu tên bắt đầu bằng chữ "${startLetter}"` : ''}. Trả về JSON hợp lệ với phần "numerology" chứa:
+    1. "lifePath": Số ${dominantNumber}, "lifePathDesc": Mô tả ngắn (1-2 câu) về ${lifePathData.theme} dựa trên ${lifePathData.strengths.join(', ')}.
+    2. "soul": Số ${soulNumber}, "soulDesc": Mô tả ngắn (1-2 câu) về ${soulData.desire} dựa trên ${soulData.motivation}.
+    3. "personality": Số ${personalityNumber}, "personalityDesc": Mô tả ngắn (1-2 câu) về ${personalityData.theme} dựa trên ${personalityData.workStyle}.
+    4. "destiny": Số ${destinyNumber}, "destinyDesc": Mô tả ngắn (1-2 câu) về ${destinyData.theme} dựa trên ${destinyData.talents.join(', ')}.
+    5. "suggestions": Mảng 3 danh xưng quốc tế, mỗi danh xưng có:
+       - "name": Tên định dạng "Tên tiếng Anh + ${lastName}" (không dùng tên đầy đủ tiếng Việt),
+       - "soul": Số linh hồn của tên,
+       - "destiny": Số định mệnh của tên,
+       - "desc": Lý do ngắn (1-2 câu) dựa trên ${lifePathData.theme}, ${soulData.desire}, ${personalityData.theme}, ${destinyData.theme},
+       - "famous": Một người nổi tiếng cùng tên (ví dụ: "David Beckham - cầu thủ bóng đá nổi tiếng").
+       Tên phải ngắn gọn, dễ gọi, phong cách quốc tế; nếu "male" thì nam tính, nếu "female" thì nữ tính${startLetter ? `, bắt đầu bằng "${startLetter}"` : ''}. Đảm bảo 3 tên khác nhau.
+    6. "advice": Lời khuyên ngắn (1-2 câu) cho "bạn" về cách dùng danh xưng.
+    Không dùng Markdown trong JSON, chỉ trả về chuỗi JSON thuần túy!`;
 
   try {
     const response = await fetch(
@@ -98,7 +109,9 @@ export default defineEventHandler(async (event) => {
     rawText = rawText.replace(/```json|```/g, '').trim();
     try {
       const parsedData = JSON.parse(rawText);
-      if (!parsedData || !parsedData.answer) throw new Error('Gemini API không trả về đầy đủ dữ liệu');
+      if (!parsedData || !parsedData.numerology || !parsedData.numerology.suggestions) {
+        throw new Error('Gemini API không trả về dữ liệu đầy đủ');
+      }
       return parsedData;
     } catch (parseError) {
       console.error('Lỗi parse JSON từ Gemini:', parseError, 'Raw text:', rawText);
@@ -155,11 +168,40 @@ function getDynamicNickname(dominantNumber, soulNumber, personalityNumber, desti
   const selectedNames = shuffleAndPick(nameList, 3);
   const [name1, name2, name3] = selectedNames;
 
-  const answer = `Dựa trên thần số học với các con số chủ đạo ${dominantNumber}, linh hồn ${soulNumber}, nhân cách ${personalityNumber}, và định mệnh ${destinyNumber}, đây là 3 gợi ý danh xưng quốc tế cho bạn${startLetter ? ` (bắt đầu bằng "${startLetter}")` : ''}:\n\n` +
-    `**${name1.name} ${lastName}**: Tên này phù hợp với năng lượng ${lifePathData.theme.toLowerCase()} từ số chủ đạo ${dominantNumber}, thể hiện ${(lifePathData.strengths || [])[0]?.toLowerCase() || 'sự mạnh mẽ'}. (${name1.famous})\n\n` +
-    `**${name2.name} ${lastName}**: Tên này phản ánh ${soulData.theme.toLowerCase()} của số linh hồn ${soulNumber}, nổi bật với ${(soulData.desires || [])[0]?.toLowerCase() || 'sự sáng tạo'}. (${name2.famous})\n\n` +
-    `**${name3.name} ${lastName}**: Tên này kết nối với ${personalityData.theme.toLowerCase()} từ số nhân cách ${personalityNumber}, phù hợp với ${(personalityData.strengths || [])[0]?.toLowerCase() || 'sự tinh tế'}. (${name3.famous})\n\n` +
-    `Bạn có thể dùng các danh xưng này trong công việc hoặc mạng xã hội để tạo dấu ấn riêng. Hãy chọn cái phù hợp nhất với phong cách của bạn!`;
+  const numerology = {
+    lifePath: dominantNumber,
+    lifePathDesc: `${lifePathData.theme} (${dominantNumber}) mang năng lượng ${lifePathData.strengths[0].toLowerCase()} và ${lifePathData.strengths[1].toLowerCase()} để định hướng danh xưng.`,
+    soul: soulNumber,
+    soulDesc: `${soulData.desire} (${soulNumber}) thể hiện khát vọng ${soulData.motivation.toLowerCase()} của bạn.`,
+    personality: personalityNumber,
+    personalityDesc: `${personalityData.theme} (${personalityNumber}) cho thấy phong cách ${personalityData.workStyle.toLowerCase()} trong danh xưng.`,
+    destiny: destinyNumber,
+    destinyDesc: `${destinyData.theme} (${destinyNumber}) định hình tương lai với ${destinyData.talents[0].toLowerCase()} và ${destinyData.talents[1].toLowerCase()}.`,
+    suggestions: [
+      {
+        name: `${name1.name} ${lastName}`,
+        soul: getSoulNumber(name1.name),
+        destiny: getDestinyNumber(`${name1.name} ${lastName}`),
+        desc: `Tên này phù hợp với ${lifePathData.theme.toLowerCase()} từ số chủ đạo ${dominantNumber}, thể hiện ${lifePathData.strengths[0].toLowerCase()}.`,
+        famous: name1.famous
+      },
+      {
+        name: `${name2.name} ${lastName}`,
+        soul: getSoulNumber(name2.name),
+        destiny: getDestinyNumber(`${name2.name} ${lastName}`),
+        desc: `Tên này phản ánh ${soulData.desire.toLowerCase()} của số linh hồn ${soulNumber}, nổi bật với ${soulData.motivation.toLowerCase()}.`,
+        famous: name2.famous
+      },
+      {
+        name: `${name3.name} ${lastName}`,
+        soul: getSoulNumber(name3.name),
+        destiny: getDestinyNumber(`${name3.name} ${lastName}`),
+        desc: `Tên này kết nối với ${personalityData.theme.toLowerCase()} từ số nhân cách ${personalityNumber}, phù hợp với ${personalityData.workStyle.toLowerCase()}.`,
+        famous: name3.famous
+      }
+    ],
+    advice: `Bạn nên chọn danh xưng phù hợp với phong cách cá nhân và mục tiêu nghề nghiệp để tạo dấu ấn riêng!`
+  };
 
-  return { answer };
+  return { numerology };
 }
