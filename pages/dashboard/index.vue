@@ -1,4 +1,3 @@
-<!-- pages/dashboard/index.vue -->
 <template>
   <div class="space-y-8">
     <!-- Banner chào mừng -->
@@ -37,30 +36,38 @@
         </div>
         <button
           @click="submitForm"
-          :disabled="loading"
-          class="bg-purple-500 text-white px-6 py-2 rounded-lg hover:bg-purple-600 disabled:bg-gray-400"
+          :disabled="loading || !isFormValid"
+          class="bg-purple-500 text-white px-6 py-2 rounded-lg hover:bg-purple-600 disabled:bg-gray-400 transition-colors"
         >
           {{ loading ? 'Đang xử lý...' : 'Xem ngay' }}
         </button>
       </div>
+      
+      <!-- Hiển thị thông tin đã nhập -->
       <div v-else class="flex justify-between items-center mb-4">
-        <p class="text-gray-700">Kết quả cho: <span class="font-semibold">{{ userInfo.name }}</span></p>
+        <p class="text-gray-700">
+          Kết quả cho: <span class="font-semibold">{{ userInfo.name }}</span>
+          <span class="text-sm text-gray-500 ml-2">({{ userInfo.birthDate }})</span>
+        </p>
         <button
           @click="editing = true"
-          class="text-purple-500 hover:underline"
+          class="text-purple-500 hover:underline flex items-center"
         >
-          Cập nhật thông tin
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+          </svg>
+          Cập nhật
         </button>
       </div>
 
       <!-- Tabs -->
-      <div v-if="userInfo.name" class="flex space-x-4 border-b mb-4">
+      <div v-if="userInfo.name" class="flex overflow-x-auto border-b mb-4 hide-scrollbar">
         <button
           v-for="tab in tabs"
           :key="tab.value"
           @click="switchTab(tab.value)"
           :class="[
-            'py-2 px-4 font-medium',
+            'py-2 px-4 font-medium whitespace-nowrap',
             activeTab === tab.value
               ? 'border-b-2 border-purple-500 text-purple-700'
               : 'text-gray-500 hover:text-purple-700'
@@ -70,53 +77,122 @@
         </button>
       </div>
 
-      <!-- Nội dung -->
-      <div v-if="!userInfo.name" class="text-center text-gray-600">
-        <p>Nhập thông tin để khám phá thần số học của bạn!</p>
-      </div>
-      <div v-else-if="activeTab !== 'cycles' && results.periods && results.periods[activeTab]" class="mt-4 p-4 bg-purple-50 rounded-lg space-y-4">
-        <div>
-          <p class="text-purple-800 font-semibold text-lg">{{ resultTitle }}: {{ results.periods[activeTab].number }}</p>
-          <p class="text-gray-700 mt-2">{{ results.periods[activeTab].description }}</p>
-        </div>
-        <div>
-          <p class="text-purple-800 font-semibold text-lg">{{ shouldDoTitle }}</p>
-          <p class="text-gray-700 mt-2">{{ results.periods[activeTab].shouldDo }}</p>
-        </div>
-        <div>
-          <p class="text-purple-800 font-semibold text-lg">{{ shouldAvoidTitle }}</p>
-          <p class="text-gray-700 mt-2">{{ results.periods[activeTab].shouldAvoid }}</p>
-        </div>
-        <div v-if="activeTab === 'day'">
-          <p class="text-purple-800 font-semibold text-lg">Trưa nay ăn gì</p>
-          <p class="text-gray-700 mt-2">{{ results.periods[activeTab].lunchSuggestion }}</p>
+      <!-- Nội dung chính -->
+      <div v-if="!userInfo.name" class="text-center py-8">
+        <div class="max-w-md mx-auto">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          <h3 class="text-lg font-medium text-gray-700 mb-2">Nhập thông tin của bạn</h3>
+          <p class="text-gray-500">Vui lòng nhập tên và ngày sinh để xem phân tích thần số học</p>
         </div>
       </div>
-      <div v-else-if="activeTab === 'cycles' && results.cycles" class="mt-4 p-4 bg-purple-50 rounded-lg space-y-4">
-        <h3 class="text-purple-800 font-semibold text-lg">Chu kỳ vận số 10 năm</h3>
-        <canvas id="numerologyChart" height="100"></canvas>
-        <div class="space-y-2">
-          <div
-            v-for="(cycle, year) in results.cycles"
-            :key="year"
-            class="p-3 bg-white rounded-lg shadow-sm"
-          >
-            <p class="text-purple-700 font-medium">Năm {{ year }} - Số cá nhân: {{ cycle.number }}</p>
-            <p class="text-gray-700">{{ cycle.description }}</p>
+      
+      <!-- Nội dung theo tab -->
+      <template v-else>
+        <!-- Tab ngày/tuần/tháng/năm -->
+        <div v-if="activeTab !== 'cycles'" class="mt-4 p-6 bg-purple-50 rounded-lg space-y-6">
+          <template v-if="results.periods && results.periods[activeTab]">
+            <div class="bg-white p-4 rounded-lg shadow-sm">
+              <p class="text-purple-800 font-semibold text-lg">{{ resultTitle }}: 
+                <span class="text-2xl font-bold ml-2">{{ results.periods[activeTab].number }}</span>
+              </p>
+              <p class="text-gray-700 mt-3 leading-relaxed">{{ results.periods[activeTab].description }}</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <p class="text-purple-800 font-semibold text-lg flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                  {{ shouldDoTitle }}
+                </p>
+                <ul class="mt-3 space-y-2 text-gray-700">
+                  <li v-for="(item, index) in results.periods[activeTab].shouldDo.split('. ')" :key="'do-'+index" class="flex items-start">
+                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-green-500 mt-2 mr-2"></span>
+                    {{ item }}
+                  </li>
+                </ul>
+              </div>
+              
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <p class="text-purple-800 font-semibold text-lg flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                  </svg>
+                  {{ shouldAvoidTitle }}
+                </p>
+                <ul class="mt-3 space-y-2 text-gray-700">
+                  <li v-for="(item, index) in results.periods[activeTab].shouldAvoid.split('. ')" :key="'avoid-'+index" class="flex items-start">
+                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-red-500 mt-2 mr-2"></span>
+                    {{ item }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div v-if="activeTab === 'day'" class="bg-white p-4 rounded-lg shadow-sm">
+              <p class="text-purple-800 font-semibold text-lg flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                  <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                </svg>
+                Gợi ý bữa trưa
+              </p>
+              <p class="text-gray-700 mt-3 leading-relaxed">{{ results.periods.day.lunchSuggestion }}</p>
+            </div>
+          </template>
+          
+          <div v-else class="text-center py-8 text-gray-500">
+            Không có dữ liệu phân tích
           </div>
         </div>
-      </div>
+        
+        <!-- Tab chu kỳ vận số -->
+        <div v-else class="mt-4 p-6 bg-purple-50 rounded-lg space-y-6">
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h3 class="text-purple-800 font-semibold text-lg mb-4">Chu kỳ vận số 10 năm</h3>
+            
+            <div class="h-64 mb-6">
+              <canvas id="numerologyChart"></canvas>
+            </div>
+            
+            <div v-if="results.cycles && Object.keys(results.cycles).length" class="space-y-4">
+              <div 
+                v-for="(cycle, year) in results.cycles" 
+                :key="year"
+                class="p-4 border rounded-lg hover:bg-purple-50 transition-colors"
+              >
+                <p class="text-purple-700 font-medium text-lg">
+                  Năm {{ year }} - 
+                  <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-purple-100 text-purple-800 ml-2">
+                    {{ cycle.number }}
+                  </span>
+                </p>
+                <p class="text-gray-700 mt-2">{{ cycle.description }}</p>
+              </div>
+            </div>
+            
+            <div v-else class="text-center py-8 text-gray-500">
+              Không có dữ liệu chu kỳ
+            </div>
+          </div>
+        </div>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { toast } from 'vue3-toastify'
 import Chart from 'chart.js/auto'
+
 definePageMeta({
   layout: 'dashboard'
-});
+})
+
 export default {
   setup() {
     // Tabs configuration
@@ -135,7 +211,10 @@ export default {
       birthDate: ''
     })
     const userInfo = ref({})
-    const results = ref({})
+    const results = ref({
+      periods: {},
+      cycles: {}
+    })
     const loading = ref(false)
     const editing = ref(false)
     const chartInstance = ref(null)
@@ -155,14 +234,21 @@ export default {
       return titles[activeTab.value] || ''
     })
 
+    const shouldDoTitle = computed(() => {
+      return 'Những việc nên làm'
+    })
+
+    const shouldAvoidTitle = computed(() => {
+      return 'Những việc nên tránh'
+    })
+
     // Methods
-    const getVietnamDate = () => {
-      const now = new Date()
-      return new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }))
+    const switchTab = (tab) => {
+      activeTab.value = tab
     }
 
     const renderChart = () => {
-      if (!results.value.cycles) return
+      if (!results.value.cycles || !Object.keys(results.value.cycles).length) return
 
       // Destroy existing chart if any
       if (chartInstance.value) {
@@ -172,7 +258,7 @@ export default {
       const ctx = document.getElementById('numerologyChart')
       if (!ctx) return
 
-      const years = Object.keys(results.value.cycles)
+      const years = Object.keys(results.value.cycles).sort()
       const numbers = years.map(year => results.value.cycles[year].number)
 
       chartInstance.value = new Chart(ctx, {
@@ -183,22 +269,51 @@ export default {
             label: 'Số cá nhân',
             data: numbers,
             borderColor: '#8b5cf6',
-            backgroundColor: 'rgba(139, 92, 246, 0.2)',
+            backgroundColor: 'rgba(139, 92, 246, 0.1)',
+            borderWidth: 2,
+            pointBackgroundColor: '#8b5cf6',
+            pointRadius: 5,
+            pointHoverRadius: 7,
             fill: true,
-            tension: 0.4
+            tension: 0.3
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: (context) => {
+                  const year = years[context.dataIndex]
+                  const desc = results.value.cycles[year].description
+                  return [
+                    `Năm ${year}: Số ${context.raw}`,
+                    desc
+                  ]
+                }
+              }
+            }
+          },
           scales: {
             y: {
-              beginAtZero: true,
-              max: 22,
-              title: { display: true, text: 'Số cá nhân' }
+              beginAtZero: false,
+              min: Math.max(1, Math.min(...numbers) - 2),
+              max: Math.min(22, Math.max(...numbers) + 2),
+              ticks: {
+                stepSize: 1
+              },
+              grid: {
+                color: 'rgba(0, 0, 0, 0.05)'
+              }
             },
             x: {
-              title: { display: true, text: 'Năm' }
+              grid: {
+                display: false
+              }
             }
           }
         }
@@ -224,17 +339,40 @@ export default {
           })
         })
 
-        if (!response.ok) throw new Error('Network response was not ok')
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
 
         const data = await response.json()
-        userInfo.value = { name: form.value.name, birthDate: form.value.birthDate }
-        results.value = data.numerology
+        userInfo.value = { 
+          name: form.value.name, 
+          birthDate: form.value.birthDate 
+        }
+        
+        // Đảm bảo dữ liệu trả về có cấu trúc đúng
+        results.value = {
+          periods: data.numerology?.periods || {},
+          cycles: data.numerology?.cycles || {}
+        }
+        
         editing.value = false
+
+        // Save to localStorage
+        localStorage.setItem('numerologyData', JSON.stringify({
+          userInfo: userInfo.value,
+          results: results.value
+        }))
 
         toast.success('Phân tích thành công!')
       } catch (error) {
         console.error('Error:', error)
-        toast.error('Đã xảy ra lỗi khi lấy dữ liệu')
+        toast.error('Đã xảy ra lỗi khi lấy dữ liệu. Vui lòng thử lại sau.')
+        
+        // Reset về giá trị mặc định khi có lỗi
+        results.value = { 
+          periods: {}, 
+          cycles: {} 
+        }
       } finally {
         loading.value = false
       }
@@ -245,9 +383,20 @@ export default {
       // Load saved data if exists
       const savedData = localStorage.getItem('numerologyData')
       if (savedData) {
-        const { userInfo: savedUserInfo, results: savedResults } = JSON.parse(savedData)
-        userInfo.value = savedUserInfo
-        results.value = savedResults
+        try {
+          const parsedData = JSON.parse(savedData)
+          if (parsedData.userInfo && parsedData.results) {
+            userInfo.value = parsedData.userInfo
+            form.value = {
+              name: parsedData.userInfo.name,
+              birthDate: parsedData.userInfo.birthDate
+            }
+            results.value = parsedData.results
+          }
+        } catch (e) {
+          console.error('Error parsing saved data:', e)
+          localStorage.removeItem('numerologyData')
+        }
       }
     })
 
@@ -262,7 +411,7 @@ export default {
     watch(
       () => activeTab.value,
       (newTab) => {
-        if (newTab === 'cycles' && results.value.cycles) {
+        if (newTab === 'cycles') {
           nextTick(() => {
             renderChart()
           })
@@ -271,9 +420,9 @@ export default {
     )
 
     watch(
-      () => results.value,
-      (newResults) => {
-        if (newResults.cycles && activeTab.value === 'cycles') {
+      () => results.value.cycles,
+      (newCycles) => {
+        if (activeTab.value === 'cycles' && newCycles) {
           nextTick(() => {
             renderChart()
           })
@@ -292,9 +441,21 @@ export default {
       editing,
       isFormValid,
       resultTitle,
-      submitForm,
-      // ... other methods and computed properties
+      shouldDoTitle,
+      shouldAvoidTitle,
+      switchTab,
+      submitForm
     }
   }
 }
 </script>
+
+<style scoped>
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+</style>
