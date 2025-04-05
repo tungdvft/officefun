@@ -4,7 +4,10 @@ import NUMEROLOGY_MEANINGS, { NumerologyUtils } from '../utils/numerology-meanin
 
 // Tính số đường đời
 function calculateLifePathNumber(birthDate) {
-  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate)) return 1;
+  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate)) {
+    console.warn(`Invalid birthDate format: ${birthDate}, defaulting to 1`);
+    return 1;
+  }
   const digits = birthDate.split('/').join('').split('').map(Number);
   return NumerologyUtils.reduceToSingleDigit(digits.reduce((a, b) => a + b, 0)) || 1;
 }
@@ -27,12 +30,66 @@ function calculateSoulUrgeNumber(name) {
 
 // Tính số năm cá nhân
 function calculatePersonalYearNumber(birthDate, year = 2025) {
-  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate)) return 1;
+  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate)) {
+    console.warn(`Invalid birthDate format: ${birthDate}, defaulting to 1`);
+    return 1;
+  }
   return NumerologyUtils.calculatePersonalYear(birthDate, year) || 1;
 }
 
+// Hàm nối mảng thành chuỗi
+function joinSentences(sentences) {
+  return Array.isArray(sentences) ? sentences.join(' ') : sentences || '';
+}
+
+// Hàm fallback
+function getFallbackResponse(name, birthDate, numbers) {
+  try {
+    const lifePathData = NUMEROLOGY_MEANINGS.lifePath[numbers.lifePath] || NUMEROLOGY_MEANINGS.lifePath[1];
+    const expressionData = NUMEROLOGY_MEANINGS.expression[numbers.expression] || NUMEROLOGY_MEANINGS.expression[1];
+    const soulUrgeData = NUMEROLOGY_MEANINGS.soulUrge[numbers.soulUrge] || NUMEROLOGY_MEANINGS.soulUrge[1];
+    const personalYearData = NUMEROLOGY_MEANINGS.personalYear[numbers.personalYear] || NUMEROLOGY_MEANINGS.personalYear[1];
+
+    return {
+      successMap: {
+        lifePathNumber: numbers.lifePath,
+        expressionNumber: numbers.expression,
+        soulUrgeNumber: numbers.soulUrge,
+        personalYearNumber: numbers.personalYear,
+        goal: `"${name}" với Số Đường đời ${numbers.lifePath} mang năng lượng ${lifePathData.theme.toLowerCase()}. Mục tiêu lớn của bạn là ${lifePathData.purpose.toLowerCase()}. Hãy tận dụng ${(lifePathData.strengths || [])[0]?.toLowerCase() || 'không xác định'} để tiến tới thành công.`,
+        strengths: `"${name}" sở hữu Số Tên ${numbers.expression}, thể hiện ${expressionData.theme.toLowerCase()}. Bạn nổi bật với ${(expressionData.strengths || [])[0]?.toLowerCase() || 'không xác định'} và ${(expressionData.strengths || [])[1]?.toLowerCase() || 'không xác định'}.`,
+        notes: `"${name}" có Số Linh hồn ${numbers.soulUrge}, phản ánh ${soulUrgeData.theme.toLowerCase()}. Bạn cần chú ý tránh ${(soulUrgeData.challenges || [])[0]?.toLowerCase() || 'không xác định'} để duy trì sự cân bằng.`,
+        strategy: `"${name}" trong năm 2025 với Số Cá nhân ${numbers.personalYear} cần tập trung vào ${personalYearData.theme.toLowerCase()}. Hãy ${(personalYearData.focus || [])[0]?.toLowerCase() || 'không xác định'} để tận dụng cơ hội trong năm nay.`,
+        milestones: {
+          shortTerm: `Dựa trên Số Linh hồn ${numbers.soulUrge}, bạn nên nuôi dưỡng ${(soulUrgeData.desires || [])[0]?.toLowerCase() || 'không xác định'}. Điều này giúp bạn tiến gần hơn đến mong muốn của mình.`,
+          mediumTerm: `Với Số Tên ${numbers.expression}, bạn có thể phát huy ${(expressionData.strengths || [])[0]?.toLowerCase() || 'không xác định'} để đạt bước tiến trong vài năm tới.`,
+          longTerm: `Số Đường đời ${numbers.lifePath} hướng bạn đến ${lifePathData.purpose.toLowerCase()}. Tập trung vào ${(lifePathData.strengths || [])[0]?.toLowerCase() || 'không xác định'} để thành công lâu dài.`,
+          currentYear: `Năm 2025 với Số Cá nhân ${numbers.personalYear}, bạn nên ${(personalYearData.focus || [])[0]?.toLowerCase() || 'không xác định'} để xây dựng nền tảng vững chắc.`
+        }
+      }
+    };
+  } catch (error) {
+    console.error('Fallback error:', error.message);
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Không thể tạo dữ liệu dự phòng'
+    });
+  }
+}
+
+// API handler chính
 export default defineEventHandler(async (event) => {
-  const { name, birthDate } = await readBody(event);
+  let body;
+  try {
+    body = await readBody(event);
+  } catch (error) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Invalid request body'
+    });
+  }
+
+  const { name, birthDate } = body;
 
   if (!name || !birthDate) {
     throw createError({
@@ -41,6 +98,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  // Tính các con số thần số học
   const numbers = {
     lifePath: calculateLifePathNumber(birthDate),
     expression: calculateExpressionNumber(name),
@@ -48,94 +106,96 @@ export default defineEventHandler(async (event) => {
     personalYear: calculatePersonalYearNumber(birthDate, 2025)
   };
 
-  // Lấy dữ liệu từ numerology-meanings.js với fallback
+  console.log('Calculated numbers:', numbers);
+
+  // Lấy dữ liệu từ NUMEROLOGY_MEANINGS
   const lifePathData = NUMEROLOGY_MEANINGS.lifePath[numbers.lifePath] || NUMEROLOGY_MEANINGS.lifePath[1];
   const expressionData = NUMEROLOGY_MEANINGS.expression[numbers.expression] || NUMEROLOGY_MEANINGS.expression[1];
   const soulUrgeData = NUMEROLOGY_MEANINGS.soulUrge[numbers.soulUrge] || NUMEROLOGY_MEANINGS.soulUrge[1];
   const personalYearData = NUMEROLOGY_MEANINGS.personalYear[numbers.personalYear] || NUMEROLOGY_MEANINGS.personalYear[1];
 
-  // Kiểm tra và log dữ liệu
-  console.log('NUMEROLOGY_MEANINGS data:', {
-    lifePath: lifePathData,
-    expression: expressionData,
-    soulUrge: soulUrgeData,
-    personalYear: personalYearData
-  });
-
-  const prompt = `Dựa trên thần số học, tạo bản đồ thành công cho "${name}" với ngày sinh ${birthDate} và các con số:
-    - Số Đường đời: ${numbers.lifePath} (${lifePathData.theme}, Tập trung: ${(lifePathData.strengths || []).join(', ') || 'Không xác định'})
-    - Số Tên: ${numbers.expression} (${expressionData.theme}, Điểm mạnh: ${(expressionData.strengths || []).join(', ') || 'Không xác định'})
-    - Số Linh hồn: ${numbers.soulUrge} (${soulUrgeData.theme}, Mong muốn: ${(soulUrgeData.desires || []).join(', ') || 'Không xác định'})
-    - Số Cá nhân năm 2025: ${numbers.personalYear} (${personalYearData.theme}, Chủ đề: ${(personalYearData.focus || []).join(', ') || 'Không xác định'})
-    Trả về JSON hợp lệ với các trường:
-    - "lifePathNumber": Số Đường đời.
-    - "expressionNumber": Số Tên.
-    - "soulUrgeNumber": Số Linh hồn.
-    - "personalYearNumber": Số Cá nhân năm 2025.
-    - "goal": Mục tiêu lớn dựa trên Số Đường đời (4-5 câu).
-    - "strengths": Điểm mạnh dựa trên Số Tên (3-4 câu).
-    - "notes": Điểm cần lưu ý dựa trên Số Linh hồn (3-4 câu).
-    - "strategy": Chiến lược năm 2025 dựa trên Số Cá nhân (4-5 câu).
-    - "milestones": Object chứa các cột mốc:
-      - "shortTerm": Cột mốc ngắn hạn dựa trên Số Linh hồn (3-4 câu).
-      - "mediumTerm": Cột mốc trung hạn dựa trên Số Tên (3-4 câu).
-      - "longTerm": Cột mốc dài hạn dựa trên Số Đường đời (3-4 câu).
-      - "currentYear": Cột mốc năm 2025 dựa trên Số Cá nhân (3-4 câu).
-    Giọng điệu tự nhiên, khách quan, dùng "bạn" trong diễn giải, chỉ nhắc tên "${name}" ở câu đầu mỗi phần "goal", "strengths", "notes", "strategy". Chỉ trả về JSON thuần túy, không markdown trong JSON!`;
+  // Prompt yêu cầu trả về chuỗi
+  const prompt = `Dựa trên thần số học, tạo bản đồ thành công cho "${name}" với:
+    - Số Đường đời: ${numbers.lifePath} (${lifePathData.theme})
+    - Số Tên: ${numbers.expression} (${expressionData.theme})
+    - Số Linh hồn: ${numbers.soulUrge} (${soulUrgeData.theme})
+    - Số Cá nhân 2025: ${numbers.personalYear} (${personalYearData.theme})
+    Trả về JSON với các trường là chuỗi (nối các câu bằng dấu cách):
+    - "lifePathNumber", "expressionNumber", "soulUrgeNumber", "personalYearNumber" (số)
+    - "goal" (3 câu về Số Đường đời)
+    - "strengths" (2 câu, chỉ dựa trên Số Tên)
+    - "notes" (2 câu về Số Linh hồn)
+    - "strategy" (3 câu về Số Cá nhân 2025)
+    - "milestones": {
+      "shortTerm" (2 câu về Số Linh hồn),
+      "mediumTerm" (2 câu về Số Tên),
+      "longTerm" (2 câu về Số Đường đời),
+      "currentYear" (2 câu về Số Cá nhân 2025)
+    }
+    Giọng điệu tự nhiên, dùng "bạn", chỉ nhắc "${name}" ở câu đầu mỗi phần "goal", "strengths", "notes", "strategy".`;
 
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+      controller.abort();
+      console.warn('Gemini API request timed out after 8000ms');
+    }, 8000);
+
     console.log('Sending prompt to Gemini:', prompt);
-    const rawData = await callGeminiApi(prompt);
-    console.log('Raw Gemini Response:', rawData);
+    const rawData = await callGeminiApi(prompt, { signal: controller.signal });
+    clearTimeout(timeoutId);
+
+    console.log('Raw Gemini response:', rawData);
 
     let data;
     if (typeof rawData === 'string') {
       try {
         data = JSON.parse(rawData);
       } catch (parseError) {
-        console.error('Failed to parse Gemini response:', parseError.message);
+        console.error('Failed to parse Gemini response:', parseError.message, 'Raw:', rawData);
         const jsonMatch = rawData.match(/\{[\s\S]*\}/);
-        if (jsonMatch) data = JSON.parse(jsonMatch[0]);
-        else throw new Error('Gemini API không trả về JSON hợp lệ');
+        if (jsonMatch) {
+          data = JSON.parse(jsonMatch[0]);
+        } else {
+          throw new Error('Gemini response không phải JSON hợp lệ');
+        }
       }
     } else if (typeof rawData === 'object' && rawData !== null) {
       data = rawData;
     } else {
-      throw new Error('Gemini API không trả về JSON hợp lệ');
+      throw new Error('Gemini response không hợp lệ: ' + typeof rawData);
     }
 
-    if (!data.lifePathNumber || !data.milestones) {
-      throw new Error('Gemini API không trả về dữ liệu đầy đủ');
+    // Chuẩn hóa dữ liệu thành chuỗi
+    const successMap = {
+      lifePathNumber: data.lifePathNumber,
+      expressionNumber: data.expressionNumber,
+      soulUrgeNumber: data.soulUrgeNumber,
+      personalYearNumber: data.personalYearNumber,
+      goal: joinSentences(data.goal),
+      strengths: joinSentences(data.strengths),
+      notes: joinSentences(data.notes),
+      strategy: joinSentences(data.strategy),
+      milestones: {
+        shortTerm: joinSentences(data.milestones.shortTerm),
+        mediumTerm: joinSentences(data.milestones.mediumTerm),
+        longTerm: joinSentences(data.milestones.longTerm),
+        currentYear: joinSentences(data.milestones.currentYear)
+      }
+    };
+
+    if (!successMap.lifePathNumber || !successMap.milestones.shortTerm) {
+      console.warn('Gemini response thiếu dữ liệu, switching to fallback');
+      return getFallbackResponse(name, birthDate, numbers);
     }
-    return { successMap: data };
+
+    console.log('Final successMap:', successMap);
+    return { successMap };
   } catch (error) {
-    console.error('Lỗi từ Gemini:', error.message);
+    console.error('Error calling Gemini API:', error.message, error.stack);
+    if (error.name === 'AbortError') {
+      console.log('Request aborted due to timeout, using fallback');
+    }
     return getFallbackResponse(name, birthDate, numbers);
   }
 });
-
-function getFallbackResponse(name, birthDate, numbers) {
-  const lifePathData = NUMEROLOGY_MEANINGS.lifePath[numbers.lifePath] || NUMEROLOGY_MEANINGS.lifePath[1];
-  const expressionData = NUMEROLOGY_MEANINGS.expression[numbers.expression] || NUMEROLOGY_MEANINGS.expression[1];
-  const soulUrgeData = NUMEROLOGY_MEANINGS.soulUrge[numbers.soulUrge] || NUMEROLOGY_MEANINGS.soulUrge[1];
-  const personalYearData = NUMEROLOGY_MEANINGS.personalYear[numbers.personalYear] || NUMEROLOGY_MEANINGS.personalYear[1];
-
-  return {
-    successMap: {
-      lifePathNumber: numbers.lifePath,
-      expressionNumber: numbers.expression,
-      soulUrgeNumber: numbers.soulUrge,
-      personalYearNumber: numbers.personalYear,
-      goal: `"${name}" với Số Đường đời ${numbers.lifePath} mang năng lượng ${lifePathData.theme.toLowerCase()}. Mục tiêu lớn của bạn là ${lifePathData.purpose.toLowerCase()}. Đây là hành trình phát triển bản thân qua ${(lifePathData.strengths || [])[0]?.toLowerCase() || 'không xác định'} và sự kiên trì. Hãy tận dụng ${(lifePathData.strengths || [])[1]?.toLowerCase() || 'không xác định'} để đạt được điều bạn hướng tới.`,
-      strengths: `"${name}" sở hữu Số Tên ${numbers.expression}, thể hiện ${expressionData.theme.toLowerCase()}. Bạn nổi bật với ${(expressionData.strengths || [])[0]?.toLowerCase() || 'không xác định'} và khả năng ${(expressionData.strengths || [])[1]?.toLowerCase() || 'không xác định'}. Đây là nền tảng để bạn tạo dấu ấn trong công việc và cuộc sống. Hãy phát huy chúng một cách tự nhiên.`,
-      notes: `"${name}" có Số Linh hồn ${numbers.soulUrge}, phản ánh khát vọng ${soulUrgeData.theme.toLowerCase()}. Bạn cần lưu ý tránh ${(soulUrgeData.challenges || [])[0]?.toLowerCase() || 'không xác định'} quá mức, vì điều này có thể làm bạn mất cân bằng. Hãy tìm cách nuôi dưỡng ${(soulUrgeData.desires || [])[0]?.toLowerCase() || 'không xác định'} để giữ tinh thần thoải mái.`,
-      strategy: `"${name}" trong năm 2025 với Số Cá nhân ${numbers.personalYear} cần tập trung vào ${personalYearData.theme.toLowerCase()}. Đây là thời điểm để bạn ${(personalYearData.focus || [])[0]?.toLowerCase() || 'không xác định'} và phát triển ${(personalYearData.focus || [])[1]?.toLowerCase() || 'không xác định'}. Hãy tận dụng năng lượng này để xây dựng nền tảng vững chắc. Kiên nhẫn và hành động đúng lúc sẽ giúp bạn đạt được thành công.`,
-      milestones: {
-        shortTerm: `Dựa trên Số Linh hồn ${numbers.soulUrge}, bạn nên bắt đầu bằng cách nuôi dưỡng ${(soulUrgeData.desires || [])[0]?.toLowerCase() || 'không xác định'}. Hãy thử thay đổi nhỏ trong cuộc sống hàng ngày để cảm nhận sự khác biệt. Điều này giúp bạn tiến gần hơn đến mong muốn sâu thẳm của mình.`,
-        mediumTerm: `Với Số Tên ${numbers.expression}, bạn có thể phát huy ${(expressionData.strengths || [])[0]?.toLowerCase() || 'không xác định'} để đạt được bước tiến. Tập trung vào một dự án nhỏ sử dụng ${(expressionData.strengths || [])[1]?.toLowerCase() || 'không xác định'} của mình. Đây là nền tảng cho những thành công lớn hơn sau này.`,
-        longTerm: `Số Đường đời ${numbers.lifePath} hướng bạn đến ${lifePathData.purpose.toLowerCase()}. Hãy đặt mục tiêu dài hạn liên quan đến ${(lifePathData.strengths || [])[0]?.toLowerCase() || 'không xác định'} để khẳng định giá trị bản thân. Đây là cột mốc quan trọng trong hành trình của bạn.`,
-        currentYear: `Năm 2025 với Số Cá nhân ${numbers.personalYear}, bạn cần ${(personalYearData.focus || [])[0]?.toLowerCase() || 'không xác định'} để đạt được kết quả rõ ràng. Tập trung vào ${(personalYearData.focus || [])[1]?.toLowerCase() || 'không xác định'} sẽ tạo đà cho tương lai. Đây là thời điểm quan trọng để bạn hành động và tổ chức lại mọi thứ.`
-      }
-    }
-  };
-}
