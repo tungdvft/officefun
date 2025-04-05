@@ -33,7 +33,7 @@ function getDestinyNumber(name) {
   return NumerologyUtils.reduceToSingleDigit(sum) || 1;
 }
 
-const apiKey = process.env.GEMINI_API_KEY || '';
+const apiKey = process.env.GEMINI_API_KEY||'AIzaSyBUmUduPG0zvD4URlJEmNnxDRsxMsTpaR8';
 
 export default defineEventHandler(async (event) => {
   const { name, birthdate, gender, startLetter } = await readBody(event);
