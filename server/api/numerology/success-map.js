@@ -1,7 +1,8 @@
 import { defineEventHandler, createError } from 'h3';
 import { callGeminiApi } from '../utils/commonApi';
 import NUMEROLOGY_MEANINGS, { NumerologyUtils } from '../utils/numerology-meanings.js';
-
+import dotenv from 'dotenv';
+dotenv.config(); // Tải biến môi trường từ .env
 // Tính số đường đời
 function calculateLifePathNumber(birthDate) {
   if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate)) {
