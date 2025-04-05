@@ -28,9 +28,9 @@
             <label for="birthDate" class="form-label">Ngày sinh (dd/mm/yyyy hoặc dd-mm-yyyy)</label>
             <div class="relative">
               <input v-model="formData.birthDate" type="text" id="birthDate" placeholder="15/03/2018" class="form-input pl-10" />
-              <!-- <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg> -->
+              </svg>
             </div>
           </div>
         </div>
@@ -59,8 +59,18 @@
                   <span class="mr-2">{{ result.numbers.lifePath.symbol }}</span> Số Đường đời: {{ result.numbers.lifePath.number }}
                 </h4>
                 <p class="text-sm text-gray-600">{{ result.numbers.lifePath.theme }}</p>
-                <p class="text-sm text-gray-500 mt-1"><strong>Điểm mạnh:</strong> {{ result.numbers.lifePath.strengths }}</p>
-                <p class="text-sm text-gray-500 mt-1"><strong>Thách thức:</strong> {{ result.numbers.lifePath.challenges }}</p>
+                <div class="mt-2">
+                  <h5 class="text-sm font-semibold text-gray-800">Điểm mạnh:</h5>
+                  <ul class="list-disc pl-5 text-gray-700 text-sm">
+                    <li v-for="strength in (Array.isArray(result.numbers.lifePath.strengths) ? result.numbers.lifePath.strengths : result.numbers.lifePath.strengths.split(', '))" :key="strength">{{ strength }}</li>
+                  </ul>
+                </div>
+                <div class="mt-2">
+                  <h5 class="text-sm font-semibold text-gray-800">Thách thức:</h5>
+                  <ul class="list-disc pl-5 text-gray-700 text-sm">
+                    <li v-for="challenge in (Array.isArray(result.numbers.lifePath.challenges) ? result.numbers.lifePath.challenges : result.numbers.lifePath.challenges.split(', '))" :key="challenge">{{ challenge }}</li>
+                  </ul>
+                </div>
               </div>
               <div class="p-4 bg-white rounded-lg shadow-sm">
                 <h4 class="font-semibold text-gray-800 flex items-center">
@@ -74,14 +84,24 @@
                   <span class="mr-2">{{ result.numbers.personality.symbol }}</span> Số Nhân cách: {{ result.numbers.personality.number }}
                 </h4>
                 <p class="text-sm text-gray-600">{{ result.numbers.personality.theme }}</p>
-                <p class="text-sm text-gray-500 mt-1"><strong>Điểm mạnh:</strong> {{ result.numbers.personality.strengths }}</p>
+                <div class="mt-2">
+                  <h5 class="text-sm font-semibold text-gray-800">Điểm mạnh:</h5>
+                  <ul class="list-disc pl-5 text-gray-700 text-sm">
+                    <li v-for="strength in (Array.isArray(result.numbers.personality.strengths) ? result.numbers.personality.strengths : result.numbers.personality.strengths.split(', '))" :key="strength">{{ strength }}</li>
+                  </ul>
+                </div>
               </div>
               <div class="p-4 bg-white rounded-lg shadow-sm">
                 <h4 class="font-semibold text-gray-800 flex items-center">
                   <span class="mr-2">{{ result.numbers.destiny.symbol }}</span> Số Sứ mệnh: {{ result.numbers.destiny.number }}
                 </h4>
                 <p class="text-sm text-gray-600">{{ result.numbers.destiny.theme }}</p>
-                <p class="text-sm text-gray-500 mt-1"><strong>Tài năng:</strong> {{ result.numbers.destiny.talents }}</p>
+                <div class="mt-2">
+                  <h5 class="text-sm font-semibold text-gray-800">Tài năng:</h5>
+                  <ul class="list-disc pl-5 text-gray-700 text-sm">
+                    <li v-for="talent in (Array.isArray(result.numbers.destiny.talents) ? result.numbers.destiny.talents : result.numbers.destiny.talents.split(', '))" :key="talent">{{ talent }}</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -93,8 +113,18 @@
               <span class="text-3xl font-bold text-indigo-600 mr-3">{{ result.personalYear.number }}</span>
               <div>
                 <h4 class="font-semibold text-gray-800">{{ result.personalYear.theme }}</h4>
-                <p class="text-sm text-gray-500"><strong>Trọng tâm:</strong> {{ result.personalYear.focus }}</p>
-                <p class="text-sm text-gray-500"><strong>Từ khóa:</strong> {{ result.personalYear.keywords }}</p>
+                <div class="mt-2">
+                  <h5 class="text-sm font-semibold text-gray-800">Trọng tâm:</h5>
+                  <ul class="list-disc pl-5 text-gray-700 text-sm">
+                    <li v-for="focus in (Array.isArray(result.personalYear.focus) ? result.personalYear.focus : result.personalYear.focus.split(', '))" :key="focus">{{ focus }}</li>
+                  </ul>
+                </div>
+                <div class="mt-2">
+                  <h5 class="text-sm font-semibold text-gray-800">Từ khóa:</h5>
+                  <ul class="list-disc pl-5 text-gray-700 text-sm">
+                    <li v-for="keyword in (Array.isArray(result.personalYear.keywords) ? result.personalYear.keywords : result.personalYear.keywords.split(', '))" :key="keyword">{{ keyword }}</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -165,7 +195,7 @@
             <p class="text-gray-700 whitespace-pre-wrap">{{ result.longTerm }}</p>
           </div>
 
-          <!-- Bản đồ 10 năm -->
+          <!-- Bản đồ 10 năm tới (Chart) -->
           <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
             <h3 class="text-xl font-bold text-purple-800 mb-4 flex items-center">
               <svg class="w-6 h-6 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -173,12 +203,11 @@
               </svg>
               Bản đồ 10 năm tới
             </h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div v-for="year in result.tenYearMap" :key="year.year" class="p-4 bg-gray-50 rounded-lg">
-                <h4 class="font-semibold text-gray-800">{{ year.year }} - Số {{ year.personalYear }} ({{ year.theme }})</h4>
-                <p class="text-sm text-gray-600">{{ year.advice }}</p>
+            <ClientOnly>
+              <div class="w-full h-80 relative">
+                <canvas ref="chartCanvas" id="tenYearChart"></canvas>
               </div>
-            </div>
+            </ClientOnly>
           </div>
 
           <!-- Nút chia sẻ -->
@@ -211,9 +240,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { toast } from 'vue3-toastify';
 import { drawDOM, exportPDF } from '@progress/kendo-drawing';
+import Chart from 'chart.js/auto';
 
 definePageMeta({ layout: 'dashboard' });
 
@@ -224,6 +254,7 @@ const formData = ref({
 
 const result = ref(null);
 const loading = ref(false);
+const chartCanvas = ref(null);
 const currentYear = new Date().getFullYear();
 const currentMonth = new Date().getMonth();
 const currentMonthVietnamese = computed(() => {
@@ -244,12 +275,77 @@ const analyzeChild = async () => {
     });
     result.value = response.childAnalysis;
     toast.success('Phân tích hoàn tất!', { position: 'top-center' });
+    setTimeout(() => renderChart(), 100); // Vẽ chart sau khi có dữ liệu
   } catch (error) {
     console.error('Error analyzing child:', error);
     toast.error(error.data?.message || 'Có lỗi xảy ra!', { position: 'top-center' });
   } finally {
     loading.value = false;
   }
+};
+
+// Vẽ biểu đồ
+const renderChart = () => {
+  if (!result.value || !result.value.tenYearMap || !chartCanvas.value) return;
+
+  const ctx = chartCanvas.value.getContext('2d');
+  if (!ctx) return;
+
+  const years = result.value.tenYearMap.map(y => y.year);
+  const numbers = result.value.tenYearMap.map(y => y.personalYear);
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: years,
+      datasets: [{
+        label: 'Số cá nhân',
+        data: numbers,
+        borderColor: '#8b5cf6',
+        backgroundColor: 'rgba(139, 92, 246, 0.2)',
+        borderWidth: 3,
+        pointBackgroundColor: '#8b5cf6',
+        pointRadius: 5,
+        pointHoverRadius: 7,
+        fill: true,
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 33,
+          title: { display: true, text: 'Số cá nhân', font: { weight: 'bold' } },
+          grid: { color: 'rgba(0, 0, 0, 0.05)' }
+        },
+        x: {
+          title: { display: true, text: 'Năm', font: { weight: 'bold' } },
+          grid: { display: false }
+        }
+      },
+      plugins: {
+        legend: { display: true, position: 'top', labels: { font: { size: 14 } } },
+        tooltip: {
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          titleFont: { size: 16, weight: 'bold' },
+          bodyFont: { size: 14 },
+          callbacks: {
+            label: (context) => {
+              const yearData = result.value.tenYearMap[context.dataIndex];
+              return [
+                `Số: ${yearData.personalYear}`,
+                `Chủ đề: ${yearData.theme}`,
+                `Lời khuyên: ${yearData.advice}`
+              ];
+            }
+          }
+        }
+      }
+    }
+  });
 };
 
 const shareResult = (platform) => {
@@ -359,6 +455,13 @@ const formatResultForShare = () => {
     `Bản đồ 10 năm tới:\n${result.value.tenYearMap.map(y => `${y.year} - Số ${y.personalYear} (${y.theme}): ${y.advice}`).join('\n')}`
   ].join('\n\n');
 };
+
+// Vẽ biểu đồ khi component được mount
+onMounted(() => {
+  if (result.value && result.value.tenYearMap) {
+    renderChart();
+  }
+});
 </script>
 
 <style scoped>

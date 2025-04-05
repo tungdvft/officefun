@@ -89,12 +89,38 @@ function getFallbackAnalysis(childName, birthDate, lifePath, soulUrge, personali
   return {
     childAnalysis: {
       numbers: {
-        lifePath: { number: lifePath, symbol: lifePathData.symbol || '🌟', theme: lifePathData.theme, strengths: lifePathData.strengths.join(', '), challenges: lifePathData.challenges.join(', ') },
-        soulUrge: { number: soulUrge, symbol: '❤️', desire: soulUrgeData.desire, motivation: soulUrgeData.motivation },
-        personality: { number: personality, symbol: personalityData.symbol || '🌀', theme: personalityData.theme, strengths: personalityData.strengths.join(', ') },
-        destiny: { number: destiny, symbol: destinyData.symbol || '⚡', theme: destinyData.theme, talents: destinyData.talents.join(', ') }
+        lifePath: { 
+          number: lifePath, 
+          symbol: lifePathData.symbol || '🌟', 
+          theme: lifePathData.theme, 
+          strengths: lifePathData.strengths.join(', '), // Đảm bảo là chuỗi
+          challenges: lifePathData.challenges.join(', ') // Đảm bảo là chuỗi
+        },
+        soulUrge: { 
+          number: soulUrge, 
+          symbol: '❤️', 
+          desire: soulUrgeData.desire, 
+          motivation: soulUrgeData.motivation 
+        },
+        personality: { 
+          number: personality, 
+          symbol: personalityData.symbol || '🌀', 
+          theme: personalityData.theme, 
+          strengths: personalityData.strengths.join(', ') // Đảm bảo là chuỗi
+        },
+        destiny: { 
+          number: destiny, 
+          symbol: destinyData.symbol || '⚡', 
+          theme: destinyData.theme, 
+          talents: destinyData.talents.join(', ') // Đảm bảo là chuỗi
+        }
       },
-      personalYear: { number: personalYear, theme: personalYearData.theme, focus: personalYearData.focus.join(', '), keywords: personalYearData.keywords.join(', ') },
+      personalYear: { 
+        number: personalYear, 
+        theme: personalYearData.theme, 
+        focus: personalYearData.focus.join(', '), 
+        keywords: personalYearData.keywords.join(', ') 
+      },
       personalityTraits: `Bé ${childName} mang năng lượng ${lifePathData.theme} (${lifePath}) với ${lifePathData.strengths[0].toLowerCase()}. Số linh hồn ${soulUrge} cho thấy bé khao khát ${soulUrgeData.desire.toLowerCase()}. Số nhân cách ${personality} thể hiện bé ${personalityData.strengths[0].toLowerCase()} trong giao tiếp. Số sứ mệnh ${destiny} định hướng bé thành ${destinyData.theme.toLowerCase()}.`,
       potential: `Bé có tiềm năng lớn với ${lifePathData.strengths[1].toLowerCase()} từ số đường đời. Số linh hồn ${soulUrge} hỗ trợ bé phát triển ${soulUrgeData.desire.toLowerCase()}. Bé có thể tỏa sáng trong ${destinyData.careers[0].toLowerCase()} nếu được hướng dẫn đúng. Tính ${personalityData.strengths[1].toLowerCase()} sẽ giúp bé nổi bật.`,
       challenges: `Thách thức lớn nhất của bé là ${lifePathData.challenges[0].toLowerCase()} từ số đường đời. Bé có thể gặp khó khăn với ${soulUrgeData.desire.toLowerCase()} nếu không được hỗ trợ. Số nhân cách ${personality} khiến bé dễ ${personalityData.challenges[0].toLowerCase()}. Hãy chú ý để bé không bị áp lực.`,

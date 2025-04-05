@@ -1,11 +1,19 @@
 <template>
   <div class="container bg-white rounded-xl shadow-lg overflow-hidden">
     <!-- Header Section -->
-    <div class="header-section bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white">
-      <h1 class="text-2xl font-bold">Bản Đồ Thành Công</h1>
-      <p class="text-purple-100">Khám phá hành trình phát triển của bạn</p>
+    <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-6">
+      <div class="flex items-center">
+        <div class="p-3 rounded-full bg-white bg-opacity-20 mr-4">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553-2.276A1 1 0 0021 13.382V6.618a1 1 0 00-1.447-.894L15 8m0 9V4" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-white">Bản Đồ Thành Công</h2>
+          <p class="text-purple-100 mt-1">Khám phá hành trình phát triển của bạn</p>
+        </div>
+      </div>
     </div>
-
     <!-- Form Section -->
     <div v-if="!userInfo.name || editing" class="form-section p-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
