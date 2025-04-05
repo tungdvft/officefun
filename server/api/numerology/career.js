@@ -45,7 +45,7 @@ function getDestinyNumber(name) {
 }
 console.log('Loaded GEMINI_API_KEY:', process.env.GEMINI_API_KEY ? '[HIDDEN]' : 'Not found');
 // Lấy API Key từ biến môi trường
-const apiKey = process.env.GEMINI_API_KEY;
+const apiKey = process.env.GEMINI_API_KEY||'AIzaSyBUmUduPG0zvD4URlJEmNnxDRsxMsTpaR8';
 
 // Hàm gọi Gemini API
 async function getGeminiCareerGuidance(birthdate, name, currentJob) {
