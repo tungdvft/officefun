@@ -49,9 +49,6 @@
               <label for="person1Birthdate" class="form-label">Ngày sinh (dd/mm/yyyy hoặc dd-mm-yyyy)</label>
               <div class="relative">
                 <input v-model="formData.person1Birthdate" type="text" id="person1Birthdate" placeholder="15/08/1995" class="form-input pl-10" />
-                <!-- <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg> -->
               </div>
             </div>
           </div>
@@ -71,9 +68,6 @@
               <label for="person2Birthdate" class="form-label">Ngày sinh (dd/mm/yyyy hoặc dd-mm-yyyy)</label>
               <div class="relative">
                 <input v-model="formData.person2Birthdate" type="text" id="person2Birthdate" placeholder="14/03/1990" class="form-input pl-10" />
-                <!-- <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg> -->
               </div>
             </div>
           </div>
@@ -193,6 +187,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { toast } from 'vue3-toastify';
+import { drawDOM, exportPDF } from '@progress/kendo-drawing';
 
 definePageMeta({ layout: 'dashboard' });
 
@@ -236,8 +231,11 @@ const checkCompatibility = async () => {
     const username = localStorage.getItem('username') || 'guest';
     const response = await $fetch('/api/numerology/compatibility', {
       method: 'POST',
-      headers: { 'x-username': encodeURIComponent(username) },
-      body: formData.value
+      headers: { 
+        'x-username': encodeURIComponent(username),
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: JSON.stringify(formData.value)
     });
     result.value = response;
     toast.success('Kiểm tra hoàn tất!', { position: 'top-center' });
@@ -251,15 +249,7 @@ const checkCompatibility = async () => {
 
 const shareResult = (platform) => {
   if (!result.value) return;
-  const text = [
-    `Mức độ hợp nhau: ${compatibilityScore.value}/10`,
-    result.value.overview,
-    `Điểm mạnh: ${result.value.strengths}`,
-    `Điểm yếu: ${result.value.weaknesses}`,
-    `Tiềm năng: ${result.value.potential}`,
-    `Thách thức: ${result.value.challenges}`,
-    `Gợi ý: ${result.value.advice}`
-  ].join('\n\n');
+  const text = formatResultForShare();
 
   if (platform === 'facebook' && process.client) {
     if (typeof FB !== 'undefined') {
@@ -282,25 +272,83 @@ const shareResult = (platform) => {
 };
 
 const downloadResult = async () => {
-  if (!process.client) return toast.error('Không thể tải PDF trên server!');
-  const { jsPDF } = await import('jspdf');
-  const doc = new jsPDF();
-  doc.setFont('helvetica');
-  doc.setFontSize(12);
+  if (!process.client || !result.value) {
+    toast.error('Vui lòng đợi kết quả hoàn tất trước khi tải');
+    return;
+  }
 
-  const content = [
-    `Mức độ hợp nhau: ${compatibilityScore.value}/10\n${compatibilityExplanation.value}`,
-    `\nTổng quan:\n${result.value.overview}`,
-    `\nĐiểm mạnh:\n${result.value.strengths}`,
-    `\nĐiểm yếu:\n${result.value.weaknesses}`,
-    `\nTiềm năng:\n${result.value.potential}`,
-    `\nThách thức:\n${result.value.challenges}`,
-    `\nGợi ý phát triển:\n${result.value.advice}`
-  ].join('\n');
+  try {
+    const container = document.createElement('div');
+    container.style.width = '210mm'; // A4 width
+    container.style.padding = '15mm';
+    container.style.fontFamily = 'Times New Roman, serif'; // Font hỗ trợ tiếng Việt
+    container.style.fontSize = '12pt';
+    container.style.lineHeight = '1.5';
+    container.style.color = '#333';
+    document.body.appendChild(container);
 
-  const lines = doc.splitTextToSize(content, 180);
-  doc.text(lines, 10, 10);
-  doc.save('compatibility-result.pdf');
+    // Nội dung PDF với UTF-8
+    container.innerHTML = `
+      <h1 style="font-size: 18pt; color: #6B46C1; margin-bottom: 10mm;">Kết quả phân tích mức độ hợp nhau</h1>
+      <div style="margin-bottom: 5mm;">
+        <strong>Người 1:</strong> ${formData.value.person1Name} (${formData.value.person1Birthdate})<br>
+        <strong>Người 2:</strong> ${formData.value.person2Name} (${formData.value.person2Birthdate})<br>
+        <strong>Loại quan hệ:</strong> ${tabs.find(t => t.value === formData.value.relationshipType)?.label}
+      </div>
+      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Tổng quan mối quan hệ</h2>
+      <p><strong>Mức độ hợp nhau:</strong> ${compatibilityScore.value}/10</p>
+      <p>${compatibilityExplanation.value}</p>
+      <p>${result.value.overview}</p>
+      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Điểm mạnh</h2>
+      <p>${result.value.strengths}</p>
+      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Điểm yếu</h2>
+      <p>${result.value.weaknesses}</p>
+      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Tiềm năng</h2>
+      <p>${result.value.potential}</p>
+      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Thách thức</h2>
+      <p>${result.value.challenges}</p>
+      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Gợi ý phát triển</h2>
+      <p>${result.value.advice}</p>
+    `;
+
+    const group = await drawDOM(container, {
+      paperSize: 'A4',
+      margin: { top: '10mm', left: '10mm', right: '10mm', bottom: '10mm' },
+      scale: 0.7,
+      keepTogether: 'p'
+    });
+
+    const pdfDataUri = await exportPDF(group);
+    const link = document.createElement('a');
+    link.href = pdfDataUri;
+    link.download = 'ket-qua-hop-nhau.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    document.body.removeChild(container);
+
+    toast.success('Tải PDF thành công!');
+  } catch (error) {
+    console.error('Lỗi khi tạo PDF:', error);
+    toast.error('Có lỗi khi tạo PDF!');
+  }
+};
+
+const formatResultForShare = () => {
+  return [
+    `Kết quả phân tích mức độ hợp nhau`,
+    `Người 1: ${formData.value.person1Name} (${formData.value.person1Birthdate})`,
+    `Người 2: ${formData.value.person2Name} (${formData.value.person2Birthdate})`,
+    `Loại quan hệ: ${tabs.find(t => t.value === formData.value.relationshipType)?.label}`,
+    `Mức độ hợp nhau: ${compatibilityScore.value}/10`,
+    compatibilityExplanation.value,
+    `Tổng quan:\n${result.value.overview}`,
+    `Điểm mạnh:\n${result.value.strengths}`,
+    `Điểm yếu:\n${result.value.weaknesses}`,
+    `Tiềm năng:\n${result.value.potential}`,
+    `Thách thức:\n${result.value.challenges}`,
+    `Gợi ý:\n${result.value.advice}`
+  ].join('\n\n');
 };
 </script>
 
