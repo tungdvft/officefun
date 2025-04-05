@@ -1,12 +1,12 @@
 <template>
   <div class="container mx-auto">
     <!-- Các phần khác của index.vue -->
-    <CompatibilityNumerology />
+    <ChildNumerology />
   </div>
 </template>
 
 <script setup>
-import CompatibilityNumerology from '~/components/CompatibilityNumerology.vue';
+import ChildNumerology from '~/components/ChildNumerology.vue';
 definePageMeta({
   layout: 'dashboard'
 });
