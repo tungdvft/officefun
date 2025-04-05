@@ -1,14 +1,22 @@
 import { defineEventHandler, createError } from 'h3';
 import NUMEROLOGY_MEANINGS, { NumerologyUtils } from '../utils/numerology-meanings.js';
 
+// Hàm tính số chủ đạo (Life Path Number)
 function getLifePathNumber(birthdate) {
-  if (!/^\d{2}[\/-]\d{2}[\/-]\d{4}$/.test(birthdate)) return 9;
+  if (!/^\d{2}[\/-]\d{2}[\/-]\d{4}$/.test(birthdate)) {
+    console.warn('Invalid birthdate format:', birthdate);
+    throw new Error('Định dạng ngày sinh không hợp lệ, cần là DD/MM/YYYY hoặc DD-MM-YYYY');
+  }
   const normalizedBirthdate = birthdate.replace(/-/g, '/');
   const [day, month, year] = normalizedBirthdate.split('/').map(Number);
-  if (isNaN(day) || isNaN(month) || isNaN(year) || month > 12 || day > 31) return 9;
+  if (isNaN(day) || isNaN(month) || isNaN(year) || month > 12 || day > 31) {
+    console.warn('Invalid birthdate values:', { day, month, year });
+    throw new Error('Ngày sinh không hợp lệ');
+  }
   return NumerologyUtils.reduceToSingleDigit(day + month + year) || 9;
 }
 
+// Hàm tính số linh hồn (Soul Urge Number)
 function getSoulNumber(name) {
   const vowels = /[aeiou]/gi;
   const vowelValues = { a: 1, e: 5, i: 9, o: 6, u: 3 };
@@ -18,6 +26,7 @@ function getSoulNumber(name) {
   return NumerologyUtils.reduceToSingleDigit(sum) || 1;
 }
 
+// Hàm tính số nhân cách (Personality Number)
 function getPersonalityNumber(name) {
   const consonants = /[^aeiou\s]/gi;
   const letterValues = { b: 2, c: 3, d: 4, f: 6, g: 7, h: 8, j: 1, k: 2, l: 3, m: 4, n: 5, p: 7, q: 8, r: 9, s: 1, t: 2, v: 4, w: 5, x: 6, y: 7, z: 8 };
@@ -27,18 +36,28 @@ function getPersonalityNumber(name) {
   return NumerologyUtils.reduceToSingleDigit(sum) || 1;
 }
 
+// Hàm tính số định mệnh (Destiny Number)
 function getDestinyNumber(name) {
   const letterValues = { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9, j: 1, k: 2, l: 3, m: 4, n: 5, o: 6, p: 7, q: 8, r: 9, s: 1, t: 2, u: 3, v: 4, w: 5, x: 6, y: 7, z: 8 };
   const sum = name.toLowerCase().split('').reduce((acc, char) => acc + (letterValues[char] || 0), 0);
   return NumerologyUtils.reduceToSingleDigit(sum) || 1;
 }
 
-const apiKey = process.env.GEMINI_API_KEY || '';
+// Lấy API Key từ biến môi trường
+const apiKey = process.env.GEMINI_API_KEY;
 
+// Hàm gọi Gemini API
 async function getGeminiCareerGuidance(birthdate, name, currentJob) {
-  console.log('API Key being used:', apiKey ? '[HIDDEN]' : 'No API Key provided');
+  const startTime = Date.now();
+  console.log('Starting getGeminiCareerGuidance at:', new Date().toISOString());
+  console.log('API Key status:', apiKey ? '[HIDDEN]' : 'No API Key provided');
   console.log('Input data:', { birthdate, name, currentJob });
 
+  if (!apiKey) {
+    throw new Error('Thiếu GEMINI_API_KEY trong cấu hình server');
+  }
+
+  // Tính toán các số Thần số học
   const dominantNumber = getLifePathNumber(birthdate);
   const soulNumber = getSoulNumber(name);
   const personalityNumber = getPersonalityNumber(name);
@@ -51,11 +70,19 @@ async function getGeminiCareerGuidance(birthdate, name, currentJob) {
   const personalityData = NUMEROLOGY_MEANINGS.personality[personalityNumber] || NUMEROLOGY_MEANINGS.personality[1];
   const destinyData = NUMEROLOGY_MEANINGS.expression[destinyNumber] || NUMEROLOGY_MEANINGS.expression[1];
 
-  console.log('Numerology data calculated:', { 
-    dominantNumber, soulNumber, personalityNumber, destinyNumber, personalCycle,
-    lifePathData: lifePathData.theme, soulData: soulData.desire, personalityData: personalityData.theme, destinyData: destinyData.theme 
+  console.log('Numerology data calculated:', {
+    dominantNumber,
+    soulNumber,
+    personalityNumber,
+    destinyNumber,
+    personalCycle,
+    lifePathTheme: lifePathData.theme,
+    soulDesire: soulData.desire,
+    personalityTheme: personalityData.theme,
+    destinyTheme: destinyData.theme
   });
 
+  // Tạo prompt cho Gemini
   const prompt = `Dựa trên thần số học với số chủ đạo ${dominantNumber} (${lifePathData.theme}), số linh hồn ${soulNumber} (${soulData.desire}), số nhân cách ${personalityNumber} (${personalityData.theme}), số định mệnh ${destinyNumber} (${destinyData.theme}), sinh ngày ${birthdate}, tên ${name}, công việc hiện tại "${currentJob || 'chưa có'}", chu kỳ cá nhân ${personalCycle}. Trả về JSON hợp lệ với các trường sau:
     1. "careerGoals": Phân tích cách số chủ đạo ${dominantNumber} (${lifePathData.theme}) định hình mục tiêu nghề nghiệp, dựa trên ${lifePathData.strengths.join(', ')} (2-3 câu).
     2. "passionAndMotivation": Phân tích số linh hồn ${soulNumber} (${soulData.desire}) thể hiện đam mê và động lực bên trong, dựa trên ${soulData.motivation} và ${soulData.fulfillment} (2-3 câu).
@@ -66,101 +93,75 @@ async function getGeminiCareerGuidance(birthdate, name, currentJob) {
     7. "practicalAdvice": Lời khuyên thực tế (2-3 câu) dựa trên chu kỳ cá nhân ${personalCycle} (${NUMEROLOGY_MEANINGS.personalYear[personalCycle].theme}) và ${NUMEROLOGY_MEANINGS.personalYear[personalCycle].advice}, kết hợp công việc hiện tại (nếu có), dùng "bạn" thay vì nhắc tên/ngày sinh.
     Đảm bảo câu trả lời tập trung vào định hướng nghề nghiệp, sử dụng ngôn ngữ tự nhiên, dễ hiểu, không dùng Markdown trong JSON, chỉ trả về chuỗi JSON thuần túy!`;
 
-  console.log('Sending prompt to Gemini API...');
+  console.log('Sending request to Gemini API...');
 
-  try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-      }
-    );
-
-    console.log('Gemini API response status:', response.status, response.statusText);
-
-    if (!response.ok) {
-      throw new Error(`Gemini API error: ${response.status} - ${response.statusText}`);
+  // Gọi Gemini API
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
+      timeout: 10000 // Timeout 10 giây
     }
+  );
 
-    const data = await response.json();
-    let rawText = data.candidates[0].content.parts[0].text;
+  console.log('Gemini API response status:', response.status, response.statusText);
+  console.log('Gemini call took:', `${Date.now() - startTime}ms`);
 
-    console.log('Raw response from Gemini:', rawText);
-
-    rawText = rawText.replace(/```json|```/g, '').trim();
-    const parsedData = JSON.parse(rawText);
-
-    if (!parsedData || !parsedData.careerGoals || !parsedData.careerSuggestions) {
-      throw new Error('Gemini API returned incomplete data');
-    }
-
-    console.log('Parsed data from Gemini:', parsedData);
-    return parsedData;
-  } catch (error) {
-    console.error('Error calling Gemini API:', {
-      message: error.message,
-      stack: error.stack,
-      responseStatus: error.response?.status,
-      responseText: error.response?.statusText
-    });
-    console.log('Falling back to default guidance...');
-    return getFallbackCareerGuidance(dominantNumber, soulNumber, personalityNumber, destinyNumber, personalCycle, currentJob, lifePathData, soulData, personalityData, destinyData);
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('Gemini API error details:', errorText);
+    throw new Error(`Gemini API failed: ${response.status} - ${response.statusText} - ${errorText}`);
   }
+
+  const data = await response.json();
+  const rawText = data.candidates[0].content.parts[0].text;
+  console.log('Raw response from Gemini:', rawText);
+
+  const parsedData = JSON.parse(rawText.replace(/```json|```/g, '').trim());
+  if (!parsedData || !parsedData.careerGoals || !parsedData.careerSuggestions) {
+    console.error('Invalid Gemini response structure:', parsedData);
+    throw new Error('Dữ liệu từ Gemini không đầy đủ hoặc không đúng định dạng');
+  }
+
+  console.log('Parsed data from Gemini:', parsedData);
+  console.log('Total processing time:', `${Date.now() - startTime}ms`);
+  return parsedData;
 }
 
-function getFallbackCareerGuidance(dominantNumber, soulNumber, personalityNumber, destinyNumber, personalCycle, currentJob, lifePathData, soulData, personalityData, destinyData) {
-  const fallbackData = {
-    careerGoals: `Số chủ đạo ${dominantNumber} (${lifePathData.theme.toLowerCase()}) định hình mục tiêu nghề nghiệp của bạn qua ${lifePathData.strengths[0].toLowerCase()} và ${lifePathData.strengths[1].toLowerCase()}. Bạn hướng đến các vai trò tận dụng ${lifePathData.strengths[2].toLowerCase()} để tạo giá trị lâu dài.`,
-    passionAndMotivation: `Số linh hồn ${soulNumber} (${soulData.desire.toLowerCase()}) thể hiện đam mê bên trong bạn là ${soulData.motivation.toLowerCase()}. Bạn sẽ tìm thấy sự thỏa mãn trong ${soulData.fulfillment.toLowerCase()}.`,
-    workStyle: `Số nhân cách ${personalityNumber} (${personalityData.theme.toLowerCase()}) cho thấy bạn làm việc với ${personalityData.strengths[0].toLowerCase()} và ${personalityData.strengths[1].toLowerCase()}. ${personalityData.workStyle.toLowerCase()}.`,
-    longTermPath: `Số định mệnh ${destinyNumber} (${destinyData.theme.toLowerCase()}) chỉ ra con đường dài hạn dựa trên ${destinyData.talents[0].toLowerCase()} và ${destinyData.talents[1].toLowerCase()}. Bạn có tiềm năng phát triển trong lĩnh vực cần ${destinyData.talents[2].toLowerCase()}.`,
-    currentJobAnalysis: currentJob ? 
-      `Công việc "${currentJob}" phù hợp với ${lifePathData.theme.toLowerCase()} nếu tận dụng ${lifePathData.strengths[0].toLowerCase()}, với ${soulData.desire.toLowerCase()} nếu đáp ứng ${soulData.fulfillment.toLowerCase()}. Nó cần hỗ trợ ${personalityData.workStyle.toLowerCase()} và ${destinyData.talents[0].toLowerCase()} để phát triển. Bạn có thể cải thiện bằng cách học kỹ năng liên quan hoặc chuyển hướng nếu thiếu sự phù hợp.` : 
-      `Hiện tại bạn chưa nhập công việc, định hướng sẽ dựa trên các số Thần số học.`,
-    careerSuggestions: [
-      {
-        job: lifePathData.careers[0],
-        reason: `Phù hợp với ${lifePathData.theme.toLowerCase()} nhờ ${lifePathData.strengths[0].toLowerCase()} và ${soulData.desire.toLowerCase()} qua ${soulData.fulfillment.toLowerCase()}.`,
-        opportunities: `Ngành này đang phát triển mạnh trong bối cảnh 2025 với nhu cầu cao về ${lifePathData.strengths[1].toLowerCase()}.`,
-        trends: `Xu hướng ${destinyData.talents[0].toLowerCase()} sẽ dẫn dắt tương lai ngành này.`
-      },
-      {
-        job: destinyData.careers[0],
-        reason: `${destinyData.theme.toLowerCase()} hỗ trợ ${destinyData.talents[0].toLowerCase()}, kết hợp ${personalityData.theme.toLowerCase()} với ${personalityData.workStyle.toLowerCase()}.`,
-        opportunities: `Cơ hội lớn trong năm 2025 nhờ xu hướng công nghệ và ${destinyData.talents[1].toLowerCase()}.`,
-        trends: `Ngành này sẽ cần ${lifePathData.strengths[0].toLowerCase()} trong tương lai gần.`
-      },
-      {
-        job: lifePathData.careers[1],
-        reason: `Hài hòa với ${lifePathData.theme.toLowerCase()} qua ${lifePathData.strengths[2].toLowerCase()} và ${soulData.desire.toLowerCase()} nhờ ${soulData.motivation.toLowerCase()}.`,
-        opportunities: `Nhu cầu tăng cao vào 2025 với trọng tâm là ${personalityData.strengths[0].toLowerCase()}.`,
-        trends: `Xu hướng phát triển dựa trên ${destinyData.talents[2].toLowerCase()}.`
-      }
-    ],
-    practicalAdvice: `Chu kỳ cá nhân ${personalCycle} (${NUMEROLOGY_MEANINGS.personalYear[personalCycle].theme.toLowerCase()}) khuyến khích bạn ${NUMEROLOGY_MEANINGS.personalYear[personalCycle].advice.toLowerCase()}. ${currentJob ? `Với "${currentJob}", hãy tận dụng cơ hội hiện tại hoặc tìm hướng mới nếu cần.` : 'Hãy bắt đầu với những bước nhỏ để khám phá khả năng của bạn.'}`
-  };
-  console.log('Fallback data generated:', fallbackData);
-  return fallbackData;
-}
-
+// Xử lý request chính
 export default defineEventHandler(async (event) => {
+  const startTime = Date.now();
   const username = event.node.req.headers['x-username'] || 'guest';
   console.log('Request received from user:', username);
 
-  const { name, birthdate, currentJob } = await readBody(event);
+  const body = await readBody(event);
+  const { name, birthdate, currentJob } = body || {};
   console.log('Request body:', { name, birthdate, currentJob });
 
   if (!name || !birthdate) {
-    console.error('Validation failed: Missing name or birthdate');
+    console.error('Validation failed: Missing name or birthdate', { name, birthdate });
     throw createError({
       statusCode: 400,
-      statusMessage: 'Thiếu thông tin: name và birthdate là bắt buộc.'
+      statusMessage: 'Thiếu thông tin: name và birthdate là bắt buộc'
     });
   }
 
-  const careerGuidance = await getGeminiCareerGuidance(birthdate, name, currentJob);
-  console.log('Final response being sent:', careerGuidance);
-  return careerGuidance;
+  try {
+    const careerGuidance = await getGeminiCareerGuidance(birthdate, name, currentJob);
+    console.log('Final response being sent:', careerGuidance);
+    console.log('Total handler time:', `${Date.now() - startTime}ms`);
+    return careerGuidance;
+  } catch (error) {
+    console.error('Handler error:', {
+      message: error.message,
+      stack: error.stack,
+      timeElapsed: `${Date.now() - startTime}ms`
+    });
+    throw createError({
+      statusCode: error.message.includes('Gemini API failed') ? 502 : 500,
+      statusMessage: `Lỗi xử lý yêu cầu: ${error.message}`
+    });
+  }
 });
