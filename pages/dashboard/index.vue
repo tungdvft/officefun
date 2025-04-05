@@ -1,4 +1,3 @@
-<!-- pages/dashboard/index.vue -->
 <template>
   <div class="space-y-8">
     <!-- Banner chào mừng -->
@@ -143,12 +142,41 @@
       </div>
 
       <!-- Nội dung kết quả -->
-      <div v-else class="space-y-8">
-        <!-- Số đường đời -->
-       
+      <div v-else-if="results && Object.keys(results).length > 0" class="space-y-8">
+        <!-- Số đường đời (Tab Tổng quan) -->
+        <div v-if="activeTab === 'general' && results.lifePathNumber" class="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-2xl">
+          <h3 class="text-xl font-bold text-purple-800 mb-4">Số đường đời: {{ results.lifePathNumber.number }} {{ results.lifePathNumber.symbol }}</h3>
+          <div class="prose prose-purple max-w-none">
+            <p class="text-gray-700">{{ results.lifePathNumber.description }}</p>
+          </div>
+          <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <h4 class="text-lg font-semibold text-gray-800 mb-2">Điểm mạnh</h4>
+              <ul class="list-disc pl-5 text-gray-700">
+                <li v-for="strength in results.lifePathNumber.strengths" :key="strength">{{ strength }}</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-lg font-semibold text-gray-800 mb-2">Thách thức</h4>
+              <ul class="list-disc pl-5 text-gray-700">
+                <li v-for="challenge in results.lifePathNumber.challenges" :key="challenge">{{ challenge }}</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-lg font-semibold text-gray-800 mb-2">Nghề nghiệp phù hợp</h4>
+              <ul class="list-disc pl-5 text-gray-700">
+                <li v-for="career in results.lifePathNumber.careers" :key="career">{{ career }}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mt-4">
+            <h4 class="text-lg font-semibold text-gray-800 mb-2">Lời khuyên</h4>
+            <p class="text-gray-700">{{ results.lifePathNumber.advice }}</p>
+          </div>
+        </div>
 
         <!-- Kết quả theo ngày/tuần/tháng/năm -->
-        <div v-if="activeTab !== 'cycles' && results.periods && results.periods[activeTab]" class="space-y-6">
+        <div v-if="['day', 'week', 'month', 'year'].includes(activeTab) && results.periods && results.periods[activeTab]" class="space-y-6">
           <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-2xl">
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-xl font-bold text-purple-800">
@@ -187,9 +215,9 @@
                 </div>
                 <h4 class="text-lg font-semibold text-gray-800">{{ shouldDoTitle }}</h4>
               </div>
-              <div class="pl-11">
-                <p class="text-gray-700">{{ results.periods[activeTab].shouldDo }}</p>
-              </div>
+              <ul class="list-disc pl-11 text-gray-700 space-y-1">
+                <li v-for="item in results.periods[activeTab].shouldDo" :key="item">{{ item }}</li>
+              </ul>
             </div>
 
             <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200">
@@ -201,14 +229,14 @@
                 </div>
                 <h4 class="text-lg font-semibold text-gray-800">{{ shouldAvoidTitle }}</h4>
               </div>
-              <div class="pl-11">
-                <p class="text-gray-700">{{ results.periods[activeTab].shouldAvoid }}</p>
-              </div>
+              <ul class="list-disc pl-11 text-gray-700 space-y-1">
+                <li v-for="item in results.periods[activeTab].shouldAvoid" :key="item">{{ item }}</li>
+              </ul>
             </div>
           </div>
 
           <!-- Gợi ý ăn trưa -->
-          <div v-if="activeTab === 'day'" class="bg-yellow-50 p-6 rounded-2xl border border-yellow-100">
+          <div v-if="activeTab === 'day' && results.periods.day.lunchSuggestion" class="bg-yellow-50 p-6 rounded-2xl border border-yellow-100">
             <div class="flex items-center mb-4">
               <div class="bg-yellow-100 p-2 rounded-full mr-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -217,14 +245,14 @@
               </div>
               <h4 class="text-lg font-semibold text-gray-800">Gợi ý ăn trưa</h4>
             </div>
-            <div class="pl-11">
-              <p class="text-gray-700">{{ results.periods[activeTab].lunchSuggestion }}</p>
-            </div>
+            <ul class="list-disc pl-11 text-gray-700 space-y-1">
+              <li v-for="item in results.periods.day.lunchSuggestion" :key="item">{{ item }}</li>
+            </ul>
           </div>
         </div>
 
         <!-- Chu kỳ vận số -->
-        <div v-else-if="activeTab === 'cycles' && results.cycles" class="space-y-6">
+        <div v-if="activeTab === 'cycles' && results.cycles" class="space-y-6">
           <div class="bg-white p-6 rounded-2xl shadow-sm">
             <h3 class="text-xl font-bold text-purple-800 mb-4">Biểu đồ chu kỳ vận số 10 năm</h3>
             <div class="w-full h-80 relative">
@@ -256,38 +284,6 @@
                 </ul>
               </div>
             </div>
-          </div>
-        </div>
-        <div v-else class="space-y-6">
-          <div v-if="results.lifePathNumber" class="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-2xl">
-          <h3 class="text-xl font-bold text-purple-800 mb-4">Số đường đời: {{ results.lifePathNumber.number }} {{ results.lifePathNumber.symbol }}</h3>
-          <div class="prose prose-purple max-w-none">
-            <p class="text-gray-700">{{ results.lifePathNumber.description }}</p>
-          </div>
-          <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <h4 class="text-lg font-semibold text-gray-800 mb-2">Điểm mạnh</h4>
-              <ul class="list-disc pl-5 text-gray-700">
-                <li v-for="strength in results.lifePathNumber.strengths" :key="strength">{{ strength }}</li>
-              </ul>
-            </div>
-            <div>
-              <h4 class="text-lg font-semibold text-gray-800 mb-2">Thách thức</h4>
-              <ul class="list-disc pl-5 text-gray-700">
-                <li v-for="challenge in results.lifePathNumber.challenges" :key="challenge">{{ challenge }}</li>
-              </ul>
-            </div>
-            <div>
-              <h4 class="text-lg font-semibold text-gray-800 mb-2">Nghề nghiệp phù hợp</h4>
-              <ul class="list-disc pl-5 text-gray-700">
-                <li v-for="career in results.lifePathNumber.careers" :key="career">{{ career }}</li>
-              </ul>
-            </div>
-          </div>
-          <div class="mt-4">
-            <h4 class="text-lg font-semibold text-gray-800 mb-2">Lời khuyên</h4>
-            <p class="text-gray-700">{{ results.lifePathNumber.advice }}</p>
-          </div>
           </div>
         </div>
       </div>
@@ -425,6 +421,7 @@ const submitForm = async (force = false) => {
     if (!force) toast.error('Vui lòng nhập đầy đủ tên và ngày sinh!', { position: 'top-center' });
     return;
   }
+
   loading.value = true;
   try {
     const response = await $fetch('/api/numerology/period', {
@@ -512,3 +509,20 @@ const switchTab = (tabValue) => {
   activeTab.value = tabValue;
 };
 </script>
+
+<style scoped>
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.animate-fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+</style>
