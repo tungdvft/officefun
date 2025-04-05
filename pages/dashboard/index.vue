@@ -145,36 +145,7 @@
       <!-- Nội dung kết quả -->
       <div v-else class="space-y-8">
         <!-- Số đường đời -->
-        <div v-if="results.lifePathNumber" class="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-2xl">
-          <h3 class="text-xl font-bold text-purple-800 mb-4">Số đường đời: {{ results.lifePathNumber.number }} {{ results.lifePathNumber.symbol }}</h3>
-          <div class="prose prose-purple max-w-none">
-            <p class="text-gray-700">{{ results.lifePathNumber.description }}</p>
-          </div>
-          <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <h4 class="text-lg font-semibold text-gray-800 mb-2">Điểm mạnh</h4>
-              <ul class="list-disc pl-5 text-gray-700">
-                <li v-for="strength in results.lifePathNumber.strengths" :key="strength">{{ strength }}</li>
-              </ul>
-            </div>
-            <div>
-              <h4 class="text-lg font-semibold text-gray-800 mb-2">Thách thức</h4>
-              <ul class="list-disc pl-5 text-gray-700">
-                <li v-for="challenge in results.lifePathNumber.challenges" :key="challenge">{{ challenge }}</li>
-              </ul>
-            </div>
-            <div>
-              <h4 class="text-lg font-semibold text-gray-800 mb-2">Nghề nghiệp phù hợp</h4>
-              <ul class="list-disc pl-5 text-gray-700">
-                <li v-for="career in results.lifePathNumber.careers" :key="career">{{ career }}</li>
-              </ul>
-            </div>
-          </div>
-          <div class="mt-4">
-            <h4 class="text-lg font-semibold text-gray-800 mb-2">Lời khuyên</h4>
-            <p class="text-gray-700">{{ results.lifePathNumber.advice }}</p>
-          </div>
-        </div>
+       
 
         <!-- Kết quả theo ngày/tuần/tháng/năm -->
         <div v-if="activeTab !== 'cycles' && results.periods && results.periods[activeTab]" class="space-y-6">
@@ -287,6 +258,38 @@
             </div>
           </div>
         </div>
+        <div v-else class="space-y-6">
+          <div v-if="results.lifePathNumber" class="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-2xl">
+          <h3 class="text-xl font-bold text-purple-800 mb-4">Số đường đời: {{ results.lifePathNumber.number }} {{ results.lifePathNumber.symbol }}</h3>
+          <div class="prose prose-purple max-w-none">
+            <p class="text-gray-700">{{ results.lifePathNumber.description }}</p>
+          </div>
+          <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <h4 class="text-lg font-semibold text-gray-800 mb-2">Điểm mạnh</h4>
+              <ul class="list-disc pl-5 text-gray-700">
+                <li v-for="strength in results.lifePathNumber.strengths" :key="strength">{{ strength }}</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-lg font-semibold text-gray-800 mb-2">Thách thức</h4>
+              <ul class="list-disc pl-5 text-gray-700">
+                <li v-for="challenge in results.lifePathNumber.challenges" :key="challenge">{{ challenge }}</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-lg font-semibold text-gray-800 mb-2">Nghề nghiệp phù hợp</h4>
+              <ul class="list-disc pl-5 text-gray-700">
+                <li v-for="career in results.lifePathNumber.careers" :key="career">{{ career }}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mt-4">
+            <h4 class="text-lg font-semibold text-gray-800 mb-2">Lời khuyên</h4>
+            <p class="text-gray-700">{{ results.lifePathNumber.advice }}</p>
+          </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -307,7 +310,8 @@ const tabs = [
   { label: 'Tuần này', value: 'week' },
   { label: 'Tháng này', value: 'month' },
   { label: 'Năm này', value: 'year' },
-  { label: 'Chu kỳ vận số', value: 'cycles' }
+  { label: 'Chu kỳ vận số', value: 'cycles' },
+  { label: 'Tổng quan', value: 'general' }
 ];
 const activeTab = ref('day');
 

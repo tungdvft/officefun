@@ -103,12 +103,7 @@
           </svg>
           <span v-if="isSidebarOpen || windowWidth >= 768">Kiểm tra mức độ hợp nhau</span>
         </NuxtLink>
-        <NuxtLink to="/dashboard/fengshui" :class="{ 'justify-center': !isSidebarOpen && windowWidth < 768, 'justify-start': isSidebarOpen || windowWidth >= 768 }" class="flex items-center p-3 rounded-lg hover:bg-purple-700" exact-active-class="bg-purple-900">
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-          </svg>
-          <span v-if="isSidebarOpen || windowWidth >= 768">Số học phong thuỷ</span>
-        </NuxtLink>
+    
       </nav>
       <div class="p-2 border-t border-purple-700">
         <button 
