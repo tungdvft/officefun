@@ -1,6 +1,7 @@
 import { defineEventHandler, createError } from 'h3';
 import NUMEROLOGY_MEANINGS, { NumerologyUtils } from '../utils/numerology-meanings.js';
-
+import dotenv from 'dotenv';
+dotenv.config(); // Tải biến môi trường từ .env
 // Hàm tính số chủ đạo (Life Path Number)
 function getLifePathNumber(birthdate) {
   if (!/^\d{2}[\/-]\d{2}[\/-]\d{4}$/.test(birthdate)) {
@@ -42,7 +43,7 @@ function getDestinyNumber(name) {
   const sum = name.toLowerCase().split('').reduce((acc, char) => acc + (letterValues[char] || 0), 0);
   return NumerologyUtils.reduceToSingleDigit(sum) || 1;
 }
-
+console.log('Loaded GEMINI_API_KEY:', process.env.GEMINI_API_KEY ? '[HIDDEN]' : 'Not found');
 // Lấy API Key từ biến môi trường
 const apiKey = process.env.GEMINI_API_KEY;
 
