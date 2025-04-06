@@ -49,19 +49,19 @@
           </svg>
           <span v-if="isSidebarOpen || windowWidth >= 768">Tổng quan</span>
         </NuxtLink>
-       
+       <NuxtLink to="/dashboard/compatibility" :class="{ 'justify-center': !isSidebarOpen && windowWidth < 768, 'justify-start': isSidebarOpen || windowWidth >= 768 }" class="flex items-center p-3 rounded-lg hover:bg-purple-700" exact-active-class="bg-purple-900">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+          <span v-if="isSidebarOpen || windowWidth >= 768">Kiểm tra mức độ hợp nhau</span>
+        </NuxtLink>
         <NuxtLink to="/dashboard/consult" :class="{ 'justify-center': !isSidebarOpen && windowWidth < 768, 'justify-start': isSidebarOpen || windowWidth >= 768 }" class="flex items-center p-3 rounded-lg hover:bg-purple-700" exact-active-class="bg-purple-900">
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <span v-if="isSidebarOpen || windowWidth >= 768">Giải đáp thắc mắc</span>
         </NuxtLink>
-        <NuxtLink to="/dashboard/compatibility" :class="{ 'justify-center': !isSidebarOpen && windowWidth < 768, 'justify-start': isSidebarOpen || windowWidth >= 768 }" class="flex items-center p-3 rounded-lg hover:bg-purple-700" exact-active-class="bg-purple-900">
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-          </svg>
-          <span v-if="isSidebarOpen || windowWidth >= 768">Kiểm tra mức độ hợp nhau</span>
-        </NuxtLink>
+        
         <NuxtLink to="/dashboard/career" :class="{ 'justify-center': !isSidebarOpen && windowWidth < 768, 'justify-start': isSidebarOpen || windowWidth >= 768 }" class="flex items-center p-3 rounded-lg hover:bg-purple-700" exact-active-class="bg-purple-900">
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
