@@ -26,9 +26,6 @@
           <label for="birthdate" class="form-label">Ngày sinh (dd/mm/yyyy)</label>
           <div class="relative">
             <input v-model="formData.birthdate" type="text" id="birthdate" placeholder="15/03/1995" class="form-input pl-10" />
-            <!-- <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg> -->
           </div>
         </div>
       </div>
@@ -181,46 +178,44 @@
                   <p class="text-gray-700">{{ period.content }}</p>
                   <div class="mt-4 p-4 bg-teal-50 rounded-lg">
                     <p class="font-medium text-teal-700">Lời khuyên:</p>
-                    <ul class="list-disc pl-5 text-gray-700">
-                      <li v-for="advice in period.advice" :key="advice">{{ advice }}</li>
-                    </ul>
+                    {{ period.advice }}
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- Tab Chu kỳ vận số -->
-           <div v-if="activeTab === 'personalYears'" class="space-y-6">
-            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-              <h3 class="text-xl font-bold text-teal-800 mb-4">Biểu đồ chu kỳ vận số</h3>
-              <ClientOnly>
-                <canvas ref="cycleChart"></canvas>
-              </ClientOnly>
-            </div>
-            <div v-for="(yearData, year) in numerologyData.cycles" :key="year" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-              <div class="flex items-center mb-4">
-                <span class="w-10 h-10 flex items-center justify-center bg-teal-100 text-teal-700 rounded-full font-bold mr-3">{{ yearData.number }}</span>
-                <h4 class="text-lg font-semibold text-gray-800">Năm {{ year }}</h4>
+            <div v-if="activeTab === 'personalYears'" class="space-y-6">
+              <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <h3 class="text-xl font-bold text-teal-800 mb-4">Biểu đồ chu kỳ vận số</h3>
+                <ClientOnly>
+                  <canvas ref="cycleChart"></canvas>
+                </ClientOnly>
               </div>
-              <div class="prose prose-teal max-w-none">
-                <p class="text-gray-700">{{ yearData.description }}</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <div>
-                    <p class="font-medium text-teal-700">Tập trung:</p>
-                    <ul class="list-disc pl-5 text-gray-700">
-                      <li v-for="focus in yearData.focus" :key="focus">{{ focus }}</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p class="font-medium text-teal-700">Từ khóa:</p>
-                    <ul class="list-disc pl-5 text-gray-700">
-                      <li v-for="keyword in yearData.keywords" :key="keyword">{{ keyword }}</li>
-                    </ul>
+              <div v-for="(yearData, year) in numerologyData.cycles" :key="year" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <div class="flex items-center mb-4">
+                  <span class="w-10 h-10 flex items-center justify-center bg-teal-100 text-teal-700 rounded-full font-bold mr-3">{{ yearData.number }}</span>
+                  <h4 class="text-lg font-semibold text-gray-800">Năm {{ year }}</h4>
+                </div>
+                <div class="prose prose-teal max-w-none">
+                  <p class="text-gray-700">{{ yearData.description }}</p>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                    <div>
+                      <p class="font-medium text-teal-700">Tập trung:</p>
+                      <ul class="list-disc pl-5 text-gray-700">
+                        <li v-for="focus in yearData.focus" :key="focus">{{ focus }}</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <p class="font-medium text-teal-700">Từ khóa:</p>
+                      <ul class="list-disc pl-5 text-gray-700">
+                        <li v-for="keyword in yearData.keywords" :key="keyword">{{ keyword }}</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
 
           <!-- Nút tải và chia sẻ -->
@@ -363,23 +358,45 @@ const generateReport = async () => {
 
   loading.value = true;
   try {
-    const response = await $fetch('/api/numerology/full', {
-      method: 'POST',
-      body: {
-        name: formData.value.name,
-        birthdate: formData.value.birthdate,
-        gender: formData.value.gender
-      }
-    });
+    // Gọi từng API riêng biệt
+    const [overviewResponse, coreNumbersResponse, lifeCyclesResponse, personalYearCyclesResponse] = await Promise.all([
+      $fetch('/api/numerology/overview', {
+        method: 'POST',
+        body: { name: formData.value.name, birthdate: formData.value.birthdate, gender: formData.value.gender }
+      }),
+      $fetch('/api/numerology/core-numbers', {
+        method: 'POST',
+        body: { name: formData.value.name, birthdate: formData.value.birthdate }
+      }),
+      $fetch('/api/numerology/life-cycles', {
+        method: 'POST',
+        body: { name: formData.value.name, birthdate: formData.value.birthdate }
+      }),
+      $fetch('/api/numerology/personal-year-cycles', {
+        method: 'POST',
+        body: { birthdate: formData.value.birthdate }
+      })
+    ]);
 
-    numerologyData.value = response.numerology;
+    // Hợp nhất dữ liệu từ các API
+    numerologyData.value = {
+      ...overviewResponse.overview, // Thông tin tổng quan
+      ...coreNumbersResponse.numerology, // Các con số chính
+      ...lifeCyclesResponse.numerology, // Chu kỳ đường đời
+      cycles: personalYearCyclesResponse.numerology.cycles // Chu kỳ vận số
+    };
+
     toast.success('Tạo báo cáo Thần số học hoàn tất!');
     activeTab.value = 'personalInfo';
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error fetching numerology data:', error);
     toast.error('Không thể tạo báo cáo từ API, sử dụng dữ liệu mẫu!');
-    // Sử dụng response mẫu bạn cung cấp
+    // Dữ liệu mẫu khi API lỗi
     numerologyData.value = {
+      name: formData.value.name,
+      birthdate: formData.value.birthdate,
+      gender: formData.value.gender,
+      description: `Với tên "${formData.value.name}", sinh ngày ${formData.value.birthdate}, bạn là một cá nhân mang năng lượng đặc biệt, định hình qua giới tính ${formData.value.gender}. Hành trình cuộc đời bạn là sự kết hợp giữa khám phá bản thân và hoàn thiện ước mơ.`,
       lifePath: {
         number: 9,
         symbol: "♾",
@@ -395,36 +412,36 @@ const generateReport = async () => {
       personalityDesc: "Số nhân cách 9 thể hiện sự vị tha, nhân đạo và lòng trắc ẩn. Bạn hướng ngoại, dễ gần và luôn quan tâm đến người khác.",
       destiny: 4,
       destinyDesc: "Số định mệnh 4 cho thấy bạn là người thực tế, chăm chỉ và có trách nhiệm. Bạn xây dựng cuộc sống bằng sự kiên trì và nỗ lực không ngừng.",
-      age0_10: "Với số linh hồn 1, những năm tuổi thơ của bạn có thể được đánh dấu bằng sự độc lập sớm. Bạn có thể là một đứa trẻ tò mò, ham học hỏi và thích khám phá thế giới xung quanh. Bạn thể hiện sự quyết đoán và có ý chí mạnh mẽ ngay từ nhỏ. Bạn có thể bộc lộ tính cách mạnh mẽ, thích làm theo ý mình và khá bướng bỉnh. Tuy nhiên, sự độc lập này cũng có thể khiến bạn cần được hướng dẫn và khích lệ để phát triển khả năng hợp tác và làm việc nhóm. Gia đình có vai trò quan trọng trong việc định hình tính cách và hướng bạn đến những giá trị tích cực. Sự hỗ trợ và thấu hiểu từ người thân sẽ giúp bạn phát triển toàn diện.",
-      age10_20: "Bước vào tuổi thiếu niên, số linh hồn 1 kết hợp với số chủ đạo 9 sẽ tạo nên một giai đoạn đầy thử thách và cơ hội. Bạn sẽ khám phá bản thân nhiều hơn, khát khao thể hiện cá tính và tìm kiếm ý nghĩa cuộc sống. Sự vị tha của số 9 sẽ được thể hiện qua việc quan tâm đến bạn bè và cộng đồng. Tuy nhiên, bạn cần học cách cân bằng giữa việc theo đuổi đam mê cá nhân và trách nhiệm xã hội. Đây là thời gian quan trọng để bạn xác định mục tiêu và định hướng tương lai, chuẩn bị cho những bước tiến lớn hơn trong cuộc sống.",
-      age20_30: "Giai đoạn này, sự kết hợp của số linh hồn 1, số chủ đạo 9 và số nhân cách 9 sẽ tạo nên một cá nhân mạnh mẽ, độc lập và giàu lòng trắc ẩn. Bạn có thể theo đuổi những mục tiêu đầy tham vọng và sẵn sàng cống hiến cho cộng đồng. Sự vị tha và lòng nhân ái là những đặc điểm nổi bật trong tính cách của bạn. Bạn sẽ tìm kiếm những mối quan hệ sâu sắc và ý nghĩa. Tuy nhiên, hãy cẩn trọng với việc đặt quá nhiều kỳ vọng vào bản thân và người khác. Học cách đặt ranh giới và cân bằng giữa công việc và đời sống cá nhân là điều cần thiết.",
-      age30_40: "Số nhân cách 9 và số định mệnh 4 sẽ định hình giai đoạn này. Bạn sẽ tập trung vào việc xây dựng sự nghiệp vững chắc và ổn định. Sự thực tế và chăm chỉ của số 4 sẽ giúp bạn đạt được những thành công đáng kể. Tuy nhiên, đừng quên giữ vững tinh thần vị tha và lòng nhân ái vốn có của số 9. Hãy cân bằng giữa công việc và gia đình để tạo nên một cuộc sống hạnh phúc và viên mãn. Đây là thời gian quan trọng để bạn thể hiện vai trò lãnh đạo và đóng góp cho xã hội.",
-      age40_50: "Sự kết hợp giữa số nhân cách 9 và số định mệnh 4 tiếp tục tạo nên sự ổn định và thành công trong giai đoạn này. Bạn sẽ đạt được những thành tựu đáng kể trong sự nghiệp và có một gia đình hạnh phúc. Sự vị tha và lòng nhân ái của số 9 sẽ được thể hiện rõ nét hơn qua việc đóng góp cho cộng đồng và giúp đỡ những người xung quanh. Bạn có thể dành nhiều thời gian hơn cho việc chăm sóc bản thân và tận hưởng thành quả của những nỗ lực trước đây.",
-      age50_60: "Ở giai đoạn này, sự kết hợp của số nhân cách 9, số định mệnh 4 và số chủ đạo 9 sẽ mang lại sự cân bằng và hài hòa trong cuộc sống. Bạn có thể hướng đến những mục tiêu cao cả hơn, đóng góp cho xã hội và truyền lại những giá trị tốt đẹp cho thế hệ sau. Sự vị tha và lòng nhân ái vẫn là những đặc điểm nổi bật trong tính cách của bạn. Bạn sẽ tận hưởng thành quả của những năm tháng lao động chăm chỉ và tìm thấy niềm vui trong việc chia sẻ kinh nghiệm và kiến thức với người khác.",
-      age60_plus: "Kết hợp tất cả các con số, giai đoạn này là thời gian để bạn nhìn lại chặng đường đã qua và tận hưởng thành quả của cuộc đời. Bạn có thể dành nhiều thời gian hơn cho việc du lịch, thư giãn và chăm sóc sức khỏe. Sự vị tha và lòng nhân ái vẫn luôn song hành cùng bạn. Bạn là nguồn cảm hứng cho người thân và bạn bè. Bạn để lại di sản quý giá cho thế hệ sau bằng những đóng góp tích cực cho xã hội.",
-      age0_10Advice: ["Khuyến khích sự tò mò và ham học hỏi của bé", "Hỗ trợ bé phát triển sự tự lập", "Dạy bé cách hợp tác và làm việc nhóm", "Tạo môi trường an toàn và yêu thương", "Hướng dẫn bé phát triển các kỹ năng sống cơ bản"],
-      age10_20Advice: ["Khuyến khích sự sáng tạo và độc lập", "Hỗ trợ bé tìm kiếm đam mê và mục tiêu", "Giúp bé cân bằng giữa việc học tập và các hoạt động ngoại khóa", "Tạo điều kiện cho bé giao lưu và học hỏi từ những người khác", "Hướng dẫn bé phát triển ý thức trách nhiệm xã hội"],
-      age20_30Advice: ["Đừng quên chăm sóc bản thân", "Đặt ra ranh giới rõ ràng trong các mối quan hệ", "Cân bằng giữa công việc và đời sống cá nhân", "Tin tưởng vào trực giác của bạn", "Đừng sợ thất bại, hãy xem đó là cơ hội học hỏi"],
-      age30_40Advice: ["Tập trung vào việc xây dựng sự nghiệp vững chắc", "Đừng quên dành thời gian cho gia đình", "Giữ vững tinh thần vị tha và lòng nhân ái", "Cân bằng giữa công việc và gia đình", "Hãy tận hưởng thành quả của những nỗ lực"],
-      age40_50Advice: ["Tiếp tục đóng góp cho xã hội", "Dành thời gian chăm sóc sức khỏe", "Tận hưởng thành quả của những năm tháng lao động", "Chia sẻ kinh nghiệm và kiến thức với người khác", "Chuẩn bị cho những thay đổi trong cuộc sống"],
-      age50_60Advice: ["Tận hưởng cuộc sống và những mối quan hệ thân thiết", "Chia sẻ kinh nghiệm và tri thức với thế hệ trẻ", "Dành thời gian cho bản thân và những sở thích cá nhân", "Đóng góp tích cực cho cộng đồng", "Chuẩn bị cho giai đoạn nghỉ hưu"],
-      age60_plusAdvice: ["Tận hưởng cuộc sống an nhàn và hạnh phúc", "Chia sẻ kinh nghiệm và kiến thức với mọi người", "Dành thời gian cho gia đình và bạn bè", "Chăm sóc sức khỏe và tinh thần", "Để lại di sản tốt đẹp cho thế hệ sau"],
+      age0_10: "Với số linh hồn 1, những năm tuổi thơ của bạn có thể được đánh dấu bằng sự độc lập sớm. Bạn có thể là một đứa trẻ tò mò, ham học hỏi và thích khám phá thế giới xung quanh. Bạn thể hiện sự quyết đoán và có ý chí mạnh mẽ ngay từ nhỏ.",
+      age10_20: "Bước vào tuổi thiếu niên, số linh hồn 1 kết hợp với số chủ đạo 9 sẽ tạo nên một giai đoạn đầy thử thách và cơ hội. Bạn sẽ khám phá bản thân nhiều hơn, khát khao thể hiện cá tính và tìm kiếm ý nghĩa cuộc sống.",
+      age20_30: "Giai đoạn này, sự kết hợp của số linh hồn 1, số chủ đạo 9 và số nhân cách 9 sẽ tạo nên một cá nhân mạnh mẽ, độc lập và giàu lòng trắc ẩn. Bạn có thể theo đuổi những mục tiêu đầy tham vọng và sẵn sàng cống hiến cho cộng đồng.",
+      age30_40: "Số nhân cách 9 và số định mệnh 4 sẽ định hình giai đoạn này. Bạn sẽ tập trung vào việc xây dựng sự nghiệp vững chắc và ổn định.",
+      age40_50: "Sự kết hợp giữa số nhân cách 9 và số định mệnh 4 tiếp tục tạo nên sự ổn định và thành công trong giai đoạn này. Bạn sẽ đạt được những thành tựu đáng kể trong sự nghiệp.",
+      age50_60: "Ở giai đoạn này, sự kết hợp của số nhân cách 9, số định mệnh 4 và số chủ đạo 9 sẽ mang lại sự cân bằng và hài hòa trong cuộc sống.",
+      age60_plus: "Kết hợp tất cả các con số, giai đoạn này là thời gian để bạn nhìn lại chặng đường đã qua và tận hưởng thành quả của cuộc đời.",
+      age0_10Advice: ["Khuyến khích sự tò mò và ham học hỏi", "Hỗ trợ bé phát triển sự tự lập"],
+      age10_20Advice: ["Khuyến khích sự sáng tạo và độc lập", "Hỗ trợ bé tìm kiếm đam mê và mục tiêu"],
+      age20_30Advice: ["Đừng quên chăm sóc bản thân", "Đặt ra ranh giới rõ ràng"],
+      age30_40Advice: ["Tập trung vào việc xây dựng sự nghiệp vững chắc", "Đừng quên dành thời gian cho gia đình"],
+      age40_50Advice: ["Tiếp tục đóng góp cho xã hội", "Dành thời gian chăm sóc sức khỏe"],
+      age50_60Advice: ["Tận hưởng cuộc sống và những mối quan hệ thân thiết", "Chia sẻ kinh nghiệm với thế hệ trẻ"],
+      age60_plusAdvice: ["Tận hưởng cuộc sống an nhàn", "Chia sẻ kinh nghiệm với mọi người"],
       cycles: {
         "2024": {
           number: 4,
-          description: "Năm 2024 là một năm tập trung vào sự ổn định và xây dựng nền tảng vững chắc. Bạn có thể tập trung vào việc hoàn thiện các dự án đã bắt đầu và tạo ra một cấu trúc vững chắc cho tương lai. Sự kiên trì và chăm chỉ sẽ giúp bạn đạt được những kết quả tốt đẹp. Hãy tận dụng thời gian này để củng cố mối quan hệ với người thân và bạn bè.",
+          description: "Năm 2024 là một năm tập trung vào sự ổn định và xây dựng nền tảng vững chắc.",
           focus: ["Sự nghiệp", "Gia đình", "Củng cố nền tảng"],
           keywords: ["Ổn định", "Kiên trì", "Cấu trúc", "Hợp tác", "Thành tựu"]
         },
         "2025": {
           number: 5,
-          description: "Năm 2025 là năm của sự thay đổi và phiêu lưu. Bạn có thể trải nghiệm những điều mới mẻ và mở rộng tầm nhìn. Hãy sẵn sàng cho những chuyến đi xa và những cuộc gặp gỡ thú vị. Sự linh hoạt và thích ứng là chìa khóa thành công trong năm này. Hãy cởi mở với những cơ hội mới và đừng ngại thử thách bản thân.",
+          description: "Năm 2025 là năm của sự thay đổi và phiêu lưu.",
           focus: ["Du lịch", "Mở rộng tầm nhìn", "Khám phá bản thân"],
           keywords: ["Thay đổi", "Linh hoạt", "Phiêu lưu", "Tự do", "Khám phá"]
         },
         "2026": {
           number: 6,
-          description: "Năm 2026 là năm của gia đình và tình yêu. Bạn có thể dành nhiều thời gian hơn cho người thân và xây dựng những mối quan hệ sâu sắc. Hãy tận hưởng những khoảnh khắc hạnh phúc bên gia đình và bạn bè. Sự hài hòa và cân bằng là chìa khóa hạnh phúc trong năm nay. Hãy dành thời gian để chăm sóc bản thân và những người xung quanh.",
+          description: "Năm 2026 là năm của gia đình và tình yêu.",
           focus: ["Gia đình", "Tình yêu", "Hài hòa"],
           keywords: ["Hạnh phúc", "Yêu thương", "Hài hòa", "Cân bằng", "Kết nối"]
         }
