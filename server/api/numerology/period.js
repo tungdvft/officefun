@@ -49,66 +49,6 @@ function calculateNumber(birthDate, period) {
   return NumerologyUtils.reduceToSingleDigit(sum) || 1;
 }
 
-// Tính số đường đời
-function calculateLifePath(birthDate) {
-  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate)) return 1;
-  const digits = birthDate.split('/').join('').split('').map(Number);
-  return NumerologyUtils.reduceToSingleDigit(digits.reduce((a, b) => a + b, 0)) || 1;
-}
-
-// Tính chu kỳ đường đời (Life Path Cycles)
-function calculateLifePathCycles(birthDate) {
-  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate)) return { formation: 1, peak: 1, completion: 1 };
-  const [day, month, year] = birthDate.split('/').map(Number);
-  const currentYear = getCurrentDateInfo().year;
-  const age = currentYear - year;
-
-  const formationCycle = NumerologyUtils.reduceToSingleDigit(day); // Chu kỳ hình thành (dựa trên ngày sinh)
-  const peakCycle = NumerologyUtils.reduceToSingleDigit(month);   // Chu kỳ đỉnh cao (dựa trên tháng sinh)
-  const completionCycle = NumerologyUtils.reduceToSingleDigit(year); // Chu kỳ hoàn thiện (dựa trên năm sinh)
-
-  return {
-    formation: {
-      number: formationCycle,
-      startAge: 0,
-      endAge: 36 - calculateLifePath(birthDate),
-      description: `Chu kỳ Hình thành (0 - ${36 - calculateLifePath(birthDate)} tuổi): Đây là giai đoạn bạn xây dựng nền tảng cuộc sống, khám phá bản thân và học hỏi từ trải nghiệm.`
-    },
-    peak: {
-      number: peakCycle,
-      startAge: 36 - calculateLifePath(birthDate) + 1,
-      endAge: (36 - calculateLifePath(birthDate)) + 9,
-      description: `Chu kỳ Đỉnh cao (${36 - calculateLifePath(birthDate) + 1} - ${(36 - calculateLifePath(birthDate)) + 9} tuổi): Đây là thời kỳ bạn đạt được thành tựu lớn nhất, tận dụng tối đa năng lượng và kinh nghiệm tích lũy.`
-    },
-    completion: {
-      number: completionCycle,
-      startAge: (36 - calculateLifePath(birthDate)) + 10,
-      endAge: null,
-      description: `Chu kỳ Hoàn thiện (${(36 - calculateLifePath(birthDate)) + 10} tuổi trở đi): Đây là giai đoạn bạn hoàn thiện bản thân, chia sẻ kinh nghiệm và sống một cuộc đời ý nghĩa hơn.`
-    }
-  };
-}
-
-// Tính nhóm tính cách theo phần trăm (Personality Traits)
-function calculatePersonalityTraits(birthDate) {
-  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate)) return { creativity: 25, practicality: 25, sensitivity: 25, leadership: 25 };
-  const digits = birthDate.split('/').join('').split('').map(Number);
-  const totalSum = digits.reduce((a, b) => a + b, 0);
-
-  const creativity = Math.round((digits.filter(d => [3, 6, 9].includes(d)).length / digits.length) * 100); // Sáng tạo
-  const practicality = Math.round((digits.filter(d => [2, 4, 8].includes(d)).length / digits.length) * 100); // Thực tế
-  const sensitivity = Math.round((digits.filter(d => [2, 5, 7].includes(d)).length / digits.length) * 100); // Nhạy cảm
-  const leadership = Math.round((digits.filter(d => [1, 5, 8].includes(d)).length / digits.length) * 100); // Lãnh đạo
-
-  const total = creativity + practicality + sensitivity + leadership;
-  return {
-    creativity: total ? Math.round((creativity / total) * 100) : 25,
-    practicality: total ? Math.round((practicality / total) * 100) : 25,
-    sensitivity: total ? Math.round((sensitivity / total) * 100) : 25,
-    leadership: total ? Math.round((leadership / total) * 100) : 25
-  };
-}
-
 // Tạo dữ liệu chu kỳ từ Gemini hoặc fallback
 async function getPeriodData(name, birthDate, periods) {
   const dateInfo = getCurrentDateInfo();
@@ -123,12 +63,13 @@ async function getPeriodData(name, birthDate, periods) {
     Trả về CHỈ JSON (không thêm text thừa): { "day": {}, "week": {}, "month": {}, "year": {} }, mỗi object chứa:
     - "number": Số cá nhân.
     - "theme": Chủ đề chính (ví dụ: "Khởi đầu", "Sáng tạo").
-    - "description": Diễn giải chi tiết (8-10 câu), bắt đầu bằng "${name}", giọng tự nhiên, sâu sắc, phù hợp chu kỳ (ngày: tức thời, tuần: ngắn hạn, tháng: trung hạn, năm: dài hạn).
-    - "focus": Mảng 3 yếu tố cần tập trung.
-    - "keywords": Mảng 5 từ khóa nổi bật.
-    - "shouldDo": 5-6 câu gợi ý việc nên làm, cụ thể theo thời điểm (ngày: đầu/giữa/cuối tuần; tháng: đầu/giữa/cuối tháng), dựa trên số cá nhân, thực tế và chi tiết.
-    - "shouldAvoid": 4-5 câu việc nên tránh, cụ thể theo thời điểm, dựa trên số cá nhân, mang tính định hướng.
-    - "lunchSuggestion": Chỉ cho "day" (3-4 câu), món ăn trưa chi tiết dựa trên seed ${randomSeed} và số ${periods.day.number}, không lặp "bún chả Hà Nội".`;
+    - "description": Diễn giải chi tiết (10-12 câu), bắt đầu bằng "${name}", giọng tự nhiên, sâu sắc, phù hợp chu kỳ (ngày: tức thời, tuần: ngắn hạn, tháng: trung hạn, năm: dài hạn).
+    - "focus": Mảng 4 yếu tố cần tập trung.
+    - "keywords": Mảng 6 từ khóa nổi bật.
+    - "shouldDo": Mảng 6-8 câu gợi ý việc nên làm (mỗi câu là một phần tử), cụ thể theo thời điểm (ngày: đầu/giữa/cuối tuần; tháng: đầu/giữa/cuối tháng), dựa trên số cá nhân, thực tế và chi tiết.
+    - "shouldAvoid": Mảng 5-6 câu việc nên tránh (mỗi câu là một phần tử), cụ thể theo thời điểm, dựa trên số cá nhân, mang tính định hướng.
+    - "energyTips": Mảng 3-4 câu mẹo cân bằng năng lượng, phù hợp với số cá nhân và chu kỳ.
+    - "lunchSuggestion": Chỉ cho "day", mảng 4-5 câu gợi ý món ăn trưa chi tiết dựa trên seed ${randomSeed} và số ${periods.day.number}, không lặp "bún chả Hà Nội".`;
 
   let periodsData;
   try {
@@ -168,58 +109,181 @@ function generateFallbackPeriods(name, birthDate, periods) {
   const isEndOfMonth = dateInfo.day > 20;
 
   const lunchOptions = [
-    `Hôm nay, một tô phở bò tái lăn với rau thơm và chút tương ớt sẽ tiếp thêm năng lượng cho số ${periods.day.number}. Một bữa trưa nhẹ nhàng nhưng đầy đủ chất để bạn tiếp tục ngày mới!`,
-    `Một đĩa cơm tấm sườn nướng, trứng ốp la và dưa leo là lựa chọn tuyệt vời cho trưa nay, hợp với số ${periods.day.number}. Thêm một ly trà đá để cân bằng nhé!`,
-    `Thử bánh xèo giòn rụm với nước mắm chua ngọt, rau sống tươi ngon, rất hợp với năng lượng số ${periods.day.number}. Một bữa trưa đậm chất Việt Nam để làm mới tinh thần!`,
-    `Một bát bún riêu cua nóng hổi, thêm rau muống và mắm tôm vừa miệng sẽ làm trưa nay thêm ngon, phù hợp số ${periods.day.number}. Thưởng thức chậm rãi để cảm nhận nhé!`
+    `Thưởng thức một suất cơm gà xối mỡ thơm ngon, nóng hổi, hợp với năng lượng số ${periods.day.number}.`,
+    `Một tô mì bò kho đậm đà với bánh mì giòn rụm là lựa chọn tuyệt vời cho trưa nay, phù hợp với số ${periods.day.number}.`,
+    `Nếu muốn nhẹ nhàng, thử salad cá hồi tươi mát với sốt chanh dây để cân bằng năng lượng số ${periods.day.number}.`,
+    `Một bát bún bò Huế cay nồng, thêm rau thơm và chanh sẽ làm trưa nay thêm thú vị, hợp với số ${periods.day.number}.`
   ];
-  const randomLunch = lunchOptions[Math.floor(Math.random() * lunchOptions.length)];
 
   const generatePeriodData = (periodKey, periodData) => {
     const validNumber = NUMEROLOGY_MEANINGS.personalYear[periodData.number] ? periodData.number : 1;
     const meaning = NUMEROLOGY_MEANINGS.personalYear[validNumber] || NUMEROLOGY_MEANINGS.personalYear[1];
 
-    let shouldDo, shouldAvoid, description;
+    let shouldDo, shouldAvoid, description, energyTips;
 
     switch (periodKey) {
       case 'day':
-        description = `"${name}" ngày ${periodData.text} mang năng lượng số ${validNumber}, ${meaning.theme.toLowerCase()}. Đây là một ngày để bạn tập trung vào những thay đổi nhỏ nhưng ý nghĩa trong cuộc sống thường nhật. Năng lượng này khuyến khích bạn hành động linh hoạt, đón nhận cơ hội bất ngờ. Mỗi quyết định hôm nay đều có thể ảnh hưởng đến hướng đi sắp tới. Hãy lắng nghe trực giác, đồng thời giữ tinh thần cởi mở để thích nghi với hoàn cảnh. Nếu bạn tận dụng tốt, đây sẽ là một ngày đầy cảm hứng và hiệu quả. Đừng ngại thử điều mới mẻ, dù chỉ là một thay đổi nhỏ trong thói quen. Năng lượng ${meaning.theme.toLowerCase()} đang ở bên bạn hôm nay!`;
+        description = `"${name}", ngày ${periodData.text} mang năng lượng số ${validNumber}, biểu trưng cho ${meaning.theme.toLowerCase()}. Đây là một ngày để bạn tập trung vào những thay đổi nhỏ nhưng có ý nghĩa trong cuộc sống thường nhật. Năng lượng này khuyến khích bạn hành động linh hoạt, đón nhận những cơ hội bất ngờ xuất hiện. Mỗi quyết định hôm nay đều có thể là bước ngoặt nhỏ dẫn bạn đến những điều lớn lao hơn. Hãy chú ý đến cảm xúc và trực giác của mình, vì chúng sẽ dẫn dắt bạn trong những tình huống không rõ ràng. Nếu bạn tận dụng tốt, ngày này sẽ tràn đầy cảm hứng và hiệu quả. Đừng ngại thử những điều mới mẻ, dù chỉ là một thay đổi nhỏ trong thói quen hàng ngày. Năng lượng ${meaning.theme.toLowerCase()} đang hỗ trợ bạn mạnh mẽ hôm nay. Hãy giữ tinh thần cởi mở và sẵn sàng thích nghi với mọi hoàn cảnh. Một ngày trọn vẹn đang chờ bạn khám phá!`;
+        energyTips = [
+          `Dành 10 phút buổi sáng hít thở sâu để khởi động năng lượng số ${validNumber}.`,
+          `Uống một ly nước chanh ấm giữa ngày để giữ cơ thể nhẹ nhàng và tỉnh táo.`,
+          `Tối nay, thắp một ngọn nến nhỏ để thư giãn và cân bằng tâm trí.`
+        ];
         if (isStartOfWeek) {
-          shouldDo = `Hôm nay là đầu tuần, hãy bắt đầu bằng cách viết ra 3 mục tiêu cụ thể cho ngày này để định hướng rõ ràng. Thử gọi điện hoặc nhắn tin cho một người bạn để chia sẻ ý tưởng mới, rất hợp với năng lượng ${meaning.theme.toLowerCase()}. Dành 10 phút buổi trưa ngồi thiền hoặc nghe nhạc yêu thích để nạp lại tinh thần. Nếu có thể, đi bộ ngắn sau giờ làm để hít thở không khí trong lành. Một ngày khởi đầu tốt sẽ tạo đà cho cả tuần!`;
-          shouldAvoid = `Đừng để những email tồn đọng từ tuần trước làm bạn phân tâm ngay từ đầu ngày. Tránh bắt đầu ngày bằng việc lướt mạng xã hội quá lâu, dễ làm mất động lực. Hạn chế uống cà phê quá nhiều sáng sớm, thay bằng trà xanh để giữ tỉnh táo nhẹ nhàng. Đừng tự tạo áp lực quá lớn ngay hôm nay nhé!`;
+          shouldDo = [
+            `Buổi sáng: Lập kế hoạch chi tiết cho ngày hôm nay để bắt đầu tuần mới hiệu quả.`,
+            `Giữa ngày: Gửi một tin nhắn hỏi thăm đồng nghiệp hoặc bạn bè để tạo kết nối.`,
+            `Cuối ngày: Dành 15 phút xem lại tiến độ công việc và ghi chú cho ngày mai.`,
+            `Thử đi bộ ngắn sau giờ làm để hít thở không khí trong lành, hợp với số ${validNumber}.`,
+            `Dành thời gian thử một món ăn mới vào bữa tối để làm phong phú ngày này.`,
+            `Nghe một bản nhạc yêu thích trước khi ngủ để nạp lại năng lượng tích cực.`,
+          ];
+          shouldAvoid = [
+            `Tránh trì hoãn việc lập kế hoạch, vì đầu tuần cần sự rõ ràng để định hướng.`,
+            `Không nên tranh cãi với người khác vào sáng sớm, giữ hòa khí để ngày suôn sẻ.`,
+            `Hạn chế lướt mạng xã hội quá lâu, dễ làm mất tập trung vào mục tiêu.`,
+            `Đừng tự tạo áp lực quá lớn ngay từ đầu tuần, hãy tiến hành từng bước nhỏ.`,
+            `Tránh ăn quá nhiều đồ chiên rán, chọn món nhẹ để giữ sức khỏe tốt.`
+          ];
         } else if (isMidWeek) {
-          shouldDo = `Giữa tuần rồi, hãy hoàn thành một email quan trọng hoặc công việc nhỏ còn dang dở để cảm thấy nhẹ nhõm. Thử vẽ một bức doodle hoặc viết vài dòng suy nghĩ trong giờ nghỉ, phù hợp với ${meaning.theme.toLowerCase()}. Tối nay, xem một video ngắn về chủ đề bạn quan tâm để thư giãn. Đừng quên uống đủ nước và đứng dậy vận động vài phút giữa giờ làm. Một ngày cân bằng sẽ giúp bạn duy trì năng lượng!`;
-          shouldAvoid = `Tránh nhận thêm deadline gấp vào giữa tuần, dễ làm bạn căng thẳng không cần thiết. Đừng để những cuộc trò chuyện phiếm kéo dài làm mất thời gian quý báu. Hạn chế ăn đồ chiên rán quá nhiều hôm nay, chọn món nhẹ để giữ sức khỏe. Đừng để bản thân kiệt sức giữa chừng nhé!`;
+          shouldDo = [
+            `Buổi sáng: Hoàn thành một nhiệm vụ nhỏ còn dang dở để cảm thấy nhẹ nhõm.`,
+            `Giữa ngày: Thử vẽ một bức doodle hoặc viết vài dòng suy nghĩ để thư giãn.`,
+            `Cuối ngày: Xem một video ngắn về chủ đề bạn quan tâm để lấy cảm hứng.`,
+            `Dành 10 phút đi dạo giữa giờ nghỉ trưa để tái tạo năng lượng số ${validNumber}.`,
+            `Gọi điện hỏi thăm một người thân để kết nối tình cảm, rất hợp với ngày này.`,
+            `Tối nay, thử tập vài động tác yoga nhẹ để giữ cơ thể khỏe mạnh.`,
+          ];
+          shouldAvoid = [
+            `Tránh nhận thêm công việc gấp vào giữa tuần, dễ gây căng thẳng không cần thiết.`,
+            `Không nên để những cuộc trò chuyện phiếm kéo dài, giữ thời gian cho việc quan trọng.`,
+            `Hạn chế uống cà phê quá nhiều, thay bằng trà thảo mộc để giữ tỉnh táo nhẹ nhàng.`,
+            `Đừng bỏ qua giờ nghỉ trưa, cơ thể cần thời gian để phục hồi giữa tuần.`,
+            `Tránh để cảm xúc tiêu cực chi phối, hãy tập trung vào những điều tích cực.`
+          ];
         } else if (isEndOfWeek) {
-          shouldDo = `Cuối tuần đến, hãy dành 30 phút để sắp xếp lại lịch tuần sau, chuẩn bị tinh thần thật tốt. Thử ra ngoài uống cà phê với bạn bè hoặc đi dạo để đổi gió, hợp với ${meaning.theme.toLowerCase()}. Tối nay, xem một bộ phim nhẹ nhàng hoặc đọc vài trang sách yêu thích. Kết thúc ngày bằng một cốc trà ấm để thư giãn hoàn toàn. Một ngày cuối tuần trọn vẹn sẽ giúp bạn tái tạo năng lượng!`;
-          shouldAvoid = `Đừng mang việc về nhà vào cuối tuần, hãy để đầu óc được nghỉ ngơi. Tránh mua sắm online chỉ vì buồn chán, dễ tiêu tiền không kiểm soát. Hạn chế ngủ nướng quá lâu, giữ nhịp sinh học ổn định để tuần sau khởi đầu tốt. Đừng để những suy nghĩ tiêu cực làm mờ đi ngày thư giãn này!`;
+          shouldDo = [
+            `Buổi sáng: Sắp xếp lại bàn làm việc để chuẩn bị cho tuần sau thật gọn gàng.`,
+            `Giữa ngày: Ra ngoài uống cà phê với bạn bè để đổi gió, hợp với số ${validNumber}.`,
+            `Cuối ngày: Xem một bộ phim nhẹ nhàng hoặc đọc sách để thư giãn hoàn toàn.`,
+            `Thử nấu một món ăn yêu thích vào bữa tối để tự thưởng cho bản thân.`,
+            `Dành 20 phút đi dạo tối để tận hưởng không khí cuối tuần thoải mái.`,
+            `Viết ra 3 điều bạn hài lòng trong ngày để kết thúc tuần một cách tích cực.`,
+          ];
+          shouldAvoid = [
+            `Tránh mang công việc về nhà vào cuối tuần, hãy để đầu óc được nghỉ ngơi.`,
+            `Không nên mua sắm online chỉ vì buồn chán, dễ tiêu tiền không kiểm soát.`,
+            `Hạn chế thức khuya xem phim, giữ nhịp sinh học ổn định cho tuần mới.`,
+            `Đừng để những suy nghĩ tiêu cực làm mờ đi ngày thư giãn này.`,
+            `Tránh ăn quá nhiều đồ ngọt tối nay, chọn món nhẹ để cơ thể dễ chịu.`
+          ];
         }
         break;
 
       case 'week':
-        description = `"${name}" tuần ${periodData.text} mang năng lượng số ${validNumber}, ${meaning.theme.toLowerCase()}. Đây là một tuần để bạn tập trung vào việc điều chỉnh nhịp sống và tận dụng những cơ hội ngắn hạn. Năng lượng này mang đến sự linh hoạt, thúc đẩy bạn hành động nhanh chóng nhưng vẫn cần sự cân nhắc. Mỗi bước đi trong tuần này đều góp phần xây dựng nền tảng cho tương lai gần. Hãy chú ý đến các mối quan hệ xung quanh, vì chúng có thể mang lại hỗ trợ bất ngờ. Nếu bạn biết cách tận dụng, đây sẽ là một tuần hiệu quả và đáng nhớ. Đừng ngần ngại thử những ý tưởng mới, vì ${meaning.theme.toLowerCase()} đang dẫn dắt bạn!`;
-        shouldDo = `Tuần này, hãy thử viết một kế hoạch ngắn hoặc ghi chú về mục tiêu cá nhân để định hình hướng đi. Dành một buổi tối đi ăn cùng đồng nghiệp hoặc gia đình, tạo kết nối mới, hợp với ${meaning.theme.toLowerCase()}. Thử tập yoga hoặc chạy bộ ít nhất 2 lần để giữ cơ thể khỏe mạnh. Gửi một email cảm ơn ai đó đã giúp bạn gần đây để lan tỏa năng lượng tích cực. Một tuần trôi chảy sẽ mang lại nhiều cảm hứng!`;
-        shouldAvoid = `Đừng để những cuộc họp không cần thiết làm gián đoạn lịch trình tuần này, hãy ưu tiên thời gian cho việc quan trọng. Tránh trì hoãn công việc đến cuối tuần, dễ gây áp lực không đáng có. Hạn chế xem tin tức tiêu cực quá nhiều, giữ tinh thần lạc quan để tập trung tốt hơn. Đừng quên dành thời gian nghỉ ngơi giữa tuần nhé!`;
+        description = `"${name}", tuần ${periodData.text} mang năng lượng số ${validNumber}, đại diện cho ${meaning.theme.toLowerCase()}. Đây là tuần để bạn tập trung vào việc điều chỉnh nhịp sống và tận dụng những cơ hội ngắn hạn. Năng lượng này thúc đẩy bạn hành động nhanh chóng nhưng vẫn cần sự cân nhắc kỹ lưỡng. Mỗi bước đi trong tuần này đều góp phần xây dựng nền tảng cho những tuần tiếp theo. Hãy chú ý đến các mối quan hệ xung quanh, vì chúng có thể mang lại sự hỗ trợ bất ngờ. Nếu bạn biết cách tận dụng, đây sẽ là một tuần hiệu quả và đáng nhớ. Năng lượng ${meaning.theme.toLowerCase()} khuyến khích bạn thử những ý tưởng mới và không ngại thay đổi. Sự linh hoạt sẽ là chìa khóa để bạn vượt qua những thử thách nhỏ. Hãy giữ tinh thần lạc quan và tập trung vào những điều quan trọng nhất. Một tuần đầy tiềm năng đang chờ bạn khai phá!`;
+        shouldDo = [
+          `Lập danh sách 5 mục tiêu nhỏ cho tuần này và theo dõi tiến độ mỗi ngày.`,
+          `Dành một buổi tối đi ăn cùng gia đình hoặc bạn bè để tăng cường kết nối.`,
+          `Thử tập thể dục ít nhất 3 lần trong tuần để giữ cơ thể khỏe mạnh, hợp với số ${validNumber}.`,
+          `Gửi một email cảm ơn ai đó đã giúp bạn gần đây để lan tỏa năng lượng tích cực.`,
+          `Dành 30 phút cuối tuần để tổng kết và lên kế hoạch cho tuần tới.`,
+          `Thử học một kỹ năng mới như nấu ăn hoặc vẽ để làm phong phú tuần này.`,
+        ];
+        shouldAvoid = [
+          `Tránh để những cuộc họp không cần thiết làm gián đoạn lịch trình tuần này.`,
+          `Không nên trì hoãn công việc đến cuối tuần, dễ gây áp lực không đáng có.`,
+          `Hạn chế xem tin tức tiêu cực quá nhiều, giữ tinh thần lạc quan để tập trung tốt hơn.`,
+          `Đừng quên nghỉ ngơi giữa tuần, tránh làm việc quá sức mà không nghỉ.`,
+          `Tránh đưa ra quyết định lớn mà chưa suy nghĩ kỹ, hãy dành thời gian cân nhắc.`,
+        ];
+        energyTips = [
+          `Bắt đầu tuần bằng một bài thiền ngắn để định hướng năng lượng số ${validNumber}.`,
+          `Giữa tuần, uống trà hoa cúc để thư giãn và giảm căng thẳng.`,
+          `Cuối tuần, đi dạo ngoài trời để tái tạo năng lượng và chuẩn bị cho tuần mới.`,
+        ];
         break;
 
       case 'month':
-        description = `"${name}" tháng ${periodData.text} mang năng lượng số ${validNumber}, ${meaning.theme.toLowerCase()}. Đây là một tháng để bạn nhìn lại những gì đã làm và định hướng cho những mục tiêu lớn hơn. Năng lượng này khuyến khích bạn tập trung vào sự phát triển cá nhân, đồng thời cân bằng giữa công việc và cuộc sống. Mỗi hành động trong tháng này đều có thể tạo ra ảnh hưởng lâu dài nếu bạn kiên nhẫn. Hãy chú ý đến những dấu hiệu nhỏ từ xung quanh, vì chúng có thể là gợi ý quan trọng. Nếu tận dụng tốt, đây sẽ là một tháng đầy ý nghĩa và thành tựu. ${meaning.theme.toLowerCase()} đang mở ra cơ hội để bạn tỏa sáng!`;
+        description = `"${name}", tháng ${periodData.text} mang năng lượng số ${validNumber}, biểu trưng cho ${meaning.theme.toLowerCase()}. Đây là một tháng để bạn nhìn lại những gì đã làm và định hướng cho những mục tiêu lớn hơn trong tương lai. Năng lượng này khuyến khích bạn tập trung vào sự phát triển cá nhân, đồng thời cân bằng giữa công việc và cuộc sống cá nhân. Mỗi hành động trong tháng này đều có thể tạo ra ảnh hưởng lâu dài nếu bạn kiên nhẫn và quyết tâm. Hãy chú ý đến những dấu hiệu nhỏ từ xung quanh, vì chúng có thể là gợi ý quan trọng cho hướng đi của bạn. Nếu tận dụng tốt, đây sẽ là một tháng đầy ý nghĩa và thành tựu. Năng lượng ${meaning.theme.toLowerCase()} đang mở ra cơ hội để bạn tỏa sáng theo cách riêng. Đừng ngại đặt câu hỏi cho bản thân về những gì thực sự quan trọng. Sự kiên trì và tập trung sẽ giúp bạn đạt được những bước tiến lớn. Một tháng đáng nhớ đang chờ bạn!`;
+        energyTips = [
+          `Dành 15 phút mỗi sáng để viết nhật ký, giúp bạn kết nối với năng lượng số ${validNumber}.`,
+          `Giữa tháng, thử thay đổi không gian sống bằng cách dọn dẹp để làm mới năng lượng.`,
+          `Cuối tháng, ngồi thiền hoặc nghe nhạc nhẹ để tổng kết và tái tạo tinh thần.`,
+        ];
         if (isStartOfMonth) {
-          shouldDo = `Đầu tháng là lúc lý tưởng để lập kế hoạch tài chính, thử tiết kiệm 10% thu nhập để chuẩn bị cho tương lai. Tham gia một buổi hội thảo online hoặc đọc một cuốn sách mới, phù hợp với ${meaning.theme.toLowerCase()}. Dành một ngày cuối tuần để dọn dẹp tủ quần áo, tạo không gian sống mới mẻ. Ghi lại 3 mục tiêu cụ thể để theo dõi trong tháng này. Một khởi đầu tốt sẽ mang lại động lực lớn!`;
-          shouldAvoid = `Đừng vội vàng mua đồ lớn ngay đầu tháng, hãy cân nhắc kỹ để tránh lãng phí. Tránh để những lo lắng không rõ ràng làm bạn mất ngủ, cứ thư giãn và lên kế hoạch từ từ. Hạn chế cam kết với dự án mới mà chưa chuẩn bị kỹ, giữ năng lượng cho những việc ưu tiên. Đừng để áp lực tài chính làm mờ đi sự hào hứng ban đầu!`;
+          shouldDo = [
+            `Đầu tháng, lập kế hoạch tài chính chi tiết để kiểm soát chi tiêu hiệu quả.`,
+            `Tham gia một buổi hội thảo hoặc đọc sách mới để khởi đầu tháng đầy cảm hứng.`,
+            `Dành một ngày cuối tuần dọn dẹp nhà cửa, tạo không gian sống tích cực.`,
+            `Ghi lại 4 mục tiêu cụ thể cho tháng này và đặt nhắc nhở để theo dõi.`,
+            `Thử một món ăn mới vào cuối tuần để làm phong phú trải nghiệm, hợp với số ${validNumber}.`,
+            `Gửi một tin nhắn động viên ai đó để lan tỏa năng lượng tích cực.`,
+          ];
+          shouldAvoid = [
+            `Tránh mua sắm đồ lớn ngay đầu tháng, hãy cân nhắc kỹ để tránh lãng phí.`,
+            `Không nên để lo lắng mơ hồ làm mất ngủ, cứ thư giãn và lên kế hoạch từ từ.`,
+            `Hạn chế cam kết với dự án mới mà chưa chuẩn bị kỹ, ưu tiên việc hiện tại.`,
+            `Đừng để áp lực tài chính làm mờ đi sự hào hứng đầu tháng, hãy bình tĩnh xử lý.`,
+            `Tránh làm việc quá sức ngay từ đầu, giữ sức khỏe cho cả tháng dài.`,
+          ];
         } else if (isMidMonth) {
-          shouldDo = `Giữa tháng rồi, hãy kiểm tra lại ngân sách và điều chỉnh chi tiêu nếu cần thiết. Thử học một công thức nấu ăn mới vào cuối tuần, hợp với ${meaning.theme.toLowerCase()}. Gọi điện hỏi thăm một người thân để kết nối lại tình cảm, mang lại năng lượng tích cực. Dành một buổi tối để viết nhật ký, nhìn lại những gì đã làm được. Một tháng cân bằng sẽ giúp bạn tiến xa hơn!`;
-          shouldAvoid = `Tránh để công việc dồn lại làm bạn căng thẳng giữa tháng này, hãy xử lý từng bước. Đừng quá khắt khe với bản thân nếu chưa đạt hết mục tiêu, cứ từ từ điều chỉnh. Hạn chế ăn ngoài liên tục, tự nấu một bữa sẽ tiết kiệm và tốt hơn cho sức khỏe. Đừng để những chuyện nhỏ làm mất tập trung nhé!`;
+          shouldDo = [
+            `Kiểm tra lại ngân sách tháng này và điều chỉnh chi tiêu nếu cần thiết.`,
+            `Thử học một công thức nấu ăn mới vào cuối tuần để thư giãn, hợp với số ${validNumber}.`,
+            `Gọi điện hỏi thăm một người thân để kết nối lại tình cảm, mang lại năng lượng tích cực.`,
+            `Dành một buổi tối viết nhật ký, nhìn lại những gì đã làm được trong nửa tháng.`,
+            `Tham gia một hoạt động ngoài trời như chạy bộ để tái tạo năng lượng giữa tháng.`,
+            `Lên kế hoạch cho nửa tháng còn lại để đảm bảo mọi thứ đi đúng hướng.`,
+          ];
+          shouldAvoid = [
+            `Tránh để công việc dồn lại làm bạn căng thẳng giữa tháng này, xử lý từng bước.`,
+            `Không nên quá khắt khe với bản thân nếu chưa đạt hết mục tiêu, cứ từ từ điều chỉnh.`,
+            `Hạn chế ăn ngoài liên tục, tự nấu một bữa để tiết kiệm và tốt cho sức khỏe.`,
+            `Đừng để những chuyện nhỏ nhặt làm mất tập trung vào mục tiêu lớn.`,
+            `Tránh thức khuya quá nhiều, giữ sức khỏe để duy trì năng lượng ổn định.`,
+          ];
         } else if (isEndOfMonth) {
-          shouldDo = `Cuối tháng, hãy dành một buổi chiều để tổng kết chi tiêu và rút kinh nghiệm cho tháng sau. Thử đi dạo công viên hoặc xem một buổi biểu diễn để thư giãn, hợp với ${meaning.theme.toLowerCase()}. Lên danh sách 3 việc cần làm cho tháng tới để chuẩn bị tốt. Tặng bản thân một món quà nhỏ như một cuốn sách hay một bữa ăn ngon để tự thưởng. Một tháng kết thúc trọn vẹn sẽ mang lại niềm vui!`;
-          shouldAvoid = `Đừng để hóa đơn cuối tháng làm bạn hoảng loạn, cứ xử lý từng bước một cách bình tĩnh. Tránh tranh cãi với đồng nghiệp hoặc gia đình vào thời điểm này, giữ hòa khí quan trọng hơn. Hạn chế thức khuya liên tục, cơ thể cần nghỉ ngơi để tái tạo năng lượng. Đừng để cảm giác tiếc nuối làm mờ đi những thành tựu đã đạt được!`;
+          shouldDo = [
+            `Dành một buổi chiều tổng kết chi tiêu tháng này và rút kinh nghiệm cho tháng sau.`,
+            `Thử đi dạo công viên hoặc xem một buổi biểu diễn để thư giãn, hợp với số ${validNumber}.`,
+            `Lên danh sách 4 việc cần làm cho tháng tới để chuẩn bị tinh thần tốt.`,
+            `Tự thưởng cho bản thân một món quà nhỏ như sách hoặc bữa ăn ngon để khích lệ.`,
+            `Gửi lời cảm ơn ai đó đã đồng hành cùng bạn trong tháng này để kết thúc tích cực.`,
+            `Dành thời gian thiền hoặc viết ra 3 điều bạn biết ơn trong tháng vừa qua.`,
+          ];
+          shouldAvoid = [
+            `Tránh hoảng loạn với hóa đơn cuối tháng, xử lý từng bước một cách bình tĩnh.`,
+            `Không nên tranh cãi với người khác vào thời điểm này, giữ hòa khí quan trọng hơn.`,
+            `Hạn chế thức khuya liên tục, cơ thể cần nghỉ ngơi để tái tạo năng lượng.`,
+            `Đừng để cảm giác tiếc nuối làm mờ đi những thành tựu đã đạt được trong tháng.`,
+            `Tránh chi tiêu quá mức vào những ngày cuối, hãy ưu tiên tiết kiệm.`,
+          ];
         }
         break;
 
       case 'year':
-        description = `"${name}" năm ${periodData.text} mang năng lượng số ${validNumber}, ${meaning.theme.toLowerCase()}. Đây là một năm để bạn đặt nền móng cho những mục tiêu dài hạn và khám phá tiềm năng sâu bên trong. Năng lượng này mang đến cơ hội lớn, nhưng cũng đòi hỏi sự kiên trì và tầm nhìn rõ ràng. Mỗi quyết định trong năm nay đều có thể định hình tương lai của bạn trong thập kỷ tới. Hãy chú ý đến những mối quan hệ quan trọng, vì chúng sẽ hỗ trợ bạn trên hành trình này. Nếu bạn tận dụng tốt, đây sẽ là một năm mang tính bước ngoặt, đầy thành tựu và sự phát triển. ${meaning.theme.toLowerCase()} đang dẫn dắt bạn đến những chân trời mới, hãy mạnh dạn bước đi!`;
-        shouldDo = `Năm nay, hãy thử đăng ký một khóa học online như lập trình, thiết kế hoặc ngoại ngữ để nâng cao kỹ năng. Lên kế hoạch đi du lịch ít nhất một lần, dù chỉ là chuyến ngắn ngày, hợp với ${meaning.theme.toLowerCase()}. Mỗi quý, dành một ngày để đánh giá lại mục tiêu cá nhân và điều chỉnh nếu cần. Tìm một người bạn đồng hành hoặc cố vấn để cùng nhau phát triển. Một năm đầy ý nghĩa đang chờ bạn chinh phục!`;
-        shouldAvoid = `Đừng để những thất bại nhỏ đầu năm làm bạn chùn bước, hãy xem đó là bài học để trưởng thành. Tránh đầu tư tài chính mạo hiểm mà không nghiên cứu kỹ, cẩn thận với những quyết định lớn. Hạn chế giữ mãi những mối quan hệ không còn tích cực, hãy ưu tiên cho những người thực sự quan trọng. Đừng quên dành thời gian nghỉ ngơi giữa các kế hoạch lớn để giữ sức khỏe và tinh thần!`;
+        description = `"${name}", năm ${periodData.text} mang năng lượng số ${validNumber}, đại diện cho ${meaning.theme.toLowerCase()}. Đây là một năm để bạn đặt nền móng cho những mục tiêu dài hạn và khám phá tiềm năng sâu bên trong. Năng lượng này mang đến cơ hội lớn, nhưng cũng đòi hỏi sự kiên trì và tầm nhìn rõ ràng. Mỗi quyết định trong năm nay đều có thể định hình tương lai của bạn trong nhiều năm tới. Hãy chú ý đến những mối quan hệ quan trọng, vì chúng sẽ là nguồn hỗ trợ quý giá trên hành trình này. Nếu bạn tận dụng tốt, đây sẽ là một năm mang tính bước ngoặt, đầy thành tựu và phát triển. Năng lượng ${meaning.theme.toLowerCase()} đang dẫn dắt bạn đến những chân trời mới, hãy mạnh dạn bước đi. Sự kiên định và sáng tạo sẽ là chìa khóa để bạn vượt qua mọi thử thách. Hãy tin vào khả năng của mình và không ngừng tìm kiếm cơ hội. Một năm đầy ý nghĩa đang chờ bạn chinh phục!`;
+        shouldDo = [
+          `Đầu năm, lập kế hoạch chi tiết cho 3 mục tiêu lớn bạn muốn đạt được trong năm này.`,
+          `Đăng ký một khóa học mới (như ngoại ngữ, kỹ năng mềm) để nâng cao bản thân.`,
+          `Dành ít nhất một kỳ nghỉ ngắn trong năm để tái tạo năng lượng, hợp với số ${validNumber}.`,
+          `Mỗi quý, dành một ngày đánh giá lại tiến độ và điều chỉnh mục tiêu nếu cần.`,
+          `Thử tham gia một dự án cộng đồng hoặc thiện nguyện để lan tỏa năng lượng tích cực.`,
+          `Cuối năm, viết một lá thư cho chính mình để tổng kết và đặt mục tiêu cho năm sau.`,
+        ];
+        shouldAvoid = [
+          `Tránh để những thất bại nhỏ đầu năm làm bạn chùn bước, xem đó là bài học để trưởng thành.`,
+          `Không nên đầu tư tài chính mạo hiểm mà không nghiên cứu kỹ, hãy cẩn thận với tiền bạc.`,
+          `Hạn chế giữ mãi những mối quan hệ không còn tích cực, ưu tiên người thực sự quan trọng.`,
+          `Đừng quên nghỉ ngơi giữa các kế hoạch lớn, tránh kiệt sức giữa chừng.`,
+          `Tránh trì hoãn các quyết định quan trọng, hãy hành động khi thời cơ đến.`,
+        ];
+        energyTips = [
+          `Mỗi tháng, dành một buổi tối thiền định để kết nối với năng lượng số ${validNumber}.`,
+          `Giữa năm, thay đổi không gian làm việc để làm mới tinh thần và sáng tạo.`,
+          `Cuối năm, đi dạo biển hoặc rừng để tái tạo năng lượng và chuẩn bị cho năm mới.`,
+        ];
         break;
     }
 
@@ -227,15 +291,17 @@ function generateFallbackPeriods(name, birthDate, periods) {
       number: validNumber,
       theme: meaning.theme,
       description,
-      focus: meaning.focus,
-      keywords: [...meaning.keywords, 'năng lượng', 'phát triển'],
+      focus: [...meaning.focus, 'Tự tin'], // Thêm yếu tố tập trung
+      keywords: [...meaning.keywords, 'năng lượng', 'phát triển'], // Thêm từ khóa
       shouldDo,
-      shouldAvoid
+      shouldAvoid,
+      energyTips,
+      ...(periodKey === 'day' ? { lunchSuggestion: lunchOptions } : {})
     };
   };
 
   return {
-    day: { ...generatePeriodData('day', periods.day), lunchSuggestion: randomLunch },
+    day: generatePeriodData('day', periods.day),
     week: generatePeriodData('week', periods.week),
     month: generatePeriodData('month', periods.month),
     year: generatePeriodData('year', periods.year)
@@ -266,32 +332,6 @@ export default defineEventHandler(async (event) => {
     year: { number: calculateNumber(birthDate, 'year'), text: `năm ${dateInfo.currentYear}` }
   };
 
-  // Tính chu kỳ vận số 10 năm
-  const cycles = {};
-  const currentYearNum = parseInt(dateInfo.currentYear);
-  for (let i = 0; i < 10; i++) {
-    const targetYear = currentYearNum + i;
-    const personalYearNumber = NumerologyUtils.calculatePersonalYear(birthDate, targetYear);
-    const meaning = NUMEROLOGY_MEANINGS.personalYear[personalYearNumber] || NUMEROLOGY_MEANINGS.personalYear[1];
-    cycles[targetYear] = {
-      number: personalYearNumber,
-      theme: meaning.theme,
-      description: `Năm ${targetYear} mang năng lượng số ${personalYearNumber}: ${meaning.theme.toLowerCase()}. Đây là một năm để bạn ${meaning.focus[0].toLowerCase()} và phát triển ${meaning.focus[1].toLowerCase()}. Năng lượng này sẽ hỗ trợ bạn trong việc định hình tương lai, nhưng đòi hỏi sự kiên nhẫn và tập trung. Hãy tận dụng cơ hội để xây dựng những nền tảng lâu dài. Một năm đầy tiềm năng nếu bạn biết cách nắm bắt!`,
-      focus: meaning.focus,
-      keywords: meaning.keywords
-    };
-  }
-
-  // Tính số đường đời
-  const lifePathNumber = calculateLifePath(birthDate);
-  const lifePathData = NUMEROLOGY_MEANINGS.lifePath[lifePathNumber] || NUMEROLOGY_MEANINGS.lifePath[1];
-
-  // Tính chu kỳ đường đời
-  const lifePathCycles = calculateLifePathCycles(birthDate);
-
-  // Tính nhóm tính cách
-  const personalityTraits = calculatePersonalityTraits(birthDate);
-
   // Lấy dữ liệu chu kỳ
   const periodsData = await getPeriodData(name, birthDate, periods);
 
@@ -299,20 +339,7 @@ export default defineEventHandler(async (event) => {
     numerology: {
       name,
       birthDate,
-      lifePathNumber: {
-        number: lifePathNumber,
-        theme: lifePathData.theme,
-        symbol: lifePathData.symbol,
-        description: `Số đường đời ${lifePathNumber} cho thấy bạn là ${lifePathData.theme.toLowerCase()}. ${lifePathData.purpose}. Đây là con đường định mệnh dẫn dắt bạn qua những thử thách và cơ hội trong cuộc sống. Năng lượng này phản ánh bản chất sâu xa nhất của bạn, định hình cách bạn nhìn nhận thế giới và tương tác với mọi người xung quanh. Hãy tận dụng nó để khám phá tiềm năng thực sự của mình!`,
-        strengths: lifePathData.strengths,
-        challenges: lifePathData.challenges,
-        careers: lifePathData.careers,
-        advice: lifePathData.advice
-      },
-      lifePathCycles,
-      personalityTraits,
-      periods: periodsData,
-      cycles
+      periods: periodsData
     },
     meta: {
       processedIn: `${Date.now() - startTime}ms`,

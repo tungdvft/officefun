@@ -138,45 +138,12 @@
           </svg>
         </div>
         <h3 class="text-xl font-medium text-gray-600 mb-2">Bắt đầu khám phá thần số học</h3>
-        <p class="text-gray-500 max-w-md mx-auto">Nhập tên và ngày sinh để xem phân tích chi tiết về số đường đời, năng lượng ngày, tuần, tháng, năm và chu kỳ vận số.</p>
+        <p class="text-gray-500 max-w-md mx-auto">Nhập tên và ngày sinh để xem phân tích chi tiết về năng lượng ngày, tuần, tháng, và năm của bạn.</p>
       </div>
 
       <!-- Nội dung kết quả -->
-      <div v-else-if="results && Object.keys(results).length > 0" class="space-y-8">
-        <!-- Số đường đời (Tab Tổng quan) -->
-        <div v-if="activeTab === 'general' && results.lifePathNumber" class="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-2xl">
-          <h3 class="text-xl font-bold text-purple-800 mb-4">Số đường đời: {{ results.lifePathNumber.number }} {{ results.lifePathNumber.symbol }}</h3>
-          <div class="prose prose-purple max-w-none">
-            <p class="text-gray-700">{{ results.lifePathNumber.description }}</p>
-          </div>
-          <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <h4 class="text-lg font-semibold text-gray-800 mb-2">Điểm mạnh</h4>
-              <ul class="list-disc pl-5 text-gray-700">
-                <li v-for="strength in results.lifePathNumber.strengths" :key="strength">{{ strength }}</li>
-              </ul>
-            </div>
-            <div>
-              <h4 class="text-lg font-semibold text-gray-800 mb-2">Thách thức</h4>
-              <ul class="list-disc pl-5 text-gray-700">
-                <li v-for="challenge in results.lifePathNumber.challenges" :key="challenge">{{ challenge }}</li>
-              </ul>
-            </div>
-            <div>
-              <h4 class="text-lg font-semibold text-gray-800 mb-2">Nghề nghiệp phù hợp</h4>
-              <ul class="list-disc pl-5 text-gray-700">
-                <li v-for="career in results.lifePathNumber.careers" :key="career">{{ career }}</li>
-              </ul>
-            </div>
-          </div>
-          <div class="mt-4">
-            <h4 class="text-lg font-semibold text-gray-800 mb-2">Lời khuyên</h4>
-            <p class="text-gray-700">{{ results.lifePathNumber.advice }}</p>
-          </div>
-        </div>
-
-        <!-- Kết quả theo ngày/tuần/tháng/năm -->
-        <div v-if="['day', 'week', 'month', 'year'].includes(activeTab) && results.periods && results.periods[activeTab]" class="space-y-6">
+      <div v-else-if="results && results.periods" class="space-y-8">
+        <div class="space-y-6">
           <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-2xl">
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-xl font-bold text-purple-800">
@@ -192,13 +159,13 @@
             <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <h4 class="text-lg font-semibold text-gray-800 mb-2">Tập trung</h4>
-                <ul class="list-disc pl-5 text-gray-700">
+                <ul class="list-disc pl-5 text-gray-700 space-y-1">
                   <li v-for="focus in results.periods[activeTab].focus" :key="focus">{{ focus }}</li>
                 </ul>
               </div>
               <div>
                 <h4 class="text-lg font-semibold text-gray-800 mb-2">Từ khóa</h4>
-                <ul class="list-disc pl-5 text-gray-700">
+                <ul class="list-disc pl-5 text-gray-700 space-y-1">
                   <li v-for="keyword in results.periods[activeTab].keywords" :key="keyword">{{ keyword }}</li>
                 </ul>
               </div>
@@ -235,6 +202,20 @@
             </div>
           </div>
 
+          <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+            <div class="flex items-center mb-4">
+              <div class="bg-blue-100 p-2 rounded-full mr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h4 class="text-lg font-semibold text-gray-800">Mẹo cân bằng năng lượng</h4>
+            </div>
+            <ul class="list-disc pl-11 text-gray-700 space-y-1">
+              <li v-for="tip in results.periods[activeTab].energyTips" :key="tip">{{ tip }}</li>
+            </ul>
+          </div>
+
           <!-- Gợi ý ăn trưa -->
           <div v-if="activeTab === 'day' && results.periods.day.lunchSuggestion" class="bg-yellow-50 p-6 rounded-2xl border border-yellow-100">
             <div class="flex items-center mb-4">
@@ -250,51 +231,14 @@
             </ul>
           </div>
         </div>
-
-        <!-- Chu kỳ vận số -->
-        <div v-if="activeTab === 'cycles' && results.cycles" class="space-y-6">
-          <div class="bg-white p-6 rounded-2xl shadow-sm">
-            <h3 class="text-xl font-bold text-purple-800 mb-4">Biểu đồ chu kỳ vận số 10 năm</h3>
-            <div class="w-full h-80 relative">
-              <canvas id="numerologyChart" class="w-full h-full"></canvas>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div
-              v-for="(cycle, year) in results.cycles"
-              :key="year"
-              class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 hover:border-purple-200"
-            >
-              <div class="flex items-center justify-between mb-2">
-                <h4 class="font-bold text-lg text-purple-700">Năm {{ year }}</h4>
-                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">Số {{ cycle.number }}</span>
-              </div>
-              <p class="text-gray-700">{{ cycle.description }}</p>
-              <div class="mt-2">
-                <h5 class="text-sm font-semibold text-gray-800">Tập trung:</h5>
-                <ul class="list-disc pl-5 text-gray-700 text-sm">
-                  <li v-for="focus in cycle.focus" :key="focus">{{ focus }}</li>
-                </ul>
-              </div>
-              <div class="mt-2">
-                <h5 class="text-sm font-semibold text-gray-800">Từ khóa:</h5>
-                <ul class="list-disc pl-5 text-gray-700 text-sm">
-                  <li v-for="keyword in cycle.keywords" :key="keyword">{{ keyword }}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { toast } from 'vue3-toastify';
-import Chart from 'chart.js/auto';
 
 definePageMeta({
   layout: 'dashboard'
@@ -305,9 +249,7 @@ const tabs = [
   { label: 'Ngày hôm nay', value: 'day' },
   { label: 'Tuần này', value: 'week' },
   { label: 'Tháng này', value: 'month' },
-  { label: 'Năm này', value: 'year' },
-  { label: 'Chu kỳ vận số', value: 'cycles' },
-  { label: 'Tổng quan', value: 'general' }
+  { label: 'Năm này', value: 'year' }
 ];
 const activeTab = ref('day');
 
@@ -317,7 +259,6 @@ const userInfo = ref({ name: '', birthDate: '' });
 const results = ref({});
 const loading = ref(false);
 const editing = ref(false);
-let chartInstance = null;
 let intervalId = null;
 
 // Ngày hiện tại
@@ -351,70 +292,6 @@ const getVietnamDate = () => {
   return new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }));
 };
 
-// Vẽ biểu đồ chu kỳ vận số
-const renderChart = () => {
-  if (!results.value.cycles) return;
-
-  const ctx = document.getElementById('numerologyChart')?.getContext('2d');
-  if (!ctx) return;
-
-  if (chartInstance) chartInstance.destroy();
-
-  const years = Object.keys(results.value.cycles);
-  const numbers = years.map(year => results.value.cycles[year].number);
-
-  chartInstance = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: years,
-      datasets: [{
-        label: 'Số cá nhân',
-        data: numbers,
-        borderColor: '#8b5cf6',
-        backgroundColor: 'rgba(139, 92, 246, 0.2)',
-        borderWidth: 3,
-        pointBackgroundColor: '#8b5cf6',
-        pointRadius: 5,
-        pointHoverRadius: 7,
-        fill: true,
-        tension: 0.4
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          beginAtZero: true,
-          max: 33,
-          title: { display: true, text: 'Số cá nhân', font: { weight: 'bold' } },
-          grid: { color: 'rgba(0, 0, 0, 0.05)' }
-        },
-        x: {
-          title: { display: true, text: 'Năm', font: { weight: 'bold' } },
-          grid: { display: false }
-        }
-      },
-      plugins: {
-        legend: { display: true, position: 'top', labels: { font: { size: 14 } } },
-        tooltip: {
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          titleFont: { size: 16, weight: 'bold' },
-          bodyFont: { size: 14 },
-          callbacks: {
-            label: (context) => {
-              const year = context.label;
-              const number = context.raw;
-              const description = results.value.cycles[year].description;
-              return `${year}: Số ${number} - ${description}`;
-            }
-          }
-        }
-      }
-    }
-  });
-};
-
 // Gửi form và lấy kết quả
 const submitForm = async (force = false) => {
   if (!form.value.name || !form.value.birthDate) {
@@ -439,10 +316,6 @@ const submitForm = async (force = false) => {
       timestamp: currentDate.toISOString()
     }));
     if (!force) toast.success('Phân tích hoàn tất!', { position: 'top-center' });
-
-    if (activeTab.value === 'cycles') {
-      setTimeout(() => renderChart(), 100);
-    }
   } catch (error) {
     console.error('Error:', error);
     if (!force) toast.error('Không thể lấy phân tích!', { position: 'top-center' });
@@ -470,7 +343,6 @@ const checkAndRefreshData = () => {
     } else {
       userInfo.value = storedUserInfo;
       results.value = storedResults;
-      if (activeTab.value === 'cycles') renderChart();
     }
   }
 };
@@ -494,14 +366,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   if (intervalId) clearInterval(intervalId);
-  if (chartInstance) chartInstance.destroy();
-});
-
-// Theo dõi tab để vẽ biểu đồ
-watch(() => activeTab.value, (newTab) => {
-  if (newTab === 'cycles' && results.value.cycles) {
-    setTimeout(() => renderChart(), 100);
-  }
 });
 
 // Chuyển tab
