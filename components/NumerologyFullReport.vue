@@ -342,6 +342,13 @@ watch([activeTab, numerologyData], () => {
   }
 });
 
+// Hàm format ngày sinh từ "dd-mm-yyyy" sang "dd/mm/yyyy"
+const formatBirthdate = (birthdate) => {
+  if (!birthdate) return '';
+  // Thay dấu "-" thành "/"
+  return birthdate.replace(/-/g, '/');
+};
+
 const generateReport = async () => {
   if (!formData.value.name) {
     toast.error('Vui lòng nhập họ và tên!');
@@ -356,25 +363,34 @@ const generateReport = async () => {
     return;
   }
 
+  // Format ngày sinh trước khi gửi
+  const formattedBirthdate = formatBirthdate(formData.value.birthdate);
+
+  // Kiểm tra định dạng sau khi format
+  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(formattedBirthdate)) {
+    toast.error('Ngày sinh không đúng định dạng (dd/mm/yyyy)!');
+    return;
+  }
+
   loading.value = true;
   try {
-    // Gọi từng API riêng biệt
+    // Gọi từng API riêng biệt với ngày sinh đã format
     const [overviewResponse, coreNumbersResponse, lifeCyclesResponse, personalYearCyclesResponse] = await Promise.all([
       $fetch('/api/numerology/overview', {
         method: 'POST',
-        body: { name: formData.value.name, birthdate: formData.value.birthdate, gender: formData.value.gender }
+        body: { name: formData.value.name, birthdate: formattedBirthdate, gender: formData.value.gender }
       }),
       $fetch('/api/numerology/core-numbers', {
         method: 'POST',
-        body: { name: formData.value.name, birthdate: formData.value.birthdate }
+        body: { name: formData.value.name, birthdate: formattedBirthdate }
       }),
       $fetch('/api/numerology/life-cycles', {
         method: 'POST',
-        body: { name: formData.value.name, birthdate: formData.value.birthdate }
+        body: { name: formData.value.name, birthdate: formattedBirthdate }
       }),
       $fetch('/api/numerology/personal-year-cycles', {
         method: 'POST',
-        body: { birthdate: formData.value.birthdate }
+        body: { birthdate: formattedBirthdate }
       })
     ]);
 
@@ -394,9 +410,9 @@ const generateReport = async () => {
     // Dữ liệu mẫu khi API lỗi
     numerologyData.value = {
       name: formData.value.name,
-      birthdate: formData.value.birthdate,
+      birthdate: formattedBirthdate, // Dùng ngày đã format trong dữ liệu mẫu
       gender: formData.value.gender,
-      description: `Với tên "${formData.value.name}", sinh ngày ${formData.value.birthdate}, bạn là một cá nhân mang năng lượng đặc biệt, định hình qua giới tính ${formData.value.gender}. Hành trình cuộc đời bạn là sự kết hợp giữa khám phá bản thân và hoàn thiện ước mơ.`,
+      description: `Với tên "${formData.value.name}", sinh ngày ${formattedBirthdate}, bạn là một cá nhân mang năng lượng đặc biệt, định hình qua giới tính ${formData.value.gender}. Hành trình cuộc đời bạn là sự kết hợp giữa khám phá bản thân và hoàn thiện ước mơ.`,
       lifePath: {
         number: 9,
         symbol: "♾",
