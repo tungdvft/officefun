@@ -178,7 +178,10 @@
                   <p class="text-gray-700">{{ period.content }}</p>
                   <div class="mt-4 p-4 bg-teal-50 rounded-lg">
                     <p class="font-medium text-teal-700">Lời khuyên:</p>
-                    {{ period.advice }}
+                    <ul class="list-disc pl-5 text-gray-700">
+                        <li v-for="focus in period.advice" :key="focus">{{ focus }}</li>
+                      </ul>
+                    
                   </div>
                 </div>
               </div>
