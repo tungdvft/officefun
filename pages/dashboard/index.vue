@@ -69,10 +69,10 @@
         </div>
         <button
           @click="submitForm"
-          :disabled="loading"
+          :disabled="loading.day"
           class="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-medium rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 disabled:transform-none disabled:shadow-none"
         >
-          <span v-if="loading" class="flex items-center justify-center">
+          <span v-if="loading.day" class="flex items-center justify-center">
             <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -119,13 +119,19 @@
           v-for="tab in tabs"
           :key="tab.value"
           @click="switchTab(tab.value)"
+          :disabled="loading[tab.value]"
           :class="[
-            'px-5 py-3 font-medium rounded-lg mr-2 whitespace-nowrap transition-all duration-200',
+            'px-5 py-3 font-medium rounded-lg mr-2 whitespace-nowrap transition-all duration-200 flex items-center',
             activeTab === tab.value
               ? 'bg-purple-100 text-purple-700 shadow-inner'
-              : 'text-gray-500 hover:bg-gray-100'
+              : 'text-gray-500 hover:bg-gray-100',
+            loading[tab.value] ? 'opacity-70 cursor-not-allowed' : ''
           ]"
         >
+          <svg v-if="loading[tab.value]" class="animate-spin -ml-1 mr-2 h-4 w-4 text-purple-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
           {{ tab.label }}
         </button>
       </div>
@@ -142,31 +148,31 @@
       </div>
 
       <!-- Nội dung kết quả -->
-      <div v-else-if="results && results.periods" class="space-y-8">
+      <div v-else-if="results && results[activeTab]" class="space-y-8">
         <div class="space-y-6">
           <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-2xl">
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-xl font-bold text-purple-800">
-                {{ resultTitle }}: <span class="text-3xl">{{ results.periods[activeTab].number }}</span> - {{ results.periods[activeTab].theme }}
+                {{ resultTitle }}: <span class="text-3xl">{{ results[activeTab].number }}</span> - {{ results[activeTab].theme }}
               </h3>
               <div class="bg-white p-2 rounded-full shadow-sm">
-                <span class="text-2xl font-bold text-purple-600">{{ results.periods[activeTab].number }}</span>
+                <span class="text-2xl font-bold text-purple-600">{{ results[activeTab].number }}</span>
               </div>
             </div>
             <div class="prose prose-purple max-w-none">
-              <p class="text-gray-700">{{ results.periods[activeTab].description }}</p>
+              <p class="text-gray-700">{{ results[activeTab].description }}</p>
             </div>
             <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <h4 class="text-lg font-semibold text-gray-800 mb-2">Tập trung</h4>
                 <ul class="list-disc pl-5 text-gray-700 space-y-1">
-                  <li v-for="focus in results.periods[activeTab].focus" :key="focus">{{ focus }}</li>
+                  <li v-for="focus in results[activeTab].focus" :key="focus">{{ focus }}</li>
                 </ul>
               </div>
               <div>
                 <h4 class="text-lg font-semibold text-gray-800 mb-2">Từ khóa</h4>
                 <ul class="list-disc pl-5 text-gray-700 space-y-1">
-                  <li v-for="keyword in results.periods[activeTab].keywords" :key="keyword">{{ keyword }}</li>
+                  <li v-for="keyword in results[activeTab].keywords" :key="keyword">{{ keyword }}</li>
                 </ul>
               </div>
             </div>
@@ -183,7 +189,7 @@
                 <h4 class="text-lg font-semibold text-gray-800">{{ shouldDoTitle }}</h4>
               </div>
               <ul class="list-disc pl-11 text-gray-700 space-y-1">
-                <li v-for="item in results.periods[activeTab].shouldDo" :key="item">{{ item }}</li>
+                <li v-for="item in results[activeTab].shouldDo" :key="item">{{ item }}</li>
               </ul>
             </div>
 
@@ -197,7 +203,7 @@
                 <h4 class="text-lg font-semibold text-gray-800">{{ shouldAvoidTitle }}</h4>
               </div>
               <ul class="list-disc pl-11 text-gray-700 space-y-1">
-                <li v-for="item in results.periods[activeTab].shouldAvoid" :key="item">{{ item }}</li>
+                <li v-for="item in results[activeTab].shouldAvoid" :key="item">{{ item }}</li>
               </ul>
             </div>
           </div>
@@ -212,12 +218,12 @@
               <h4 class="text-lg font-semibold text-gray-800">Mẹo cân bằng năng lượng</h4>
             </div>
             <ul class="list-disc pl-11 text-gray-700 space-y-1">
-              <li v-for="tip in results.periods[activeTab].energyTips" :key="tip">{{ tip }}</li>
+              <li v-for="tip in results[activeTab].energyTips" :key="tip">{{ tip }}</li>
             </ul>
           </div>
 
           <!-- Gợi ý ăn trưa -->
-          <div v-if="activeTab === 'day' && results.periods.day.lunchSuggestion" class="bg-yellow-50 p-6 rounded-2xl border border-yellow-100">
+          <div v-if="activeTab === 'day' && results.day.lunchSuggestion" class="bg-yellow-50 p-6 rounded-2xl border border-yellow-100">
             <div class="flex items-center mb-4">
               <div class="bg-yellow-100 p-2 rounded-full mr-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -227,10 +233,19 @@
               <h4 class="text-lg font-semibold text-gray-800">Gợi ý ăn trưa</h4>
             </div>
             <ul class="list-disc pl-11 text-gray-700 space-y-1">
-              <li v-for="item in results.periods.day.lunchSuggestion" :key="item">{{ item }}</li>
+              <li v-for="item in results.day.lunchSuggestion" :key="item">{{ item }}</li>
             </ul>
           </div>
         </div>
+      </div>
+
+      <!-- Loading khi chưa có dữ liệu cho tab -->
+      <div v-else-if="userInfo.name && loading[activeTab]" class="text-center py-12">
+        <svg class="animate-spin mx-auto h-12 w-12 text-purple-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <p class="text-gray-600">Đang tải dữ liệu {{ tabs.find(t => t.value === activeTab).label }}...</p>
       </div>
     </div>
   </div>
@@ -256,8 +271,8 @@ const activeTab = ref('day');
 // Form và trạng thái
 const form = ref({ name: '', birthDate: '' });
 const userInfo = ref({ name: '', birthDate: '' });
-const results = ref({});
-const loading = ref(false);
+const results = ref({ day: null, week: null, month: null, year: null });
+const loading = ref({ day: false, week: false, month: false, year: false });
 const editing = ref(false);
 let intervalId = null;
 
@@ -292,39 +307,70 @@ const getVietnamDate = () => {
   return new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }));
 };
 
-// Gửi form và lấy kết quả
-const submitForm = async (force = false) => {
+// Gửi form và lấy dữ liệu cho tab "day" đầu tiên
+const submitForm = async () => {
   if (!form.value.name || !form.value.birthDate) {
-    if (!force) toast.error('Vui lòng nhập đầy đủ tên và ngày sinh!', { position: 'top-center' });
+    toast.error('Vui lòng nhập đầy đủ tên và ngày sinh!', { position: 'top-center' });
     return;
   }
 
-  loading.value = true;
+  // Reset toàn bộ kết quả khi thông tin thay đổi
+  results.value = { day: null, week: null, month: null, year: null };
+  activeTab.value = 'day'
+  loading.value.day = true;
   try {
-    const response = await $fetch('/api/numerology/period', {
+    const response = await $fetch('/api/numerology/day', {
       method: 'POST',
       body: { name: form.value.name, birthDate: form.value.birthDate }
     });
     userInfo.value = { name: form.value.name, birthDate: form.value.birthDate };
-    results.value = response.numerology;
+    results.value.day = response.numerology.periods.day;
     editing.value = false;
 
+    // Lưu vào localStorage
     const currentDate = getVietnamDate();
     localStorage.setItem('numerologyData', JSON.stringify({
       userInfo: userInfo.value,
       results: results.value,
       timestamp: currentDate.toISOString()
     }));
-    if (!force) toast.success('Phân tích hoàn tất!', { position: 'top-center' });
+    toast.success('Phân tích hoàn tất!', { position: 'top-center' });
   } catch (error) {
-    console.error('Error:', error);
-    if (!force) toast.error('Không thể lấy phân tích!', { position: 'top-center' });
+    console.error('Error fetching day:', error);
+    toast.error('Không thể lấy phân tích ngày!', { position: 'top-center' });
   } finally {
-    loading.value = false;
+    loading.value.day = false;
   }
 };
 
-// Kiểm tra và làm mới dữ liệu
+// Tải dữ liệu cho tab được chọn
+const loadTabData = async (tab) => {
+  if (results.value[tab]) return; // Nếu đã có dữ liệu, không gọi lại
+
+  loading.value[tab] = true;
+  try {
+    const response = await $fetch(`/api/numerology/${tab}`, {
+      method: 'POST',
+      body: { name: userInfo.value.name, birthDate: userInfo.value.birthDate }
+    });
+    results.value[tab] = response.numerology.periods[tab];
+
+    // Cập nhật localStorage
+    const currentDate = getVietnamDate();
+    localStorage.setItem('numerologyData', JSON.stringify({
+      userInfo: userInfo.value,
+      results: results.value,
+      timestamp: currentDate.toISOString()
+    }));
+  } catch (error) {
+    console.error(`Error fetching ${tab}:`, error);
+    toast.error(`Không thể lấy phân tích ${tab}!`, { position: 'top-center' });
+  } finally {
+    loading.value[tab] = false;
+  }
+};
+
+// Kiểm tra và làm mới dữ liệu khi qua ngày mới
 const checkAndRefreshData = () => {
   const storedData = localStorage.getItem('numerologyData');
   const currentDate = getVietnamDate();
@@ -338,8 +384,8 @@ const checkAndRefreshData = () => {
     if (currentDay !== storedDay) {
       form.value.name = storedUserInfo.name;
       form.value.birthDate = storedUserInfo.birthDate;
-      submitForm(true);
-      console.log('Đã qua 0h, gọi lại API');
+      results.value = { day: null, week: null, month: null, year: null }; // Reset toàn bộ
+      submitForm(); // Gọi lại API cho tab "day"
     } else {
       userInfo.value = storedUserInfo;
       results.value = storedResults;
@@ -368,9 +414,12 @@ onUnmounted(() => {
   if (intervalId) clearInterval(intervalId);
 });
 
-// Chuyển tab
+// Chuyển tab và tải dữ liệu
 const switchTab = (tabValue) => {
   activeTab.value = tabValue;
+  if (userInfo.value.name && !results.value[tabValue]) {
+    loadTabData(tabValue);
+  }
 };
 </script>
 
