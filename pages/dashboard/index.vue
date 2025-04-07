@@ -5,7 +5,7 @@
       <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
       <div class="relative z-10">
         <h1 class="text-4xl font-bold mb-2 animate-fade-in">Chào mừng đến với Thần số học</h1>
-        <p class="text-lg opacity-90 mb-4">Khám phá năng lượng của bạn qua con số!</p>
+        <p class="text-lg opacity-90 mb-4">Khám phá năng lượng và hành trình của bạn qua con số!</p>
         <div class="flex items-center space-x-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -150,17 +150,19 @@
       <!-- Nội dung kết quả -->
       <div v-else-if="results && results[activeTab]" class="space-y-8">
         <div class="space-y-6">
+          <!-- Insight chính -->
           <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-2xl">
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-xl font-bold text-purple-800">
-                {{ resultTitle }}: <span class="text-3xl">{{ results[activeTab].number }}</span> - {{ results[activeTab].theme }}
+                {{ resultTitle }}: <span class="text-3xl">{{ results[activeTab].number }}</span>
               </h3>
               <div class="bg-white p-2 rounded-full shadow-sm">
                 <span class="text-2xl font-bold text-purple-600">{{ results[activeTab].number }}</span>
               </div>
             </div>
             <div class="prose prose-purple max-w-none">
-              <p class="text-gray-700">{{ results[activeTab].description }}</p>
+              <h4 class="text-lg font-semibold text-gray-800 mb-2">Insight {{ insightTitle }}</h4>
+              <p class="text-gray-700">{{ results[activeTab].insight }}</p>
             </div>
             <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -178,6 +180,7 @@
             </div>
           </div>
 
+          <!-- Nên làm và nên tránh -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200">
               <div class="flex items-center mb-3">
@@ -208,6 +211,7 @@
             </div>
           </div>
 
+          <!-- Mẹo cân bằng năng lượng -->
           <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
             <div class="flex items-center mb-4">
               <div class="bg-blue-100 p-2 rounded-full mr-3">
@@ -222,7 +226,7 @@
             </ul>
           </div>
 
-          <!-- Gợi ý ăn trưa -->
+          <!-- Gợi ý ăn trưa (chỉ cho tab ngày) -->
           <div v-if="activeTab === 'day' && results.day.lunchSuggestion" class="bg-yellow-50 p-6 rounded-2xl border border-yellow-100">
             <div class="flex items-center mb-4">
               <div class="bg-yellow-100 p-2 rounded-full mr-3">
@@ -289,6 +293,12 @@ const resultTitle = computed(() => {
     : activeTab.value === 'month' ? 'Số tháng cá nhân'
     : 'Số năm cá nhân';
 });
+const insightTitle = computed(() => {
+  return activeTab.value === 'day' ? 'hôm nay'
+    : activeTab.value === 'week' ? 'tuần này'
+    : activeTab.value === 'month' ? 'tháng này'
+    : 'năm này';
+});
 const shouldDoTitle = computed(() => {
   return activeTab.value === 'day' ? 'Nên làm hôm nay'
     : activeTab.value === 'week' ? 'Nên làm trong tuần'
@@ -316,7 +326,7 @@ const submitForm = async () => {
 
   // Reset toàn bộ kết quả khi thông tin thay đổi
   results.value = { day: null, week: null, month: null, year: null };
-  activeTab.value = 'day'
+  activeTab.value = 'day';
   loading.value.day = true;
   try {
     const response = await $fetch('/api/numerology/day', {
