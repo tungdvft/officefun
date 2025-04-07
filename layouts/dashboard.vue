@@ -92,12 +92,7 @@
           </svg>
           <span v-if="isSidebarOpen || windowWidth >= 768">Đặt tên thương hiệu</span>
         </NuxtLink>
-        //  <NuxtLink to="/dashboard/success-map" :class="{ 'justify-center': !isSidebarOpen && windowWidth < 768, 'justify-start': isSidebarOpen || windowWidth >= 768 }" class="flex items-center p-3 rounded-lg hover:bg-purple-700" exact-active-class="bg-purple-900">
-        //   <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        //     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553-2.276A1 1 0 0021 13.382V6.618a1 1 0 00-1.447-.894L15 8m0 9V4m0 13l-6-3" />
-        //   </svg>
-        //   <span v-if="isSidebarOpen || windowWidth >= 768">Bản đồ thành công</span>
-        // </NuxtLink>
+
         <NuxtLink to="/dashboard/full" :class="{ 'justify-center': !isSidebarOpen && windowWidth < 768, 'justify-start': isSidebarOpen || windowWidth >= 768 }" class="flex items-center p-3 rounded-lg hover:bg-purple-700" exact-active-class="bg-purple-900">
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
