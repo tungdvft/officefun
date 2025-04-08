@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
   const prompt = `Dựa trên thần số học, tạo diễn giải bằng tiếng Việt cho ${name} (sinh ${birthDate}), với các chỉ số:
     - Số Linh hồn: ${numbers.soulUrge} (mong muốn: ${meanings.soulUrge.desire}, động lực: ${meanings.soulUrge.motivation}, trọn vẹn: ${meanings.soulUrge.fulfillment})
     - Số Nhân cách: ${numbers.personality} (${meanings.personality.theme}, ấn tượng: ${meanings.personality.strengths[0]}, ${meanings.personality.strengths[1]}, lưu ý: ${meanings.personality.challenges[0]})
-    Hãy tạo diễn giải riêng cho từng chỉ số (mỗi cái 4-5 câu), giọng điệu huyền bí, sâu sắc như lời tiên tri, dùng hình ảnh ẩn dụ (ngọn lửa, bóng tối, ngôi sao, đại dương, cơn bão), dùng "bạn" thay "anh", không đề cập thời gian cụ thể. Trả về:
+    Hãy tạo diễn giải riêng cho từng chỉ số (mỗi cái 4-5 câu), giọng điệu thực tế, gần gũi như lời khuyên từ một người bạn, không dùng hình ảnh ẩn dụ bay bổng (ngọn lửa, bóng tối, ngôi sao, đại dương, cơn bão), dùng "bạn" thay "anh", không đề cập thời gian cụ thể. Trả về:
     soulUrge: [diễn giải]
     personality: [diễn giải]
     Chỉ trả văn bản thuần túy, không JSON, không markdown.`;
@@ -42,8 +42,8 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     console.error('Lỗi khi gọi Gemini cho inner-numbers:', error.message);
     response = `
-soulUrge: Số Linh hồn ${numbers.soulUrge} là ngọn gió đại dương sâu thẳm trong bạn, ${name}, réo gọi từ những khát vọng ẩn dưới bóng tối tâm hồn. Nó như ngọn lửa bất diệt, dẫn bạn qua những chân trời xa xôi chưa ai chạm tới, nơi lòng trắc ẩn trở thành ngọn hải đăng. Trong sự huyền bí ấy, bạn tìm thấy động lực để vượt qua cơn bão định mệnh.
-personality: Số Nhân cách ${numbers.personality} là tấm gương mờ ảo, ${name}, phản chiếu ánh sao dịu dàng của bạn giữa đại dương bóng tối. Nó như vầng trăng mờ, tỏa sáng giữa cơn bão, nhưng đôi khi bị che khuất bởi những làn sóng rụt rè. Trong sự sâu thẳm ấy, bạn để lại dấu ấn huyền bí không thể xóa nhòa.
+soulUrge: Số Linh hồn ${numbers.soulUrge} của bạn, ${name}, được tính từ tên bạn, cho thấy bạn khao khát ${meanings.soulUrge.desire} trong cuộc sống. Điều thúc đẩy bạn là ${meanings.soulUrge.motivation}, và bạn sẽ cảm thấy trọn vẹn khi đạt được ${meanings.soulUrge.fulfillment}. Nó như một phần sâu kín trong bạn, định hướng những gì bạn thật sự muốn. Hãy lắng nghe điều này để hiểu rõ hơn về bản thân mình.
+personality: Số Nhân cách ${numbers.personality} của bạn, ${name}, cũng dựa trên tên bạn, thể hiện cách mọi người nhìn bạn qua ${meanings.personality.theme}. Bạn để lại ấn tượng với ${meanings.personality.strengths[0]} và ${meanings.personality.strengths[1]}, là điểm mạnh trong giao tiếp xã hội. Nhưng bạn nên chú ý đến ${meanings.personality.challenges[0]}, để tránh những hiểu lầm không đáng có. Đây là cách bạn xây dựng hình ảnh của mình với người khác.
     `;
   }
 

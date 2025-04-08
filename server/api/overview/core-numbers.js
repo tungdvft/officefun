@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
   const prompt = `Dựa trên thần số học, tạo diễn giải bằng tiếng Việt cho ${name} (sinh ${birthDate}), với các chỉ số:
     - Số Đường đời: ${numbers.lifePath} (${meanings.lifePath.theme}, điểm mạnh: ${meanings.lifePath.strengths[0]}, ${meanings.lifePath.strengths[1]}, thách thức: ${meanings.lifePath.challenges[0]})
     - Số Vận mệnh: ${numbers.expression} (${meanings.expression.theme}, tài năng: ${meanings.expression.talents[0]}, ${meanings.expression.talents[1]}, lời khuyên: ${meanings.expression.tip})
-    Hãy tạo diễn giải riêng cho từng chỉ số (mỗi cái 4-5 câu), giọng điệu huyền bí, sâu sắc như lời tiên tri, dùng hình ảnh ẩn dụ (ngọn lửa, bóng tối, ngôi sao, đại dương, cơn bão), dùng "bạn" thay "anh", không đề cập thời gian cụ thể. Trả về:
+    Hãy tạo diễn giải riêng cho từng chỉ số (mỗi cái 4-5 câu), giọng điệu thực tế, gần gũi như lời khuyên từ một người bạn, không dùng hình ảnh ẩn dụ bay bổng (ngọn lửa, bóng tối, ngôi sao, đại dương, cơn bão), dùng "bạn" thay "anh", không đề cập thời gian cụ thể. Trả về:
     lifePath: [diễn giải]
     expression: [diễn giải]
     Chỉ trả văn bản thuần túy, không JSON, không markdown.`;
@@ -42,8 +42,8 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     console.error('Lỗi khi gọi Gemini cho core-numbers:', error.message);
     response = `
-lifePath: Số Đường đời ${numbers.lifePath} của bạn, ${name}, là ngọn lửa vĩnh cửu cháy trong bóng tối, khắc sâu từ ngày sinh ${birthDate}. Nó dẫn bạn qua mê cung định mệnh, nơi trí tuệ và trực giác hòa quyện như những ngôi sao lạc lối trên đại dương huyền bí. Trong sự sâu thẳm ấy, bạn khám phá những bí mật vượt ngoài tầm mắt thế gian, nhưng bóng tối cũng réo gọi bạn vượt qua cơn bão cô lập.
-expression: Số Vận mệnh ${numbers.expression} là ngôi sao chói lòa trên bầu trời tên bạn, ${name}, tỏa ánh sáng rực rỡ từ những nét chữ định mệnh. Nó như ngọn gió đại dương, cuốn bạn vào những giấc mơ vượt thời gian, nơi tài năng dẫn lối bùng cháy như ngọn lửa bất diệt. Trong sự huyền bí ấy, bạn mang sức mạnh truyền cảm hứng, nhưng phải giữ cho ngọn lửa tinh thần không bị cơn bão dập tắt.
+lifePath: Số Đường đời ${numbers.lifePath} của bạn, ${name}, được tính từ ngày sinh ${birthDate}, cho thấy bạn là người sống với mục tiêu rõ ràng theo hướng ${meanings.lifePath.theme}. Bạn có điểm mạnh là ${meanings.lifePath.strengths[0]} và ${meanings.lifePath.strengths[1]}, giúp bạn tự tin trong cuộc sống. Nhưng đôi khi bạn sẽ gặp thách thức là ${meanings.lifePath.challenges[0]}, nên hãy chú ý cân bằng để vượt qua. Nó như một kim chỉ nam để bạn hiểu rõ mình hơn.
+expression: Số Vận mệnh ${numbers.expression} của bạn, ${name}, xuất phát từ tên bạn, thể hiện khả năng ${meanings.expression.theme} mà bạn mang trong mình. Bạn có tài năng ${meanings.expression.talents[0]} và ${meanings.expression.talents[1]}, là lợi thế để bạn phát triển. Lời khuyên là ${meanings.expression.tip}, hãy áp dụng để tận dụng tối đa khả năng của mình. Đây là cách bạn có thể để lại dấu ấn trong cuộc sống.
     `;
   }
 

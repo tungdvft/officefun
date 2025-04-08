@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
     - Số Năm cá nhân: ${numbers.personalYear} (${meanings.personalYear.theme}, tập trung: ${meanings.personalYear.focus[0]}, ${meanings.personalYear.focus[1]}, lời khuyên: ${meanings.personalYear.advice})
     - Số Tháng cá nhân: ${numbers.personalMonth}
     - Số Ngày cá nhân: ${numbers.personalDay}
-    Hãy tạo diễn giải riêng cho từng chỉ số (mỗi cái 4-5 câu), giọng điệu huyền bí, sâu sắc như lời tiên tri, dùng hình ảnh ẩn dụ (ngọn lửa, bóng tối, ngôi sao, đại dương, cơn bão), dùng "bạn" thay "anh", không đề cập thời gian cụ thể. Trả về:
+    Hãy tạo diễn giải riêng cho từng chỉ số (mỗi cái 4-5 câu), giọng điệu thực tế, gần gũi như lời khuyên từ một người bạn, không dùng hình ảnh ẩn dụ bay bổng (ngọn lửa, bóng tối, ngôi sao, đại dương, cơn bão), dùng "bạn" thay "anh", không đề cập thời gian cụ thể. Trả về:
     personalYear: [diễn giải]
     personalMonth: [diễn giải]
     personalDay: [diễn giải]
@@ -44,9 +44,9 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     console.error('Lỗi khi gọi Gemini cho time-numbers:', error.message);
     response = `
-personalYear: Số Năm cá nhân ${numbers.personalYear} là cánh cửa mờ sương trong mê lộ định mệnh, ${name}, mở ra từ ngày sinh ${birthDate}. Nó như ngọn lửa vĩnh cửu, soi sáng một hành trình tái sinh đầy bí ẩn giữa đại dương bóng tối. Trong sự huyền bí ấy, bạn đối diện chính mình, nơi cơn bão quyền lực dẫn lối tới ánh sáng.
-personalMonth: Số Tháng cá nhân ${numbers.personalMonth} là vầng trăng mờ ảo, ${name}, treo lơ lửng trên bầu trời vận mệnh của bạn. Nó như ngọn gió đại dương, thì thầm những bí mật của nhịp đập vô hình, dẫn bạn qua những ngã rẽ huyền bí. Trong bóng tối ấy, bạn tìm thấy ánh sao dẫn đường.
-personalDay: Số Ngày cá nhân ${numbers.personalDay} là ngọn lửa tí tách, ${name}, bùng cháy trong lõi sâu của vận mệnh bạn. Nó như ngôi sao rơi giữa cơn bão, soi sáng từng khoảnh khắc bạn bước đi. Trong sự sâu thẳm ấy, bạn nắm giữ lưỡi gươm định mệnh của chính mình.
+personalYear: Số Năm cá nhân ${numbers.personalYear} của bạn, ${name}, được tính từ ngày sinh ${birthDate}, mang đến cơ hội liên quan đến ${meanings.personalYear.theme}. Bạn nên tập trung vào ${meanings.personalYear.focus[0]} và ${meanings.personalYear.focus[1]} để tận dụng tốt giai đoạn này. Lời khuyên là ${meanings.personalYear.advice}, hãy áp dụng để đạt được kết quả tốt nhất. Nó như một hướng dẫn để bạn định hướng hành động của mình.
+personalMonth: Số Tháng cá nhân ${numbers.personalMonth} của bạn, ${name}, cho thấy những gì bạn cần chú ý trong khoảng thời gian ngắn sắp tới. Nó như một gợi ý nhỏ, giúp bạn điều chỉnh kế hoạch và hành động hàng ngày. Bạn có thể dựa vào con số này để làm mọi thứ hiệu quả hơn. Đây là cách để bạn giữ mọi việc đi đúng hướng.
+personalDay: Số Ngày cá nhân ${numbers.personalDay} của bạn, ${name}, là một chỉ dẫn nhỏ cho từng ngày trong cuộc sống. Nó thể hiện cách bạn nên tiếp cận những việc xảy ra xung quanh mình. Bạn có thể dùng nó để quyết định khi nào cần tập trung hoặc nghỉ ngơi. Đây là một công cụ đơn giản để bạn sống tốt hơn mỗi ngày.
     `;
   }
 

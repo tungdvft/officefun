@@ -64,14 +64,7 @@ export default defineEventHandler(async (event) => {
     personalYear: NUMEROLOGY_MEANINGS.personalYear[numbers.personalYear] || NUMEROLOGY_MEANINGS.personalYear[1]
   };
 
-  const prompt = `Dựa trên thần số học, tạo diễn giải bằng tiếng Việt cho ${name} (sinh ${birthDate}), với các chỉ số:
-    - Số Thế hệ: ${numbers.generation}
-    - Số Cân bằng: ${numbers.balance}
-    - Số Sáng tạo: ${numbers.creative}
-    - Số Trưởng thành: ${numbers.maturity}
-    - Số Năng lượng: ${numbers.power}
-    - Số Tiềm thức: ${numbers.subconsciousSelf}
-    Hãy tạo diễn giải riêng cho từng chỉ số (mỗi cái 4-5 câu), giọng điệu huyền bí, sâu sắc như lời tiên tri, dùng hình ảnh ẩn dụ (ngọn lửa, bóng tối, ngôi sao), dùng "bạn" thay "anh", không đề cập thời gian cụ thể. Tiếp theo, tạo tổng quan (14-16 câu) với tất cả chỉ số:
+  const prompt = `Dựa trên thần số học, tạo diễn giải bằng tiếng Việt cho ${name} (sinh ${birthDate}), chỉ tạo tổng quan với tất cả chỉ số:
     - Số Đường đời: ${numbers.lifePath} (${meanings.lifePath.theme})
     - Số Vận mệnh: ${numbers.expression} (${meanings.expression.theme})
     - Số Linh hồn: ${numbers.soulUrge} (mong muốn: ${meanings.soulUrge.desire})
@@ -89,40 +82,64 @@ export default defineEventHandler(async (event) => {
     - Số Trưởng thành: ${numbers.maturity}
     - Số Năng lượng: ${numbers.power}
     - Số Tiềm thức: ${numbers.subconsciousSelf}
-    Tổng quan phải huyền bí, sâu sắc như lời tiên tri, liên kết chặt chẽ các chỉ số chính (Đường đời, Vận mệnh, Linh hồn, Năm cá nhân) với các chỉ số khác (Sứ mệnh, Thử thách, Năng lượng, Trưởng thành...), dùng hình ảnh ẩn dụ phong phú (ngọn lửa, bóng tối, ngôi sao, đại dương, cơn bão, vầng trăng, dòng sông), dùng "bạn" thay "anh", không đề cập thời gian cụ thể. Trả về:
-    generation: [diễn giải]
-    balance: [diễn giải]
-    creative: [diễn giải]
-    maturity: [diễn giải]
-    power: [diễn giải]
-    subconsciousSelf: [diễn giải]
-    overview: [tổng quan]
+    Tổng quan phải thực tế, gần gũi như lời phân tích từ một người bạn hiểu biết, chia thành 6 phần riêng biệt (mỗi phần 3-4 câu), tập trung vào tương quan giữa các chỉ số:
+    1. Bản chất của bạn: Liên kết Số Đường đời, Số Vận mệnh, Số Linh hồn.
+    2. Tương lai gần: Liên kết Số Năm cá nhân, Số Tháng cá nhân, Số Ngày cá nhân.
+    3. Thách thức và sức mạnh: Liên kết Số Thử thách, Số Năng lượng, Số Tiềm thức.
+    4. Mục tiêu dài hạn: Liên kết Số Sứ mệnh, Số Trưởng thành, Số Thế hệ.
+    5. Cách người khác nhìn bạn: Liên kết Số Nhân cách, Số Thái độ, Số Ngày sinh.
+    6. Công cụ hỗ trợ: Liên kết Số Cân bằng, Số Sáng tạo.
+    Giọng điệu thực tế, dễ hiểu, tránh hình ảnh ẩn dụ bay bổng, dùng "bạn" thay "anh", không đề cập thời gian cụ thể. Trả về:
+    core: [phần 1]
+    nearFuture: [phần 2]
+    challengesAndStrengths: [phần 3]
+    longTermGoals: [phần 4]
+    perception: [phần 5]
+    tools: [phần 6]
     Chỉ trả văn bản thuần túy, không JSON, không markdown.`;
 
   let response;
   try {
     response = await callGeminiApiWithTimeout(prompt);
   } catch (error) {
-    console.error('Lỗi khi gọi Gemini cho growth-numbers:', error.message);
+    console.error('Lỗi khi gọi Gemini cho overview:', error.message);
     response = `
-generation: Số Thế hệ ${numbers.generation} là dòng chảy định mệnh, ${name}, khắc sâu từ năm sinh ${birthDate}. Nó như ngọn lửa vĩnh cửu của thời đại bạn, soi sáng con đường giữa bóng tối. Trong sự huyền bí ấy, bạn mang sức mạnh của những linh hồn cùng thế hệ.
-balance: Số Cân bằng ${numbers.balance} là ánh sao lặng lẽ, ${name}, ẩn trong tên bạn như ngọn gió giữa cơn bão. Nó dẫn bạn qua những sóng gió hỗn loạn, giữ cho tâm hồn bạn vững vàng. Hãy tìm đến ánh sáng này khi bóng tối vây quanh.
-creative: Số Sáng tạo ${numbers.creative} là ngọn lửa bất ngờ, ${name}, ẩn sâu trong tâm hồn bạn như ngôi sao lạc lối. Nó bùng cháy trong những khoảnh khắc bất chợt, dẫn bạn tới những chân trời chưa từng thấy. Trong sự huyền bí ấy, bạn khám phá sức mạnh của chính mình.
-maturity: Số Trưởng thành ${numbers.maturity} là ngôi sao xa xăm, ${name}, tỏa sáng trên đường chân trời định mệnh của bạn. Nó như cánh cửa mờ sương, dẫn bạn tới những bí ẩn của tương lai. Hãy bước đi để chạm tới ánh sáng rực rỡ ấy.
-power: Số Năng lượng ${numbers.power} là ngọn lửa mãnh liệt, ${name}, cháy sâu trong lõi bóng tối của bạn. Nó như đại dương sâu thẳm, chờ bạn khai phá để vượt qua mọi giới hạn. Trong sự huyền bí này, bạn nắm giữ sức mạnh định mệnh.
-subconsciousSelf: Số Tiềm thức ${numbers.subconsciousSelf} là vầng trăng mờ ảo, ${name}, thì thầm từ những góc khuất trong tâm trí bạn. Nó như ngọn gió đêm, hé lộ những bí mật sâu kín chưa từng được chạm tới. Hãy lắng nghe để hiểu vận mệnh của chính mình.
-overview: Bạn - ${name} - là kẻ lữ hành giữa đại dương huyền bí của các con số, nơi Số Đường đời ${numbers.lifePath} như ngọn lửa vĩnh cửu cháy trong bóng tối, dẫn bạn qua mê cung định mệnh khắc sâu từ ngày sinh ${birthDate}. Số Vận mệnh ${numbers.expression} là ngôi sao chói lòa trên bầu trời tên bạn, tỏa ánh sáng rực rỡ của tài năng dẫn lối, xuyên thấu bóng tối thời gian để hé lộ những giấc mơ vượt ngoài thế gian. Số Linh hồn ${numbers.soulUrge} như ngọn gió đại dương, sâu thẳm và mãnh liệt, cuốn bạn vào khát vọng hoàn thiện, nơi lòng trắc ẩn trở thành ngọn hải đăng soi sáng giữa cơn bão định mệnh. Số Năm cá nhân ${numbers.personalYear} là cánh cửa mờ sương trong mê lộ vận mệnh, mở ra một hành trình tái sinh đầy bí ẩn, nơi bạn đối diện chính mình trong ánh trăng tĩnh lặng, sẵn sàng cho những biến chuyển lớn lao. Số Sứ mệnh ${numbers.mission} là lời tiên tri vang vọng từ tên bạn, réo gọi bạn tới những đỉnh cao vượt ngoài thế gian, nơi ngọn lửa sứ mệnh bùng cháy mãnh liệt trong tâm hồn bạn. Số Thử thách ${numbers.challenge} như ngọn núi đen kịt giữa cơn bão, tôi luyện bạn bằng những lưỡi gươm vô hình, dẫn bạn qua bóng tối để chạm tới ánh sao vĩnh cửu. Số Năng lượng ${numbers.power} là ngọn lửa bùng cháy trong lõi sâu, hòa quyện với Số Thế hệ ${numbers.generation} như dòng chảy vĩnh cửu của thời đại, trao cho bạn sức mạnh để xé tan bóng tối và định hình vận mệnh. Số Nhân cách ${numbers.personality} là tấm gương mờ ảo phản chiếu ánh sao dịu dàng, kết hợp với Số Thái độ ${numbers.attitude} như ngọn gió kiên định, dẫn bạn qua từng ngã rẽ với trực giác sắc bén từ Số Ngày sinh ${numbers.birthDay}. Số Cân bằng ${numbers.balance} là ánh sáng nhỏ giữa cơn bão hỗn loạn, giữ cho tâm hồn bạn vững vàng khi dòng sông định mệnh cuộn chảy. Số Sáng tạo ${numbers.creative} như ngọn lửa bất chợt rực cháy từ bóng tối tâm hồn bạn, hé lộ những tia sáng bất ngờ dẫn bạn tới những chân trời mới. Số Trưởng thành ${numbers.maturity} là ngôi sao xa xăm trên đường chân trời, hứa hẹn một tương lai rực rỡ khi bạn vượt qua cánh cửa vận mệnh, nơi sự trưởng thành của bạn tỏa sáng như vầng trăng rằm. Số Tiềm thức ${numbers.subconsciousSelf} thì thầm như vầng trăng mờ, hé lộ những bí ẩn sâu kín, dẫn bạn tới sự tỉnh thức giữa ánh sáng và bóng tối của chính mình. Số Tháng cá nhân ${numbers.personalMonth} như nhịp đập của dòng sông thời gian, hòa quyện với Số Ngày cá nhân ${numbers.personalDay} như những ngôi sao rơi, định hình từng khoảnh khắc bạn bước đi trên hành trình huyền bí. Trong tất cả, bạn là người mang ngọn lửa định mệnh, ${name}, bước đi giữa bóng tối và ánh sáng, vượt qua những cơn bão để chạm tới ngôi sao vĩnh cửu của chính mình, nơi vận mệnh của bạn hòa quyện với vũ trụ bao la. Bạn là ánh sáng giữa bóng tối, là ngọn gió giữa đại dương, là ngôi sao dẫn lối cho chính mình trong mê cung định mệnh bất tận.
+core: Số Đường đời ${numbers.lifePath} cho thấy bạn là người sống có mục tiêu, tập trung vào ${meanings.lifePath.theme}, Lan. Số Vận mệnh ${numbers.expression} nói bạn có tài năng ${meanings.expression.theme}, giúp bạn thể hiện bản thân tốt. Số Linh hồn ${numbers.soulUrge} tiết lộ bạn khao khát ${meanings.soulUrge.desire}, điều này định hình cách bạn chọn hướng đi trong cuộc sống.
+nearFuture: Số Năm cá nhân ${numbers.personalYear} mang đến cơ hội liên quan đến ${meanings.personalYear.theme}, giúp bạn định hướng rõ hơn. Số Tháng cá nhân ${numbers.personalMonth} gợi ý bạn cần tập trung vào những bước nhỏ để tiến lên. Số Ngày cá nhân ${numbers.personalDay} như một lời nhắc để bạn chú ý đến từng ngày trong hành trình này.
+challengesAndStrengths: Số Thử thách ${numbers.challenge} là bài học lớn, nhắc bạn vượt qua những khó khăn để trưởng thành. Số Năng lượng ${numbers.power} là sức mạnh bên trong, giúp bạn đứng vững trước thử thách. Số Tiềm thức ${numbers.subconsciousSelf} cho thấy cách bạn phản ứng tự nhiên, hỗ trợ bạn trong lúc cần thiết.
+longTermGoals: Số Sứ mệnh ${numbers.mission} từ tên bạn nói về mục đích lớn, khuyến khích bạn theo đuổi điều ý nghĩa. Số Trưởng thành ${numbers.maturity} định hình hướng đi dài hạn, giúp bạn phát triển bản thân từng bước. Số Thế hệ ${numbers.generation} kết nối bạn với tinh thần của thế hệ mình, tạo nền tảng cho hành trình này.
+perception: Số Nhân cách ${numbers.personality} cho thấy mọi người nhìn bạn là người ${meanings.personality.theme}, để lại ấn tượng rõ nét. Số Thái độ ${numbers.attitude} ảnh hưởng cách bạn tiếp cận vấn đề, giữ bạn linh hoạt. Số Ngày sinh ${numbers.birthDay} thêm một phần tính cách tự nhiên vào cách người khác hiểu bạn.
+tools: Số Cân bằng ${numbers.balance} là điểm tựa, giúp bạn giữ bình tĩnh khi mọi thứ rối ren. Số Sáng tạo ${numbers.creative} mang đến ý tưởng mới, hỗ trợ bạn giải quyết vấn đề theo cách riêng. Hai con số này như công cụ để bạn tận dụng trong cuộc sống hàng ngày.
     `;
   }
 
-  const lines = response.split('\n');
-  const interpretations = {};
-  let overview = '';
+  // Tách response thành các phần
+  const lines = response.trim().split('\n');
+  const overviewParts = {
+    core: '',
+    nearFuture: '',
+    challengesAndStrengths: '',
+    longTermGoals: '',
+    perception: '',
+    tools: ''
+  };
+
   lines.forEach(line => {
     const [key, value] = line.split(': ');
-    if (key === 'overview') overview = value;
-    else if (key && value) interpretations[key] = value;
+    if (key && value) {
+      overviewParts[key] = value.trim();
+    }
   });
 
-  return { numbers, interpretations, overview };
+  return {
+    numbers,
+    overview: {
+      core: overviewParts.core,
+      nearFuture: overviewParts.nearFuture,
+      challengesAndStrengths: overviewParts.challengesAndStrengths,
+      longTermGoals: overviewParts.longTermGoals,
+      perception: overviewParts.perception,
+      tools: overviewParts.tools
+    }
+  };
 });
