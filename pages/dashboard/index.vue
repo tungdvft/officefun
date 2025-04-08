@@ -205,17 +205,31 @@ const mainNumbers = computed(() => {
 });
 
 // Hàm định dạng key sang tiếng Việt
-function formatKey(key) {
+const formatKey = (key) => {
   return keyMap[key] || key;
-}
+};
 
-// Hàm gọi API
-async function fetchNumerology() {
+// Hàm preload hình nền
+const preloadImage = (url) => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.src = url;
+    img.onload = () => resolve();
+    img.onerror = () => reject(new Error(`Không thể tải hình nền: ${url}`));
+  });
+};
+
+// Hàm gọi API và preload hình nền
+const fetchNumerology = async () => {
   isLoading.value = true;
   error.value = '';
   numerologyData.value = null;
 
   try {
+    // Preload hình nền ngay khi nhấn nút
+    const preloadPromise = preloadImage('/numerology-background.jpg');
+
+    // Gọi API
     const response = await fetch('/api/overview', {
       method: 'POST',
       headers: {
@@ -233,6 +247,9 @@ async function fetchNumerology() {
 
     const data = await response.json();
 
+    // Đợi cả API và preload hình nền hoàn tất
+    await Promise.all([preloadPromise]);
+
     if (data) {
       numerologyData.value = data;
     } else {
@@ -240,11 +257,69 @@ async function fetchNumerology() {
     }
   } catch (err) {
     error.value = err.message || 'Có lỗi xảy ra khi gọi API. Vui lòng thử lại.';
-    console.error('Lỗi khi gọi API:', err);
+    console.error('Lỗi:', err);
   } finally {
     isLoading.value = false;
   }
-}
+};
+
+// Hàm tải PDF (nếu bạn vẫn dùng)
+const downloadPDF = async () => {
+  const { default: jsPDF } = await import('jspdf');
+
+  const pdf = new jsPDF({
+    orientation: 'portrait',
+    unit: 'mm',
+    format: 'a4',
+  });
+
+  pdf.setFontSize(16);
+  pdf.setTextColor(33, 33, 33);
+  pdf.text('Thần Số Học - Kết Quả Phân Tích', 105, 20, { align: 'center' });
+
+  pdf.setFontSize(12);
+  pdf.text(`Họ và tên: ${numerologyData.value.numerology.name}`, 20, 40);
+  pdf.text(`Ngày sinh: ${numerologyData.value.numerology.birthDate}`, 20, 50);
+
+  pdf.setFontSize(40);
+  pdf.setTextColor(138, 43, 226);
+  pdf.text(`${numerologyData.value.numerology.profile.numbers.lifePath}`, 105, 80, { align: 'center' });
+
+  pdf.setFontSize(14);
+  pdf.setTextColor(33, 33, 33);
+  pdf.text('Tổng quan', 20, 100);
+  pdf.setFontSize(12);
+  const overviewLines = pdf.splitTextToSize(numerologyData.value.numerology.profile.overview, 170);
+  pdf.text(overviewLines, 20, 110);
+
+  let yPosition = 110 + overviewLines.length * 7 + 10;
+  pdf.setFontSize(14);
+  pdf.text('Giải thích chi tiết các chỉ số', 20, yPosition);
+  yPosition += 10;
+
+  pdf.setFontSize(12);
+  for (const [key, interpretation] of Object.entries(numerologyData.value.numerology.profile.interpretations)) {
+    const number = numerologyData.value.numerology.profile.numbers[key];
+    const title = `${formatKey(key)}: ${number}`;
+    pdf.setFontSize(14);
+    pdf.setTextColor(138, 43, 226);
+    pdf.text(title, 20, yPosition);
+    yPosition += 7;
+
+    pdf.setFontSize(12);
+    pdf.setTextColor(33, 33, 33);
+    const interpretationLines = pdf.splitTextToSize(interpretation, 170);
+    pdf.text(interpretationLines, 20, yPosition);
+    yPosition += interpretationLines.length * 6 + 5;
+
+    if (yPosition > 260) {
+      pdf.addPage();
+      yPosition = 20;
+    }
+  }
+
+  pdf.save(`${numerologyData.value.numerology.name}_than_so_hoc.pdf`);
+};
 </script>
 
 <style scoped>
