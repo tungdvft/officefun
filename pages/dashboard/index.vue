@@ -76,22 +76,12 @@
       <div class="bg-white rounded-xl shadow-md overflow-hidden">
         <div class="p-6 sm:p-8 text-center bg-gradient-to-r from-blue-50 to-purple-50">
           <div class="inline-block relative">
-            <!-- Nền không gian vũ trụ -->
-            <div class="space-background w-64 h-64 rounded-full relative flex items-center justify-center">
-              <!-- Lớp overlay ánh sáng vũ trụ (nebula) -->
-              <div class="nebula-overlay"></div>
-              <!-- Hiệu ứng hạt bụi vũ trụ -->
-              <div class="cosmic-particles"></div>
-              <!-- Vòng tròn mandala -->
-              <div class="mandala-circle"></div>
-              <!-- Các đường nét phát sáng -->
-              <div class="mandala-lines"></div>
-              <!-- Hiệu ứng ngôi sao -->
-              <div class="stars-overlay"></div>
-              <!-- Số Đường đời -->
-              <div class="glow-number">{{ numerologyData.numerology.profile.numbers.lifePath }}</div>
-            </div>
-          </div>
+  <!-- Nền không gian vũ trụ -->
+  <div class="space-background w-64 h-64 rounded-full relative flex items-center justify-center">
+    <!-- Số Đường đời -->
+    <div class="glow-number">{{ numerologyData.numerology.profile.numbers.lifePath }}</div>
+  </div>
+</div>
           <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-1 mt-3">{{ numerologyData.numerology.name }}</h2>
           <p class="text-gray-600">Ngày sinh: {{ numerologyData.numerology.birthDate }}</p>
           <!-- <p class="text-sm text-gray-500 mt-2">Thời gian xử lý: {{ numerologyData.meta.processedIn }}</p> -->
@@ -275,177 +265,30 @@ async function fetchNumerology() {
 .grid > div:nth-child(3) { animation-delay: 0.3s; }
 /* Nền không gian vũ trụ */
 /* Nền không gian vũ trụ */
+/* Nền không gian vũ trụ */
 .space-background {
-  background-image: url('/tsh.avif'); /* Đường dẫn đến file trong thư mục public */
+  background-image: url('/numerology-background.jpg'); /* Hình nền mới */
   background-size: cover;
   background-position: center;
   position: relative;
   overflow: hidden;
-  animation: spaceTwinkle 10s infinite ease-in-out;
   box-shadow: 0 0 40px rgba(75, 0, 130, 0.5);
-}
-/* Hiệu ứng nhấp nháy không gian */
-@keyframes spaceTwinkle {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
-}
-
-/* Lớp overlay ánh sáng vũ trụ (nebula) */
-.nebula-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(75, 0, 130, 0.3), transparent 70%);
-  opacity: 0.6;
-  z-index: 3;
-  animation: nebulaGlow 15s infinite ease-in-out;
-}
-
-/* Hiệu ứng ánh sáng vũ trụ */
-@keyframes nebulaGlow {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 0.9; }
-}
-
-/* Hiệu ứng hạt bụi vũ trụ */
-.cosmic-particles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  z-index: 4;
-  overflow: hidden;
-}
-
-.cosmic-particles::before,
-.cosmic-particles::after {
-  content: '';
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 50%;
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-  animation: particleFloat 5s infinite linear;
-}
-
-.cosmic-particles::before {
-  top: 20%;
-  left: 30%;
-  animation-delay: 0s;
-}
-
-.cosmic-particles::after {
-  top: 70%;
-  left: 60%;
-  animation-delay: 2s;
-}
-
-/* Hiệu ứng hạt bụi trôi nổi */
-@keyframes particleFloat {
-  0% { transform: translate(0, 0); opacity: 0.8; }
-  50% { opacity: 0.3; }
-  100% { transform: translate(50px, 50px); opacity: 0; }
 }
 
 /* Hiệu ứng glow cho số */
 .glow-number {
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 
-               0 0 40px rgba(138, 43, 226, 0.8), /* Tím đậm */
-               0 0 60px rgba(75, 0, 130, 0.7), /* Tím rất đậm */
-               0 0 80px rgba(0, 191, 255, 0.5); /* Xanh lam đậm */
+               0 0 40px rgba(138, 43, 226, 0.8),
+               0 0 60px rgba(75, 0, 130, 0.7),
+               0 0 80px rgba(0, 191, 255, 0.5);
   color: white;
   font-size: 6rem;
   font-weight: 900;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Căn giữa chính xác */
   z-index: 10;
-  animation: glowPulse 2s infinite ease-in-out;
-}
-
-/* Hiệu ứng nhấp nháy cho số */
-@keyframes glowPulse {
-  0%, 100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(138, 43, 226, 0.8), 0 0 60px rgba(75, 0, 130, 0.7), 0 0 80px rgba(0, 191, 255, 0.5); }
-  50% { text-shadow: 0 0 30px rgba(255, 255, 255, 1), 0 0 50px rgba(138, 43, 226, 1), 0 0 80px rgba(75, 0, 130, 0.9), 0 0 100px rgba(0, 191, 255, 0.7); }
-}
-
-/* Vòng tròn mandala */
-.mandala-circle {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(138, 43, 226, 0.2), transparent);
-  border: 2px solid rgba(138, 43, 226, 0.7); /* Tím đậm */
-  border-radius: 50%;
-  box-shadow: 0 0 30px rgba(75, 0, 130, 0.5); /* Tím rất đậm */
-  z-index: 5;
-  animation: rotateMandala 20s linear infinite;
-}
-
-/* Hiệu ứng xoay chậm cho mandala */
-@keyframes rotateMandala {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* Họa tiết mandala */
-.mandala-circle::before,
-.mandala-circle::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  border-radius: 50%;
-  border: 1px dashed rgba(138, 43, 226, 0.5); /* Tím đậm */
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.mandala-circle::after {
-  transform: translate(-50%, -50%) rotate(-45deg);
-}
-
-/* Các đường nét phát sáng */
-.mandala-lines {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  z-index: 8;
-}
-
-.mandala-lines::before,
-.mandala-lines::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 80%;
-  height: 1px;
-  background: rgba(138, 43, 226, 0.7); /* Tím đậm */
-  box-shadow: 0 0 15px rgba(75, 0, 130, 0.9); /* Tím rất đậm */
-  transform: translate(-50%, -50%) rotate(30deg);
-}
-
-.mandala-lines::after {
-  transform: translate(-50%, -50%) rotate(-30deg);
-}
-
-/* Hiệu ứng ngôi sao mờ ảo */
-.stars-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.15), transparent);
-  z-index: 2;
-  animation: starFade 5s infinite ease-in-out;
 }
 
 /* Hiệu ứng nhấp nháy cho ngôi sao */
