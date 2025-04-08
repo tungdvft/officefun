@@ -276,15 +276,14 @@ async function fetchNumerology() {
 /* Nền không gian vũ trụ */
 /* Nền không gian vũ trụ */
 .space-background {
-  background-image: url('https://images.unsplash.com/photo-1465101162946-4377e57745c3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-image: url('/tsh.avif'); /* Đường dẫn đến file trong thư mục public */
   background-size: cover;
   background-position: center;
   position: relative;
   overflow: hidden;
   animation: spaceTwinkle 10s infinite ease-in-out;
-  box-shadow: 0 0 40px rgba(75, 0, 130, 0.5); /* Thêm bóng tím đậm */
+  box-shadow: 0 0 40px rgba(75, 0, 130, 0.5);
 }
-
 /* Hiệu ứng nhấp nháy không gian */
 @keyframes spaceTwinkle {
   0%, 100% { opacity: 0.7; }
