@@ -4,6 +4,7 @@
     <Stats />
     <WhyChooseUs />
     <NumerologyBasics />
+    <LifepathNumber />
     <CoreNumbers />
     <Calculator />
     <Testimonials />
@@ -24,7 +25,7 @@ import Testimonials from '~/components/Testimonials.vue'
 import FAQ from '~/components/FAQ.vue'
 import Blog from '~/components/Blog.vue'
 import Newsletter from '~/components/Newsletter.vue'
-
+import LifepathNumber from '~/components/LifepathNumber.vue'
 export default {
   components: {
     Hero,
@@ -35,7 +36,9 @@ export default {
     Testimonials,
     FAQ,
     Blog,
-    Newsletter
+    Newsletter,
+    Stats,
+    LifepathNumber
   }
 }
 </script>
