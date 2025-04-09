@@ -11,10 +11,16 @@
     "start": "nuxt start"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/free-regular-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/vue-fontawesome": "^3.0.8",
     "@google/generative-ai": "^0.24.0",
     "@nuxt/image": "^1.10.0",
     "@progress/kendo-drawing": "^1.21.2",
     "@progress/kendo-vue-pdf": "^6.3.0",
+    "@sidebase/nuxt-pdf": "^1.0.0-alpha.0",
     "@vuepic/vue-datepicker": "^11.0.2",
     "axios": "^1.8.4",
     "chart.js": "^4.4.8",
@@ -30,6 +36,7 @@
     "sqlite3": "^5.1.7",
     "vercel": "^41.4.1",
     "vue": "^3.5.13",
+    "vue-html2pdf": "^1.8.0",
     "vue-router": "^4.5.0",
     "vue3-toastify": "^0.2.8"
   },

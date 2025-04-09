@@ -88,24 +88,6 @@
         </div>
       </div>
 
-      <!-- Các chỉ số chính -->
-      <!-- <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div 
-          v-for="(number, key) in mainNumbers" 
-          :key="key"
-          class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300"
-        >
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0 bg-blue-100 text-blue-600 rounded-lg p-3">
-              <span class="text-xl font-bold">{{ number.value }}</span>
-            </div>
-            <div>
-              <h3 class="text-lg font-semibold text-gray-800 mb-1">{{ number.label }}</h3>
-              <p class="text-gray-600 text-sm">{{ number.interpretation }}</p>
-            </div>
-          </div>
-        </div>
-      </div> -->
 
       <!-- Tổng quan -->
       <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">

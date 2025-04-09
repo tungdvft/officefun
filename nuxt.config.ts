@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss', '@nuxt/image'],
   components: true,
+  
   hooks: {
     'pages:extend'(pages) {
       const host = process.server ? useRequestHeaders()['host'] : process.client ? window.location.host : '';
@@ -27,5 +28,5 @@ export default defineNuxtConfig({
       ],
     },
   },
-  plugins: [{ src: '~/plugins/vue3-toastify.client.js', mode: 'client' }],
+  plugins: [{ src: '~/plugins/vue3-toastify.client.js', mode: 'client' },'~/plugins/fontawesome.js'],
 });
