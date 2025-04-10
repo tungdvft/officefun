@@ -7,19 +7,19 @@
         alt="Soft background"
         class="w-full h-full object-cover"
       />
-      <div class="absolute inset-0 bg-white opacity-20"></div>
+      <!-- <div class="absolute inset-0 bg-white opacity-20"></div> -->
     </div>
     
     <div class="container mx-auto px-4 relative z-10">
       <div class="flex flex-col lg:flex-row items-center">
         <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10">
           <!-- Heading với text gradient tím -> xanh nhẹ -->
-          <h2 class="text-4xl md:text-5xl font-bold mb-6 fade-in bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
+          <h2 class="text-4xl md:text-5xl font-bold mb-6 fade-in bg-clip-text text-white">
             Khám Phá Bản Thân Qua Thần Số Học
           </h2>
           
           <!-- Subheading màu tự nhiên -->
-          <p class="text-xl mb-8 fade-in text-gray-700">
+          <p class="text-xl mb-8 fade-in text-white">
             Con số ngày sinh và tên gọi của bạn tiết lộ nhiều điều thú vị về tính cách, sứ mệnh và tiềm năng của bạn.
           </p>
           
@@ -31,13 +31,13 @@
               Tính Số Của Bạn
               <font-awesome-icon :icon="['fas', 'calculator']" class="ml-2 text-lg" />
             </NuxtLink>
-            <NuxtLink 
+            <!-- <NuxtLink 
               to="/blog" 
               class="border-2 border-purple-500 text-purple-600 font-bold py-3 px-6 rounded-full hover:bg-purple-50 transition duration-300 flex items-center"
             >
               Tìm Hiểu Thêm
               <font-awesome-icon :icon="['fas', 'book-open']" class="ml-2 text-lg" />
-            </NuxtLink>
+            </NuxtLink> -->
           </div>
         </div>
 
