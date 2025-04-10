@@ -19,11 +19,11 @@ export default defineNuxtConfig({
   css: ['~/assets/css/tailwind.css'],
   app: {
     head: {
-      title: 'Offitify - Ứng dụng bói tarot, thần số học cá nhân hoá, tương tác trực quan.', // Thêm thẻ title
+      title: 'AuraTrust - Ứng dụng thần số học cá nhân hoá, tương tác trực quan.', 
       meta: [
         {
           name: 'description', // Sửa lại thành 'description'
-          content: 'Offitify - Ứng dụng bói tarot, thần số học cá nhân hoá, tương tác trực quan.',
+          content: 'AuraTrust - Ứng dụng thần số học cá nhân hoá, tương tác trực quan',
         },
       ],
     },
