@@ -1,28 +1,32 @@
 <template>
-  <section class="py-16 mystical-bg relative overflow-hidden">
-    <div class="stars"></div>
-    <div class="container mx-auto px-4 text-center relative z-10">
-      <h2 class="text-3xl font-bold mb-12 text-purple-300">Thần Số Học Trong Cuộc Sống</h2>
+  <section class="py-16 cosmic-bg relative overflow-hidden">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-4xl font-bold mb-6 text-purple-800">Thần Số Học Hiện Đại</h2>
+      <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">Kết hợp tri thức cổ xưa và công nghệ hiện đại để mang lại những phân tích chính xác</p>
 
-      <div class="grid md:grid-cols-4 gap-8">
-        <div class="bg-white/5 p-6 rounded-xl backdrop-filter backdrop-blur-sm border border-purple-300/20">
-          <div class="count-up mb-2 text-4xl font-bold text-white" ref="count1" data-target="10000">0</div>
-          <h3 class="text-xl font-medium text-purple-300">Người Đã Phân Tích</h3>
+      <div class="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+        <div class="bg-white p-6 rounded-xl shadow-lg border border-purple-100 transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
+          <div class="count-up mb-4 text-5xl font-bold text-purple-600" ref="count1" data-target="10000">0</div>
+          <h3 class="text-xl font-medium text-gray-700">Người Đã Phân Tích</h3>
+          <p class="text-gray-500 mt-2">Hơn 10,000 hồ sơ được nghiên cứu chuyên sâu</p>
         </div>
 
-        <div class="bg-white/5 p-6 rounded-xl backdrop-filter backdrop-blur-sm border border-purple-300/20">
-          <div class="count-up mb-2 text-4xl font-bold text-white" ref="count2" data-target="9">0</div>
-          <h3 class="text-xl font-medium text-purple-300">Con Số Cơ Bản</h3>
+        <div class="bg-white p-6 rounded-xl shadow-lg border border-purple-100 transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
+          <div class="count-up mb-4 text-5xl font-bold text-purple-600" ref="count2" data-target="9">0</div>
+          <h3 class="text-xl font-medium text-gray-700">Con Số Cơ Bản</h3>
+          <p class="text-gray-500 mt-2">9 con số chủ đạo trong hệ thống Pythagoras</p>
         </div>
 
-        <div class="bg-white/5 p-6 rounded-xl backdrop-filter backdrop-blur-sm border border-purple-300/20">
-          <div class="count-up mb-2 text-4xl font-bold text-white" ref="count3" data-target="27">0</div>
-          <h3 class="text-xl font-medium text-purple-300">Chỉ Số Quan Trọng</h3>
+        <div class="bg-white p-6 rounded-xl shadow-lg border border-purple-100 transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
+          <div class="count-up mb-4 text-5xl font-bold text-purple-600" ref="count3" data-target="27">0</div>
+          <h3 class="text-xl font-medium text-gray-700">Chỉ Số Quan Trọng</h3>
+          <p class="text-gray-500 mt-2">Phân tích đa chiều các khía cạnh cuộc sống</p>
         </div>
 
-        <div class="bg-white/5 p-6 rounded-xl backdrop-filter backdrop-blur-sm border border-purple-300/20">
-          <div class="count-up mb-2 text-4xl font-bold text-white" ref="count4" data-target="99">0<span>%</span></div>
-          <h3 class="text-xl font-medium text-purple-300">Độ Chính Xác</h3>
+        <div class="bg-white p-6 rounded-xl shadow-lg border border-purple-100 transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
+          <div class="count-up mb-4 text-5xl font-bold text-purple-600" ref="count4" data-target="99">0<span>%</span></div>
+          <h3 class="text-xl font-medium text-gray-700">Độ Chính Xác</h3>
+          <p class="text-gray-500 mt-2">Theo đánh giá từ người dùng</p>
         </div>
       </div>
     </div>
@@ -37,28 +41,27 @@ export default {
   methods: {
     startCounting() {
       const counters = [
-        { el: this.$refs.count1, target: 10000 },
-        { el: this.$refs.count2, target: 9 },
-        { el: this.$refs.count3, target: 27 },
-        { el: this.$refs.count4, target: 99 }
+        { el: this.$refs.count1, target: 10000, duration: 2000 },
+        { el: this.$refs.count2, target: 9, duration: 1000 },
+        { el: this.$refs.count3, target: 27, duration: 1500 },
+        { el: this.$refs.count4, target: 99, duration: 2500 }
       ]
 
       counters.forEach(counter => {
-        const updateCounter = () => {
-          const target = parseInt(counter.el.getAttribute('data-target'))
-          const current = parseInt(counter.el.textContent.replace('%', '')) // Loại bỏ ký hiệu % để tính toán
-          const increment = target / 100 // Tốc độ đếm (có thể điều chỉnh)
-
-          if (current < target) {
-            counter.el.textContent = Math.ceil(current + increment) + (counter.el === this.$refs.count4 ? '%' : '')
+        const startTime = performance.now()
+        
+        const updateCounter = (timestamp) => {
+          const progress = Math.min((timestamp - startTime) / counter.duration, 1)
+          const value = Math.floor(progress * counter.target)
+          
+          counter.el.textContent = value + (counter.el === this.$refs.count4 ? '%' : '')
+          
+          if (progress < 1) {
             requestAnimationFrame(updateCounter)
-          } else {
-            counter.el.textContent = target + (counter.el === this.$refs.count4 ? '%' : '')
           }
         }
 
-        // Bắt đầu đếm khi component được mount
-        updateCounter()
+        requestAnimationFrame(updateCounter)
       })
     }
   }
@@ -66,58 +69,34 @@ export default {
 </script>
 
 <style scoped>
-/* Nền huyền bí với hiệu ứng sao */
-.mystical-bg {
-    background: radial-gradient(circle at center, #2a1053 0%, #0d041f 100%);
+.cosmic-bg {
+  background: radial-gradient(circle at center, #f9f5ff 0%, #e9d8fd 100%);
+  position: relative;
 }
-/* Hiệu ứng sao */
-.stars {
+
+/* Hiệu ứng tinh tế */
+.cosmic-bg::before {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  animation: twinkle 5s infinite;
-  z-index: 0;
-  pointer-events: none;
+  right: 0;
+  height: 10px;
+  background: linear-gradient(90deg, #9f7aea 0%, #6b46c1 100%);
 }
 
-/* Tạo hiệu ứng nhấp nháy sao bằng pseudo-elements */
-.stars::before,
-.stars::after {
-  content: '';
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: white;
-  border-radius: 50%;
-  box-shadow: 
-    100px 50px 1px #fff,
-    200px 150px 2px #fff,
-    300px 100px 1px #fff,
-    400px 200px 2px #fff,
-    500px 50px 1px #fff,
-    600px 180px 2px #fff,
-    700px 120px 1px #fff,
-    800px 90px 2px #fff;
-  animation: twinkle 3s infinite alternate;
+/* Animation cho số đếm */
+@keyframes countUp {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
-.stars::after {
-  box-shadow: 
-    150px 80px 1px #fff,
-    250px 130px 2px #fff,
-    350px 170px 1px #fff,
-    450px 110px 2px #fff,
-    550px 70px 1px #fff,
-    650px 140px 2px #fff,
-    750px 160px 1px #fff,
-    850px 60px 2px #fff;
+.count-up {
+  animation: countUp 0.5s ease-out forwards;
 }
 
-@keyframes twinkle {
-  0% { opacity: 0.5; }
-  100% { opacity: 1; }
+/* Hiệu ứng hover tinh tế */
+.transform {
+  transition: all 0.3s ease;
 }
 </style>
