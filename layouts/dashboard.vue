@@ -74,6 +74,12 @@
           </svg>
           <span v-if="isSidebarOpen || windowWidth >= 768">Định hướng nghề nghiệp</span>
         </NuxtLink>
+        <NuxtLink to="/dashboard/wedding-date" :class="{ 'justify-center': !isSidebarOpen && windowWidth < 768, 'justify-start': isSidebarOpen || windowWidth >= 768 }" class="flex items-center p-3 rounded-lg hover:bg-purple-700" exact-active-class="bg-purple-900">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span v-if="isSidebarOpen || windowWidth >= 768">Chọn ngày cưới</span>
+        </NuxtLink>
         <NuxtLink to="/dashboard/child" :class="{ 'justify-center': !isSidebarOpen && windowWidth < 768, 'justify-start': isSidebarOpen || windowWidth >= 768 }" class="flex items-center p-3 rounded-lg hover:bg-purple-700" exact-active-class="bg-purple-900">
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0-1.104-.896-2-2-2s-2 .896-2 2c0 .738.402 1.378 1 1.723V15a1 1 0 001 1h2a1 1 0 001-1v-2.277c.598-.345 1-.985 1-1.723zm9 1c0-4.971-4.029-9-9-9s-9 4.029-9 9c0 2.232.811 4.275 2.156 5.854M12 3v1m5.657 1.343l-.707.707M21 12h-1m-1.343 5.657l-.707-.707M12 21v-1m-5.657-1.343l-.707.707" />
