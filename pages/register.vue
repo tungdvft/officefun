@@ -1,84 +1,124 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md relative">
-      <!-- Loading bar -->
-      <div
-        v-if="loading"
-        class="absolute top-0 left-0 h-1 bg-blue-500 animate-loading-bar"
-        :style="{ width: loadingProgress + '%' }"
-      ></div>
-      <div class="flex items-center justify-center mb-3">
-        <svg class="w-8 h-8 text-blue-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-        </svg>
-        <span
-          class="text-xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text"
-        >
-          Offitify
-        </span>
+  <div class="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50 flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden">
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-center">
+        <h1 class="text-2xl font-bold text-white">Tạo Tài Khoản Mới</h1>
+        <p class="text-purple-100 mt-1">Bắt đầu hành trình của bạn ngay hôm nay</p>
       </div>
-      <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Đăng ký tài khoản</h1>
 
-      <!-- Form đăng ký -->
-      <form @submit.prevent="register">
-        <div class="mb-4">
-          <label for="username" class="block text-gray-700 mb-2">Username (viết liền, không dấu)</label>
-          <input
-            v-model="username"
-            type="text"
-            id="username"
-            placeholder="VD: nguyenvan"
-            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            :class="{ 'border-red-500': usernameError }"
-            required
-            @input="validateUsername"
-          />
-          <p v-if="usernameError" class="text-red-500 text-sm mt-1">{{ usernameError }}</p>
-        </div>
-        <div class="mb-4">
-          <label for="birthdate" class="block text-gray-700 mb-2">Ngày sinh</label>
-          <input
-            v-model="birthdate"
-            type="text"
-            id="birthdate"
-            placeholder="Nhập đúng định dạng DD-MM-YYYY (VD: 01-01-1990)"
-            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            :class="{ 'border-red-500': birthdateError }"
-            required
-            @input="validateBirthdate"
-          />
-          <p v-if="birthdateError" class="text-red-500 text-sm mt-1">{{ birthdateError }}</p>
-        </div>
-        <div class="mb-4">
-          <label for="gender" class="block text-gray-700 mb-2">Giới tính</label>
-          <select
-            v-model="gender"
-            id="gender"
-            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
+      <!-- Form -->
+      <div class="p-6 md:p-8">
+        <form @submit.prevent="handleRegister" class="space-y-6">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Họ và tên</label>
+            <input
+              v-model="form.name"
+              type="text"
+              id="name"
+              placeholder="Nhập họ tên của bạn"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              required
+            >
+          </div>
+
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <input
+              v-model="form.email"
+              type="email"
+              id="email"
+              placeholder="Nhập email của bạn"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              required
+            >
+          </div>
+
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>
+            <input
+              v-model="form.password"
+              type="password"
+              id="password"
+              placeholder="Nhập mật khẩu"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              required
+            >
+          </div>
+
+          <div>
+            <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Xác nhận mật khẩu</label>
+            <input
+              v-model="form.confirmPassword"
+              type="password"
+              id="confirm-password"
+              placeholder="Nhập lại mật khẩu"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              required
+            >
+          </div>
+
+          <div class="flex items-center">
+            <input
+              id="terms"
+              type="checkbox"
+              class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+              required
+            >
+            <label for="terms" class="ml-2 block text-sm text-gray-700">
+              Tôi đồng ý với <a href="#" class="text-purple-600 hover:text-purple-500">Điều khoản dịch vụ</a> và <a href="#" class="text-purple-600 hover:text-purple-500">Chính sách bảo mật</a>
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-medium hover:shadow-md transition-all"
           >
-            <option value="" disabled>Chọn giới tính</option>
-            <option value="Male">Nam</option>
-            <option value="Female">Nữ</option>
-            <option value="Other">Khác</option>
-          </select>
+            Đăng Ký
+          </button>
+        </form>
+
+        <!-- Social Login -->
+        <div class="mt-8">
+          <div class="relative">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-gray-300"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+              <span class="px-2 bg-white text-gray-500">Hoặc đăng ký bằng</span>
+            </div>
+          </div>
+
+          <div class="mt-6 grid grid-cols-2 gap-4">
+            <button
+              @click="registerWithGoogle"
+              class="w-full inline-flex justify-center items-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+            >
+              <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+              </svg>
+              Google
+            </button>
+            <button
+              class="w-full inline-flex justify-center items-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+            >
+              <svg class="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
+              </svg>
+              Facebook
+            </button>
+          </div>
         </div>
-        
-        <button
-          type="submit"
-          class="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-          :disabled="loading || isSubmitted"
-        >
-          {{ loading ? 'Đang xử lý...' : 'Đăng ký' }}
-        </button>
 
-        <!-- Thông báo lỗi chung -->
-        <p v-if="formError" class="text-red-500 text-sm mt-4 text-center">{{ formError }}</p>
-      </form>
-
-      <div class="mt-4 text-center">
-        <p class="text-gray-600">Đã có tài khoản?</p>
-        <NuxtLink to="/login" class="text-blue-500 hover:underline">Đăng nhập ngay</NuxtLink>
+        <div class="mt-6 text-center">
+          <p class="text-sm text-gray-600">
+            Đã có tài khoản?
+            <router-link to="/dang-nhap" class="text-purple-600 font-medium hover:text-purple-500">Đăng nhập ngay</router-link>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -86,145 +126,20 @@
 
 <script setup>
 import { ref } from 'vue';
-import { toast } from 'vue3-toastify';
 
-const username = ref('');
-const birthdate = ref('');
-const gender = ref('');
-const loading = ref(false);
-const isSubmitted = ref(false);
-const loadingProgress = ref(0);
-const usernameError = ref('');
-const birthdateError = ref('');
-const formError = ref(''); // Thêm biến để lưu lỗi chung
-
-// Validate username: chỉ chứa chữ cái và số, không dấu, không khoảng trắng
-function validateUsername() {
-  const usernamePattern = /^[a-z0-9]+$/;
-  if (!username.value) {
-    usernameError.value = 'Username không được để trống.';
-  } else if (!usernamePattern.test(username.value)) {
-    usernameError.value = 'Username chỉ được chứa chữ cái thường và số, không dấu, không khoảng trắng.';
-  } else {
-    usernameError.value = '';
-  }
-}
-
-// Validate birthdate: phải đúng định dạng DD-MM-YYYY, ngày hợp lệ, không trong tương lai
-function validateBirthdate() {
-  const birthdatePattern = /^\d{2}-\d{2}-\d{4}$/;
-  if (!birthdate.value) {
-    birthdateError.value = 'Ngày sinh không được để trống.';
-    return;
-  }
-
-  if (!birthdatePattern.test(birthdate.value)) {
-    birthdateError.value = 'Ngày sinh phải đúng định dạng DD-MM-YYYY (VD: 01-01-1990).';
-    return;
-  }
-
-  const [day, month, year] = birthdate.value.split('-').map(Number);
-  const date = new Date(year, month - 1, day);
-  const today = new Date();
-
-  // Kiểm tra ngày hợp lệ
-  if (
-    isNaN(date.getTime()) ||
-    date.getDate() !== day ||
-    date.getMonth() + 1 !== month ||
-    date.getFullYear() !== year
-  ) {
-    birthdateError.value = 'Ngày sinh không hợp lệ.';
-    return;
-  }
-
-  // Kiểm tra ngày không trong tương lai
-  if (date > today) {
-    birthdateError.value = 'Ngày sinh không được trong tương lai.';
-    return;
-  }
-
-  birthdateError.value = '';
-}
-
-async function register() {
-  // Reset lỗi chung
-  formError.value = '';
-
-  // Kiểm tra các trường required
-  if (!username.value || !birthdate.value || !gender.value) {
-    formError.value = 'Vui lòng điền đầy đủ các trường bắt buộc (Username, Ngày sinh, Giới tính).';
-    return;
-  }
-
-  // Kiểm tra validate username và birthdate
-  validateUsername();
-  validateBirthdate();
-
-  if (usernameError.value || birthdateError.value) {
-    formError.value = 'Vui lòng sửa các lỗi trong form trước khi đăng ký.';
-    return;
-  }
-
-  loading.value = true;
-  isSubmitted.value = false;
-  loadingProgress.value = 0;
-
-  const progressInterval = setInterval(() => {
-    if (loadingProgress.value < 90) {
-      loadingProgress.value += 10;
-    }
-  }, 100);
-
-  try {
-    const formattedUsername = username.value.toLowerCase().replace(/\s/g, '');
-    const { data: userResponse } = await useFetch('/api/user', {
-      method: 'GET',
-      query: { username: formattedUsername },
-    });
-
-    if (userResponse.value && !userResponse.value.error) {
-      toast.error('Username đã tồn tại. Vui lòng chọn username khác.', {
-        position: 'top-center',
-      });
-      clearInterval(progressInterval);
-      return;
-    }
-
-    await $fetch('/api/user', {
-      method: 'POST',
-      body: {
-        username: formattedUsername,
-        birthdate: birthdate.value,
-        gender: gender.value,
-      },
-    });
-
-    toast.success('Đăng ký thành công! Đang chuyển về đăng nhập...', {
-      position: 'top-center',
-    });
-    isSubmitted.value = true;
-    loadingProgress.value = 100;
-    clearInterval(progressInterval);
-    setTimeout(() => navigateTo('/login'), 1000);
-  } catch (error) {
-    console.error('Error during registration:', error);
-    toast.error('Đã có lỗi xảy ra. Vui lòng thử lại.', {
-      position: 'top-center',
-    });
-    clearInterval(progressInterval);
-  } finally {
-    loading.value = false;
-  }
-}
-
-definePageMeta({
-  layout: 'auth',
+const form = ref({
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
 });
-</script>
 
-<style scoped>
-.animate-loading-bar {
-  transition: width 0.3s ease-in-out;
-}
-</style>
+const handleRegister = () => {
+  console.log('Register with:', form.value);
+};
+
+const registerWithGoogle = () => {
+  console.log('Register with Google');
+  // Implement Google OAuth here
+};
+</script>

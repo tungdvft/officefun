@@ -1,15 +1,44 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <template>
   <div class="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50 flex items-center justify-center p-4">
     <div class="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden">
       <!-- Header -->
       <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-center">
-        <h1 class="text-2xl font-bold text-white">Đăng Nhập Tài Khoản</h1>
-        <p class="text-purple-100 mt-1">Chào mừng bạn quay trở lại</p>
+        <h1 class="text-2xl font-bold text-white">Tạo Tài Khoản Mới</h1>
+        <p class="text-purple-100 mt-1">Bắt đầu hành trình của bạn ngay hôm nay</p>
       </div>
 
       <!-- Form -->
       <div class="p-6 md:p-8">
-        <form @submit.prevent="handleLogin" class="space-y-6">
+        <form @submit.prevent="handleRegister" class="space-y-6">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Họ và tên</label>
+            <input
+              v-model="form.name"
+              type="text"
+              id="name"
+              placeholder="Nhập họ tên của bạn"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              required
+            >
+          </div>
+
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
             <input
@@ -34,23 +63,35 @@
             >
           </div>
 
-          <div class="flex items-center justify-between">
-            <div class="flex items-center">
-              <input
-                id="remember-me"
-                type="checkbox"
-                class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
-              >
-              <label for="remember-me" class="ml-2 block text-sm text-gray-700">Ghi nhớ đăng nhập</label>
-            </div>
-            <router-link to="/quen-mat-khau" class="text-sm text-purple-600 hover:text-purple-500">Quên mật khẩu?</router-link>
+          <div>
+            <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Xác nhận mật khẩu</label>
+            <input
+              v-model="form.confirmPassword"
+              type="password"
+              id="confirm-password"
+              placeholder="Nhập lại mật khẩu"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              required
+            >
+          </div>
+
+          <div class="flex items-center">
+            <input
+              id="terms"
+              type="checkbox"
+              class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+              required
+            >
+            <label for="terms" class="ml-2 block text-sm text-gray-700">
+              Tôi đồng ý với <a href="#" class="text-purple-600 hover:text-purple-500">Điều khoản dịch vụ</a> và <a href="#" class="text-purple-600 hover:text-purple-500">Chính sách bảo mật</a>
+            </label>
           </div>
 
           <button
             type="submit"
             class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-medium hover:shadow-md transition-all"
           >
-            Đăng Nhập
+            Đăng Ký
           </button>
         </form>
 
@@ -61,13 +102,13 @@
               <div class="w-full border-t border-gray-300"></div>
             </div>
             <div class="relative flex justify-center text-sm">
-              <span class="px-2 bg-white text-gray-500">Hoặc đăng nhập bằng</span>
+              <span class="px-2 bg-white text-gray-500">Hoặc đăng ký bằng</span>
             </div>
           </div>
 
           <div class="mt-6 grid grid-cols-2 gap-4">
             <button
-              @click="loginWithGoogle"
+              @click="registerWithGoogle"
               class="w-full inline-flex justify-center items-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
             >
               <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
@@ -91,8 +132,8 @@
 
         <div class="mt-6 text-center">
           <p class="text-sm text-gray-600">
-            Chưa có tài khoản?
-            <router-link to="/dang-ky" class="text-purple-600 font-medium hover:text-purple-500">Đăng ký ngay</router-link>
+            Đã có tài khoản?
+            <router-link to="/dang-nhap" class="text-purple-600 font-medium hover:text-purple-500">Đăng nhập ngay</router-link>
           </p>
         </div>
       </div>
@@ -104,16 +145,18 @@
 import { ref } from 'vue';
 
 const form = ref({
+  name: '',
   email: '',
-  password: ''
+  password: '',
+  confirmPassword: ''
 });
 
-const handleLogin = () => {
-  console.log('Login with:', form.value);
+const handleRegister = () => {
+  console.log('Register with:', form.value);
 };
 
-const loginWithGoogle = () => {
-  console.log('Login with Google');
+const registerWithGoogle = () => {
+  console.log('Register with Google');
   // Implement Google OAuth here
 };
 </script>
