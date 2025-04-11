@@ -127,7 +127,7 @@ alt: "Lịch để bản với các con số năm được highlight",
   {
     id: "4",
       slug: "than-so-hoc-va-phong-thuy",
-    image: "https://images.unsplash.com/photo-1583845112203-454c60c05a9f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZmVuZyUyMHNodWklMjBudW1iZXJzfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
 alt: "Không gian phòng làm việc bài trí theo phong thủy với biểu tượng các con số",
     title: "Kết Hợp Thần Số Học Và Phong Thủy Để Tăng Vượng Khí",
     excerpt: "Cách hài hòa năng lượng số học với không gian sống để thu hút may mắn.",
