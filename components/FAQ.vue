@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <div class="text-center mt-12">
+      <!-- <div class="text-center mt-12">
         <nuxt-link 
           to="/faq"
           class="inline-flex items-center bg-white text-purple-600 font-bold py-3 px-8 rounded-full border-2 border-purple-600 hover:bg-purple-600 hover:text-white transition-all duration-300 hover:shadow-lg"
@@ -47,7 +47,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
         </nuxt-link>
-      </div>
+      </div> -->
     </div>
   </section>
 </template>

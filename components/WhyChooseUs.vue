@@ -59,14 +59,14 @@
         </div>
       </div>
 
-      <div class="mt-16 text-center">
+      <!-- <div class="mt-16 text-center">
         <button class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-8 rounded-full hover:shadow-lg transition-all duration-300 hover:scale-105">
           Trải nghiệm ngay
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block ml-2" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
           </svg>
         </button>
-      </div>
+      </div> -->
     </div>
   </section>
 </template>
