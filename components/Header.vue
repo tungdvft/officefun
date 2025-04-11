@@ -33,6 +33,13 @@
             >
               Về chúng tôi
             </NuxtLink>
+            <NuxtLink 
+              to="/kien-thuc" 
+              class="px-4 py-2 rounded-lg font-medium hover:text-purple-600 hover:bg-purple-50 transition-colors duration-200 h-full flex items-center"
+              active-class="text-purple-600 bg-purple-50 font-semibold"
+            >
+              Kiến thức
+            </NuxtLink>
             <!-- Menu Khám Phá -->
             <!-- <div 
               class="dropdown h-full relative" 

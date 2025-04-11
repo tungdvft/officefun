@@ -90,7 +90,7 @@
           <p class="text-gray-400 mb-4">
             Đăng ký để nhận thông tin mới nhất về thần số học và các ưu đãi đặc biệt.
           </p>
-          <form @submit.prevent="subscribeFooter" class="space-y-3">
+          <!-- <form @submit.prevent="subscribeFooter" class="space-y-3">
             <input 
               type="email" 
               v-model="email" 
@@ -105,7 +105,7 @@
               <font-awesome-icon :icon="['fas', 'paper-plane']" class="mr-2" />
               Đăng Ký Ngay
             </button>
-          </form>
+          </form> -->
         </div>
       </div>
 
