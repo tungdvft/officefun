@@ -145,7 +145,7 @@ const submitForm = async () => {
   });
 
   if (!userStore.error) {
-    router.push("/dashboard");
+    router.push("/xem");
   }
 };
 </script>

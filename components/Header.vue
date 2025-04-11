@@ -34,7 +34,7 @@
               Về chúng tôi
             </NuxtLink>
             <!-- Menu Khám Phá -->
-            <div 
+            <!-- <div 
               class="dropdown h-full relative" 
               @mouseenter="openMenu('explore')"
               @mouseleave="closeMenu('explore')"
@@ -64,7 +64,6 @@
               </div>
             </div>
 
-            <!-- Menu Công Cụ -->
             <div 
               class="dropdown h-full relative" 
               @mouseenter="openMenu('tools')"
@@ -93,7 +92,7 @@
                   <span>{{ item.name }}</span>
                 </NuxtLink>
               </div>
-            </div>
+            </div> -->
 
             <NuxtLink 
               to="/blog" 

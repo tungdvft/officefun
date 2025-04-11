@@ -13,12 +13,11 @@ export const useUserStore = defineStore("user", {
       this.isLoading = true;
       this.error = null;
       this.numerologyData = null;
-
       try {
         // Lưu thông tin người dùng
         this.fullname = fullname;
         this.birthdate = birthdate;
-
+        
         // Gọi API
         const response = await fetch("/api/overview", {
           method: "POST",
@@ -34,7 +33,6 @@ export const useUserStore = defineStore("user", {
         if (!response.ok) {
           throw new Error(`API trả về lỗi: ${response.status} - ${response.statusText}`);
         }
-
         const data = await response.json();
         if (data) {
           this.numerologyData = data;

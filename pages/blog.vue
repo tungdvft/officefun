@@ -210,7 +210,7 @@
           </div>
 
           <!-- Pagination -->
-          <div class="mt-16 flex justify-center">
+          <!-- <div class="mt-16 flex justify-center">
             <nav class="flex items-center space-x-2">
               <button class="w-10 h-10 flex items-center justify-center rounded-full bg-purple-600 text-white">
                 1
@@ -231,7 +231,7 @@
                 </svg>
               </button>
             </nav>
-          </div>
+          </div> -->
         </div>
 
         <!-- Sidebar -->
