@@ -18,9 +18,9 @@
         <p class="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto mb-8 animate-slide-up">
           Công nghệ AI tiên tiến kết hợp với kho dữ liệu thần số học khổng lồ giúp bạn hiểu rõ bản thân và định hướng tương lai.
         </p>
-        <a href="/" class="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-8 rounded-full text-lg font-semibold hover:shadow-lg transition-all duration-300 animate-pulse-once shadow-md">
+        <!-- <a href="/" class="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-8 rounded-full text-lg font-semibold hover:shadow-lg transition-all duration-300 animate-pulse-once shadow-md">
           Bắt đầu hành trình của bạn
-        </a>
+        </a> -->
       </div>
       
       <!-- <div class="mt-16 max-w-4xl mx-auto animate-fade-in-up">
