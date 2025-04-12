@@ -5,26 +5,27 @@
       <div class="container mx-auto px-4">
         <div class="flex justify-between items-center h-16">
           <!-- Logo -->
-          <div class="flex items-center">
-            <svg width="32" height="32" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" class="mr-2">
-              <defs>
-                <linearGradient id="infinityGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#5B21B6;stop-opacity:1"/>
-                  <stop offset="100%" style="stop-color:#A78BFA;stop-opacity:1"/>
-                </linearGradient>
-              </defs>
-              <path d="M20 50 Q40 10 60 50 Q80 90 100 50 Q80 10 60 50 Q40 90 20 50" 
-                    fill="none" stroke="url(#infinityGradient)" stroke-width="8" stroke-linecap="round">
-                <animate attributeName="stroke-opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite"/>
-              </path>
-              <path d="M20 50 Q40 10 60 50 Q80 90 100 50 Q80 10 60 50 Q40 90 20 50" 
-                    fill="none" stroke="#8B5CF6" stroke-width="12" stroke-linecap="round" opacity="0.3"/>
-              <polygon points="60,45 62,50 67,50 63,53 64,58 60,55 56,58 57,53 53,50 58,50" 
-                      fill="#FFFFFF" />
-            </svg>
-            <h1 class="text-xl font-bold">Thần số học</h1>
-          </div>
-
+          <NuxtLink to="/xem">
+            <div class="flex items-center">
+              <svg width="32" height="32" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+                <defs>
+                  <linearGradient id="infinityGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#5B21B6;stop-opacity:1"/>
+                    <stop offset="100%" style="stop-color:#A78BFA;stop-opacity:1"/>
+                  </linearGradient>
+                </defs>
+                <path d="M20 50 Q40 10 60 50 Q80 90 100 50 Q80 10 60 50 Q40 90 20 50" 
+                      fill="none" stroke="url(#infinityGradient)" stroke-width="8" stroke-linecap="round">
+                  <animate attributeName="stroke-opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite"/>
+                </path>
+                <path d="M20 50 Q40 10 60 50 Q80 90 100 50 Q80 10 60 50 Q40 90 20 50" 
+                      fill="none" stroke="#8B5CF6" stroke-width="12" stroke-linecap="round" opacity="0.3"/>
+                <polygon points="60,45 62,50 67,50 63,53 64,58 60,55 56,58 57,53 53,50 58,50" 
+                        fill="#FFFFFF" />
+              </svg>
+              <h1 class="text-xl font-bold">Thần số học</h1>
+            </div>
+          </NuxtLink>
           <!-- Desktop Navigation -->
           <nav class="hidden md:flex items-center space-x-1">
             <div 
@@ -241,11 +242,14 @@ const UsersIcon = {
 
 const mainMenu = [
   {
-    title: "Tổng quan",
+    title: "Cá nhân",
     icon: HomeIcon,
     children: [
-      { title: "Trang chủ", path: "/xem", icon: HomeIcon },
-      { title: "Thần số học mỗi ngày", path: "/xem/daily", icon: StarIcon }
+      { title: "Tổng quan", path: "/xem", icon: HomeIcon },
+      { title: "Thần số học mỗi ngày", path: "/xem/daily", icon: StarIcon },
+      { title: "Thần số học trọn đời", path: "/xem/full", icon: ClockIcon },
+      { title: "Giải đáp thắc mắc", path: "/xem/consult", icon: QuestionIcon },
+      { title: "Đặt biệt danh", path: "/xem/nick-name", icon: UserIcon }
     ]
   },
   {
@@ -270,17 +274,9 @@ const mainMenu = [
     children: [
       { title: "Thần số học trẻ em", path: "/xem/child", icon: ChildIcon },
       { title: "Đặt tên con", path: "/xem/baby-name", icon: UsersIcon },
-      { title: "Đặt biệt danh", path: "/xem/nick-name", icon: UserIcon }
+     
     ]
   },
-  {
-    title: "Báo cáo",
-    icon: ClockIcon,
-    children: [
-      { title: "Thần số học trọn đời", path: "/xem/full", icon: ClockIcon },
-      { title: "Giải đáp thắc mắc", path: "/xem/consult", icon: QuestionIcon }
-    ]
-  }
 ];
 
 const isMobileMenuOpen = ref(false);
@@ -308,9 +304,6 @@ const logout = () => {
 </script>
 
 <style scoped>
-.router-link-active {
-  @apply bg-purple-900 text-white;
-}
 
 .rotate-180 {
   transform: rotate(180deg);

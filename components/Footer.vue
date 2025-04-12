@@ -32,20 +32,16 @@
         <!-- Column 2: Quick Links -->
         <div>
           <h3 class="text-lg font-semibold mb-5 pb-2 border-b border-gray-700 flex items-center">
-            <font-awesome-icon :icon="['fas', 'link']" class="mr-2 text-purple-400" />
             <span class="text-white">Liên Kết</span>
           </h3>
           <ul class="space-y-3">
             <li><NuxtLink to="/" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 flex items-center">
-              <font-awesome-icon :icon="['fas', 'chevron-right']" class="mr-2 text-xs text-purple-400" />
               Trang Chủ
             </NuxtLink></li>
             <li><NuxtLink to="/gioi-thieu" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 flex items-center">
-              <font-awesome-icon :icon="['fas', 'chevron-right']" class="mr-2 text-xs text-purple-400" />
               Về Chúng Tôi
             </NuxtLink></li>
             <li><NuxtLink to="/blog" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 flex items-center">
-              <font-awesome-icon :icon="['fas', 'chevron-right']" class="mr-2 text-xs text-purple-400" />
               Blog
             </NuxtLink></li>
           </ul>
@@ -59,11 +55,9 @@
           </h3>
           <ul class="space-y-3">
             <li><NuxtLink to="/chinh-sach-bao-mat" class="text-gray-400 hover:text-blue-400 transition-colors duration-300 flex items-center">
-              <font-awesome-icon :icon="['fas', 'lock']" class="mr-2 text-xs text-blue-400" />
               Chính sách bảo mật
             </NuxtLink></li>
             <li><NuxtLink to="/dieu-khoan-su-dung" class="text-gray-400 hover:text-blue-400 transition-colors duration-300 flex items-center">
-              <font-awesome-icon :icon="['fas', 'file-contract']" class="mr-2 text-xs text-blue-400" />
               Điều khoản sử dụng
             </NuxtLink></li>
           </ul>
