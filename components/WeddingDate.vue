@@ -26,9 +26,9 @@
           <label for="brideBirthdate" class="form-label">Ngày sinh cô dâu (dd/mm/yyyy)</label>
           <div class="relative">
             <input v-model="formData.brideBirthdate" type="text" id="brideBirthdate" placeholder="15/03/1995" class="form-input pl-10" />
-            <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <!-- <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
+            </svg> -->
           </div>
         </div>
       </div>
@@ -42,9 +42,9 @@
           <label for="groomBirthdate" class="form-label">Ngày sinh chú rể (dd/mm/yyyy)</label>
           <div class="relative">
             <input v-model="formData.groomBirthdate" type="text" id="groomBirthdate" placeholder="22/07/1994" class="form-input pl-10" />
-            <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <!-- <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
+            </svg> -->
           </div>
         </div>
       </div>
@@ -54,18 +54,18 @@
           <label for="startDate" class="form-label">Từ ngày (dd/mm/yyyy)</label>
           <div class="relative">
             <input v-model="formData.startDate" type="text" id="startDate" placeholder="01/06/2025" class="form-input pl-10" />
-            <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <!-- <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
+            </svg> -->
           </div>
         </div>
         <div>
           <label for="endDate" class="form-label">Đến ngày (dd/mm/yyyy)</label>
           <div class="relative">
             <input v-model="formData.endDate" type="text" id="endDate" placeholder="30/06/2025" class="form-input pl-10" />
-            <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <!-- <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
+            </svg> -->
           </div>
         </div>
       </div>

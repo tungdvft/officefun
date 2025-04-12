@@ -76,7 +76,7 @@
              <button
                 type="submit"
                 :disabled="userStore.isLoading"
-                class="w-full inline-flex justify-center items-center bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-8 rounded-full text-lg font-semibold hover:shadow-lg transition-all duration-300 shadow-md disabled:opacity-70 disabled:cursor-not-allowed min-h-[56px]"
+                class="w-full inline-flex justify-center items-center bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-8 rounded-full text-lg font-semibold hover:shadow-lg transition-all duration-300 shadow-md disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                 <template v-if="userStore.isLoading">
                     <svg
