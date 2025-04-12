@@ -9,7 +9,7 @@
       
       <div class="container mx-auto px-4 relative z-10">
         <h1 class="text-4xl md:text-5xl font-bold mb-6">
-          <span class="bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">Bí Mật</span> Trong Những Con Số
+          <span class="bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">Bí mật</span> trong những con số
         </h1>
         <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8 opacity-90">
           Khám phá hệ thống kiến thức thần số học từ cổ đại đến hiện đại
