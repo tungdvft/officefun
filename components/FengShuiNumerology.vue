@@ -136,7 +136,7 @@
 
           <!-- Phân tích chi tiết -->
           <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-xl border border-purple-100">
-            <h3 class="text-xl font-bold text-purple-800 mb-4">Phân tích phong thủy</h3>
+            <h3 class="text-xl font-bold text-purple-900 mb-4">Phân tích phong thủy</h3>
             <div class="prose prose-purple max-w-none">
               <p class="whitespace-pre-wrap">{{ fengShuiData.analysis }}</p>
             </div>
@@ -199,7 +199,7 @@ const colorClass = (color) => {
     'Xanh lá': 'bg-green-100 text-green-800',
     'Xanh dương': 'bg-blue-100 text-blue-800',
     'Đỏ': 'bg-red-100 text-red-800',
-    'Tím': 'bg-purple-100 text-purple-800',
+    'Tím': 'bg-purple-100 text-purple-900',
     'Hồng': 'bg-pink-100 text-pink-800',
     'Đen': 'bg-gray-800 text-white',
     'Nâu': 'bg-yellow-800 text-white'

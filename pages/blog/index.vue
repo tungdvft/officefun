@@ -33,7 +33,7 @@
         >
         <div class="p-6 md:p-8">
           <div class="flex items-center mb-4">
-            <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full">NỔI BẬT</span>
+            <span class="bg-purple-100 text-purple-900 text-xs font-semibold px-3 py-1 rounded-full">NỔI BẬT</span>
             <span class="ml-4 text-gray-500 text-sm">Bài viết mới nhất</span>
           </div>
           <h2 class="text-2xl md:text-3xl font-bold text-purple-900 mb-4">
@@ -46,7 +46,7 @@
           </p>
           <NuxtLink 
             :to="`/blog/${articles[0].slug}`"
-            class="inline-flex items-center text-purple-600 font-medium hover:text-purple-800"
+            class="inline-flex items-center text-purple-600 font-medium hover:text-purple-900"
           >
             Đọc tiếp
             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -89,7 +89,7 @@
             </p>
             <NuxtLink 
               :to="`/blog/${article.slug}`"
-              class="inline-flex items-center text-purple-600 text-sm font-medium hover:text-purple-800"
+              class="inline-flex items-center text-purple-600 text-sm font-medium hover:text-purple-900"
             >
               Đọc tiếp
               <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

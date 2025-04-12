@@ -77,7 +77,7 @@
                 <span class="text-gray-700">Gợi ý hướng phát triển phù hợp với năng lượng số</span>
               </li>
             </ul>
-            <a href="/about" class="inline-flex items-center text-purple-600 font-medium hover:text-purple-800">
+            <a href="/about" class="inline-flex items-center text-purple-600 font-medium hover:text-purple-900">
               Tìm hiểu thêm
               <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -92,7 +92,7 @@
     <section class="py-16 bg-gradient-to-br from-purple-50 to-indigo-50">
       <div class="container mx-auto px-4">
         <div class="text-center mb-16">
-          <span class="inline-block px-4 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-semibold mb-4">TÍNH NĂNG NỔI BẬT</span>
+          <span class="inline-block px-4 py-1 bg-purple-100 text-purple-900 rounded-full text-sm font-semibold mb-4">TÍNH NĂNG NỔI BẬT</span>
           <h2 class="text-3xl md:text-4xl font-bold text-purple-900">
             Giải Mã <span class="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Vận Mệnh</span> Toàn Diện
           </h2>
@@ -112,7 +112,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <h3 class="text-xl font-semibold text-purple-800 mb-3">{{ feature.title }}</h3>
+            <h3 class="text-xl font-semibold text-purple-900 mb-3">{{ feature.title }}</h3>
             <p class="text-gray-600">{{ feature.description }}</p>
           </div>
         </div>

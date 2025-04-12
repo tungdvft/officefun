@@ -179,7 +179,7 @@
         <div v-if="result" class="mt-6 space-y-6">
           <!-- Phân tích -->
           <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-xl border border-purple-100">
-            <h3 class="text-xl font-bold text-purple-800 mb-4">Phân tích tổng quan</h3>
+            <h3 class="text-xl font-bold text-purple-900 mb-4">Phân tích tổng quan</h3>
             <div class="prose prose-purple max-w-none">
               <p class="whitespace-pre-wrap">{{ result.analysis }}</p>
             </div>
@@ -187,7 +187,7 @@
 
           <!-- Tên đề xuất -->
           <div>
-            <h3 class="text-xl font-bold text-purple-800 mb-4">Tên đề xuất cho bé</h3>
+            <h3 class="text-xl font-bold text-purple-900 mb-4">Tên đề xuất cho bé</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div 
                 v-for="(name, index) in result.names" 

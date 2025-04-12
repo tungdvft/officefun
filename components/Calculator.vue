@@ -1,7 +1,7 @@
 <template>
   <section id="calculator" class="bg-purple-50 rounded-xl p-8 mb-16">
     <div class="max-w-3xl mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-8 text-purple-800">Tính Số Đường Đời Của Bạn</h2>
+      <h2 class="text-3xl font-bold text-center mb-8 text-purple-900">Tính Số Đường Đời Của Bạn</h2>
       <div class="bg-white rounded-lg p-6 shadow-md">
         <form @submit.prevent="calculateLifePath" class="space-y-4">
           <div>
@@ -15,12 +15,12 @@
         
         <div id="result" class="mt-6" :class="{ 'hidden': !showResult }">
           <div class="bg-purple-100 p-4 rounded-lg">
-            <h3 class="text-xl font-bold text-purple-800 mb-2">Kết Quả</h3>
+            <h3 class="text-xl font-bold text-purple-900 mb-2">Kết Quả</h3>
             <p class="text-gray-800">Số Đường Đời của bạn là: <span id="lifePathNumber" class="text-3xl font-bold text-purple-600">{{ lifePathNumber }}</span></p>
             <div id="interpretation" class="mt-4 text-gray-700">
               <p class="mb-2"><strong>Ý nghĩa Số Đường Đời {{ lifePathNumber }}:</strong></p>
               <p>{{ interpretation }}</p>
-              <p class="mt-4"><NuxtLink to="/duong-doi" class="text-purple-600 font-medium hover:text-purple-800">Xem chi tiết phân tích →</NuxtLink></p>
+              <p class="mt-4"><NuxtLink to="/duong-doi" class="text-purple-600 font-medium hover:text-purple-900">Xem chi tiết phân tích →</NuxtLink></p>
             </div>
           </div>
         </div>

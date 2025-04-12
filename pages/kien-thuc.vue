@@ -26,12 +26,12 @@
           </p>
 
           <p class="text-lg mb-6">
-            <span class="font-bold text-purple-800">Thần số học không phải là bói toán.</span> Đây là môn <span class="underline">khoa học cổ xưa</span> được Pythagoras hệ thống hóa từ 2500 năm trước, dựa trên nguyên lý: "Mọi thứ trong vũ trụ đều là số học".
+            <span class="font-bold text-purple-900">Thần số học không phải là bói toán.</span> Đây là môn <span class="underline">khoa học cổ xưa</span> được Pythagoras hệ thống hóa từ 2500 năm trước, dựa trên nguyên lý: "Mọi thứ trong vũ trụ đều là số học".
           </p>
 
           <div class="flex flex-col md:flex-row gap-6 my-10">
             <div class="md:w-1/2 bg-purple-50 p-6 rounded-xl border-l-4 border-purple-500">
-              <h3 class="text-xl font-bold text-purple-800 mb-3">🧮 Nền Tảng Toán Học</h3>
+              <h3 class="text-xl font-bold text-purple-900 mb-3">🧮 Nền Tảng Toán Học</h3>
               <p>Mỗi con số mang tần số rung động đặc trưng, ảnh hưởng đến tính cách và vận mệnh theo cách có thể tính toán chính xác</p>
             </div>
             <div class="md:w-1/2 bg-pink-50 p-6 rounded-xl border-l-4 border-pink-500">
@@ -65,7 +65,7 @@
                   <img :src="item.image" :alt="item.title" class="rounded-lg shadow-md w-full h-48 object-cover">
                 </div>
                 <div class="md:w-1/2" :class="index % 2 === 0 ? 'md:text-right' : 'md:text-left'">
-                  <h3 class="text-xl font-bold text-purple-800">{{ item.title }}</h3>
+                  <h3 class="text-xl font-bold text-purple-900">{{ item.title }}</h3>
                   <p class="text-gray-600 mt-2">{{ item.description }}</p>
                 </div>
               </div>
@@ -88,18 +88,18 @@
         <div class="grid md:grid-cols-2 gap-8 mb-12">
           <div class="bg-white p-6 rounded-xl shadow-md border border-purple-100">
             <div class="text-purple-600 text-5xl font-bold mb-4">1.618</div>
-            <h3 class="text-xl font-semibold text-purple-800 mb-3">Tỷ Lệ Vàng</h3>
+            <h3 class="text-xl font-semibold text-purple-900 mb-3">Tỷ Lệ Vàng</h3>
             <p class="text-gray-600">Xuất hiện trong dãy số Fibonacci, cấu trúc ADN và cả các chỉ số quan trọng trong biểu đồ ngày sinh</p>
           </div>
           <div class="bg-white p-6 rounded-xl shadow-md border border-purple-100">
             <div class="text-purple-600 text-5xl font-bold mb-4">432Hz</div>
-            <h3 class="text-xl font-semibold text-purple-800 mb-3">Tần Số Rung Động</h3>
+            <h3 class="text-xl font-semibold text-purple-900 mb-3">Tần Số Rung Động</h3>
             <p class="text-gray-600">Tần số tự nhiên của vũ trụ tương ứng với năng lượng các con số chủ đạo</p>
           </div>
         </div>
 
         <div class="bg-purple-50 rounded-2xl p-8 md:p-10">
-          <h3 class="text-2xl font-bold text-purple-800 mb-4">Nghiên Cứu Đáng Chú Ý</h3>
+          <h3 class="text-2xl font-bold text-purple-900 mb-4">Nghiên Cứu Đáng Chú Ý</h3>
           <p class="mb-6">Theo nghiên cứu của Đại học Princeton (2018):</p>
           <ul class="space-y-4">
             <li class="flex items-start">
@@ -158,22 +158,22 @@ const timeline = [
   {
     title: "Nền Văn Minh Babylon",
     description: "Những ghi chép đầu tiên về mối liên hệ giữa số học và vận mệnh từ 2000 TCN",
-    image: "https://images.unsplash.com/photo-1603569283847-aa295f0d016a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    image: "/photo-1625997607545-20102e3115ad.avif"
   },
   {
     title: "Pythagoras",
     description: "Nhà toán học Hy Lạp hệ thống hóa thần số học thành môn khoa học hoàn chỉnh",
-    image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    image: "/photo-1673561159703-067d2a02338c.avif"
   },
   {
     title: "Thời Phục Hưng",
     description: "Các học giả phương Tây ứng dụng trong y học, kiến trúc và nghệ thuật",
-    image: "https://images.unsplash.com/photo-1452570053594-1b985d6ea890?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    image: "/photo-1668557497762-6902a92d6761.avif"
   },
   {
     title: "Thế Kỷ 21",
     description: "Kết hợp với vật lý lượng tử và nghiên cứu tần số rung động",
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    image: "/photo-1454165804606-c3d57bc86b40.avif"
   }
 ]
 

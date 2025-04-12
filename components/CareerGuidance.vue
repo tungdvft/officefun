@@ -54,7 +54,7 @@
         <div v-if="result" class="mt-6 space-y-6">
           <!-- Tổng quan -->
           <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-xl border border-purple-100">
-            <h3 class="text-xl font-bold text-purple-800 mb-4">Định hướng nghề nghiệp</h3>
+            <h3 class="text-xl font-bold text-purple-900 mb-4">Định hướng nghề nghiệp</h3>
             <div class="space-y-4">
               <div>
                 <h4 class="text-lg font-semibold text-purple-700 flex items-center">

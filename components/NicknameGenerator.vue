@@ -71,7 +71,7 @@
         <div v-if="numerologyData" class="mt-6 space-y-8">
           <!-- Thông tin đầu vào -->
           <div class="bg-purple-50 p-6 rounded-xl border border-purple-100">
-            <h3 class="text-xl font-bold text-purple-800 mb-4">Thông tin cá nhân</h3>
+            <h3 class="text-xl font-bold text-purple-900 mb-4">Thông tin cá nhân</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div><p class="text-sm text-gray-500">Họ và tên</p><p class="font-medium">{{ formData.name }}</p></div>
               <div><p class="text-sm text-gray-500">Ngày sinh</p><p class="font-medium">{{ formData.birthdate }}</p></div>
@@ -82,7 +82,7 @@
 
           <!-- Các con số chính -->
           <div>
-            <h3 class="text-xl font-bold text-purple-800 mb-4">Các con số chính</h3>
+            <h3 class="text-xl font-bold text-purple-900 mb-4">Các con số chính</h3>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
                 <div class="flex items-center mb-2">
@@ -129,7 +129,7 @@
 
           <!-- Gợi ý danh xưng -->
           <div>
-            <h3 class="text-xl font-bold text-purple-800 mb-4">Gợi ý danh xưng quốc tế</h3>
+            <h3 class="text-xl font-bold text-purple-900 mb-4">Gợi ý danh xưng quốc tế</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div v-for="(suggestion, index) in numerologyData.suggestions" :key="index" 
                    class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">

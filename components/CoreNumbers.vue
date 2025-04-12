@@ -1,7 +1,7 @@
 <template>
   <section class="container mx-auto mt-12 px-4">
     <div class="text-center mb-16">
-      <h2 class="text-4xl font-bold text-purple-800 mb-4">Các Con Số Cốt Lõi</h2>
+      <h2 class="text-4xl font-bold text-purple-900 mb-4">Các Con Số Cốt Lõi</h2>
       <p class="text-xl text-gray-600 max-w-2xl mx-auto">Khám phá ý nghĩa sâu sắc đằng sau những con số quan trọng nhất trong thần số học của bạn</p>
     </div>
 
@@ -26,11 +26,11 @@
           <div class="relative z-10 h-full flex flex-col p-8">
             <div class="mb-6">
               <div class="w-16 h-16 rounded-full bg-purple-600 flex items-center justify-center text-white text-2xl font-bold mb-4 shadow-lg">1</div>
-              <h3 class="text-2xl font-bold text-purple-800 mb-2">Số Đường Đời</h3>
+              <h3 class="text-2xl font-bold text-purple-900 mb-2">Số Đường Đời</h3>
               <p class="text-gray-600">Mục đích sống và bài học cuộc đời bạn</p>
             </div>
             <div class="mt-auto">
-              <div class="inline-flex items-center text-purple-600 font-medium group-hover:text-purple-800 transition-colors">
+              <div class="inline-flex items-center text-purple-600 font-medium group-hover:text-purple-900 transition-colors">
                 <span>Khám phá ngay</span>
                 <svg class="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>

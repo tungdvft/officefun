@@ -33,7 +33,7 @@
 
       <!-- Lịch -->
       <div v-if="calendarData" class="mt-6">
-        <h3 class="text-lg font-semibold text-purple-800 mb-4">{{ calendarData.month }}/{{ calendarData.year }}</h3>
+        <h3 class="text-lg font-semibold text-purple-900 mb-4">{{ calendarData.month }}/{{ calendarData.year }}</h3>
         <div class="grid grid-cols-7 gap-2 text-center">
           <div v-for="day in ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']" :key="day" class="font-semibold text-gray-700">
             {{ day }}
@@ -57,7 +57,7 @@
 
         <!-- Chú thích -->
         <div class="mt-6 p-4 bg-purple-50 rounded-lg">
-          <h4 class="text-purple-800 font-semibold mb-2">Chú thích màu sắc:</h4>
+          <h4 class="text-purple-900 font-semibold mb-2">Chú thích màu sắc:</h4>
           <p><span class="inline-block w-4 h-4 bg-green-200 mr-2"></span> <strong>Ngày tốt:</strong> Năng lượng tích cực, phù hợp để bắt đầu dự án, ký kết, hoặc giao tiếp quan trọng.</p>
           <p><span class="inline-block w-4 h-4 bg-yellow-200 mr-2"></span> <strong>Ngày trung bình:</strong> Ổn định, thích hợp cho công việc thường nhật, không quá nổi bật.</p>
           <p><span class="inline-block w-4 h-4 bg-red-200 mr-2"></span> <strong>Ngày xấu:</strong> Năng lượng thấp, nên tránh quyết định lớn hoặc hành động mạo hiểm.</p>

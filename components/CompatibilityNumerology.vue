@@ -91,7 +91,7 @@
           <!-- Tổng quan -->
           <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-xl border border-purple-100">
             <div class="flex items-center justify-between mb-4">
-              <h3 class="text-xl font-bold text-purple-800">Tổng quan mối quan hệ</h3>
+              <h3 class="text-xl font-bold text-purple-900">Tổng quan mối quan hệ</h3>
               <div class="flex items-center">
                 <span class="text-3xl font-bold text-purple-600 mr-2">{{ compatibilityScore }}</span>
                 <div class="relative w-24 h-2 bg-gray-200 rounded-full overflow-hidden">

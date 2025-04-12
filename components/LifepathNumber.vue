@@ -31,7 +31,7 @@
     <!-- Nội dung hiển thị bên phải với độ rộng cố định -->
     <div class="w-full md:w-96 bg-white p-6 rounded-xl shadow-md min-h-[200px] flex flex-col justify-between">
       <div v-if="activeNumber !== null">
-        <h3 class="text-2xl font-bold text-purple-800 mb-4">Số {{ numbers[activeNumber].label }}</h3>
+        <h3 class="text-2xl font-bold text-purple-900 mb-4">Số {{ numbers[activeNumber].label }}</h3>
         <p class="text-gray-600 mb-4">{{ numbers[activeNumber].content }}</p>
         <a
           :href="numbers[activeNumber].link"

@@ -21,7 +21,7 @@
             Con số ngày sinh và tên gọi của bạn tiết lộ nhiều điều thú vị về tính
             cách, sứ mệnh và tiềm năng của bạn.
           </p>
-          <div class="flex flex-col sm:flex-row gap-4 fade-in">
+          <!-- <div class="flex flex-col sm:flex-row gap-4 fade-in">
             <NuxtLink
               to="#calculator"
               class="bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold py-3 px-6 rounded-full hover:from-purple-600 hover:to-blue-600 transition duration-300 flex items-center shadow-sm"
@@ -32,7 +32,7 @@
                 class="ml-2 text-lg"
               />
             </NuxtLink>
-          </div>
+          </div> -->
         </div>
 
         <!-- Form section đơn giản -->
@@ -76,7 +76,7 @@
               <button
                 type="submit"
                 :disabled="userStore.isLoading"
-                class="w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:from-purple-600 hover:to-blue-600 transition duration-300 flex items-center justify-center shadow-sm disabled:opacity-70"
+                class="w-full inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-8 rounded-full text-lg font-semibold hover:shadow-lg transition-all duration-300 animate-pulse-once shadow-md disabled:opacity-70"
               >
                 <svg
                   v-if="userStore.isLoading"
@@ -111,7 +111,7 @@
               Bằng việc nhấn nút trên, bạn đồng ý với
               <NuxtLink
                 to="/dieu-khoan"
-                class="text-purple-600 hover:text-purple-800 transition duration-200"
+                class="text-purple-600 hover:text-purple-900 transition duration-200"
               >
                 Điều khoản sử dụng
               </NuxtLink>

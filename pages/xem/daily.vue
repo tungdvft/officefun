@@ -98,7 +98,7 @@
           </div>
           <div>
             <p class="text-gray-700">Kết quả cho:</p>
-            <p class="font-semibold text-lg text-purple-800">{{ userInfo.name }}</p>
+            <p class="font-semibold text-lg text-purple-900">{{ userInfo.name }}</p>
             <p class="text-sm text-gray-500">Ngày sinh: {{ userInfo.birthDate }}</p>
           </div>
         </div>
@@ -153,7 +153,7 @@
           <!-- Insight chính -->
           <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-2xl">
             <div class="flex items-center justify-between mb-4">
-              <h3 class="text-xl font-bold text-purple-800">
+              <h3 class="text-xl font-bold text-purple-900">
                 {{ resultTitle }}: <span class="text-3xl">{{ results[activeTab].number }}</span>
               </h3>
               <div class="bg-white p-2 rounded-full shadow-sm">

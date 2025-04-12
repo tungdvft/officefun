@@ -1,7 +1,7 @@
 <template>
   <section class="container mx-auto mt-16 px-4">
     <div class="text-center mb-12">
-      <h2 class="text-4xl font-bold text-purple-800 mb-4">Khách Hàng Nói Gì Về Chúng Tôi</h2>
+      <h2 class="text-4xl font-bold text-purple-900 mb-4">Khách Hàng Nói Gì Về Chúng Tôi</h2>
       <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto"></div>
     </div>
 

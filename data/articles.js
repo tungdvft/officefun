@@ -7,7 +7,7 @@ alt: "Các con số từ 1-9 hiện lên với hiệu ứng ánh sáng huyền �
     title: "Ý Nghĩa Chi Tiết Các Con Số Chủ Đạo Từ 1 Đến 9",
     excerpt: "Khám phá sâu về ý nghĩa từng con số chủ đạo trong thần số học và cách chúng ảnh hưởng đến cuộc đời bạn.",
     content: `
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Con Số Chủ Đạo 1 - Lãnh Đạo Bẩm Sinh</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Con Số Chủ Đạo 1 - Lãnh Đạo Bẩm Sinh</h2>
       <p class="mb-4">Những người có con số chủ đạo 1 thường có tính cách độc lập, sáng tạo và quyết đoán. Họ sinh ra để dẫn đầu với:</p>
       <ul class="list-disc pl-6 mb-4 space-y-2">
         <li>Khả năng sáng tạo vượt trội</li>
@@ -16,7 +16,7 @@ alt: "Các con số từ 1-9 hiện lên với hiệu ứng ánh sáng huyền �
       </ul>
       <p class="mb-4"><strong>Lưu ý:</strong> Cần tránh xu hướng độc đoán và thiếu kiên nhẫn.</p>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4 mt-8">Con Số Chủ Đạo 2 - Người Hòa Giải</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Con Số Chủ Đạo 2 - Người Hòa Giải</h2>
       <p class="mb-4">Người số 2 có trực giác nhạy bén và khả năng ngoại giao tuyệt vời:</p>
       <ul class="list-disc pl-6 mb-4 space-y-2">
         <li>Nhạy cảm với cảm xúc người khác</li>
@@ -40,7 +40,7 @@ alt: "Nhóm trẻ em đang vui chơi với các con số nhiều màu sắc",
     title: "Ứng Dụng Thần Số Học Trong Nuôi Dạy Trẻ",
     excerpt: "Cách sử dụng thần số học để hiểu và phát triển tiềm năng của trẻ từ sớm.",
     content: `
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Hiểu Tính Cách Trẻ Qua Con Số Chủ Đạo</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Hiểu Tính Cách Trẻ Qua Con Số Chủ Đạo</h2>
       <p class="mb-4">Thần số học giúp cha mẹ nhận diện được:</p>
       <ul class="list-disc pl-6 mb-6 space-y-2">
         <li>Cách trẻ tiếp thu kiến thức</li>
@@ -69,7 +69,7 @@ alt: "Nhóm trẻ em đang vui chơi với các con số nhiều màu sắc",
         </div>
       </div>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4 mt-8">Chọn Tên Phù Hợp Cho Trẻ</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Chọn Tên Phù Hợp Cho Trẻ</h2>
       <p>Kết hợp hài hòa giữa:</p>
       <ul class="list-decimal pl-6 mb-4 space-y-2">
         <li>Con số chủ đạo từ ngày sinh</li>
@@ -86,14 +86,14 @@ alt: "Lịch để bản với các con số năm được highlight",
     title: "Cách Tính Và Ứng Dụng Năm Cá Nhân Trong Thần Số Học",
     excerpt: "Hướng dẫn chi tiết cách xác định năm cá nhân và tận dụng năng lượng từng chu kỳ.",
     content: `
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Công Thức Tính Năm Cá Nhân</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Công Thức Tính Năm Cá Nhân</h2>
       <div class="bg-purple-50 p-4 rounded-lg mb-6">
         <p class="font-medium">Năm Cá Nhân = Ngày sinh + Tháng sinh + Năm hiện tại</p>
         <p class="mt-2"><em>Ví dụ: Sinh ngày 15/03, năm 2023 → 1+5 + 0+3 + 2+0+2+3 = 16 → 1+6 = 7</em></p>
         <p class="mt-2 text-sm">→ Năm Cá Nhân 7 (từ 15/03/2023 đến 14/03/2024)</p>
       </div>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4 mt-8">Ý Nghĩa Từng Năm Cá Nhân</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Ý Nghĩa Từng Năm Cá Nhân</h2>
       <div class="space-y-6">
         <div>
           <h3 class="font-bold text-lg text-purple-700 mb-2">Năm 1 - Khởi Đầu Mới</h3>
@@ -115,7 +115,7 @@ alt: "Lịch để bản với các con số năm được highlight",
         </div>
       </div>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4 mt-8">Kết Hợp Năm Cá Nhân Và Con Số Chủ Đạo</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Kết Hợp Năm Cá Nhân Và Con Số Chủ Đạo</h2>
       <p>Ví dụ người số 3 đang ở năm cá nhân 5:</p>
       <ul class="list-disc pl-6 mb-4 space-y-2">
         <li>Tận dụng năng lượng sáng tạo (số 3)</li>
@@ -132,7 +132,7 @@ alt: "Không gian phòng làm việc bài trí theo phong thủy với biểu t�
     title: "Kết Hợp Thần Số Học Và Phong Thủy Để Tăng Vượng Khí",
     excerpt: "Cách hài hòa năng lượng số học với không gian sống để thu hút may mắn.",
     content: `
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Chọn Hướng Nhà Theo Con Số Chủ Đạo</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Chọn Hướng Nhà Theo Con Số Chủ Đạo</h2>
       <div class="overflow-x-auto">
         <table class="min-w-full bg-white rounded-lg overflow-hidden mb-6">
           <thead class="bg-purple-100">
@@ -157,7 +157,7 @@ alt: "Không gian phòng làm việc bài trí theo phong thủy với biểu t�
         </table>
       </div>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4 mt-8">Bài Trí Không Gian Làm Việc</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Bài Trí Không Gian Làm Việc</h2>
       <div class="grid md:grid-cols-2 gap-6 mb-8">
         <div>
           <h3 class="font-bold text-lg text-purple-700 mb-2">Cho Người Số 3</h3>
@@ -177,7 +177,7 @@ alt: "Không gian phòng làm việc bài trí theo phong thủy với biểu t�
         </div>
       </div>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4 mt-8">Vật Phẩm Phong Thủy Hợp Mệnh Số</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Vật Phẩm Phong Thủy Hợp Mệnh Số</h2>
       <p>Kết hợp vật phẩm theo ngũ hành tương sinh:</p>
       <ul class="list-disc pl-6 mb-4 space-y-2">
         <li>Số 1: Tháp văn xương (hành Thủy)</li>
@@ -194,7 +194,7 @@ alt: "Không gian phòng làm việc bài trí theo phong thủy với biểu t�
 alt: "Bàn làm việc với các con số tài chính và biểu đồ",
     excerpt: "Cách sử dụng thần số học để đặt tên công ty, chọn ngày khai trương và phát triển doanh nghiệp.",
     content: `
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Chọn Tên Công Ty Theo Thần Số Học</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Chọn Tên Công Ty Theo Thần Số Học</h2>
       <p class="mb-4">Quy trình 4 bước:</p>
       <ol class="list-decimal pl-6 mb-6 space-y-2">
         <li>Tính con số chủ đạo của người sáng lập</li>
@@ -209,7 +209,7 @@ alt: "Bàn làm việc với các con số tài chính và biểu đồ",
         <p><strong>Phù hợp:</strong> Công ty khởi nghiệp sáng tạo (số 1)</p>
       </div>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4 mt-8">Chọn Ngày Khai Trương</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Chọn Ngày Khai Trương</h2>
       <p>Kết hợp 3 yếu tố:</p>
       <ul class="list-disc pl-6 mb-4 space-y-2">
         <li>Năm cá nhân của chủ doanh nghiệp</li>
@@ -218,7 +218,7 @@ alt: "Bàn làm việc với các con số tài chính và biểu đồ",
       </ul>
       <p class="italic">Ví dụ: Chọn ngày có tổng số 8 cho công ty bất động sản</p>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4 mt-8">Xây Dựng Chiến Lược Kinh Doanh</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Xây Dựng Chiến Lược Kinh Doanh</h2>
       <div class="grid md:grid-cols-2 gap-6">
         <div class="bg-white p-4 rounded-lg shadow">
           <h3 class="font-bold text-lg text-purple-700 mb-2">Công Ty Số 3</h3>
@@ -277,7 +277,7 @@ alt: "Bàn tay viết các con số lên cát với ánh hoàng hôn",
         </div>
       </div>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Ví Dụ Thực Tế</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Ví Dụ Thực Tế</h2>
       <p class="mb-4"><strong>Tên:</strong> NGUYỄN VĂN A</p>
       
       <div class="overflow-x-auto mb-6">
@@ -311,7 +311,7 @@ alt: "Biểu đồ các cung hoàng đạo kết hợp với con số",
     title: "Kết Hợp Thần Số Học Và 12 Cung Hoàng Đạo",
     excerpt: "Cách tích hợp hai hệ thống chiêm tinh để có cái nhìn toàn diện về bản thân.",
     content: `
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Bảng Tương Quan Giữa Con Số Và Cung Hoàng Đạo</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Bảng Tương Quan Giữa Con Số Và Cung Hoàng Đạo</h2>
       <div class="overflow-x-auto mb-8">
         <table class="min-w-full bg-white rounded-lg overflow-hidden">
           <thead class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
@@ -336,7 +336,7 @@ alt: "Biểu đồ các cung hoàng đạo kết hợp với con số",
         </table>
       </div>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Cách Phân Tích Kết Hợp</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Cách Phân Tích Kết Hợp</h2>
       <div class="grid md:grid-cols-3 gap-6 mb-8">
         <div class="bg-white p-4 rounded-lg shadow-sm border border-purple-100">
           <h3 class="font-bold text-purple-700 mb-2">1. Tính Cách Cơ Bản</h3>
@@ -364,7 +364,7 @@ alt: "Đôi bàn tay nắm nhau tạo hình trái tim với các con số xung q
     title: "Các Cặp Số Hòa Hợp Nhất Trong Tình Yêu Theo Thần Số Học",
     excerpt: "Khám phá sự kết hợp giữa các con số để tìm hiểu mức độ tương hợp với đối tác.",
     content: `
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Top 5 Cặp Đôi Hoàn Hảo</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Top 5 Cặp Đôi Hoàn Hảo</h2>
       <div class="space-y-6 mb-8">
         <div class="flex items-start">
           <div class="flex-shrink-0 w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center text-2xl font-bold text-pink-600 mr-4">2 + 6</div>
@@ -382,7 +382,7 @@ alt: "Đôi bàn tay nắm nhau tạo hình trái tim với các con số xung q
         </div>
       </div>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Các Cặp Số Cần Nỗ Lực</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Các Cặp Số Cần Nỗ Lực</h2>
       <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
         <div class="flex">
           <div class="flex-shrink-0">
@@ -399,7 +399,7 @@ alt: "Đôi bàn tay nắm nhau tạo hình trái tim với các con số xung q
         </div>
       </div>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Cách Cải Thiện Quan Hệ</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Cách Cải Thiện Quan Hệ</h2>
       <ul class="list-decimal pl-6 space-y-2 mb-4">
         <li><strong>Hiểu điểm khác biệt:</strong> Số 4 cần ổn định trong khi số 5 thích tự do</li>
         <li><strong>Tìm điểm chung:</strong> Số 7 và số 9 cùng yêu tri thức</li>
@@ -415,7 +415,7 @@ alt: "Con số trên nền hình ảnh yoga và sức khỏe",
     title: "Thần Số Học Và Sức Khỏe: Con Số Ảnh Hưởng Đến Thể Chất Như Thế Nào?",
     excerpt: "Khám phá mối liên hệ giữa các con số với sức khỏe và cách cân bằng năng lượng.",
     content: `
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Con Số Và Các Vấn Đề Sức Khỏe Tiềm Ẩn</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Con Số Và Các Vấn Đề Sức Khỏe Tiềm Ẩn</h2>
       <div class="grid md:grid-cols-2 gap-6 mb-8">
         <div class="bg-white p-4 rounded-lg shadow">
           <h3 class="font-bold text-lg text-purple-700 mb-2">Số 1</h3>
@@ -435,7 +435,7 @@ alt: "Con số trên nền hình ảnh yoga và sức khỏe",
         </div>
       </div>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Thực Phẩm Hỗ Trợ Theo Từng Số</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Thực Phẩm Hỗ Trợ Theo Từng Số</h2>
       <div class="overflow-x-auto mb-8">
         <table class="min-w-full bg-white rounded-lg overflow-hidden">
           <thead class="bg-green-100">
@@ -460,7 +460,7 @@ alt: "Con số trên nền hình ảnh yoga và sức khỏe",
         </table>
       </div>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Bài Tập Thể Dục Phù Hợp</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Bài Tập Thể Dục Phù Hợp</h2>
       <div class="flex flex-wrap gap-4 mb-6">
         <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">Số 5: Yoga Flow</span>
         <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">Số 2: Bơi lội</span>
@@ -476,7 +476,7 @@ alt: "Tiền xu và các con số may mắn về tài chính",
     title: "Thần Số Học Tài Chính: Cách Các Con Số Ảnh Hưởng Đến Vận May Tiền Bạc",
     excerpt: "Khám phá con số may mắn về tài chính và cách quản lý tiền bạc theo thần số học.",
     content: `
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Con Số Thịnh Vượng Nhất</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Con Số Thịnh Vượng Nhất</h2>
       <div class="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-lg p-6 text-white mb-8">
         <div class="flex items-center justify-center mb-4">
           <span class="text-5xl font-bold mr-4">8</span>
@@ -485,7 +485,7 @@ alt: "Tiền xu và các con số may mắn về tài chính",
         <p class="text-purple-100"><strong>Đặc điểm:</strong> Khả năng nhìn ra cơ hội đầu tư, tư duy chiến lược về tiền bạc</p>
       </div>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Cách Quản Lý Tiền Bạc Theo Từng Số</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Cách Quản Lý Tiền Bạc Theo Từng Số</h2>
       <div class="space-y-6 mb-8">
         <div class="flex items-start">
           <div class="flex-shrink-0 w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center text-xl font-bold text-green-800 mr-4">3</div>
@@ -503,7 +503,7 @@ alt: "Tiền xu và các con số may mắn về tài chính",
         </div>
       </div>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Năm Tài Chính Thuận Lợi</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Năm Tài Chính Thuận Lợi</h2>
       <div class="bg-white p-6 rounded-xl shadow-md mb-6">
         <div class="flex items-center">
           <div class="flex-shrink-0 bg-purple-100 p-3 rounded-lg">
@@ -518,7 +518,7 @@ alt: "Tiền xu và các con số may mắn về tài chính",
         </div>
       </div>
 
-      <h2 class="text-2xl font-bold text-purple-800 mb-4">Mẹo Tăng Vận May Tài Chính</h2>
+      <h2 class="text-2xl font-bold text-purple-900 mb-4">Mẹo Tăng Vận May Tài Chính</h2>
       <ul class="list-disc pl-6 space-y-2">
         <li><strong>Số 4:</strong> Đầu tư vào bất động sản</li>
         <li><strong>Số 9:</strong> Kinh doanh liên quan đến nhân đạo</li>

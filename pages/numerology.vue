@@ -81,7 +81,7 @@
 
             <!-- Hiển thị lời khuyên ngay dưới form -->
             <div v-if="advice" class="mt-4 p-6 bg-purple-50 rounded-lg">
-              <p class="text-purple-800 font-semibold text-lg mb-2">Câu trả lời cho câu hỏi của bạn</p>
+              <p class="text-purple-900 font-semibold text-lg mb-2">Câu trả lời cho câu hỏi của bạn</p>
               <p class="text-gray-700 whitespace-pre-line">{{ advice }}</p>
             </div>
           </div>
@@ -137,7 +137,7 @@
                   {{ loadingRelationship ? 'Đang phân tích...' : 'Phân tích mức độ hợp nhau' }}
                 </button>
                 <div v-if="relationshipData.loverResult" class="mt-4 p-6 bg-purple-50 rounded-lg">
-                  <p class="text-purple-800 font-semibold text-lg mb-2">Kết quả phân tích với người yêu</p>
+                  <p class="text-purple-900 font-semibold text-lg mb-2">Kết quả phân tích với người yêu</p>
                   <p class="text-gray-700 whitespace-pre-line">{{ getDescription('lover') }}</p>
                   <p class="text-purple-700 font-semibold mt-2">Lời khuyên:</p>
                   <p class="text-gray-700 whitespace-pre-line">{{ getAdvice('lover') }}</p>
@@ -173,7 +173,7 @@
                   {{ loadingRelationship ? 'Đang phân tích...' : 'Phân tích mức độ hợp nhau' }}
                 </button>
                 <div v-if="relationshipData.friendResult" class="mt-4 p-6 bg-purple-50 rounded-lg">
-                  <p class="text-purple-800 font-semibold text-lg mb-2">Kết quả phân tích với bạn bè</p>
+                  <p class="text-purple-900 font-semibold text-lg mb-2">Kết quả phân tích với bạn bè</p>
                   <p class="text-gray-700 whitespace-pre-line">{{ getDescription('friend') }}</p>
                   <p class="text-purple-700 font-semibold mt-2">Lời khuyên:</p>
                   <p class="text-gray-700 whitespace-pre-line">{{ getAdvice('friend') }}</p>
@@ -209,7 +209,7 @@
                   {{ loadingRelationship ? 'Đang phân tích...' : 'Phân tích mức độ hợp nhau' }}
                 </button>
                 <div v-if="relationshipData.partnerResult" class="mt-4 p-6 bg-purple-50 rounded-lg">
-                  <p class="text-purple-800 font-semibold text-lg mb-2">Kết quả phân tích với đối tác</p>
+                  <p class="text-purple-900 font-semibold text-lg mb-2">Kết quả phân tích với đối tác</p>
                   <p class="text-gray-700 whitespace-pre-line">{{ getDescription('partner') }}</p>
                   <p class="text-purple-700 font-semibold mt-2">Lời khuyên:</p>
                   <p class="text-gray-700 whitespace-pre-line">{{ getAdvice('partner') }}</p>

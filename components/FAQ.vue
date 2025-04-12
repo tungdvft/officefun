@@ -2,7 +2,7 @@
   <section class="py-16 bg-gradient-to-b from-purple-50 to-white">
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold text-purple-800 mb-4">Câu Hỏi Thường Gặp</h2>
+        <h2 class="text-4xl font-bold text-purple-900 mb-4">Câu Hỏi Thường Gặp</h2>
         <p class="text-xl text-gray-600 max-w-2xl mx-auto">Những thắc mắc phổ biến về thần số học</p>
       </div>
 
@@ -182,7 +182,7 @@ export default {
             </div>
 
             <div class="mt-6 bg-purple-50 p-4 rounded-lg border border-purple-200">
-            <h4 class="font-bold text-purple-800 mb-2">Ví dụ thực tế:</h4>
+            <h4 class="font-bold text-purple-900 mb-2">Ví dụ thực tế:</h4>
             <p>Nếu bé sinh ngày 15/12/2023 (tổng ngày sinh 1+5+1+2+2+0+2+3=16=7):</p>
             <ul class="mt-2 space-y-1 list-disc pl-5">
                 <li>Nên chọn tên bổ sung năng lượng số 2 hoặc 6 để cân bằng</li>

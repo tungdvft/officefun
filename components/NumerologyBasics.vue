@@ -2,7 +2,7 @@
   <section class="py-16 cosmic-bg">
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold text-purple-800 mb-4">Thần Số Học Là Gì?</h2>
+        <h2 class="text-4xl font-bold text-purple-900 mb-4">Thần Số Học Là Gì?</h2>
         <div class="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto"></div>
       </div>
 

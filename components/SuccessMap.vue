@@ -91,7 +91,7 @@
         <div class="bg-white rounded-lg shadow-sm p-6">
           <h3 class="section-title">Mục tiêu lớn (Số Đường đời)</h3>
           <div class="flex items-start space-x-4">
-            <div class="number-badge bg-purple-100 text-purple-800">
+            <div class="number-badge bg-purple-100 text-purple-900">
               {{ successMap.lifePathNumber }}
             </div>
             <p class="text-gray-700">{{ successMap.goal }}</p>

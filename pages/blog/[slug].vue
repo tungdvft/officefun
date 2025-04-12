@@ -3,7 +3,7 @@
     <div class="container mx-auto py-12 px-4 max-w-4xl">
       <!-- Hiển thị bài viết chi tiết -->
       <article v-if="article">
-        <h1 class="text-3xl font-bold text-purple-800 mb-6">{{ article.title }}</h1>
+        <h1 class="text-3xl font-bold text-purple-900 mb-6">{{ article.title }}</h1>
         <img :src="article.image" :alt="article.alt" class="w-full h-64 object-cover mb-8 rounded-lg">
         
         <div class="prose max-w-none" v-html="article.content"></div>
@@ -11,7 +11,7 @@
         <div class="mt-8 pt-6 border-t border-gray-200">
           <nuxt-link 
             to="/bai-viet" 
-            class="text-purple-600 hover:text-purple-800 font-medium"
+            class="text-purple-600 hover:text-purple-900 font-medium"
           >
             ← Quay lại danh sách bài viết
           </nuxt-link>
@@ -23,7 +23,7 @@
         <h2 class="text-2xl font-bold text-gray-700 mb-4">Bài viết không tồn tại</h2>
         <nuxt-link 
           to="/bai-viet" 
-          class="text-purple-600 hover:text-purple-800 font-medium"
+          class="text-purple-600 hover:text-purple-900 font-medium"
         >
           Quay lại danh sách bài viết
         </nuxt-link>
@@ -60,7 +60,7 @@ useHead({
 <style>
 /* Thêm các style cần thiết cho nội dung bài viết */
 .prose h2 {
-  @apply text-2xl font-bold text-purple-800 mb-4 mt-8;
+  @apply text-2xl font-bold text-purple-900 mb-4 mt-8;
 }
 .prose p {
   @apply mb-4;

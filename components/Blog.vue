@@ -1,7 +1,7 @@
 <template>
   <section class="mb-16">
     <div class="container mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-8 text-purple-800">Bài Viết Mới Nhất</h2>
+      <h2 class="text-3xl font-bold text-center mb-8 text-purple-900">Bài Viết Mới Nhất</h2>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         <!-- Render 3 bài viết đầu tiên -->
         <article 
@@ -20,7 +20,7 @@
             <p class="text-gray-600 mb-4">{{ article.excerpt }}</p>
             <nuxt-link 
               :to="`/blog/${article.slug}`" 
-              class="text-purple-600 font-medium hover:text-purple-800"
+              class="text-purple-600 font-medium hover:text-purple-900"
             >
               Đọc tiếp →
             </nuxt-link>
@@ -31,7 +31,7 @@
       <div class="text-center mt-8">
         <nuxt-link 
           to="/blog" 
-          class="inline-block bg-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-700 transition duration-300"
+          class="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-8 rounded-full text-lg font-semibold hover:shadow-lg transition-all duration-300 animate-pulse-once shadow-md"
         >
           Xem Tất Cả Bài Viết <i class="fas fa-arrow-right ml-2"></i>
         </nuxt-link>

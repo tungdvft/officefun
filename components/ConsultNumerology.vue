@@ -56,7 +56,7 @@
         <div v-if="result" class="mt-6 space-y-6">
           <!-- Số chủ đạo -->
           <div class="bg-purple-50 p-6 rounded-xl border border-purple-100">
-            <h3 class="text-xl font-bold text-purple-800 mb-4">Số chủ đạo</h3>
+            <h3 class="text-xl font-bold text-purple-900 mb-4">Số chủ đạo</h3>
             <div class="flex items-center mb-2">
               <span class="text-3xl font-bold text-purple-600 mr-3">{{ result.lifePath }}</span>
               <div>
@@ -80,7 +80,7 @@
 
           <!-- Phân tích -->
           <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <h3 class="text-xl font-bold text-purple-800 mb-4 flex items-center">
+            <h3 class="text-xl font-bold text-purple-900 mb-4 flex items-center">
               <svg class="w-6 h-6 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>

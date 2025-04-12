@@ -52,7 +52,7 @@
         <div v-if="result" class="mt-6 space-y-6">
           <!-- Các con số chủ đạo -->
           <div class="bg-purple-50 p-6 rounded-xl border border-purple-100">
-            <h3 class="text-xl font-bold text-purple-800 mb-4">Các con số chủ đạo</h3>
+            <h3 class="text-xl font-bold text-purple-900 mb-4">Các con số chủ đạo</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div class="p-4 bg-white rounded-lg shadow-sm">
                 <h4 class="font-semibold text-gray-800 flex items-center">
@@ -131,7 +131,7 @@
 
           <!-- Tính cách -->
           <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <h3 class="text-xl font-bold text-purple-800 mb-4 flex items-center">
+            <h3 class="text-xl font-bold text-purple-900 mb-4 flex items-center">
               <svg class="w-6 h-6 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
@@ -164,7 +164,7 @@
 
           <!-- Ngắn hạn -->
           <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <h3 class="text-xl font-bold text-purple-800 mb-4 flex items-center">
+            <h3 class="text-xl font-bold text-purple-900 mb-4 flex items-center">
               <svg class="w-6 h-6 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -197,7 +197,7 @@
 
           <!-- Bản đồ 10 năm tới (Chart) -->
           <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <h3 class="text-xl font-bold text-purple-800 mb-4 flex items-center">
+            <h3 class="text-xl font-bold text-purple-900 mb-4 flex items-center">
               <svg class="w-6 h-6 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553-2.276A1 1 0 0021 13.382V6.618a1 1 0 00-1.447-.894L15 8m0 9V4m0 13l-6-3" />
               </svg>

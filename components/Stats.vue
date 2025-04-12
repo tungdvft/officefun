@@ -1,7 +1,7 @@
 <template>
   <section class="py-16 cosmic-bg relative overflow-hidden">
     <div class="container mx-auto px-4 text-center">
-      <h2 class="text-4xl font-bold mb-6 text-purple-800">Thần Số Học Hiện Đại</h2>
+      <h2 class="text-4xl font-bold mb-6 text-purple-900">Thần Số Học Hiện Đại</h2>
       <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">Kết hợp tri thức cổ xưa và công nghệ hiện đại để mang lại những phân tích chính xác</p>
 
       <div class="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">

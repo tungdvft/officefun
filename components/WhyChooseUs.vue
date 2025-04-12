@@ -2,7 +2,7 @@
   <section class="py-20 bg-gradient-to-b from-purple-50 to-white">
     <div class="container mx-auto px-4">
       <div class="text-center max-w-3xl mx-auto mb-16">
-        <h2 class="text-4xl font-bold text-purple-800 mb-6">Giải Pháp Thần Số Học Thế Hệ Mới</h2>
+        <h2 class="text-4xl font-bold text-purple-900 mb-6">Giải Pháp Thần Số Học Thế Hệ Mới</h2>
         <p class="text-xl text-gray-600">Công nghệ tiên tiến kết hợp với tri thức huyền học, mang đến những phân tích chính xác và trải nghiệm cá nhân hóa sâu sắc</p>
       </div>
       
