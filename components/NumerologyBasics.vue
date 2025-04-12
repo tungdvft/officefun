@@ -74,7 +74,7 @@
   </section>
 </template>
 
-<style scoped>
+<style>
 .cosmic-bg {
   background: radial-gradient(circle at center, #f9f5ff 0%, #e9d8fd 100%);
 }

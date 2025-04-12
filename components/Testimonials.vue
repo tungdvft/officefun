@@ -1,5 +1,6 @@
 <template>
-  <section class="container mx-auto mt-16 px-4">
+  <section class="py-16 cosmic-bg mt-16">
+    <div class="container mx-auto">
     <div class="text-center mb-12">
       <h2 class="text-4xl font-bold text-purple-900 mb-4">Khách Hàng Nói Gì Về Chúng Tôi</h2>
       <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto"></div>
@@ -72,6 +73,7 @@
         </svg>
       </nuxt-link>
     </div> -->
+    </div>
   </section>
 </template>
 
