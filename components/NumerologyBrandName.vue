@@ -190,7 +190,7 @@
           </div>
 
           <!-- Nút tải và chia sẻ -->
-          <div class="flex flex-wrap gap-3 justify-center">
+          <!-- <div class="flex flex-wrap gap-3 justify-center">
             <ClientOnly>
               <button @click="downloadPDF" class="btn-share bg-teal-600 hover:bg-teal-700">
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -211,7 +211,7 @@
               </svg>
               Chia sẻ Facebook
             </button>
-          </div>
+          </div> -->
         </div>
       </transition>
     </div>

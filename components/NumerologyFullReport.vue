@@ -44,7 +44,7 @@
         </div>
       </div>
 
-      <button @click="generateReport" :disabled="loading" class="w-full btn-primary">
+      <button @click="generateReport" :disabled="loading" class="w-full flex justify-center items-center py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium rounded-lg shadow-md transition-all duration-300 transform hover:-translate-y-0.5 disabled:opacity-70 disabled:transform-non">
         <span v-if="loading" class="flex items-center justify-center">
           <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -222,7 +222,7 @@
           </div>
 
           <!-- Nút tải và chia sẻ -->
-          <div class="flex flex-wrap gap-3 justify-center mt-8">
+          <!-- <div class="flex flex-wrap gap-3 justify-center mt-8">
             <ClientOnly>
               <button @click="downloadPDF" class="btn-share bg-teal-600 hover:bg-teal-700">
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -237,7 +237,7 @@
               </svg>
               Chia sẻ Zalo
             </button>
-          </div>
+          </div> -->
         </div>
       </transition>
     </div>
@@ -472,105 +472,7 @@ const generateReport = async () => {
   }
 };
 
-const downloadPDF = () => {
-  if (!process.client || !jspdf || !numerologyData.value) {
-    toast.error('Không thể tải PDF trên server-side hoặc chưa có dữ liệu!');
-    return;
-  }
-  const doc = new jspdf();
-  doc.setFont('times');
-  doc.setFontSize(12);
-  let y = 10;
 
-  // Tiêu đề
-  doc.setFontSize(16);
-  doc.text('Thần số học trọn đời', 10, y);
-  y += 10;
-
-  // Thông tin cá nhân
-  doc.setFontSize(12);
-  doc.text('Thông tin cá nhân:', 10, y);
-  y += 7;
-  doc.text(`Họ và tên: ${formData.value.name}`, 10, y);
-  y += 7;
-  doc.text(`Ngày sinh: ${formData.value.birthdate}`, 10, y);
-  y += 7;
-  doc.text(`Giới tính: ${formData.value.gender === 'male' ? 'Nam' : 'Nữ'}`, 10, y);
-  y += 10;
-
-  // Tổng quan
-  doc.text('Tổng quan:', 10, y);
-  y += 7;
-  doc.text(`Số chủ đạo: ${numerologyData.value.lifePath.number} ${numerologyData.value.lifePath.symbol}`, 10, y);
-  y += 7;
-  const lifePathDesc = doc.splitTextToSize(numerologyData.value.lifePath.description, 180);
-  doc.text(lifePathDesc, 10, y);
-  y += lifePathDesc.length * 7 + 5;
-  doc.text('Điểm mạnh: ' + numerologyData.value.lifePath.strengths.join(', '), 10, y);
-  y += 7;
-  doc.text('Thử thách: ' + numerologyData.value.lifePath.challenges.join(', '), 10, y);
-  y += 7;
-  doc.text('Nghề nghiệp: ' + numerologyData.value.lifePath.careers.join(', '), 10, y);
-  y += 7;
-  const adviceLines = doc.splitTextToSize('Lời khuyên: ' + numerologyData.value.lifePath.advice.join('; '), 180);
-  doc.text(adviceLines, 10, y);
-  y += adviceLines.length * 7 + 10;
-
-  // Các con số chính
-  doc.text('Các con số chính:', 10, y);
-  y += 7;
-  doc.text(`Số linh hồn: ${numerologyData.value.soul} - ${numerologyData.value.soulDesc}`, 10, y);
-  y += 7;
-  doc.text(`Số nhân cách: ${numerologyData.value.personality} - ${numerologyData.value.personalityDesc}`, 10, y);
-  y += 7;
-  doc.text(`Số định mệnh: ${numerologyData.value.destiny} - ${numerologyData.value.destinyDesc}`, 10, y);
-  y += 10;
-
-  // Chu kỳ đường đời
-  const addSection = (title, content, advice) => {
-    if (y > 260) {
-      doc.addPage();
-      y = 10;
-    }
-    doc.setFontSize(14);
-    doc.text(title, 10, y);
-    y += 7;
-    doc.setFontSize(12);
-    const lines = doc.splitTextToSize(content, 180);
-    doc.text(lines, 10, y);
-    y += lines.length * 7 + 5;
-    const adviceLines = doc.splitTextToSize('Lời khuyên: ' + advice.join('; '), 180);
-    doc.text(adviceLines, 10, y);
-    y += adviceLines.length * 7 + 10;
-  };
-
-  lifePeriods.value.forEach(period => {
-    addSection(period.title, period.content, period.advice);
-  });
-
-  // Chu kỳ vận số
-  doc.setFontSize(14);
-  doc.text('Chu kỳ vận số:', 10, y);
-  y += 10;
-  doc.setFontSize(12);
-  Object.entries(numerologyData.value.cycles).forEach(([year, data]) => {
-    if (y > 260) {
-      doc.addPage();
-      y = 10;
-    }
-    doc.text(`Năm ${year} - Số ${data.number}`, 10, y);
-    y += 7;
-    const descLines = doc.splitTextToSize(data.description, 180);
-    doc.text(descLines, 10, y);
-    y += descLines.length * 7 + 5;
-    doc.text('Tập trung: ' + data.focus.join(', '), 10, y);
-    y += 7;
-    doc.text('Từ khóa: ' + data.keywords.join(', '), 10, y);
-    y += 10;
-  });
-
-  doc.save('numerology_full.pdf');
-};
 
 const shareResult = (platform) => {
   toast.info(`Chia sẻ qua ${platform} đang được phát triển!`);
