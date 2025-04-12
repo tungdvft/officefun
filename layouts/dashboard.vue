@@ -249,7 +249,7 @@ const mainMenu = [
       { title: "Thần số học mỗi ngày", path: "/xem/daily", icon: StarIcon },
       { title: "Chu kỳ vận số", path: "/xem/full", icon: ClockIcon },
       { title: "Giải đáp thắc mắc", path: "/xem/consult", icon: QuestionIcon },
-      { title: "Đặt biệt danh", path: "/xem/nick-name", icon: UserIcon }
+      { title: "Đặt danh xưng quốc tế", path: "/xem/nick-name", icon: UserIcon }
     ]
   },
   {
