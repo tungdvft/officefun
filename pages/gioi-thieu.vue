@@ -1,37 +1,21 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-purple-50 to-white">
+    <div class="min-h-screen bg-gradient-to-b from-purple-50 to-white">
     <!-- Hero Section -->
-    <section class="relative py-16 md:py-32 text-center overflow-hidden">
-      <div class="absolute inset-0 overflow-hidden">
-        <div class="absolute inset-0 bg-purple-900 opacity-10"></div>
-        <div class="absolute top-0 left-0 w-full h-full">
-          <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-          <div class="absolute top-1/3 right-1/4 w-64 h-64 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
-          <div class="absolute bottom-1/4 left-1/2 w-64 h-64 bg-indigo-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
-        </div>
+    <section class="relative py-20 text-center overflow-hidden bg-gradient-to-r from-purple-900 to-indigo-900 text-white">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div class="absolute top-1/3 right-1/4 w-64 h-64 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
       </div>
       
       <div class="container mx-auto px-4 relative z-10">
-        <h1 class="text-4xl md:text-6xl font-bold text-purple-900 mb-6 animate-fade-in">
-          Khám Phá <span class="text-purple-600">Bí Mật</span> Của Những Con Số
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
+          <span class="bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">Sự kết hợp </span> giữa hiện đại và cổ điển
         </h1>
-        <p class="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto mb-8 animate-slide-up">
-          Công nghệ AI tiên tiến kết hợp với kho dữ liệu thần số học khổng lồ giúp bạn hiểu rõ bản thân và định hướng tương lai.
+        <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8 opacity-90">
+           Công nghệ AI tiên tiến kết hợp với kho dữ liệu thần số học khổng lồ giúp bạn hiểu rõ bản thân và định hướng tương lai.
         </p>
-        <!-- <a href="/" class="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-8 rounded-full text-lg font-semibold hover:shadow-lg transition-all duration-300 animate-pulse-once shadow-md">
-          Bắt đầu hành trình của bạn
-        </a> -->
       </div>
-      
-      <!-- <div class="mt-16 max-w-4xl mx-auto animate-fade-in-up">
-        <img 
-          src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-          alt="Thần số học" 
-          class="rounded-xl shadow-2xl border-8 border-white transform rotate-1 hover:rotate-0 transition-transform duration-500"
-        >
-      </div> -->
     </section>
-
     <!-- About Content -->
     <section class="py-16 bg-white">
       <div class="container mx-auto px-4">

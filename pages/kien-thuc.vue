@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-gradient-to-b from-purple-50 to-white">
     <!-- Hero Section -->
-    <section class="relative py-20 md:py-32 text-center overflow-hidden bg-gradient-to-r from-purple-900 to-indigo-900 text-white">
+    <section class="relative py-20 text-center overflow-hidden bg-gradient-to-r from-purple-900 to-indigo-900 text-white">
       <div class="absolute inset-0 opacity-10">
         <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
         <div class="absolute top-1/3 right-1/4 w-64 h-64 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
@@ -9,7 +9,7 @@
       
       <div class="container mx-auto px-4 relative z-10">
         <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
-          <span class="bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">Bí Mật</span> Ngàn Năm Trong Những Con Số
+          <span class="bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">Bí Mật</span> Trong Những Con Số
         </h1>
         <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8 opacity-90">
           Khám phá hệ thống kiến thức thần số học từ cổ đại đến hiện đại
