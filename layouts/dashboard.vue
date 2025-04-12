@@ -23,7 +23,7 @@
                 <polygon points="60,45 62,50 67,50 63,53 64,58 60,55 56,58 57,53 53,50 58,50" 
                         fill="#FFFFFF" />
               </svg>
-              <h1 class="text-xl font-bold">Thần số học</h1>
+            
             </div>
           </NuxtLink>
           <!-- Desktop Navigation -->
@@ -243,9 +243,9 @@ const UsersIcon = {
 const mainMenu = [
   {
     title: "Cá nhân",
-    icon: HomeIcon,
+   
     children: [
-      { title: "Tổng quan", path: "/xem", icon: HomeIcon },
+      { title: "Tổng quan", path: "/xem"},
       { title: "Thần số học mỗi ngày", path: "/xem/daily", icon: StarIcon },
       { title: "Thần số học trọn đời", path: "/xem/full", icon: ClockIcon },
       { title: "Giải đáp thắc mắc", path: "/xem/consult", icon: QuestionIcon },
@@ -254,7 +254,7 @@ const mainMenu = [
   },
   {
     title: "Mối quan hệ",
-    icon: HeartIcon,
+   
     children: [
       { title: "Kiểm tra hợp nhau", path: "/xem/compatibility", icon: HeartIcon },
       { title: "Chọn ngày cưới", path: "/xem/wedding-date", icon: CalendarIcon }
@@ -262,7 +262,6 @@ const mainMenu = [
   },
   {
     title: "Nghề nghiệp",
-    icon: BriefcaseIcon,
     children: [
       { title: "Định hướng nghề", path: "/xem/career", icon: BriefcaseIcon },
       { title: "Tên thương hiệu", path: "/xem/numerology-brand", icon: BuildingIcon }
@@ -270,7 +269,6 @@ const mainMenu = [
   },
   {
     title: "Gia đình",
-    icon: ChildIcon,
     children: [
       { title: "Thần số học trẻ em", path: "/xem/child", icon: ChildIcon },
       { title: "Đặt tên con", path: "/xem/baby-name", icon: UsersIcon },
