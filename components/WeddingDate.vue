@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
     <!-- Header -->
-    <div class="bg-gradient-to-r from-pink-600 to-rose-600 p-6">
+    <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-6">
       <div class="flex items-center">
         <div class="p-3 rounded-full bg-white bg-opacity-20 mr-4">
           <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,7 +70,7 @@
         </div>
       </div>
 
-      <button @click="fetchWeddingDates" :disabled="loading" class="w-full btn-primary">
+      <button @click="fetchWeddingDates" :disabled="loading" class="w-full flex justify-center items-center py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium rounded-lg shadow-md transition-all duration-300 transform hover:-translate-y-0.5 disabled:opacity-70 disabled:transform-none">
         <span v-if="loading" class="flex items-center justify-center">
           <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

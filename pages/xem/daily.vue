@@ -1,7 +1,7 @@
 <template>
-  <div class="space-y-8">
+  <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
     <!-- Banner chào mừng -->
-    <div class="container mx-auto relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white p-8 rounded-2xl shadow-xl overflow-hidden">
+    <!-- <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
       <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
       <div class="relative z-10">
         <h1 class="text-4xl font-bold mb-2 animate-fade-in">Thần số học mỗi ngày</h1>
@@ -13,10 +13,22 @@
           <span class="text-sm font-medium">Hôm nay là {{ currentDate }}</span>
         </div>
       </div>
+    </div> -->
+     <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-6">
+      <div class="flex items-center">
+        <div class="p-3 rounded-full bg-white bg-opacity-20 mr-4">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18v2m0-16v2m6 6h2m-16 0h2m2.828 2.828l1.414 1.414m-8.485 0l1.414-1.414m8.485-8.485l-1.414 1.414m-1.414-1.414l1.414-1.414M12 16a4 4 0 100-8 4 4 0 000 8z" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-white">Thần số học mỗi ngày</h2>
+          <p class="text-pink-100 mt-1">Khám phá mỗi ngày với thần số học!</p>
+        </div>
+      </div>
     </div>
-
     <!-- Card chính -->
-    <div class="container mx-auto bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+    <div class="p-6 space-y-6">
       <div class="flex items-center justify-between mb-6">
         <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
           Thần số học cá nhân
@@ -70,7 +82,7 @@
         <button
           @click="submitForm"
           :disabled="loading.day"
-          class="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-medium rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 disabled:transform-none disabled:shadow-none"
+          class="w-full flex justify-center items-center py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium rounded-lg shadow-md transition-all duration-300 transform hover:-translate-y-0.5 disabled:opacity-70 disabled:transform-none"
         >
           <span v-if="loading.day" class="flex items-center justify-center">
             <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -80,9 +92,9 @@
             Đang phân tích...
           </span>
           <span v-else class="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
+            </svg> -->
             Xem ngay
           </span>
         </button>
@@ -137,7 +149,7 @@
       </div>
 
       <!-- Placeholder khi chưa nhập thông tin -->
-      <div v-if="!userInfo.name" class="text-center py-12">
+      <!-- <div v-if="!userInfo.name" class="text-center py-12">
         <div class="mx-auto w-24 h-24 mb-4 text-gray-300">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -145,10 +157,10 @@
         </div>
         <h3 class="text-xl font-medium text-gray-600 mb-2">Bắt đầu khám phá thần số học</h3>
         <p class="text-gray-500 max-w-md mx-auto">Nhập tên và ngày sinh để xem phân tích chi tiết về năng lượng ngày, tuần, tháng, và năm của bạn.</p>
-      </div>
+      </div> -->
 
       <!-- Nội dung kết quả -->
-      <div v-else-if="results && results[activeTab]" class="space-y-8">
+      <div v-if="results && results[activeTab]" class="space-y-8">
         <div class="space-y-6">
           <!-- Insight chính -->
           <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-2xl">
@@ -244,7 +256,7 @@
       </div>
 
       <!-- Loading khi chưa có dữ liệu cho tab -->
-      <div v-else-if="userInfo.name && loading[activeTab]" class="text-center py-12">
+      <div v-if="userInfo.name && loading[activeTab]" class="text-center py-12">
         <svg class="animate-spin mx-auto h-12 w-12 text-purple-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>

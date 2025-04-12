@@ -1,23 +1,22 @@
 <template>
-  <div class="min-h-screen from-blue-50 to-white py-8 sm:px-6">
-    <!-- Header với background gradient -->
-    <div
-      class="container mx-auto relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white p-8 rounded-2xl shadow-xl overflow-hidden"
-    >
-      <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-      <div class="relative z-10">
-        <h1 class="text-4xl font-bold mb-2 animate-fade-in">
-          Chào mừng đến với Thần số học
-        </h1>
-        <p class="text-lg opacity-90 mb-4">
-          Khám phá năng lượng và hành trình của bạn qua con số!
-        </p>
+  <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+
+    <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-6">
+      <div class="flex items-center">
+        <div class="p-3 rounded-full bg-white bg-opacity-20 mr-4">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 8a4 4 0 100 8 4 4 0 000-8zm8-4a4 4 0 100 8 4 4 0 000-8zm-8 12a4 4 0 100 8 4 4 0 000-8zm8 0a4 4 0 100 8 4 4 0 000-8z" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-white">Xem luận giải chi tiết về bạn.</h2>
+          <p class="text-pink-100 mt-1">Khám phá năng lượng và hành trình của bạn qua con số!</p>
+        </div>
       </div>
     </div>
-
     <!-- Form nhập liệu -->
     <div
-      class="container mx-auto bg-white rounded-xl shadow-md overflow-hidden mb-10 transition-all duration-300 hover:shadow-lg mt-3"
+      class="p-6 space-y-6"
     >
       <div class="p-6 sm:p-8">
         <form @submit.prevent="fetchNumerology" class="space-y-4">
