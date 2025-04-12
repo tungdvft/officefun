@@ -139,7 +139,7 @@
 
         <div class="mt-16">
           <NuxtLink 
-            to="/tinh-toan" 
+            to="/dang-ky" 
             class="inline-flex items-center px-8 py-4 bg-white text-purple-900 rounded-full text-lg font-bold hover:bg-gray-100 transition-all shadow-lg"
           >
             Khám Phá Bản Đồ Số Của Bạn
