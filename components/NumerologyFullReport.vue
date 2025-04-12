@@ -67,23 +67,13 @@
               </ClientOnly>
             </div>
             <!-- Danh sách các năm -->
-            <div v-for="focus in numerologyData.focusAreas" :key="focus.year" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+            <div v-for="year in Object.keys(numerologyData.cycles)" :key="year" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
               <div class="flex items-center mb-4">
-                <span class="w-10 h-10 flex items-center justify-center bg-teal-100 text-teal-700 rounded-full font-bold mr-3">{{ focus.year }}</span>
-                <h4 class="text-lg font-semibold text-gray-800">Năm {{ focus.year }}</h4>
+                <span class="w-10 h-10 flex items-center justify-center bg-teal-100 text-teal-700 rounded-full font-bold mr-3">{{ year }}</span>
+                <h4 class="text-lg font-semibold text-gray-800">Năm {{ year }}</h4>
               </div>
               <div class="prose prose-teal max-w-none">
-                <p class="text-gray-700">{{ numerologyData.cycles[focus.year].description }}</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <div>
-                    <p class="font-medium text-teal-700">Trọng tâm:</p>
-                    <p class="text-gray-700">{{ focus.focus }}</p>
-                  </div>
-                  <div>
-                    <p class="font-medium text-teal-700">Từ khóa:</p>
-                    <p class="text-gray-700">{{ focus.keyword }}</p>
-                  </div>
-                </div>
+                <p class="text-gray-700">{{ numerologyData.cycles[year].description }}</p>
               </div>
             </div>
           </div>
@@ -208,29 +198,17 @@ const generateReport = async () => {
     toast.error('Không thể tạo báo cáo từ API, sử dụng dữ liệu mẫu!');
     numerologyData.value = {
       cycles: {
-        2025: { number: 1, description: 'Năm 2025 mang chủ đề khởi đầu mới. Đây là thời điểm để bạn bắt đầu các dự án mới, thử nghiệm ý tưởng sáng tạo và khẳng định sự độc lập của mình. Năng lượng của năm này khuyến khích sự tự tin và hành động quyết đoán.', focus: ['Khởi đầu', 'Sáng tạo', 'Độc lập'], keywords: ['Bắt đầu', 'Đổi mới', 'Lãnh đạo', 'Tự tin', 'Cơ hội'] },
-        2026: { number: 2, description: 'Năm 2026 tập trung vào hợp tác và cân bằng. Đây là thời gian để xây dựng mối quan hệ, lắng nghe trực giác và duy trì sự hài hòa trong cuộc sống. Bạn sẽ học cách kiên nhẫn và làm việc nhóm hiệu quả.', focus: ['Hợp tác', 'Cân bằng', 'Kiên nhẫn'], keywords: ['Hài hòa', 'Đồng đội', 'Nhạy cảm', 'Kiên trì', 'Hỗ trợ'] },
-        2027: { number: 3, description: 'Năm 2027 là năm của sự sáng tạo và giao tiếp. Bạn sẽ tìm thấy niềm vui trong việc thể hiện bản thân qua nghệ thuật, viết lách hoặc các hoạt động xã hội. Đây là thời điểm để tận hưởng sự năng động và kết nối.', focus: ['Sáng tạo', 'Giao tiếp', 'Vui vẻ'], keywords: ['Biểu đạt', 'Năng động', 'Vui vẻ', 'Tưởng tượng', 'Kết nối'] },
-        2028: { number: 4, description: 'Năm 2028 tập trung vào xây dựng nền tảng vững chắc. Bạn sẽ làm việc chăm chỉ để tổ chức cuộc sống, thiết lập cấu trúc và đạt được sự ổn định trong sự nghiệp hoặc gia đình.', focus: ['Ổn định', 'Kỷ luật', 'Công việc'], keywords: ['Cấu trúc', 'Kiên trì', 'Thực tế', 'Tổ chức', 'Thành công'] },
-        2029: { number: 5, description: 'Năm 2029 mang năng lượng thay đổi và tự do. Đây là thời gian để bạn khám phá những cơ hội mới, chấp nhận rủi ro và trải nghiệm sự linh hoạt trong cuộc sống.', focus: ['Thay đổi', 'Tự do', 'Phiêu lưu'], keywords: ['Linh hoạt', 'Khám phá', 'Tự do', 'Đa dạng', 'Năng động'] },
-        2030: { number: 6, description: 'Năm 2030 là năm của trách nhiệm và gia đình. Bạn sẽ tập trung vào việc chăm sóc người thân yêu, xây dựng sự hài hòa và đảm nhận vai trò lãnh đạo trong cộng đồng.', focus: ['Gia đình', 'Trách nhiệm', 'Chăm sóc'], keywords: ['Yêu thương', 'Hài hòa', 'Trách nhiệm', 'Chăm sóc', 'Cân bằng'] },
-        2031: { number: 7, description: 'Năm 2031 khuyến khích tìm kiếm sự thật và nội tâm. Đây là thời điểm để bạn suy ngẫm, học hỏi và phát triển trực giác, tập trung vào sự phát triển tâm linh hoặc tri thức.', focus: ['Nội tâm', 'Tìm kiếm', 'Học hỏi'], keywords: ['Suy ngẫm', 'Trực giác', 'Tâm linh', 'Hiểu biết', 'Tĩnh lặng'] },
-        2032: { number: 8, description: 'Năm 2032 là năm của thành công và quyền lực. Bạn sẽ có cơ hội đạt được những mục tiêu lớn, quản lý tài chính hiệu quả và khẳng định vị thế trong công việc.', focus: ['Thành công', 'Quyền lực', 'Tài chính'], keywords: ['Tham vọng', 'Thành tựu', 'Quyền lực', 'Tự tin', 'Tổ chức'] },
-        2033: { number: 9, description: 'Năm 2033 đánh dấu sự hoàn thiện và vị tha. Đây là thời gian để bạn chia sẻ kinh nghiệm, kết thúc một chu kỳ và chuẩn bị cho sự khởi đầu mới với tinh thần nhân đạo.', focus: ['Hoàn thiện', 'Vị tha', 'Chia sẻ'], keywords: ['Nhân đạo', 'Kết thúc', 'Vị tha', 'Chia sẻ', 'Tâm linh'] },
-        2034: { number: 1, description: 'Năm 2034 khởi đầu chu kỳ mới với năng lượng sáng tạo. Bạn sẽ cảm thấy tràn đầy động lực để bắt đầu lại, thử nghiệm ý tưởng mới và dẫn dắt bản thân theo hướng đi riêng.', focus: ['Khởi đầu', 'Sáng tạo', 'Độc lập'], keywords: ['Bắt đầu', 'Đổi mới', 'Lãnh đạo', 'Tự tin', 'Cơ hội'] }
-      },
-      focusAreas: [
-        { year: '2025', focus: 'Khởi đầu', keyword: 'Bắt đầu' },
-        { year: '2026', focus: 'Hợp tác', keyword: 'Hài hòa' },
-        { year: '2027', focus: 'Sáng tạo', keyword: 'Biểu đạt' },
-        { year: '2028', focus: 'Ổn định', keyword: 'Cấu trúc' },
-        { year: '2029', focus: 'Thay đổi', keyword: 'Linh hoạt' },
-        { year: '2030', focus: 'Gia đình', keyword: 'Yêu thương' },
-        { year: '2031', focus: 'Nội tâm', keyword: 'Suy ngẫm' },
-        { year: '2032', focus: 'Thành công', keyword: 'Tham vọng' },
-        { year: '2033', focus: 'Hoàn thiện', keyword: 'Nhân đạo' },
-        { year: '2034', focus: 'Khởi đầu', keyword: 'Bắt đầu' }
-      ]
+        2025: { number: 1, description: 'Năm 2025 với số 1 mang năng lượng khởi đầu. Đây là thời điểm bắt đầu dự án mới và tự tin tiến lên.' },
+        2026: { number: 2, description: 'Năm 2026 với số 2 tập trung vào hợp tác. Hãy xây dựng mối quan hệ và tìm sự cân bằng.' },
+        2027: { number: 3, description: 'Năm 2027 với số 3 tràn đầy sáng tạo. Hãy thể hiện bản thân và tận hưởng niềm vui.' },
+        2028: { number: 4, description: 'Năm 2028 với số 4 là xây dựng nền tảng. Làm việc chăm chỉ để đạt sự ổn định.' },
+        2029: { number: 5, description: 'Năm 2029 với số 5 mang đến thay đổi. Khám phá cơ hội mới và sống năng động.' },
+        2030: { number: 6, description: 'Năm 2030 với số 6 nhấn mạnh gia đình. Chăm sóc người thân và tạo sự hài hòa.' },
+        2031: { number: 7, description: 'Năm 2031 với số 7 khuyến khích nội tâm. Suy ngẫm và học hỏi sẽ mang lại giá trị.' },
+        2032: { number: 8, description: 'Năm 2032 với số 8 là năm thành công. Tận dụng tham vọng để đạt mục tiêu lớn.' },
+        2033: { number: 9, description: 'Năm 2033 với số 9 đánh dấu hoàn thiện. Chia sẻ kinh nghiệm và chuẩn bị khởi đầu mới.' },
+        2034: { number: 1, description: 'Năm 2034 với số 1 mang năng lượng khởi đầu. Đây là thời điểm bắt đầu dự án mới và tự tin tiến lên.' }
+      }
     };
   } finally {
     loading.value = false;
