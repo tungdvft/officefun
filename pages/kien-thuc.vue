@@ -8,7 +8,7 @@
       </div>
       
       <div class="container mx-auto px-4 relative z-10">
-        <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
           <span class="bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">Bí Mật</span> Trong Những Con Số
         </h1>
         <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8 opacity-90">
