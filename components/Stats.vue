@@ -43,8 +43,8 @@ export default {
       const counters = [
         { el: this.$refs.count1, target: 10000, duration: 2000 },
         { el: this.$refs.count2, target: 9, duration: 1000 },
-        { el: this.$refs.count3, target: 27, duration: 1500 },
-        { el: this.$refs.count4, target: 99, duration: 2500 }
+        { el: this.$refs.count3, target: 17, duration: 1500 },
+        { el: this.$refs.count4, target: 92, duration: 2500 }
       ]
 
       counters.forEach(counter => {

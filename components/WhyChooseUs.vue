@@ -16,7 +16,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
             </div>
-            <h3 class="text-2xl font-bold text-center text-gray-800 mb-4">AI Thần Số Học Độc Quyền</h3>
+            <h3 class="text-2xl font-bold text-center text-gray-800 mb-4"> Tiên Phong sử dụng AI cho Thần Số Học</h3>
             <p class="text-gray-600 text-center">
               Hệ thống AI được đào tạo chuyên sâu với hơn 100,000 hồ sơ thần số học, kết hợp thuật toán Pythagoras và các trường phái hiện đại. 
               Công nghệ machine learning giúp phân tích đa chiều và dự đoán chính xác đến 92%.
@@ -36,7 +36,7 @@
             <h3 class="text-2xl font-bold text-center text-gray-800 mb-4">Bản Đồ Số Cá Nhân Hóa</h3>
             <p class="text-gray-600 text-center">
               Mỗi báo cáo được thiết kế riêng biệt dựa trên tổ hợp số ngày sinh, tên gọi và biểu đồ sao cá nhân. 
-              Chúng tôi phân tích 27 chỉ số quan trọng để vẽ nên bức tranh toàn diện về con người bạn, từ tính cách đến tiềm năng ẩn giấu.
+              Chúng tôi phân tích 17 chỉ số quan trọng để vẽ nên bức tranh toàn diện về con người bạn, từ tính cách đến tiềm năng ẩn giấu.
             </p>
           </div>
         </div>
@@ -50,10 +50,10 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
               </svg>
             </div>
-            <h3 class="text-2xl font-bold text-center text-gray-800 mb-4">Trực Quan & Tương Tác 3D</h3>
+            <h3 class="text-2xl font-bold text-center text-gray-800 mb-4">Giao Diện Trực Quan</h3>
             <p class="text-gray-600 text-center">
-              Trải nghiệm thần số học sống động với biểu đồ 3D tương tác, mô phỏng năng lượng các con số qua chuyển động. 
-              Hình ảnh hóa các mối quan hệ giữa chỉ số và dự báo tương lai bằng công nghệ data visualization tiên tiến.
+              Trải nghiệm thần số học sống động với biểu đồ , form nhập thông tin trực quan. 
+              Kết nối mối quan hệ giữa chỉ số và dự báo tương lai bằng công nghệ AI tiên tiến.
             </p>
           </div>
         </div>

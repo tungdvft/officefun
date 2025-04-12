@@ -8,10 +8,8 @@
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       <!-- Đánh giá 1 -->
       <div class="bg-white rounded-xl shadow-lg p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
-        <div class="flex items-center mb-6">
-          <div class="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center mr-4 overflow-hidden">
-            <!-- <img src="~/assets/svg/user1.svg" alt="Khách hàng Trần Ngọc" class="w-full h-full object-cover"> -->
-          </div>
+        <div class="flex items-center mb-6 justify-center">
+        
           <div>
             <h4 class="text-lg font-bold text-gray-800">Trần Ngọc</h4>
             <p class="text-sm text-gray-500">Nhà thiết kế - Hà Nội</p>
@@ -28,10 +26,8 @@
 
       <!-- Đánh giá 2 -->
       <div class="bg-white rounded-xl shadow-lg p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
-        <div class="flex items-center mb-6">
-          <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mr-4 overflow-hidden">
-            <!-- <img src="~/assets/svg/user2.svg" alt="Khách hàng Lê Minh" class="w-full h-full object-cover"> -->
-          </div>
+        <div class="flex items-center mb-6 justify-center">
+      
           <div>
             <h4 class="text-lg font-bold text-gray-800">Lê Minh</h4>
             <p class="text-sm text-gray-500">Doanh nhân - TP.HCM</p>
@@ -48,10 +44,8 @@
 
       <!-- Đánh giá 3 -->
       <div class="bg-white rounded-xl shadow-lg p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
-        <div class="flex items-center mb-6">
-          <div class="w-16 h-16 rounded-full bg-pink-100 flex items-center justify-center mr-4 overflow-hidden">
-            <!-- <img src="~/assets/svg/user3.svg" alt="Khách hàng Phạm Hương" class="w-full h-full object-cover"> -->
-          </div>
+        <div class="flex items-center mb-6 justify-center">
+         
           <div>
             <h4 class="text-lg font-bold text-gray-800">Phạm Hương</h4>
             <p class="text-sm text-gray-500">Giáo viên - Đà Nẵng</p>
