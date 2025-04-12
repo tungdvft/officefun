@@ -247,7 +247,7 @@ const mainMenu = [
     children: [
       { title: "Tổng quan", path: "/xem"},
       { title: "Thần số học mỗi ngày", path: "/xem/daily", icon: StarIcon },
-      { title: "Thần số học trọn đời", path: "/xem/full", icon: ClockIcon },
+      { title: "Chu kỳ vận số", path: "/xem/full", icon: ClockIcon },
       { title: "Giải đáp thắc mắc", path: "/xem/consult", icon: QuestionIcon },
       { title: "Đặt biệt danh", path: "/xem/nick-name", icon: UserIcon }
     ]
