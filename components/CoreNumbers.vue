@@ -29,14 +29,7 @@
               <h3 class="text-2xl font-bold text-purple-900 mb-2">Số Đường Đời</h3>
               <p class="text-gray-600">Mục đích sống và bài học cuộc đời bạn</p>
             </div>
-            <div class="mt-auto">
-              <div class="inline-flex items-center text-purple-600 font-medium group-hover:text-purple-900 transition-colors">
-                <span>Khám phá ngay</span>
-                <svg class="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                </svg>
-              </div>
-            </div>
+           
           </div>
         </div>
       </NuxtLink>
@@ -59,14 +52,7 @@
               <h3 class="text-2xl font-bold text-blue-800 mb-2">Số Linh Hồn</h3>
               <p class="text-gray-600">Khát vọng sâu thẳm trong trái tim bạn</p>
             </div>
-            <div class="mt-auto">
-              <div class="inline-flex items-center text-blue-600 font-medium group-hover:text-blue-800 transition-colors">
-                <span>Khám phá ngay</span>
-                <svg class="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                </svg>
-              </div>
-            </div>
+       
           </div>
         </div>
       </NuxtLink>
@@ -89,14 +75,6 @@
               <h3 class="text-2xl font-bold text-green-800 mb-2">Số Nhân Cách</h3>
               <p class="text-gray-600">Cách bạn thể hiện ra thế giới bên ngoài</p>
             </div>
-            <div class="mt-auto">
-              <div class="inline-flex items-center text-green-600 font-medium group-hover:text-green-800 transition-colors">
-                <span>Khám phá ngay</span>
-                <svg class="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                </svg>
-              </div>
-            </div>
           </div>
         </div>
       </NuxtLink>
@@ -118,14 +96,6 @@
               <div class="w-16 h-16 rounded-full bg-indigo-600 flex items-center justify-center text-white text-2xl font-bold mb-4 shadow-lg">4</div>
               <h3 class="text-2xl font-bold text-indigo-800 mb-2">Số Sứ Mệnh</h3>
               <p class="text-gray-600">Tài năng bẩm sinh và cách bạn cống hiến</p>
-            </div>
-            <div class="mt-auto">
-              <div class="inline-flex items-center text-indigo-600 font-medium group-hover:text-indigo-800 transition-colors">
-                <span>Khám phá ngay</span>
-                <svg class="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                </svg>
-              </div>
             </div>
           </div>
         </div>

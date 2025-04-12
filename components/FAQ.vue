@@ -1,5 +1,5 @@
 <template>
-  <section class="py-16 bg-gradient-to-b from-purple-50 to-white">
+  <section class="py-16 bg-gradient-to-b from-purple-50 to-white mt-12">
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
         <h2 class="text-4xl font-bold text-purple-900 mb-4">Câu Hỏi Thường Gặp</h2>
