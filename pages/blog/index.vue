@@ -3,7 +3,7 @@
     <!-- Hero Section -->
     <section class="bg-gradient-to-r from-purple-900 to-indigo-900 text-white py-16">
       <div class="container mx-auto px-4 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold mb-6">Khám Phá Thế Giới Thần Số Học</h1>
+        <h1 class="text-4xl md:text-5xl font-bold mb-6"><span class="bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent" data-v-0d994878="">Khám Phá</span> Thế Giới Thần Số Học</h1>
         <p class="text-xl max-w-2xl mx-auto mb-8 opacity-90">
           Các bài viết chuyên sâu giúp bạn hiểu rõ về bản thân và vận mệnh thông qua những con số
         </p>

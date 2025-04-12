@@ -77,12 +77,12 @@
                 <span class="text-gray-700">Gợi ý hướng phát triển phù hợp với năng lượng số</span>
               </li>
             </ul>
-            <a href="/about" class="inline-flex items-center text-purple-600 font-medium hover:text-purple-900">
+            <!-- <a href="/about" class="inline-flex items-center text-purple-600 font-medium hover:text-purple-900">
               Tìm hiểu thêm
               <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
-            </a>
+            </a> -->
           </div>
         </div>
       </div>
@@ -158,12 +158,10 @@
           Đăng ký ngay để nhận báo cáo thần số học miễn phí và bắt đầu hành trình khám phá bản thân!
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <a href="/signup" class="inline-block bg-white text-purple-900 py-3 px-8 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300 shadow-lg">
+          <a href="/dang-ky" class="inline-block bg-white text-purple-900 py-3 px-8 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300 shadow-lg">
             Đăng ký miễn phí
           </a>
-          <a href="/demo" class="inline-block border-2 border-white text-white py-3 px-8 rounded-full text-lg font-semibold hover:bg-white hover:bg-opacity-10 transition-all duration-300">
-            Xem bản demo
-          </a>
+         
         </div>
       </div>
     </section>
