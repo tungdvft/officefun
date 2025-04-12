@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-8">
     <!-- Banner chào mừng -->
-    <div class="relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white p-8 rounded-2xl shadow-xl overflow-hidden">
+    <div class="container mx-auto relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white p-8 rounded-2xl shadow-xl overflow-hidden">
       <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
       <div class="relative z-10">
         <h1 class="text-4xl font-bold mb-2 animate-fade-in">Thần số học mỗi ngày</h1>
@@ -16,7 +16,7 @@
     </div>
 
     <!-- Card chính -->
-    <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+    <div class="container mx-auto bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
       <div class="flex items-center justify-between mb-6">
         <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
           Thần số học cá nhân
@@ -381,44 +381,44 @@ const loadTabData = async (tab) => {
 };
 
 // Kiểm tra và làm mới dữ liệu khi qua ngày mới
-const checkAndRefreshData = () => {
-  const storedData = localStorage.getItem('numerologyData');
-  const currentDate = getVietnamDate();
-  const currentDay = currentDate.getDate();
+// const checkAndRefreshData = () => {
+//   const storedData = localStorage.getItem('numerologyData');
+//   const currentDate = getVietnamDate();
+//   const currentDay = currentDate.getDate();
 
-  if (storedData) {
-    const { userInfo: storedUserInfo, results: storedResults, timestamp } = JSON.parse(storedData);
-    const storedDate = new Date(timestamp);
-    const storedDay = storedDate.getDate();
+//   if (storedData) {
+//     const { userInfo: storedUserInfo, results: storedResults, timestamp } = JSON.parse(storedData);
+//     const storedDate = new Date(timestamp);
+//     const storedDay = storedDate.getDate();
 
-    if (currentDay !== storedDay) {
-      form.value.name = storedUserInfo.name;
-      form.value.birthDate = storedUserInfo.birthDate;
-      results.value = { day: null, week: null, month: null, year: null }; // Reset toàn bộ
-      submitForm(); // Gọi lại API cho tab "day"
-    } else {
-      userInfo.value = storedUserInfo;
-      results.value = storedResults;
-    }
-  }
-};
+//     if (currentDay !== storedDay) {
+//       form.value.name = storedUserInfo.name;
+//       form.value.birthDate = storedUserInfo.birthDate;
+//       results.value = { day: null, week: null, month: null, year: null }; // Reset toàn bộ
+//       submitForm(); // Gọi lại API cho tab "day"
+//     } else {
+//       userInfo.value = storedUserInfo;
+//       results.value = storedResults;
+//     }
+//   }
+// };
 
 // Lên lịch kiểm tra mỗi phút
-const scheduleDailyCheck = () => {
-  intervalId = setInterval(() => {
-    const currentDate = getVietnamDate();
-    const hours = currentDate.getHours();
-    const minutes = currentDate.getMinutes();
+// const scheduleDailyCheck = () => {
+//   intervalId = setInterval(() => {
+//     const currentDate = getVietnamDate();
+//     const hours = currentDate.getHours();
+//     const minutes = currentDate.getMinutes();
 
-    if (hours === 0 && minutes <= 1) checkAndRefreshData();
-  }, 60000);
-};
+//     if (hours === 0 && minutes <= 1) checkAndRefreshData();
+//   }, 60000);
+// };
 
 // Lifecycle hooks
-onMounted(() => {
-  checkAndRefreshData();
-  scheduleDailyCheck();
-});
+// onMounted(() => {
+//   checkAndRefreshData();
+//   scheduleDailyCheck();
+// });
 
 onUnmounted(() => {
   if (intervalId) clearInterval(intervalId);

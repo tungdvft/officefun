@@ -2,7 +2,7 @@
   <div class="min-h-screen from-blue-50 to-white py-8 sm:px-6">
     <!-- Header với background gradient -->
     <div
-      class="relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white p-8 rounded-2xl shadow-xl overflow-hidden"
+      class="container mx-auto relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white p-8 rounded-2xl shadow-xl overflow-hidden"
     >
       <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
       <div class="relative z-10">
@@ -526,72 +526,7 @@ onMounted(() => {
 });
 
 // Hàm tải PDF (nếu bạn vẫn dùng)
-const downloadPDF = async () => {
-  const { default: jsPDF } = await import("jspdf");
 
-  const pdf = new jsPDF({
-    orientation: "portrait",
-    unit: "mm",
-    format: "a4",
-  });
-
-  pdf.setFontSize(16);
-  pdf.setTextColor(33, 33, 33);
-  pdf.text("Thần Số Học - Kết Quả Phân Tích", 105, 20, { align: "center" });
-
-  pdf.setFontSize(12);
-  pdf.text(`Họ và tên: ${numerologyData.value.numerology.name}`, 20, 40);
-  pdf.text(`Ngày sinh: ${numerologyData.value.numerology.birthDate}`, 20, 50);
-
-  pdf.setFontSize(40);
-  pdf.setTextColor(138, 43, 226);
-  pdf.text(
-    `${numerologyData.value.numerology.profile.numbers.lifePath}`,
-    105,
-    80,
-    { align: "center" }
-  );
-
-  pdf.setFontSize(14);
-  pdf.setTextColor(33, 33, 33);
-  pdf.text("Tổng quan", 20, 100);
-  pdf.setFontSize(12);
-  const overviewLines = pdf.splitTextToSize(
-    numerologyData.value.numerology.profile.overview,
-    170
-  );
-  pdf.text(overviewLines, 20, 110);
-
-  let yPosition = 110 + overviewLines.length * 7 + 10;
-  pdf.setFontSize(14);
-  pdf.text("Giải thích chi tiết các chỉ số", 20, yPosition);
-  yPosition += 10;
-
-  pdf.setFontSize(12);
-  for (const [key, interpretation] of Object.entries(
-    numerologyData.value.numerology.profile.interpretations
-  )) {
-    const number = numerologyData.value.numerology.profile.numbers[key];
-    const title = `${formatKey(key)}: ${number}`;
-    pdf.setFontSize(14);
-    pdf.setTextColor(138, 43, 226);
-    pdf.text(title, 20, yPosition);
-    yPosition += 7;
-
-    pdf.setFontSize(12);
-    pdf.setTextColor(33, 33, 33);
-    const interpretationLines = pdf.splitTextToSize(interpretation, 170);
-    pdf.text(interpretationLines, 20, yPosition);
-    yPosition += interpretationLines.length * 6 + 5;
-
-    if (yPosition > 260) {
-      pdf.addPage();
-      yPosition = 20;
-    }
-  }
-
-  pdf.save(`${numerologyData.value.numerology.name}_than_so_hoc.pdf`);
-};
 </script>
 
 <style scoped>
