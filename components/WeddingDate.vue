@@ -157,7 +157,7 @@
           </div>
 
           <!-- Nút chia sẻ -->
-          <div class="flex flex-wrap gap-3 justify-center">
+          <!-- <div class="flex flex-wrap gap-3 justify-center">
             <button @click="shareResult('zalo')" class="btn-share bg-blue-500 hover:bg-blue-600">
               <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.441 16.892c-2.102.144-6.784.144-8.883 0-2.276-.156-2.541-1.27-2.558-4.892.017-3.629.285-4.736 2.558-4.892 2.099-.144 6.782-.144 8.883 0 2.277.156 2.541 1.27 2.559 4.892-.018 3.629-.285 4.736-2.559 4.892zm-6.441-7.234l4.917 2.338-4.917 2.346v-4.684z"/>
@@ -176,7 +176,7 @@
               </svg>
               Lưu PDF
             </button>
-          </div>
+          </div> -->
         </div>
       </transition>
     </div>

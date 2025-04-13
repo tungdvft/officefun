@@ -126,7 +126,7 @@
           </div>
 
           <!-- Nút chia sẻ -->
-          <div class="flex flex-wrap gap-3 justify-center">
+          <!-- <div class="flex flex-wrap gap-3 justify-center">
             <button @click="shareResult('zalo')" class="btn-share bg-blue-500 hover:bg-blue-600">
               <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.441 16.892c-2.102.144-6.784.144-8.883 0-2.276-.156-2.541-1.27-2.558-4.892.017-3.629.285-4.736 2.558-4.892 2.099-.144 6.782-.144 8.883 0 2.277.156 2.541 1.27 2.559 4.892-.018 3.629-.285 4.736-2.559 4.892zm-6.441-7.234l4.917 2.338-4.917 2.346v-4.684z"/>
@@ -147,7 +147,7 @@
                 Lưu PDF
               </button>
             </ClientOnly>
-          </div>
+          </div> -->
         </div>
       </transition>
     </div>
@@ -190,63 +190,7 @@ const getCareerGuidance = async () => {
   }
 };
 
-const shareResult = (platform) => {
-  if (!result.value) return;
-  const text = [
-    `Định hướng nghề nghiệp cho ${formData.value.name}`,
-    `Mục tiêu nghề nghiệp: ${result.value.careerGoals}`,
-    `Đam mê và động lực: ${result.value.passionAndMotivation}`,
-    `Phong cách làm việc: ${result.value.workStyle}`,
-    `Con đường dài hạn: ${result.value.longTermPath}`,
-    formData.value.currentJob ? `Phân tích công việc hiện tại: ${result.value.currentJobAnalysis}` : '',
-    `Đề xuất nghề nghiệp:`,
-    ...result.value.careerSuggestions.map(s => `- ${s.job}: ${s.reason}`),
-    `Lời khuyên thực tế: ${result.value.practicalAdvice}`
-  ].filter(Boolean).join('\n\n');
 
-  if (platform === 'facebook' && process.client) {
-    if (typeof FB !== 'undefined') {
-      FB.ui({
-        method: 'share',
-        href: window.location.href,
-        quote: text
-      }, (response) => {
-        if (response && !response.error) toast.success('Đã chia sẻ lên Facebook!');
-        else toast.error('Có lỗi khi chia sẻ lên Facebook!');
-      });
-    } else {
-      toast.error('Facebook SDK chưa tải, thử lại sau!');
-    }
-  } else if (platform === 'zalo' && process.client) {
-    navigator.clipboard.writeText(text).then(() => {
-      toast.success('Đã sao chép kết quả! Dán vào Zalo để chia sẻ.');
-    }).catch(() => toast.error('Không thể sao chép!'));
-  }
-};
-
-const downloadResult = async () => {
-  if (!process.client) return toast.error('Không thể tải PDF trên server!');
-  const { jsPDF } = await import('jspdf');
-  const doc = new jsPDF();
-  doc.setFont('helvetica');
-  doc.setFontSize(12);
-
-  const content = [
-    `Định hướng nghề nghiệp cho ${formData.value.name}`,
-    `\nMục tiêu nghề nghiệp:\n${result.value.careerGoals}`,
-    `\nĐam mê và động lực:\n${result.value.passionAndMotivation}`,
-    `\nPhong cách làm việc:\n${result.value.workStyle}`,
-    `\nCon đường dài hạn:\n${result.value.longTermPath}`,
-    formData.value.currentJob ? `\nPhân tích công việc hiện tại (${formData.value.currentJob}):\n${result.value.currentJobAnalysis}` : '',
-    `\nĐề xuất nghề nghiệp:`,
-    ...result.value.careerSuggestions.map(s => `- ${s.job}:\n  Lý do: ${s.reason}\n  Cơ hội: ${s.opportunities}\n  Xu hướng: ${s.trends}`),
-    `\nLời khuyên thực tế:\n${result.value.practicalAdvice}`
-  ].filter(Boolean).join('\n\n');
-
-  const lines = doc.splitTextToSize(content, 180);
-  doc.text(lines, 10, 10);
-  doc.save(`career-guidance-${formData.value.name}.pdf`);
-};
 </script>
 
 <style scoped>

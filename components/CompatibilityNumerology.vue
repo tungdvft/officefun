@@ -156,7 +156,7 @@
           </div>
 
           <!-- Nút chia sẻ -->
-          <div class="flex flex-wrap gap-3 justify-center">
+          <!-- <div class="flex flex-wrap gap-3 justify-center">
             <button @click="shareResult('facebook')" class="btn-share bg-blue-600 hover:bg-blue-700">
               <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
@@ -177,7 +177,7 @@
                 Tải PDF
               </button>
             </ClientOnly>
-          </div>
+          </div> -->
         </div>
       </transition>
     </div>
@@ -245,109 +245,6 @@ const checkCompatibility = async () => {
   }
 };
 
-const shareResult = (platform) => {
-  if (!result.value) return;
-  const text = formatResultForShare();
-
-  if (platform === 'facebook' && process.client) {
-    if (typeof FB !== 'undefined') {
-      FB.ui({
-        method: 'share',
-        href: window.location.href,
-        quote: text
-      }, (response) => {
-        if (response && !response.error) toast.success('Đã chia sẻ lên Facebook!');
-        else toast.error('Có lỗi khi chia sẻ lên Facebook!');
-      });
-    } else {
-      toast.error('Facebook SDK chưa tải, thử lại sau!');
-    }
-  } else if (platform === 'zalo' && process.client) {
-    navigator.clipboard.writeText(text).then(() => {
-      toast.success('Đã sao chép kết quả! Dán vào Zalo để chia sẻ.');
-    }).catch(() => toast.error('Không thể sao chép!'));
-  }
-};
-
-const downloadResult = async () => {
-  if (!process.client || !result.value) {
-    toast.error('Vui lòng đợi kết quả hoàn tất trước khi tải');
-    return;
-  }
-
-  try {
-    const container = document.createElement('div');
-    container.style.width = '210mm'; // A4 width
-    container.style.padding = '15mm';
-    container.style.fontFamily = 'Times New Roman, serif'; // Font hỗ trợ tiếng Việt
-    container.style.fontSize = '12pt';
-    container.style.lineHeight = '1.5';
-    container.style.color = '#333';
-    document.body.appendChild(container);
-
-    // Nội dung PDF với UTF-8
-    container.innerHTML = `
-      <h1 style="font-size: 18pt; color: #6B46C1; margin-bottom: 10mm;">Kết quả phân tích mức độ hợp nhau</h1>
-      <div style="margin-bottom: 5mm;">
-        <strong>Người 1:</strong> ${formData.value.person1Name} (${formData.value.person1Birthdate})<br>
-        <strong>Người 2:</strong> ${formData.value.person2Name} (${formData.value.person2Birthdate})<br>
-        <strong>Loại quan hệ:</strong> ${tabs.find(t => t.value === formData.value.relationshipType)?.label}
-      </div>
-      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Tổng quan mối quan hệ</h2>
-      <p><strong>Mức độ hợp nhau:</strong> ${compatibilityScore.value}/10</p>
-      <p>${compatibilityExplanation.value}</p>
-      <p>${result.value.overview}</p>
-      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Điểm mạnh</h2>
-      <p>${result.value.strengths}</p>
-      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Điểm yếu</h2>
-      <p>${result.value.weaknesses}</p>
-      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Tiềm năng</h2>
-      <p>${result.value.potential}</p>
-      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Thách thức</h2>
-      <p>${result.value.challenges}</p>
-      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Gợi ý phát triển</h2>
-      <p>${result.value.advice}</p>
-    `;
-
-    const group = await drawDOM(container, {
-      paperSize: 'A4',
-      margin: { top: '10mm', left: '10mm', right: '10mm', bottom: '10mm' },
-      scale: 0.7,
-      keepTogether: 'p'
-    });
-
-    const pdfDataUri = await exportPDF(group);
-    const link = document.createElement('a');
-    link.href = pdfDataUri;
-    link.download = 'ket-qua-hop-nhau.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    document.body.removeChild(container);
-
-    toast.success('Tải PDF thành công!');
-  } catch (error) {
-    console.error('Lỗi khi tạo PDF:', error);
-    toast.error('Có lỗi khi tạo PDF!');
-  }
-};
-
-const formatResultForShare = () => {
-  return [
-    `Kết quả phân tích mức độ hợp nhau`,
-    `Người 1: ${formData.value.person1Name} (${formData.value.person1Birthdate})`,
-    `Người 2: ${formData.value.person2Name} (${formData.value.person2Birthdate})`,
-    `Loại quan hệ: ${tabs.find(t => t.value === formData.value.relationshipType)?.label}`,
-    `Mức độ hợp nhau: ${compatibilityScore.value}/10`,
-    compatibilityExplanation.value,
-    `Tổng quan:\n${result.value.overview}`,
-    `Điểm mạnh:\n${result.value.strengths}`,
-    `Điểm yếu:\n${result.value.weaknesses}`,
-    `Tiềm năng:\n${result.value.potential}`,
-    `Thách thức:\n${result.value.challenges}`,
-    `Gợi ý:\n${result.value.advice}`
-  ].join('\n\n');
-};
 </script>
 
 <style scoped>
