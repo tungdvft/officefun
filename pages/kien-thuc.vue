@@ -24,11 +24,9 @@
           <p class="text-2xl leading-relaxed text-purple-900 font-medium mb-8 text-center max-w-3xl mx-auto">
             "Bạn không tình cờ đến với thần số học. Những con số đã dẫn lối bạn đến đây để giải mã bản thiết kế vũ trụ dành riêng cho cuộc đời mình."
           </p>
-
           <p class="text-lg mb-6 max-w-4xl mx-auto">
             <span class="font-bold text-purple-900">Thần số học không phải là bói toán.</span> Đây là môn <span class="underline">khoa học cổ xưa</span> được Pythagoras hệ thống hóa từ 2500 năm trước, dựa trên nguyên lý: "Mọi thứ trong vũ trụ đều là số học".
           </p>
-
          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-10">
             <!-- Item 1 -->
             <div class="bg-purple-50 p-6 rounded-xl border-l-4 border-purple-500">
