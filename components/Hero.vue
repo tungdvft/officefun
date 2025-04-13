@@ -42,7 +42,7 @@
                 id="fullname"
                 v-model="form.fullname"
                 class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-purple-300 focus:border-transparent focus:outline-none transition duration-200"
-                placeholder="Nguyễn Văn A"
+                placeholder="Nguyễn Văn Hùng"
                 required
               />
             </div>

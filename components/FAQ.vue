@@ -1,12 +1,12 @@
 <template>
   <section class="py-16">
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto">
       <div class="text-center mb-12">
         <h2 class="text-4xl font-bold text-purple-900 mb-4">Câu Hỏi Thường Gặp</h2>
         <p class="text-xl text-gray-600 max-w-2xl mx-auto">Những thắc mắc phổ biến về thần số học</p>
       </div>
 
-      <div class="max-w-4xl mx-auto space-y-4">
+      <div class="space-y-4">
         <div 
           v-for="(faq, index) in faqs" 
           :key="index"
