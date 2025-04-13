@@ -140,12 +140,10 @@
         <div class="mt-16">
           <NuxtLink 
             to="/dang-ky" 
-            class="inline-flex items-center px-8 py-4 bg-white text-purple-900 rounded-full text-lg font-bold hover:bg-gray-100 transition-all shadow-lg"
+            class="inline-flex items-center px-8 py-2  bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full text-lg font-bold hover:bg-gray-100 transition-all shadow-lg"
           >
             Khám Phá Bản Đồ Số Của Bạn
-            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-            </svg>
+          
           </NuxtLink>
         </div>
       </div>

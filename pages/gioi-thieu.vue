@@ -140,7 +140,7 @@
           Đăng ký ngay để nhận báo cáo thần số học miễn phí và bắt đầu hành trình khám phá bản thân!
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <a href="/dang-ky" class="inline-block bg-white text-purple-900 py-3 px-8 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300 shadow-lg">
+          <a href="/dang-ky" class="inline-block py-2  bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300 shadow-lg">
             Đăng ký miễn phí
           </a>
          
