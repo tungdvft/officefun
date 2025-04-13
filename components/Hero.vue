@@ -1,43 +1,33 @@
 <template>
   <section class="text-gray-800 py-12 md:py-16 relative overflow-hidden">
-    <!-- Background với overlay cực nhẹ -->
-    <div class="absolute inset-0 z-0">
-      <img
-        src="/tsh.avif"
-        alt="Soft background"
-        class="w-full h-full object-cover"
-      />
+    <!-- Gradient background thay thế ảnh -->
+    <div class="absolute inset-0 z-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-violet-800">
+      <!-- Thêm hiệu ứng ánh sáng mờ -->
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent from-10% to-black/30"></div>
+      <!-- Thêm các điểm sáng decor -->
+      <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20">
+        <div class="absolute top-20 left-10 w-64 h-64 rounded-full bg-purple-500 mix-blend-screen filter blur-3xl opacity-30"></div>
+        <div class="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-indigo-500 mix-blend-screen filter blur-3xl opacity-30"></div>
+      </div>
     </div>
 
     <div class="container mx-auto px-4 relative z-10">
       <div class="flex flex-col lg:flex-row items-center">
         <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10">
           <h2
-            class="text-4xl md:text-5xl font-bold mb-6 fade-in bg-clip-text text-white"
+            class="text-4xl md:text-5xl font-bold mb-6 fade-in bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
           >
             Khám Phá Bản Thân Qua Thần Số Học
           </h2>
-          <p class="text-xl mb-8 fade-in text-white">
+          <p class="text-xl mb-8 fade-in text-white/90">
             Con số ngày sinh và tên gọi của bạn tiết lộ nhiều điều thú vị về tính
             cách, sứ mệnh và tiềm năng của bạn.
           </p>
-          <!-- <div class="flex flex-col sm:flex-row gap-4 fade-in">
-            <NuxtLink
-              to="#calculator"
-              class="bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold py-3 px-6 rounded-full hover:from-purple-600 hover:to-blue-600 transition duration-300 flex items-center shadow-sm"
-            >
-              Tính Số Của Bạn
-              <font-awesome-icon
-                :icon="['fas', 'calculator']"
-                class="ml-2 text-lg"
-              />
-            </NuxtLink>
-          </div> -->
         </div>
 
         <!-- Form section đơn giản -->
         <div
-          class="lg:w-1/2 bg-white/90 rounded-xl p-6 shadow-sm border border-gray-100"
+          class="lg:w-1/2 bg-white/90 rounded-xl p-6 shadow-lg border border-white/20 backdrop-blur-sm"
         >
           <h3 class="text-2xl font-bold mb-4 text-gray-800">
             Nhập thông tin của bạn
