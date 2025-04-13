@@ -4,7 +4,7 @@
       <h2 class="text-4xl font-bold mb-6 text-purple-900">Thần Số Học Hiện Đại</h2>
       <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">Kết hợp tri thức cổ xưa và công nghệ hiện đại để mang lại những phân tích chính xác</p>
 
-      <div class="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+      <div class="grid md:grid-cols-4 gap-6">
         <div class="bg-white p-6 rounded-xl shadow-lg border border-purple-100 transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
           <div class="count-up mb-4 text-5xl font-bold text-purple-600" ref="count1" data-target="10000">0</div>
           <h3 class="text-xl font-medium text-gray-700">Người Đã Phân Tích</h3>

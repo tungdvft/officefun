@@ -6,7 +6,7 @@
         <div class="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto"></div>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-3 gap-8 mx-auto">
         <!-- Card 1 -->
         <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 flex flex-col h-full">
           <div class="p-8 flex-grow">
