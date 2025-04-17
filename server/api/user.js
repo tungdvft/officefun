@@ -61,7 +61,34 @@ export default defineEventHandler(async (event) => {
         profession: user.profession, // Có thể là null
         displayName: user.displayName,
       };
-    }
+    } // Thêm vào api/user.js
+    else if (method === 'PUT') {
+      const body = await readBody(event);
+      const { userId, amount } = body;
+      
+      if (!userId || amount === undefined) {
+        return { error: 'Missing required fields' };
+      }
+
+      // Kiểm tra user có trong bảng tokens chưa
+      const tokenRecord = await db.get('SELECT * FROM tokens WHERE user_id = ?', [userId]);
+      
+      if (!tokenRecord) {
+        // Nếu chưa có, tạo mới với số dư ban đầu
+        await db.run(
+          'INSERT INTO tokens (user_id, balance) VALUES (?, ?)',
+          [userId, amount]
+        );
+      } else {
+        // Nếu đã có, cập nhật số dư
+        await db.run(
+          'UPDATE tokens SET balance = balance + ?, last_updated = CURRENT_TIMESTAMP WHERE user_id = ?',
+          [amount, userId]
+        );
+      }
+  
+  return { success: true };
+}
 
     return { error: 'Method not allowed' };
   } catch (error) {

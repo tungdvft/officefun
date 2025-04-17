@@ -23,23 +23,21 @@
                 <polygon points="60,45 62,50 67,50 63,53 64,58 60,55 56,58 57,53 53,50 58,50" 
                         fill="#FFFFFF" />
               </svg>
-            
             </div>
           </NuxtLink>
+
           <!-- Desktop Navigation -->
           <nav class="hidden md:flex items-center space-x-1">
             <div 
               class="relative h-full"
               v-for="(item, index) in mainMenu" 
               :key="index"
-              @mouseenter="activeDropdown = index"
-              @mouseleave="activeDropdown = null"
+              @mouseenter="openMenu(index)"
+              @mouseleave="closeMenu(index)"
             >
               <button 
                 class="flex items-center h-full px-4 hover:bg-purple-700 transition-colors"
-                
               >
-                <component :is="item.icon" class="w-5 h-5 mr-2" />
                 <span>{{ item.title }}</span>
                 <svg 
                   class="w-4 h-4 ml-1 transition-transform" 
@@ -63,9 +61,9 @@
               >
                 <div 
                   v-show="activeDropdown === index"
-                  class="absolute left-0 mt-0 w-56 origin-top-left bg-white rounded-b-lg shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-30"
-                  @mouseenter="activeDropdown = index"
-                  @mouseleave="activeDropdown = null"
+                  class="absolute left-0 top-full w-56 bg-white rounded-b-lg shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-30"
+                  @mouseenter="openMenu(index)"
+                  @mouseleave="closeMenu(index)"
                 >
                   <div class="py-1">
                     <NuxtLink 
@@ -75,10 +73,7 @@
                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-900"
                       active-class="bg-purple-100 text-purple-900"
                     >
-                      <div class="flex items-center">
-                        <component :is="subItem.icon" class="w-4 h-4 mr-3 text-purple-500" />
-                        {{ subItem.title }}
-                      </div>
+                      {{ subItem.title }}
                     </NuxtLink>
                   </div>
                 </div>
@@ -86,17 +81,49 @@
             </div>
           </nav>
 
-          <!-- User & Mobile Menu Button -->
+          <!-- User Menu -->
           <div class="flex items-center space-x-4">
-            <button 
-              @click="logout"
-              class="flex items-center text-sm rounded-full focus:outline-none"
-            >
-              <span class="hidden md:inline mr-2">Đăng xuất</span>
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-              </svg>
-            </button>
+            <template v-if="!userStore.isAuthenticated">
+              <NuxtLink 
+                to="/login"
+                class="flex items-center text-sm rounded-full px-4 py-2 text-white hover:bg-purple-700 transition-colors"
+              >
+                <span>Đăng nhập</span>
+              </NuxtLink>
+            </template>
+            <template v-else>
+              <div 
+                class="dropdown relative"
+                @mouseenter="openMenu('auth')"
+                @mouseleave="closeMenu('auth')"
+              >
+                <button class="flex items-center space-x-2 focus:outline-none rounded-full px-4 py-2 hover:bg-purple-700 transition-colors">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                  <span class="hidden md:inline">{{ userStore.fullname || 'Tài khoản' }}</span>
+                </button>
+                <div 
+                  class="absolute top-full right-0 bg-white rounded-lg shadow-lg py-2 w-48 z-40 ring-1 ring-black ring-opacity-5"
+                  :class="{ 'block': activeMenu === 'auth', 'hidden': activeMenu !== 'auth' }"
+                  @mouseenter="openMenu('auth')"
+                  @mouseleave="closeMenu('auth')"
+                >
+                  <NuxtLink 
+                    to="/tai-khoan"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-900"
+                  >
+                    Tài khoản
+                  </NuxtLink>
+                  <button
+                    @click="logout"
+                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-900"
+                  >
+                    Đăng xuất
+                  </button>
+                </div>
+              </div>
+            </template>
             
             <!-- Mobile menu button -->
             <button 
@@ -124,7 +151,6 @@
               @click="toggleMobileDropdown(index)"
               class="flex items-center w-full px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-600"
             >
-              <component :is="item.icon" class="w-5 h-5 mr-2" />
               <span>{{ item.title }}</span>
               <svg 
                 class="w-4 h-4 ml-auto transition-transform" 
@@ -149,12 +175,36 @@
                 active-class="bg-purple-800 text-white"
                 @click="isMobileMenuOpen = false"
               >
-                <div class="flex items-center">
-                  <component :is="subItem.icon" class="w-4 h-4 mr-3" />
-                  {{ subItem.title }}
-                </div>
+                {{ subItem.title }}
               </NuxtLink>
             </div>
+          </div>
+          <!-- Mobile Auth Menu -->
+          <div class="pt-2 border-t border-purple-600">
+            <template v-if="!userStore.isAuthenticated">
+              <NuxtLink 
+                to="/login"
+                class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-600"
+                @click="isMobileMenuOpen = false"
+              >
+                Đăng nhập
+              </NuxtLink>
+            </template>
+            <template v-else>
+              <NuxtLink 
+                to="/tai-khoan"
+                class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-600"
+                @click="isMobileMenuOpen = false"
+              >
+                Tài khoản
+              </NuxtLink>
+              <button
+                @click="logout"
+                class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-600"
+              >
+                Đăng xuất
+              </button>
+            </template>
           </div>
         </div>
       </div>
@@ -169,159 +219,118 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { navigateTo } from '#app';
+import { ref, onMounted, onUnmounted } from 'vue'
+import { navigateTo } from '#app'
+import { useUserStore } from '~/stores/general'
 
-// Icons components (giữ nguyên như trước)
-// Icons components
-const HomeIcon = {
-  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-  </svg>`
-};
-
-const StarIcon = {
-  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.915a1 1 0 00.95-.69l1.519-4.674z" />
-  </svg>`
-};
-
-const HeartIcon = {
-  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-  </svg>`
-};
-
-const QuestionIcon = {
-  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>`
-};
-
-const BriefcaseIcon = {
-  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-  </svg>`
-};
-
-const ChildIcon = {
-  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0-1.104-.896-2-2-2s-2 .896-2 2c0 .738.402 1.378 1 1.723V15a1 1 0 001 1h2a1 1 0 001-1v-2.277c.598-.345 1-.985 1-1.723zm9 1c0-4.971-4.029-9-9-9s-9 4.029-9 9c0 2.232.811 4.275 2.156 5.854M12 3v1m5.657 1.343l-.707.707M21 12h-1m-1.343 5.657l-.707-.707M12 21v-1m-5.657-1.343l-.707.707" />
-  </svg>`
-};
-
-const UserIcon = {
-  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-  </svg>`
-};
-
-const ClockIcon = {
-  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>`
-};
-
-const BuildingIcon = {
-  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-  </svg>`
-};
-
-const CalendarIcon = {
-  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-  </svg>`
-};
-
-const UsersIcon = {
-  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-  </svg>`
-};
+const userStore = useUserStore()
 
 const mainMenu = [
   {
     title: "Cá nhân",
-   
     children: [
-      { title: "Tổng quan", path: "/xem"},
-      { title: "Thần số học mỗi ngày", path: "/xem/daily", icon: StarIcon },
-      { title: "Chu kỳ vận số", path: "/xem/full", icon: ClockIcon },
-      { title: "Giải đáp thắc mắc", path: "/xem/consult", icon: QuestionIcon },
-      { title: "Đặt danh xưng quốc tế", path: "/xem/nick-name", icon: UserIcon }
+      { title: "Tổng quan", path: "/xem" },
+      { title: "Thần số học mỗi ngày", path: "/xem/daily" },
+      { title: "Chu kỳ vận số", path: "/xem/full" },
+      { title: "Giải đáp thắc mắc", path: "/xem/consult" },
+      { title: "Đặt danh xưng quốc tế", path: "/xem/nick-name" }
     ]
   },
   {
     title: "Mối quan hệ",
-   
     children: [
-      { title: "Kiểm tra hợp nhau", path: "/xem/compatibility", icon: HeartIcon },
-      { title: "Chọn ngày cưới", path: "/xem/wedding-date", icon: CalendarIcon }
+      { title: "Kiểm tra hợp nhau", path: "/xem/compatibility" },
+      { title: "Chọn ngày cưới", path: "/xem/wedding-date" }
     ]
   },
   {
     title: "Nghề nghiệp",
     children: [
-      { title: "Định hướng nghề", path: "/xem/career", icon: BriefcaseIcon },
-      { title: "Tên thương hiệu", path: "/xem/numerology-brand", icon: BuildingIcon }
+      { title: "Định hướng nghề", path: "/xem/career" },
+      { title: "Tên thương hiệu", path: "/xem/numerology-brand" }
     ]
   },
   {
     title: "Gia đình",
     children: [
-      { title: "Thần số học trẻ em", path: "/xem/child", icon: ChildIcon },
-      { title: "Đặt tên con", path: "/xem/baby-name", icon: UsersIcon },
-     
+      { title: "Thần số học trẻ em", path: "/xem/child" },
+      { title: "Đặt tên con", path: "/xem/baby-name" }
     ]
-  },
-];
+  }
+]
 
-const isMobileMenuOpen = ref(false);
-const activeDropdown = ref(null);
-const activeMobileDropdown = ref(null);
-
-// Kiểm tra xem có item con nào đang active không
-const isActive = (children) => {
-  return children.some(child => {
-    const route = useRoute();
-    return route.path.startsWith(child.path);
-  });
-};
+const isMobileMenuOpen = ref(false)
+const activeDropdown = ref(null)
+const activeMobileDropdown = ref(null)
+const activeMenu = ref(null)
+const menuTimeout = ref(null)
 
 const toggleMobileDropdown = (index) => {
-  activeMobileDropdown.value = activeMobileDropdown.value === index ? null : index;
-};
+  activeMobileDropdown.value = activeMobileDropdown.value === index ? null : index
+}
 
-const logout = () => {
-  if (process.client) {
-    localStorage.removeItem('username');
-    navigateTo('/login');
+const openMenu = (menu) => {
+  clearTimeout(menuTimeout.value)
+  activeMenu.value = menu
+}
+
+const closeMenu = (menu) => {
+  menuTimeout.value = setTimeout(() => {
+    if (activeMenu.value === menu) {
+      activeMenu.value = null
+    }
+  }, 200)
+}
+
+const logout = async () => {
+  try {
+    await userStore.logout()
+    isMobileMenuOpen.value = false
+    activeMenu.value = null
+    await navigateTo('/login')
+  } catch (error) {
+    console.error('Logout error:', error)
   }
-};
+}
+
+onMounted(() => {
+  userStore.initialize()
+})
+
+onUnmounted(() => {
+  clearTimeout(menuTimeout.value)
+})
 </script>
 
 <style scoped>
-
 .rotate-180 {
   transform: rotate(180deg);
 }
 
-/* Smooth transitions */
-.bg-purple-900 {
-  background-color: #6b46c1;
+.dropdown {
+  position: relative;
 }
 
-/* Đảm bảo dropdown không bị ẩn khi di chuột qua */
-.group:hover .dropdown-content {
-  display: block;
+.dropdown-menu {
+  top: 100%;
+  margin-top: 0;
+  z-index: 40;
 }
 
-.dropdown-content {
-  display: none;
+.dropdown-menu {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform-origin: top center;
+  animation: fadeIn 0.2s ease-out;
 }
 
-.group:hover .dropdown-content {
-  display: block;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

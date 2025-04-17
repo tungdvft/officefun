@@ -26,7 +26,7 @@
             >
               Trang Chủ
             </NuxtLink>
-             <NuxtLink 
+            <NuxtLink 
               to="/gioi-thieu" 
               class="px-4 py-2 rounded-lg font-medium hover:text-purple-600 hover:bg-purple-50 transition-colors duration-200 h-full flex items-center"
               active-class="text-purple-600 bg-purple-50 font-semibold"
@@ -40,67 +40,6 @@
             >
               Kiến thức
             </NuxtLink>
-            <!-- Menu Khám Phá -->
-            <!-- <div 
-              class="dropdown h-full relative" 
-              @mouseenter="openMenu('explore')"
-              @mouseleave="closeMenu('explore')"
-            >
-              <button class="px-4 py-2 rounded-lg font-medium flex items-center h-full hover:text-purple-600 hover:bg-purple-50 transition-colors duration-200">
-                <span>Khám Phá</span>
-                <font-awesome-icon 
-                  :icon="['fas', 'chevron-down']" 
-                  class="ml-1 text-xs transition-transform duration-200"
-                  :class="{ 'rotate-180': activeMenu === 'explore' }"
-                />
-              </button>
-              <div 
-                class="dropdown-menu absolute top-full left-0 bg-white shadow-xl rounded-b-lg py-2 w-56 z-20 border border-gray-100"
-                :class="{ 'block': activeMenu === 'explore', 'hidden': activeMenu !== 'explore' }"
-              >
-                <NuxtLink 
-                  v-for="(item, i) in exploreItems" 
-                  :key="i"
-                  :to="item.path"
-                  class="block px-4 py-3 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200 flex items-center"
-                  active-class="bg-purple-50 text-purple-600"
-                >
-                  <font-awesome-icon :icon="item.icon" class="mr-3 w-4 text-center" />
-                  <span>{{ item.name }}</span>
-                </NuxtLink>
-              </div>
-            </div>
-
-            <div 
-              class="dropdown h-full relative" 
-              @mouseenter="openMenu('tools')"
-              @mouseleave="closeMenu('tools')"
-            >
-              <button class="px-4 py-2 rounded-lg font-medium flex items-center h-full hover:text-purple-600 hover:bg-purple-50 transition-colors duration-200">
-                <span>Công Cụ</span>
-                <font-awesome-icon 
-                  :icon="['fas', 'chevron-down']" 
-                  class="ml-1 text-xs transition-transform duration-200"
-                  :class="{ 'rotate-180': activeMenu === 'tools' }"
-                />
-              </button>
-              <div 
-                class="dropdown-menu absolute top-full left-0 bg-white shadow-xl rounded-b-lg py-2 w-56 z-20 border border-gray-100"
-                :class="{ 'block': activeMenu === 'tools', 'hidden': activeMenu !== 'tools' }"
-              >
-                <NuxtLink 
-                  v-for="(item, i) in toolsItems" 
-                  :key="i"
-                  :to="item.path"
-                  class="block px-4 py-3 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200 flex items-center"
-                  active-class="bg-purple-50 text-purple-600"
-                >
-                  <font-awesome-icon :icon="item.icon" class="mr-3 w-4 text-center" />
-                  <span>{{ item.name }}</span>
-                </NuxtLink>
-              </div>
-            </div> -->
-
             <NuxtLink 
               to="/blog" 
               class="px-4 py-2 rounded-lg font-medium hover:text-purple-600 hover:bg-purple-50 transition-colors duration-200 h-full flex items-center"
@@ -113,41 +52,44 @@
 
         <!-- Auth Buttons bên phải -->
         <div class="flex items-center space-x-4 ml-auto">
-          <div 
-            class="dropdown relative"
-            @mouseenter="openMenu('auth')"
-            @mouseleave="closeMenu('auth')"
-          >
-            <button class="flex items-center space-x-2 focus:outline-none group">
-              <div class="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-purple-100 transition-colors duration-300">
-                <font-awesome-icon :icon="['fas', 'user']" class="text-gray-600 group-hover:text-purple-600" />
-              </div>
-            </button>
-            <div 
-              class="dropdown-menu absolute top-full right-0 bg-white shadow-xl rounded-lg py-2 w-48 z-20 border border-gray-100 mt-1"
-              :class="{ 'block': activeMenu === 'auth', 'hidden': activeMenu !== 'auth' }"
+          <template v-if="!userStore.isAuthenticated">
+            <NuxtLink 
+              to="/dang-nhap"
+              class="block px-4 py-3 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
             >
-              <NuxtLink 
-                to="/dang-nhap"
-                class="block px-4 py-3 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
+              Đăng nhập
+            </NuxtLink>
+          </template>
+          <template v-else>
+            <div 
+              class="dropdown relative"
+              @mouseenter="openMenu('auth')"
+              @mouseleave="closeMenu('auth')"
+            >
+              <button class="flex items-center space-x-2 focus:outline-none group">
+                <div class="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-purple-100 transition-colors duration-300">
+                  <font-awesome-icon :icon="['fas', 'user']" class="text-gray-600 group-hover:text-purple-600" />
+                </div>
+              </button>
+              <div 
+                class="dropdown-menu absolute top-full right-0 bg-white shadow-xl rounded-lg py-2 w-48 z-30 border border-gray-100"
+                :class="{ 'block': activeMenu === 'auth', 'hidden': activeMenu !== 'auth' }"
               >
-                Đăng nhập
-              </NuxtLink>
-              <NuxtLink 
-                to="/dang-ky"
-                class="block px-4 py-3 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
-              >
-                Đăng ký
-              </NuxtLink>
-              <div class="border-t border-gray-200 my-1"></div>
-              <NuxtLink 
-                to="/tai-khoan"
-                class="block px-4 py-3 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
-              >
-                Tài khoản
-              </NuxtLink>
+                <NuxtLink 
+                  to="/tai-khoan"
+                  class="block px-4 py-3 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
+                >
+                  Tài khoản
+                </NuxtLink>
+                <button
+                  @click="logout"
+                  class="block w-full text-left px-4 py-3 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
+                >
+                  Đăng xuất
+                </button>
+              </div>
             </div>
-          </div>
+          </template>
         </div>
 
         <!-- Mobile menu button -->
@@ -191,20 +133,37 @@
             </NuxtLink>
           </div>
           <div class="px-4 py-3 border-t border-gray-100">
-            <NuxtLink 
-              to="/dang-nhap"
-              @click="mobileMenuOpen = false"
-              class="block w-full px-4 py-2 text-center rounded-lg font-medium bg-purple-50 text-purple-600 hover:bg-purple-100 transition-colors duration-200 mb-2"
-            >
-              Đăng nhập
-            </NuxtLink>
-            <NuxtLink 
-              to="/dang-ky"
-              @click="mobileMenuOpen = false"
-              class="block w-full px-4 py-2 text-center rounded-lg font-medium bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 transition-all duration-300 shadow"
-            >
-              Đăng ký
-            </NuxtLink>
+            <template v-if="!userStore.isAuthenticated">
+              <NuxtLink 
+                to="/dang-nhap"
+                @click="mobileMenuOpen = false"
+                class="block w-full px-4 py-2 text-center rounded-lg font-medium bg-purple-50 text-purple-600 hover:bg-purple-100 transition-colors duration-200 mb-2"
+              >
+                Đăng nhập
+              </NuxtLink>
+              <NuxtLink 
+                to="/dang-ky"
+                @click="mobileMenuOpen = false"
+                class="block w-full px-4 py-2 text-center rounded-lg font-medium bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 transition-all duration-300 shadow"
+              >
+                Đăng ký
+              </NuxtLink>
+            </template>
+            <template v-else>
+              <NuxtLink 
+                to="/tai-khoan"
+                @click="mobileMenuOpen = false"
+                class="block w-full px-4 py-2 text-center rounded-lg font-medium bg-purple-50 text-purple-600 hover:bg-purple-100 transition-colors duration-200 mb-2"
+              >
+                Tài khoản
+              </NuxtLink>
+              <button
+                @click="logout"
+                class="block w-full px-4 py-2 text-center rounded-lg font-medium bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 transition-all duration-300 shadow"
+              >
+                Đăng xuất
+              </button>
+            </template>
           </div>
         </div>
       </transition>
@@ -212,56 +171,84 @@
   </header>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      mobileMenuOpen: false,
-      activeMenu: null,
-      isSticky: false,
-      exploreItems: [
-        { name: 'Số Đường Đời', path: '/duong-doi', icon: ['fas', 'route'] },
-        { name: 'Số Linh Hồn', path: '/linh-hon', icon: ['fas', 'heart'] },
-        { name: 'Số Nhân Cách', path: '/nhan-cach', icon: ['fas', 'user'] },
-        { name: 'Số Sứ Mệnh', path: '/su-menh', icon: ['fas', 'bullseye'] }
-      ],
-      toolsItems: [
-        { name: 'Tính Số Đường Đời', path: '/tinh-duong-doi', icon: ['fas', 'calculator'] },
-        { name: 'Tính Số Ngày Sinh', path: '/tinh-ngay-sinh', icon: ['fas', 'birthday-cake'] },
-        { name: 'Tên Theo Thần Số Học', path: '/ten-than-so-hoc', icon: ['fas', 'signature'] },
-        { name: 'Biểu Đồ Ngày Sinh', path: '/bieu-do-ngay-sinh', icon: ['fas', 'chart-pie'] }
-      ],
-      mobileMenuItems: [
-        { name: 'Trang Chủ', path: '/' },
-        { name: 'Về chúng tôi', path: '/gioi-thieu' },
-        { name: 'Khám Phá', path: '/khám-phá' },
-        { name: 'Công Cụ', path: '/công-cụ' },
-        { name: 'Blog', path: '/blog' },
-        { name: 'Liên Hệ', path: '/lien-he' }
-      ]
+<script setup>
+import { useUserStore } from '~/stores/user'
+import { ref, onMounted, onUnmounted } from 'vue'
+
+// Khởi tạo userStore
+const userStore = useUserStore()
+
+// Khởi tạo dữ liệu
+const mobileMenuOpen = ref(false)
+const activeMenu = ref(null)
+const isSticky = ref(false)
+const header = ref(null)
+const menuTimeout = ref(null)
+
+const exploreItems = [
+  { name: 'Số Đường Đời', path: '/duong-doi', icon: ['fas', 'route'] },
+  { name: 'Số Linh Hồn', path: '/linh-hon', icon: ['fas', 'heart'] },
+  { name: 'Số Nhân Cách', path: '/nhan-cach', icon: ['fas', 'user'] },
+  { name: 'Số Sứ Mệnh', path: '/su-menh', icon: ['fas', 'bullseye'] }
+]
+const toolsItems = [
+  { name: 'Tính Số Đường Đời', path: '/tinh-duong-doi', icon: ['fas', 'calculator'] },
+  { name: 'Tính Số Ngày Sinh', path: '/tinh-ngay-sinh', icon: ['fas', 'birthday-cake'] },
+  { name: 'Tên Theo Thần Số Học', path: '/ten-than-so-hoc', icon: ['fas', 'signature'] },
+  { name: 'Biểu Đồ Ngày Sinh', path: '/bieu-do-ngay-sinh', icon: ['fas', 'chart-pie'] }
+]
+const mobileMenuItems = [
+  { name: 'Trang Chủ', path: '/' },
+  { name: 'Về chúng tôi', path: '/gioi-thieu' },
+  { name: 'Khám Phá', path: '/khám-phá' },
+  { name: 'Công Cụ', path: '/công-cụ' },
+  { name: 'Blog', path: '/blog' },
+  { name: 'Liên Hệ', path: '/lien-he' }
+]
+
+// Hàm xử lý
+const toggleMobileMenu = () => {
+  mobileMenuOpen.value = !mobileMenuOpen.value
+}
+
+const openMenu = (menu) => {
+  clearTimeout(menuTimeout.value)
+  activeMenu.value = menu
+}
+
+const closeMenu = (menu) => {
+  menuTimeout.value = setTimeout(() => {
+    if (activeMenu.value === menu) {
+      activeMenu.value = null
     }
-  },
-  methods: {
-    toggleMobileMenu() {
-      this.mobileMenuOpen = !this.mobileMenuOpen
-    },
-    openMenu(menu) {
-      this.activeMenu = menu
-    },
-    closeMenu() {
-      this.activeMenu = null
-    },
-    handleScroll() {
-      this.isSticky = window.scrollY > 10
-    }
-  },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll)
-  },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll)
+  }, 200) // Delay 200ms để chuột di chuyển sang submenu
+}
+
+const handleScroll = () => {
+  isSticky.value = window.scrollY > 10
+}
+
+const logout = async () => {
+  try {
+    await userStore.logout()
+    mobileMenuOpen.value = false
+    activeMenu.value = null
+    await navigateTo('/dang-nhap')
+  } catch (error) {
+    console.error('Logout error:', error)
   }
 }
+
+// Lifecycle hooks
+onMounted(() => {
+  userStore.initialize() // Khởi tạo user từ localStorage
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+  clearTimeout(menuTimeout.value)
+})
 </script>
 
 <style scoped>
@@ -275,7 +262,7 @@ export default {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-4px); /* Giảm translateY để gần button hơn */
   }
   to {
     opacity: 1;
@@ -292,5 +279,15 @@ header {
 nav {
   left: 50%;
   transform: translateX(-50%);
+}
+
+/* Loại bỏ khoảng trống giữa button và submenu */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  top: 100%; /* Đặt ngay sát dưới button */
+  margin-top: 0; /* Xóa margin-top */
 }
 </style>
