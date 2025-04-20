@@ -10,18 +10,7 @@
       <!-- Form -->
       <div class="p-6 md:p-8">
         <form @submit.prevent="handleRegister" class="space-y-6">
-          <div>
-            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Họ và tên</label>
-            <input
-              v-model="form.name"
-              type="text"
-              id="name"
-              placeholder="Nhập họ tên của bạn"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              required
-            >
-          </div>
-
+          <!-- Email field (moved to top as requested) -->
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
             <input
@@ -34,6 +23,32 @@
             >
           </div>
 
+          <!-- Full name field -->
+          <div>
+            <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Họ và tên đầy đủ</label>
+            <input
+              v-model="form.fullName"
+              type="text"
+              id="fullName"
+              placeholder="Nhập họ tên đầy đủ"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              required
+            >
+          </div>
+
+          <!-- Birthdate field -->
+          <div>
+            <label for="birthdate" class="block text-sm font-medium text-gray-700 mb-1">Ngày sinh</label>
+            <input
+              v-model="form.birthdate"
+              type="date"
+              id="birthdate"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              required
+            >
+          </div>
+
+          <!-- Password fields -->
           <div>
             <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>
             <input
@@ -58,6 +73,7 @@
             >
           </div>
 
+          <!-- Terms checkbox -->
           <div class="flex items-center">
             <input
               id="terms"
@@ -70,6 +86,7 @@
             </label>
           </div>
 
+          <!-- Submit button -->
           <button
             type="submit"
             class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-medium hover:shadow-md transition-all"
@@ -102,6 +119,7 @@
           </div>
         </div>
 
+        <!-- Login link -->
         <div class="mt-6 text-center">
           <p class="text-sm text-gray-600">
             Đã có tài khoản?
@@ -117,18 +135,15 @@
 import { ref } from 'vue';
 
 const form = ref({
-  name: '',
   email: '',
+  fullName: '',
+  birthdate: '',
   password: '',
   confirmPassword: ''
 });
 
 const handleRegister = () => {
   console.log('Register with:', form.value);
-};
-
-const registerWithGoogle = () => {
-  console.log('Register with Google');
-  // Implement Google OAuth here
+  // Thêm logic xử lý đăng ký ở đây
 };
 </script>

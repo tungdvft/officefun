@@ -36,25 +36,36 @@ export const useUserStore = defineStore('user', {
   },
 
   actions: {
-    // Khởi tạo từ localStorage
+    // Khởi tạo từ localStorage và kiểm tra trạng thái đăng nhập
     initialize() {
       if (process.client) {
         const savedUser = localStorage.getItem('user')
         if (savedUser) {
-          const userData = JSON.parse(savedUser)
-          this.$patch({
-            id: userData.id || null,
-            username: userData.username || '',
-            email: userData.email || '',
-            fullname: userData.fullname || '',
-            birthdate: userData.birthdate || null,
-            tokens: userData.tokens || 0,
-            isAuthenticated: userData.isAuthenticated || false
-          })
+          try {
+            const userData = JSON.parse(savedUser)
+            
+            // Kiểm tra xem có đủ thông tin để coi là đã đăng nhập hay không
+            const isValidAuth = userData.id && userData.isAuthenticated === true
+            
+            this.$patch({
+              id: userData.id || null,
+              username: userData.username || '',
+              email: userData.email || '',
+              fullname: userData.fullname || '',
+              birthdate: userData.birthdate || null,
+              tokens: userData.tokens || 0,
+              isAuthenticated: isValidAuth // Chỉ set true nếu có id và isAuthenticated === true
+            })
+            
+          } catch (e) {
+            console.error('Lỗi khi parse user data từ localStorage:', e)
+            this.clearUserData()
+          }
         }
       }
     },
-
+    
+    // Đồng bộ thông tin với server
     // Đăng nhập bằng Google
     async googleLogin(userData) {
       this.isLoading = true
@@ -87,17 +98,16 @@ export const useUserStore = defineStore('user', {
             id: response.user.id,
             email: response.user.email,
             fullname: response.user.displayName || '',
-            birthdate: response.user.birthdate || null
+            birthdate: response.user.birthdate || null,
+            isAuthenticated: true
           })
 
           // Lấy số dư token
           await this.fetchUserTokens()
-
-          // Lưu vào localStorage
-          this.saveToLocalStorage()
           return true // Đăng nhập thành công
         } else {
           this.error = 'Phản hồi API không hợp lệ: Thiếu success hoặc user'
+          this.isAuthenticated = false
           return false
         }
       } catch (error) {
@@ -126,7 +136,7 @@ export const useUserStore = defineStore('user', {
 
         if (response && typeof response.balance === 'number') {
           this.tokens = response.balance
-          this.saveToLocalStorage()
+       
         } else {
           this.error = 'Không thể lấy số dư token: Phản hồi không hợp lệ'
           console.error(this.error)
@@ -138,65 +148,49 @@ export const useUserStore = defineStore('user', {
     },
 
     // Lấy thông tin Numerology và trừ token
-     async fetchNumerology({ fullname, birthdate }) {
-      this.isLoading = true;
-      this.error = null;
-      this.numerologyData = null;
+    async fetchNumerology({ fullname, birthdate }) {
+      this.isLoading = true
+      this.error = null
+      this.numerologyData = null
+      
       try {
         // Lưu thông tin người dùng
-        this.fullname = fullname;
-        this.birthdate = birthdate;
+        this.fullname = fullname
+        this.birthdate = birthdate
         
         // Gọi API
-        const response = await fetch("/api/overview", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+        const response = await $fetch('/api/overview', {
+          method: 'POST',
+          body: {
             name: fullname.trim(),
             birthDate: birthdate.trim(),
-          }),
-        });
+          }
+        })
 
-        if (!response.ok) {
-          throw new Error(`API trả về lỗi: ${response.status} - ${response.statusText}`);
-        }
-        const data = await response.json();
-        if (data) {
-          this.numerologyData = data;
+        if (response) {
+          this.numerologyData = response
         } else {
-          throw new Error("Response rỗng hoặc không hợp lệ");
+          throw new Error('Response rỗng hoặc không hợp lệ')
         }
       } catch (err) {
-        this.error = err.message || "Có lỗi xảy ra khi gọi API. Vui lòng thử lại.";
-        console.error("Lỗi:", err);
+        this.error = err.message || 'Có lỗi xảy ra khi gọi API. Vui lòng thử lại.'
+        console.error('Lỗi:', err)
       } finally {
-        this.isLoading = false;
+        this.isLoading = false
       }
     },
 
-    // Lưu vào localStorage
-    saveToLocalStorage() {
+    // Xóa toàn bộ dữ liệu người dùng
+    clearUserData() {
       if (process.client) {
-        localStorage.setItem('user', JSON.stringify({
-          id: this.id,
-          username: this.username,
-          email: this.email,
-          fullname: this.fullname,
-          birthdate: this.birthdate,
-          tokens: this.tokens,
-          isAuthenticated: this.isAuthenticated
-        }))
+        localStorage.removeItem('user')
       }
+      this.$reset()
     },
 
     // Đăng xuất
     logout() {
-      this.$reset()
-      if (process.client) {
-        localStorage.removeItem('user')
-      }
+      this.clearUserData()
     },
 
     // Cập nhật tokens

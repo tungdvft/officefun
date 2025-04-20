@@ -156,7 +156,7 @@ import { ref } from 'vue';
 import { toast } from 'vue3-toastify';
 import { drawDOM, exportPDF } from '@progress/kendo-drawing';
 
-definePageMeta({ layout: 'dashboard' });
+definePageMeta({ layout: 'view' });
 
 const formData = ref({
   name: '',

@@ -8,6 +8,6 @@
 <script setup>
 import NumerologyFullReport from '~/components/NumerologyFullReport.vue';
 definePageMeta({
-  layout: 'dashboard'
+  layout: 'view'
 });
 </script>

@@ -158,7 +158,7 @@
 import { ref } from 'vue';
 import { toast } from 'vue3-toastify';
 
-definePageMeta({ layout: 'dashboard' });
+definePageMeta({ layout: 'view' });
 
 const formData = ref({
   name: '',

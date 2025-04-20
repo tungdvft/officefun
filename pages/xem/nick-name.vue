@@ -8,6 +8,6 @@
 <script setup>
 import NicknameGenerator from '~/components/NicknameGenerator.vue';
 definePageMeta({
-  layout: 'dashboard'
+  layout: 'view'
 });
 </script>

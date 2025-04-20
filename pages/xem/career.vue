@@ -8,6 +8,6 @@
 <script setup>
 import CareerGuidance from '~/components/CareerGuidance.vue';
 definePageMeta({
-  layout: 'dashboard'
+  layout: 'view'
 });
 </script>

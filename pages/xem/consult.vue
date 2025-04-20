@@ -8,6 +8,6 @@
 <script setup>
 import ConsultNumerology from '~/components/ConsultNumerology.vue';
 definePageMeta({
-  layout: 'dashboard'
+  layout: 'view'
 });
 </script>

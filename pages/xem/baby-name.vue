@@ -8,6 +8,6 @@
 <script setup>
 import BabyName from '~/components/BabyName.vue';
 definePageMeta({
-  layout: 'dashboard'
+  layout: 'view'
 });
 </script>

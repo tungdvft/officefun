@@ -390,7 +390,7 @@ import { ref, computed, onMounted } from "vue";
 import { useUserStore } from "~/stores/general";
 
 definePageMeta({
-  layout: "dashboard",
+  layout: "view",
 });
 
 // Khởi tạo store

@@ -245,7 +245,7 @@ import { toast } from 'vue3-toastify';
 import { drawDOM, exportPDF } from '@progress/kendo-drawing';
 import Chart from 'chart.js/auto';
 
-definePageMeta({ layout: 'dashboard' });
+definePageMeta({ layout: 'view' });
 
 const formData = ref({
   childName: '',

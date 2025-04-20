@@ -8,6 +8,6 @@
 <script setup>
 import WeddingDate from '~/components/WeddingDate.vue';
 definePageMeta({
-  layout: 'dashboard'
+  layout: 'view'
 });
 </script>

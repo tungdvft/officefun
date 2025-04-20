@@ -272,7 +272,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { toast } from 'vue3-toastify';
 
 definePageMeta({
-  layout: 'dashboard'
+  layout: 'view'
 });
 
 // Tabs

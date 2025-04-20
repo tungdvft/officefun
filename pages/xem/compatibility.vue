@@ -8,6 +8,6 @@
 <script setup>
 import CompatibilityNumerology from '~/components/CompatibilityNumerology.vue';
 definePageMeta({
-  layout: 'dashboard'
+  layout: 'view'
 });
 </script>

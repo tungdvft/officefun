@@ -172,7 +172,7 @@
 </template>
 
 <script setup>
-import { useUserStore } from '~/stores/user'
+import { useUserStore } from '~/stores/general'
 import { ref, onMounted, onUnmounted } from 'vue'
 
 // Khởi tạo userStore

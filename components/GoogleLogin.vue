@@ -36,7 +36,15 @@ export default {
         birthdate: user.birthdate || null
       };
     };
-
+     const saveToLocalStorage = (userData) => {
+      localStorage.setItem('user', JSON.stringify({
+        id: userData.id,
+        email: userData.email,
+        fullname: userData.fullname,
+        isAuthenticated: true,
+        tokens: userData.tokens || 0
+      }));
+    };
     // Load Google API script
     const loadGoogleScript = () => {
       return new Promise((resolve, reject) => {
@@ -76,7 +84,8 @@ export default {
       try {
         const response = await $fetch('/api/user/sync', {
           method: 'POST',
-          body: cleanData
+            body: cleanData,
+           tokens: 1000
         });
 
         console.log('API /api/user/sync response:', response); // Debug API response
@@ -95,8 +104,14 @@ export default {
             });
 
             // Fetch token balance if needed
-            await userStore.fetchUserTokens();
-
+              await userStore.fetchUserTokens();
+            console.log('tokens', userStore.tokens)
+             saveToLocalStorage({
+              id: user.id,
+              email: user.email,
+              fullname: user.displayName || user.name || '',
+            tokens: response.user.tokens,
+            });
             toast.success(`Chào mừng ${user.displayName || user.name || 'bạn'} quay trở lại!`);
             console.log('Redirecting to /xem'); // Debug redirect
             return await navigateTo('/xem'); // Ensure await for redirect
@@ -133,7 +148,8 @@ export default {
               }
 
               const userInfo = await fetchUserInfo(response.access_token);
-              await processGoogleLogin(userInfo);
+                await processGoogleLogin(userInfo);
+              
             } catch (error) {
               console.error('Google login error:', error);
               toast.error('Lỗi đăng nhập với Google: ' + (error.message || 'Không xác định'));

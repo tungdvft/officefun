@@ -9,6 +9,6 @@
 <script setup>
 import SuccessMap from '~/components/SuccessMap.vue';
 definePageMeta({
-  layout: 'dashboard'
+  layout: 'view'
 });
 </script>

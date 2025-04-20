@@ -8,6 +8,6 @@
 <script setup>
 import ChildNumerology from '~/components/ChildNumerology.vue';
 definePageMeta({
-  layout: 'dashboard'
+  layout: 'view'
 });
 </script>

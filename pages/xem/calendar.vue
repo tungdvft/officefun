@@ -6,6 +6,6 @@
 <script setup>
 import NumerologyCalendar from '~/components/NumerologyCalendar.vue';
 definePageMeta({
-  layout: 'dashboard'
+  layout: 'view'
 });
 </script>
