@@ -1,7 +1,14 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', '@nuxt/image', '@pinia/nuxt'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/image', '@pinia/nuxt','nuxt-gtag'],
+  gtag: {
+    id: 'G-8DV4NBC25C',
+     config: {
+      send_page_view: true,
+      debug_mode: true // Bật debug để xem log
+    }
+  },
   components: true,
   
   hooks: {

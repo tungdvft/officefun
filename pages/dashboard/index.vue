@@ -145,7 +145,9 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-
+definePageMeta({
+  layout: 'dashboard'
+})
 
 
 const timeRange = ref('7daysAgo')
