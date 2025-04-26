@@ -50,8 +50,8 @@
           </div>
         </nav>
 
-        <!-- Auth Buttons bên phải -->
-        <div class="flex items-center space-x-4 ml-auto">
+        <!-- Auth Buttons bên phải - Ẩn trên mobile -->
+        <div class="hidden md:flex items-center space-x-4 ml-auto">
           <template v-if="!userStore.isAuthenticated">
             <NuxtLink 
               to="/dang-nhap"
@@ -99,6 +99,7 @@
             class="p-2 rounded-full hover:bg-purple-50 transition-colors duration-200 focus:outline-none"
             aria-label="Menu"
           >
+            <!-- Icon sẽ thay đổi giữa bars và times dựa trên mobileMenuOpen -->
             <font-awesome-icon 
               :icon="['fas', mobileMenuOpen ? 'times' : 'bars']" 
               class="text-xl text-purple-600" 
@@ -117,8 +118,9 @@
         leave-to-class="opacity-0 max-h-0"
       >
         <div 
-          v-show="mobileMenuOpen"
-          class="md:hidden bg-white overflow-hidden"
+         v-show="mobileMenuOpen"
+      class="md:hidden fixed inset-x-0 top-16 bg-white shadow-lg z-40 overflow-y-auto"
+      style="max-height: calc(100vh - 64px)"
         >
           <div class="px-2 py-3 space-y-1">
             <NuxtLink 
@@ -172,7 +174,7 @@
 </template>
 
 <script setup>
-import { useUserStore } from '~/stores/general'
+import { useUserStore } from '~/stores/user'
 import { ref, onMounted, onUnmounted } from 'vue'
 
 // Khởi tạo userStore
@@ -200,10 +202,8 @@ const toolsItems = [
 const mobileMenuItems = [
   { name: 'Trang Chủ', path: '/' },
   { name: 'Về chúng tôi', path: '/gioi-thieu' },
-  { name: 'Khám Phá', path: '/khám-phá' },
-  { name: 'Công Cụ', path: '/công-cụ' },
-  { name: 'Blog', path: '/blog' },
-  { name: 'Liên Hệ', path: '/lien-he' }
+  { name: 'Kiến thức', path: '/kien-thuc' },
+  { name: 'Blog', path: '/blog' }
 ]
 
 // Hàm xử lý
@@ -241,7 +241,6 @@ const logout = async () => {
 
 // Lifecycle hooks
 onMounted(() => {
-  userStore.initialize() // Khởi tạo user từ localStorage
   window.addEventListener('scroll', handleScroll)
 })
 
@@ -289,5 +288,34 @@ nav {
 .dropdown-menu {
   top: 100%; /* Đặt ngay sát dưới button */
   margin-top: 0; /* Xóa margin-top */
+}
+.fixed {
+  position: fixed;
+}
+
+.inset-x-0 {
+  left: 0;
+  right: 0;
+}
+
+.top-16 {
+  top: 4rem; /* 64px - chiều cao header */
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.z-40 {
+  z-index: 40;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+/* Đảm bảo header có z-index cao hơn */
+header {
+  z-index: 50;
 }
 </style>

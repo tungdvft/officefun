@@ -15,161 +15,119 @@
   </button>
 </template>
 
-<script>
-import { ref } from 'vue';
-import { useUserStore } from '~/stores/general';
-import { toast } from 'vue3-toastify';
+<script setup>
+import { ref } from 'vue'
+import { useUserStore } from '~/stores/user'
+import { toast } from 'vue3-toastify'
 
-export default {
-  setup() {
-    const loading = ref(false);
-    const config = useRuntimeConfig();
-    const userStore = useUserStore();
+const config = useRuntimeConfig()
+const userStore = useUserStore()
+const loading = ref(false)
 
-    // Validate user data before sending to API
-    const validateUserData = (user) => {
-      console.log('Google userInfo:', user); // Debug Google user info
-      return {
-        id: String(user.sub || ''), // Ensure ID is a string, fallback to empty
-        email: user.email || '',
-        displayName: user.name || '',
-        birthdate: user.birthdate || null
-      };
-    };
-     const saveToLocalStorage = (userData) => {
-      localStorage.setItem('user', JSON.stringify({
-        id: userData.id,
-        email: userData.email,
-        fullname: userData.fullname,
-        isAuthenticated: true,
-        tokens: userData.tokens || 0
-      }));
-    };
-    // Load Google API script
-    const loadGoogleScript = () => {
-      return new Promise((resolve, reject) => {
-        if (window.google?.accounts?.oauth2) {
-          return resolve();
-        }
+const handleGoogleLogin = async () => {
+  if (loading.value) return
 
-        const script = document.createElement('script');
-        script.src = 'https://accounts.google.com/gsi/client';
-        script.async = true;
-        script.defer = true;
-        script.onload = () => resolve();
-        script.onerror = () => reject(new Error('Failed to load Google API'));
-        document.head.appendChild(script);
-      });
-    };
+  try {
+    loading.value = true
+    
+    // Load Google API client library
+    await new Promise((resolve, reject) => {
+      if (window.google?.accounts?.oauth2) return resolve()
+      
+      const script = document.createElement('script')
+      script.src = 'https://accounts.google.com/gsi/client'
+      script.async = true
+      script.defer = true
+      script.onload = resolve
+      script.onerror = () => reject(new Error('Failed to load Google API'))
+      document.head.appendChild(script)
+    })
 
-    // Fetch user info from Google
-    const fetchUserInfo = async (accessToken) => {
-      const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-        headers: { Authorization: `Bearer ${accessToken}` }
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch user info');
-      }
-
-      const userInfo = await response.json();
-      console.log('Fetched Google userInfo:', userInfo); // Debug Google response
-      return userInfo;
-    };
-
-    // Process Google login and sync with backend
-    const processGoogleLogin = async (userInfo) => {
-      const cleanData = validateUserData(userInfo);
-
-      try {
-        const response = await $fetch('/api/user/sync', {
-          method: 'POST',
-            body: cleanData,
-           tokens: 1000
-        });
-
-        console.log('API /api/user/sync response:', response); // Debug API response
-
-        // Validate API response
-        if (response && typeof response.success === 'boolean' && response.user) {
-          const { success, user } = response;
-
-          if (success && user.id && user.email) {
-            // Update user store
-            userStore.$patch({
-              id: user.id,
-              email: user.email,
-              fullname: user.displayName || user.name || '',
-              isAuthenticated: true
-            });
-
-            // Fetch token balance if needed
-              await userStore.fetchUserTokens();
-            console.log('tokens', userStore.tokens)
-             saveToLocalStorage({
-              id: user.id,
-              email: user.email,
-              fullname: user.displayName || user.name || '',
-            tokens: response.user.tokens,
-            });
-            toast.success(`Chào mừng ${user.displayName || user.name || 'bạn'} quay trở lại!`);
-            console.log('Redirecting to /xem'); // Debug redirect
-            return await navigateTo('/xem'); // Ensure await for redirect
-          } else {
-            console.error('API response invalid: success or user data missing', response);
-            toast.error('Đăng nhập thất bại: Dữ liệu người dùng không hợp lệ');
+    // Initialize Google Identity Services
+    const client = google.accounts.oauth2.initTokenClient({
+      client_id: '14260610616-tifcr2fa8031gmkiujk1l096rl8j67n4.apps.googleusercontent.com',
+      scope: 'email profile openid',
+      callback: async (response) => {
+        try {
+          if (response.error) {
+            throw new Error(response.error)
           }
-        } else {
-          console.error('Malformed API response:', response);
-          toast.error('Đăng nhập thất bại: Phản hồi API không hợp lệ');
-        }
-      } catch (error) {
-        console.error('Login error:', error);
-        toast.error('Lỗi đăng nhập: ' + (error.message || 'Không xác định'));
-      }
-    };
 
-    // Handle Google login
-    const handleGoogleLogin = async () => {
-      if (loading.value) return;
-
-      try {
-        loading.value = true;
-
-        await loadGoogleScript();
-
-        const client = google.accounts.oauth2.initTokenClient({
-          client_id: config.public.googleClientId || '14260610616-tifcr2fa8031gmkiujk1l096rl8j67n4.apps.googleusercontent.com',
-          scope: 'email profile openid',
-          callback: async (response) => {
-            try {
-              if (response.error) {
-                throw new Error(response.error);
-              }
-
-              const userInfo = await fetchUserInfo(response.access_token);
-                await processGoogleLogin(userInfo);
-              
-            } catch (error) {
-              console.error('Google login error:', error);
-              toast.error('Lỗi đăng nhập với Google: ' + (error.message || 'Không xác định'));
-            } finally {
-              loading.value = false;
+          // Get user info from Google
+          const userInfo = await fetchUserInfo(response.access_token)
+          
+          // Send to backend to process
+          const { user, isNewUser, token } = await $fetch('/api/auth/google', {
+            method: 'POST',
+            body: {
+              email: userInfo.email,
+              name: userInfo.name,
+              picture: userInfo.picture
             }
+          })
+
+          // Save user to store and localStorage
+          saveUserData({
+            ...user,
+            token,
+            isAuthenticated: true
+          })
+
+          // Show success message
+          toast.success(isNewUser 
+            ? 'Tài khoản mới đã được tạo! Vui lòng hoàn thiện thông tin' 
+            : `Chào mừng ${user.fullname || userInfo.name} quay trở lại!`)
+
+          // Redirect based on profile completion
+          if (user.fullname && user.birthdate) {
+            await navigateTo('/xem')
+          } else {
+            await navigateTo('/hoan-thanh')
           }
-        });
-
-        client.requestAccessToken();
-      } catch (error) {
-        console.error('Initialization error:', error);
-        toast.error('Không thể khởi tạo Google API');
-        loading.value = false;
+        } catch (error) {
+          console.error('Google login error:', error)
+          toast.error(error.message || 'Đăng nhập thất bại')
+        } finally {
+          loading.value = false
+        }
       }
-    };
+    })
 
-    return { loading, handleGoogleLogin };
+    // Request access token
+    client.requestAccessToken()
+  } catch (error) {
+    console.error('Error loading Google API:', error)
+    toast.error('Không thể khởi tạo Google Sign-In')
+    loading.value = false
   }
-};
+}
+
+const fetchUserInfo = async (accessToken) => {
+  const response = await $fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  })
+  return response
+}
+
+// Hàm lưu thông tin user vào cả store và localStorage
+const saveUserData = (userData) => {
+  // Lưu vào Pinia store
+  userStore.setUser(userData)
+  
+  // Lưu vào localStorage
+  localStorage.setItem('auth', JSON.stringify({
+    id: userData.id,
+    email: userData.email,
+    fullname: userData.fullname,
+    birthdate: userData.birthdate,
+    avatar: userData.avatar,
+    token: userData.token,
+    isAuthenticated: true,
+    lastLogin: new Date().toISOString()
+  }))
+}
 </script>
 
 <style scoped>

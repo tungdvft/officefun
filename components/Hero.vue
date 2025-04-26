@@ -119,7 +119,7 @@
 </template>
 
 <script setup>
-import { useUserStore } from "~/stores/general";
+import { useUserStore } from "~/stores/user";
 
 // Khởi tạo form
 const form = ref({

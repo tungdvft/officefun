@@ -38,19 +38,28 @@
             <div class="flex items-center">
               <input
                 id="remember-me"
+                v-model="rememberMe"
                 type="checkbox"
                 class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
               >
               <label for="remember-me" class="ml-2 block text-sm text-gray-700">Ghi nhớ đăng nhập</label>
             </div>
-            <router-link to="/quen-mat-khau" class="text-sm text-purple-600 hover:text-purple-500">Quên mật khẩu?</router-link>
+            <NuxtLink to="/quen-mat-khau" class="text-sm text-purple-600 hover:text-purple-500">Quên mật khẩu?</NuxtLink>
           </div>
 
           <button
             type="submit"
-            class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-medium hover:shadow-md transition-all"
+            class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-medium hover:shadow-md transition-all flex justify-center items-center"
+            :disabled="isLoading"
           >
-            Đăng Nhập
+            <span v-if="!isLoading">Đăng Nhập</span>
+            <span v-else class="flex items-center">
+              <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Đang xử lý...
+            </span>
           </button>
         </form>
 
@@ -81,7 +90,7 @@
         <div class="mt-6 text-center">
           <p class="text-sm text-gray-600">
             Chưa có tài khoản?
-            <router-link to="/dang-ky" class="text-purple-600 font-medium hover:text-purple-500">Đăng ký ngay</router-link>
+            <NuxtLink to="/dang-ky" class="text-purple-600 font-medium hover:text-purple-500">Đăng ký ngay</NuxtLink>
           </p>
         </div>
       </div>
@@ -90,19 +99,68 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { useUserStore } from '~/stores/user'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
+const userStore = useUserStore()
 const form = ref({
   email: '',
   password: ''
-});
+})
 
-const handleLogin = () => {
-  console.log('Login with:', form.value);
-};
+const rememberMe = ref(false)
+const isLoading = ref(false)
 
-const loginWithGoogle = () => {
-  console.log('Login with Google');
-  // Implement Google OAuth here
-};
+// Khởi tạo store khi component được tạo
+
+
+const handleLogin = async () => {
+  if (!form.value.email || !form.value.password) {
+    toast.error('Vui lòng nhập đầy đủ email và mật khẩu', {
+      position: 'top-center',
+      theme: 'colored'
+    })
+    return
+  }
+
+  isLoading.value = true
+
+  try {
+    const response = await $fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify({
+        email: form.value.email,
+        password: form.value.password,
+        remember: rememberMe.value
+      })
+    })
+
+    // Lưu thông tin user vào store
+    userStore.setUser(response.user, response.token)
+
+    toast.success('Đăng nhập thành công!', {
+      position: 'top-center',
+      theme: 'colored'
+    })
+
+    // Chuyển hướng sau 1 giây
+    setTimeout(() => {
+      navigateTo('/xem')
+    }, 1000)
+  } catch (error) {
+    let errorMessage = 'Đăng nhập thất bại. Vui lòng thử lại'
+    
+    if (error.response && error.response._data) {
+      errorMessage = error.response._data.message || errorMessage
+    }
+
+    toast.error(errorMessage, {
+      position: 'top-center',
+      theme: 'colored'
+    })
+  } finally {
+    isLoading.value = false
+  }
+}
 </script>

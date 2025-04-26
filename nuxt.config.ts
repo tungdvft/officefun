@@ -9,6 +9,11 @@ export default defineNuxtConfig({
       debug_mode: true // Bật debug để xem log
     }
   },
+   runtimeConfig: {
+    public: {
+      gaPropertyId: '8DV4NBC25C' // GA4 Property ID (numeric)
+    }
+  },
   components: true,
   
   hooks: {

@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { 
   faCalculator, 
   faBars, 
+  faTools,
+  faTimes, 
   faChevronDown, 
   faUserCircle, 
   faSignInAlt, 
@@ -15,6 +17,8 @@ import {
 library.add(
   faCalculator,
   faBars,
+  faTools,
+  faTimes,
   faChevronDown,
   faUserCircle,
   faSignInAlt,

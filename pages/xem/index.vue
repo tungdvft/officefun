@@ -387,7 +387,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { useUserStore } from "~/stores/general";
+import { useUserStore } from "~/stores/user";
 
 definePageMeta({
   layout: "view",

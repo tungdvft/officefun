@@ -18,7 +18,7 @@
             <tr>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Người dùng</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Premium</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ngày sinh</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tokens</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Thao tác</th>
             </tr>
@@ -28,27 +28,21 @@
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                   <div class="flex-shrink-0 h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
-                    <span class="text-purple-600 font-medium">{{ user.displayName?.charAt(0) || 'U' }}</span>
+                    <span class="text-purple-600 font-medium">{{ user.fullname?.charAt(0) || 'U' }}</span>
                   </div>
                   <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">{{ user.displayName || 'Chưa có tên' }}</div>
-                    <div class="text-sm text-gray-500">{{ user.profession || '-' }}</div>
+                    <div class="text-sm font-medium text-gray-900">{{ user.fullname || 'Chưa có tên' }}</div>
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {{ user.email || '-' }}
               </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span v-if="user.isPremium" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                  Premium
-                </span>
-                <span v-else class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                  Thường
-                </span>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ user.birthdate || '-' }}
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {{ userTokens[user.id]?.balance || 0 }} tokens
+                {{ user.tokens || 0 }} tokens
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <button @click="editUser(user)" class="text-purple-600 hover:text-purple-900 mr-3">Sửa</button>
@@ -58,7 +52,7 @@
           </tbody>
         </table>
       </div>
-      
+
       <!-- Pagination -->
       <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
         <div class="flex-1 flex justify-between sm:hidden">
@@ -118,22 +112,20 @@
         <form @submit.prevent="saveUser">
           <div class="space-y-4">
             <div>
-              <label class="block text-sm font-medium text-gray-700">Tên hiển thị</label>
-              <input v-model="editingUser.displayName" type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+              <label class="block text-sm font-medium text-gray-700">Họ tên</label>
+              <input v-model="editingUser.fullname" type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-purple-500 focus:border-purple-500">
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700">Email</label>
               <input v-model="editingUser.email" type="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-purple-500 focus:border-purple-500">
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700">Tokens</label>
-              <input v-model="editingUser.tokenBalance" type="number" min="0" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+              <label class="block text-sm font-medium text-gray-700">Ngày sinh</label>
+              <input v-model="editingUser.birthdate" type="date" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-purple-500 focus:border-purple-500">
             </div>
             <div>
-              <label class="flex items-center">
-                <input v-model="editingUser.isPremium" type="checkbox" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
-                <span class="ml-2 text-sm text-gray-700">Tài khoản Premium</span>
-              </label>
+              <label class="block text-sm font-medium text-gray-700">Tokens</label>
+              <input v-model.number="editingUser.tokens" type="number" min="0" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-purple-500 focus:border-purple-500">
             </div>
           </div>
           <div class="mt-6 flex justify-end space-x-3">
@@ -151,180 +143,145 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue';
+
 definePageMeta({
   layout: 'dashboard'
-})
+});
 
-const users = ref([])
-const userTokens = ref({})
-const showEditModal = ref(false)
-const loading = ref(true)
-const error = ref(null)
+const users = ref([]);
+const showEditModal = ref(false);
+const loading = ref(true);
+const error = ref(null);
 
 const editingUser = ref({
   id: '',
-  displayName: '',
+  fullname: '',
   email: '',
-  isPremium: false,
-  tokenBalance: 0
-})
+  birthdate: '',
+  tokens: 0
+});
 
 const pagination = ref({
   page: 1,
   limit: 10,
   total: 0,
   totalPages: 1
-})
-const fetchUserTokens = async (userId) => {
-  try {
-    const tokenInfo = await $fetch(`/api/token`, {
-      query: { userId },
-      // Thêm retry logic nếu cần
-      retry: 3,
-      retryDelay: 1000
-    })
-    return tokenInfo || { balance: 1000 }
-  } catch (error) {
-    console.error(`Error fetching tokens for user ${userId}:`, error)
-    return { balance: 1000 } // Trả về giá trị mặc định nếu có lỗi
-  }
-}
-// Fetch users and their tokens
+});
+
+// Fetch users
 const fetchUsers = async () => {
   try {
-    loading.value = true
-    error.value = null
-    
-    // 1. Fetch users with pagination
-    const usersResponse = await $fetch(`/api/user?page=${pagination.value.page}&limit=${pagination.value.limit}`)
-    
-    if (usersResponse && usersResponse.data) {
-      users.value = Array.isArray(usersResponse.data) ? usersResponse.data : []
-      
-      // Update pagination info
-      if (usersResponse.pagination) {
-        pagination.value = {
-          page: usersResponse.pagination.page,
-          limit: usersResponse.pagination.limit,
-          total: usersResponse.pagination.total,
-          totalPages: usersResponse.pagination.totalPages
-        }
+    loading.value = true;
+    error.value = null;
+
+    // Gọi API users.get.js để lấy danh sách người dùng
+    const response = await $fetch(`/api/users?page=${pagination.value.page}&limit=${pagination.value.limit}`, {
+      method: 'GET',
+      headers: {
+        // Thêm headers xác thực nếu cần
       }
-      
-      // 2. Fetch tokens for each user - sử dụng Promise.allSettled để xử lý lỗi từng request
-      const tokenPromises = users.value.map(user => fetchUserTokens(user.id))
-      const tokensResults = await Promise.allSettled(tokenPromises)
-      
-      const tokensMap = {}
-      tokensResults.forEach((result, index) => {
-        if (result.status === 'fulfilled') {
-          tokensMap[users.value[index].id] = result.value
-        } else {
-          console.error('Error fetching token:', result.reason)
-          tokensMap[users.value[index].id] = { balance: 1000 } // Giá trị mặc định
-        }
-      })
-      
-      userTokens.value = tokensMap
+    });
+
+    if (response.success && response.data.users) {
+      users.value = response.data.users;
+      // Cập nhật thông tin phân trang
+      pagination.value.total = users.value.length; // Giả sử API trả về tổng số
+      pagination.value.totalPages = Math.ceil(pagination.value.total / pagination.value.limit);
     } else {
-      users.value = []
-      userTokens.value = {}
+      users.value = [];
+      throw new Error('Không có dữ liệu người dùng');
     }
   } catch (err) {
-    console.error('Failed to fetch users:', err)
-    error.value = err.message || 'Failed to load users'
-    users.value = []
-    userTokens.value = {}
+    console.error('Lỗi khi lấy danh sách người dùng:', err);
+    error.value = err.message || 'Không thể tải danh sách người dùng';
+    users.value = [];
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
 // Pagination controls
 const prevPage = () => {
   if (pagination.value.page > 1) {
-    pagination.value.page--
-    fetchUsers()
+    pagination.value.page--;
+    fetchUsers();
   }
-}
+};
 
 const nextPage = () => {
   if (pagination.value.page < pagination.value.totalPages) {
-    pagination.value.page++
-    fetchUsers()
+    pagination.value.page++;
+    fetchUsers();
   }
-}
+};
 
 const goToPage = (page) => {
   if (page >= 1 && page <= pagination.value.totalPages) {
-    pagination.value.page = page
-    fetchUsers()
+    pagination.value.page = page;
+    fetchUsers();
   }
-}
+};
 
 // Edit user
 const editUser = (user) => {
   editingUser.value = {
     id: user.id,
-    displayName: user.displayName,
+    fullname: user.fullname,
     email: user.email,
-    isPremium: Boolean(user.isPremium), // Convert to boolean
-    tokenBalance: userTokens.value[user.id]?.balance || 0
-  }
-  showEditModal.value = true
-}
+    birthdate: user.birthdate,
+    tokens: user.tokens || 0
+  };
+  showEditModal.value = true;
+};
+
 // Save user changes
 const saveUser = async () => {
   try {
-    loading.value = true
-    
-    // Update user info
-    await $fetch(`/api/user/${editingUser.value.id}`, {
-      method: 'PUT',
+    loading.value = true;
+
+    // Gọi API users/[id].patch.js để cập nhật thông tin người dùng
+    await $fetch(`/api/users/${editingUser.value.id}`, {
+      method: 'PATCH',
       body: {
-        displayName: editingUser.value.displayName,
-        email: editingUser.value.email,
-        isPremium: editingUser.value.isPremium ? 1 : 0 // Convert to number
+        fullname: editingUser.value.fullname,
+        birthdate: editingUser.value.birthdate,
+        tokens: parseInt(editingUser.value.tokens) || 0
       }
-    })
-    
-    // Update token balance
-    await $fetch(`/api/token/${editingUser.value.id}`, {
-      method: 'PUT',
-      body: {
-        balance: parseInt(editingUser.value.tokenBalance) || 0
-      }
-    })
-    
-    // Refresh data
-    await fetchUsers()
-    showEditModal.value = false
+    });
+
+    // Làm mới danh sách người dùng
+    await fetchUsers();
+    showEditModal.value = false;
   } catch (err) {
-    console.error('Failed to save user:', err)
-    alert('Lỗi khi lưu thay đổi: ' + (err.message || 'Lỗi không xác định'))
+    console.error('Lỗi khi lưu thay đổi:', err);
+    alert('Lỗi khi lưu thay đổi: ' + (err.message || 'Lỗi không xác định'));
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
 // Delete user
 const deleteUser = async (userId) => {
-  if (!confirm('Bạn có chắc chắn muốn xóa người dùng này?')) return
-  
+  if (!confirm('Bạn có chắc chắn muốn xóa người dùng này?')) return;
+
   try {
-    loading.value = true
-    await $fetch(`/api/user/${userId}`, { method: 'DELETE' })
-    await fetchUsers() // Refresh the list
+    loading.value = true;
+    // Giả sử có API DELETE, bạn có thể cần tạo API này
+    await $fetch(`/api/users/${userId}`, {
+      method: 'DELETE'
+    });
+    await fetchUsers(); // Làm mới danh sách
   } catch (err) {
-    console.error('Failed to delete user:', err)
-    alert('Lỗi khi xóa người dùng: ' + (err.message || 'Lỗi không xác định'))
+    console.error('Lỗi khi xóa người dùng:', err);
+    alert('Lỗi khi xóa người dùng: ' + (err.message || 'Lỗi không xác định'));
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
 // Initial fetch
 onMounted(() => {
-  fetchUsers()
-})
+  fetchUsers();
+});
 </script>

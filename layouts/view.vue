@@ -196,7 +196,7 @@
 <script setup>
 import { ref } from 'vue'
 import { navigateTo } from '#app'
-import { useUserStore } from '~/stores/general'
+import { useUserStore } from '~/stores/user'
 
 const userStore = useUserStore()
 onMounted(() => {
