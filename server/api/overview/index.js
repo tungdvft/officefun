@@ -8,13 +8,14 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Thiếu thông tin: name và birthDate là bắt buộc.' });
   }
 
-  // Gọi 5 API song song
-  const [coreResult, innerResult, timeResult, fateResult, growthResult] = await Promise.all([
+  // Gọi 6 API song song, bao gồm extended-numbers
+  const [coreResult, innerResult, timeResult, fateResult, growthResult, extendedResult] = await Promise.all([
     $fetch('/api/overview/core-numbers', { method: 'POST', body: { name, birthDate } }),
     $fetch('/api/overview/inner-numbers', { method: 'POST', body: { name, birthDate } }),
     $fetch('/api/overview/time-numbers', { method: 'POST', body: { name, birthDate } }),
     $fetch('/api/overview/fate-numbers', { method: 'POST', body: { name, birthDate } }),
-    $fetch('/api/overview/growth-numbers', { method: 'POST', body: { name, birthDate } })
+    $fetch('/api/overview/growth-numbers', { method: 'POST', body: { name, birthDate } }),
+    $fetch('/api/overview/extended-numbers', { method: 'POST', body: { name, birthDate } })
   ]);
 
   // Tổng hợp kết quả
@@ -23,14 +24,16 @@ export default defineEventHandler(async (event) => {
     ...innerResult.numbers,
     ...timeResult.numbers,
     ...fateResult.numbers,
-    ...growthResult.numbers
+    ...growthResult.numbers,
+    ...extendedResult.numbers
   };
   const interpretations = {
     ...coreResult.interpretations,
     ...innerResult.interpretations,
     ...timeResult.interpretations,
     ...fateResult.interpretations,
-    ...growthResult.interpretations
+    ...growthResult.interpretations,
+    ...extendedResult.interpretations
   };
   const overview = growthResult.overview;
 

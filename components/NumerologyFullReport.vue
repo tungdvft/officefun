@@ -73,6 +73,7 @@
                 <h4 class="text-lg font-semibold text-gray-800">Năm {{ year }}</h4>
               </div>
               <div class="prose prose-teal max-w-none">
+                <p class="text-gray-700"><strong>Số cá nhân: {{ numerologyData.cycles[year].number }}</strong></p>
                 <p class="text-gray-700">{{ numerologyData.cycles[year].description }}</p>
               </div>
             </div>
@@ -91,7 +92,7 @@ import Chart from 'chart.js/auto';
 const formData = ref({
   name: '',
   birthdate: '',
-  gender: 'male'
+  gender: 'male',
 });
 const numerologyData = ref(null);
 const loading = ref(false);
@@ -105,7 +106,8 @@ const createCycleChart = () => {
   if (chartInstance) chartInstance.destroy();
 
   const years = Object.keys(numerologyData.value.cycles);
-  const numbers = years.map(year => numerologyData.value.cycles[year].number);
+  const energyLevels = years.map((year) => numerologyData.value.cycles[year].energyLevel || 5); // Mặc định 5 nếu thiếu
+  const numbers = years.map((year) => numerologyData.value.cycles[year].number);
 
   chartInstance = new Chart(cycleChart.value, {
     type: 'line',
@@ -113,8 +115,8 @@ const createCycleChart = () => {
       labels: years,
       datasets: [
         {
-          label: 'Số cá nhân',
-          data: numbers,
+          label: 'Mức năng lượng',
+          data: energyLevels,
           borderColor: '#14B8A6',
           backgroundColor: 'rgba(20, 184, 166, 0.2)',
           fill: true,
@@ -122,9 +124,9 @@ const createCycleChart = () => {
           pointBackgroundColor: '#14B8A6',
           pointBorderColor: '#fff',
           pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: '#14B8A6'
-        }
-      ]
+          pointHoverBorderColor: '#14B8A6',
+        },
+      ],
     },
     options: {
       responsive: true,
@@ -132,21 +134,26 @@ const createCycleChart = () => {
         legend: { display: false },
         tooltip: {
           callbacks: {
-            label: (context) => `Số ${context.raw}`
-          }
-        }
+            label: (context) => {
+              const year = context.label;
+              const number = numbers[context.dataIndex];
+              const description = numerologyData.value.cycles[year].description.split('.')[0];
+              return `Số ${number} - Năng lượng: ${context.raw}/10 - ${description}`;
+            },
+          },
+        },
       },
       scales: {
         y: {
           beginAtZero: true,
-          max: 11,
-          title: { display: true, text: 'Số cá nhân' }
+          max: 10,
+          title: { display: true, text: 'Mức năng lượng' },
         },
         x: {
-          title: { display: true, text: 'Năm' }
-        }
-      }
-    }
+          title: { display: true, text: 'Năm' },
+        },
+      },
+    },
   });
 };
 
@@ -188,27 +195,27 @@ const generateReport = async () => {
   try {
     const response = await $fetch('/api/numerology/full', {
       method: 'POST',
-      body: { name: formData.value.name, birthdate: formattedBirthdate, gender: formData.value.gender }
+      body: { name: formData.value.name, birthdate: formattedBirthdate, gender: formData.value.gender },
     });
 
     numerologyData.value = response.numerology;
     toast.success('Tạo báo cáo chu kỳ vận số hoàn tất!');
   } catch (error) {
     console.error('Error fetching numerology data:', error);
-    toast.error('Không thể tạo báo cáo từ API, sử dụng dữ liệu mẫu!');
+    toast.warn('Không thể tạo báo cáo từ API, sử dụng dữ liệu mẫu!');
     numerologyData.value = {
       cycles: {
-        2025: { number: 1, description: 'Năm 2025 với số 1 mang năng lượng khởi đầu. Đây là thời điểm bắt đầu dự án mới và tự tin tiến lên.' },
-        2026: { number: 2, description: 'Năm 2026 với số 2 tập trung vào hợp tác. Hãy xây dựng mối quan hệ và tìm sự cân bằng.' },
-        2027: { number: 3, description: 'Năm 2027 với số 3 tràn đầy sáng tạo. Hãy thể hiện bản thân và tận hưởng niềm vui.' },
-        2028: { number: 4, description: 'Năm 2028 với số 4 là xây dựng nền tảng. Làm việc chăm chỉ để đạt sự ổn định.' },
-        2029: { number: 5, description: 'Năm 2029 với số 5 mang đến thay đổi. Khám phá cơ hội mới và sống năng động.' },
-        2030: { number: 6, description: 'Năm 2030 với số 6 nhấn mạnh gia đình. Chăm sóc người thân và tạo sự hài hòa.' },
-        2031: { number: 7, description: 'Năm 2031 với số 7 khuyến khích nội tâm. Suy ngẫm và học hỏi sẽ mang lại giá trị.' },
-        2032: { number: 8, description: 'Năm 2032 với số 8 là năm thành công. Tận dụng tham vọng để đạt mục tiêu lớn.' },
-        2033: { number: 9, description: 'Năm 2033 với số 9 đánh dấu hoàn thiện. Chia sẻ kinh nghiệm và chuẩn bị khởi đầu mới.' },
-        2034: { number: 1, description: 'Năm 2034 với số 1 mang năng lượng khởi đầu. Đây là thời điểm bắt đầu dự án mới và tự tin tiến lên.' }
-      }
+        2025: { number: 1, description: 'Năm 2025 với số 1 mang năng lượng khởi đầu. Đây là thời điểm bắt đầu dự án mới và tự tin tiến lên.', energyLevel: 5 },
+        2026: { number: 2, description: 'Năm 2026 với số 2 tập trung vào hợp tác. Hãy xây dựng mối quan hệ và tìm sự cân bằng.', energyLevel: 4 },
+        2027: { number: 3, description: 'Năm 2027 với số 3 tràn đầy sáng tạo. Hãy thể hiện bản thân và tận hưởng niềm vui.', energyLevel: 6 },
+        2028: { number: 4, description: 'Năm 2028 với số 4 là xây dựng nền tảng. Làm việc chăm chỉ để đạt sự ổn định.', energyLevel: 3 },
+        2029: { number: 5, description: 'Năm 2029 với số 5 mang đến thay đổi. Khám phá cơ hội mới và sống năng động.', energyLevel: 8 },
+        2030: { number: 6, description: 'Năm 2030 với số 6 nhấn mạnh gia đình. Chăm sóc người thân và tạo sự hài hòa.', energyLevel: 4 },
+        2031: { number: 7, description: 'Năm 2031 với số 7 khuyến khích nội tâm. Suy ngẫm và học hỏi sẽ mang lại giá trị.', energyLevel: 2 },
+        2032: { number: 8, description: 'Năm 2032 với số 8 là năm thành công. Tận dụng tham vọng để đạt mục tiêu lớn.', energyLevel: 7 },
+        2033: { number: 9, description: 'Năm 2033 với số 9 đánh dấu hoàn thiện. Chia sẻ kinh nghiệm và chuẩn bị khởi đầu mới.', energyLevel: 3 },
+        2034: { number: 1, description: 'Năm 2034 với số 1 mang năng lượng khởi đầu. Đây là thời điểm bắt đầu dự án mới và tự tin tiến lên.', energyLevel: 5 },
+      },
     };
   } finally {
     loading.value = false;

@@ -394,7 +394,133 @@ const NUMEROLOGY_MEANINGS = {
       keywords: ["Yêu thương", "Cho đi", "Nâng đỡ"]
     }
   },
+    // Ý nghĩa số ngày sinh (Birth Day)
+   // Ý nghĩa các đỉnh cao (Peak Numbers)
+  peaks: {
+    1: {
+      theme: "Tự lập và khẳng định bản thân",
+      advice: "Tập trung vào phát triển cá nhân và sự nghiệp"
+    },
+    2: {
+      theme: "Hợp tác và cân bằng",
+      advice: "Phát triển các mối quan hệ và sự nhạy cảm"
+    },
+    3: {
+      theme: "Sáng tạo và giao tiếp",
+      advice: "Thể hiện tài năng và kết nối với người khác"
+    },
+    4: {
+      theme: "Ổn định và xây dựng",
+      advice: "Làm việc chăm chỉ để tạo nền tảng vững chắc"
+    },
+    5: {
+      theme: "Thay đổi và tự do",
+      advice: "Mở lòng với những trải nghiệm mới"
+    },
+    6: {
+      theme: "Trách nhiệm và gia đình",
+      advice: "Chăm sóc người thân và tạo sự hài hòa"
+    },
+    7: {
+      theme: "Nội tâm và trí tuệ",
+      advice: "Dành thời gian cho học hỏi và phát triển tâm linh"
+    },
+    8: {
+      theme: "Thành tựu và tài chính",
+      advice: "Tập trung vào mục tiêu vật chất và sự nghiệp"
+    },
+    9: {
+      theme: "Nhân đạo và hoàn thiện",
+      advice: "Cho đi và kết thúc những chu kỳ cũ"
+    }
+  },
 
+  // Ý nghĩa các thử thách (Challenge Numbers)
+  challenges: {
+    1: "Học cách tự lập mà không trở nên độc đoán",
+    2: "Phát triển sự tự tin mà không phụ thuộc vào người khác",
+    3: "Tập trung năng lượng vào những mục tiêu cụ thể",
+    4: "Giữ vững kỷ luật nhưng không trở nên cứng nhắc",
+    5: "Tìm sự cân bằng giữa tự do và trách nhiệm",
+    6: "Chăm sóc người khác mà không quên bản thân",
+    7: "Kết nối với thế giới bên ngoài nhiều hơn",
+    8: "Sử dụng quyền lực một cách khôn ngoan",
+    9: "Học cách buông bỏ và tha thứ"
+  },
+
+  // Ý nghĩa số ngày sinh (Birth Day)
+  birthDay: {
+    1: "Người độc lập, có tinh thần lãnh đạo",
+    2: "Người hòa giải, nhạy cảm và kiên nhẫn",
+    3: "Người giao tiếp, sáng tạo và vui vẻ",
+    4: "Người thực tế, có tổ chức và đáng tin cậy",
+    5: "Người phiêu lưu, linh hoạt và tò mò",
+    6: "Người nuôi dưỡng, có trách nhiệm và đồng cảm",
+    7: "Người phân tích, trí tuệ và tâm linh",
+    8: "Người tham vọng, có óc tổ chức và thực tế",
+    9: "Người nhân đạo, rộng lượng và sáng tạo",
+    11: "Người truyền cảm hứng với trực giác mạnh mẽ",
+    22: "Người kiến tạo với khả năng hiện thực hóa ước mơ"
+  },
+
+  // Ý nghĩa các số trong ngũ giác (Pentagon Numbers)
+  pentagon: {
+    physical: {
+      1: "Năng động và độc lập",
+      2: "Nhịp nhàng và cân bằng",
+      3: "Linh hoạt và biểu cảm",
+      4: "Bền bỉ và ổn định",
+      5: "Nhanh nhẹn và thích nghi",
+      6: "Dẻo dai và nuôi dưỡng",
+      7: "Tinh tế và có kiểm soát",
+      8: "Mạnh mẽ và kiên định",
+      9: "Uyển chuyển và thích ứng"
+    },
+    mental: {
+      1: "Tư duy độc lập và sáng tạo",
+      2: "Nhạy cảm và phân tích",
+      3: "Nhanh trí và hài hước",
+      4: "Logic và thực tế",
+      5: "Tò mò và đa dạng",
+      6: "Cân bằng và có trách nhiệm",
+      7: "Phân tích và chiêm nghiệm",
+      8: "Chiến lược và tham vọng",
+      9: "Rộng lượng và bao quát"
+    },
+    emotional: {
+      1: "Mạnh mẽ và quyết đoán",
+      2: "Nhạy cảm và đồng cảm",
+      3: "Vui vẻ và nhiệt tình",
+      4: "Ổn định và kiên định",
+      5: "Biến động và nhiệt huyết",
+      6: "Yêu thương và chăm sóc",
+      7: "Sâu sắc và kín đáo",
+      8: "Kiểm soát và cường độ cao",
+      9: "Rộng lượng và bao dung"
+    },
+    intuitive: {
+      1: "Trực giác nhanh nhạy",
+      2: "Nhạy cảm với năng lượng",
+      3: "Linh cảm sáng tạo",
+      4: "Trực giác thực tế",
+      5: "Linh hoạt và mở rộng",
+      6: "Trực giác nuôi dưỡng",
+      7: "Sâu sắc và tâm linh",
+      8: "Trực giác chiến lược",
+      9: "Trực giác nhân đạo"
+    },
+    spiritual: {
+      1: "Độc lập trong hành trình tâm linh",
+      2: "Hòa hợp với vũ trụ",
+      3: "Thể hiện tâm linh qua sáng tạo",
+      4: "Xây dựng nền tảng tâm linh vững chắc",
+      5: "Khám phá tự do tâm linh",
+      6: "Phục vụ qua tình yêu thương",
+      7: "Chiêm nghiệm và khai sáng",
+      8: "Biểu hiện vật chất từ tâm linh",
+      9: "Hoàn thiện và giác ngộ"
+    }
+  },
   // ================ CÔNG CỤ PHÂN TÍCH ================
   analyzers: {
     /**

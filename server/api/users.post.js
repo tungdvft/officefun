@@ -21,12 +21,13 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    // Bắt đầu giao dịch
+    console.log('Bắt đầu giao dịch');
     await db.run('BEGIN TRANSACTION');
 
-    // Kiểm tra email đã tồn tại
+    console.log('Kiểm tra email:', body.email);
     const existingUser = await db.get('SELECT id FROM users WHERE email = ?', [body.email]);
     if (existingUser) {
+      console.log('Email đã tồn tại');
       await db.run('ROLLBACK');
       throw createError({
         statusCode: 409,
@@ -34,22 +35,22 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Hash mật khẩu
+    console.log('Hash mật khẩu');
     const hashedPassword = await hash(body.password, 10);
 
-    // Tạo người dùng mới
+    console.log('Tạo người dùng mới');
     const result = await db.run(
       'INSERT INTO users (email, fullname, birthdate, password, tokens) VALUES (?, ?, ?, ?, ?)',
       [body.email, body.fullName, body.birthdate, hashedPassword, 100]
     );
 
-    // Ghi giao dịch khởi tạo tokens
+    console.log('Ghi giao dịch tokens');
     await db.run(
       'INSERT INTO token_transactions (user_id, amount, description) VALUES (?, ?, ?)',
       [result.lastID, 100, 'Khởi tạo tokens cho tài khoản mới']
     );
 
-    // Hoàn tất giao dịch
+    console.log('Hoàn tất giao dịch');
     await db.run('COMMIT');
 
     return {
@@ -58,11 +59,16 @@ export default defineEventHandler(async (event) => {
       userId: result.lastID,
     };
   } catch (error) {
-    // Hoàn tác nếu có lỗi
-    await db.run('ROLLBACK');
+    console.error('Lỗi trong quá trình xử lý:', error);
+    try {
+      await db.run('ROLLBACK');
+    } catch (rollbackError) {
+      console.error('Rollback thất bại:', rollbackError.message);
+    }
     throw createError({
       statusCode: error.statusCode || 500,
       statusMessage: error.message || 'Lỗi khi tạo tài khoản',
     });
   }
+  // Xóa khối finally hoặc không gọi db.close()
 });

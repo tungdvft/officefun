@@ -1,6 +1,5 @@
 <template>
   <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-
     <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-6">
       <div class="flex items-center">
         <div class="p-3 rounded-full bg-white bg-opacity-20 mr-4">
@@ -15,16 +14,12 @@
       </div>
     </div>
     <!-- Form nhập liệu -->
-    <div
-      class="p-6 space-y-6"
-    >
+    <div class="p-6 space-y-6">
       <div class="p-6 sm:p-8">
         <form @submit.prevent="fetchNumerology" class="space-y-4">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label for="name" class="block text-sm font-medium text-gray-700 mb-1"
-                >Họ và tên</label
-              >
+              <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Họ và tên</label>
               <div class="relative">
                 <input
                   v-model="name"
@@ -34,31 +29,15 @@
                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
                   required
                 />
-                <div
-                  class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
-                >
-                  <svg
-                    class="h-5 w-5 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                 </div>
               </div>
             </div>
             <div>
-              <label
-                for="birthDate"
-                class="block text-sm font-medium text-gray-700 mb-1"
-                >Ngày sinh</label
-              >
+              <label for="birthDate" class="block text-sm font-medium text-gray-700 mb-1">Ngày sinh</label>
               <div class="relative">
                 <input
                   v-model="birthDate"
@@ -70,21 +49,9 @@
                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
                   required
                 />
-                <div
-                  class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
-                >
-                  <svg
-                    class="h-5 w-5 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
               </div>
@@ -102,19 +69,8 @@
               fill="none"
               viewBox="0 0 24 24"
             >
-              <circle
-                class="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                stroke-width="4"
-              ></circle>
-              <path
-                class="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
             {{ isLoading ? "Đang phân tích..." : "Xem kết quả" }}
           </button>
@@ -122,19 +78,15 @@
         </form>
       </div>
     </div>
-
+     <LifePathCalculator />
     <!-- Kết quả -->
     <div v-if="numerologyData && numerologyData.numerology" class="max-w-4xl mx-auto space-y-6">
       <!-- Profile header -->
       <div class="bg-white rounded-xl shadow-md overflow-hidden">
-        <div
-          class="p-6 sm:p-8 text-center bg-gradient-to-r from-blue-50 to-purple-50"
-        >
+        <div class="p-6 sm:p-8 text-center bg-gradient-to-r from-blue-50 to-purple-50">
           <div class="inline-block relative">
             <!-- Nền không gian vũ trụ -->
-            <div
-              class="space-background w-64 h-64 rounded-full relative flex items-center justify-center"
-            >
+            <div class="space-background w-64 h-64 rounded-full relative flex items-center justify-center">
               <!-- Số Đường đời -->
               <div class="glow-number">
                 {{ numerologyData.numerology.profile.numbers.lifePath }}
@@ -151,43 +103,18 @@
       <!-- Tổng quan -->
       <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
         <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-          <svg
-            class="w-5 h-5 text-purple-600 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            ></path>
+          <svg class="w-5 h-5 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
           Tổng quan
         </h3>
         <div class="space-y-4">
           <!-- Cốt lõi - Màu xanh dương -->
-          <div
-            class="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-400 shadow-sm hover:shadow-md transition-shadow duration-200"
-          >
+          <div class="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-400 shadow-sm hover:shadow-md transition-shadow duration-200">
             <div class="flex items-center mb-2">
-              <div
-                class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3"
-              >
-                <svg
-                  class="w-4 h-4 text-blue-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 13l4 4L19 7"
-                  ></path>
+              <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
               </div>
               <h4 class="font-semibold text-blue-700">Cốt lõi</h4>
@@ -198,25 +125,11 @@
           </div>
 
           <!-- Tương lai gần - Màu xanh lá -->
-          <div
-            class="p-4 bg-green-50 rounded-lg border-l-4 border-green-400 shadow-sm hover:shadow-md transition-shadow duration-200"
-          >
+          <div class="p-4 bg-green-50 rounded-lg border-l-4 border-green-400 shadow-sm hover:shadow-md transition-shadow duration-200">
             <div class="flex items-center mb-2">
-              <div
-                class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3"
-              >
-                <svg
-                  class="w-4 h-4 text-green-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  ></path>
+              <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                 </svg>
               </div>
               <h4 class="font-semibold text-green-700">Tương lai gần</h4>
@@ -227,25 +140,11 @@
           </div>
 
           <!-- Thách thức và sức mạnh - Màu cam -->
-          <div
-            class="p-4 bg-orange-50 rounded-lg border-l-4 border-orange-400 shadow-sm hover:shadow-md transition-shadow duration-200"
-          >
+          <div class="p-4 bg-orange-50 rounded-lg border-l-4 border-orange-400 shadow-sm hover:shadow-md transition-shadow duration-200">
             <div class="flex items-center mb-2">
-              <div
-                class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mr-3"
-              >
-                <svg
-                  class="w-4 h-4 text-orange-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                  ></path>
+              <div class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mr-3">
+                <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                 </svg>
               </div>
               <h4 class="font-semibold text-orange-700">Thách thức & Sức mạnh</h4>
@@ -256,25 +155,11 @@
           </div>
 
           <!-- Mục tiêu dài hạn - Màu tím -->
-          <div
-            class="p-4 bg-purple-50 rounded-lg border-l-4 border-purple-400 shadow-sm hover:shadow-md transition-shadow duration-200"
-          >
+          <div class="p-4 bg-purple-50 rounded-lg border-l-4 border-purple-400 shadow-sm hover:shadow-md transition-shadow duration-200">
             <div class="flex items-center mb-2">
-              <div
-                class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-3"
-              >
-                <svg
-                  class="w-4 h-4 text-purple-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                  ></path>
+              <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                 </svg>
               </div>
               <h4 class="font-semibold text-purple-700">Mục tiêu dài hạn</h4>
@@ -285,31 +170,12 @@
           </div>
 
           <!-- Cách người khác nhìn bạn - Màu chàm -->
-          <div
-            class="p-4 bg-indigo-50 rounded-lg border-l-4 border-indigo-400 shadow-sm hover:shadow-md transition-shadow duration-200"
-          >
+          <div class="p-4 bg-indigo-50 rounded-lg border-l-4 border-indigo-400 shadow-sm hover:shadow-md transition-shadow duration-200">
             <div class="flex items-center mb-2">
-              <div
-                class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center mr-3"
-              >
-                <svg
-                  class="w-4 h-4 text-indigo-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  ></path>
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                  ></path>
+              <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center mr-3">
+                <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                 </svg>
               </div>
               <h4 class="font-semibold text-indigo-700">Cách người khác nhìn bạn</h4>
@@ -320,25 +186,11 @@
           </div>
 
           <!-- Công cụ hỗ trợ - Màu hồng -->
-          <div
-            class="p-4 bg-pink-50 rounded-lg border-l-4 border-pink-400 shadow-sm hover:shadow-md transition-shadow duration-200"
-          >
+          <div class="p-4 bg-pink-50 rounded-lg border-l-4 border-pink-400 shadow-sm hover:shadow-md transition-shadow duration-200">
             <div class="flex items-center mb-2">
-              <div
-                class="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center mr-3"
-              >
-                <svg
-                  class="w-4 h-4 text-pink-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                  ></path>
+              <div class="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center mr-3">
+                <svg class="w-4 h-4 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                 </svg>
               </div>
               <h4 class="font-semibold text-pink-700">Công cụ hỗ trợ</h4>
@@ -352,9 +204,7 @@
 
       <!-- Giải thích chi tiết -->
       <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
-        <div
-          class="p-6 bg-gradient-to-r from-blue-50 to-purple-50 border-b border-gray-200"
-        >
+        <div class="p-6 bg-gradient-to-r from-blue-50 to-purple-50 border-b border-gray-200">
           <h3 class="text-xl font-bold text-gray-800">Giải thích chi tiết các chỉ số</h3>
         </div>
         <div class="divide-y divide-gray-200">
@@ -364,18 +214,17 @@
             class="p-6 hover:bg-gray-50 transition-colors duration-200"
           >
             <div class="flex items-start">
-              <div
-                class="flex-shrink-0 bg-indigo-100 text-indigo-600 rounded-md p-2 mr-4"
-              >
-                <span class="font-bold">{{
-                  numerologyData.numerology.profile.numbers[key]
-                }}</span>
+              <div class="flex-shrink-0 bg-indigo-100 text-indigo-600 rounded-md p-2 mr-4">
+                <span class="font-bold">{{ formatNumberDisplay(key, numerologyData.numerology.profile.numbers[key]) }}</span>
               </div>
               <div>
-                <h4 class="text-lg font-semibold text-gray-800 mb-1">
-                  {{ formatKey(key) }}
-                </h4>
-                <p class="text-gray-600">{{ interpretation }}</p>
+                <h4 class="text-lg font-semibold text-gray-800 mb-1">{{ formatKey(key) }}</h4>
+                <div v-if="key === 'peaks'" class="space-y-2">
+                  <div v-for="(peak, index) in parsePeaks(interpretation)" :key="index" class="text-gray-600">
+                    <strong>{{ peak.title }}:</strong> {{ peak.text }}
+                  </div>
+                </div>
+                <p v-else class="text-gray-600">{{ interpretation }}</p>
               </div>
             </div>
           </div>
@@ -422,6 +271,39 @@ const keyMap = {
   maturity: "Số Trưởng thành",
   power: "Số Năng lượng",
   subconsciousSelf: "Số Tiềm thức",
+  peaks: "Đỉnh cao cuộc đời",
+  hiddenChallenges: "Thử thách ẩn",
+  karmic: "Nghiệp quả",
+  pentagon: "Ngũ giác số",
+};
+
+// Hàm định dạng giá trị số cho hiển thị
+const formatNumberDisplay = (key, value) => {
+  if (key === 'peaks') {
+    return `Đỉnh 1: ${value.firstPeak}, Đỉnh 2: ${value.secondPeak}, Đỉnh 3: ${value.thirdPeak}, Đỉnh 4: ${value.fourthPeak}`;
+  } else if (key === 'hiddenChallenges') {
+    return value.ultimateChallenge;
+  } else if (key === 'karmic') {
+    return value.inLifePath ? 'Có' : 'Không';
+  } else if (key === 'pentagon') {
+    return value.mental;
+  }
+  return value;
+};
+
+// Hàm phân tích diễn giải peaks thành các đoạn riêng biệt
+const parsePeaks = (interpretation) => {
+  if (!interpretation) return [];
+  // Nếu interpretation là chuỗi, phân tách bằng \n
+  const lines = typeof interpretation === 'string' 
+    ? interpretation.split('\n').filter(line => line.trim())
+    : Array.isArray(interpretation) 
+      ? interpretation 
+      : [];
+  return lines.map((line, index) => ({
+    title: `Đỉnh ${index + 1}`,
+    text: line.trim()
+  }));
 };
 
 // Các chỉ số chính để hiển thị nổi bật
@@ -523,9 +405,6 @@ onMounted(() => {
     numerologyData.value = userStore.numerologyData;
   }
 });
-
-// Hàm tải PDF (nếu bạn vẫn dùng)
-
 </script>
 
 <style scoped>
