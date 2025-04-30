@@ -1,0 +1,59 @@
+{
+  "personal_months": [
+    {
+      "number": 4,
+      "events": "Công việc ổn định hơn, cơ hội tổ chức và xây dựng nền tảng vững chắc. Có thể đối mặt với khối lượng công việc lớn hoặc cần sắp xếp lại cuộc sống.",
+      "focus": "Lập kế hoạch chi tiết cho công việc và tài chính. Hoàn thành các nhiệm vụ đang dở. Tập trung vào kỷ luật và tổ chức."
+    },
+    {
+      "number": 5,
+      "events": "Thay đổi bất ngờ, cơ hội mới trong công việc hoặc mối quan hệ. Có thể xuất hiện cơ hội du lịch hoặc trải nghiệm mới.",
+      "focus": "Thử nghiệm ý tưởng mới, linh hoạt với thay đổi. Tận dụng cơ hội để học hỏi và mở rộng mạng lưới quan hệ."
+    },
+    {
+      "number": 6,
+      "events": "Tập trung vào gia đình và các mối quan hệ. Có thể phải giải quyết trách nhiệm cá nhân hoặc hỗ trợ người thân.",
+      "focus": "Chăm sóc người thân, tạo môi trường hài hòa. Dành thời gian xây dựng các mối quan hệ bền vững."
+    },
+    {
+      "number": 1,
+      "events": "Cơ hội khởi đầu dự án mới hoặc đưa ra sáng kiến. Năng lượng thúc đẩy sự độc lập và sáng tạo.",
+      "focus": "Đặt mục tiêu cá nhân, bắt đầu dự án mới. Tự tin đưa ra quyết định và dẫn dắt."
+    },
+    {
+      "number": 2,
+      "events": "Tăng cường giao tiếp và hợp tác. Có thể xuất hiện cơ hội làm việc nhóm hoặc củng cố quan hệ.",
+      "focus": "Lắng nghe trực giác, làm việc nhóm. Xây dựng mạng lưới quan hệ và giải quyết mâu thuẫn."
+    },
+    {
+      "number": 3,
+      "events": "Năng lượng sáng tạo dồi dào, cơ hội thể hiện bản thân qua nghệ thuật hoặc giao tiếp.",
+      "focus": "Tham gia hoạt động sáng tạo, chia sẻ ý tưởng. Tận hưởng niềm vui và lan tỏa năng lượng tích cực."
+    },
+    {
+      "number": 7,
+      "events": "Thời điểm suy ngẫm và khám phá nội tâm. Có thể xuất hiện cơ hội học tập hoặc phát triển tâm linh.",
+      "focus": "Dành thời gian thiền định, đọc sách, hoặc học kỹ năng mới. Tập trung vào phát triển bản thân."
+    },
+    {
+      "number": 8,
+      "events": "Cơ hội đạt được thành công trong công việc hoặc tài chính. Có thể đối mặt với áp lực từ tham vọng.",
+      "focus": "Tập trung vào mục tiêu tài chính, quản lý dự án lớn. Xây dựng thương hiệu cá nhân."
+    },
+    {
+      "number": 9,
+      "events": "Thời điểm hoàn thiện và chia sẻ kinh nghiệm. Có thể kết thúc một giai đoạn hoặc tham gia hoạt động cộng đồng.",
+      "focus": "Hoàn thành dự án dang dở, tham gia từ thiện. Chuẩn bị cho khởi đầu mới."
+    },
+    {
+      "number": 11,
+      "events": "Năng lượng trực giác mạnh mẽ, cơ hội dẫn dắt bằng cảm hứng. Có thể gặp những tình huống thử thách cảm xúc.",
+      "focus": "Lắng nghe trực giác, dẫn dắt dự án sáng tạo. Chia sẻ tầm nhìn với cộng đồng."
+    },
+    {
+      "number": 22,
+      "events": "Cơ hội xây dựng dự án lớn hoặc tạo giá trị lâu dài. Có thể đối mặt với áp lực từ trách nhiệm.",
+      "focus": "Lập kế hoạch chiến lược, thực hiện dự án tầm cỡ. Quản lý thời gian và tài nguyên hiệu quả."
+    }
+  ]
+}

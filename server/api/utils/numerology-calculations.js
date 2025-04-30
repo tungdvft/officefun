@@ -1,4 +1,3 @@
-// numerology-calculations.js
 const NumerologyUtils = {
   reduceToSingleDigit: (number) => {
     if ([11, 22, 33].includes(number)) return number; // Giữ nguyên Master Numbers
@@ -45,7 +44,7 @@ const VOWELS = {
   ý: 7, ỳ: 7, ỷ: 7, ỹ: 7, ỵ: 7
 };
 
-// 1. Số Đường đời (Life Path Number) - Hoàn thiện
+// 1. Số Đường đời (Life Path Number)
 function calculateLifePathNumber(birthDate) {
   if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate)) {
     throw new Error('Invalid date format. Use DD/MM/YYYY');
@@ -73,7 +72,7 @@ function calculateLifePathNumber(birthDate) {
   return reduceWithMaster(reducedDay + reducedMonth + reducedYear);
 }
 
-// 2. Số Vận mệnh (Expression Number) - Cải tiến
+// 2. Số Vận mệnh (Expression Number)
 function calculateExpressionNumber(name) {
   if (!name || typeof name !== 'string') return 1;
   
@@ -85,7 +84,7 @@ function calculateExpressionNumber(name) {
   return NumerologyUtils.reduceToSingleDigit(sum);
 }
 
-// 3. Số Linh hồn (Soul Urge Number) - Cải tiến
+// 3. Số Linh hồn (Soul Urge Number)
 function calculateSoulUrgeNumber(name) {
   if (!name || typeof name !== 'string') return 1;
   
@@ -97,7 +96,7 @@ function calculateSoulUrgeNumber(name) {
   return NumerologyUtils.reduceToSingleDigit(sum);
 }
 
-// 4. Số Nhân cách (Personality Number) - Cải tiến
+// 4. Số Nhân cách (Personality Number)
 function calculatePersonalityNumber(name) {
   if (!name || typeof name !== 'string') return 1;
   
@@ -109,7 +108,7 @@ function calculatePersonalityNumber(name) {
   return NumerologyUtils.reduceToSingleDigit(sum);
 }
 
-// 5. Số Thái độ (Attitude Number) - Hoàn thiện
+// 5. Số Thái độ (Attitude Number)
 function calculateAttitudeNumber(birthDate) {
   try {
     const lifePath = calculateLifePathNumber(birthDate);
@@ -120,7 +119,7 @@ function calculateAttitudeNumber(birthDate) {
   }
 }
 
-// 6. Số Ngày sinh (Birth Day Number) - Hoàn thiện
+// 6. Số Ngày sinh (Birth Day Number)
 function calculateBirthDayNumber(birthDate) {
   if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate)) return 1;
   
@@ -131,7 +130,7 @@ function calculateBirthDayNumber(birthDate) {
   return NumerologyUtils.reduceToSingleDigit(day);
 }
 
-// 7. Số Năm cá nhân (Personal Year Number) - Hoàn thiện
+// 7. Số Năm cá nhân (Personal Year Number)
 function calculatePersonalYearNumber(birthDate) {
   try {
     const today = new Date();
@@ -150,7 +149,7 @@ function calculatePersonalYearNumber(birthDate) {
   }
 }
 
-// 8. Số Tháng cá nhân (Personal Month Number) - Hoàn thiện
+// 8. Số Tháng cá nhân (Personal Month Number)
 function calculatePersonalMonthNumber(birthDate) {
   try {
     const today = new Date();
@@ -162,7 +161,7 @@ function calculatePersonalMonthNumber(birthDate) {
   }
 }
 
-// 9. Số Ngày cá nhân (Personal Day Number) - Hoàn thiện
+// 9. Số Ngày cá nhân (Personal Day Number)
 function calculatePersonalDayNumber(birthDate) {
   try {
     const today = new Date();
@@ -174,12 +173,12 @@ function calculatePersonalDayNumber(birthDate) {
   }
 }
 
-// 10. Số Sứ mệnh (Mission Number) - Giữ nguyên
+// 10. Số Sứ mệnh (Mission Number)
 function calculateMissionNumber(name) {
   return calculateExpressionNumber(name);
 }
 
-// 11. Số Thử thách (Challenge Number) - Hoàn thiện
+// 11. Số Thử thách (Challenge Number)
 function calculateChallengeNumber(birthDate) {
   try {
     const [day, month, year] = birthDate.split('/').map(Number);
@@ -195,7 +194,7 @@ function calculateChallengeNumber(birthDate) {
   }
 }
 
-// 12. Số Thế hệ (Generation Number) - Hoàn thiện
+// 12. Số Thế hệ (Generation Number)
 function calculateGenerationNumber(birthDate) {
   if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate)) return 1;
   
@@ -204,7 +203,7 @@ function calculateGenerationNumber(birthDate) {
   return NumerologyUtils.reduceToSingleDigit(sum);
 }
 
-// 13. Số Cân bằng (Balance Number) - Hoàn thiện
+// 13. Số Cân bằng (Balance Number)
 function calculateBalanceNumber(name) {
   if (!name || typeof name !== 'string') return 1;
   
@@ -217,7 +216,7 @@ function calculateBalanceNumber(name) {
   return NumerologyUtils.reduceToSingleDigit(sum);
 }
 
-// 14. Số Sáng tạo (Creative Number) - Hoàn thiện
+// 14. Số Sáng tạo (Creative Number)
 function calculateCreativeNumber(birthDate, name) {
   try {
     const lifePath = calculateLifePathNumber(birthDate);
@@ -230,7 +229,7 @@ function calculateCreativeNumber(birthDate, name) {
   }
 }
 
-// 15. Số Trưởng thành (Maturity Number) - Hoàn thiện
+// 15. Số Trưởng thành (Maturity Number)
 function calculateMaturityNumber(birthDate, name) {
   try {
     const lifePath = calculateLifePathNumber(birthDate);
@@ -241,12 +240,12 @@ function calculateMaturityNumber(birthDate, name) {
   }
 }
 
-// 16. Số Năng lượng (Power Number) - Hoàn thiện
+// 16. Số Năng lượng (Power Number)
 function calculatePowerNumber(birthDate, name) {
   return calculateMaturityNumber(birthDate, name);
 }
 
-// 17. Số Tiềm thức (Subconscious Self Number) - Hoàn thiện
+// 17. Số Tiềm thức (Subconscious Self Number)
 function calculateSubconsciousSelfNumber(name) {
   if (!name || typeof name !== 'string') return 1;
   
@@ -257,6 +256,7 @@ function calculateSubconsciousSelfNumber(name) {
   
   return uniqueNumbers.size || 1;
 }
+
 // 18. Tính 4 đỉnh cao đời người
 function calculatePeakNumbers(birthDate) {
   try {
@@ -285,6 +285,7 @@ function calculatePeakNumbers(birthDate) {
     return { firstPeak: 1, secondPeak: 1, thirdPeak: 1, fourthPeak: 1 };
   }
 }
+
 // 19. Thử thách ẩn (từ tên)
 function calculateHiddenChallengeNumbers(name) {
   try {
@@ -306,6 +307,7 @@ function calculateHiddenChallengeNumbers(name) {
     return { challenge1: 1, challenge2: 1, challenge3: 1, ultimateChallenge: 1 };
   }
 }
+
 // 20. 3 trụ cột chính
 function calculateCoreNumbers(birthDate, name) {
   return {
@@ -314,6 +316,7 @@ function calculateCoreNumbers(birthDate, name) {
     soulUrge: calculateSoulUrgeNumber(name)            // Động lực
   };
 }
+
 // 21. Kiểm tra số Nghiệp
 function checkKarmicNumbers(birthDate, name) {
   const hasKarmicDebt = (number) => [13, 14, 16, 19].includes(number);
@@ -325,6 +328,7 @@ function checkKarmicNumbers(birthDate, name) {
     inPeaks: Object.values(calculatePeakNumbers(birthDate)).some(hasKarmicDebt)
   };
 }
+
 // 22. 5 góc của ngũ giác số
 function calculatePentagonNumbers(birthDate, name) {
   return {
@@ -335,6 +339,107 @@ function calculatePentagonNumbers(birthDate, name) {
     spiritual: calculateLifePathNumber(birthDate)      // Tâm linh
   };
 }
+
+// 23. Tính Kim Tự Tháp Thần Số Học
+function calculateNumerologyPyramid(birthDate, descriptions) {
+  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate)) {
+    throw new Error('Invalid date format. Use DD/MM/YYYY');
+  }
+
+  const [day, month, year] = birthDate.split('/').map(Number);
+  
+  // Validate date
+  const dateObj = new Date(year, month-1, day);
+  if (dateObj.getDate() !== day || dateObj.getMonth()+1 !== month) {
+    throw new Error('Invalid date');
+  }
+
+  // Ngày sinh
+  const monthStr = month.toString().padStart(2, '0');
+  const dayStr = day.toString().padStart(2, '0');
+  const yearStr = year.toString();
+  const monthNumber = NumerologyUtils.reduceToSingleDigit(month);
+  const dayNumber = NumerologyUtils.reduceToSingleDigit(day);
+  const yearNumber = NumerologyUtils.reduceToSingleDigit(
+    year.toString().split('').reduce((sum, digit) => sum + parseInt(digit), 0)
+  );
+
+  // Tính đỉnh (peaks)
+  const peak1 = NumerologyUtils.reduceToSingleDigit(monthNumber + dayNumber);
+  const peak2 = NumerologyUtils.reduceToSingleDigit(dayNumber + yearNumber);
+  const peak3 = NumerologyUtils.reduceToSingleDigit(peak1 + peak2);
+  const peak4 = NumerologyUtils.reduceToSingleDigit(monthNumber + yearNumber);
+
+  // Tính thử thách (challenges)
+  const challenge1 = Math.abs(monthNumber - dayNumber);
+  const challenge2 = Math.abs(dayNumber - yearNumber);
+  const challenge3 = Math.abs(challenge1 - challenge2);
+  const challenge4 = Math.abs(peak1 - peak2);
+
+  // Tính khoảng tuổi và năm bắt đầu
+  const lifePath = calculateLifePathNumber(birthDate);
+  const birthYear = year;
+  const firstPeakYear = birthYear + 36 - lifePath;
+  const peaks = [
+    {
+      number: peak1,
+      description: descriptions[peak1]?.meaning || 'Không có mô tả.',
+      ageRange: '21-29 tuổi',
+      startYear: firstPeakYear
+    },
+    {
+      number: peak2,
+      description: descriptions[peak2]?.meaning || 'Không có mô tả.',
+      ageRange: '30-38 tuổi',
+      startYear: firstPeakYear + 9
+    },
+    {
+      number: peak3,
+      description: descriptions[peak3]?.meaning || 'Không có mô tả.',
+      ageRange: '39-47 tuổi',
+      startYear: firstPeakYear + 18
+    },
+    {
+      number: peak4,
+      description: descriptions[peak4]?.meaning || 'Không có mô tả.',
+      ageRange: '48-56 tuổi',
+      startYear: firstPeakYear + 27
+    }
+  ];
+
+  const challenges = [
+    {
+      number: challenge1,
+      description: descriptions[`challenge_${challenge1}`]?.meaning || 'Không có mô tả.'
+    },
+    {
+      number: challenge2,
+      description: descriptions[`challenge_${challenge2}`]?.meaning || 'Không có mô tả.'
+    },
+    {
+      number: challenge3,
+      description: descriptions[`challenge_${challenge3}`]?.meaning || 'Không có mô tả.'
+    },
+    {
+      number: challenge4,
+      description: descriptions[`challenge_${challenge4}`]?.meaning || 'Không có mô tả.'
+    }
+  ];
+
+  return {
+    birthDate: {
+      month: monthStr,
+      day: dayStr,
+      year: yearStr,
+      monthNumber,
+      dayNumber,
+      yearNumber
+    },
+    peaks,
+    challenges
+  };
+}
+
 export {
   calculateLifePathNumber,
   calculateExpressionNumber,
@@ -353,10 +458,11 @@ export {
   calculateMaturityNumber,
   calculatePowerNumber,
   calculateSubconsciousSelfNumber,
-  NumerologyUtils,
   calculatePeakNumbers,
   calculateHiddenChallengeNumbers,
   calculateCoreNumbers,
   checkKarmicNumbers,
-  calculatePentagonNumbers
+  calculatePentagonNumbers,
+  calculateNumerologyPyramid,
+  NumerologyUtils
 };

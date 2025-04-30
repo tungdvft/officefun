@@ -1,12 +1,21 @@
-
 <template>
   <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
     <h1 class="text-3xl font-bold text-center text-indigo-600 mb-6">
       Tính Số Đường Đời & Chu Kỳ Vận Số
     </h1>
 
-    <!-- Form nhập ngày sinh -->
+    <!-- Form nhập họ tên và ngày sinh -->
     <div class="mb-6">
+      <label for="fullName" class="block text-lg font-medium text-gray-700 mb-2">
+        Nhập họ tên
+      </label>
+      <input
+        v-model="fullName"
+        type="text"
+        id="fullName"
+        placeholder="VD: Nguyễn Văn A"
+        class="mb-4 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full"
+      />
       <label for="birthDate" class="block text-lg font-medium text-gray-700 mb-2">
         Nhập ngày sinh (DD/MM/YYYY)
       </label>
@@ -21,14 +30,15 @@
           @input="formatDateInput"
           @keyup.enter="calculateNumbers"
         />
-        <button
+       
+      </div>
+       <button
           @click="calculateNumbers"
           :disabled="isLoading"
-          class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-400"
+          class="px-6 mt-3 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-400"
         >
           {{ isLoading ? 'Đang tính...' : 'Tính toán' }}
         </button>
-      </div>
       <p class="mt-2 text-sm text-gray-600">
         Vui lòng nhập ngày sinh theo định dạng DD/MM/YYYY (ví dụ: 25/12/1990).
       </p>
@@ -36,30 +46,34 @@
     </div>
 
     <!-- Hiển thị kết quả -->
-      <LifePathCalculator :result="result" />
-    <PersonalYearChart :cycles="personalYearCycles" />
+    <div v-if="birthDate" class="space-y-8">
+      <LifePathCalculator :birth-date="birthDate" :result="result" />
+      <PersonalYearChart :birth-date="birthDate" />
+      <PersonalityGroups :birth-date="birthDate"/>
+      <NumerologyCycles :birth-date="birthDate" />
+      <NumerologyPyramid :birth-date="birthDate" />
+      <PersonalYearIndex :birth-date="birthDate" />
+      <PersonalMonthCycle :birth-date="birthDate" />
+      <DestinyNumber :birth-date="birthDate" />
+      <LifePathDestinyDisplay :birth-date="birthDate" />
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import LifePathResult from '@/components/LifePathResult.vue';
-import PersonalYearChart from '@/components/PersonalYearChart.vue';
-import { calculateLifePathNumber } from '~/utils/numerology-calculations';
 
-// Tắt SSR để tránh lỗi với Chart.js
 definePageMeta({
   ssr: false
 });
 
-// State
+const fullName = ref('');
 const birthDate = ref('');
 const result = ref(null);
-const personalYearCycles = ref([]);
 const error = ref('');
 const isLoading = ref(false);
+const showChart = ref(false);
 
-// Hàm định dạng input ngày sinh
 const formatDateInput = (event) => {
   let value = event.target.value.replace(/[^0-9]/g, '');
   if (value.length > 2 && value.length <= 4) {
@@ -70,20 +84,15 @@ const formatDateInput = (event) => {
   birthDate.value = value;
 };
 
-// Hàm tính Số Đường Đời và Chu Kỳ Vận Số
 const calculateNumbers = async () => {
   error.value = '';
   result.value = null;
-  personalYearCycles.value = [];
   isLoading.value = true;
-
   try {
-    // Kiểm tra định dạng ngày sinh
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate.value)) {
       throw new Error('Vui lòng nhập ngày sinh theo định dạng DD/MM/YYYY');
     }
 
-    // Kiểm tra ngày hợp lệ
     const [day, month, year] = birthDate.value.split('/').map(Number);
     const dateObj = new Date(year, month - 1, day);
     if (
@@ -95,11 +104,9 @@ const calculateNumbers = async () => {
       throw new Error('Ngày sinh không hợp lệ.');
     }
 
-    // Tính Số Đường Đời
     const lifePath = calculateLifePathNumber(birthDate.value);
     const lifePathStr = [11, 22].includes(lifePath) ? lifePath.toString() : lifePath.toString();
 
-    // Gọi API Số Đường Đời
     const { data: lifePathData, error: lifePathError } = await useFetch(`/api/life-path/${lifePathStr}`, {
       baseURL: useRuntimeConfig().public.apiBase
     });
@@ -113,27 +120,8 @@ const calculateNumbers = async () => {
       throw new Error('Không tìm thấy dữ liệu cho Số Đường Đời này.');
     }
 
+    console.log('Dữ liệu Số Đường Đời:', lifePathData.value);
     result.value = lifePathData.value;
-
-    // Gọi API Chu Kỳ Vận Số
-    const { data: cycleData, error: cycleError } = await useFetch(`/api/personal-year-cycle/${lifePathStr}`, {
-      baseURL: useRuntimeConfig().public.apiBase,
-      query: { birthDate: birthDate.value }
-    });
-
-    if (cycleError.value) {
-      console.error('Lỗi API Chu Kỳ Vận Số:', cycleError.value);
-      throw new Error('Lỗi khi lấy dữ liệu Chu Kỳ Vận Số.');
-    }
-
-    // Kiểm tra dữ liệu Chu Kỳ Vận Số
-    if (!Array.isArray(cycleData.value) || !cycleData.value.every(cycle => cycle && typeof cycle.year === 'number' && typeof cycle.number === 'number')) {
-      console.error('Dữ liệu Chu Kỳ Vận Số không hợp lệ:', cycleData.value);
-      throw new Error('Dữ liệu Chu Kỳ Vận Số không hợp lệ.');
-    }
-
-    console.log('Dữ liệu Chu Kỳ Vận Số:', cycleData.value);
-    personalYearCycles.value = [...cycleData.value]; // Tạo bản sao
   } catch (err) {
     console.error('Lỗi trong calculateNumbers:', err);
     error.value = err.message;
@@ -142,3 +130,6 @@ const calculateNumbers = async () => {
   }
 };
 </script>
+
+<style scoped>
+</style>

@@ -63,6 +63,7 @@ export default defineEventHandler(async (event) => {
   for (let i = 0; i < 10; i++) {
     const targetYear = 2025 + i;
     const personalYear = calculatePersonalYearNumber(birthDate, targetYear);
+    console.log(`API: Year=${targetYear}, BirthDate=${birthDate}, PersonalYear=${personalYear}`); // Debug log
     const personalYearStr = personalYear.toString();
     const data = personalYearData[personalYearStr];
 
