@@ -77,26 +77,8 @@
 <script setup>
 import { ref, watch, onMounted, computed } from 'vue'
 import { toast } from 'vue3-toastify'
-import { calculateLifePathNumber } from '@/utils/numerology-calculations'
-
-const calculateSoulUrgeNumber = (fullName) => {
-  if (!fullName) return null
-  const vowels = { a: 1, e: 5, i: 9, o: 6, u: 3 }
-  const normalizedName = fullName
-    .toLowerCase()
-    .replace(/[^a-z]/g, '')
-  let sum = normalizedName
-    .split('')
-    .reduce((sum, char) => (vowels[char] ? sum + vowels[char] : sum), 0)
-  if (sum === 0) return null
-  while (sum > 9 && sum !== 11 && sum !== 22) {
-    sum = sum
-      .toString()
-      .split('')
-      .reduce((s, digit) => s + parseInt(digit), 0)
-  }
-  return sum
-}
+import { calculateLifePathNumber, calculateSoulUrgeNumber } from '@/utils/numerology-calculations'
+import { soulUrgeData } from '@/data/lifePathSoulUrgeData'
 
 const props = defineProps({
   birthDate: {
@@ -123,7 +105,7 @@ const showResult = computed(() => {
   return combinationData.value && lifePathNumber.value !== null && soulUrgeNumber.value !== null
 })
 
-const fetchCombinationData = async () => {
+const loadCombinationData = async () => {
   loading.value = true
   error.value = null
   lifePathNumber.value = null
@@ -158,17 +140,9 @@ const fetchCombinationData = async () => {
       throw new Error('Không thể tính toán các chỉ số số học')
     }
 
-    const fileName = `LifePath${lifePathNumber.value}SoulUrgeData.json`
-    console.log('Đang tải file dữ liệu:', fileName)
-    
-    const response = await fetch(`/data/LifePathAndSoulUrge/${fileName}`)
-    if (!response.ok) {
-      throw new Error(`Không tìm thấy file dữ liệu cho Số Đường Đời ${lifePathNumber.value}`)
-    }
-    
-    const data = await response.json()
-    if (!data.combinations) {
-      throw new Error(`Dữ liệu JSON không đúng định dạng (thiếu 'combinations')`)
+    const data = soulUrgeData[lifePathNumber.value]
+    if (!data || !data.combinations) {
+      throw new Error(`Không tìm thấy dữ liệu cho Số Đường Đời ${lifePathNumber.value}`)
     }
 
     const combination = data.combinations.find(
@@ -183,7 +157,7 @@ const fetchCombinationData = async () => {
     }
 
   } catch (err) {
-    console.error('Lỗi trong fetchCombinationData:', err)
+    console.error('Lỗi trong loadCombinationData:', err)
     error.value = err.message
     toast.error(err.message)
     
@@ -204,7 +178,7 @@ watch(
   [() => props.birthDate, () => props.fullName],
   ([newBirthDate, newFullName]) => {
     if (newBirthDate && newFullName && /^\d{2}\/\d{2}\/\d{4}$/.test(newBirthDate)) {
-      fetchCombinationData()
+      loadCombinationData()
     }
   },
   { immediate: true }
@@ -212,7 +186,7 @@ watch(
 
 onMounted(() => {
   if (props.birthDate && props.fullName && /^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
-    fetchCombinationData()
+    loadCombinationData()
   }
 })
 </script>

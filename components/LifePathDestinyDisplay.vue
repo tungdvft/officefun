@@ -61,6 +61,7 @@
 import { ref, watch, onMounted, computed } from 'vue'
 import { toast } from 'vue3-toastify'
 import { calculateLifePathNumber, calculateExpressionNumber } from '@/utils/numerology-calculations'
+import { correlationData } from '@/data/lifePathCorrelationData'
 
 const props = defineProps({
   birthDate: {
@@ -87,7 +88,7 @@ const showResult = computed(() => {
   return correlationData.value && lifePathNumber.value !== null && destinyNumber.value !== null
 })
 
-const fetchCorrelationData = async () => {
+const loadCorrelationData = async () => {
   loading.value = true
   error.value = null
   lifePathNumber.value = null
@@ -118,17 +119,13 @@ const fetchCorrelationData = async () => {
     lifePathNumber.value = calculateLifePathNumber(props.birthDate)
     destinyNumber.value = calculateExpressionNumber(props.fullName)
 
-    const fileName = `LifePath${lifePathNumber.value}CorrelationData.json`
-    console.log('Đang tải file dữ liệu:', fileName)
-    
-    const response = await fetch(`/data/LifePathDestinyCorrelationData/${fileName}`)
-    if (!response.ok) {
-      throw new Error(`Không tìm thấy file dữ liệu cho Số Đường Đời ${lifePathNumber.value}`)
+    if (!lifePathNumber.value || !destinyNumber.value) {
+      throw new Error('Không thể tính toán các chỉ số số học')
     }
-    
-    const data = await response.json()
-    if (!data.correlations) {
-      throw new Error(`Dữ liệu JSON không đúng định dạng (thiếu 'correlations')`)
+
+    const data = correlationData[lifePathNumber.value]
+    if (!data || !data.correlations) {
+      throw new Error(`Không tìm thấy dữ liệu cho Số Đường Đời ${lifePathNumber.value}`)
     }
 
     const correlation = data.correlations.find(
@@ -143,7 +140,7 @@ const fetchCorrelationData = async () => {
     }
 
   } catch (err) {
-    console.error('Lỗi trong fetchCorrelationData:', err)
+    console.error('Lỗi trong loadCorrelationData:', err)
     error.value = err.message
     toast.error(err.message)
     
@@ -162,7 +159,7 @@ watch(
   [() => props.birthDate, () => props.fullName],
   ([newBirthDate, newFullName]) => {
     if (newBirthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(newBirthDate)) {
-      fetchCorrelationData()
+      loadCorrelationData()
     }
   },
   { immediate: true }
@@ -170,7 +167,7 @@ watch(
 
 onMounted(() => {
   if (props.birthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
-    fetchCorrelationData()
+    loadCorrelationData()
   }
 })
 </script>
