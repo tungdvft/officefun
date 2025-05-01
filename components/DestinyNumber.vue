@@ -1,3 +1,4 @@
+```vue
 <template>
   <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
     <div class="p-6 space-y-6">
@@ -36,34 +37,38 @@
 import { ref, watch, onMounted } from 'vue';
 import { toast } from 'vue3-toastify';
 import destinyNumberData from '~/data/DestinyNumberData.json'; // Giả định file JSON
+import { calculateExpressionNumber } from '@/utils/numerology-calculations';
 
 const props = defineProps({
-  birthDate: { type: String, default: '' }
+  birthDate: {
+    type: String,
+    default: '',
+    validator: (value) => {
+      if (!value) return true;
+      return /^\d{2}\/\d{2}\/\d{4}$/.test(value);
+    },
+  },
+  fullName: {
+    type: String,
+    default: '',
+  },
 });
 
 const destinyNumber = ref(null);
 const destinyData = ref(null);
 const loading = ref(false);
 
-// Tính chỉ số sứ mệnh
-const calculateDestinyNumber = (day, month, year) => {
-  // Tổng tất cả chữ số trong ngày sinh
-  const dateStr = `${day.toString().padStart(2, '0')}${month.toString().padStart(2, '0')}${year}`;
-  const sum = dateStr.split('').reduce((acc, digit) => acc + parseInt(digit), 0);
-  // Giữ số Master 11, 22
-  if ([11, 22].includes(sum)) return sum;
-  // Rút gọn về 1–9
-  let result = sum;
-  while (result > 9) {
-    result = result.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
-  }
-  return result;
-};
-
 // Lấy dữ liệu chỉ số sứ mệnh
 const fetchDestinyData = async () => {
-  console.log('fetchDestinyData called with birthDate:', props.birthDate);
+  console.log('fetchDestinyData called with birthDate:', props.birthDate, 'fullName:', props.fullName);
 
+  // Kiểm tra fullName
+  if (!props.fullName || props.fullName.trim() === '') {
+    toast.error('Vui lòng nhập họ tên!');
+    return;
+  }
+
+  // Kiểm tra birthDate (dùng để xác thực, không tính số Sứ Mệnh)
   if (!props.birthDate) {
     toast.error('Vui lòng nhập ngày sinh!');
     return;
@@ -91,11 +96,11 @@ const fetchDestinyData = async () => {
   destinyData.value = null;
 
   try {
-    // Tính chỉ số sứ mệnh
-    let calculatedNumber = calculateDestinyNumber(day, month, year);
-    // Điều chỉnh để khớp ví dụ: 07/02/1996 → 22
-    if (props.birthDate === '07/02/1996') {
-      calculatedNumber = 22; // Giả định ví dụ của bạn
+    // Tính chỉ số sứ mệnh từ fullName
+    const calculatedNumber = calculateExpressionNumber(props.fullName);
+    if (!calculatedNumber) {
+      toast.error('Họ tên không hợp lệ để tính số Sứ Mệnh!');
+      return;
     }
 
     destinyNumber.value = calculatedNumber;
@@ -103,7 +108,7 @@ const fetchDestinyData = async () => {
       traits: `Số sứ mệnh ${calculatedNumber}.`,
       excellence: 'Chưa có dữ liệu chi tiết.',
       path: 'Hãy khám phá thêm về bản thân.',
-      challenges: 'Chưa xác định thách thức cụ thể.'
+      challenges: 'Chưa xác định thách thức cụ thể.',
     };
 
     console.log('Chỉ số sứ mệnh:', destinyNumber.value, 'Dữ liệu:', destinyData.value);
@@ -111,30 +116,34 @@ const fetchDestinyData = async () => {
   } catch (err) {
     console.error('Lỗi trong fetchDestinyData:', err);
     toast.warn('Không thể tính chỉ số sứ mệnh, sử dụng dữ liệu mẫu!');
-    // Dữ liệu mẫu (dựa trên 07/02/1996 → 22)
+    // Dữ liệu mẫu
     destinyNumber.value = 22;
     destinyData.value = {
       traits: 'Bạn là người xây dựng vĩ đại, kết hợp giữa thực tế và lý tưởng. Là số Master, bạn sở hữu tầm nhìn chiến lược và khả năng biến những ý tưởng lớn thành hiện thực. Sự kiên trì, trách nhiệm, và khả năng tổ chức giúp bạn tạo ra những giá trị lâu dài.',
       excellence: 'Bạn tỏa sáng trong các lĩnh vực đòi hỏi tầm nhìn lớn và sự quản lý phức tạp, như kiến trúc, quản lý dự án quốc tế, hoặc khởi nghiệp xã hội. Ví dụ, bạn có thể thành công khi thiết kế một thành phố bền vững, điều hành một tổ chức phi lợi nhuận quy mô lớn, hoặc phát triển công nghệ đột phá.',
       path: 'Hãy tập trung vào việc thực hiện các mục tiêu tầm cỡ, xây dựng các hệ thống hoặc dự án có tác động sâu rộng đến xã hội. Làm việc với đội ngũ để biến tầm nhìn thành hiện thực và đảm bảo mọi chi tiết được hoàn thiện. Con đường phù hợp là tạo ra di sản bền vững, mang lại lợi ích cho cộng đồng và thế hệ tương lai.',
-      challenges: 'Bạn có thể đối mặt với áp lực từ trách nhiệm lớn hoặc cảm giác quá tải khi quản lý các dự án phức tạp. Để vượt qua, hãy học cách phân bổ công việc và tin tưởng vào đội ngũ. Tránh ôm đồm mọi thứ và dành thời gian để tái tạo năng lượng.'
+      challenges: 'Bạn có thể đối mặt với áp lực từ trách nhiệm lớn hoặc cảm giác quá tải khi quản lý các dự án phức tạp. Để vượt qua, hãy học cách phân bổ công việc và tin tưởng vào đội ngũ. Tránh ôm đồm mọi thứ và dành thời gian để tái tạo năng lượng.',
     };
   } finally {
     loading.value = false;
   }
 };
 
-// Theo dõi birthDate để gọi dữ liệu
-watch(() => props.birthDate, (newValue) => {
-  console.log('watch birthDate triggered:', newValue);
-  if (newValue && /^\d{2}\/\d{2}\/\d{4}$/.test(newValue)) {
-    fetchDestinyData();
-  }
-});
+// Theo dõi birthDate và fullName
+watch(
+  [() => props.birthDate, () => props.fullName],
+  ([newBirthDate, newFullName]) => {
+    console.log('watch triggered - birthDate:', newBirthDate, 'fullName:', newFullName);
+    if (newBirthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(newBirthDate)) {
+      fetchDestinyData();
+    }
+  },
+  { immediate: true }
+);
 
 // Gọi khi component mount
 onMounted(() => {
-  console.log('Component mounted, birthDate:', props.birthDate);
+  console.log('Component mounted, birthDate:', props.birthDate, 'fullName:', props.fullName);
   if (props.birthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
     fetchDestinyData();
   }
@@ -152,3 +161,4 @@ onMounted(() => {
   transform: translateY(10px);
 }
 </style>
+```

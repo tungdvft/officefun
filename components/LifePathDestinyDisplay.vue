@@ -1,49 +1,82 @@
 <template>
   <div class="life-path-destiny-display">
-    <h2>Tương Quan Số Đường Đời và Sứ Mệnh</h2>
-    <div v-if="error" class="error">
+    <h2 class="text-2xl font-bold text-center text-teal-800 mb-6">Tương Quan Số Đường Đời và Sứ Mệnh</h2>
+    
+    <!-- Thông báo lỗi -->
+    <div v-if="error" class="error-message p-4 mb-4 bg-red-100 border border-red-400 text-red-700 rounded">
       {{ error }}
     </div>
-    <div v-else-if="loading" class="loading">
-      Đang tải dữ liệu...
+    
+    <!-- Trạng thái loading -->
+    <div v-else-if="loading" class="loading-state p-4 text-center text-gray-600">
+      <div class="animate-pulse">Đang tải dữ liệu...</div>
     </div>
-    <div v-else-if="correlationData">
-      <div class="summary">
-        <p><strong>Số Đường Đời:</strong> {{ lifePathNumber }}</p>
-        <p><strong>Số Sứ Mệnh:</strong> {{ destinyNumber }}</p>
-      </div>
-      <div class="correlation-section">
-        <h3>Tương Thích</h3>
-        <p>{{ correlationData.compatibility }}</p>
-      </div>
-      <div class="correlation-section">
-        <h3>Điểm Mạnh</h3>
-        <p>{{ correlationData.strengths }}</p>
-      </div>
-      <div class="correlation-section">
-        <h3>Thách Thức</h3>
-        <p>{{ correlationData.challenges }}</p>
-      </div>
-      <div class="correlation-section">
-        <h3>Giải Pháp</h3>
-        <p>{{ correlationData.solutions }}</p>
+    
+    <!-- Hiển thị kết quả -->
+    <div v-else-if="showResult" class="result-container mt-6">
+      <div class="space-y-6">
+        <!-- Hiển thị số Đường Đời và Sứ Mệnh -->
+        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+          <h3 class="text-xl font-bold text-teal-800 mb-4">Chỉ Số Của Bạn</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex items-center">
+              <span class="w-12 h-12 flex items-center justify-center bg-teal-100 text-teal-700 rounded-full font-bold text-lg mr-4">
+                {{ lifePathNumber }}
+              </span>
+              <p class="text-gray-700 text-lg">Số Đường Đời: <span class="font-bold text-teal-600">{{ lifePathNumber }}</span></p>
+            </div>
+            <div class="flex items-center">
+              <span class="w-12 h-12 flex items-center justify-center bg-teal-100 text-teal-700 rounded-full font-bold text-lg mr-4">
+                {{ destinyNumber }}
+              </span>
+              <p class="text-gray-700 text-lg">Số Sứ Mệnh: <span class="font-bold text-teal-600">{{ destinyNumber }}</span></p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Luận giải chi tiết -->
+        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+          <h3 class="text-xl font-bold text-teal-800 mb-4">Luận Giải Chi Tiết</h3>
+          <div class="prose prose-teal max-w-none space-y-3">
+            <p class="text-gray-700"><strong>Tương Thích:</strong> {{ correlationData.compatibility }}</p>
+            <p class="text-gray-700"><strong>Điểm Mạnh:</strong> {{ correlationData.strengths }}</p>
+            <p class="text-gray-700"><strong>Thách Thức:</strong> {{ correlationData.challenges }}</p>
+            <p class="text-gray-700"><strong>Giải Pháp:</strong> {{ correlationData.solutions }}</p>
+          </div>
+        </div>
       </div>
     </div>
-    <div v-else>
-      Không tìm thấy dữ liệu cho ngày sinh này.
+    
+    <!-- Yêu cầu nhập thông tin -->
+    <div v-else class="empty-state p-4 text-center">
+      <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+        Vui lòng nhập ngày sinh hợp lệ (DD/MM/YYYY) để xem thông tin.
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted, computed } from 'vue';
+import { toast } from 'vue3-toastify';
+import { 
+  calculateLifePathNumber,
+  calculateExpressionNumber 
+} from '@/utils/numerology-calculations';
 
-// Props
 const props = defineProps({
-  birthdate: {
+  birthDate: {
     type: String,
-    required: true,
+    default: '',
+    validator: (value) => {
+      if (!value) return true;
+      return /^\d{2}\/\d{2}\/\d{4}$/.test(value);
+    }
   },
+  fullName: {
+    type: String,
+    default: ''
+  }
 });
 
 // State
@@ -53,82 +86,104 @@ const correlationData = ref(null);
 const loading = ref(false);
 const error = ref(null);
 
-// Hàm tính số Đường Đời hoặc Sứ Mệnh
-const calculateNumber = (input) => {
-  if (!input) return null;
-  // Tổng các chữ số
-  const sum = input
-    .replace(/\D/g, '') // Chỉ lấy số
-    .split('')
-    .reduce((acc, digit) => acc + parseInt(digit), 0);
-  // Giữ số chính (11, 22, 33), rút gọn về 1–9 nếu không phải
-  if ([11, 22, 33].includes(sum)) return sum;
-  const reduced = sum
-    .toString()
-    .split('')
-    .reduce((acc, digit) => acc + parseInt(digit), 0);
-  return reduced > 9 ? calculateNumber(reduced.toString()) : reduced;
-};
+// Computed
+const showResult = computed(() => {
+  return correlationData.value && lifePathNumber.value !== null && destinyNumber.value !== null;
+});
 
-// Tính số Đường Đời và Sứ Mệnh
-const computeNumbers = () => {
-  if (!props.birthdate || !/^\d{2}\/\d{2}\/\d{4}$/.test(props.birthdate)) {
-    error.value = 'Ngày sinh không hợp lệ. Vui lòng nhập theo định dạng DD/MM/YYYY.';
-    return;
-  }
-  try {
-    // Chuyển DD/MM/YYYY thành Date để kiểm tra hợp lệ
-    const [day, month, year] = props.birthdate.split('/');
-    const date = new Date(`${year}-${month}-${day}`);
-    if (isNaN(date.getTime()) || date.getFullYear() != year || date.getMonth() + 1 != month || date.getDate() != day) {
-      error.value = 'Ngày sinh không hợp lệ. Vui lòng kiểm tra lại.';
-      return;
-    }
-    // Tính số Đường Đời (tổng chữ số ngày sinh)
-    lifePathNumber.value = calculateNumber(props.birthdate);
-    // Tính số Sứ Mệnh (giả định tương tự, vì chưa có công thức riêng)
-    destinyNumber.value = calculateNumber(props.birthdate); // Thay đổi nếu có công thức riêng
-  } catch (err) {
-    error.value = 'Lỗi khi tính toán số Đường Đời hoặc Sứ Mệnh.';
-  }
-};
-
-// Tải dữ liệu JSON
-const loadCorrelationData = async () => {
-  if (!lifePathNumber.value || !destinyNumber.value) return;
+// Lấy dữ liệu tương quan
+const fetchCorrelationData = async () => {
+  // Reset state
   loading.value = true;
   error.value = null;
+  lifePathNumber.value = null;
+  destinyNumber.value = null;
   correlationData.value = null;
+
   try {
-    // Tải file JSON dựa trên số Đường Đời
-    const fileName = `LifePath${lifePathNumber.value}CorrelationData.json`;
-    const response = await import(`@/data/LifePathDestinyCorrelationData/${fileName}`);
-    const data = response.default;
-    // Tìm bản ghi tương quan dựa trên số Sứ Mệnh
-    const correlation = data.correlations.find(
-      (item) => item.destiny === destinyNumber.value
-    );
-    if (correlation) {
-      correlationData.value = correlation;
-    } else {
-      error.value = `Không tìm thấy dữ liệu tương quan cho Sứ Mệnh ${destinyNumber.value}.`;
+    // Validate input
+    if (!props.birthDate) {
+      throw new Error('Vui lòng nhập ngày sinh');
     }
+
+    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
+      throw new Error('Định dạng ngày sinh không hợp lệ (DD/MM/YYYY)');
+    }
+
+    const [day, month, year] = props.birthDate.split('/').map(Number);
+    const dateObj = new Date(year, month - 1, day);
+    
+    if (
+      dateObj.getDate() !== day ||
+      dateObj.getMonth() + 1 !== month ||
+      year < 1900 ||
+      year > new Date().getFullYear()
+    ) {
+      throw new Error('Ngày sinh không hợp lệ');
+    }
+
+    // Tính toán các chỉ số SỬ DỤNG HÀM TỪ UTILS
+    lifePathNumber.value = calculateLifePathNumber(props.birthDate);
+    destinyNumber.value = calculateExpressionNumber(props.fullName); // Sử dụng fullName để tính Destiny Number
+
+    // Tải file JSON tương ứng
+    const fileName = `LifePath${lifePathNumber.value}CorrelationData.json`;
+    console.log('Đang tải file dữ liệu:', fileName);
+    
+    try {
+      // Dynamic import file JSON - Sửa lại theo cách Vite hỗ trợ
+      const response = await import(`../data/LifePathDestinyCorrelationData/LifePath${lifePathNumber.value}CorrelationData.json`);
+      const data = response.default;
+
+      // Tìm bản ghi phù hợp với Destiny Number
+      const correlation = data.correlations.find(
+        (item) => item.destiny === destinyNumber.value
+      );
+
+      if (correlation) {
+        correlationData.value = correlation;
+        toast.success('Phân tích tương quan thành công!');
+      } else {
+        throw new Error(`Không tìm thấy dữ liệu tương quan cho Sứ Mệnh ${destinyNumber.value}`);
+      }
+    } catch (importError) {
+      console.error('Lỗi khi tải file dữ liệu:', importError);
+      throw new Error(`Không tải được dữ liệu cho Đường Đời ${lifePathNumber.value}`);
+    }
+
   } catch (err) {
-    error.value = `Lỗi khi tải file LifePath${lifePathNumber.value}CorrelationData.json.`;
+    console.error('Lỗi trong fetchCorrelationData:', err);
+    error.value = err.message;
+    toast.error(err.message);
+    
+    // Fallback data nếu cần
+    correlationData.value = {
+      compatibility: `Tạm thời chưa có dữ liệu chi tiết cho cặp số ${lifePathNumber.value} và ${destinyNumber.value}`,
+      strengths: 'Đang cập nhật dữ liệu',
+      challenges: 'Đang cập nhật dữ liệu',
+      solutions: 'Đang cập nhật dữ liệu'
+    };
   } finally {
     loading.value = false;
   }
 };
 
-// Watch birthdate để cập nhật khi thay đổi
 watch(
-  () => props.birthdate,
-  () => {
-    computeNumbers();
-    loadCorrelationData();
+  [() => props.birthDate, () => props.fullName],
+  ([newBirthDate, newFullName]) => {
+    if (newBirthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(newBirthDate)) {
+      fetchCorrelationData();
+    }
   },
   { immediate: true }
 );
+
+// Gọi khi component mount
+onMounted(() => {
+  if (props.birthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
+    fetchCorrelationData();
+  }
+});
 </script>
 
 <style scoped>
@@ -136,52 +191,45 @@ watch(
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  font-family: Arial, sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
 }
 
-h2 {
-  text-align: center;
-  color: #333;
+.error-message {
+  transition: all 0.3s ease;
 }
 
-.summary {
-  background-color: #f5f5f5;
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 20px;
+.loading-state {
+  transition: all 0.3s ease;
 }
 
-.correlation-section {
-  margin-bottom: 20px;
+.result-container {
+  animation: fadeIn 0.5s ease;
 }
 
-.correlation-section h3 {
-  color: #2c3e50;
-  margin-bottom: 10px;
+.empty-state {
+  animation: fadeIn 0.5s ease;
 }
 
-.correlation-section p {
-  line-height: 1.6;
-  color: #555;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.loading, .error {
-  text-align: center;
-  color: #e74c3c;
-  font-weight: bold;
-}
-
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .life-path-destiny-display {
-    padding: 10px;
+    padding: 15px;
   }
-
-  h2 {
-    font-size: 1.5em;
+  
+  .text-2xl {
+    font-size: 1.4rem;
   }
-
-  .correlation-section h3 {
-    font-size: 1.2em;
+  
+  .text-xl {
+    font-size: 1.2rem;
+  }
+  
+  .text-lg {
+    font-size: 1rem;
   }
 }
 </style>

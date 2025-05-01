@@ -54,8 +54,27 @@
       <NumerologyPyramid :birth-date="birthDate" />
       <PersonalYearIndex :birth-date="birthDate" />
       <PersonalMonthCycle :birth-date="birthDate" />
-      <DestinyNumber :birth-date="birthDate" />
-      <LifePathDestinyDisplay :birth-date="birthDate" />
+      <DestinyNumber :birth-date="birthDate"  :full-name="fullName"/>
+      <LifePathDestinyDisplay 
+        :birth-date="birthDate"
+        :full-name="fullName"
+      />
+       <ChallengeDisplay 
+        :birth-date="birthDate"
+        :full-name="fullName"
+      />
+       <MaturityDisplay 
+        :birth-date="birthDate"
+        :full-name="fullName"
+      />
+       <MaturePowerDisplay 
+        :birth-date="birthDate"
+        :full-name="fullName"
+      />
+       <SoulUrgeDisplay 
+        :birth-date="birthDate"
+        :full-name="fullName"
+      />
     </div>
   </div>
 </template>
