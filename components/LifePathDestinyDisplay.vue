@@ -39,10 +39,10 @@
         <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
           <h3 class="text-xl font-bold text-teal-800 mb-4">Luận Giải Chi Tiết</h3>
           <div class="prose prose-teal max-w-none space-y-3">
-            <p class="text-gray-700"><strong>Tương Thích:</strong> {{ correlationData.compatibility }}</p>
-            <p class="text-gray-700"><strong>Điểm Mạnh:</strong> {{ correlationData.strengths }}</p>
-            <p class="text-gray-700"><strong>Thách Thức:</strong> {{ correlationData.challenges }}</p>
-            <p class="text-gray-700"><strong>Giải Pháp:</strong> {{ correlationData.solutions }}</p>
+            <p class="text-gray-700"><strong>Tương Thích:</strong> {{ correlationResult.compatibility }}</p>
+            <p class="text-gray-700"><strong>Điểm Mạnh:</strong> {{ correlationResult.strengths }}</p>
+            <p class="text-gray-700"><strong>Thách Thức:</strong> {{ correlationResult.challenges }}</p>
+            <p class="text-gray-700"><strong>Giải Pháp:</strong> {{ correlationResult.solutions }}</p>
           </div>
         </div>
       </div>
@@ -80,12 +80,12 @@ const props = defineProps({
 
 const lifePathNumber = ref(null)
 const destinyNumber = ref(null)
-const correlationData = ref(null)
+const correlationResult = ref(null)
 const loading = ref(false)
 const error = ref(null)
 
 const showResult = computed(() => {
-  return correlationData.value && lifePathNumber.value !== null && destinyNumber.value !== null
+  return correlationResult.value && lifePathNumber.value !== null && destinyNumber.value !== null
 })
 
 const loadCorrelationData = async () => {
@@ -93,7 +93,7 @@ const loadCorrelationData = async () => {
   error.value = null
   lifePathNumber.value = null
   destinyNumber.value = null
-  correlationData.value = null
+  correlationResult.value = null
 
   try {
     if (!props.birthDate) {
@@ -123,6 +123,11 @@ const loadCorrelationData = async () => {
       throw new Error('Không thể tính toán các chỉ số số học')
     }
 
+    // Kiểm tra Master Numbers
+    if (![1, 2, 3, 4, 5, 6, 7, 8, 9].includes(lifePathNumber.value)) {
+      throw new Error(`Số Đường Đời ${lifePathNumber.value} không được hỗ trợ`)
+    }
+
     const data = correlationData[lifePathNumber.value]
     if (!data || !data.correlations) {
       throw new Error(`Không tìm thấy dữ liệu cho Số Đường Đời ${lifePathNumber.value}`)
@@ -133,7 +138,7 @@ const loadCorrelationData = async () => {
     )
 
     if (correlation) {
-      correlationData.value = correlation
+      correlationResult.value = correlation
       toast.success('Phân tích tương quan thành công!')
     } else {
       throw new Error(`Không tìm thấy dữ liệu tương quan cho Sứ Mệnh ${destinyNumber.value}`)
@@ -144,7 +149,7 @@ const loadCorrelationData = async () => {
     error.value = err.message
     toast.error(err.message)
     
-    correlationData.value = {
+    correlationResult.value = {
       compatibility: `Tạm thời chưa có dữ liệu chi tiết cho cặp số ${lifePathNumber.value} và ${destinyNumber.value}`,
       strengths: 'Đang cập nhật dữ liệu',
       challenges: 'Đang cập nhật dữ liệu',
