@@ -75,6 +75,10 @@
         :birth-date="birthDate"
         :full-name="fullName"
       />
+       <LifePathAndSoulUrge 
+        :birth-date="birthDate"
+        :full-name="fullName"
+      />
     </div>
   </div>
 </template>

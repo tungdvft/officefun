@@ -1,3 +1,4 @@
+<!-- components/LifePathDestinyDisplay.vue -->
 <template>
   <div class="life-path-destiny-display">
     <h2 class="text-2xl font-bold text-center text-teal-800 mb-6">Tương Quan Số Đường Đời và Sứ Mệnh</h2>
@@ -57,61 +58,53 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, computed } from 'vue';
-import { toast } from 'vue3-toastify';
-import { 
-  calculateLifePathNumber,
-  calculateExpressionNumber 
-} from '@/utils/numerology-calculations';
+import { ref, watch, onMounted, computed } from 'vue'
+import { toast } from 'vue3-toastify'
+import { calculateLifePathNumber, calculateExpressionNumber } from '@/utils/numerology-calculations'
 
 const props = defineProps({
   birthDate: {
     type: String,
     default: '',
     validator: (value) => {
-      if (!value) return true;
-      return /^\d{2}\/\d{2}\/\d{4}$/.test(value);
-    }
+      if (!value) return true
+      return /^\d{2}\/\d{2}\/\d{4}$/.test(value)
+    },
   },
   fullName: {
     type: String,
-    default: ''
-  }
-});
+    default: '',
+  },
+})
 
-// State
-const lifePathNumber = ref(null);
-const destinyNumber = ref(null);
-const correlationData = ref(null);
-const loading = ref(false);
-const error = ref(null);
+const lifePathNumber = ref(null)
+const destinyNumber = ref(null)
+const correlationData = ref(null)
+const loading = ref(false)
+const error = ref(null)
 
-// Computed
 const showResult = computed(() => {
-  return correlationData.value && lifePathNumber.value !== null && destinyNumber.value !== null;
-});
+  return correlationData.value && lifePathNumber.value !== null && destinyNumber.value !== null
+})
 
-// Lấy dữ liệu tương quan
 const fetchCorrelationData = async () => {
-  // Reset state
-  loading.value = true;
-  error.value = null;
-  lifePathNumber.value = null;
-  destinyNumber.value = null;
-  correlationData.value = null;
+  loading.value = true
+  error.value = null
+  lifePathNumber.value = null
+  destinyNumber.value = null
+  correlationData.value = null
 
   try {
-    // Validate input
     if (!props.birthDate) {
-      throw new Error('Vui lòng nhập ngày sinh');
+      throw new Error('Vui lòng nhập ngày sinh')
     }
 
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
-      throw new Error('Định dạng ngày sinh không hợp lệ (DD/MM/YYYY)');
+      throw new Error('Định dạng ngày sinh không hợp lệ (DD/MM/YYYY)')
     }
 
-    const [day, month, year] = props.birthDate.split('/').map(Number);
-    const dateObj = new Date(year, month - 1, day);
+    const [day, month, year] = props.birthDate.split('/').map(Number)
+    const dateObj = new Date(year, month - 1, day)
     
     if (
       dateObj.getDate() !== day ||
@@ -119,71 +112,67 @@ const fetchCorrelationData = async () => {
       year < 1900 ||
       year > new Date().getFullYear()
     ) {
-      throw new Error('Ngày sinh không hợp lệ');
+      throw new Error('Ngày sinh không hợp lệ')
     }
 
-    // Tính toán các chỉ số SỬ DỤNG HÀM TỪ UTILS
-    lifePathNumber.value = calculateLifePathNumber(props.birthDate);
-    destinyNumber.value = calculateExpressionNumber(props.fullName); // Sử dụng fullName để tính Destiny Number
+    lifePathNumber.value = calculateLifePathNumber(props.birthDate)
+    destinyNumber.value = calculateExpressionNumber(props.fullName)
 
-    // Tải file JSON tương ứng
-    const fileName = `LifePath${lifePathNumber.value}CorrelationData.json`;
-    console.log('Đang tải file dữ liệu:', fileName);
+    const fileName = `LifePath${lifePathNumber.value}CorrelationData.json`
+    console.log('Đang tải file dữ liệu:', fileName)
     
-    try {
-      // Dynamic import file JSON - Sửa lại theo cách Vite hỗ trợ
-      const response = await import(`../data/LifePathDestinyCorrelationData/LifePath${lifePathNumber.value}CorrelationData.json`);
-      const data = response.default;
+    const response = await fetch(`/data/LifePathDestinyCorrelationData/${fileName}`)
+    if (!response.ok) {
+      throw new Error(`Không tìm thấy file dữ liệu cho Số Đường Đời ${lifePathNumber.value}`)
+    }
+    
+    const data = await response.json()
+    if (!data.correlations) {
+      throw new Error(`Dữ liệu JSON không đúng định dạng (thiếu 'correlations')`)
+    }
 
-      // Tìm bản ghi phù hợp với Destiny Number
-      const correlation = data.correlations.find(
-        (item) => item.destiny === destinyNumber.value
-      );
+    const correlation = data.correlations.find(
+      (item) => item.destiny === destinyNumber.value
+    )
 
-      if (correlation) {
-        correlationData.value = correlation;
-        toast.success('Phân tích tương quan thành công!');
-      } else {
-        throw new Error(`Không tìm thấy dữ liệu tương quan cho Sứ Mệnh ${destinyNumber.value}`);
-      }
-    } catch (importError) {
-      console.error('Lỗi khi tải file dữ liệu:', importError);
-      throw new Error(`Không tải được dữ liệu cho Đường Đời ${lifePathNumber.value}`);
+    if (correlation) {
+      correlationData.value = correlation
+      toast.success('Phân tích tương quan thành công!')
+    } else {
+      throw new Error(`Không tìm thấy dữ liệu tương quan cho Sứ Mệnh ${destinyNumber.value}`)
     }
 
   } catch (err) {
-    console.error('Lỗi trong fetchCorrelationData:', err);
-    error.value = err.message;
-    toast.error(err.message);
+    console.error('Lỗi trong fetchCorrelationData:', err)
+    error.value = err.message
+    toast.error(err.message)
     
-    // Fallback data nếu cần
     correlationData.value = {
       compatibility: `Tạm thời chưa có dữ liệu chi tiết cho cặp số ${lifePathNumber.value} và ${destinyNumber.value}`,
       strengths: 'Đang cập nhật dữ liệu',
       challenges: 'Đang cập nhật dữ liệu',
-      solutions: 'Đang cập nhật dữ liệu'
-    };
+      solutions: 'Đang cập nhật dữ liệu',
+    }
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 
 watch(
   [() => props.birthDate, () => props.fullName],
   ([newBirthDate, newFullName]) => {
     if (newBirthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(newBirthDate)) {
-      fetchCorrelationData();
+      fetchCorrelationData()
     }
   },
   { immediate: true }
-);
+)
 
-// Gọi khi component mount
 onMounted(() => {
   if (props.birthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
-    fetchCorrelationData();
+    fetchCorrelationData()
   }
-});
+})
 </script>
 
 <style scoped>

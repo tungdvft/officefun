@@ -1,0 +1,98 @@
+[
+  {
+    "lifePathNumber": 1,
+    "cycles": [
+      { "cycle": "Gieo Hạt", "number": 1 },
+      { "cycle": "Chín", "number": 5 },
+      { "cycle": "Thu Hoạch", "number": 9 }
+    ]
+  },
+  {
+    "lifePathNumber": 2,
+    "cycles": [
+      { "cycle": "Gieo Hạt", "number": 2 },
+      { "cycle": "Chín", "number": 7 },
+      { "cycle": "Thu Hoạch", "number": 7 }
+    ]
+  },
+  {
+    "lifePathNumber": 3,
+    "cycles": [
+      { "cycle": "Gieo Hạt", "number": 3 },
+      { "cycle": "Chín", "number": 6 },
+      { "cycle": "Thu Hoạch", "number": 8 }
+    ]
+  },
+  {
+    "lifePathNumber": 4,
+    "cycles": [
+      { "cycle": "Gieo Hạt", "number": 4 },
+      { "cycle": "Chín", "number": 8 },
+      { "cycle": "Thu Hoạch", "number": 6 }
+    ]
+  },
+  {
+    "lifePathNumber": 5,
+    "cycles": [
+      { "cycle": "Gieo Hạt", "number": 5 },
+      { "cycle": "Chín", "number": 3 },
+      { "cycle": "Thu Hoạch", "number": 9 }
+    ]
+  },
+  {
+    "lifePathNumber": 6,
+    "cycles": [
+      { "cycle": "Gieo Hạt", "number": 6 },
+      { "cycle": "Chín", "number": 4 },
+      { "cycle": "Thu Hoạch", "number": 8 }
+    ]
+  },
+  {
+    "lifePathNumber": 7,
+    "cycles": [
+      { "cycle": "Gieo Hạt", "number": 7 },
+      { "cycle": "Chín", "number": 2 },
+      { "cycle": "Thu Hoạch", "number": 5 }
+    ]
+  },
+  {
+    "lifePathNumber": 8,
+    "cycles": [
+      { "cycle": "Gieo Hạt", "number": 8 },
+      { "cycle": "Chín", "number": 1 },
+      { "cycle": "Thu Hoạch", "number": 4 }
+    ]
+  },
+  {
+    "lifePathNumber": 9,
+    "cycles": [
+      { "cycle": "Gieo Hạt", "number": 9 },
+      { "cycle": "Chín", "number": 5 },
+      { "cycle": "Thu Hoạch", "number": 3 }
+    ]
+  },
+  {
+    "lifePathNumber": 11,
+    "cycles": [
+      { "cycle": "Gieo Hạt", "number": 2 },
+      { "cycle": "Chín", "number": 11 },
+      { "cycle": "Thu Hoạch", "number": 7 }
+    ]
+  },
+  {
+    "lifePathNumber": 22,
+    "cycles": [
+      { "cycle": "Gieo Hạt", "number": 4 },
+      { "cycle": "Chín", "number": 22 },
+      { "cycle": "Thu Hoạch", "number": 6 }
+    ]
+  },
+  {
+    "lifePathNumber": 33,
+    "cycles": [
+      { "cycle": "Gieo Hạt", "number": 6 },
+      { "cycle": "Chín", "number": 33 },
+      { "cycle": "Thu Hoạch", "number": 9 }
+    ]
+  }
+]
