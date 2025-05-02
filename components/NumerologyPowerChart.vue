@@ -1,14 +1,16 @@
 <template>
-  <div class="numerology-power-chart max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-sm font-inter">
-    <!-- Tiêu đề và mô tả -->
-    <h3 class="text-center text-2xl font-bold text-teal-800 mb-2">
-      {{ chartData.chartTypes.pythagorean.name }}
-    </h3>
-    <p class="text-center text-gray-600 mb-6">{{ chartData.chartTypes.pythagorean.description }}</p>
+  <div class="numerology-charts max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-sm font-inter">
+    <!-- Tiêu đề chính -->
+    <h2 class="text-center text-3xl font-bold text-teal-800 mb-6">
+      Phân tích Thần số học
+    </h2>
+    <p class="text-center text-gray-600 mb-8">
+      Xem biểu đồ tên, tổng hợp và sức mạnh, với diễn giải chi tiết bên dưới.
+    </p>
 
     <!-- Trạng thái loading -->
     <div v-if="loading" class="p-4 text-center text-gray-600">
-      <div class="animate-pulse">Đang tải biểu đồ sức mạnh...</div>
+      <div class="animate-pulse">Đang tải biểu đồ...</div>
     </div>
 
     <!-- Trạng thái lỗi -->
@@ -16,30 +18,98 @@
       {{ error }}
     </div>
 
-    <!-- Bảng biểu đồ -->
-    <div v-else class="chart-container flex justify-center mb-6">
-      <table class="m-auto text-center font-bold border-collapse">
-        <tbody>
-          <tr v-for="(row, rowIndex) in pythagoreanGrid" :key="`row-${rowIndex}`">
-            <td
-              v-for="(cell, cellIndex) in row"
-              :key="`cell-${rowIndex}-${cellIndex}`"
-              class="border p-4 w-16 h-16 relative transition-all"
-              :class="getCellClasses(cell)"
-            >
-              <span class="text-xl font-bold">{{ cell }}</span>
-              <div v-if="powerChartData[cell] || isCoreNumber(cell)" class="absolute bottom-1 right-1 text-sm flex items-center space-x-1">
-                <span v-if="powerChartData[cell]" class="text-gray-600">{{ powerChartData[cell] }}</span>
-                <span v-if="isCoreNumber(cell)" class="text-teal-600">★</span>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Biểu đồ -->
+    <div v-else class="charts-container grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <!-- Biểu đồ Tên -->
+      <div class="name-chart">
+        <h3 class="text-center text-xl font-bold text-teal-800 mb-4">
+          Biểu đồ Tên
+        </h3>
+        <table class="m-auto text-center font-bold border-collapse">
+          <tbody>
+            <tr v-for="(row, rowIndex) in pythagoreanGrid" :key="`name-row-${rowIndex}`">
+              <td
+                v-for="(cell, cellIndex) in row"
+                :key="`name-cell-${rowIndex}-${cellIndex}`"
+                class="border p-4 w-16 h-16 relative transition-all"
+                :class="getCellClasses(cell, nameChartData)"
+              >
+                <span class="text-xl font-bold">
+                  {{ cell === 9 && nameChartData[99] ? '99' : cell }}
+                </span>
+                <span v-if="nameChartData[cell] || (cell === 9 && nameChartData[99])" class="text-red-500">
+                  {{ getFrequencyDisplay(cell, nameChartData) }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Biểu đồ Tổng hợp -->
+      <div class="combined-chart">
+        <h3 class="text-center text-xl font-bold text-teal-800 mb-4">
+          Biểu đồ Tổng hợp
+        </h3>
+        <table class="m-auto text-center font-bold border-collapse">
+          <tbody>
+            <tr v-for="(row, rowIndex) in pythagoreanGrid" :key="`combined-row-${rowIndex}`">
+              <td
+                v-for="(cell, cellIndex) in row"
+                :key="`combined-cell-${rowIndex}-${cellIndex}`"
+                class="border p-4 w-16 h-16 relative transition-all"
+                :class="getCellClasses(cell, combinedChartData)"
+              >
+                <span class="text-xl font-bold">
+                  {{ cell === 9 && combinedChartData[99] ? '99' : cell }}
+                </span>
+                <span v-if="combinedChartData[cell] || (cell === 9 && combinedChartData[99]) || isCoreNumber(cell)" class="flex items-center space-x-1">
+                  <span v-if="combinedChartData[cell] || (cell === 9 && combinedChartData[99])" class="text-red-500">
+                    {{ getFrequencyDisplay(cell, combinedChartData) }}
+                  </span>
+                  <span v-if="isCoreNumber(cell)" class="text-teal-600">★</span>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Biểu đồ Sức mạnh -->
+      <div class="power-chart">
+        <h3 class="text-center text-xl font-bold text-teal-800 mb-4">
+          Biểu đồ Sức mạnh
+        </h3>
+        <table class="m-auto text-center font-bold border-collapse">
+          <tbody>
+            <tr v-for="(row, rowIndex) in pythagoreanGrid" :key="`power-row-${rowIndex}`">
+              <td
+                v-for="(cell, cellIndex) in row"
+                :key="`power-cell-${rowIndex}-${cellIndex}`"
+                class="border p-4 w-16 h-16 relative transition-all"
+                :class="getPowerCellClasses(cell)"
+              >
+                <span class="text-xl font-bold">
+                  {{ cell }}
+                </span>
+                <span v-if="powerChartData[cell] || isCoreNumber(cell)" class="flex items-center space-x-1 absolute bottom-1 right-1 text-sm">
+                  <span v-if="powerChartData[cell]" class="text-red-500">
+                    {{ powerChartData[cell] }}
+                  </span>
+                  <span v-if="isCoreNumber(cell)" class="text-teal-600">★</span>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <!-- Diễn giải tất cả các số -->
-    <div v-if="!loading && !error" class="interpretations mt-6">
+    <!-- Diễn giải chung -->
+    <div v-if="!loading && !error" class="interpretations mt-8">
+      <h3 class="text-center text-2xl font-bold text-teal-800 mb-6">
+        Diễn giải Thần số học
+      </h3>
       <div
         v-for="number in activeNumbers"
         :key="`interpretation-${number}`"
@@ -50,7 +120,13 @@
           <span v-if="isCoreNumber(number)" class="text-teal-500 text-sm ml-2">★</span>
         </h4>
         <p class="text-gray-700 mb-2">
-          <strong>Tần suất:</strong> {{ powerChartData[number] || 'N/A' }}
+          <strong>Tần suất (Tên):</strong> {{ nameChartData[number] || 0 }}
+        </p>
+        <p class="text-gray-700 mb-2">
+          <strong>Tần suất (Tổng hợp):</strong> {{ combinedChartData[number] || 0 }}
+        </p>
+        <p class="text-gray-700 mb-2">
+          <strong>Tần suất (Sức mạnh):</strong> {{ powerChartData[number] || 0 }}
         </p>
         <p class="text-gray-700 mb-2">
           <strong>Ý nghĩa cốt lõi:</strong> {{ getNumberCoreMeaning(number) }}
@@ -126,7 +202,7 @@ import {
 } from '~/utils/numerology-calculations';
 import chartData from '~/data/powerChart.json';
 
-// Bảng Pythagorean cứng để đảm bảo đúng lưới
+// Bảng Pythagorean chuẩn
 const pythagoreanGrid = [
   [4, 9, 2],
   [3, 5, 7],
@@ -167,7 +243,9 @@ const props = defineProps({
 
 const loading = ref(false);
 const error = ref(null);
-const powerChartData = ref({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 99: 0 });
+const nameChartData = ref({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 99: 0 });
+const combinedChartData = ref({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 99: 0 });
+const powerChartData = ref({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 });
 
 // Tính số cốt lõi
 const coreNumbers = computed(() => {
@@ -177,33 +255,44 @@ const coreNumbers = computed(() => {
     const soulUrge = calculateSoulUrgeNumber(props.fullName);
     const personality = calculatePersonalityNumber(props.fullName);
     const birthday = calculateBirthDayNumber(props.birthDate);
-    console.log('[NumerologyPowerChart] Core numbers:', { lifePath, expression, soulUrge, personality, birthday });
+    console.log('[NumerologyCharts] Core numbers:', { lifePath, expression, soulUrge, personality, birthday });
     return { lifePath, expression, soulUrge, personality, birthday };
   } catch (err) {
-    console.error('[NumerologyPowerChart] Core numbers error:', err.message);
+    console.error('[NumerologyCharts] Core numbers error:', err.message);
     return {};
   }
 });
 
 // Danh sách các số có tần suất
 const activeNumbers = computed(() => {
-  const numbers = Object.keys(powerChartData.value)
-    .filter(key => powerChartData.value[key] > 0 && key !== '99' || (key === '99' && powerChartData.value[99] > 0))
-    .map(Number);
-  console.log('[NumerologyPowerChart] Active numbers:', numbers);
-  return numbers.sort((a, b) => a - b);
+  const numbers = new Set();
+  Object.keys(nameChartData.value).forEach(key => {
+    if (nameChartData.value[key] > 0 && key !== '99') numbers.add(Number(key));
+  });
+  Object.keys(combinedChartData.value).forEach(key => {
+    if (combinedChartData.value[key] > 0 && key !== '99') numbers.add(Number(key));
+  });
+  Object.keys(powerChartData.value).forEach(key => {
+    if (powerChartData.value[key] > 0) numbers.add(Number(key));
+  });
+  if (nameChartData.value[99] > 0 || combinedChartData.value[99] > 0) numbers.add(99);
+  const sortedNumbers = Array.from(numbers).sort((a, b) => a - b);
+  console.log('[NumerologyCharts] Active numbers:', sortedNumbers);
+  return sortedNumbers;
 });
 
-// Tính tần suất số
-const calculatePowerChart = async () => {
-  console.log('[NumerologyPowerChart] Calculating power chart:', {
+// Tính tần suất cho tất cả biểu đồ
+const calculateCharts = async () => {
+  console.log('[NumerologyCharts] Calculating charts:', {
     fullName: props.fullName,
     birthDate: props.birthDate
   });
 
   loading.value = true;
   error.value = null;
-  powerChartData.value = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 99: 0 };
+  nameChartData.value = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 99: 0 };
+  combinedChartData.value = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 99: 0 };
+  powerChartData.value = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
 
   try {
     if (!props.fullName || props.fullName.trim() === '') {
@@ -219,6 +308,27 @@ const calculatePowerChart = async () => {
       throw new Error('Ngày sinh không hợp lệ');
     }
 
+    // Tính số từ tên
+    const cleanName = props.fullName.toLowerCase().replace(/[^a-zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ]/g, '');
+    const nameNumbers = cleanName.split('').map(char => {
+      const value = PYTHAGOREAN_CHART[char] || 0;
+      console.log(`[NumerologyCharts] Name char: ${char}, value=${value}`);
+      return value;
+    }).filter(n => n > 0);
+
+    console.log('[NumerologyCharts] Name numbers:', nameNumbers);
+
+    // Biểu đồ Tên
+    nameNumbers.forEach(num => {
+      if (num >= 1 && num <= 9) {
+        nameChartData.value[num]++;
+      }
+    });
+    if (nameChartData.value[9] >= 5) {
+      nameChartData.value[99] = nameChartData.value[9];
+      nameChartData.value[9] = 0;
+    }
+
     // Tính các chỉ số
     const lifePath = calculateLifePathNumber(props.birthDate);
     const expression = calculateExpressionNumber(props.fullName);
@@ -227,7 +337,7 @@ const calculatePowerChart = async () => {
     const birthday = calculateBirthDayNumber(props.birthDate);
     const peaks = Object.values(calculatePeakNumbers(props.birthDate));
 
-    console.log('[NumerologyPowerChart] Calculated numbers:', {
+    console.log('[NumerologyCharts] Calculated numbers:', {
       lifePath,
       expression,
       soulUrge,
@@ -236,18 +346,8 @@ const calculatePowerChart = async () => {
       peaks
     });
 
-    // Tính số từ tên
-    const cleanName = props.fullName.toLowerCase().replace(/[^a-zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ]/g, '');
-    const nameNumbers = cleanName.split('').map(char => {
-      const value = PYTHAGOREAN_CHART[char] || 0;
-      console.log(`[NumerologyPowerChart] Name char: ${char}, value=${value}`);
-      return value;
-    }).filter(n => n > 0);
-
-    console.log('[NumerologyPowerChart] Name numbers:', nameNumbers);
-
-    // Tổng hợp số
-    const allNumbers = [
+    // Biểu đồ Tổng hợp
+    const combinedNumbers = [
       lifePath,
       expression,
       soulUrge,
@@ -256,25 +356,39 @@ const calculatePowerChart = async () => {
       ...peaks,
       ...nameNumbers
     ];
-    console.log('[NumerologyPowerChart] All numbers:', allNumbers);
+    combinedNumbers.forEach(num => {
+      if (num >= 1 && num <= 9) {
+        combinedChartData.value[num]++;
+      }
+    });
+    if (combinedChartData.value[9] >= 5) {
+      combinedChartData.value[99] = combinedChartData.value[9];
+      combinedChartData.value[9] = 0;
+    }
 
-    // Đếm tần suất
-    allNumbers.forEach(num => {
+    // Biểu đồ Sức mạnh
+    const powerNumbers = [
+      lifePath,
+      expression,
+      soulUrge,
+      personality,
+      birthday,
+      ...peaks
+    ];
+    powerNumbers.forEach(num => {
       if (num >= 1 && num <= 9) {
         powerChartData.value[num]++;
       }
     });
 
-    // Xử lý số 99
-    if (powerChartData.value[9] >= 5) {
-      powerChartData.value[99] = powerChartData.value[9];
-      powerChartData.value[9] = 0;
-    }
-
-    console.log('[NumerologyPowerChart] Power chart data:', powerChartData.value);
-    toast.success('Tải biểu đồ sức mạnh thành công!');
+    console.log('[NumerologyCharts] Chart data:', {
+      nameChartData: nameChartData.value,
+      combinedChartData: combinedChartData.value,
+      powerChartData: powerChartData.value
+    });
+    toast.success('Tải biểu đồ thần số học thành công!');
   } catch (err) {
-    console.error('[NumerologyPowerChart] Error:', err.message);
+    console.error('[NumerologyCharts] Error:', err.message);
     error.value = err.message;
     toast.error(err.message);
   } finally {
@@ -285,9 +399,37 @@ const calculatePowerChart = async () => {
 // Kiểm tra số cốt lõi
 const isCoreNumber = (cell) => {
   const isCore = Object.values(coreNumbers.value).includes(cell);
-  console.log(`[NumerologyPowerChart] Checking core number ${cell}: ${isCore}`);
+  console.log(`[NumerologyCharts] Checking core number ${cell}: ${isCore}`);
   return isCore;
 };
+
+// Hiển thị tần suất dạng lặp số
+const getFrequencyDisplay = (cell, data) => {
+  if (cell === 9 && data[99]) {
+    return '9'.repeat(data[99]);
+  }
+  return data[cell] ? String(cell).repeat(data[cell]) : '';
+};
+
+// Lớp CSS cho ô (Biểu đồ Tên và Tổng hợp)
+const getCellClasses = (cell, data) => ({
+  'bg-teal-50': isCoreNumber(cell),
+  'border-teal-300': isCoreNumber(cell),
+  'bg-teal-100': data[cell] > 0 || (cell === 9 && data[99] > 0),
+  'border-red-300': true,
+  'bg-gray-100': !data[cell] && !(cell === 9 && data[99] > 0),
+  'border-teal-400': (data[cell] >= 3 || (cell === 9 && data[99] >= 3)) && cell !== 99
+});
+
+// Lớp CSS cho ô (Biểu đồ Sức mạnh)
+const getPowerCellClasses = (cell) => ({
+  'bg-teal-50': isCoreNumber(cell),
+  'border-teal-300': isCoreNumber(cell),
+  'bg-teal-100': powerChartData.value[cell] > 0,
+  'border-red-300': true,
+  'bg-gray-100': !powerChartData.value[cell],
+  'border-teal-400': powerChartData.value[cell] >= 3
+});
 
 // Lấy thông tin số
 const getNumberTitle = (number) => {
@@ -338,24 +480,16 @@ const getNumberSpiritualLesson = (number) => {
   return chartData.numberMeanings[number]?.spiritualLesson || chartData.specialNumbers[number]?.spiritualLesson || 'Không có dữ liệu';
 };
 
-// Lớp CSS cho ô
-const getCellClasses = (cell) => ({
-  'bg-teal-50': isCoreNumber(cell),
-  'border-teal-300': isCoreNumber(cell),
-  'bg-teal-100': powerChartData.value[cell] > 0 && cell !== 99,
-  'border-teal-400': powerChartData.value[cell] >= 3 && cell !== 99, // Nổi bật tần suất cao
-  'bg-gray-100': !powerChartData.value[cell] && cell !== 99,
-  'border-gray-300': true
-});
-
 // Theo dõi thay đổi props
 watch(
   () => [props.fullName, props.birthDate],
   () => {
     if (props.fullName && props.birthDate) {
-      calculatePowerChart();
+      calculateCharts();
     } else {
-      powerChartData.value = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 99: 0 };
+      nameChartData.value = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 99: 0 };
+      combinedChartData.value = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 99: 0 };
+      powerChartData.value = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
       error.value = 'Vui lòng nhập đầy đủ họ tên và ngày sinh';
     }
   },
@@ -364,15 +498,15 @@ watch(
 </script>
 
 <style scoped>
-.numerology-power-chart {
+.numerology-charts {
   font-family: 'Inter', sans-serif;
 }
 
-.chart-container table {
+.charts-container table {
   border-spacing: 0;
 }
 
-.chart-container td {
+.charts-container td {
   border-width: 1px;
   transition: background-color 0.2s;
 }
