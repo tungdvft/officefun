@@ -107,7 +107,7 @@ import ApproachCapacityDisplay from '~/components/ApproachCapacityDisplay.vue';
 import ApproachAttitudeDisplay from '~/components/ApproachAttitudeDisplay.vue';
 
 definePageMeta({
-  ssr: false,
+  layout: "view",
 });
 
 const fullName = ref('');
