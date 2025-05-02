@@ -14,37 +14,37 @@
     
     <!-- Hiển thị kết quả -->
     <div v-else-if="showResult" class="mt-6 animate-fadeIn">
-      <div class="bg-white p-6 rounded-xl border border-gray-200">
-      <h3 class="text-xl font-bold text-teal-800 mb-4">Các Nợ Nghiệp Của Bạn</h3>
-      <p class="text-gray-700 text-lg">Các loại nợ nghiệp: <span class="font-bold text-teal-600">{{ debtTypes.join(', ') }}</span></p>
+      <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+        <h3 class="text-xl font-bold text-teal-800 mb-4">Các Nợ Nghiệp Của Bạn</h3>
+        <p class="text-gray-700 text-lg">Các loại nợ nghiệp: <span class="font-bold text-teal-600">{{ debtTypes.join(', ') }}</span></p>
+      </div>
+      
+      <div v-for="debt in debtData" :key="debt.type" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm mt-6">
+        <h3 class="text-xl font-bold text-teal-800 mb-4">{{ debt.type }}</h3>
+        <div class="prose prose-teal max-w-none space-y-3">
+          <p class="text-gray-700"><strong>Mô tả:</strong> {{ debt.description }}</p>
+          <p class="text-gray-700"><strong>Lời khuyên:</strong></p>
+          <ul class="list-disc pl-5">
+            <li v-for="(advice, index) in debt.advice" :key="index" class="text-gray-700">{{ advice }}</li>
+          </ul>
+        </div>
+      </div>
     </div>
     
-    <div v-for="debt in debtData" :key="debt.type" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm mt-6">
-      <h3 class="text-xl font-bold text-teal-800 mb-4">{{ debt.type }}</h3>
-      <div class="prose prose-teal max-w-none space-y-3">
-        <p class="text-gray-700"><strong>Mô tả:</strong> {{ debt.description }}</p>
-        <p class="text-gray-700"><strong>Lời khuyên:</strong></p>
-        <ul class="list-disc pl-5">
-          <li v-for="(advice, index) in debt.advice" :key="index" class="text-gray-700">{{ advice }}</li>
-        </ul>
+    <!-- Trường hợp không có nợ nghiệp -->
+    <div v-else-if="!loading && !error" class="p-4 text-center animate-fadeIn">
+      <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+        Chúc mừng! Không tìm thấy nợ nghiệp nào với thông tin của bạn.
+      </div>
+    </div>
+    
+    <!-- Yêu cầu nhập thông tin -->
+    <div v-else class="p-4 text-center animate-fadeIn">
+      <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+        Vui lòng nhập họ tên và ngày sinh hợp lệ (DD/MM/YYYY) để xem thông tin.
       </div>
     </div>
   </div>
-  
-  <!-- Trường hợp không có nợ nghiệp -->
-  <div v-else-if="!loading && !error" class="p-4 text-center animate-fadeIn">
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-      Chúc mừng! Không tìm thấy nợ nghiệp nào với thông tin của bạn.
-    </div>
-  </div>
-  
-  <!-- Yêu cầu nhập thông tin -->
-  <div v-else class="p-4 text-center animate-fadeIn">
-    <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
-      Vui lòng nhập họ tên và ngày sinh hợp lệ (DD/MM/YYYY) để xem thông tin.
-    </div>
-  </div>
-</div>
 </template>
 
 <script setup>
@@ -62,19 +62,19 @@ const props = defineProps({
     validator: (value) => {
       if (!value) return true;
       return /^\d{2}\/\d{2}\/\d{4}$/.test(value);
-    },
+    }
   },
   fullName: {
     type: String,
-    default: '',
-  },
+    default: ''
+  }
 });
 
 onMounted(() => {
   console.log('[KarmicDebtDisplay] Mounted with props:', {
     fullName: props.fullName,
     birthDate: props.birthDate,
-    isValidBirthDate: props.birthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate),
+    isValidBirthDate: props.birthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)
   });
 });
 
@@ -87,7 +87,7 @@ const showResult = computed(() => {
   const result = debtData.value.length > 0 && debtTypes.value.length > 0;
   console.log('[KarmicDebtDisplay] showResult:', result, {
     debtData: debtData.value,
-    debtTypes: debtTypes.value,
+    debtTypes: debtTypes.value
   });
   return result;
 });
@@ -95,7 +95,7 @@ const showResult = computed(() => {
 const loadKarmicDebtData = async () => {
   console.log('[KarmicDebtDisplay] loadKarmicDebtData called with:', {
     fullName: props.fullName,
-    birthDate: props.birthDate,
+    birthDate: props.birthDate
   });
 
   loading.value = true;
@@ -153,36 +153,34 @@ const loadKarmicDebtData = async () => {
       toast.info('Không tìm thấy nợ nghiệp nào!');
     }
   } catch (err) {
-    console.error('[KarmicDebtDisplay] Error in loadKarmicDebtData:', err.message, err.stack);
+    console.error('[KarmicDebtDisplay] Error:', err.message);
     error.value = err.message;
     toast.error(err.message);
-    debtData.value = [];
   } finally {
     loading.value = false;
-    console.log('[KarmicDebtDisplay] loadKarmicDebtData finished:', {
+    console.log('[KarmicDebtDisplay] loadKarmicDebtData completed', {
       error: error.value,
-      loading: loading.value,
       debtTypes: debtTypes.value,
-      debtData: debtData.value,
-      showResult: showResult.value,
+      debtData: debtData.value
     });
   }
 };
 
 watch(
-  [() => props.birthDate, () => props.fullName],
-  ([newBirthDate, newFullName]) => {
-    console.log('[KarmicDebtDisplay] Watch triggered:', {
-      newBirthDate,
-      newFullName,
-      isValidBirthDate: newBirthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(newBirthDate),
-      isValidFullName: newFullName && newFullName.trim() !== '',
+  () => [props.fullName, props.birthDate],
+  () => {
+    console.log('[KarmicDebtDisplay] Props changed:', {
+      fullName: props.fullName,
+      birthDate: props.birthDate
     });
-    if (newBirthDate && newFullName && newFullName.trim() !== '') {
+    if (props.fullName && props.birthDate) {
       loadKarmicDebtData();
     } else {
-      console.warn('[KarmicDebtDisplay] Watch skipped: Invalid input');
-      error.value = 'Vui lòng nhập đầy đủ họ tên và ngày sinh';
+      debtTypes.value = [];
+      debtData.value = [];
+      error.value = null;
+      loading.value = false;
+      console.log('[KarmicDebtDisplay] Resetting data due to missing inputs');
     }
   },
   { immediate: true }
@@ -190,35 +188,23 @@ watch(
 </script>
 
 <style scoped>
-.karmic-debt-display {
-  font-family: 'Inter', Arial, sans-serif;
-}
-
-.transition-all {
-  transition: all 0.3s ease;
-}
-
+/* Tailwind CSS đảm bảo hoạt ảnh và giao diện nhất quán */
 .animate-fadeIn {
-  animation: fadeIn 0.5s ease;
+  animation: fadeIn 0.5s ease-in;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-@media (max-width: 640px) {
-  .karmic-debt-display {
-    padding: 15px;
-  }
-  .text-2xl {
-    font-size: 1.4rem;
-  }
-  .text-xl {
-    font-size: 1.2rem;
-  }
-  .text-lg {
-    font-size: 1rem;
-  }
+.font-inter {
+  font-family: 'Inter', sans-serif;
 }
 </style>

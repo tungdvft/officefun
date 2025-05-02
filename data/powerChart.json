@@ -1,0 +1,527 @@
+{
+  "chartTypes": {
+    "pythagorean": {
+      "name": "BIỂU ĐỒ SỨC MẠNH",
+      "description": "Mô hình chuẩn trong thần số học phương Tây, sử dụng lưới 3x3 để hiển thị tần suất các số từ 1-9, phản ánh năng lượng cá nhân qua tên và ngày sinh",
+      "grid": [
+        [4, 9, 2],
+        [3, 5, 7],
+        [8, 1, 6]
+      ],
+      "labels": {
+        "4": "Thể chất - Nền tảng và sức bền",
+        "9": "Tinh thần - Trí tuệ và nhân đạo",
+        "2": "Cảm xúc - Hài hòa và nhạy cảm",
+        "3": "Trí tuệ - Sáng tạo và biểu đạt",
+        "5": "Linh hồn - Tự do và phiêu lưu",
+        "7": "Nhân cách - Phân tích và tâm linh",
+        "8": "Vật chất - Quyền lực và thành công",
+        "1": "Tâm linh - Lãnh đạo và độc lập",
+        "6": "Kết nối - Trách nhiệm và chăm sóc"
+      }
+    }
+  },
+  "numberMeanings": {
+    "1": {
+      "title": "CÁ TÍNH & LÃNH ĐẠO",
+      "coreMeaning": "Năng lượng khởi nguyên, đại diện cho sự độc lập, sáng tạo và tinh thần tiên phong",
+      "symbolism": "Cây thông thẳng đứng - Biểu tượng của sự vươn lên mạnh mẽ giữa gió bão",
+      "element": "Lửa",
+      "planet": "Mặt Trời",
+      "color": "Đỏ rực",
+      "frequencyImpact": "Tần suất cao (3+): Người lãnh đạo bẩm sinh, mạnh mẽ nhưng có thể độc đoán; Tần suất thấp (0-1): Thiếu tự tin, cần phát triển cá tính",
+      "strengths": [
+        "Quyết đoán và tự tin trong hành động",
+        "Khả năng lãnh đạo bẩm sinh, truyền cảm hứng",
+        "Tư duy độc lập, sáng tạo ý tưởng mới",
+        "Tinh thần tiên phong, dám đối mặt thách thức"
+      ],
+      "challenges": [
+        "Xu hướng độc đoán, áp đặt ý kiến",
+        "Cái tôi quá lớn, khó chấp nhận phê bình",
+        "Thiếu kiên nhẫn với người chậm chạp",
+        "Khó hợp tác hoặc phụ thuộc vào người khác"
+      ],
+      "careerAdvice": [
+        "Quản lý, điều hành doanh nghiệp",
+        "Khởi nghiệp hoặc sáng lập dự án",
+        "Các ngành sáng tạo như thiết kế, công nghệ",
+        "Vị trí đòi hỏi quyết định nhanh và độc lập"
+      ],
+      "relationshipTips": [
+        "Lắng nghe và tôn trọng quan điểm đối phương",
+        "Cân bằng giữa dẫn dắt và hợp tác",
+        "Tránh kiểm soát hoặc áp đặt trong tình cảm",
+        "Phát huy vai trò truyền cảm hứng"
+      ],
+      "spiritualLesson": "Học cách khiêm nhường, kết nối với tập thể và cân bằng cái tôi cá nhân",
+      "lifePathConnection": "Nếu là Số Đường Đời, sứ mệnh là dẫn dắt và tiên phong"
+    },
+    "2": {
+      "title": "CẢM XÚC & HÀI HÒA",
+      "coreMeaning": "Năng lượng của sự cân bằng, hợp tác, nhạy cảm và trực giác",
+      "symbolism": "Đôi cánh thiên thần - Biểu tượng của sự kết nối và bảo vệ",
+      "element": "Nước",
+      "planet": "Mặt Trăng",
+      "color": "Cam nhạt",
+      "frequencyImpact": "Tần suất cao (3+): Nhạy cảm, giỏi ngoại giao nhưng dễ tổn thương; Tần suất thấp (0-1): Thiếu đồng cảm, cần học lắng nghe",
+      "strengths": [
+        "Khả năng ngoại giao xuất sắc, hòa giải xung đột",
+        "Trực giác nhạy bén, dễ hiểu cảm xúc người khác",
+        "Tinh thần hợp tác, làm việc nhóm tốt",
+        "Sự đồng cảm, luôn hỗ trợ người xung quanh"
+      ],
+      "challenges": [
+        "Dễ bị tổn thương bởi lời nói hoặc hành động",
+        "Thiếu quyết đoán, hay do dự khi ra quyết định",
+        "Xu hướng phụ thuộc vào người khác",
+        "Nhạy cảm quá mức, dễ bị ảnh hưởng cảm xúc"
+      ],
+      "careerAdvice": [
+        "Tư vấn, hòa giải hoặc chăm sóc khách hàng",
+        "Ngành chăm sóc sức khỏe tinh thần",
+        "Công việc nhóm, tổ chức sự kiện",
+        "Nghệ thuật sáng tạo như âm nhạc, hội họa"
+      ],
+      "relationshipTips": [
+        "Thiết lập ranh giới rõ ràng trong tình cảm",
+        "Phát triển lòng tự trọng, tránh hy sinh quá mức",
+        "Tìm đối tác bổ trợ năng lượng mạnh mẽ",
+        "Học cách bày tỏ cảm xúc một cách tự tin"
+      ],
+      "spiritualLesson": "Học cách tự tin, độc lập cảm xúc và cân bằng giữa cho và nhận",
+      "lifePathConnection": "Nếu là Số Đường Đời, sứ mệnh là tạo hòa hợp và kết nối"
+    },
+    "3": {
+      "title": "SÁNG TẠO & GIAO TIẾP",
+      "coreMeaning": "Năng lượng của sự biểu đạt, sáng tạo và truyền cảm hứng",
+      "symbolism": "Tam giác cân - Biểu tượng của sự hài hòa giữa ý tưởng, cảm xúc và hiện thực",
+      "element": "Lửa",
+      "planet": "Sao Mộc",
+      "color": "Vàng tươi",
+      "frequencyImpact": "Tần suất cao (3+): Sáng tạo vượt trội, nhưng dễ phân tán; Tần suất thấp (0-1): Khó thể hiện bản thân, cần phát triển giao tiếp",
+      "strengths": [
+        "Giao tiếp lôi cuốn, thu hút mọi người",
+        "Trí tưởng tượng phong phú, sáng tạo nghệ thuật",
+        "Tinh thần lạc quan, lan tỏa năng lượng tích cực",
+        "Khả năng truyền cảm hứng qua lời nói và hành động"
+      ],
+      "challenges": [
+        "Thiếu tập trung, dễ bị phân tán ý tưởng",
+        "Xu hướng phóng đại hoặc nói quá sự thật",
+        "Cả thèm chóng chán, khó hoàn thành dự án",
+        "Cần kiểm soát cảm xúc để tránh bốc đồng"
+      ],
+      "careerAdvice": [
+        "Nghệ thuật, giải trí, diễn xuất",
+        "Truyền thông, quảng cáo, viết lách",
+        "Giáo dục sáng tạo, đào tạo trẻ em",
+        "Công việc tự do, không gò bó"
+      ],
+      "relationshipTips": [
+        "Lắng nghe sâu sắc, không chỉ tập trung nói",
+        "Cân bằng giữa biểu đạt và hành động cụ thể",
+        "Tránh hứa hẹn mà không thực hiện",
+        "Phát triển tính kiên định trong tình cảm"
+      ],
+      "spiritualLesson": "Học cách tập trung, cam kết và biến ý tưởng thành hiện thực",
+      "lifePathConnection": "Nếu là Số Đường Đời, sứ mệnh là truyền cảm hứng và sáng tạo"
+    },
+    "4": {
+      "title": "ỔN ĐỊNH & TỔ CHỨC",
+      "coreMeaning": "Năng lượng của sự vững chắc, kỷ luật và xây dựng nền tảng",
+      "symbolism": "Hình vuông - Biểu tượng của sự ổn định và cấu trúc",
+      "element": "Đất",
+      "planet": "Sao Thổ",
+      "color": "Nâu đất",
+      "frequencyImpact": "Tần suất cao (3+): Kỷ luật, đáng tin cậy nhưng cứng nhắc; Tần suất thấp (0-1): Thiếu tổ chức, cần học lập kế hoạch",
+      "strengths": [
+        "Tư duy logic, tổ chức hệ thống",
+        "Tính kỷ luật cao, luôn hoàn thành nhiệm vụ",
+        "Khả năng xây dựng nền tảng lâu dài",
+        "Tinh thần trách nhiệm, đáng tin cậy"
+      ],
+      "challenges": [
+        "Cứng nhắc, khó chấp nhận thay đổi",
+        "Xu hướng bảo thủ, không linh hoạt",
+        "Áp lực tự tạo do tiêu chuẩn cao",
+        "Khó thể hiện cảm xúc, khô khan"
+      ],
+      "careerAdvice": [
+        "Quản lý dự án, kế hoạch",
+        "Kế toán, tài chính, kiểm toán",
+        "Xây dựng, kiến trúc, kỹ thuật",
+        "Công việc đòi hỏi độ chính xác cao"
+      ],
+      "relationshipTips": [
+        "Mở lòng, học cách linh hoạt hơn",
+        "Thể hiện cảm xúc để gần gũi hơn",
+        "Tránh áp đặt tiêu chuẩn lên đối phương",
+        "Phát triển sự đồng cảm và cởi mở"
+      ],
+      "spiritualLesson": "Học cách linh hoạt, chấp nhận thay đổi và cân bằng giữa công việc và cảm xúc",
+      "lifePathConnection": "Nếu là Số Đường Đời, sứ mệnh là xây dựng nền tảng vững chắc"
+    },
+    "5": {
+      "title": "TỰ DO & KHÁM PHÁ",
+      "coreMeaning": "Năng lượng của sự phiêu lưu, thích nghi và tìm kiếm trải nghiệm mới",
+      "symbolism": "Ngôi sao năm cánh - Biểu tượng của sự tự do và đa dạng",
+      "element": "Khí",
+      "planet": "Sao Thủy",
+      "color": "Xanh lam",
+      "frequencyImpact": "Tần suất cao (3+): Linh hoạt, cuốn hút nhưng thiếu ổn định; Tần suất thấp (0-1): Sợ thay đổi, cần học thích nghi",
+      "strengths": [
+        "Khả năng thích nghi nhanh với hoàn cảnh",
+        "Tư duy đa chiều, sáng tạo giải pháp",
+        "Tinh thần phiêu lưu, yêu thích khám phá",
+        "Sức hút cá nhân, dễ kết nối với mọi người"
+      ],
+      "challenges": [
+        "Thiếu kiên định, khó cam kết lâu dài",
+        "Bốc đồng, dễ đưa ra quyết định vội vàng",
+        "Khó gắn bó với trách nhiệm cố định",
+        "Dễ sa đà vào các trải nghiệm cực đoan"
+      ],
+      "careerAdvice": [
+        "Du lịch, báo chí, khám phá",
+        "Kinh doanh đa ngành, khởi nghiệp",
+        "Truyền thông, marketing tự do",
+        "Công việc không gò bó thời gian"
+      ],
+      "relationshipTips": [
+        "Học cách cam kết và giữ lời hứa",
+        "Cân bằng giữa tự do và trách nhiệm",
+        "Tránh thay đổi đột ngột gây tổn thương",
+        "Tôn trọng nhu cầu ổn định của đối phương"
+      ],
+      "spiritualLesson": "Học cách tập trung, cam kết và tìm tự do trong khuôn khổ",
+      "lifePathConnection": "Nếu là Số Đường Đời, sứ mệnh là khám phá và truyền cảm hứng thay đổi"
+    },
+    "6": {
+      "title": "TRÁCH NHIỆM & CÂN BẰNG",
+      "coreMeaning": "Năng lượng của sự chăm sóc, hài hòa và trách nhiệm với gia đình, cộng đồng",
+      "symbolism": "Hoa sen - Biểu tượng của sự thanh khiết và hoàn thiện",
+      "element": "Đất",
+      "planet": "Sao Kim",
+      "color": "Xanh lá",
+      "frequencyImpact": "Tần suất cao (3+): Chăm sóc, trách nhiệm nhưng dễ kiểm soát; Tần suất thấp (0-1): Thiếu trách nhiệm, cần học chăm sóc",
+      "strengths": [
+        "Tinh thần trách nhiệm cao, luôn hỗ trợ",
+        "Khả năng chăm sóc, nuôi dưỡng người khác",
+        "Gu thẩm mỹ tinh tế, yêu cái đẹp",
+        "Kỹ năng hòa giải, tạo hài hòa"
+      ],
+      "challenges": [
+        "Xu hướng kiểm soát hoặc ôm đồm",
+        "Dễ hy sinh bản thân quá mức",
+        "Khó từ chối yêu cầu của người khác",
+        "Áp đặt tiêu chuẩn cá nhân lên người khác"
+      ],
+      "careerAdvice": [
+        "Giáo dục, đào tạo, chăm sóc trẻ em",
+        "Thiết kế nội thất, nghệ thuật",
+        "Tư vấn tâm lý, chăm sóc sức khỏe",
+        "Công việc phục vụ cộng đồng"
+      ],
+      "relationshipTips": [
+        "Học cách buông bỏ và không kiểm soát",
+        "Tôn trọng sự tự do của đối phương",
+        "Tránh ôm đồm trách nhiệm của người khác",
+        "Phát triển sự độc lập cá nhân"
+      ],
+      "spiritualLesson": "Học cách yêu thương vô điều kiện và buông bỏ kiểm soát",
+      "lifePathConnection": "Nếu là Số Đường Đời, sứ mệnh là nuôi dưỡng và tạo hài hòa"
+    },
+    "7": {
+      "title": "TRÍ TUỆ & TÂM LINH",
+      "coreMeaning": "Năng lượng của sự phân tích, chiêm nghiệm và tìm kiếm chân lý",
+      "symbolism": "Tam giác đỉnh - Biểu tượng của sự thăng hoa ý thức",
+      "element": "Nước",
+      "planet": "Sao Hải Vương",
+      "color": "Tím",
+      "frequencyImpact": "Tần suất cao (3+): Sâu sắc, trực giác mạnh nhưng cô lập; Tần suất thấp (0-1): Thiếu chiều sâu, cần học chiêm nghiệm",
+      "strengths": [
+        "Tư duy phân tích sắc bén, logic",
+        "Trực giác nhạy bén, cảm nhận sâu sắc",
+        "Khả năng nghiên cứu, tìm hiểu chuyên sâu",
+        "Chiều sâu tâm linh, kết nối với vũ trụ"
+      ],
+      "challenges": [
+        "Xu hướng cô lập, khó mở lòng",
+        "Hoài nghi quá mức, thiếu niềm tin",
+        "Khó thể hiện cảm xúc, lạnh lùng",
+        "Thiếu thực tế, sống trong tư duy"
+      ],
+      "careerAdvice": [
+        "Nghiên cứu khoa học, triết học",
+        "Công nghệ thông tin, phân tích dữ liệu",
+        "Tâm linh, thiền định, yoga",
+        "Viết lách, nghiên cứu chuyên sâu"
+      ],
+      "relationshipTips": [
+        "Mở lòng, chia sẻ cảm xúc thật",
+        "Cân bằng giữa lý trí và trái tim",
+        "Tránh phân tích quá mức trong tình cảm",
+        "Phát triển sự đồng cảm với đối phương"
+      ],
+      "spiritualLesson": "Học cách kết nối, tin tưởng và cân bằng giữa tâm linh và thực tại",
+      "lifePathConnection": "Nếu là Số Đường Đời, sứ mệnh là tìm kiếm chân lý và chia sẻ trí tuệ"
+    },
+    "8": {
+      "title": "QUYỀN LỰC & THÀNH TỰU",
+      "coreMeaning": "Năng lượng của sự thịnh vượng, quyền lực và cân bằng vật chất",
+      "symbolism": "Vô cực - Biểu tượng của sự tuần hoàn và năng lượng vô tận",
+      "element": "Đất",
+      "planet": "Sao Thổ",
+      "color": "Đen",
+      "frequencyImpact": "Tần suất cao (3+): Tham vọng, thành công nhưng áp lực; Tần suất thấp (0-1): Thiếu động lực, cần học quản lý",
+      "strengths": [
+        "Tư duy chiến lược, tầm nhìn lớn",
+        "Khả năng quản lý tài chính, tổ chức",
+        "Năng lực đạt được thành công lớn",
+        "Tinh thần kiên trì, vượt qua khó khăn"
+      ],
+      "challenges": [
+        "Tham vọng quá độ, bỏ qua đạo đức",
+        "Đánh giá người khác qua vật chất",
+        "Xu hướng thao túng để đạt mục tiêu",
+        "Áp lực thành công gây căng thẳng"
+      ],
+      "careerAdvice": [
+        "Quản lý cấp cao, lãnh đạo doanh nghiệp",
+        "Đầu tư tài chính, bất động sản",
+        "Kinh doanh quy mô lớn",
+        "Các ngành nghề có vị thế xã hội"
+      ],
+      "relationshipTips": [
+        "Cho đi vô điều kiện, không tính toán",
+        "Cân bằng giữa công việc và gia đình",
+        "Tránh dùng tiền bạc đo lường tình cảm",
+        "Phát triển lòng bao dung, đồng cảm"
+      ],
+      "spiritualLesson": "Học cách hào phóng, cho đi và tìm ý nghĩa vượt trên vật chất",
+      "lifePathConnection": "Nếu là Số Đường Đời, sứ mệnh là đạt thành công và chia sẻ thịnh vượng"
+    },
+    "9": {
+      "title": "NHÂN ĐẠO & HOÀN THIỆN",
+      "coreMeaning": "Năng lượng của sự hoàn thiện, nhân ái và trí tuệ phổ quát",
+      "symbolism": "Vòng tròn hoàn hảo - Biểu tượng của sự viên mãn và kết thúc",
+      "element": "Lửa",
+      "planet": "Sao Hỏa",
+      "color": "Trắng bạc",
+      "frequencyImpact": "Tần suất cao (3+): Nhân ái, lý tưởng nhưng dễ thất vọng; Tần suất thấp (0-1): Thiếu đồng cảm, cần học sẻ chia",
+      "strengths": [
+        "Tầm nhìn nhân đạo, quan tâm cộng đồng",
+        "Khả năng cảm thông sâu sắc với mọi người",
+        "Trí tuệ tổng hợp, nhìn nhận toàn diện",
+        "Năng lực truyền cảm hứng, dẫn dắt lý tưởng"
+      ],
+      "challenges": [
+        "Lý tưởng hóa quá mức, xa rời thực tế",
+        "Dễ thất vọng khi người khác không hoàn hảo",
+        "Xu hướng ôm đồm trách nhiệm xã hội",
+        "Khó chấp nhận sự không hoàn hảo"
+      ],
+      "careerAdvice": [
+        "Hoạt động xã hội, từ thiện",
+        "Giáo dục nhân văn, giảng dạy",
+        "Tâm lý trị liệu, chữa lành cộng đồng",
+        "Nghệ thuật truyền tải thông điệp nhân đạo"
+      ],
+      "relationshipTips": [
+        "Chấp nhận khuyết điểm của đối phương",
+        "Cân bằng giữa lý tưởng và thực tế",
+        "Tránh cố gắng cứu rỗi người khác",
+        "Phát triển sự kiên nhẫn và bao dung"
+      ],
+      "spiritualLesson": "Học cách chấp nhận, buông bỏ và sống với sự không hoàn hảo",
+      "lifePathConnection": "Nếu là Số Đường Đời, sứ mệnh là phục vụ nhân loại và hoàn thiện bản thân"
+    }
+  },
+  "specialNumbers": {
+    "11": {
+      "title": "SỨ GIẢ TÂM LINH",
+      "coreMeaning": "Năng lượng tâm linh siêu việt, trực giác mạnh mẽ và sứ mệnh dẫn dắt tinh thần",
+      "symbolism": "Ánh sáng kép - Biểu tượng của sự khai sáng và kết nối vũ trụ",
+      "element": "Khí",
+      "planet": "Sao Thiên Vương",
+      "color": "Xanh ngọc",
+      "frequencyImpact": "Hiếm gặp, xuất hiện khi tổng không giảm về 2, biểu thị sứ mệnh tâm linh",
+      "strengths": [
+        "Trực giác siêu phàm, cảm nhận năng lượng",
+        "Khả năng truyền cảm hứng tâm linh",
+        "Tầm nhìn vượt thời gian, sáng tạo",
+        "Kết nối sâu sắc với vũ trụ"
+      ],
+      "challenges": [
+        "Căng thẳng do nhạy cảm quá mức",
+        "Khó hòa nhập với thế giới vật chất",
+        "Xu hướng cô lập để tìm bình yên",
+        "Áp lực từ sứ mệnh tâm linh"
+      ],
+      "careerAdvice": [
+        "Tâm linh, thiền định, yoga",
+        "Tư vấn chữa lành, trị liệu năng lượng",
+        "Nghệ thuật sáng tạo biểu đạt tâm linh",
+        "Nghiên cứu siêu hình, triết học"
+      ],
+      "relationshipTips": [
+        "Tìm đối tác hiểu và tôn trọng tâm linh",
+        "Cân bằng giữa trực giác và thực tế",
+        "Chia sẻ tầm nhìn mà không áp đặt",
+        "Học cách sống hòa hợp với thế giới"
+      ],
+      "spiritualLesson": "Học cách cân bằng giữa tâm linh và vật chất, dẫn dắt mà không áp lực"
+    },
+    "22": {
+      "title": "KIẾN TRÚC SƯ VĨ ĐẠI",
+      "coreMeaning": "Năng lượng xây dựng những công trình vĩ đại, kết hợp thực tế và tầm nhìn lớn",
+      "symbolism": "Cầu nối đất trời - Biểu tượng của sự kết hợp lý tưởng và thực tiễn",
+      "element": "Đất",
+      "planet": "Sao Thổ",
+      "color": "Vàng ánh kim",
+      "frequencyImpact": "Hiếm gặp, xuất hiện khi tổng không giảm về 4, biểu thị sứ mệnh kiến tạo",
+      "strengths": [
+        "Tầm nhìn lớn, khả năng hiện thực hóa",
+        "Tư duy tổ chức, xây dựng hệ thống",
+        "Kiên trì, vượt qua mọi thử thách",
+        "Khả năng lãnh đạo các dự án lớn"
+      ],
+      "challenges": [
+        "Áp lực từ trách nhiệm quá lớn",
+        "Khó cân bằng giữa lý tưởng và thực tế",
+        "Xu hướng làm việc quá sức",
+        "Cần kiểm soát để tránh bảo thủ"
+      ],
+      "careerAdvice": [
+        "Kiến trúc, kỹ thuật quy mô lớn",
+        "Quản lý dự án quốc tế",
+        "Kinh doanh có tầm ảnh hưởng",
+        "Lãnh đạo tổ chức phi lợi nhuận"
+      ],
+      "relationshipTips": [
+        "Chia sẻ trách nhiệm với đối phương",
+        "Cân bằng giữa công việc và tình cảm",
+        "Tránh đặt kỳ vọng quá cao",
+        "Học cách thư giãn và tận hưởng"
+      ],
+      "spiritualLesson": "Học cách hài hòa giữa lý tưởng lớn và cuộc sống cá nhân"
+    },
+    "33": {
+      "title": "THẦY CHỮA LÀNH",
+      "coreMeaning": "Năng lượng của sự từ bi, hy sinh và chữa lành cho cộng đồng",
+      "symbolism": "Trái tim rực sáng - Biểu tượng của tình yêu vô điều kiện",
+      "element": "Nước",
+      "planet": "Sao Kim",
+      "color": "Hồng phấn",
+      "frequencyImpact": "Rất hiếm, xuất hiện khi tổng không giảm về 6, biểu thị sứ mệnh chữa lành",
+      "strengths": [
+        "Tình yêu thương vô điều kiện",
+        "Khả năng chữa lành, truyền cảm hứng",
+        "Sự hy sinh vì lợi ích cộng đồng",
+        "Trực giác mạnh mẽ, kết nối cảm xúc"
+      ],
+      "challenges": [
+        "Dễ hy sinh bản thân quá mức",
+        "Khó từ chối, dễ bị lợi dụng",
+        "Căng thẳng do ôm đồm cảm xúc",
+        "Cần học cách tự bảo vệ năng lượng"
+      ],
+      "careerAdvice": [
+        "Trị liệu, chữa lành tâm lý",
+        "Hoạt động từ thiện, cứu trợ",
+        "Giáo dục cộng đồng, chăm sóc",
+        "Nghệ thuật chữa lành qua âm nhạc, hội họa"
+      ],
+      "relationshipTips": [
+        "Thiết lập ranh giới để tự bảo vệ",
+        "Tìm đối tác tôn trọng lòng từ bi",
+        "Cân bằng giữa cho đi và nhận lại",
+        "Học cách yêu bản thân trước"
+      ],
+      "spiritualLesson": "Học cách yêu thương bản thân và chữa lành chính mình trước khi giúp người khác"
+    },
+    "99": {
+      "title": "TRÍ TUỆ VŨ TRỤ",
+      "coreMeaning": "Năng lượng của sự thông thái toàn diện, trách nhiệm với nhân loại và kết nối vũ trụ",
+      "symbolism": "Vòng ánh sáng vô cực - Biểu tượng của trí tuệ và sự viên mãn tối cao",
+      "element": "Lửa",
+      "planet": "Sao Hỏa",
+      "color": "Trắng ánh kim",
+      "frequencyImpact": "Cực kỳ hiếm, xuất hiện khi tần suất số 9 vượt ngưỡng (ví dụ: >=5), biểu thị sứ mệnh nhân đạo đặc biệt",
+      "strengths": [
+        "Tầm nhìn vượt thời gian, hiểu biết sâu rộng",
+        "Khả năng dẫn dắt nhân loại qua trí tuệ",
+        "Trực giác siêu việt, kết nối vũ trụ",
+        "Tinh thần nhân đạo, cống hiến không ngừng"
+      ],
+      "challenges": [
+        "Xa rời thực tế, khó sống trong đời thường",
+        "Áp lực từ sứ mệnh quá lớn",
+        "Dễ thất vọng với sự không hoàn hảo",
+        "Cần học cách sống giản đơn"
+      ],
+      "careerAdvice": [
+        "Lãnh đạo phong trào nhân đạo toàn cầu",
+        "Nghiên cứu vũ trụ, triết học sâu sắc",
+        "Viết sách truyền cảm hứng nhân loại",
+        "Hoạt động xã hội có tầm ảnh hưởng lớn"
+      ],
+      "relationshipTips": [
+        "Tìm đối tác chia sẻ lý tưởng lớn",
+        "Cân bằng giữa sứ mệnh và đời sống cá nhân",
+        "Tránh lý tưởng hóa tình cảm",
+        "Học cách sống trong khoảnh khắc hiện tại"
+      ],
+      "spiritualLesson": "Học cách chấp nhận thực tại, sống giản dị và kết nối với nhân loại qua tình yêu"
+    }
+  },
+  "calculationRules": {
+    "frequencyCalculation": {
+      "description": "Tính tần suất các số (1-9) dựa trên tên và ngày sinh để điền vào biểu đồ Pythagorean",
+      "steps": [
+        {
+          "step": "Thu thập số từ ngày sinh",
+          "details": "Tính các chỉ số: Số Đường Đời (tổng ngày, tháng, năm), Số Ngày Sinh, 4 Đỉnh Cao Đời Người. Giảm về số đơn (1-9) trừ khi là 11, 22, 33."
+        },
+        {
+          "step": "Thu thập số từ tên",
+          "details": "Chuyển các chữ cái trong tên (không dấu cách, ký tự đặc biệt) thành số qua bảng Pythagorean (A=1, B=2, ..., I=9)."
+        },
+        {
+          "step": "Tổng hợp và đếm tần suất",
+          "details": "Kết hợp tất cả số từ ngày sinh và tên, đếm tần suất mỗi số (1-9). Số 99 xuất hiện nếu tần suất số 9 >= 5."
+        },
+        {
+          "step": "Ánh xạ vào biểu đồ",
+          "details": "Điền tần suất vào lưới Pythagorean: 4 (Thể chất), 9 (Tinh thần), 2 (Cảm xúc), 3 (Trí tuệ), 5 (Linh hồn), 7 (Nhân cách), 8 (Vật chất), 1 (Tâm linh), 6 (Kết nối)."
+        }
+      ]
+    },
+    "masterNumbers": {
+      "description": "Xử lý các số Master (11, 22, 33) và số đặc biệt (99) trong tính toán",
+      "rules": [
+        {
+          "number": "11",
+          "condition": "Giữ nguyên nếu tổng là 11, không giảm về 2, trừ khi ngữ cảnh yêu cầu",
+          "application": "Áp dụng cho Số Đường Đời, Số Vận Mệnh, hoặc khi phân tích tâm linh"
+        },
+        {
+          "number": "22",
+          "condition": "Giữ nguyên nếu tổng là 22, không giảm về 4, trừ khi ngữ cảnh yêu cầu",
+          "application": "Áp dụng cho Số Đường Đời, Số Vận Mệnh, hoặc khi phân tích kiến tạo"
+        },
+        {
+          "number": "33",
+          "condition": "Giữ nguyên nếu tổng là 33, không giảm về 6, trừ khi ngữ cảnh yêu cầu",
+          "application": "Áp dụng cho Số Đường Đời hoặc khi phân tích chữa lành"
+        },
+        {
+          "number": "99",
+          "condition": "Hiển thị thay cho số 9 nếu tần suất số 9 >= 5 trong biểu đồ",
+          "application": "Áp dụng trong biểu đồ Pythagorean để biểu thị năng lượng nhân đạo đặc biệt"
+        }
+      ]
+    }
+  }
+}

@@ -736,169 +736,71 @@ function calculateWeaknessNumbers(name) {
 function calculateKarmicDebtNumbers(fullName, birthDate) {
   console.log(`[calculateKarmicDebtNumbers] Input: fullName=${fullName}, birthDate=${birthDate}`);
 
-  // Kiểm tra đầu vào
+  // 1. Validate input
   if (!fullName || typeof fullName !== 'string' || fullName.trim() === '') {
-    console.warn('[calculateKarmicDebtNumbers] Invalid fullName, returning default');
-    return {
-      inLifePath: false,
-      inExpression: false,
-      inSoulUrge: false,
-      inPersonality: false,
-      inBirthday: false,
-      inPeaks: false,
-    };
+    console.warn('[calculateKarmicDebtNumbers] Invalid fullName');
+    return defaultKarmicResult();
   }
 
   if (!birthDate || !/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate)) {
-    console.warn(`[calculateKarmicDebtNumbers] Invalid birthDate format: ${birthDate}`);
-    return {
-      inLifePath: false,
-      inExpression: false,
-      inSoulUrge: false,
-      inPersonality: false,
-      inBirthday: false,
-      inPeaks: false,
-    };
+    console.warn('[calculateKarmicDebtNumbers] Invalid birthDate format');
+    return defaultKarmicResult();
   }
 
-  try {
-    // Kiểm tra ngày sinh hợp lệ
-    const [day, month, year] = birthDate.split('/').map(Number);
-    const dateObj = new Date(year, month - 1, day);
-    console.log('[calculateKarmicDebtNumbers] Parsed birthDate:', { day, month, year, dateObj });
-
-    if (
-      isNaN(dateObj.getTime()) ||
-      dateObj.getDate() !== day ||
+  // 2. Parse and validate date
+  const [day, month, year] = birthDate.split('/').map(Number);
+  const dateObj = new Date(year, month - 1, day);
+  
+  if (isNaN(dateObj.getTime()) || 
+      dateObj.getDate() !== day || 
       dateObj.getMonth() + 1 !== month ||
-      year < 1900 ||
-      year > new Date().getFullYear()
-    ) {
-      console.warn(`[calculateKarmicDebtNumbers] Invalid birthDate: ${birthDate}`);
-      return {
-        inLifePath: false,
-        inExpression: false,
-        inSoulUrge: false,
-        inPersonality: false,
-        inBirthday: false,
-        inPeaks: false,
-      };
-    }
-
-    // Hàm kiểm tra nợ nghiệp
-    const hasKarmicDebt = (number, label) => {
-      const debts = [13, 14, 16, 19];
-      const result = debts.includes(number);
-      console.log(`[calculateKarmicDebtNumbers] Checking ${label}: number=${number}, hasKarmicDebt=${result}`);
-      return result;
-    };
-
-    // Tính các chỉ số và kiểm tra nợ nghiệp trên số trung gian
-    let lifePathSum = 0;
-    let lifePath = 0;
-    {
-      const sum = day + month + year;
-      lifePathSum = sum;
-      lifePath = NumerologyUtils.reduceToSingleDigit(sum, false); // Keep Master Numbers
-      console.log(`[calculateKarmicDebtNumbers] LifePath: sum=${sum}, reduced=${lifePath}`);
-    }
-
-    let expressionSum = 0;
-    let expression = 0;
-    {
-      const cleanName = fullName.toLowerCase().replace(/[^a-zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ]/g, '');
-      const sum = cleanName.split('').reduce((acc, char) => {
-        const value = PYTHAGOREAN_CHART[char] || 0;
-        console.log(`[calculateKarmicDebtNumbers] Expression char: ${char}, value=${value}`);
-        return acc + value;
-      }, 0);
-      expressionSum = sum;
-      expression = NumerologyUtils.reduceToSingleDigit(sum, false);
-      console.log(`[calculateKarmicDebtNumbers] Expression: sum=${sum}, reduced=${expression}`);
-    }
-
-    let soulUrgeSum = 0;
-    let soulUrge = 0;
-    {
-      const cleanName = fullName.toLowerCase().replace(/[^a-zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ]/g, '');
-      const sum = cleanName.split('').reduce((acc, char) => {
-        const value = VOWELS[char] || 0;
-        console.log(`[calculateKarmicDebtNumbers] SoulUrge char: ${char}, value=${value}`);
-        return acc + value;
-      }, 0);
-      soulUrgeSum = sum;
-      soulUrge = NumerologyUtils.reduceToSingleDigit(sum, false);
-      console.log(`[calculateKarmicDebtNumbers] SoulUrge: sum=${sum}, reduced=${soulUrge}`);
-    }
-
-    let personalitySum = 0;
-    let personality = 0;
-    {
-      const cleanName = fullName.toLowerCase().replace(/[^a-zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ]/g, '');
-      const consonants = cleanName.split('').filter(char => !Object.keys(VOWELS).includes(char));
-      const sum = consonants.reduce((acc, char) => {
-        const value = PYTHAGOREAN_CHART[char] || 0;
-        console.log(`[calculateKarmicDebtNumbers] Personality char: ${char}, value=${value}`);
-        return acc + value;
-      }, 0);
-      personalitySum = sum;
-      personality = sum > 0 ? NumerologyUtils.reduceToSingleDigit(sum, true) : 1;
-      console.log(`[calculateKarmicDebtNumbers] Personality: sum=${sum}, reduced=${personality}`);
-    }
-
-    let birthday = 0;
-    {
-      const dayNum = parseInt(day);
-      birthday = [11, 22].includes(dayNum) ? dayNum : NumerologyUtils.reduceToSingleDigit(dayNum, false);
-      console.log(`[calculateKarmicDebtNumbers] Birthday: day=${dayNum}, reduced=${birthday}`);
-    }
-
-    let peaksSums = { firstPeak: 0, secondPeak: 0, thirdPeak: 0, fourthPeak: 0 };
-    let peaks = { firstPeak: 0, secondPeak: 0, thirdPeak: 0, fourthPeak: 0 };
-    {
-      const peak1Sum = month + day;
-      const peak2Sum = day + year;
-      const peak3Sum = peak1Sum + peak2Sum;
-      const peak4Sum = month + year;
-      peaksSums = {
-        firstPeak: peak1Sum,
-        secondPeak: peak2Sum,
-        thirdPeak: peak3Sum,
-        fourthPeak: peak4Sum,
-      };
-      peaks = {
-        firstPeak: NumerologyUtils.reduceToSingleDigit(peak1Sum, false),
-        secondPeak: NumerologyUtils.reduceToSingleDigit(peak2Sum, false),
-        thirdPeak: NumerologyUtils.reduceToSingleDigit(peak3Sum, false),
-        fourthPeak: NumerologyUtils.reduceToSingleDigit(peak4Sum, false),
-      };
-      console.log(`[calculateKarmicDebtNumbers] Peaks: sums=`, peaksSums, `reduced=`, peaks);
-    }
-
-    // Kiểm tra nợ nghiệp trên số trung gian và số cuối
-    const result = {
-      inLifePath: hasKarmicDebt(lifePathSum, 'LifePathSum') || hasKarmicDebt(lifePath, 'LifePath'),
-      inExpression: hasKarmicDebt(expressionSum, 'ExpressionSum') || hasKarmicDebt(expression, 'Expression'),
-      inSoulUrge: hasKarmicDebt(soulUrgeSum, 'SoulUrgeSum') || hasKarmicDebt(soulUrge, 'SoulUrge'),
-      inPersonality: hasKarmicDebt(personalitySum, 'PersonalitySum') || hasKarmicDebt(personality, 'Personality'),
-      inBirthday: hasKarmicDebt(day, 'Birthday') || hasKarmicDebt(birthday, 'BirthdayReduced'),
-      inPeaks: Object.values(peaksSums).some((sum, i) => hasKarmicDebt(sum, `PeakSum${i + 1}`)) ||
-                Object.values(peaks).some((num, i) => hasKarmicDebt(num, `Peak${i + 1}`)),
-    };
-
-    console.log('[calculateKarmicDebtNumbers] Final result:', result);
-    return result;
-  } catch (error) {
-    console.error(`[calculateKarmicDebtNumbers] Error: ${error.message}, Stack: ${error.stack}`);
-    return {
-      inLifePath: false,
-      inExpression: false,
-      inSoulUrge: false,
-      inPersonality: false,
-      inBirthday: false,
-      inPeaks: false,
-    };
+      year < 1900 || 
+      year > new Date().getFullYear()) {
+    console.warn('[calculateKarmicDebtNumbers] Invalid date values');
+    return defaultKarmicResult();
   }
+
+  // 3. Helper function to check karmic debt (including Master Numbers)
+  const hasKarmicDebt = (number) => {
+    const karmicNumbers = [13, 14, 16, 19, 11, 22]; // Extended with Master Numbers
+    const isDebt = karmicNumbers.includes(number);
+    console.log(`[KarmicCheck] number=${number}, isDebt=${isDebt}`);
+    return isDebt;
+  };
+
+  // 4. Calculate core numbers (optimized)
+  const coreNumbers = calculateCoreNumbers(birthDate, fullName); // Reuse existing function
+  const birthdayNumber = calculateBirthDayNumber(birthDate);
+  const peakNumbers = calculatePeakNumbers(birthDate);
+
+  // 5. Check debts in all relevant numbers
+  const result = {
+    inLifePath: hasKarmicDebt(coreNumbers.lifePath),
+    inExpression: hasKarmicDebt(coreNumbers.expression),
+    inSoulUrge: hasKarmicDebt(coreNumbers.soulUrge),
+    inBirthday: hasKarmicDebt(birthdayNumber),
+    inPeaks: Object.values(peakNumbers).some(peak => hasKarmicDebt(peak)),
+    // Additional checks for intermediate sums if needed
+    inLifePathSum: hasKarmicDebt(day + month + year),
+    inExpressionSum: hasKarmicDebt(
+      [...fullName.toLowerCase()].reduce((sum, char) => sum + (PYTHAGOREAN_CHART[char] || 0), 0)
+    )
+  };
+
+  console.log('[calculateKarmicDebtNumbers] Final result:', result);
+  return result;
+}
+
+function defaultKarmicResult() {
+  return {
+    inLifePath: false,
+    inExpression: false,
+    inSoulUrge: false,
+    inBirthday: false,
+    inPeaks: false,
+    inLifePathSum: false,
+    inExpressionSum: false
+  };
 }
 
 // 30. Chỉ số Năng Lực Tự Nhiên (Natural Ability Number)

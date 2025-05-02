@@ -62,6 +62,9 @@
       <LifePathAndSoulUrge :birth-date="birthDate" :full-name="fullName" />
       <SoulChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
       <PersonalityDisplay :birth-date="birthDate" :full-name="fullName" />
+      <NumerologyPowerChart 
+      :birth-date="birthDate" :full-name="fullName"
+    />
       <PersonalityChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
       <WeaknessDisplay :birth-date="birthDate" :full-name="fullName" />
       <KarmicDebtDisplay :birth-date="birthDate" :full-name="fullName" />
