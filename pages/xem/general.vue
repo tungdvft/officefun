@@ -30,15 +30,14 @@
           @input="formatDateInput"
           @keyup.enter="calculateNumbers"
         />
-       
       </div>
-       <button
-          @click="calculateNumbers"
-          :disabled="isLoading"
-          class="px-6 mt-3 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-400"
-        >
-          {{ isLoading ? 'Đang tính...' : 'Tính toán' }}
-        </button>
+      <button
+        @click="calculateNumbers"
+        :disabled="isLoading"
+        class="px-6 mt-3 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-400"
+      >
+        {{ isLoading ? 'Đang tính...' : 'Tính toán' }}
+      </button>
       <p class="mt-2 text-sm text-gray-600">
         Vui lòng nhập ngày sinh theo định dạng DD/MM/YYYY (ví dụ: 25/12/1990).
       </p>
@@ -49,45 +48,63 @@
     <div v-if="birthDate" class="space-y-8">
       <LifePathCalculator :birth-date="birthDate" :result="result" />
       <PersonalYearChart :birth-date="birthDate" />
-      <PersonalityGroups :birth-date="birthDate"/>
+      <PersonalityGroups :birth-date="birthDate" />
       <NumerologyCycles :birth-date="birthDate" />
       <NumerologyPyramid :birth-date="birthDate" />
       <PersonalYearIndex :birth-date="birthDate" />
       <PersonalMonthCycle :birth-date="birthDate" />
-      <DestinyNumber :birth-date="birthDate"  :full-name="fullName"/>
-      <LifePathDestinyDisplay 
-        :birth-date="birthDate"
-        :full-name="fullName"
-      />
-       <ChallengeDisplay 
-        :birth-date="birthDate"
-        :full-name="fullName"
-      />
-       <MaturityDisplay 
-        :birth-date="birthDate"
-        :full-name="fullName"
-      />
-       <MaturePowerDisplay 
-        :birth-date="birthDate"
-        :full-name="fullName"
-      />
-       <SoulUrgeDisplay 
-        :birth-date="birthDate"
-        :full-name="fullName"
-      />
-       <LifePathAndSoulUrge 
-        :birth-date="birthDate"
-        :full-name="fullName"
-      />
+      <DestinyNumber :birth-date="birthDate" :full-name="fullName" />
+      <LifePathDestinyDisplay :birth-date="birthDate" :full-name="fullName" />
+      <ChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
+      <MaturityDisplay :birth-date="birthDate" :full-name="fullName" />
+      <MaturePowerDisplay :birth-date="birthDate" :full-name="fullName" />
+      <SoulUrgeDisplay :birth-date="birthDate" :full-name="fullName" />
+      <LifePathAndSoulUrge :birth-date="birthDate" :full-name="fullName" />
+      <SoulChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
+      <PersonalityDisplay :birth-date="birthDate" :full-name="fullName" />
+      <PersonalityChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
+      <WeaknessDisplay :birth-date="birthDate" :full-name="fullName" />
+      <KarmicDebtDisplay :birth-date="birthDate" :full-name="fullName" />
+      <NaturalAbilityDisplay :birth-date="birthDate" :full-name="fullName" />
+      <OvercomeChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
+      <MentalCapacityDisplay :birth-date="birthDate" :full-name="fullName" />
+      <ApproachMotivationDisplay :birth-date="birthDate" :full-name="fullName" />
+      <ApproachCapacityDisplay :birth-date="birthDate" :full-name="fullName" />
+      <ApproachAttitudeDisplay :birth-date="birthDate" :full-name="fullName" />
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import LifePathCalculator from '~/components/LifePathCalculator.vue';
+import PersonalYearChart from '~/components/PersonalYearChart.vue';
+import PersonalityGroups from '~/components/PersonalityGroups.vue';
+import NumerologyCycles from '~/components/NumerologyCycles.vue';
+import NumerologyPyramid from '~/components/NumerologyPyramid.vue';
+import PersonalYearIndex from '~/components/PersonalYearIndex.vue';
+import PersonalMonthCycle from '~/components/PersonalMonthCycle.vue';
+import DestinyNumber from '~/components/DestinyNumber.vue';
+import LifePathDestinyDisplay from '~/components/LifePathDestinyDisplay.vue';
+import ChallengeDisplay from '~/components/ChallengeDisplay.vue';
+import MaturityDisplay from '~/components/MaturityDisplay.vue';
+import MaturePowerDisplay from '~/components/MaturePowerDisplay.vue';
+import SoulUrgeDisplay from '~/components/SoulUrgeDisplay.vue';
+import LifePathAndSoulUrge from '~/components/LifePathAndSoulUrge.vue';
+import SoulChallengeDisplay from '~/components/SoulChallengeDisplay.vue';
+import PersonalityDisplay from '~/components/PersonalityDisplay.vue';
+import PersonalityChallengeDisplay from '~/components/PersonalityChallengeDisplay.vue';
+import WeaknessDisplay from '~/components/WeaknessDisplay.vue';
+import KarmicDebtDisplay from '~/components/KarmicDebtDisplay.vue';
+import NaturalAbilityDisplay from '~/components/NaturalAbilityDisplay.vue';
+import OvercomeChallengeDisplay from '~/components/OvercomeChallengeDisplay.vue';
+import MentalCapacityDisplay from '~/components/MentalCapacityDisplay.vue';
+import ApproachMotivationDisplay from '~/components/ApproachMotivationDisplay.vue';
+import ApproachCapacityDisplay from '~/components/ApproachCapacityDisplay.vue';
+import ApproachAttitudeDisplay from '~/components/ApproachAttitudeDisplay.vue';
 
 definePageMeta({
-  ssr: false
+  ssr: false,
 });
 
 const fullName = ref('');
@@ -131,7 +148,7 @@ const calculateNumbers = async () => {
     const lifePathStr = [11, 22].includes(lifePath) ? lifePath.toString() : lifePath.toString();
 
     const { data: lifePathData, error: lifePathError } = await useFetch(`/api/life-path/${lifePathStr}`, {
-      baseURL: useRuntimeConfig().public.apiBase
+      baseURL: useRuntimeConfig().public.apiBase,
     });
 
     if (lifePathError.value) {
