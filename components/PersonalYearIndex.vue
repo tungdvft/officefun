@@ -153,8 +153,6 @@
 
 <script setup>
 import { ref, watch, onMounted } from 'vue';
-import { toast } from 'vue3-toastify';
-
 const props = defineProps({
   birthDate: {
     type: String,
@@ -233,19 +231,16 @@ const calculatePersonalYear = (day, month, year) => {
 // Lấy và xử lý dữ liệu
 const fetchPersonalYearData = async () => {
   if (!props.birthDate) {
-    toast.error('Vui lòng nhập ngày sinh!');
     return;
   }
 
   if (!/^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
-    toast.error('Ngày sinh không đúng định dạng (DD/MM/YYYY)!');
     return;
   }
 
   const [day, month, year] = props.birthDate.split('/').map(Number);
   const dateObj = new Date(year, month - 1, day);
   if (dateObj.getDate() !== day || dateObj.getMonth() + 1 !== month || year < 1900 || year > 2025) {
-    toast.error('Ngày sinh không hợp lệ!');
     return;
   }
 
@@ -300,7 +295,6 @@ const fetchPersonalYearData = async () => {
     yearData.value = sampleData;
   } catch (err) {
     console.error('Lỗi khi lấy dữ liệu:', err);
-    toast.error('Không thể lấy dữ liệu chu kỳ vận số');
   } finally {
     loading.value = false;
   }

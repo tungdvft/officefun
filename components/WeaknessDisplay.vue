@@ -42,7 +42,6 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue';
-import { toast } from 'vue3-toastify';
 import { calculateWeaknessNumbers } from '~/utils/numerology-calculations';
 import weaknessDataJson from '~/data/weaknessData.json';
 
@@ -84,14 +83,12 @@ const loadWeaknessData = async () => {
       .filter(Boolean);
 
     if (weaknessDataList.value.length > 0) {
-      toast.success('Tính toán Điểm Yếu thành công!');
     } else {
       throw new Error('Không tìm thấy dữ liệu cho các số điểm yếu');
     }
   } catch (err) {
     console.error('Lỗi trong loadWeaknessData:', err);
     error.value = err.message;
-    toast.error(err.message);
     weaknessDataList.value = [{
       number: 0,
       description: 'Tạm thời chưa có dữ liệu chi tiết cho các điểm yếu',

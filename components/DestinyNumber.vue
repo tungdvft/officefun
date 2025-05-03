@@ -108,7 +108,6 @@
 <script setup>
 // Giữ nguyên toàn bộ phần script như cũ
 import { ref, watch, onMounted } from 'vue';
-import { toast } from 'vue3-toastify';
 import destinyNumberData from '~/data/DestinyNumberData.json';
 import { calculateExpressionNumber } from '@/utils/numerology-calculations';
 
@@ -133,17 +132,14 @@ const loading = ref(false);
 
 const fetchDestinyData = async () => {
   if (!props.fullName || props.fullName.trim() === '') {
-    toast.error('Vui lòng nhập họ tên!');
     return;
   }
 
   if (!props.birthDate) {
-    toast.error('Vui lòng nhập ngày sinh!');
     return;
   }
 
   if (!/^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
-    toast.error('Ngày sinh không đúng định dạng (DD/MM/YYYY)!');
     return;
   }
 
@@ -155,7 +151,6 @@ const fetchDestinyData = async () => {
     year < 1900 ||
     year > new Date().getFullYear()
   ) {
-    toast.error('Ngày sinh không hợp lệ!');
     return;
   }
 
@@ -166,7 +161,6 @@ const fetchDestinyData = async () => {
   try {
     const calculatedNumber = calculateExpressionNumber(props.fullName);
     if (!calculatedNumber) {
-      toast.error('Họ tên không hợp lệ để tính số Sứ Mệnh!');
       return;
     }
 
@@ -178,10 +172,8 @@ const fetchDestinyData = async () => {
       challenges: 'Chưa xác định thách thức cụ thể.',
     };
 
-    toast.success('Tạo báo cáo chỉ số sứ mệnh hoàn tất!');
   } catch (err) {
     console.error('Lỗi trong fetchDestinyData:', err);
-    toast.warn('Không thể tính chỉ số sứ mệnh, sử dụng dữ liệu mẫu!');
     destinyNumber.value = 22;
     destinyData.value = {
       traits: 'Bạn là người xây dựng vĩ đại, kết hợp giữa thực tế và lý tưởng. Là số Master, bạn sở hữu tầm nhìn chiến lược và khả năng biến những ý tưởng lớn thành hiện thực. Sự kiên trì, trách nhiệm, và khả năng tổ chức giúp bạn tạo ra những giá trị lâu dài.',

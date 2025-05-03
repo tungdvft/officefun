@@ -96,7 +96,6 @@
 <script setup>
 // Giữ nguyên toàn bộ phần script như cũ
 import { ref, watch, onMounted } from 'vue';
-import { toast } from 'vue3-toastify';
 import personalMonthData from '~/data/PersonalMonthData.json';
 
 const props = defineProps({
@@ -130,12 +129,10 @@ const calculatePersonalMonth = (personalYear, month) => {
 
 const fetchMonthData = async () => {
   if (!props.birthDate) {
-    toast.error('Vui lòng nhập ngày sinh!');
     return;
   }
 
   if (!/^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
-    toast.error('Ngày sinh không đúng định dạng (DD/MM/YYYY)!');
     return;
   }
 
@@ -147,7 +144,6 @@ const fetchMonthData = async () => {
     year < 1900 ||
     year > new Date().getFullYear()
   ) {
-    toast.error('Ngày sinh không hợp lệ!');
     return;
   }
 
@@ -182,10 +178,7 @@ const fetchMonthData = async () => {
     }
 
     monthData.value = months;
-    toast.success('Tạo báo cáo chu kỳ vận số tháng hoàn tất!');
   } catch (err) {
-    console.error('Lỗi trong fetchMonthData:', err);
-    toast.warn('Không thể lấy dữ liệu, sử dụng dữ liệu mẫu!');
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth() + 1;
     const months = [];

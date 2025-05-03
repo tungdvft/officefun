@@ -47,7 +47,6 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue';
-import { toast } from 'vue3-toastify';
 import { calculateApproachAttitudeNumber } from '~/utils/numerology-calculations';
 import approachAttitudeData from '~/data/approachAttitudeData.json';
 
@@ -114,14 +113,12 @@ const loadAttitudeData = async () => {
 
     if (data) {
       attitudeData.value = data;
-      toast.success('Tính toán Thái Độ Tiếp Cận thành công!');
     } else {
       throw new Error(`Không tìm thấy dữ liệu cho số ${attitudeNumber.value}`);
     }
   } catch (err) {
     console.error('Lỗi trong loadAttitudeData:', err);
     error.value = err.message;
-    toast.error(err.message);
     attitudeData.value = {
       description: `Tạm thời chưa có dữ liệu chi tiết cho số ${attitudeNumber.value}`,
       advice: ['Đang cập nhật dữ liệu'],

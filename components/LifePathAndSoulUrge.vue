@@ -76,7 +76,6 @@
 
 <script setup>
 import { ref, watch, onMounted, computed } from 'vue'
-import { toast } from 'vue3-toastify'
 import { calculateLifePathNumber, calculateSoulUrgeNumber } from '@/utils/numerology-calculations'
 import { soulUrgeData } from '@/data/lifePathSoulUrgeData'
 
@@ -151,7 +150,6 @@ const loadCombinationData = async () => {
 
     if (combination) {
       combinationData.value = combination
-      toast.success('Phân tích tương quan thành công!')
     } else {
       throw new Error(`Không tìm thấy dữ liệu cho Số Linh Hồn ${soulUrgeNumber.value}`)
     }
@@ -159,7 +157,6 @@ const loadCombinationData = async () => {
   } catch (err) {
     console.error('Lỗi trong loadCombinationData:', err)
     error.value = err.message
-    toast.error(err.message)
     
     combinationData.value = {
       description: `Tạm thời chưa có dữ liệu chi tiết cho cặp số ${lifePathNumber.value} và ${soulUrgeNumber.value}`,

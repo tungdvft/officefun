@@ -52,7 +52,6 @@
 
 <script setup>
 import { ref, watch, onMounted, computed } from 'vue'
-import { toast } from 'vue3-toastify'
 import { calculatePersonalityNumber } from '@/utils/numerology-calculations'
 import personalityData from '@/data/personalityData.json'
 
@@ -95,7 +94,6 @@ const loadPersonalityData = async () => {
 
     if (data) {
       selectedPersonalityData.value = data
-      toast.success('Phân tích chỉ số nhân cách thành công!')
     } else {
       throw new Error(`Không tìm thấy dữ liệu cho Chỉ số Nhân Cách ${personalityNumber.value}`)
     }
@@ -103,7 +101,6 @@ const loadPersonalityData = async () => {
   } catch (err) {
     console.error('Lỗi trong loadPersonalityData:', err)
     error.value = err.message
-    toast.error(err.message)
     
     selectedPersonalityData.value = {
       description: `Tạm thời chưa có dữ liệu chi tiết cho Chỉ số Nhân Cách ${personalityNumber.value || 'không xác định'}`,

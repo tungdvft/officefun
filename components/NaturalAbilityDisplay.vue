@@ -47,7 +47,6 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue';
-import { toast } from 'vue3-toastify';
 import { calculateNaturalAbilityNumber } from '~/utils/numerology-calculations';
 import naturalAbilityData from '~/data/naturalAbilityData.json';
 
@@ -114,14 +113,12 @@ const loadAbilityData = async () => {
 
     if (data) {
       abilityData.value = data;
-      toast.success('Tính toán Năng Lực Tự Nhiên thành công!');
     } else {
       throw new Error(`Không tìm thấy dữ liệu cho số ${abilityNumber.value}`);
     }
   } catch (err) {
     console.error('Lỗi trong loadAbilityData:', err);
     error.value = err.message;
-    toast.error(err.message);
     abilityData.value = {
       description: `Tạm thời chưa có dữ liệu chi tiết cho số ${abilityNumber.value}`,
       advice: ['Đang cập nhật dữ liệu'],

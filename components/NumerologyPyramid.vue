@@ -185,7 +185,6 @@
 </template>
 <script setup>
 import { ref, watch, onMounted, computed } from 'vue';
-import { toast } from 'vue3-toastify';
 import { calculateLifePathNumber } from '~/utils/numerology-calculations';
 import peaksAndChallengesData from '~/data/PeaksandChallenges.json';
 
@@ -252,12 +251,10 @@ const fetchPeaksAndChallenges = async () => {
   console.log('fetchPeaksAndChallenges called with birthDate:', props.birthDate);
 
   if (!props.birthDate) {
-    toast.error('Vui lòng nhập ngày sinh!');
     return;
   }
 
   if (!/^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
-    toast.error('Ngày sinh không đúng định dạng (DD/MM/YYYY)!');
     return;
   }
 
@@ -269,7 +266,6 @@ const fetchPeaksAndChallenges = async () => {
     year < 1900 ||
     year > 2025
   ) {
-    toast.error('Ngày sinh không hợp lệ!');
     return;
   }
 
@@ -311,10 +307,8 @@ const fetchPeaksAndChallenges = async () => {
 
     peaksData.value = stages;
     console.log('Dữ liệu đỉnh cao và thử thách:', peaksData.value);
-    toast.success('Tạo báo cáo đỉnh cao và thử thách hoàn tất!');
   } catch (err) {
     console.error('Lỗi trong fetchPeaksAndChallenges:', err);
-    toast.error('Không thể lấy dữ liệu: ' + err.message);
     peaksData.value = [
       {
         stage: '5.1',

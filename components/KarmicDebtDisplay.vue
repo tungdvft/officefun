@@ -49,7 +49,6 @@
 
 <script setup>
 import { ref, watch, computed, onMounted } from 'vue';
-import { toast } from 'vue3-toastify';
 import { calculateKarmicDebtNumbers } from '~/utils/numerology-calculations';
 import karmicDebtDataJson from '~/data/karmicDebtData.json';
 
@@ -147,15 +146,12 @@ const loadKarmicDebtData = async () => {
     console.log('[KarmicDebtDisplay] debtData:', debtData.value);
 
     if (debtData.value.length > 0) {
-      toast.success('Tính toán Nợ Nghiệp thành công!');
     } else {
       console.log('[KarmicDebtDisplay] No karmic debts found, displaying no-debt state');
-      toast.info('Không tìm thấy nợ nghiệp nào!');
     }
   } catch (err) {
     console.error('[KarmicDebtDisplay] Error:', err.message);
     error.value = err.message;
-    toast.error(err.message);
   } finally {
     loading.value = false;
     console.log('[KarmicDebtDisplay] loadKarmicDebtData completed', {

@@ -137,7 +137,6 @@
 <script setup>
 // Giữ nguyên phần script như cũ
 import { ref, watch, onMounted, computed } from 'vue'
-import { toast } from 'vue3-toastify'
 import { calculateLifePathNumber, calculateExpressionNumber } from '@/utils/numerology-calculations'
 import { correlationData } from '@/data/lifePathCorrelationData'
 
@@ -217,7 +216,6 @@ const loadCorrelationData = async () => {
 
     if (correlation) {
       correlationResult.value = correlation
-      toast.success('Phân tích tương quan thành công!')
     } else {
       throw new Error(`Không tìm thấy dữ liệu tương quan cho Sứ Mệnh ${destinyNumber.value}`)
     }
@@ -225,7 +223,6 @@ const loadCorrelationData = async () => {
   } catch (err) {
     console.error('Lỗi trong loadCorrelationData:', err)
     error.value = err.message
-    toast.error(err.message)
     
     correlationResult.value = {
       compatibility: `Tạm thời chưa có dữ liệu chi tiết cho cặp số ${lifePathNumber.value} và ${destinyNumber.value}`,

@@ -47,7 +47,6 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue';
-import { toast } from 'vue3-toastify';
 import { calculateMentalCapacityNumber } from '~/utils/numerology-calculations';
 import mentalCapacityData from '~/data/mentalCapacityData.json';
 
@@ -114,14 +113,12 @@ const loadCapacityData = async () => {
 
     if (data) {
       capacityData.value = data;
-      toast.success('Tính toán Năng Lực Tư Duy thành công!');
     } else {
       throw new Error(`Không tìm thấy dữ liệu cho số ${capacityNumber.value}`);
     }
   } catch (err) {
     console.error('Lỗi trong loadCapacityData:', err);
     error.value = err.message;
-    toast.error(err.message);
     capacityData.value = {
       description: `Tạm thời chưa có dữ liệu chi tiết cho số ${capacityNumber.value}`,
       advice: ['Đang cập nhật dữ liệu'],

@@ -53,7 +53,6 @@
 
 <script setup>
 import { ref, watch, onMounted, computed } from 'vue'
-import { toast } from 'vue3-toastify'
 import { calculateSoulChallengeNumber } from '@/utils/numerology-calculations'
 import soulChallengeData from '@/data/soulChallengeData.json'
 
@@ -96,7 +95,6 @@ const loadChallengeData = async () => {
 
     if (data) {
       challengeData.value = data
-      toast.success('Phân tích thử thách linh hồn thành công!')
     } else {
       throw new Error(`Không tìm thấy dữ liệu cho Chỉ số Thử Thách Linh Hồn ${soulChallengeNumber.value}`)
     }
@@ -104,7 +102,6 @@ const loadChallengeData = async () => {
   } catch (err) {
     console.error('Lỗi trong loadChallengeData:', err)
     error.value = err.message
-    toast.error(err.message)
     
     challengeData.value = {
       description: `Tạm thời chưa có dữ liệu chi tiết cho Chỉ số Thử Thách Linh Hồn ${soulChallengeNumber.value || 'không xác định'}`,

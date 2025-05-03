@@ -191,7 +191,6 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue';
-import { toast } from 'vue3-toastify';
 import {
   calculateLifePathNumber,
   calculateExpressionNumber,
@@ -386,11 +385,9 @@ const calculateCharts = async () => {
       combinedChartData: combinedChartData.value,
       powerChartData: powerChartData.value
     });
-    toast.success('Tải biểu đồ thần số học thành công!');
   } catch (err) {
     console.error('[NumerologyCharts] Error:', err.message);
     error.value = err.message;
-    toast.error(err.message);
   } finally {
     loading.value = false;
   }

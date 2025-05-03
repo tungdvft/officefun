@@ -47,7 +47,6 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue';
-import { toast } from 'vue3-toastify';
 import { calculateOvercomeChallengeNumber } from '~/utils/numerology-calculations';
 import overcomeChallengeData from '~/data/overcomeChallengeData.json';
 
@@ -114,14 +113,12 @@ const loadChallengeData = async () => {
 
     if (data) {
       challengeData.value = data;
-      toast.success('Tính toán Vượt Khó thành công!');
     } else {
       throw new Error(`Không tìm thấy dữ liệu cho số ${challengeNumber.value}`);
     }
   } catch (err) {
     console.error('Lỗi trong loadChallengeData:', err);
     error.value = err.message;
-    toast.error(err.message);
     challengeData.value = {
       description: `Tạm thời chưa có dữ liệu chi tiết cho số ${challengeNumber.value}`,
       advice: ['Đang cập nhật dữ liệu'],

@@ -131,7 +131,6 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
-import { toast } from 'vue3-toastify';
 import Chart from 'chart.js/auto';
 
 // Bảng ánh xạ số năm cá nhân sang mức năng lượng (đã điều chỉnh)
@@ -355,7 +354,6 @@ const fetchNumerologyData = async () => {
     
   } catch (err) {
     console.error('Lỗi khi lấy dữ liệu:', err);
-    toast.error('Có lỗi khi tải dữ liệu chu kỳ vận số');
   } finally {
     loading.value = false;
   }

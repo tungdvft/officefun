@@ -47,7 +47,6 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue';
-import { toast } from 'vue3-toastify';
 import { calculateApproachMotivationNumber } from '~/utils/numerology-calculations';
 import approachMotivationData from '~/data/approachMotivationData.json';
 
@@ -114,14 +113,12 @@ const loadMotivationData = async () => {
 
     if (data) {
       motivationData.value = data;
-      toast.success('Tính toán Động Lực Tiếp Cận thành công!');
     } else {
       throw new Error(`Không tìm thấy dữ liệu cho số ${motivationNumber.value}`);
     }
   } catch (err) {
     console.error('Lỗi trong loadMotivationData:', err);
     error.value = err.message;
-    toast.error(err.message);
     motivationData.value = {
       description: `Tạm thời chưa có dữ liệu chi tiết cho số ${motivationNumber.value}`,
       advice: ['Đang cập nhật dữ liệu'],

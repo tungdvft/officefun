@@ -46,32 +46,32 @@
 
     <!-- H hiển thị kết quả -->
     <div v-if="birthDate" class="space-y-8">
-      <LifePathCalculator :birth-date="birthDate" :result="result" />
-      <PersonalYearChart :birth-date="birthDate" />
-      <PersonalityGroups :birth-date="birthDate" />
-      <NumerologyCycles :birth-date="birthDate" />
-      <NumerologyPyramid :birth-date="birthDate" />
-      <PersonalYearIndex :birth-date="birthDate" />
-      <PersonalMonthCycle :birth-date="birthDate" />
-      <DestinyNumber :birth-date="birthDate" :full-name="fullName" />
-      <LifePathDestinyDisplay :birth-date="birthDate" :full-name="fullName" />
-      <ChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
-      <MaturityDisplay :birth-date="birthDate" :full-name="fullName" />
-      <MaturePowerDisplay :birth-date="birthDate" :full-name="fullName" />
-      <SoulUrgeDisplay :birth-date="birthDate" :full-name="fullName" />
-      <LifePathAndSoulUrge :birth-date="birthDate" :full-name="fullName" />
-      <SoulChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
-      <PersonalityDisplay :birth-date="birthDate" :full-name="fullName" />
-      <NumerologyPowerChart :birth-date="birthDate" :full-name="fullName" />
-      <PersonalityChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
-      <WeaknessDisplay :birth-date="birthDate" :full-name="fullName" />
-      <KarmicDebtDisplay :birth-date="birthDate" :full-name="fullName" />
-      <NaturalAbilityDisplay :birth-date="birthDate" :full-name="fullName" />
-      <OvercomeChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
-      <MentalCapacityDisplay :birth-date="birthDate" :full-name="fullName" />
-      <ApproachMotivationDisplay :birth-date="birthDate" :full-name="fullName" />
-      <ApproachCapacityDisplay :birth-date="birthDate" :full-name="fullName" />
-      <ApproachAttitudeDisplay :birth-date="birthDate" :full-name="fullName" />
+      <LifePathCalculator v-if="startCalulation" :birth-date="birthDate" :result="result" />
+      <PersonalYearChart v-if="startCalulation" :birth-date="birthDate" />
+      <PersonalityGroups  v-if="startCalulation" :birth-date="birthDate" />
+      <NumerologyCycles  v-if="startCalulation" :birth-date="birthDate" />
+      <NumerologyPyramid  v-if="startCalulation" :birth-date="birthDate" />
+      <PersonalYearIndex  v-if="startCalulation" :birth-date="birthDate" />
+      <PersonalMonthCycle  v-if="startCalulation" :birth-date="birthDate" />
+      <DestinyNumber  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <LifePathDestinyDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <ChallengeDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <MaturityDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <MaturePowerDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <SoulUrgeDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <LifePathAndSoulUrge  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <SoulChallengeDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <PersonalityDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <NumerologyPowerChart  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <PersonalityChallengeDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <WeaknessDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <KarmicDebtDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <NaturalAbilityDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <OvercomeChallengeDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <MentalCapacityDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <ApproachMotivationDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <ApproachCapacityDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <ApproachAttitudeDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
     </div>
   </div>
 </template>
@@ -115,7 +115,7 @@ const result = ref(null);
 const error = ref('');
 const isLoading = ref(false);
 const showChart = ref(false);
-
+const startCalulation = ref(false);
 // Lấy store
 const generalStore = useGeneralStore();
 
@@ -181,6 +181,7 @@ const calculateNumbers = async () => {
     // Lưu dữ liệu mới vào store nếu người dùng chỉnh sửa
     generalStore.fullname = fullName.value;
     generalStore.birthdate = birthDate.value;
+    startCalulation.value = true
   } catch (err) {
     console.error('Lỗi trong calculateNumbers:', err);
     error.value = err.message;

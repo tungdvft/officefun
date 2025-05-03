@@ -51,7 +51,6 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue';
-import { toast } from 'vue3-toastify';
 import { calculatePersonalityChallengeNumber } from '@/utils/numerology-calculations';
 import personalityChallengeDataJson from '@/data/personalityChallengeData.json';
 
@@ -118,14 +117,12 @@ const loadChallengeData = async () => {
 
     if (data) {
       challengeData.value = data;
-      toast.success('Phân tích Chỉ số Thử Thách Nhân Cách thành công!');
     } else {
       throw new Error(`Không tìm thấy dữ liệu cho số ${challengeNumber.value}`);
     }
   } catch (err) {
     console.error('Lỗi trong loadChallengeData:', err);
     error.value = err.message;
-    toast.error(err.message);
     challengeData.value = {
       description: `Tạm thời chưa có dữ liệu chi tiết cho số ${challengeNumber.value || 'không xác định'}`,
       advice: ['Vui lòng thử lại với thông tin khác hoặc liên hệ hỗ trợ'],
