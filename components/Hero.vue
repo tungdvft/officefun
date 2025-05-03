@@ -63,42 +63,42 @@
             </div>
 
             <div class="pt-2">
-             <button
+              <button
                 type="submit"
-                :disabled="userStore.isLoading"
+                :disabled="generalStore.isLoading"
                 class="w-full inline-flex justify-center items-center bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-8 rounded-full text-lg font-semibold hover:shadow-lg transition-all duration-300 shadow-md disabled:opacity-70 disabled:cursor-not-allowed"
-                >
-                <template v-if="userStore.isLoading">
-                    <svg
+              >
+                <template v-if="generalStore.isLoading">
+                  <svg
                     class="animate-spin h-5 w-5 text-white mr-2"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    >
+                  >
                     <circle
-                        class="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        stroke-width="4"
+                      class="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      stroke-width="4"
                     ></circle>
                     <path
-                        class="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      class="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
-                    </svg>
-                    <span>Đang phân tích...</span>
+                  </svg>
+                  <span>Đang phân tích...</span>
                 </template>
                 <template v-else>
-                    <span>Phân tích ngay</span>
+                  <span>Phân tích ngay</span>
                 </template>
-                </button>
+              </button>
             </div>
 
-            <p v-if="userStore.error" class="text-red-500 text-sm text-center">
-              {{ userStore.error }}
+            <p v-if="generalStore.error" class="text-red-500 text-sm text-center">
+              {{ generalStore.error }}
             </p>
 
             <p class="text-sm text-gray-500">
@@ -119,7 +119,8 @@
 </template>
 
 <script setup>
-import { useUserStore } from "~/stores/user";
+import { useGeneralStore } from "~/stores/general";
+import { useRouter } from "vue-router";
 
 // Khởi tạo form
 const form = ref({
@@ -128,18 +129,22 @@ const form = ref({
 });
 
 // Khởi tạo store và router
-const userStore = useUserStore();
+const generalStore = useGeneralStore();
 const router = useRouter();
 
 // Hàm submit form
 const submitForm = async () => {
-  await userStore.fetchNumerology({
-    fullname: form.value.fullname,
-    birthdate: form.value.birthdate,
-  });
+  try {
+    await generalStore.fetchNumerology({
+      fullname: form.value.fullname,
+      birthdate: form.value.birthdate,
+    });
 
-  if (!userStore.error) {
-    router.push("/xem");
+    if (!generalStore.error) {
+      router.push("/xem/general");
+    }
+  } catch (err) {
+    // Error is already set in the store, no need to handle here
   }
 };
 </script>

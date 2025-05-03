@@ -1,63 +1,141 @@
-<!-- components/LifePathDestinyDisplay.vue -->
 <template>
-  <div class="life-path-destiny-display">
-    <h2 class="text-2xl font-bold text-center text-teal-800 mb-6">Tương Quan Số Đường Đời và Sứ Mệnh</h2>
-    
-    <!-- Thông báo lỗi -->
-    <div v-if="error" class="error-message p-4 mb-4 bg-red-100 border border-red-400 text-red-700 rounded">
-      {{ error }}
-    </div>
-    
-    <!-- Trạng thái loading -->
-    <div v-else-if="loading" class="loading-state p-4 text-center text-gray-600">
-      <div class="animate-pulse">Đang tải dữ liệu...</div>
-    </div>
-    
-    <!-- Hiển thị kết quả -->
-    <div v-else-if="showResult" class="result-container mt-6">
-      <div class="space-y-6">
-        <!-- Hiển thị số Đường Đời và Sứ Mệnh -->
-        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-          <h3 class="text-xl font-bold text-teal-800 mb-4">Chỉ Số Của Bạn</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="flex items-center">
-              <span class="w-12 h-12 flex items-center justify-center bg-teal-100 text-teal-700 rounded-full font-bold text-lg mr-4">
-                {{ lifePathNumber }}
-              </span>
-              <p class="text-gray-700 text-lg">Số Đường Đời: <span class="font-bold text-teal-600">{{ lifePathNumber }}</span></p>
+  <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+    <div class="p-6 space-y-8">
+      <!-- Header section -->
+      <div class="text-center">
+        <h2 class="text-3xl font-bold text-teal-700 mb-2">Tương Quan Số Đường Đời & Sứ Mệnh</h2>
+        <p class="text-lg text-gray-600">Khám phá mối quan hệ giữa con đường và mục đích cuộc đời bạn</p>
+      </div>
+
+      <transition name="fade-slide">
+        <!-- Main content -->
+        <div v-if="showResult" class="space-y-8">
+          <!-- Number display with visual connection -->
+          <div class="bg-gradient-to-r from-teal-50 to-blue-50 p-8 rounded-2xl border border-teal-100 shadow-sm">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+              <!-- Life Path Number -->
+              <div class="relative text-center">
+                <div class="w-24 h-24 rounded-full bg-teal-100 border-4 border-teal-500 flex items-center justify-center mx-auto mb-3">
+                  <span class="text-3xl font-bold text-teal-700">{{ lifePathNumber }}</span>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800">Số Đường Đời</h3>
+              </div>
+              
+              <!-- Connection arrow -->
+              <div class="hidden md:block relative">
+                <div class="w-16 h-1 bg-teal-300"></div>
+                <div class="absolute -right-1 top-1/2 transform -translate-y-1/2 w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-teal-300"></div>
+              </div>
+              
+              <!-- Destiny Number -->
+              <div class="relative text-center">
+                <div class="w-24 h-24 rounded-full bg-purple-100 border-4 border-purple-500 flex items-center justify-center mx-auto mb-3">
+                  <span class="text-3xl font-bold text-purple-700">{{ destinyNumber }}</span>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800">Số Sứ Mệnh</h3>
+              </div>
             </div>
-            <div class="flex items-center">
-              <span class="w-12 h-12 flex items-center justify-center bg-teal-100 text-teal-700 rounded-full font-bold text-lg mr-4">
-                {{ destinyNumber }}
-              </span>
-              <p class="text-gray-700 text-lg">Số Sứ Mệnh: <span class="font-bold text-teal-600">{{ destinyNumber }}</span></p>
+          </div>
+
+          <!-- Detailed interpretation -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Compatibility card -->
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+              <div class="flex items-start mb-4">
+                <div class="flex-shrink-0 p-2 bg-teal-100 rounded-lg text-teal-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-semibold text-gray-800">Mức độ tương thích</h4>
+                  <p class="text-gray-600 mt-2">{{ correlationResult.compatibility }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Strengths card -->
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+              <div class="flex items-start mb-4">
+                <div class="flex-shrink-0 p-2 bg-amber-100 rounded-lg text-amber-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-semibold text-gray-800">Điểm mạnh kết hợp</h4>
+                  <p class="text-gray-600 mt-2">{{ correlationResult.strengths }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Challenges card -->
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+              <div class="flex items-start mb-4">
+                <div class="flex-shrink-0 p-2 bg-red-100 rounded-lg text-red-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-semibold text-gray-800">Thách thức cần vượt qua</h4>
+                  <p class="text-gray-600 mt-2">{{ correlationResult.challenges }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Solutions card -->
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+              <div class="flex items-start mb-4">
+                <div class="flex-shrink-0 p-2 bg-green-100 rounded-lg text-green-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-semibold text-gray-800">Giải pháp hài hòa</h4>
+                  <p class="text-gray-600 mt-2">{{ correlationResult.solutions }}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        
-        <!-- Luận giải chi tiết -->
-        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-          <h3 class="text-xl font-bold text-teal-800 mb-4">Luận Giải Chi Tiết</h3>
-          <div class="prose prose-teal max-w-none space-y-3">
-            <p class="text-gray-700"><strong>Tương Thích:</strong> {{ correlationResult.compatibility }}</p>
-            <p class="text-gray-700"><strong>Điểm Mạnh:</strong> {{ correlationResult.strengths }}</p>
-            <p class="text-gray-700"><strong>Thách Thức:</strong> {{ correlationResult.challenges }}</p>
-            <p class="text-gray-700"><strong>Giải Pháp:</strong> {{ correlationResult.solutions }}</p>
+
+        <!-- Loading state -->
+        <div v-else-if="loading" class="text-center py-12">
+          <div class="inline-flex items-center">
+            <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span class="text-gray-600">Đang phân tích tương quan...</span>
           </div>
         </div>
-      </div>
-    </div>
-    
-    <!-- Yêu cầu nhập thông tin -->
-    <div v-else class="empty-state p-4 text-center">
-      <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
-        Vui lòng nhập ngày sinh hợp lệ (DD/MM/YYYY) để xem thông tin.
-      </div>
+
+        <!-- Error state -->
+        <div v-else-if="error" class="text-center py-12 bg-red-50 rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-red-500 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+          </svg>
+          <h4 class="text-red-600 font-medium text-lg">Đã xảy ra lỗi</h4>
+          <p class="text-gray-600 mt-1">{{ error }}</p>
+        </div>
+
+        <!-- Empty state -->
+        <div v-else class="text-center py-12 bg-yellow-50 rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-yellow-500 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+          </svg>
+          <h4 class="text-yellow-700 font-medium text-lg">Thông tin cần thiết</h4>
+          <p class="text-gray-600 mt-1">Vui lòng nhập ngày sinh và họ tên đầy đủ</p>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
 
 <script setup>
+// Giữ nguyên phần script như cũ
 import { ref, watch, onMounted, computed } from 'vue'
 import { toast } from 'vue3-toastify'
 import { calculateLifePathNumber, calculateExpressionNumber } from '@/utils/numerology-calculations'
@@ -178,49 +256,37 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.life-path-destiny-display {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: 'Inter', Arial, sans-serif;
-}
-
-.error-message {
+.fade-slide-enter-active,
+.fade-slide-leave-active {
   transition: all 0.3s ease;
 }
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
 
-.loading-state {
+/* Animation for cards */
+.card-enter-active {
   transition: all 0.3s ease;
+  transition-delay: calc(0.1s * var(--i));
+}
+.card-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
 }
 
-.result-container {
-  animation: fadeIn 0.5s ease;
-}
-
-.empty-state {
-  animation: fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@media (max-width: 640px) {
-  .life-path-destiny-display {
-    padding: 15px;
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
   }
   
-  .text-2xl {
-    font-size: 1.4rem;
+  .text-3xl {
+    font-size: 1.5rem;
   }
   
   .text-xl {
     font-size: 1.2rem;
-  }
-  
-  .text-lg {
-    font-size: 1rem;
   }
 }
 </style>

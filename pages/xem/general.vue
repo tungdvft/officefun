@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+  <div class="container mx-auto p-6 bg-white rounded-lg shadow-md">
     <h1 class="text-3xl font-bold text-center text-indigo-600 mb-6">
       Tính Số Đường Đời & Chu Kỳ Vận Số
     </h1>
@@ -44,7 +44,7 @@
       <p v-if="error" class="mt-2 text-red-600">{{ error }}</p>
     </div>
 
-    <!-- Hiển thị kết quả -->
+    <!-- H hiển thị kết quả -->
     <div v-if="birthDate" class="space-y-8">
       <LifePathCalculator :birth-date="birthDate" :result="result" />
       <PersonalYearChart :birth-date="birthDate" />
@@ -62,9 +62,7 @@
       <LifePathAndSoulUrge :birth-date="birthDate" :full-name="fullName" />
       <SoulChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
       <PersonalityDisplay :birth-date="birthDate" :full-name="fullName" />
-      <NumerologyPowerChart 
-      :birth-date="birthDate" :full-name="fullName"
-    />
+      <NumerologyPowerChart :birth-date="birthDate" :full-name="fullName" />
       <PersonalityChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
       <WeaknessDisplay :birth-date="birthDate" :full-name="fullName" />
       <KarmicDebtDisplay :birth-date="birthDate" :full-name="fullName" />
@@ -79,7 +77,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { useGeneralStore } from '~/stores/general';
 import LifePathCalculator from '~/components/LifePathCalculator.vue';
 import PersonalYearChart from '~/components/PersonalYearChart.vue';
 import PersonalityGroups from '~/components/PersonalityGroups.vue';
@@ -116,6 +115,19 @@ const result = ref(null);
 const error = ref('');
 const isLoading = ref(false);
 const showChart = ref(false);
+
+// Lấy store
+const generalStore = useGeneralStore();
+
+// Tự động điền dữ liệu từ store khi trang được tải
+onMounted(() => {
+  if (generalStore.hasData) {
+    fullName.value = generalStore.fullname;
+    birthDate.value = generalStore.birthdate;
+    // Tự động gọi calculateNumbers để hiển thị kết quả ngay lập tức
+    calculateNumbers();
+  }
+});
 
 const formatDateInput = (event) => {
   let value = event.target.value.replace(/[^0-9]/g, '');
@@ -165,6 +177,10 @@ const calculateNumbers = async () => {
 
     console.log('Dữ liệu Số Đường Đời:', lifePathData.value);
     result.value = lifePathData.value;
+
+    // Lưu dữ liệu mới vào store nếu người dùng chỉnh sửa
+    generalStore.fullname = fullName.value;
+    generalStore.birthdate = birthDate.value;
   } catch (err) {
     console.error('Lỗi trong calculateNumbers:', err);
     error.value = err.message;

@@ -1,5 +1,5 @@
 <template>
-  <div class="numerology-charts max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-sm font-inter">
+  <div class="numerology-charts  mx-auto p-6 bg-white rounded-xl shadow-sm font-inter">
     <!-- Tiêu đề chính -->
     <h2 class="text-center text-3xl font-bold text-teal-800 mb-6">
       Phân tích Thần số học

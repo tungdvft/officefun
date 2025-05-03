@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-lg">
+  <div class=" mx-auto p-6 bg-white rounded-xl shadow-lg">
     <!-- Header với ngày sinh -->
     <div v-if="birthDate" class="mb-8 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100">
       <h1 class="text-2xl font-bold text-indigo-700">Kết quả thần số học</h1>
