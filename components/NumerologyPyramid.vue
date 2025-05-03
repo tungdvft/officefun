@@ -8,66 +8,105 @@
       <transition name="fade-slide">
         <div v-if="peaksData && peaksData.length" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
           <h3 class="text-xl font-bold text-teal-800 mb-4">Biểu đồ Đỉnh Cao và Thử Thách</h3>
-          <svg width="800" height="800" viewBox="0 0 800 800">
+          <svg width="700" height="600">
             <defs>
               <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#14B8A6" />
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#003366" />
               </marker>
             </defs>
 
-            <!-- Đường nối -->
-            <!-- Ngày → Tháng -->
-            <line class="line" x1="400" y1="100" x2="400" y2="200" />
-            <!-- Tháng → Năm -->
-            <line class="line" x1="400" y1="200" x2="400" y2="300" />
-            <!-- Năm → Số đường đời -->
-            <line class="line" x1="400" y1="300" x2="400" y2="400" />
-            <!-- Số đường đời → Đỉnh cao -->
-            <line class="line" v-for="(stage, index) in peaksData" :key="'peak-line-' + index" :x1="400" y1="400" :x2="250 + index * 100" y2="500" />
-            <!-- Đỉnh cao → Thử thách -->
-            <line class="line" v-for="(stage, index) in peaksData" :key="'challenge-line-' + index" :x1="250 + index * 100" y1="500" :x2="250 + index * 100" y2="600" />
+            <!-- Lines -->
+            <line class="line" x1="350" y1="20" x2="100" y2="260"/>
+            <line class="line" x1="350" y1="20" x2="600" y2="260"/>
+            <line class="line" x1="350" y1="80" x2="250" y2="170"/>
+            <line class="line" x1="350" y1="80" x2="450" y2="170"/>
+            <line class="line" x1="250" y1="170" x2="100" y2="260"/>
+            <line class="line" x1="450" y1="170" x2="600" y2="260"/>
+            <line class="line" x1="250" y1="170" x2="350" y2="260"/>
+            <line class="line" x1="450" y1="170" x2="350" y2="260"/>
+            <line class="line" x1="100" y1="260" x2="250" y2="350"/>
+            <line class="line" x1="600" y1="260" x2="450" y2="350"/>
+            <line class="line" x1="350" y1="260" x2="250" y2="350"/>
+            <line class="line" x1="350" y1="260" x2="450" y2="350"/>
+            <line class="line" x1="250" y1="350" x2="350" y2="430"/>
+            <line class="line" x1="450" y1="350" x2="350" y2="430"/>
+            <line class="line" x1="350" y1="510" x2="100" y2="260"/>
+            <line class="line" x1="350" y1="510" x2="600" y2="260"/>
 
-            <!-- Node: Ngày sinh -->
-            <g class="node" transform="translate(400,100)">
-              <circle r="25" fill="#14B8A6" />
-              <text y="6" class="node-number">{{ birthDigits.day }}</text>
-              <text y="28" class="node-label">Ngày sinh</text>
+            <!-- Nodes -->
+            <!-- Topmost node (Life Path) -->
+            <g class="node" transform="translate(350,20)">
+              <circle r="20" fill="#b96cc4"/>
+              <text y="5" text-anchor="middle" x="0">{{ lifePath }}</text>
             </g>
 
-            <!-- Node: Tháng sinh -->
-            <g class="node" transform="translate(400,200)">
-              <circle r="25" fill="#14B8A6" />
-              <text y="6" class="node-number">{{ birthDigits.month }}</text>
-              <text y="28" class="node-label">Tháng sinh</text>
+            <!-- Peak Stage 4 -->
+            <g class="node" transform="translate(350,80)">
+              <circle r="20" fill="#b96cc4"/>
+              <text y="5" text-anchor="middle" x="0">{{ peaksData[3].peak }}</text>
+              <text y="35" text-anchor="middle" x="0">{{ peaksData[3].age_range.split(' ')[0] }}</text>
+              <text y="50" text-anchor="middle" x="0">({{ peaksData[3].age_range.match(/\d{4}–\d{4}/)[0]}})</text>
             </g>
 
-            <!-- Node: Năm sinh -->
-            <g class="node" transform="translate(400,300)">
-              <circle r="25" fill="#14B8A6" />
-              <text y="6" class="node-number">{{ birthDigits.year }}</text>
-              <text y="28" class="node-label">Năm sinh</text>
+            <!-- Peak Stage 3 -->
+            <g class="node" transform="translate(250,170)">
+              <circle r="20" fill="#b96cc4"/>
+              <text y="5" text-anchor="middle" x="0">{{ peaksData[2].peak }}</text>
+              <text y="35" text-anchor="middle" x="0">{{ peaksData[2].age_range.split(' ')[0] }}</text>
+              <text y="50" text-anchor="middle" x="0">({{ peaksData[2].age_range.match(/\d{4}–\d{4}/)[0]}})</text>
             </g>
 
-            <!-- Node: Số đường đời -->
-            <g class="node" transform="translate(400,400)">
-              <circle r="25" fill="#14B8A6" />
-              <text y="6" class="node-number">{{ lifePath }}</text>
-              <text y="28" class="node-label">Số đường đời</text>
+            <!-- Peak Stage 2 -->
+            <g class="node" transform="translate(450,170)">
+              <circle r="20" fill="#b96cc4"/>
+              <text y="5" text-anchor="middle" x="0">{{ peaksData[1].peak }}</text>
+              <text y="35" text-anchor="middle" x="0">{{ peaksData[1].age_range.split(' ')[0] }}</text>
+              <text y="50" text-anchor="middle" x="0">({{ peaksData[1].age_range.match(/\d{4}–\d{4}/)[0]}})</text>
             </g>
 
-            <!-- Node: Đỉnh cao -->
-            <g class="node" v-for="(stage, index) in peaksData" :key="'peak-' + index" :transform="`translate(${250 + index * 100},500)`">
-              <circle r="25" fill="#14B8A6" />
-              <text y="6" class="node-number">{{ stage.peak }}</text>
-              <text y="28" class="node-label">{{ stage.age_range.split(' ')[0] }}</text>
-              <text y="44" class="node-year">({{ stage.age_range.match(/\d{4}/g)[0]}})</text>
+            <!-- Birth Month -->
+            <g class="node" transform="translate(100,260)">
+              <circle r="20" fill="#c0e6f8"/>
+              <text y="5" text-anchor="middle" x="0">{{ birthDigits.month }}</text>
+              <text y="35" text-anchor="middle" x="0">Tháng 02</text>
             </g>
 
-            <!-- Node: Thử thách -->
-            <g class="node" v-for="(stage, index) in peaksData" :key="'challenge-' + index" :transform="`translate(${250 + index * 100},600)`">
-              <circle r="20" fill="#EF4444" />
-              <text y="6" class="node-number">{{ stage.challenge }}</text>
-              <text y="28" class="node-label">Thử thách</text>
+            <!-- Birth Day -->
+            <g class="node" transform="translate(350,260)">
+              <circle r="20" fill="#c0e6f8"/>
+              <text y="5" text-anchor="middle" x="0">{{ birthDigits.day }}</text>
+              <text y="35" text-anchor="middle" x="0">Ngày 07</text>
+            </g>
+
+            <!-- Birth Year -->
+            <g class="node" transform="translate(600,260)">
+              <circle r="20" fill="#c0e6f8"/>
+              <text y="5" text-anchor="middle" x="0">{{ birthDigits.year }}</text>
+              <text y="35" text-anchor="middle" x="0">1996</text>
+            </g>
+
+            <!-- Challenge Stage 1 -->
+            <g class="node" transform="translate(250,350)">
+              <circle r="20" fill="#b96cc4"/>
+              <text y="5" text-anchor="middle" x="0">{{ peaksData[0].challenge }}</text>
+            </g>
+
+            <!-- Challenge Stage 2 -->
+            <g class="node" transform="translate(450,350)">
+              <circle r="20" fill="#b96cc4"/>
+              <text y="5" text-anchor="middle" x="0">{{ peaksData[1].challenge }}</text>
+            </g>
+
+            <!-- Challenge Stage 3 -->
+            <g class="node" transform="translate(350,430)">
+              <circle r="20" fill="#b96cc4"/>
+              <text y="5" text-anchor="middle" x="0">{{ peaksData[2].challenge }}</text>
+            </g>
+
+            <!-- Bottommost node (Life Path Challenge) -->
+            <g class="node" transform="translate(350,510)">
+              <circle r="20" fill="#b96cc4"/>
+              <text y="5" text-anchor="middle" x="0">{{ peaksData[3].challenge }}</text>
             </g>
           </svg>
         </div>
@@ -76,24 +115,74 @@
       </transition>
 
       <!-- Giải thích chi tiết -->
-      <div v-if="peaksData && peaksData.length" class="space-y-6">
-        <h3 class="text-xl font-bold text-teal-800">Giải Thích 4 Giai Đoạn Đỉnh Cao và Thử Thách</h3>
-        <div v-for="(stage, index) in peaksData" :key="index" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-          <div class="flex items-center mb-4">
-            <span class="w-10 h-10 flex items-center justify-center bg-teal-100 text-teal-700 rounded-full font-bold mr-3">{{ stage.stage }}</span>
-            <h4 class="text-lg font-semibold text-gray-800">Giai đoạn {{ stage.age_range }}</h4>
-          </div>
-          <div class="prose prose-teal max-w-none">
-            <p class="text-gray-700"><strong>Đỉnh cao: {{ stage.peak }}</strong> - {{ getPeakDescription(stage.peak) }}</p>
-            <p class="text-gray-700"><strong>Thử thách: {{ stage.challenge }}</strong> - {{ getChallengeDescription(stage.challenge) }}</p>
-            <p class="text-gray-700">{{ stage.description }}</p>
+      <div v-if="peaksData && peaksData.length" class="space-y-8">
+        <div class="text-center mb-8">
+          <h3 class="text-2xl font-bold text-teal-700 mb-2">Giải Thích 4 Giai Đoạn Đỉnh Cao</h3>
+          <div class="w-24 h-1 bg-teal-300 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div 
+            v-for="(stage, index) in peaksData" 
+            :key="index" 
+            class="relative bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all hover:shadow-lg"
+            :style="`--i: ${index}`"
+          >
+            <!-- Header với số giai đoạn -->
+            <div class="flex items-center px-6 pt-6 pb-4 border-b border-gray-100">
+              <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold text-lg mr-4">
+                {{ index + 1 }}
+              </div>
+              <div>
+                <h4 class="text-lg font-semibold text-gray-800">Giai đoạn {{ stage.age_range.split(' ')[0] }}</h4>
+                <p class="text-sm text-gray-500 mt-1">{{ stage.age_range.match(/\(\d{4}–\d{4}\)/)[0] }}</p>
+              </div>
+            </div>
+            
+            <!-- Nội dung -->
+            <div class="p-6 space-y-4">
+              <!-- Đỉnh cao -->
+              <div class="flex items-start">
+                <div class="flex-shrink-0 mt-1">
+                  <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-teal-100 text-teal-700 font-bold text-sm">
+                    {{ stage.peak }}
+                  </span>
+                </div>
+                <div class="ml-3">
+                  <h5 class="font-medium text-gray-800">Đỉnh cao số {{ stage.peak }}</h5>
+                  <p class="text-sm text-gray-600 mt-1 leading-relaxed">{{ getPeakDescription(stage.peak) }}</p>
+                </div>
+              </div>
+              
+              <!-- Thử thách -->
+              <div class="flex items-start">
+                <div class="flex-shrink-0 mt-1">
+                  <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-amber-100 text-amber-700 font-bold text-sm">
+                    {{ stage.challenge }}
+                  </span>
+                </div>
+                <div class="ml-3">
+                  <h5 class="font-medium text-gray-800">Thử thách số {{ stage.challenge }}</h5>
+                  <p class="text-sm text-gray-600 mt-1 leading-relaxed">{{ getChallengeDescription(stage.challenge) }}</p>
+                </div>
+              </div>
+              
+              <!-- Mô tả -->
+              <div class="pt-3 mt-3 border-t border-gray-100">
+                <p class="text-gray-700 text-sm leading-relaxed">{{ stage.description }}</p>
+              </div>
+            </div>
+            
+            <!-- Góc trang trí -->
+            <div class="absolute top-0 right-0 w-16 h-16 overflow-hidden">
+              <div class="absolute top-0 right-0 w-full h-full bg-teal-50 transform translate-x-1/2 -translate-y-1/2 rotate-45 origin-bottom-left"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref, watch, onMounted, computed } from 'vue';
 import { toast } from 'vue3-toastify';
