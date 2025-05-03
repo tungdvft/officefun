@@ -1,77 +1,143 @@
 <template>
-  <div class="container mx-auto p-6 bg-white rounded-lg shadow-md">
-    <h1 class="text-3xl font-bold text-center text-indigo-600 mb-6">
-      Tính Số Đường Đời & Chu Kỳ Vận Số
-    </h1>
-
-    <!-- Form nhập họ tên và ngày sinh -->
-    <div class="mb-6">
-      <label for="fullName" class="block text-lg font-medium text-gray-700 mb-2">
-        Nhập họ tên
-      </label>
-      <input
-        v-model="fullName"
-        type="text"
-        id="fullName"
-        placeholder="VD: Nguyễn Văn A"
-        class="mb-4 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full"
-      />
-      <label for="birthDate" class="block text-lg font-medium text-gray-700 mb-2">
-        Nhập ngày sinh (DD/MM/YYYY)
-      </label>
-      <div class="flex gap-4">
-        <input
-          v-model="birthDate"
-          type="text"
-          id="birthDate"
-          placeholder="VD: 25/12/1990"
-          maxlength="10"
-          class="flex-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          @input="formatDateInput"
-          @keyup.enter="calculateNumbers"
-        />
+  <div class="min-h-screen bg-gradient-to-b from-indigo-50 to-white py-8">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <!-- Header section -->
+      <div class="text-center mb-10">
+        <h1 class="text-4xl font-bold text-indigo-700 mb-3">
+          Thần Số Học Toàn Diện
+        </h1>
+        <p class="text-lg text-gray-600">
+          Khám phá con số chủ đạo và các chỉ số quan trọng trong cuộc đời bạn
+        </p>
       </div>
-      <button
-        @click="calculateNumbers"
-        :disabled="isLoading"
-        class="px-6 mt-3 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-400"
-      >
-        {{ isLoading ? 'Đang tính...' : 'Tính toán' }}
-      </button>
-      <p class="mt-2 text-sm text-gray-600">
-        Vui lòng nhập ngày sinh theo định dạng DD/MM/YYYY (ví dụ: 25/12/1990).
-      </p>
-      <p v-if="error" class="mt-2 text-red-600">{{ error }}</p>
-    </div>
 
-    <!-- H hiển thị kết quả -->
-    <div v-if="birthDate" class="space-y-8">
-      <LifePathCalculator v-if="startCalulation" :birth-date="birthDate" :result="result" />
-      <PersonalYearChart v-if="startCalulation" :birth-date="birthDate" />
-      <PersonalityGroups  v-if="startCalulation" :birth-date="birthDate" />
-      <NumerologyCycles  v-if="startCalulation" :birth-date="birthDate" />
-      <NumerologyPyramid  v-if="startCalulation" :birth-date="birthDate" />
-      <PersonalYearIndex  v-if="startCalulation" :birth-date="birthDate" />
-      <PersonalMonthCycle  v-if="startCalulation" :birth-date="birthDate" />
-      <DestinyNumber  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <LifePathDestinyDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <ChallengeDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <MaturityDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <MaturePowerDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <SoulUrgeDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <LifePathAndSoulUrge  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <SoulChallengeDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <PersonalityDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <NumerologyPowerChart  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <PersonalityChallengeDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <WeaknessDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <KarmicDebtDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <NaturalAbilityDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <OvercomeChallengeDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <MentalCapacityDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <ApproachMotivationDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <ApproachCapacityDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
-      <ApproachAttitudeDisplay  v-if="startCalulation" :birth-date="birthDate" :full-name="fullName" />
+      <!-- Input form -->
+      <div class="bg-white rounded-xl shadow-lg p-6 mb-10">
+        <div class="space-y-6">
+          <!-- Full name input -->
+          <div>
+            <label for="fullName" class="block text-lg font-medium text-gray-700 mb-2">
+              Họ và tên đầy đủ
+            </label>
+            <input
+              v-model="fullName"
+              type="text"
+              id="fullName"
+              placeholder="Ví dụ: Nguyễn Văn A"
+              class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-lg"
+            />
+          </div>
+
+          <!-- Birth date input -->
+          <div>
+            <label for="birthDate" class="block text-lg font-medium text-gray-700 mb-2">
+              Ngày sinh (DD/MM/YYYY)
+            </label>
+            <div class="flex gap-4">
+              <input
+                v-model="birthDate"
+                type="text"
+                id="birthDate"
+                placeholder="Ví dụ: 25/12/1990"
+                maxlength="10"
+                class="flex-1 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-lg"
+                @input="formatDateInput"
+                @keyup.enter="calculateNumbers"
+              />
+            </div>
+            <p class="mt-2 text-sm text-gray-500">
+              Vui lòng nhập ngày sinh theo định dạng DD/MM/YYYY
+            </p>
+          </div>
+
+          <!-- Submit button -->
+          <button
+            @click="calculateNumbers"
+            :disabled="isLoading || !birthDate || !fullName"
+            class="w-full py-4 px-6 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            <span v-if="!isLoading" class="flex items-center justify-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              Phân tích thần số học
+            </span>
+            <span v-else class="flex items-center justify-center gap-2">
+              <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Đang phân tích...
+            </span>
+          </button>
+
+          <!-- Error message -->
+          <p v-if="error" class="mt-2 text-red-600 text-center font-medium">{{ error }}</p>
+        </div>
+      </div>
+
+      <!-- Results section -->
+      <div v-if="startCalulation" class="space-y-8">
+        <!-- Progress indicator -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <div class="flex items-center gap-4">
+            <div class="flex-shrink-0">
+              <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold text-gray-800">Báo cáo thần số học đã sẵn sàng</h3>
+              <p class="text-gray-600">Cuộn xuống để xem các chỉ số chi tiết</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Components grid -->
+        <div class="grid grid-cols-1 gap-8">
+          <LifePathCalculator :birth-date="birthDate" :result="result" />
+          <PersonalYearChart :birth-date="birthDate" />
+          <PersonalityGroups :birth-date="birthDate" />
+          <NumerologyCycles :birth-date="birthDate" />
+          <NumerologyPyramid :birth-date="birthDate" />
+          <PersonalYearIndex :birth-date="birthDate" />
+          <PersonalMonthCycle :birth-date="birthDate" />
+          <DestinyNumber :birth-date="birthDate" :full-name="fullName" />
+          <LifePathDestinyDisplay :birth-date="birthDate" :full-name="fullName" />
+          <ChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
+          <MaturityDisplay :birth-date="birthDate" :full-name="fullName" />
+          <MaturePowerDisplay :birth-date="birthDate" :full-name="fullName" />
+          <SoulUrgeDisplay :birth-date="birthDate" :full-name="fullName" />
+          <LifePathAndSoulUrge :birth-date="birthDate" :full-name="fullName" />
+          <SoulChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
+          <PersonalityDisplay :birth-date="birthDate" :full-name="fullName" />
+          <NumerologyPowerChart :birth-date="birthDate" :full-name="fullName" />
+          <PersonalityChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
+          <WeaknessDisplay :birth-date="birthDate" :full-name="fullName" />
+          <KarmicDebtDisplay :birth-date="birthDate" :full-name="fullName" />
+          <NaturalAbilityDisplay :birth-date="birthDate" :full-name="fullName" />
+          <OvercomeChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
+          <MentalCapacityDisplay :birth-date="birthDate" :full-name="fullName" />
+          <ApproachMotivationDisplay :birth-date="birthDate" :full-name="fullName" />
+          <ApproachCapacityDisplay :birth-date="birthDate" :full-name="fullName" />
+          <ApproachAttitudeDisplay :birth-date="birthDate" :full-name="fullName" />
+        </div>
+
+        <!-- Back to top button -->
+        <div class="flex justify-center mt-8">
+          <button 
+            @click="scrollToTop"
+            class="flex items-center gap-2 px-6 py-3 bg-indigo-100 text-indigo-700 rounded-full hover:bg-indigo-200 transition-colors"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+            Lên đầu trang
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -104,6 +170,7 @@ import MentalCapacityDisplay from '~/components/MentalCapacityDisplay.vue';
 import ApproachMotivationDisplay from '~/components/ApproachMotivationDisplay.vue';
 import ApproachCapacityDisplay from '~/components/ApproachCapacityDisplay.vue';
 import ApproachAttitudeDisplay from '~/components/ApproachAttitudeDisplay.vue';
+import NumerologyPowerChart from '~/components/NumerologyPowerChart.vue';
 
 definePageMeta({
   layout: "view",
@@ -114,17 +181,13 @@ const birthDate = ref('');
 const result = ref(null);
 const error = ref('');
 const isLoading = ref(false);
-const showChart = ref(false);
 const startCalulation = ref(false);
-// Lấy store
 const generalStore = useGeneralStore();
 
-// Tự động điền dữ liệu từ store khi trang được tải
 onMounted(() => {
   if (generalStore.hasData) {
     fullName.value = generalStore.fullname;
     birthDate.value = generalStore.birthdate;
-    // Tự động gọi calculateNumbers để hiển thị kết quả ngay lập tức
     calculateNumbers();
   }
 });
@@ -175,13 +238,18 @@ const calculateNumbers = async () => {
       throw new Error('Không tìm thấy dữ liệu cho Số Đường Đời này.');
     }
 
-    console.log('Dữ liệu Số Đường Đời:', lifePathData.value);
     result.value = lifePathData.value;
-
-    // Lưu dữ liệu mới vào store nếu người dùng chỉnh sửa
     generalStore.fullname = fullName.value;
     generalStore.birthdate = birthDate.value;
-    startCalulation.value = true
+    startCalulation.value = true;
+    
+    // Cuộn xuống phần kết quả sau khi tính toán
+    setTimeout(() => {
+      const resultsSection = document.querySelector('.bg-white.rounded-xl.shadow-lg.p-6');
+      if (resultsSection) {
+        resultsSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 300);
   } catch (err) {
     console.error('Lỗi trong calculateNumbers:', err);
     error.value = err.message;
@@ -189,7 +257,35 @@ const calculateNumbers = async () => {
     isLoading.value = false;
   }
 };
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+};
 </script>
 
 <style scoped>
+/* Animation for results section */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+}
 </style>
