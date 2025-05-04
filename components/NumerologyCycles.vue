@@ -185,7 +185,7 @@ watch(() => props.birthDate, (newDate) => {
         ageRange: '30 - 56 tuổi',
         yearRange: `${year + 30} - ${year + 56}`,
         percentage: 40,
-        description: cycleDescriptions[NumerologyUtils.reduceToSingleDigit(day)]?.['Chín Muồi'] || {}
+        description: cycleDescriptions[NumerologyUtils.reduceToSingleDigit(day)]?.['Chín'] || {} // Sửa từ 'Chín Muồi' thành 'Chín'
       },
       {
         cycle: 'Thu Hoạch',
