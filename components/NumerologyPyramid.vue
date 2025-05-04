@@ -3,7 +3,7 @@
     <div class="p-6 space-y-6">
       <!-- Tiêu đề với họ tên -->
       <h2 class="text-2xl font-bold text-teal-800">
-        Đỉnh Cao và Thử Thách Thần Số Học của {{ fullName }}
+        Đỉnh Cao và Thử Thách Thần Số Học 
       </h2>
 
       <!-- Biểu đồ SVG -->
