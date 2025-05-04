@@ -3,14 +3,14 @@
     <div class="p-6 space-y-6">
       <!-- Tiêu đề với họ tên -->
       <h2 class="text-2xl font-bold text-teal-800">
-        Đỉnh Cao và Thử Thách Thần Số Học của Nguyễn Văn A
+        Đỉnh Cao và Thử Thách Thần Số Học của {{ fullName }}
       </h2>
 
       <!-- Biểu đồ SVG -->
       <transition name="fade-slide">
         <div v-if="peaksData && peaksData.length" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
           <h3 class="text-xl font-bold text-teal-800 mb-4">Biểu đồ Đỉnh Cao và Thử Thách</h3>
-          <svg width="700" height="500" viewBox="0 0 700 500" preserveAspectRatio="xMidYMid meet">
+          <svg width="700" height="520" viewBox="0 0 780 520" preserveAspectRatio="xMidYMid meet">
             <defs>
               <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
                 <path d="M 0 0 L 10 5 L 0 10 z" fill="#003366" />
@@ -18,8 +18,8 @@
             </defs>
 
             <!-- Lines -->
-            <line class="line" x1="350" y1="20" x2="100" y2="200" />
-            <line class="line" x1="350" y1="20" x2="600" y2="200" />
+            <line class="line" x1="350" y1="0" x2="100" y2="200" />
+            <line class="line" x1="350" y1="0" x2="600" y2="200" />
             <line class="line" x1="350" y1="80" x2="250" y2="140" />
             <line class="line" x1="350" y1="80" x2="450" y2="140" />
             <line class="line" x1="250" y1="140" x2="100" y2="200" />
@@ -32,30 +32,32 @@
             <line class="line" x1="350" y1="200" x2="450" y2="260" />
             <line class="line" x1="250" y1="260" x2="350" y2="320" />
             <line class="line" x1="450" y1="260" x2="350" y2="320" />
-            <line class="line" x1="350" y1="380" x2="100" y2="200" />
-            <line class="line" x1="350" y1="380" x2="600" y2="200" />
+            <line class="line" x1="350" y1="400" x2="100" y2="200" />
+            <line class="line" x1="350" y1="400" x2="600" y2="200" />
 
             <!-- Nodes -->
-            <!-- Topmost node (Life Path) -->
-            <g class="node" transform="translate(350,20)">
+            <!-- Topmost node (Đỉnh cao giai đoạn 4) -->
+            <g class="node" transform="translate(350,0)">
               <circle r="20" fill="#b96cc4" />
-              <text y="5" text-anchor="middle" x="0">{{ lifePath }}</text>
+              <text y="5" text-anchor="middle" x="0">{{ peaksData[3].peak }}</text>
+              <text y="35" text-anchor="middle" x="0">{{ peaksData[3].age_range.split(' ')[0] }}</text>
+              <text y="50" text-anchor="middle" x="0">({{ peaksData[3].age_range.match(/\d{4}–\d{4}/)[0]}})</text>
             </g>
 
             <!-- Peak Stage 4 -->
             <g class="node" transform="translate(350,80)">
               <circle r="20" fill="#b96cc4" />
-              <text y="5" text-anchor="middle" x="0">{{ peaksData[3].peak }}</text>
-              <text y="35" text-anchor="middle" x="0">{{ peaksData[3].age_range.split(' ')[0] }}</text>
-              <text y="50" text-anchor="middle" x="0">({{ peaksData[3].age_range.match(/\d{4}–\d{4}/)[0] }})</text>
+              <text y="5" text-anchor="middle" x="0">{{ peaksData[2].peak }}</text>
+              <text y="35" text-anchor="middle" x="0">{{ peaksData[2].age_range.split(' ')[0] }}</text>
+              <text y="50" text-anchor="middle" x="0">({{ peaksData[2].age_range.match(/\d{4}–\d{4}/)[0]}})</text>
             </g>
 
             <!-- Peak Stage 3 -->
             <g class="node" transform="translate(250,140)">
               <circle r="20" fill="#b96cc4" />
-              <text y="5" text-anchor="middle" x="0">{{ peaksData[2].peak }}</text>
-              <text y="35" text-anchor="middle" x="0">{{ peaksData[2].age_range.split(' ')[0] }}</text>
-              <text y="50" text-anchor="middle" x="0">({{ peaksData[2].age_range.match(/\d{4}–\d{4}/)[0] }})</text>
+              <text y="5" text-anchor="middle" x="0">{{ peaksData[0].peak }}</text>
+              <text y="35" text-anchor="middle" x="0">{{ peaksData[0].age_range.split(' ')[0] }}</text>
+              <text y="50" text-anchor="middle" x="0">({{ peaksData[0].age_range.match(/\d{4}–\d{4}/)[0]}})</text>
             </g>
 
             <!-- Peak Stage 2 -->
@@ -63,7 +65,7 @@
               <circle r="20" fill="#b96cc4" />
               <text y="5" text-anchor="middle" x="0">{{ peaksData[1].peak }}</text>
               <text y="35" text-anchor="middle" x="0">{{ peaksData[1].age_range.split(' ')[0] }}</text>
-              <text y="50" text-anchor="middle" x="0">({{ peaksData[1].age_range.match(/\d{4}–\d{4}/)[0] }})</text>
+              <text y="50" text-anchor="middle" x="0">({{ peaksData[1].age_range.match(/\d{4}–\d{4}/)[0]}})</text>
             </g>
 
             <!-- Birth Month -->
@@ -72,8 +74,6 @@
               <text y="5" text-anchor="middle" x="0">{{ birthDigits.month }}</text>
               <text y="35" text-anchor="middle" x="0">Tháng {{ birthDate.split('/')[1] }}</text>
             </g>
-
-            Rosé - I Wanna Dance With Somebody (Who Loves Me) (Official Music Video)
 
             <!-- Birth Day -->
             <g class="node" transform="translate(350,200)">
@@ -107,8 +107,8 @@
               <text y="5" text-anchor="middle" x="0">{{ peaksData[2].challenge }}</text>
             </g>
 
-            <!-- Bottommost node (Life Path Challenge) -->
-            <g class="node" transform="translate(350,380)">
+            <!-- Bottommost node (Thử thách giai đoạn 4) -->
+            <g class="node" transform="translate(350,400)">
               <circle r="20" fill="#b96cc4" />
               <text y="5" text-anchor="middle" x="0">{{ peaksData[3].challenge }}</text>
             </g>
@@ -283,13 +283,13 @@ const fetchPeaksAndChallenges = async () => {
 
   try {
     // Tính số ngày, tháng, năm
-    const daySum = reduceToSingleDigit(day); // 25 → 7
-    const monthSum = reduceToSingleDigit(month); // 03 → 3
-    const yearSum = reduceToSingleDigit(year.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0)); // 1988 → 8
+    const daySum = reduceToSingleDigit(day);
+    const monthSum = reduceToSingleDigit(month);
+    const yearSum = reduceToSingleDigit(year.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0));
     birthDigits.value = { day: daySum, month: monthSum, year: yearSum };
 
     // Tính số đường đời
-    lifePath.value = calculateLifePathNumber(props.birthDate); // 25/03/1988 → 9
+    lifePath.value = calculateLifePathNumber(props.birthDate);
     console.log('lifePath:', lifePath.value);
     const lifePathStr = lifePath.value === 22 ? '22/4' : lifePath.value.toString();
 

@@ -97,32 +97,32 @@
 
         <!-- Components grid -->
         <div class="grid grid-cols-1 gap-8">
-          <LifePathCalculator :birth-date="birthDate" :result="result" />
-          <PersonalYearChart :birth-date="birthDate" />
-          <PersonalityGroups :birth-date="birthDate" />
-          <NumerologyCycles :birth-date="birthDate" />
-          <NumerologyPyramid :birth-date="birthDate" />
-          <PersonalYearIndex :birth-date="birthDate" />
-          <PersonalMonthCycle :birth-date="birthDate" />
-          <DestinyNumber :birth-date="birthDate" :full-name="fullName" />
-          <LifePathDestinyDisplay :birth-date="birthDate" :full-name="fullName" />
-          <ChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
-          <MaturityDisplay :birth-date="birthDate" :full-name="fullName" />
-          <MaturePowerDisplay :birth-date="birthDate" :full-name="fullName" />
-          <SoulUrgeDisplay :birth-date="birthDate" :full-name="fullName" />
-          <LifePathAndSoulUrge :birth-date="birthDate" :full-name="fullName" />
-          <SoulChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
-          <PersonalityDisplay :birth-date="birthDate" :full-name="fullName" />
-          <NumerologyPowerChart :birth-date="birthDate" :full-name="fullName" />
-          <PersonalityChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
-          <WeaknessDisplay :birth-date="birthDate" :full-name="fullName" />
-          <KarmicDebtDisplay :birth-date="birthDate" :full-name="fullName" />
-          <NaturalAbilityDisplay :birth-date="birthDate" :full-name="fullName" />
-          <OvercomeChallengeDisplay :birth-date="birthDate" :full-name="fullName" />
-          <MentalCapacityDisplay :birth-date="birthDate" :full-name="fullName" />
-          <ApproachMotivationDisplay :birth-date="birthDate" :full-name="fullName" />
-          <ApproachCapacityDisplay :birth-date="birthDate" :full-name="fullName" />
-          <ApproachAttitudeDisplay :birth-date="birthDate" :full-name="fullName" />
+          <LifePathCalculator :birth-date="calculatedBirthDate" :result="result" />
+          <PersonalYearChart :birth-date="calculatedBirthDate" />
+          <PersonalityGroups :birth-date="calculatedBirthDate" />
+          <NumerologyCycles :birth-date="calculatedBirthDate" />
+          <NumerologyPyramid :birth-date="calculatedBirthDate" />
+          <PersonalYearIndex :birth-date="calculatedBirthDate" />
+          <PersonalMonthCycle :birth-date="calculatedBirthDate" />
+          <DestinyNumber :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <LifePathDestinyDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <ChallengeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <MaturityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <MaturePowerDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <SoulUrgeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <LifePathAndSoulUrge :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <SoulChallengeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <PersonalityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <NumerologyPowerChart :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <PersonalityChallengeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <WeaknessDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <KarmicDebtDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <NaturalAbilityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <OvercomeChallengeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <MentalCapacityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <ApproachMotivationDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <ApproachCapacityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <ApproachAttitudeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
         </div>
 
         <!-- Back to top button -->
@@ -178,16 +178,45 @@ definePageMeta({
 
 const fullName = ref('');
 const birthDate = ref('');
+const calculatedFullName = ref('');
+const calculatedBirthDate = ref('');
 const result = ref(null);
 const error = ref('');
 const isLoading = ref(false);
 const startCalulation = ref(false);
 const generalStore = useGeneralStore();
 
+// Khôi phục dữ liệu từ localStorage khi trang được tải
 onMounted(() => {
+  const savedData = localStorage.getItem('numerologyData');
+  if (savedData) {
+    try {
+      const parsedData = JSON.parse(savedData);
+      const { fullName: savedFullName, birthDate: savedBirthDate, startCalulation: savedStartCalulation, result: savedResult } = parsedData;
+      if (
+        savedFullName &&
+        savedBirthDate &&
+        /^\d{2}\/\d{2}\/\d{4}$/.test(savedBirthDate) &&
+        savedResult
+      ) {
+        fullName.value = savedFullName;
+        birthDate.value = savedBirthDate;
+        calculatedFullName.value = savedFullName;
+        calculatedBirthDate.value = savedBirthDate;
+        result.value = savedResult;
+        startCalulation.value = savedStartCalulation;
+      }
+    } catch (err) {
+      console.error('Lỗi khi khôi phục dữ liệu từ localStorage:', err);
+    }
+  }
+
+  // Kiểm tra dữ liệu từ store (như mã hiện tại)
   if (generalStore.hasData) {
     fullName.value = generalStore.fullname;
     birthDate.value = generalStore.birthdate;
+    calculatedFullName.value = generalStore.fullname;
+    calculatedBirthDate.value = generalStore.birthdate;
     calculateNumbers();
   }
 });
@@ -200,6 +229,16 @@ const formatDateInput = (event) => {
     value = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4, 8)}`;
   }
   birthDate.value = value;
+};
+
+// Hàm tính số đường đời
+const calculateLifePathNumber = (birthDate) => {
+  const digits = birthDate.replace(/[^0-9]/g, '').split('').map(Number);
+  let sum = digits.reduce((acc, curr) => acc + curr, 0);
+  while (sum > 9 && sum !== 11 && sum !== 22) {
+    sum = sum.toString().split('').map(Number).reduce((acc, curr) => acc + curr, 0);
+  }
+  return sum;
 };
 
 const calculateNumbers = async () => {
@@ -241,8 +280,18 @@ const calculateNumbers = async () => {
     result.value = lifePathData.value;
     generalStore.fullname = fullName.value;
     generalStore.birthdate = birthDate.value;
+    calculatedFullName.value = fullName.value;
+    calculatedBirthDate.value = birthDate.value;
     startCalulation.value = true;
-    
+
+    // Lưu dữ liệu vào localStorage
+    localStorage.setItem('numerologyData', JSON.stringify({
+      fullName: calculatedFullName.value,
+      birthDate: calculatedBirthDate.value,
+      startCalulation: startCalulation.value,
+      result: result.value,
+    }));
+
     // Cuộn xuống phần kết quả sau khi tính toán
     setTimeout(() => {
       const resultsSection = document.querySelector('.bg-white.rounded-xl.shadow-lg.p-6');

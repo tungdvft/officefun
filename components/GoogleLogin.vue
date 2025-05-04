@@ -11,7 +11,7 @@
       <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
       <path fill="none" d="M0 0h48v48H0z"/>
     </svg>
-    {{ loading ? 'Đang đăng nhập...' : 'Google' }}
+    {{ loading ? 'Đang đăng nhập...' : 'Đăng nhập với Google' }}
   </button>
 </template>
 
@@ -20,20 +20,22 @@ import { ref } from 'vue'
 import { useUserStore } from '~/stores/user'
 import { toast } from 'vue3-toastify'
 
-const config = useRuntimeConfig()
+// Khởi tạo store và trạng thái
 const userStore = useUserStore()
 const loading = ref(false)
 
+// Hardcode các giá trị
+const appOrigin = 'https://oyster-app-lxrw8.ondigitalocean.app'
+const googleClientId = '14260610616-tifcr2fa8031gmkiujk1l096rl8j67n4.apps.googleusercontent.com'
+
 const handleGoogleLogin = async () => {
   if (loading.value) return
-
   try {
     loading.value = true
-    
-    // Load Google API client library
+
+    // Tải thư viện Google API
     await new Promise((resolve, reject) => {
       if (window.google?.accounts?.oauth2) return resolve()
-      
       const script = document.createElement('script')
       script.src = 'https://accounts.google.com/gsi/client'
       script.async = true
@@ -43,80 +45,61 @@ const handleGoogleLogin = async () => {
       document.head.appendChild(script)
     })
 
-    // Initialize Google Identity Services
+    // Khởi tạo Google Identity Services
     const client = google.accounts.oauth2.initTokenClient({
-      client_id: '14260610616-tifcr2fa8031gmkiujk1l096rl8j67n4.apps.googleusercontent.com',
+      client_id: googleClientId,
       scope: 'email profile openid',
       callback: async (response) => {
         try {
           if (response.error) {
-            throw new Error(response.error)
+            throw new Error(`Google OAuth error: ${response.error} (Origin: ${appOrigin})`)
           }
-
-          // Get user info from Google
           const userInfo = await fetchUserInfo(response.access_token)
-          
-          // Send to backend to process
           const { user, isNewUser, token } = await $fetch('/api/auth/google', {
             method: 'POST',
-            body: {
-              email: userInfo.email,
-              name: userInfo.name,
-              picture: userInfo.picture
-            }
+            body: { email: userInfo.email, name: userInfo.name, picture: userInfo.picture },
           })
-
-          // Save user to store and localStorage
-          saveUserData({
-            ...user,
-            token,
-            isAuthenticated: true
-          })
-
-          // Show success message
-          toast.success(isNewUser 
-            ? 'Tài khoản mới đã được tạo! Vui lòng hoàn thiện thông tin' 
+          saveUserData({ ...user, token, isAuthenticated: true })
+          toast.success(isNewUser
+            ? 'Tài khoản mới đã được tạo! Vui lòng hoàn thiện thông tin'
             : `Chào mừng ${user.fullname || userInfo.name} quay trở lại!`)
-
-          // Redirect based on profile completion
           if (user.fullname && user.birthdate) {
             await navigateTo('/xem')
           } else {
             await navigateTo('/hoan-thanh')
           }
         } catch (error) {
-          console.error('Google login error:', error)
-          toast.error(error.message || 'Đăng nhập thất bại')
+          console.error('Google login error:', error, { origin: appOrigin })
+          toast.error(error.message || 'Đăng nhập Google thất bại')
         } finally {
           loading.value = false
         }
-      }
+      },
     })
 
-    // Request access token
+    // Yêu cầu access token
+    console.debug('Requesting Google access token from origin:', appOrigin)
     client.requestAccessToken()
   } catch (error) {
-    console.error('Error loading Google API:', error)
+    console.error('Error initializing Google Sign-In:', error, { origin: appOrigin })
     toast.error('Không thể khởi tạo Google Sign-In')
     loading.value = false
   }
 }
 
 const fetchUserInfo = async (accessToken) => {
-  const response = await $fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-    headers: {
-      Authorization: `Bearer ${accessToken}`
-    }
-  })
-  return response
+  try {
+    const response = await $fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+    return response
+  } catch (error) {
+    throw new Error('Failed to fetch user info: ' + error.message)
+  }
 }
 
-// Hàm lưu thông tin user vào cả store và localStorage
 const saveUserData = (userData) => {
-  // Lưu vào Pinia store
   userStore.setUser(userData)
-  
-  // Lưu vào localStorage
   localStorage.setItem('auth', JSON.stringify({
     id: userData.id,
     email: userData.email,
@@ -125,7 +108,7 @@ const saveUserData = (userData) => {
     avatar: userData.avatar,
     token: userData.token,
     isAuthenticated: true,
-    lastLogin: new Date().toISOString()
+    lastLogin: new Date().toISOString(),
   }))
 }
 </script>
