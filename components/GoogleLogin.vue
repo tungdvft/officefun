@@ -22,59 +22,74 @@ import { ref } from 'vue'
 import { useUserStore } from '~/stores/user'
 import { toast } from 'vue3-toastify'
 
-// Khởi tạo store và trạng thái
 const userStore = useUserStore()
 const loading = ref(false)
 
-// Hardcode các giá trị
-const appOrigin = 'https://oyster-app-lxrw8.ondigitalocean.app'
-const googleClientId = '14260610616-tifcr2fa8031gmkiujk1l096rl8j67n4.apps.googleusercontent.com'
+// Dynamic configuration based on environment
+const runtimeConfig = useRuntimeConfig()
+const googleClientId = runtimeConfig.public.googleClientId || '14260610616-tifcr2fa8031gmkiujk1l096rl8j67n4.apps.googleusercontent.com'
+const currentOrigin = typeof window !== 'undefined' ? window.location.origin : ''
 
 const handleGoogleLogin = async () => {
   if (loading.value) return
+  
   try {
     loading.value = true
 
-    // Tải thư viện Google API
-    await new Promise((resolve, reject) => {
-      if (window.google?.accounts?.oauth2) return resolve()
-      const script = document.createElement('script')
-      script.src = 'https://accounts.google.com/gsi/client'
-      script.async = true
-      script.defer = true
-      script.onload = resolve
-      script.onerror = () => reject(new Error('Failed to load Google API'))
-      document.head.appendChild(script)
-    })
+    // Load Google API library if not already loaded
+    if (!window.google?.accounts?.oauth2) {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = 'https://accounts.google.com/gsi/client'
+        script.async = true
+        script.defer = true
+        script.onload = resolve
+        script.onerror = () => reject(new Error('Failed to load Google API'))
+        document.head.appendChild(script)
+      })
+    }
 
-    // Khởi tạo Google Identity Services
+    // Initialize Google OAuth client with dynamic redirect URI
     const client = google.accounts.oauth2.initTokenClient({
       client_id: googleClientId,
       scope: 'email profile openid',
+      redirect_uri: `${currentOrigin}/api/auth/callback/google`,
       callback: async (response) => {
         try {
           if (response.error) {
-            throw new Error(`Google OAuth error: ${response.error} (Origin: ${appOrigin})`)
+            throw new Error(`Google OAuth error: ${response.error}`)
           }
-          console.debug('Google response:', response)
+          
+          // Fetch user info from Google
           const userInfo = await fetchUserInfo(response.access_token)
-          console.debug('User info:', userInfo)
+          
+          // Send to your backend
           const { user, isNewUser, token } = await $fetch('/api/auth/google', {
             method: 'POST',
-            body: { email: userInfo.email, name: userInfo.name, picture: userInfo.picture },
+            body: { 
+              email: userInfo.email, 
+              name: userInfo.name, 
+              picture: userInfo.picture,
+              access_token: response.access_token
+            },
           })
-          console.debug('Backend response:', { user, isNewUser, token })
+
+          // Save user data
           saveUserData({ ...user, token, isAuthenticated: true })
+          
+          // Show appropriate message
           toast.success(isNewUser
             ? 'Tài khoản mới đã được tạo! Vui lòng hoàn thiện thông tin'
             : `Chào mừng ${user.fullname || userInfo.name} quay trở lại!`)
+            
+          // Redirect based on profile completion
           if (user.fullname && user.birthdate) {
             await navigateTo('/xem')
           } else {
             await navigateTo('/hoan-thanh')
           }
         } catch (error) {
-          console.error('Google login error:', error, { origin: appOrigin })
+          console.error('Google login error:', error)
           toast.error(error.message || 'Đăng nhập Google thất bại')
         } finally {
           loading.value = false
@@ -82,11 +97,10 @@ const handleGoogleLogin = async () => {
       },
     })
 
-    // Yêu cầu access token
-    console.debug('Requesting Google access token from origin:', appOrigin)
+    // Request access token
     client.requestAccessToken()
   } catch (error) {
-    console.error('Error initializing Google Sign-In:', error, { origin: appOrigin })
+    console.error('Error initializing Google Sign-In:', error)
     toast.error('Không thể khởi tạo Google Sign-In')
     loading.value = false
   }
@@ -99,7 +113,7 @@ const fetchUserInfo = async (accessToken) => {
     })
     return response
   } catch (error) {
-    throw new Error('Failed to fetch user info: ' + error.message)
+    throw new Error('Không thể lấy thông tin người dùng từ Google: ' + error.message)
   }
 }
 
