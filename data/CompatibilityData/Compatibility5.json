@@ -1,0 +1,454 @@
+{
+  "number": 5,
+  "description": "Số đường đời 5 đại diện cho sự tự do, phiêu lưu và linh hoạt. Những người mang số 5 thường yêu thích sự thay đổi, khám phá và trải nghiệm mới. Họ có sức hút, năng động và thích giao tiếp, nhưng đôi khi có thể thiếu cam kết hoặc bốc đồng. Số 5 cần học cách cân bằng giữa tự do và trách nhiệm để đạt được sự ổn định.",
+  "compatibility": [
+    {
+      "partnerNumber": 1,
+      "relationshipType": "Người yêu",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 75,
+      "details": {
+        "overview": "7/10\nMối quan hệ giữa số 5 (Nhà phiêu lưu) và số 1 (Nhà lãnh đạo) là sự kết hợp giữa sự tự do và tham vọng. Số 5 mang lại năng lượng và sự linh hoạt, trong khi số 1 cung cấp tầm nhìn và sự quyết đoán. Sự tương tác này tạo ra một tình yêu sôi động, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá cảm xúc sâu hơn còn hạn chế.",
+        "strengths": "Số 5 mang lại sự mới mẻ và năng lượng, trong khi số 1 dẫn dắt với mục tiêu rõ ràng. Họ bổ sung cho nhau, với số 5 khuyến khích số 1 thư giãn và số 1 giúp số 5 tập trung hơn. Khả năng tạo ra một mối quan hệ thú vị là điểm mạnh.",
+        "weaknesses": "Số 5 có thể cảm thấy số 1 quá kiểm soát, trong khi số 1 có thể thấy số 5 thiếu cam kết. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột cảm xúc. Sự khác biệt trong ưu tiên (tự do vs. mục tiêu) có thể gây hiểu lầm.",
+        "potential": "Mối quan hệ này có tiềm năng phát triển nếu cả hai học cách tôn trọng sự khác biệt. Sự kết hợp giữa phiêu lưu và lãnh đạo có thể tạo ra một tình yêu phong phú. Việc cùng nhau tham gia các hoạt động mới sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong cách tiếp cận: số 5 ưu tiên tự do, số 1 ưu tiên mục tiêu. Số 5 cần cam kết hơn, còn số 1 cần linh hoạt hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tham gia các hoạt động như du lịch hoặc thử thách mới. Số 5 nên bày tỏ cam kết rõ ràng, còn số 1 cần cởi mở hơn với sự thay đổi. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 1,
+      "relationshipType": "Vợ chồng",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 70,
+      "details": {
+        "overview": "7/10\nHôn nhân giữa số 5 (Nhà phiêu lưu) và số 1 (Nhà lãnh đạo) là sự kết hợp giữa sự linh hoạt và định hướng, tạo nên một gia đình năng động nhưng cần sự cân bằng. Số 5 mang lại sự mới mẻ và năng lượng, trong khi số 1 cung cấp tầm nhìn và sự quyết đoán. Sự tương tác này có thể thú vị, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 mang lại không khí vui vẻ và sự linh hoạt, trong khi số 1 đảm bảo gia đình có mục tiêu rõ ràng. Họ bổ sung cho nhau, với số 5 làm dịu sự nghiêm túc của số 1 và số 1 giúp số 5 ổn định hơn. Khả năng phối hợp tạo nên một gia đình năng động.",
+        "weaknesses": "Số 5 có thể cảm thấy số 1 quá kiểm soát, trong khi số 1 có thể thấy số 5 thiếu trách nhiệm. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong ưu tiên (tự do vs. trách nhiệm) có thể gây căng thẳng.",
+        "potential": "Hôn nhân này có tiềm năng nếu cả hai học cách bổ sung cho nhau. Sự kết hợp giữa phiêu lưu và lãnh đạo có thể tạo ra một cuộc sống gia đình phong phú. Việc cùng nhau xây dựng mục tiêu chung sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong cách tiếp cận: số 5 tập trung vào tự do, số 1 tập trung vào mục tiêu. Số 5 cần chia sẻ trách nhiệm, còn số 1 cần linh hoạt hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tổ chức các hoạt động gia đình như du lịch hoặc thử thách mới. Số 5 nên nỗ lực chia sẻ trách nhiệm, còn số 1 cần cởi mở hơn với sự thay đổi. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 1,
+      "relationshipType": "Đối tác",
+      "compatibilityLevel": "Cao",
+      "percentage": 80,
+      "details": {
+        "overview": "8/10\nSự hợp tác giữa số 5 (Nhà phiêu lưu) và số 1 (Nhà lãnh đạo) có thể tạo ra kết quả ấn tượng nhờ sự kết hợp giữa sự linh hoạt và chiến lược. Số 5 mang lại ý tưởng mới và khả năng thích ứng, trong khi số 1 cung cấp tầm nhìn và sự quyết đoán. Sự tương tác này tạo nên một đội nhóm năng động, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 hỗ trợ bằng cách đưa ra ý tưởng sáng tạo và thích ứng nhanh, trong khi số 1 dẫn dắt dự án với tầm nhìn lớn. Họ bổ sung cho nhau, với số 5 mang lại năng lượng và số 1 mang lại cấu trúc. Khả năng phối hợp tạo ra những dự án đột phá.",
+        "weaknesses": "Số 5 có thể thấy số 1 quá kiểm soát, trong khi số 1 có thể cảm thấy số 5 thiếu kỷ luật. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong phong cách làm việc (tự do vs. quyết đoán) có thể gây căng thẳng.",
+        "potential": "Sự hợp tác này có tiềm năng trong các dự án đổi mới hoặc kinh doanh. Sự kết hợp giữa phiêu lưu và lãnh đạo có thể dẫn đến thành công lớn. Việc phân chia vai trò rõ ràng sẽ giúp họ phát huy tối đa tiềm năng.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách làm việc: số 5 bốc đồng, số 1 quyết đoán. Số 5 cần tuân thủ kế hoạch, còn số 1 cần cởi mở hơn với ý tưởng mới. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết bất đồng.",
+        "suggestions": "Cả hai nên phân chia vai trò, với số 5 tập trung vào sáng tạo và số 1 tập trung vào chiến lược. Số 5 nên chủ động tuân thủ kế hoạch, còn số 1 cần tôn trọng ý kiến của số 5. Duy trì giao tiếp thường xuyên và tổ chức các buổi họp định kỳ."
+      }
+    },
+    {
+      "partnerNumber": 2,
+      "relationshipType": "Người yêu",
+      "compatibilityLevel": "Thấp",
+      "percentage": 60,
+      "details": {
+        "overview": "6/10\nMối quan hệ giữa số 5 (Nhà phiêu lưu) và số 2 (Nhà ngoại giao) có thể gặp thử thách do sự khác biệt trong cách tiếp cận. Số 5 mang lại sự tự do và năng lượng, trong khi số 2 cung cấp sự nhạy cảm và hỗ trợ. Sự tương phản này có thể hấp dẫn ban đầu, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá cảm xúc sâu hơn còn hạn chế.",
+        "strengths": "Số 5 mang lại sự mới mẻ và năng lượng, trong khi số 2 cung cấp sự quan tâm và khả năng hòa giải. Họ có thể bổ sung cho nhau, với số 5 khuyến khích số 2 khám phá và số 2 làm dịu sự bốc đồng của số 5. Khả năng tạo ra một mối quan hệ cân bằng là điểm mạnh.",
+        "weaknesses": "Số 5 có thể cảm thấy số 2 quá phụ thuộc, trong khi số 2 có thể thấy số 5 thiếu cam kết. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột cảm xúc. Sự khác biệt trong ưu tiên (tự do vs. cảm xúc) có thể gây hiểu lầm.",
+        "potential": "Mối quan hệ này có tiềm năng nếu cả hai học cách tôn trọng sự khác biệt. Sự kết hợp giữa phiêu lưu và hỗ trợ có thể tạo ra một tình yêu phong phú. Việc cùng nhau tham gia các hoạt động mới sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong cách tiếp cận: số 5 ưu tiên tự do, số 2 ưu tiên cảm xúc. Số 5 cần cam kết hơn, còn số 2 cần tự tin hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tham gia các hoạt động như du lịch hoặc làm việc chung trong các dự án mới. Số 5 nên bày tỏ cam kết rõ ràng, còn số 2 cần tự tin hơn. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 2,
+      "relationshipType": "Vợ chồng",
+      "compatibilityLevel": "Thấp",
+      "percentage": 55,
+      "details": {
+        "overview": "5/10\nHôn nhân giữa số 5 (Nhà phiêu lưu) và số 2 (Nhà ngoại giao) có thể gặp nhiều thử thách do sự khác biệt trong ưu tiên. Số 5 mang lại sự linh hoạt và năng lượng, trong khi số 2 cung cấp sự chu đáo và thấu hiểu. Sự tương phản này có thể thú vị, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 mang lại không khí vui vẻ và sự mới mẻ, trong khi số 2 cung cấp sự quan tâm và khả năng hòa giải. Họ có thể bổ sung cho nhau, với số 5 làm dịu sự căng thẳng của số 2 và số 2 giúp số 5 ổn định hơn. Khả năng tạo ra một gia đình năng động là điểm mạnh.",
+        "weaknesses": "Số 5 có thể cảm thấy số 2 quá phụ thuộc, trong khi số 2 có thể thấy số 5 thiếu trách nhiệm. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong ưu tiên (tự do vs. cảm xúc) có thể gây căng thẳng.",
+        "potential": "Hôn nhân này có tiềm năng nếu cả hai học cách bổ sung cho nhau. Sự kết hợp giữa phiêu lưu và chăm sóc có thể tạo ra một cuộc sống gia đình phong phú. Việc cùng nhau tham gia các hoạt động mới sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách sống: số 5 hướng tới tự do, số 2 hướng tới cảm xúc. Số 5 cần chia sẻ trách nhiệm, còn số 2 cần tự tin hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tổ chức các hoạt động gia đình như du lịch hoặc làm việc chung trong các dự án mới. Số 5 nên nỗ lực chia sẻ trách nhiệm, còn số 2 cần tự tin hơn. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 2,
+      "relationshipType": "Đối tác",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 65,
+      "details": {
+        "overview": "6/10\nSự hợp tác giữa số 5 (Nhà phiêu lưu) và số 2 (Nhà ngoại giao) có thể hiệu quả trong các dự án cần sự cân bằng giữa đổi mới và ngoại giao. Số 5 mang lại ý tưởng mới và khả năng thích ứng, trong khi số 2 cung cấp sự tinh tế và kỹ năng xây dựng mối quan hệ. Sự tương phản này có thể tạo ra một đội nhóm năng động, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 hỗ trợ bằng cách đưa ra ý tưởng sáng tạo và thích ứng nhanh, trong khi số 2 xây dựng quan hệ và giải quyết xung đột. Họ bổ sung cho nhau, với số 5 mang lại năng lượng và số 2 mang lại sự linh hoạt. Khả năng phối hợp tạo ra những dự án thú vị.",
+        "weaknesses": "Số 5 có thể thấy số 2 quá chậm chạp, trong khi số 2 có thể cảm thấy số 5 thiếu kỷ luật. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong phong cách làm việc (tự do vs. linh hoạt) có thể gây căng thẳng.",
+        "potential": "Sự hợp tác này có tiềm năng trong các dự án thay đổi nhanh. Sự kết hợp giữa phiêu lưu và ngoại giao có thể dẫn đến thành công. Việc phân chia vai trò rõ ràng sẽ giúp họ phát huy tối đa tiềm năng.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách làm việc: số 5 bốc đồng, số 2 linh hoạt. Số 5 cần tuân thủ kế hoạch, còn số 2 cần quyết đoán hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết bất đồng.",
+        "suggestions": "Cả hai nên phân chia vai trò, với số 5 tập trung vào sáng tạo và số 2 tập trung vào quan hệ đối ngoại. Số 5 nên chủ động tuân thủ kế hoạch, còn số 2 cần quyết đoán hơn. Duy trì giao tiếp thường xuyên và tổ chức các buổi họp định kỳ."
+      }
+    },
+    {
+      "partnerNumber": 3,
+      "relationshipType": "Người yêu",
+      "compatibilityLevel": "Cao",
+      "percentage": 85,
+      "details": {
+        "overview": "8/10\nMối quan hệ giữa số 5 (Nhà phiêu lưu) và số 3 (Nhà sáng tạo) là sự kết hợp giữa sự tự do và sáng tạo. Số 5 mang lại năng lượng và sự linh hoạt, trong khi số 3 cung cấp sự lạc quan và khả năng biểu đạt. Sự tương đồng về tính năng động tạo ra một tình yêu sôi nổi, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá cảm xúc sâu hơn còn hạn chế.",
+        "strengths": "Số 5 và số 3 đều yêu thích sự đổi mới và trải nghiệm, tạo nên một mối quan hệ đầy niềm vui. Họ bổ sung cho nhau, với số 5 mang lại sự phiêu lưu và số 3 mang lại sự sáng tạo. Khả năng đồng điệu trong các hoạt động vui vẻ là điểm mạnh.",
+        "weaknesses": "Cả hai có thể thiếu cam kết hoặc quá bốc đồng, dẫn đến sự thiếu ổn định. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột cảm xúc. Sự thiếu tập trung của cả hai có thể khiến mối quan hệ thiếu chiều sâu.",
+        "potential": "Mối quan hệ này có tiềm năng trở thành một tình yêu sôi động nếu cả hai học cách cân bằng tự do và trách nhiệm. Sự kết hợp giữa phiêu lưu và sáng tạo có thể tạo ra một mối quan hệ phong phú. Việc cùng nhau tham gia các hoạt động sáng tạo sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức lớn nhất là sự thiếu cam kết và xu hướng bốc đồng của cả hai. Họ cần học cách nghiêm túc hơn và xây dựng nền tảng chung. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tham gia các hoạt động sáng tạo như nghệ thuật, du lịch hoặc tổ chức sự kiện. Họ cần thêm cam kết và xây dựng kế hoạch chung. Duy trì giao tiếp cởi mở và khuyến khích sự nghiêm túc sẽ giúp mối quan hệ bền vững."
+      }
+    },
+    {
+      "partnerNumber": 3,
+      "relationshipType": "Vợ chồng",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 75,
+      "details": {
+        "overview": "7/10\nHôn nhân giữa số 5 (Nhà phiêu lưu) và số 3 (Nhà sáng tạo) là sự kết hợp giữa sự linh hoạt và sáng tạo, tạo nên một gia đình năng động nhưng cần sự cân bằng. Số 5 mang lại sự mới mẻ và năng lượng, trong khi số 3 cung cấp sự lạc quan và khả năng biểu đạt. Sự tương đồng này có thể thú vị, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 mang lại không khí vui vẻ và sự linh hoạt, trong khi số 3 mang lại sự sáng tạo và niềm vui. Họ bổ sung cho nhau, với số 5 khuyến khích số 3 khám phá và số 3 làm dịu sự bốc đồng của số 5. Khả năng phối hợp tạo nên một gia đình sôi động.",
+        "weaknesses": "Cả hai có thể thiếu trách nhiệm hoặc quá bốc đồng, dẫn đến sự thiếu ổn định. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự thiếu tập trung của cả hai có thể khiến gia đình thiếu cấu trúc.",
+        "potential": "Hôn nhân này có tiềm năng nếu cả hai học cách bổ sung cho nhau. Sự kết hợp giữa phiêu lưu và sáng tạo có thể tạo ra một cuộc sống gia đình phong phú. Việc cùng nhau xây dựng mục tiêu chung sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự thiếu cam kết và xu hướng bốc đồng: số 5 hướng tới tự do, số 3 hướng tới niềm vui. Số 5 cần chia sẻ trách nhiệm, còn số 3 cần nghiêm túc hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tổ chức các hoạt động gia đình như du lịch hoặc sáng tạo nghệ thuật. Số 5 nên nỗ lực chia sẻ trách nhiệm, còn số 3 cần nghiêm túc hơn. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 3,
+      "relationshipType": "Đối tác",
+      "compatibilityLevel": "Cao",
+      "percentage": 85,
+      "details": {
+        "overview": "8/10\nSự hợp tác giữa số 5 (Nhà phiêu lưu) và số 3 (Nhà sáng tạo) có thể tạo ra kết quả ấn tượng nhờ sự kết hợp giữa sự linh hoạt và sáng tạo. Số 5 mang lại ý tưởng mới và khả năng thích ứng, trong khi số 3 cung cấp sự lạc quan và khả năng biểu đạt. Sự tương đồng này tạo nên một đội nhóm năng động, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 hỗ trợ bằng cách đưa ra ý tưởng sáng tạo và thích ứng nhanh, trong khi số 3 thu hút sự chú ý với khả năng giao tiếp. Họ bổ sung cho nhau, với số 5 mang lại năng lượng và số 3 mang lại sự sáng tạo. Khả năng phối hợp tạo ra những dự án đột phá.",
+        "weaknesses": "Cả hai có thể thiếu kỷ luật hoặc quá bốc đồng, dẫn đến việc bỏ lỡ kế hoạch. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự thiếu tập trung của cả hai có thể khiến dự án thiếu cấu trúc.",
+        "potential": "Sự hợp tác này có tiềm năng trong các dự án sáng tạo hoặc đổi mới. Sự kết hợp giữa phiêu lưu và sáng tạo có thể dẫn đến thành công lớn. Việc tìm kiếm sự hỗ trợ từ bên ngoài sẽ giúp họ phát huy tối đa tiềm năng.",
+        "challenges": "Thách thức chính là sự thiếu kỷ luật và xu hướng bốc đồng. Cả hai cần học cách tuân thủ kế hoạch và nghiêm túc hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết bất đồng.",
+        "suggestions": "Cả hai nên tìm kiếm sự hỗ trợ từ một người kỷ luật để bổ sung cấu trúc. Tham gia các buổi họp định kỳ để duy trì đồng thuận. Cả hai cần học cách tuân thủ kế hoạch và duy trì giao tiếp cởi mở để đảm bảo thành công."
+      }
+    },
+    {
+      "partnerNumber": 4,
+      "relationshipType": "Người yêu",
+      "compatibilityLevel": "Thấp",
+      "percentage": 55,
+      "details": {
+        "overview": "5/10\nMối quan hệ giữa số 5 (Nhà phiêu lưu) và số 4 (Nhà xây dựng) có thể gặp thử thách do sự khác biệt trong cách tiếp cận. Số 5 mang lại sự tự do và năng lượng, trong khi số 4 cung cấp sự ổn định và kỷ luật. Sự tương phản này có thể hấp dẫn ban đầu, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá cảm xúc sâu hơn còn hạn chế.",
+        "strengths": "Số 5 mang lại sự mới mẻ và năng lượng, trong khi số 4 cung cấp nền tảng vững chắc. Họ có thể bổ sung cho nhau, với số 5 khuyến khích số 4 thư giãn và số 4 giúp số 5 ổn định hơn. Khả năng tạo ra một mối quan hệ cân bằng là điểm mạnh.",
+        "weaknesses": "Số 5 có thể cảm thấy số 4 quá cứng nhắc hoặc nhàm chán, trong khi số 4 có thể thấy số 5 thiếu cam kết. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột cảm xúc. Sự khác biệt trong ưu tiên (tự do vs. ổn định) có thể gây hiểu lầm.",
+        "potential": "Mối quan hệ này có tiềm năng nếu cả hai học cách tôn trọng sự khác biệt. Sự kết hợp giữa phiêu lưu và thực tế có thể tạo ra một tình yêu phong phú. Việc cùng nhau tham gia các hoạt động mới sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong cách tiếp cận: số 5 ưu tiên tự do, số 4 ưu tiên ổn định. Số 5 cần cam kết hơn, còn số 4 cần linh hoạt hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tham gia các hoạt động như du lịch hoặc làm việc chung trong các dự án mới. Số 5 nên bày tỏ cam kết rõ ràng, còn số 4 cần cởi mở hơn với sự thay đổi. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 4,
+      "relationshipType": "Vợ chồng",
+      "compatibilityLevel": "Thấp",
+      "percentage": 50,
+      "details": {
+        "overview": "5/10\nHôn nhân giữa số 5 (Nhà phiêu lưu) và số 4 (Nhà xây dựng) có thể gặp nhiều thử thách do sự khác biệt trong ưu tiên. Số 5 mang lại sự linh hoạt và năng lượng, trong khi số 4 cung cấp sự ổn định và tổ chức. Sự tương phản này có thể thú vị, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 mang lại không khí vui vẻ và sự mới mẻ, trong khi số 4 cung cấp nền tảng vững chắc. Họ có thể bổ sung cho nhau, với số 5 làm dịu sự cứng nhắc của số 4 và số 4 giúp số 5 ổn định hơn. Khả năng tạo ra một gia đình năng động là điểm mạnh.",
+        "weaknesses": "Số 5 có thể cảm thấy số 4 quá cứng nhắc, trong khi số 4 có thể thấy số 5 thiếu trách nhiệm. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong ưu tiên (tự do vs. trách nhiệm) có thể gây căng thẳng.",
+        "potential": "Hôn nhân này có tiềm năng nếu cả hai học cách bổ sung cho nhau. Sự kết hợp giữa phiêu lưu và thực tế có thể tạo ra một cuộc sống gia đình phong phú. Việc cùng nhau tham gia các hoạt động mới sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách sống: số 5 hướng tới tự do, số 4 hướng tới ổn định. Số 5 cần chia sẻ trách nhiệm, còn số 4 cần linh hoạt hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tổ chức các hoạt động gia đình như du lịch hoặc làm việc chung trong các dự án mới. Số 5 nên nỗ lực chia sẻ trách nhiệm, còn số 4 cần cởi mở hơn với sự thay đổi. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 4,
+      "relationshipType": "Đối tác",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 65,
+      "details": {
+        "overview": "6/10\nSự hợp tác giữa số 5 (Nhà phiêu lưu) và số 4 (Nhà xây dựng) có thể hiệu quả trong các dự án cần sự cân bằng giữa đổi mới và thực tế. Số 5 mang lại ý tưởng mới và khả năng thích ứng, trong khi số 4 cung cấp sự kỷ luật và khả năng thực hiện. Sự tương phản này có thể tạo ra một đội nhóm năng động, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 hỗ trợ bằng cách đưa ra ý tưởng sáng tạo và thích ứng nhanh, trong khi số 4 đảm bảo mọi thứ được thực hiện đúng kế hoạch. Họ bổ sung cho nhau, với số 5 mang lại năng lượng và số 4 mang lại cấu trúc. Khả năng phối hợp tạo ra những dự án thú vị.",
+        "weaknesses": "Số 5 có thể thấy số 4 quá cứng nhắc, trong khi số 4 có thể cảm thấy số 5 thiếu kỷ luật. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong phong cách làm việc (tự do vs. kỷ luật) có thể gây căng thẳng.",
+        "potential": "Sự hợp tác này có tiềm năng trong các dự án thay đổi nhanh. Sự kết hợp giữa phiêu lưu và thực tế có thể dẫn đến thành công. Việc phân chia vai trò rõ ràng sẽ giúp họ phát huy tối đa tiềm năng.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách làm việc: số 5 bốc đồng, số 4 kỷ luật. Số 5 cần tuân thủ kế hoạch, còn số 4 cần cởi mở hơn với ý tưởng mới. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết bất đồng.",
+        "suggestions": "Cả hai nên phân chia vai trò, với số 5 tập trung vào sáng tạo và số 4 tập trung vào thực hiện. Số 5 nên chủ động tuân thủ kế hoạch, còn số 4 cần tôn trọng ý kiến của số 5. Duy trì giao tiếp thường xuyên và tổ chức các buổi họp định kỳ."
+      }
+    },
+    {
+      "partnerNumber": 5,
+      "relationshipType": "Người yêu",
+      "compatibilityLevel": "Cao",
+      "percentage": 90,
+      "details": {
+        "overview": "9/10\nMối quan hệ giữa hai số 5 (Nhà phiêu lưu) là sự kết hợp lý tưởng của sự tự do và năng lượng. Cả hai đều yêu thích sự thay đổi, khám phá và trải nghiệm mới, tạo nên một tình yêu sôi động và đầy đam mê. Sự tương đồng này mang lại sự thoải mái, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá cảm xúc sâu hơn còn hạn chế.",
+        "strengths": "Cả hai đều có khả năng tận hưởng sự phiêu lưu và đổi mới, với sự tôn trọng lẫn nhau về tự do và năng lượng. Họ hỗ trợ nhau trong việc khám phá và trải nghiệm mới. Sự tương đồng trong cách tiếp cận giúp họ dễ dàng đồng điệu.",
+        "weaknesses": "Cả hai có thể quá bốc đồng hoặc thiếu cam kết, dẫn đến sự thiếu ổn định. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột cảm xúc. Sự thiếu trách nhiệm của cả hai có thể khiến mối quan hệ thiếu nền tảng.",
+        "potential": "Mối quan hệ này có tiềm năng trở thành một tình yêu mẫu mực nếu cả hai học cách thêm cam kết. Sự kết hợp của hai nhà phiêu lưu tạo ra một mối quan hệ phong phú. Việc cùng nhau tham gia các hoạt động mới sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức lớn nhất là sự thiếu cam kết và xu hướng bốc đồng. Cả hai cần học cách xây dựng nền tảng và nghiêm túc hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tham gia các hoạt động phiêu lưu như du lịch hoặc thử thách mới. Họ cần thêm cam kết và xây dựng kế hoạch chung. Duy trì giao tiếp cởi mở và khuyến khích sự nghiêm túc sẽ giúp mối quan hệ bền vững."
+      }
+    },
+    {
+      "partnerNumber": 5,
+      "relationshipType": "Vợ chồng",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 80,
+      "details": {
+        "overview": "8/10\nHôn nhân giữa hai số 5 (Nhà phiêu lưu) là sự kết hợp của sự linh hoạt và năng lượng, tạo nên một gia đình sôi động nhưng cần sự cân bằng. Cả hai đều yêu thích sự thay đổi và khám phá, giúp họ phối hợp tốt trong các trải nghiệm mới. Sự tương đồng này rất thú vị, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Cả hai đều giỏi tận hưởng sự phiêu lưu và đổi mới, với sự tôn trọng lẫn nhau về tự do và năng lượng. Họ hỗ trợ nhau trong việc khám phá và trải nghiệm mới. Sự tương đồng trong cách tiếp cận giúp họ phối hợp tốt.",
+        "weaknesses": "Cả hai có thể thiếu trách nhiệm hoặc quá bốc đồng, dẫn đến sự thiếu ổn định. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự thiếu cấu trúc của cả hai có thể khiến gia đình thiếu nền tảng.",
+        "potential": "Hôn nhân này có tiềm năng nếu cả hai học cách thêm cam kết. Sự kết hợp của hai nhà phiêu lưu có thể tạo ra một cuộc sống gia đình phong phú. Việc cùng nhau xây dựng mục tiêu chung sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự thiếu cam kết và xu hướng bốc đồng. Cả hai cần học cách chia sẻ trách nhiệm và xây dựng nền tảng. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết bất đồng.",
+        "suggestions": "Cả hai nên tổ chức các hoạt động gia đình như du lịch hoặc làm việc chung trong các dự án mới. Họ cần thêm cam kết và xây dựng kế hoạch chung. Duy trì giao tiếp cởi mở và khuyến khích sự nghiêm túc sẽ giúp gia đình bền vững."
+      }
+    },
+    {
+      "partnerNumber": 5,
+      "relationshipType": "Đối tác",
+      "compatibilityLevel": "Cao",
+      "percentage": 85,
+      "details": {
+        "overview": "8/10\nSự hợp tác giữa hai số 5 (Nhà phiêu lưu) có thể tạo ra kết quả ấn tượng nhờ sự kết hợp của sự linh hoạt và năng lượng. Cả hai đều yêu thích sự đổi mới và khám phá, tạo nên một đội nhóm năng động và sáng tạo. Tuy nhiên, thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Cả hai đều có khả năng đưa ra ý tưởng sáng tạo và thích ứng nhanh, với sự tôn trọng lẫn nhau về tự do và năng lượng. Họ phối hợp tốt trong việc khám phá cơ hội mới. Sự tương đồng trong cách tiếp cận tạo ra một môi trường làm việc thú vị.",
+        "weaknesses": "Cả hai có thể thiếu kỷ luật hoặc quá bốc đồng, dẫn đến việc bỏ lỡ kế hoạch. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự thiếu cấu trúc của cả hai có thể khiến dự án thiếu nền tảng.",
+        "potential": "Sự hợp tác này có tiềm năng trong các dự án đổi mới hoặc sáng tạo. Sự kết hợp của hai nhà phiêu lưu có thể dẫn đến những dự án đột phá. Việc tìm kiếm sự hỗ trợ từ bên ngoài sẽ giúp họ phát huy tối đa tiềm năng.",
+        "challenges": "Thách thức chính là sự thiếu kỷ luật và xu hướng bốc đồng. Cả hai cần học cách tuân thủ kế hoạch và nghiêm túc hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết bất đồng.",
+        "suggestions": "Cả hai nên tìm kiếm sự hỗ trợ từ một người kỷ luật để bổ sung cấu trúc. Tham gia các buổi họp định kỳ để duy trì đồng thuận. Cả hai cần học cách tuân thủ kế hoạch và duy trì giao tiếp cởi mở để đảm bảo thành công."
+      }
+    },
+    {
+      "partnerNumber": 6,
+      "relationshipType": "Người yêu",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 70,
+      "details": {
+        "overview": "7/10\nMối quan hệ giữa số 5 (Nhà phiêu lưu) và số 6 (Nhà chăm sóc) là sự kết hợp giữa sự tự do và yêu thương. Số 5 mang lại năng lượng và sự linh hoạt, trong khi số 6 cung cấp sự chu đáo và khả năng chăm sóc. Sự tương phản này tạo ra một tình yêu cân bằng, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá cảm xúc sâu hơn còn hạn chế.",
+        "strengths": "Số 5 mang lại sự mới mẻ và năng lượng, trong khi số 6 cung cấp sự quan tâm và ấm áp. Họ bổ sung cho nhau, với số 5 khuyến khích số 6 khám phá và số 6 làm dịu sự bốc đồng của số 5. Khả năng thấu hiểu và hỗ trợ lẫn nhau là điểm mạnh.",
+        "weaknesses": "Số 5 có thể cảm thấy số 6 quá kiểm soát, trong khi số 6 có thể thấy số 5 thiếu cam kết. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột cảm xúc. Sự khác biệt trong ưu tiên (tự do vs. chăm sóc) có thể gây hiểu lầm.",
+        "potential": "Mối quan hệ này có tiềm năng phát triển nếu cả hai học cách cân bằng tự do và cảm xúc. Sự kết hợp giữa phiêu lưu và chăm sóc có thể tạo ra một tình yêu phong phú. Việc cùng nhau tham gia các hoạt động ý nghĩa sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong cách tiếp cận: số 5 ưu tiên tự do, số 6 ưu tiên chăm sóc. Số 5 cần cam kết hơn, còn số 6 cần tôn trọng sự độc lập của số 5. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tham gia các hoạt động như từ thiện hoặc làm việc chung trong các dự án mới. Số 5 nên bày tỏ cam kết rõ ràng, còn số 6 cần tôn trọng sự độc lập của số 5. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 6,
+      "relationshipType": "Vợ chồng",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 65,
+      "details": {
+        "overview": "6/10\nHôn nhân giữa số 5 (Nhà phiêu lưu) và số 6 (Nhà chăm sóc) là sự kết hợp giữa sự linh hoạt và trách nhiệm, tạo nên một gia đình ấm áp nhưng cần sự cân bằng. Số 5 mang lại sự mới mẻ và năng lượng, trong khi số 6 cung cấp sự chu đáo và khả năng xây dựng mái ấm. Sự tương phản này có thể thú vị, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 mang lại không khí vui vẻ và sự linh hoạt, trong khi số 6 cung cấp sự quan tâm và ấm áp. Họ bổ sung cho nhau, với số 5 làm dịu sự căng thẳng của số 6 và số 6 giúp số 5 ổn định hơn. Khả năng phối hợp tạo nên một gia đình năng động.",
+        "weaknesses": "Số 5 có thể cảm thấy số 6 quá kiểm soát, trong khi số 6 có thể thấy số 5 thiếu trách nhiệm. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong ưu tiên (tự do vs. chăm sóc) có thể gây căng thẳng.",
+        "potential": "Hôn nhân này có tiềm năng nếu cả hai học cách bổ sung cho nhau. Sự kết hợp giữa phiêu lưu và chăm sóc có thể tạo ra một cuộc sống gia đình phong phú. Việc cùng nhau tham gia các hoạt động ý nghĩa sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách sống: số 5 hướng tới tự do, số 6 hướng tới chăm sóc. Số 5 cần chia sẻ trách nhiệm, còn số 6 cần tôn trọng sự độc lập của số 5. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tổ chức các hoạt động gia đình như từ thiện hoặc làm việc chung trong các dự án mới. Số 5 nên nỗ lực chia sẻ trách nhiệm, còn số 6 cần tôn trọng sự độc lập của số 5. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 6,
+      "relationshipType": "Đối tác",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 70,
+      "details": {
+        "overview": "7/10\nSự hợp tác giữa số 5 (Nhà phiêu lưu) và số 6 (Nhà chăm sóc) có thể hiệu quả trong các dự án cần sự cân bằng giữa đổi mới và trách nhiệm. Số 5 mang lại ý tưởng mới và khả năng thích ứng, trong khi số 6 cung cấp sự chu đáo và khả năng quản lý. Sự tương phản này có thể tạo ra một đội nhóm hài hòa, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 hỗ trợ bằng cách đưa ra ý tưởng sáng tạo và thích ứng nhanh, trong khi số 6 mang lại sự tinh tế và khả năng xây dựng mối quan hệ. Họ bổ sung cho nhau, với số 5 mang lại năng lượng và số 6 mang lại sự chăm sóc. Khả năng phối hợp tạo ra những dự án có ý nghĩa.",
+        "weaknesses": "Số 5 có thể thấy số 6 quá kiểm soát, trong khi số 6 có thể cảm thấy số 5 thiếu kỷ luật. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong phong cách làm việc (tự do vs. chăm sóc) có thể gây căng thẳng.",
+        "potential": "Sự hợp tác này có tiềm năng trong các dự án cộng đồng hoặc tổ chức. Sự kết hợp giữa phiêu lưu và chăm sóc có thể dẫn đến thành công. Việc phân chia vai trò rõ ràng sẽ giúp họ phát huy tối đa tiềm năng.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách làm việc: số 5 bốc đồng, số 6 chăm sóc. Số 5 cần tuân thủ kế hoạch, còn số 6 cần quyết đoán hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết bất đồng.",
+        "suggestions": "Cả hai nên phân chia vai trò, với số 5 tập trung vào sáng tạo và số 6 tập trung vào quan hệ đối ngoại. Số 5 nên chủ động tuân thủ kế hoạch, còn số 6 cần quyết đoán hơn. Duy trì giao tiếp thường xuyên và tổ chức các buổi họp định kỳ."
+      }
+    },
+    {
+      "partnerNumber": 7,
+      "relationshipType": "Người yêu",
+      "compatibilityLevel": "Cao",
+      "percentage": 85,
+      "details": {
+        "overview": "8/10\nMối quan hệ giữa số 5 (Nhà phiêu lưu) và số 7 (Nhà hiền triết) là sự kết hợp giữa sự tự do và chiều sâu. Số 5 mang lại năng lượng và sự linh hoạt, trong khi số 7 cung cấp sự nội tâm và tư duy triết học. Sự tương phản này tạo ra một tình yêu độc đáo, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá cảm xúc sâu hơn còn hạn chế.",
+        "strengths": "Số 5 mang lại sự mới mẻ và năng lượng, trong khi số 7 mang lại sự sâu sắc và tư duy triết học. Họ bổ sung cho nhau, với số 5 khuyến khích số 7 khám phá và số 7 giúp số 5 suy ngẫm sâu hơn. Khả năng tạo ra một mối quan hệ phong phú là điểm mạnh.",
+        "weaknesses": "Số 5 có thể cảm thấy số 7 quá xa cách, trong khi số 7 có thể thấy số 5 thiếu chiều sâu. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột cảm xúc. Sự khác biệt trong ưu tiên (tự do vs. tinh thần) có thể gây hiểu lầm.",
+        "potential": "Mối quan hệ này có tiềm năng phát triển nếu cả hai học cách tôn trọng sự khác biệt. Sự kết hợp giữa phiêu lưu và hiền triết có thể tạo ra một tình yêu sâu sắc. Việc cùng nhau tham gia các hoạt động tinh thần sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong cách tiếp cận: số 5 ưu tiên tự do, số 7 ưu tiên suy ngẫm. Số 5 cần nghiêm túc hơn, còn số 7 cần cởi mở hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tham gia các hoạt động tinh thần như thiền hoặc đọc sách cùng nhau. Số 5 nên cởi mở hơn với sự suy ngẫm, còn số 7 cần học cách cởi mở hơn. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 7,
+      "relationshipType": "Vợ chồng",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 75,
+      "details": {
+        "overview": "7/10\nHôn nhân giữa số 5 (Nhà phiêu lưu) và số 7 (Nhà hiền triết) là sự kết hợp giữa sự linh hoạt và chiều sâu, tạo nên một gia đình độc đáo nhưng cần sự cân bằng. Số 5 mang lại sự mới mẻ và năng lượng, trong khi số 7 cung cấp sự nội tâm và tư duy triết học. Sự tương phản này có thể thú vị, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 mang lại không khí vui vẻ và sự linh hoạt, trong khi số 7 mang lại sự sâu sắc và tư duy triết học. Họ bổ sung cho nhau, với số 5 làm dịu sự căng thẳng của số 7 và số 7 giúp số 5 suy ngẫm sâu hơn. Khả năng phối hợp tạo nên một gia đình độc đáo.",
+        "weaknesses": "Số 5 có thể cảm thấy số 7 quá xa cách, trong khi số 7 có thể thấy số 5 thiếu trách nhiệm. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong ưu tiên (tự do vs. tinh thần) có thể gây căng thẳng.",
+        "potential": "Hôn nhân này có tiềm năng nếu cả hai học cách bổ sung cho nhau. Sự kết hợp giữa phiêu lưu và hiền triết có thể tạo ra một cuộc sống gia đình phong phú. Việc cùng nhau tham gia các hoạt động tinh thần sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách sống: số 5 hướng tới tự do, số 7 hướng tới suy ngẫm. Số 5 cần chia sẻ trách nhiệm, còn số 7 cần cởi mở hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tổ chức các hoạt động gia đình như thiền hoặc đọc sách cùng nhau. Số 5 nên nỗ lực chia sẻ trách nhiệm, còn số 7 cần cởi mở hơn. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 7,
+      "relationshipType": "Đối tác",
+      "compatibilityLevel": "Cao",
+      "percentage": 80,
+      "details": {
+        "overview": "8/10\nSự hợp tác giữa số 5 (Nhà phiêu lưu) và số 7 (Nhà hiền triết) có thể tạo ra kết quả ấn tượng nhờ sự kết hợp giữa sự linh hoạt và chiều sâu. Số 5 mang lại ý tưởng mới và khả năng thích ứng, trong khi số 7 cung cấp sự phân tích và tư duy triết học. Sự tương phản này có thể tạo ra một đội nhóm độc đáo, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 hỗ trợ bằng cách đưa ra ý tưởng sáng tạo và thích ứng nhanh, trong khi số 7 mang lại sự sâu sắc và khả năng phân tích. Họ bổ sung cho nhau, với số 5 mang lại năng lượng và số 7 mang lại chiều sâu. Khả năng phối hợp tạo ra những dự án có ý nghĩa.",
+        "weaknesses": "Số 5 có thể thấy số 7 quá xa cách, trong khi số 7 có thể cảm thấy số 5 thiếu chiều sâu. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong phong cách làm việc (tự do vs. suy ngẫm) có thể gây căng thẳng.",
+        "potential": "Sự hợp tác này có tiềm năng trong các dự án đòi hỏi tư duy sâu sắc. Sự kết hợp giữa phiêu lưu và triết học có thể dẫn đến những dự án độc đáo. Việc phân chia vai trò rõ ràng sẽ giúp họ phát huy tối đa tiềm năng.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách làm việc: số 5 bốc đồng, số 7 suy ngẫm. Số 5 cần tuân thủ kế hoạch, còn số 7 cần hành động nhanh hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết bất đồng.",
+        "suggestions": "Cả hai nên phân chia vai trò, với số 5 tập trung vào sáng tạo và số 7 tập trung vào phân tích. Số 5 nên chủ động tuân thủ kế hoạch, còn số 7 cần hành động nhanh hơn. Duy trì giao tiếp thường xuyên và tổ chức các buổi họp để đảm bảo đồng thuận."
+      }
+    },
+    {
+      "partnerNumber": 8,
+      "relationshipType": "Người yêu",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 70,
+      "details": {
+        "overview": "7/10\nMối quan hệ giữa số 5 (Nhà phiêu lưu) và số 8 (Nhà quyền lực) là sự kết hợp giữa sự tự do và tham vọng. Số 5 mang lại năng lượng và sự linh hoạt, trong khi số 8 cung cấp sự quyết đoán và khát vọng thành công. Sự tương phản này tạo ra một tình yêu sôi động, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá cảm xúc sâu hơn còn hạn chế.",
+        "strengths": "Số 5 mang lại sự mới mẻ và năng lượng, trong khi số 8 mang lại động lực và tầm nhìn lớn. Họ bổ sung cho nhau, với số 5 khuyến khích số 8 thư giãn và số 8 giúp số 5 tập trung hơn. Khả năng tạo ra một mối quan hệ thành công là điểm mạnh.",
+        "weaknesses": "Số 5 có thể cảm thấy số 8 quá kiểm soát, trong khi số 8 có thể thấy số 5 thiếu cam kết. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột cảm xúc. Sự khác biệt trong ưu tiên (tự do vs. thành công) có thể gây hiểu lầm.",
+        "potential": "Mối quan hệ này có tiềm năng phát triển nếu cả hai học cách cân bằng tự do và tham vọng. Sự kết hợp giữa phiêu lưu và quyền lực có thể tạo ra một tình yêu phong phú. Việc cùng nhau lập kế hoạch hoặc tham gia các hoạt động mới sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong cách tiếp cận: số 5 ưu tiên tự do, số 8 ưu tiên thành công. Số 5 cần cam kết hơn, còn số 8 cần kiên nhẫn hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tham gia các hoạt động như lập kế hoạch tài chính hoặc du lịch. Số 5 nên bày tỏ cam kết rõ ràng, còn số 8 cần tôn trọng sự tự do của số 5. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 8,
+      "relationshipType": "Vợ chồng",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 65,
+      "details": {
+        "overview": "6/10\nHôn nhân giữa số 5 (Nhà phiêu lưu) và số 8 (Nhà quyền lực) là sự kết hợp giữa sự linh hoạt và tham vọng, tạo nên một gia đình năng động nhưng cần sự cân bằng. Số 5 mang lại sự mới mẻ và năng lượng, trong khi số 8 cung cấp sự quyết đoán và tầm nhìn lớn. Sự tương phản này có thể thú vị, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 mang lại không khí vui vẻ và sự linh hoạt, trong khi số 8 đảm bảo gia đình có mục tiêu lớn. Họ bổ sung cho nhau, với số 5 làm dịu sự căng thẳng của số 8 và số 8 giúp số 5 tập trung hơn. Khả năng phối hợp tạo nên một gia đình thành công.",
+        "weaknesses": "Số 5 có thể cảm thấy số 8 quá kiểm soát, trong khi số 8 có thể thấy số 5 thiếu trách nhiệm. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong ưu tiên (tự do vs. trách nhiệm) có thể gây căng thẳng.",
+        "potential": "Hôn nhân này có tiềm năng nếu cả hai học cách bổ sung cho nhau. Sự kết hợp giữa phiêu lưu và quyền lực có thể tạo ra một cuộc sống gia đình phong phú. Việc cùng nhau xây dựng mục tiêu chung sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách sống: số 5 hướng tới tự do, số 8 hướng tới thành công. Số 5 cần chia sẻ trách nhiệm, còn số 8 cần kiên nhẫn hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tổ chức các hoạt động gia đình như quản lý tài chính hoặc du lịch. Số 5 nên nỗ lực chia sẻ trách nhiệm, còn số 8 cần tôn trọng sự tự do của số 5. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 8,
+      "relationshipType": "Đối tác",
+      "compatibilityLevel": "Cao",
+      "percentage": 80,
+      "details": {
+        "overview": "8/10\nSự hợp tác giữa số 5 (Nhà phiêu lưu) và số 8 (Nhà quyền lực) có thể tạo ra kết quả ấn tượng nhờ sự kết hợp giữa sự linh hoạt và tham vọng. Số 5 mang lại ý tưởng mới và khả năng thích ứng, trong khi số 8 cung cấp sự quyết đoán và tầm nhìn lớn. Sự tương phản này có thể tạo ra một đội nhóm mạnh mẽ, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 hỗ trợ bằng cách đưa ra ý tưởng sáng tạo và thích ứng nhanh, trong khi số 8 dẫn dắt dự án với tầm nhìn chiến lược. Họ bổ sung cho nhau, với số 5 mang lại năng lượng và số 8 mang lại động lực. Khả năng phối hợp tạo ra những dự án thành công.",
+        "weaknesses": "Số 5 có thể thấy số 8 quá kiểm soát, trong khi số 8 có thể cảm thấy số 5 thiếu kỷ luật. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong phong cách làm việc (tự do vs. quyết đoán) có thể gây căng thẳng.",
+        "potential": "Sự hợp tác này có tiềm năng trong các dự án kinh doanh hoặc đổi mới. Sự kết hợp giữa phiêu lưu và quyền lực có thể dẫn đến thành công lớn. Việc phân chia vai trò rõ ràng sẽ giúp họ phát huy tối đa tiềm năng.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách làm việc: số 5 bốc đồng, số 8 quyết đoán. Số 5 cần tuân thủ kế hoạch, còn số 8 cần cởi mở hơn với ý tưởng mới. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết bất đồng.",
+        "suggestions": "Cả hai nên phân chia vai trò, với số 5 tập trung vào sáng tạo và số 8 tập trung vào chiến lược. Số 5 nên chủ động tuân thủ kế hoạch, còn số 8 cần tôn trọng ý kiến của số 5. Duy trì giao tiếp thường xuyên và tổ chức các buổi họp định kỳ."
+      }
+    },
+    {
+      "partnerNumber": 9,
+      "relationshipType": "Người yêu",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 75,
+      "details": {
+        "overview": "7/10\nMối quan hệ giữa số 5 (Nhà phiêu lưu) và số 9 (Nhà nhân đạo) là sự kết hợp giữa sự tự do và lý tưởng. Số 5 mang lại năng lượng và sự linh hoạt, trong khi số 9 cung cấp lòng trắc ẩn và khát vọng thay đổi thế giới. Sự tương phản này tạo ra một tình yêu phong phú, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá cảm xúc sâu hơn còn hạn chế.",
+        "strengths": "Số 5 mang lại sự mới mẻ và năng lượng, trong khi số 9 mang lại sự đam mê và lý tưởng cao cả. Họ bổ sung cho nhau, với số 5 khuyến khích số 9 khám phá và số 9 truyền cảm hứng cho số 5. Khả năng tạo ra một mối quan hệ ý nghĩa là điểm mạnh.",
+        "weaknesses": "Số 5 có thể cảm thấy số 9 quá lý tưởng, trong khi số 9 có thể thấy số 5 thiếu chiều sâu. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột cảm xúc. Sự khác biệt trong ưu tiên (tự do vs. lý tưởng) có thể gây hiểu lầm.",
+        "potential": "Mối quan hệ này có tiềm năng phát triển nếu cả hai học cách tôn trọng sự khác biệt. Sự kết hợp giữa phiêu lưu và nhân đạo có thể tạo ra một tình yêu sâu sắc. Việc cùng nhau tham gia các hoạt động từ thiện sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong cách tiếp cận: số 5 ưu tiên tự do, số 9 ưu tiên lý tưởng. Số 5 cần nghiêm túc hơn, còn số 9 cần thực tế hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tham gia các hoạt động từ thiện hoặc làm việc chung vì cộng đồng. Số 5 nên cởi mở hơn với lý tưởng, còn số 9 cần học cách thực tế hơn. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 9,
+      "relationshipType": "Vợ chồng",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 70,
+      "details": {
+        "overview": "7/10\nHôn nhân giữa số 5 (Nhà phiêu lưu) và số 9 (Nhà nhân đạo) là sự kết hợp giữa sự linh hoạt và lý tưởng, tạo nên một gia đình ý nghĩa nhưng cần sự cân bằng. Số 5 mang lại sự mới mẻ và năng lượng, trong khi số 9 cung cấp lòng trắc ẩn và khát vọng cống hiến. Sự tương phản này có thể thú vị, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 mang lại không khí vui vẻ và sự linh hoạt, trong khi số 9 mang lại sự đam mê và lý tưởng cao cả. Họ bổ sung cho nhau, với số 5 làm dịu sự căng thẳng của số 9 và số 9 truyền cảm hứng cho số 5. Khả năng phối hợp tạo nên một gia đình ý nghĩa.",
+        "weaknesses": "Số 5 có thể cảm thấy số 9 quá xa cách, trong khi số 9 có thể thấy số 5 thiếu trách nhiệm. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong ưu tiên (tự do vs. lý tưởng) có thể gây căng thẳng.",
+        "potential": "Hôn nhân này có tiềm năng nếu cả hai học cách bổ sung cho nhau. Sự kết hợp giữa phiêu lưu và nhân đạo có thể tạo ra một cuộc sống gia đình phong phú. Việc cùng nhau tham gia các hoạt động từ thiện sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách sống: số 5 hướng tới tự do, số 9 hướng tới lý tưởng. Số 5 cần chia sẻ trách nhiệm, còn số 9 cần chú ý hơn đến gia đình. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tổ chức các hoạt động gia đình như từ thiện hoặc làm việc chung vì cộng đồng. Số 5 nên nỗ lực chia sẻ trách nhiệm, còn số 9 cần thực tế hơn. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 9,
+      "relationshipType": "Đối tác",
+      "compatibilityLevel": "Cao",
+      "percentage": 80,
+      "details": {
+        "overview": "8/10\nSự hợp tác giữa số 5 (Nhà phiêu lưu) và số 9 (Nhà nhân đạo) có thể tạo ra kết quả ấn tượng nhờ sự kết hợp giữa sự linh hoạt và lý tưởng. Số 5 mang lại ý tưởng mới và khả năng thích ứng, trong khi số 9 cung cấp lòng trắc ẩn và tầm nhìn lớn. Sự tương phản này có thể tạo ra một đội nhóm ý nghĩa, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 hỗ trợ bằng cách đưa ra ý tưởng sáng tạo và thích ứng nhanh, trong khi số 9 mang lại ý tưởng cao cả và sự đam mê. Họ bổ sung cho nhau, với số 5 mang lại năng lượng và số 9 mang lại cảm hứng. Khả năng phối hợp tạo ra những dự án có tác động lớn.",
+        "weaknesses": "Số 5 có thể thấy số 9 thiếu thực tế, trong khi số 9 có thể cảm thấy số 5 thiếu chiều sâu. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong phong cách làm việc (tự do vs. lý tưởng) có thể gây căng thẳng.",
+        "potential": "Sự hợp tác này có tiềm năng trong các dự án từ thiện hoặc cộng đồng. Sự kết hợp giữa phiêu lưu và nhân đạo có thể dẫn đến thành công. Việc phân chia vai trò rõ ràng sẽ giúp họ phát huy tối đa tiềm năng.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách làm việc: số 5 bốc đồng, số 9 lý tưởng. Số 5 cần tuân thủ kế hoạch, còn số 9 cần thực tế hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết bất đồng.",
+        "suggestions": "Cả hai nên phân chia vai trò, với số 5 tập trung vào sáng tạo và số 9 tập trung vào ý tưởng lớn. Số 5 nên chủ động tuân thủ kế hoạch, còn số 9 cần thực tế hơn. Duy trì giao tiếp thường xuyên và tổ chức các buổi họp để đảm bảo đồng thuận."
+      }
+    },
+    {
+      "partnerNumber": 11,
+      "relationshipType": "Người yêu",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 70,
+      "details": {
+        "overview": "7/10\nMối quan hệ giữa số 5 (Nhà phiêu lưu) và số 11 (Nhà truyền cảm hứng) là sự kết hợp giữa sự tự do và tâm linh. Số 5 mang lại năng lượng và sự linh hoạt, trong khi số 11 cung cấp sự sáng tạo và trực giác. Sự tương phản này tạo ra một tình yêu độc đáo, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá cảm xúc sâu hơn còn hạn chế.",
+        "strengths": "Số 5 mang lại sự mới mẻ và năng lượng, trong khi số 11 mang lại sự sáng tạo và cảm hứng. Họ bổ sung cho nhau, với số 5 khuyến khích số 11 khám phá và số 11 giúp số 5 suy ngẫm sâu hơn. Khả năng tạo ra một mối quan hệ phong phú là điểm mạnh.",
+        "weaknesses": "Số 5 có thể cảm thấy số 11 quá xa cách, trong khi số 11 có thể thấy số 5 thiếu chiều sâu. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột cảm xúc. Sự khác biệt trong ưu tiên (tự do vs. tâm linh) có thể gây hiểu lầm.",
+        "potential": "Mối quan hệ này có tiềm năng phát triển nếu cả hai học cách tôn trọng sự khác biệt. Sự kết hợp giữa phiêu lưu và truyền cảm hứng có thể tạo ra một tình yêu sâu sắc. Việc cùng nhau tham gia các hoạt động tâm linh sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong cách tiếp cận: số 5 ưu tiên tự do, số 11 ưu tiên tâm linh. Số 5 cần nghiêm túc hơn, còn số 11 cần thực tế hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tham gia các hoạt động như thiền, yoga hoặc sáng tạo nghệ thuật. Số 5 nên cởi mở hơn với sự tâm linh, còn số 11 cần học cách thực tế hơn. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 11,
+      "relationshipType": "Vợ chồng",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 65,
+      "details": {
+        "overview": "6/10\nHôn nhân giữa số 5 (Nhà phiêu lưu) và số 11 (Nhà truyền cảm hứng) là sự kết hợp giữa sự linh hoạt và tâm linh, tạo nên một gia đình độc đáo nhưng cần sự cân bằng. Số 5 mang lại sự mới mẻ và năng lượng, trong khi số 11 cung cấp sự sáng tạo và trực giác. Sự tương phản này có thể thú vị, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 mang lại không khí vui vẻ và sự linh hoạt, trong khi số 11 mang lại sự sáng tạo và cảm hứng. Họ bổ sung cho nhau, với số 5 làm dịu sự căng thẳng của số 11 và số 11 giúp số 5 suy ngẫm sâu hơn. Khả năng phối hợp tạo nên một gia đình độc đáo.",
+        "weaknesses": "Số 5 có thể cảm thấy số 11 quá xa cách, trong khi số 11 có thể thấy số 5 thiếu trách nhiệm. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong ưu tiên (tự do vs. tâm linh) có thể gây căng thẳng.",
+        "potential": "Hôn nhân này có tiềm năng nếu cả hai học cách bổ sung cho nhau. Sự kết hợp giữa phiêu lưu và truyền cảm hứng có thể tạo ra một cuộc sống gia đình phong phú. Việc cùng nhau tham gia các hoạt động tâm linh sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách sống: số 5 hướng tới tự do, số 11 hướng tới tâm linh. Số 5 cần chia sẻ trách nhiệm, còn số 11 cần chú ý hơn đến gia đình. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tổ chức các hoạt động gia đình như thiền hoặc sáng tạo nghệ thuật. Số 5 nên nỗ lực chia sẻ trách nhiệm, còn số 11 cần thực tế hơn. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 11,
+      "relationshipType": "Đối tác",
+      "compatibilityLevel": "Cao",
+      "percentage": 80,
+      "details": {
+        "overview": "8/10\nSự hợp tác giữa số 5 (Nhà phiêu lưu) và số 11 (Nhà truyền cảm hứng) có thể tạo ra kết quả ấn tượng nhờ sự kết hợp giữa sự linh hoạt và sáng tạo. Số 5 mang lại ý tưởng mới và khả năng thích ứng, trong khi số 11 cung cấp sự sáng tạo và trực giác. Sự tương phản này có thể tạo ra một đội nhóm độc đáo, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 hỗ trợ bằng cách đưa ra ý tưởng sáng tạo và thích ứng nhanh, trong khi số 11 mang lại ý tưởng tâm linh và cảm hứng. Họ bổ sung cho nhau, với số 5 mang lại năng lượng và số 11 mang lại chiều sâu. Khả năng phối hợp tạo ra những dự án độc đáo.",
+        "weaknesses": "Số 5 có thể thấy số 11 thiếu thực tế, trong khi số 11 có thể cảm thấy số 5 thiếu chiều sâu. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong phong cách làm việc (tự do vs. trực giác) có thể gây căng thẳng.",
+        "potential": "Sự hợp tác này có tiềm năng trong các dự án sáng tạo hoặc tâm linh. Sự kết hợp giữa phiêu lưu và truyền cảm hứng có thể dẫn đến những dự án có tác động lớn. Việc phân chia vai trò rõ ràng sẽ giúp họ phát huy tối đa tiềm năng.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách làm việc: số 5 bốc đồng, số 11 trực giác. Số 5 cần tuân thủ kế hoạch, còn số 11 cần thực tế hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết bất đồng.",
+        "suggestions": "Cả hai nên phân chia vai trò, với số 5 tập trung vào sáng tạo và số 11 tập trung vào ý tưởng tâm linh. Số 5 nên chủ động tuân thủ kế hoạch, còn số 11 cần thực tế hơn. Duy trì giao tiếp thường xuyên và tổ chức các buổi họp để đảm bảo đồng thuận."
+      }
+    },
+  {
+      "partnerNumber": 22,
+      "relationshipType": "Vợ chồng",
+      "compatibilityLevel": "Thấp",
+      "percentage": 55,
+      "details": {
+        "overview": "5/10\nHôn nhân giữa số 5 (Nhà phiêu lưu) và số 22 (Nhà kiến tạo bậc thầy) có thể gặp nhiều thử thách do sự khác biệt trong ưu tiên. Số 5 mang lại sự linh hoạt và năng lượng, trong khi số 22 cung cấp tầm nhìn lớn và khả năng tổ chức. Sự tương phản này có thể thú vị ban đầu, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 mang lại không khí vui vẻ và sự mới mẻ, trong khi số 22 cung cấp sự ổn định và mục tiêu dài hạn. Họ có thể bổ sung cho nhau, với số 5 làm dịu sự nghiêm túc của số 22 và số 22 giúp số 5 tập trung hơn. Khả năng tạo ra một gia đình năng động là điểm mạnh.",
+        "weaknesses": "Số 5 có thể cảm thấy số 22 quá kiểm soát hoặc cứng nhắc, trong khi số 22 có thể thấy số 5 thiếu trách nhiệm. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong ưu tiên (tự do vs. trách nhiệm) có thể gây căng thẳng.",
+        "potential": "Hôn nhân này có tiềm năng nếu cả hai học cách bổ sung cho nhau. Sự kết hợp giữa phiêu lưu và kiến tạo có thể tạo ra một cuộc sống gia đình phong phú. Việc cùng nhau xây dựng mục tiêu chung sẽ giúp họ gắn kết hơn.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách sống: số 5 hướng tới tự do, số 22 hướng tới mục tiêu lớn. Số 5 cần chia sẻ trách nhiệm, còn số 22 cần kiên nhẫn hơn. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết mâu thuẫn.",
+        "suggestions": "Cả hai nên tổ chức các hoạt động gia đình như lập kế hoạch tài chính hoặc xây dựng dự án chung. Số 5 nên nỗ lực chia sẻ trách nhiệm, còn số 22 cần tôn trọng sự tự do của số 5. Duy trì giao tiếp cởi mở và tạo không gian để cả hai thể hiện bản thân."
+      }
+    },
+    {
+      "partnerNumber": 22,
+      "relationshipType": "Đối tác",
+      "compatibilityLevel": "Trung bình",
+      "percentage": 65,
+      "details": {
+        "overview": "6/10\nSự hợp tác giữa số 5 (Nhà phiêu lưu) và số 22 (Nhà kiến tạo bậc thầy) có thể hiệu quả trong các dự án cần sự cân bằng giữa đổi mới và thực tế. Số 5 mang lại ý tưởng mới và khả năng thích ứng, trong khi số 22 cung cấp tầm nhìn chiến lược và khả năng thực hiện. Sự tương phản này có thể tạo ra một đội nhóm năng động, nhưng thiếu thông tin về số linh hồn và định mệnh khiến việc đánh giá toàn diện còn hạn chế.",
+        "strengths": "Số 5 hỗ trợ bằng cách đưa ra ý tưởng sáng tạo và thích ứng nhanh, trong khi số 22 đảm bảo mọi thứ được thực hiện đúng kế hoạch. Họ bổ sung cho nhau, với số 5 mang lại năng lượng và số 22 mang lại cấu trúc. Khả năng phối hợp tạo ra những dự án thú vị.",
+        "weaknesses": "Số 5 có thể thấy số 22 quá kiểm soát, trong khi số 22 có thể cảm thấy số 5 thiếu kỷ luật. Thiếu thông tin về số linh hồn và định mệnh làm hạn chế việc dự đoán xung đột. Sự khác biệt trong phong cách làm việc (tự do vs. chiến lược) có thể gây căng thẳng.",
+        "potential": "Sự hợp tác này có tiềm năng trong các dự án đổi mới hoặc tổ chức. Sự kết hợp giữa phiêu lưu và kiến tạo có thể dẫn đến thành công. Việc phân chia vai trò rõ ràng sẽ giúp họ phát huy tối đa tiềm năng.",
+        "challenges": "Thách thức chính là sự khác biệt trong phong cách làm việc: số 5 bốc đồng, số 22 quyết đoán. Số 5 cần tuân thủ kế hoạch, còn số 22 cần cởi mở hơn với ý tưởng mới. Thiếu thông tin về số linh hồn và định mệnh có thể làm khó việc giải quyết bất đồng.",
+        "suggestions": "Cả hai nên phân chia vai trò, với số 5 tập trung vào sáng tạo và số 22 tập trung vào chiến lược. Số 5 nên chủ động tuân thủ kế hoạch, còn số 22 cần tôn trọng ý kiến của số 5. Duy trì giao tiếp thường xuyên và tổ chức các buổi họp định kỳ."
+      }
+    }
+  ]
+}

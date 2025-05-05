@@ -141,7 +141,7 @@ const submitForm = async () => {
     });
 
     if (!generalStore.error) {
-      router.push("/xem/general");
+      router.push("/xem/tong-quan");
     }
   } catch (err) {
     // Error is already set in the store, no need to handle here

@@ -1,0 +1,90 @@
+{
+  "compatibility": {
+    "1": {
+      "recommended_destiny_numbers": [1, 3, 5],
+      "recommended_soul_urge_numbers": [1, 3, 5],
+      "reason": "Số đường đời 1 (Người lãnh đạo) hợp với tên con có số định mệnh/linh hồn năng động, sáng tạo (3, 5) hoặc độc lập (1) để hỗ trợ tinh thần tiên phong."
+    },
+    "2": {
+      "recommended_destiny_numbers": [2, 6, 9],
+      "recommended_soul_urge_numbers": [2, 6, 9],
+      "reason": "Số đường đời 2 (Người hòa giải) hợp với tên con mang số định mệnh/linh hồn nuôi dưỡng (6), nhân ái (9), hoặc nhạy cảm (2) để tạo sự hài hòa trong gia đình."
+    },
+    "3": {
+      "recommended_destiny_numbers": [1, 3, 5],
+      "recommended_soul_urge_numbers": [1, 3, 5],
+      "reason": "Số đường đời 3 (Người sáng tạo) hợp với tên con có số định mệnh/linh hồn sáng tạo (3), năng động (5), hoặc lãnh đạo (1) để khuếch đại năng lượng tích cực."
+    },
+    "4": {
+      "recommended_destiny_numbers": [4, 6, 8],
+      "recommended_soul_urge_numbers": [4, 6, 8],
+      "reason": "Số đường đời 4 (Người xây dựng) hợp với tên con mang số định mệnh/linh hồn ổn định (4), trách nhiệm (6), hoặc tham vọng (8) để hỗ trợ sự bền vững."
+    },
+    "5": {
+      "recommended_destiny_numbers": [1, 3, 5],
+      "recommended_soul_urge_numbers": [1, 3, 5],
+      "reason": "Số đường đời 5 (Nhà thám hiểm) hợp với tên con có số định mệnh/linh hồn tự do (5), sáng tạo (3), hoặc độc lập (1) để khuyến khích sự linh hoạt."
+    },
+    "6": {
+      "recommended_destiny_numbers": [2, 6, 9],
+      "recommended_soul_urge_numbers": [2, 6, 9],
+      "reason": "Số đường đời 6 (Người nuôi dưỡng) hợp với tên con mang số định mệnh/linh hồn yêu thương (6), nhân ái (9), hoặc nhạy cảm (2) để củng cố tình cảm gia đình."
+    },
+    "7": {
+      "recommended_destiny_numbers": [7, 9, 11],
+      "recommended_soul_urge_numbers": [7, 9, 11],
+      "reason": "Số đường đời 7 (Nhà hiền triết) hợp với tên con có số định mệnh/linh hồn trí tuệ (7), nhân đạo (9), hoặc tâm linh (11) để hỗ trợ chiều sâu tinh thần."
+    },
+    "8": {
+      "recommended_destiny_numbers": [4, 6, 8],
+      "recommended_soul_urge_numbers": [4, 6, 8],
+      "reason": "Số đường đời 8 (Nhà quản lý) hợp với tên con mang số định mệnh/linh hồn tham vọng (8), ổn định (4), hoặc trách nhiệm (6) để thúc đẩy thành công."
+    },
+    "9": {
+      "recommended_destiny_numbers": [2, 6, 9],
+      "recommended_soul_urge_numbers": [2, 6, 9],
+      "reason": "Số đường đời 9 (Nhà nhân đạo) hợp với tên con có số định mệnh/linh hồn nhân ái (9), yêu thương (6), hoặc nhạy cảm (2) để lan tỏa lòng tốt."
+    },
+    "11": {
+      "recommended_destiny_numbers": [7, 9, 11],
+      "recommended_soul_urge_numbers": [7, 9, 11],
+      "reason": "Số đường đời 11 (Bậc thầy tâm linh) hợp với tên con mang số định mệnh/linh hồn tâm linh (11), trí tuệ (7), hoặc nhân đạo (9) để nâng cao nhận thức."
+    },
+    "22": {
+      "recommended_destiny_numbers": [4, 8, 22],
+      "recommended_soul_urge_numbers": [4, 8, 22],
+      "reason": "Số đường đời 22 (Kiến trúc sư vĩ đại) hợp với tên con có số định mệnh/linh hồn xây dựng (22), ổn định (4), hoặc tham vọng (8) để hiện thực hóa tầm nhìn."
+    },
+    "33": {
+      "recommended_destiny_numbers": [6, 9, 33],
+      "recommended_soul_urge_numbers": [6, 9, 33],
+      "reason": "Số đường đời 33 (Bậc thầy giáo dục) hợp với tên con mang số định mệnh/linh hồn yêu thương (33), nhân ái (9), hoặc trách nhiệm (6) để truyền cảm hứng."
+    }
+  },
+  "future_goals": {
+    "Trở thành nhà lãnh đạo xuất sắc": {
+      "recommended_destiny_numbers": [1, 3, 8],
+      "description": "Tên mang số định mệnh 1 (độc lập), 3 (sáng tạo), hoặc 8 (tham vọng) giúp bé phát triển khả năng lãnh đạo và ảnh hưởng."
+    },
+    "Trở thành người sáng tạo đổi mới": {
+      "recommended_destiny_numbers": [3, 5, 7],
+      "description": "Tên mang số định mệnh 3 (sáng tạo), 5 (tự do), hoặc 7 (trí tuệ) thúc đẩy tư duy đổi mới và nghệ thuật."
+    },
+    "Trở thành người mang lại hòa bình": {
+      "recommended_destiny_numbers": [2, 6, 9],
+      "description": "Tên mang số định mệnh 2 (hòa giải), 6 (yêu thương), hoặc 9 (nhân ái) giúp bé lan tỏa sự hài hòa và lòng tốt."
+    },
+    "Trở thành người thành công vượt bậc": {
+      "recommended_destiny_numbers": [4, 8, 22],
+      "description": "Tên mang số định mệnh 4 (ổn định), 8 (tham vọng), hoặc 22 (xây dựng) hỗ trợ bé đạt được thành tựu lớn."
+    },
+    "Trở thành nhà trí tuệ sâu sắc": {
+      "recommended_destiny_numbers": [7, 9, 11],
+      "description": "Tên mang số định mệnh 7 (trí tuệ), 9 (nhân đạo), hoặc 11 (tâm linh) giúp bé phát triển tư duy sâu sắc."
+    },
+    "Trở thành người kết nối tâm linh": {
+      "recommended_destiny_numbers": [7, 11, 33],
+      "description": "Tên mang số định mệnh 7 (trí tuệ), 11 (tâm linh), hoặc 33 (giáo dục) hỗ trợ bé kết nối với chiều sâu tinh thần."
+    }
+  }
+}

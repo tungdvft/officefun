@@ -224,11 +224,10 @@ const mainMenu = [
   {
     title: "Cá nhân",
     children: [
-      { title: "Tổng quan", path: "/xem" },
-      { title: "Thần số học mỗi ngày", path: "/xem/daily" },
-      { title: "Chu kỳ vận số", path: "/xem/full" },
+      { title: "Thần số học theo chu kỳ", path: "/xem" },
+      { title: "Tổng quan", path: "/xem/tong-quan" },
       { title: "Giải đáp thắc mắc", path: "/xem/consult" },
-      { title: "Đặt danh xưng quốc tế", path: "/xem/nick-name" }
+      { title: "Đặt danh xưng quốc tế", path: "/xem/danh-xung" }
     ]
   },
   {
@@ -242,14 +241,14 @@ const mainMenu = [
     title: "Nghề nghiệp",
     children: [
       { title: "Định hướng nghề", path: "/xem/career" },
-      { title: "Tên thương hiệu", path: "/xem/numerology-brand" }
+      { title: "Tên thương hiệu", path: "/xem/ten-thuong-hieu" }
     ]
   },
   {
     title: "Gia đình",
     children: [
       { title: "Thần số học trẻ em", path: "/xem/child" },
-      { title: "Đặt tên con", path: "/xem/baby-name" }
+      { title: "Đặt tên con", path: "/xem/dat-ten-con" }
     ]
   }
 ]

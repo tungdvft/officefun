@@ -109,6 +109,7 @@
           <ChallengeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
           <MaturityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
           <MaturePowerDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+          <ExpressionNumber :full-name="calculatedFullName" />
           <SoulUrgeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
           <LifePathAndSoulUrge :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
           <SoulChallengeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
