@@ -13,20 +13,6 @@
           <p class="text-gray-400 mb-4 leading-relaxed">
             Khám phá bản thân qua sức mạnh của các con số. Giải mã ý nghĩa cuộc đời thông qua thần số học Pitago.
           </p>
-          <!-- <div class="flex space-x-4">
-            <a href="#" class="w-10 h-10 rounded-full bg-gray-700 hover:bg-purple-600 flex items-center justify-center transition-colors duration-300">
-              <font-awesome-icon :icon="['fab', 'facebook-f']" class="text-white" />
-            </a>
-            <a href="#" class="w-10 h-10 rounded-full bg-gray-700 hover:bg-blue-400 flex items-center justify-center transition-colors duration-300">
-              <font-awesome-icon :icon="['fab', 'twitter']" class="text-white" />
-            </a>
-            <a href="#" class="w-10 h-10 rounded-full bg-gray-700 hover:bg-pink-600 flex items-center justify-center transition-colors duration-300">
-              <font-awesome-icon :icon="['fab', 'instagram']" class="text-white" />
-            </a>
-            <a href="#" class="w-10 h-10 rounded-full bg-gray-700 hover:bg-red-500 flex items-center justify-center transition-colors duration-300">
-              <font-awesome-icon :icon="['fab', 'youtube']" class="text-white" />
-            </a>
-          </div> -->
         </div>
 
         <!-- Column 2: Quick Links -->

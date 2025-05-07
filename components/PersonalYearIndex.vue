@@ -3,7 +3,7 @@
     <div class="p-6 space-y-8">
       <!-- Header -->
       <div class="text-center">
-        <h2 class="text-3xl font-bold text-teal-700 mb-2">Chu Kỳ Vận Số Cá Nhân</h2>
+        <h2 class="text-3xl font-bold text-teal-700 mb-2">Các chỉ số năm</h2>
         <p class="text-gray-600 max-w-2xl mx-auto">
           Dự báo chi tiết vận trình 3 năm tới dựa trên thần số học
         </p>

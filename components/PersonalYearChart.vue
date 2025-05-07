@@ -6,9 +6,15 @@
         <div v-if="numerologyData && Object.keys(numerologyData.cycles).length" class="mt-6">
           <div class="space-y-8">
             <!-- Biểu đồ chu kỳ vận số -->
+             <div class="text-center mb-8">
+              <h2 class="text-4xl font-bold text-teal-700 mb-3">Biểu đồ chu kỳ vận số </h2>
+              <div class="w-24 h-1 bg-teal-500 mx-auto mb-4 rounded-full"></div>
+              <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Hành trình cuộc đời qua các chu kỳ số - Khám phá những giai đoạn thịnh vượng và thử thách
+              </p>
+            </div>
             <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
               <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                <h3 class="text-xl font-bold text-teal-800">Biểu đồ chu kỳ vận số</h3>
                 <div class="mt-2 md:mt-0 flex items-center text-sm text-gray-600">
                   <span class="inline-block w-3 h-3 rounded-full bg-teal-500 mr-1"></span>
                   <span>Mức năng lượng (1-9)</span>

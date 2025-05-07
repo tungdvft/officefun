@@ -1,19 +1,14 @@
 <template>
   <div class="mb-10 p-6 bg-white rounded-xl shadow-md">
-    <div class="flex items-start mb-4">
-      <div class="p-2 bg-indigo-100 rounded-lg mr-4">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-        </svg>
-      </div>
-      <div>
-        <h3 class="text-xl font-bold text-gray-800 mb-1">Phân Tích Nhóm Tính Cách</h3>
-        <p class="text-gray-600">
-          Các nhóm tính cách trong bản ngã của bạn. 
-          <span class="font-medium text-indigo-600">Hãy tập trung cải thiện nhóm có tỷ lệ thấp nhất.</span>
-        </p>
-      </div>
-    </div>
+    
+      <div class="text-center mb-8">
+          <h2 class="text-4xl font-bold text-teal-700 mb-3">Nhóm tính cách theo bản ngã </h2>
+          <div class="w-24 h-1 bg-teal-500 mx-auto mb-4 rounded-full"></div>
+          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            Nhận diện nhóm tính cách đặc trưng qua Thần số học
+          </p>
+        </div>
+  
 
     <div v-if="error" class="mt-4 p-4 bg-red-50 rounded-lg border border-red-200">
       <div class="flex items-center text-red-600">

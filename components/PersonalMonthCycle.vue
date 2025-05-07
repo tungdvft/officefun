@@ -3,7 +3,7 @@
     <div class="p-6 space-y-8">
       <!-- Tiêu đề chính -->
       <div class="text-center">
-        <h2 class="text-3xl font-bold text-teal-700 mb-2">Chu Kỳ Vận Số Tháng</h2>
+        <h2 class="text-3xl font-bold text-teal-700 mb-2">Các Chỉ Số Tháng</h2>
         <p class="text-lg text-gray-600">Dự báo năng lượng 3 tháng tới</p>
       </div>
 

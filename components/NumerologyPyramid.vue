@@ -2,15 +2,22 @@
   <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
     <div class="p-6 space-y-6">
       <!-- Tiêu đề với họ tên -->
-      <h2 class="text-2xl font-bold text-teal-800">
-        Đỉnh Cao và Thử Thách Thần Số Học 
-      </h2>
-
+       <div data-v-2530b048="" class="text-center mb-8">
+        <h2 data-v-2530b048="" class="text-4xl font-bold text-teal-700 mb-3"> Kim Tự Tháp Thần Số Học </h2>
+        <div data-v-2530b048="" class="w-24 h-1 bg-teal-500 mx-auto mb-4 rounded-full"></div>
+        <p data-v-2530b048="" class="text-lg text-gray-600 max-w-2xl mx-auto">
+            Khám phá các chu kỳ quan trọng trong cuộc đời bạn thông qua kim tự tháp số
+          </p>
+        </div>
       <!-- Biểu đồ SVG -->
       <transition name="fade-slide">
         <div v-if="peaksData && peaksData.length" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-          <h3 class="text-xl font-bold text-teal-800 mb-4">Biểu đồ Đỉnh Cao và Thử Thách</h3>
-          <svg width="700" height="520" viewBox="0 0 780 520" preserveAspectRatio="xMidYMid meet">
+          <div class="text-center mb-8">
+          <h3 class="text-2xl font-bold text-teal-700 mb-2">Biểu Đồ Thể Hiện 4 Giai Đoạn Đỉnh Cao Kèm Thử Thách Tương Ứng </h3>
+          <div class="w-24 h-1 bg-teal-300 mx-auto rounded-full"></div>
+        </div>
+        <div class="flex justify-center">
+          <svg width="700" height="520" viewBox="0 0 780 520" preserveAspectRatio="xMidYMid meet" class="mx-auto">
             <defs>
               <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
                 <path d="M 0 0 L 10 5 L 0 10 z" fill="#003366" />
@@ -113,6 +120,7 @@
               <text y="5" text-anchor="middle" x="0">{{ peaksData[3].challenge }}</text>
             </g>
           </svg>
+          </div>
         </div>
         <div v-else-if="loading" class="text-center text-gray-600">Đang tải dữ liệu...</div>
         <div v-else class="text-center text-red-600">Không có dữ liệu đỉnh cao và thử thách.</div>

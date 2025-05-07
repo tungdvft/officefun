@@ -1,13 +1,13 @@
 <template>
   <div class="mb-12 p-6 bg-white rounded-xl shadow-lg">
-    <div class="text-center mb-8">
-      <h2 class="text-2xl font-bold text-indigo-700 mb-2">Chu Kỳ Đường Đời</h2>
-      <p class="text-gray-600 max-w-2xl mx-auto">
-        Ba giai đoạn quan trọng trong cuộc đời mỗi người: Gieo Hạt, Chín Muồi và Thu Hoạch.
+     <div class="text-center mb-8">
+          <h2 class="text-4xl font-bold text-teal-700 mb-3">Chu Kỳ Đường Đời</h2>
+          <div class="w-24 h-1 bg-teal-500 mx-auto mb-4 rounded-full"></div>
+          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+             Ba giai đoạn quan trọng trong cuộc đời mỗi người: Gieo Hạt, Chín Muồi và Thu Hoạch.
         Mỗi chu kỳ mang những bài học và cơ hội riêng.
-      </p>
-    </div>
-
+          </p>
+        </div>
     <div v-if="error" class="p-4 bg-red-50 rounded-lg border border-red-200 mb-6">
       <div class="flex items-center text-red-600">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">

@@ -147,30 +147,6 @@
             <ApproachCapacityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
             <ApproachAttitudeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
           </div>
-
-          <!-- Back to top button -->
-          <div class="flex justify-center mt-8">
-            <button
-              @click="scrollToTop"
-              class="flex items-center gap-2 px-6 py-3 bg-purple-100 text-purple-700 rounded-full hover:bg-purple-200 transition-colors"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 10l7-7m0 0l7 7m-7-7v18"
-                />
-              </svg>
-              Lên đầu trang
-            </button>
-          </div>
         </div>
       </transition>
     </div>
@@ -342,12 +318,6 @@ const calculateNumbers = async () => {
   }
 };
 
-const scrollToTop = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-};
 </script>
 
 <style scoped>
