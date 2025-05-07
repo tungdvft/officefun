@@ -50,7 +50,7 @@
         <!-- Column 3: Thông tin chung -->
         <div>
           <h3 class="text-lg font-semibold mb-5 pb-2 border-b border-gray-700 flex items-center">
-            <font-awesome-icon :icon="['fas', 'tools']" class="mr-2 text-blue-400" />
+        
             <span class="text-white">Thông tin chung</span>
           </h3>
           <ul class="space-y-3">
