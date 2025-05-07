@@ -32,10 +32,9 @@ export function useNumerologyData(type, birthDate, fullName) {
 
   // Hàm xác thực đầu vào
   const validateInputs = () => {
-    console.log(`Validating inputs for ${type}: birthDate=${birthDate.value}, fullName=${fullName.value}`);
-    
+   
     if (!fullName.value || fullName.value.trim() === '') {
-      toast.error('Vui lòng nhập họ tên!');
+
       console.warn('Validation failed: fullName is empty');
       return false;
     }
@@ -88,8 +87,6 @@ export function useNumerologyData(type, birthDate, fullName) {
         : type === 'soulUrge'
         ? selectedData.calculate(fullName.value)
         : selectedData.calculate(birthDate.value, fullName.value);
-      
-      console.log(`Calculated number for ${type}:`, calculatedNumber);
 
       if (!calculatedNumber || calculatedNumber < 1) {
         console.warn(`Invalid calculated number for ${type}:`, calculatedNumber);
@@ -101,13 +98,11 @@ export function useNumerologyData(type, birthDate, fullName) {
           traits: 'Dữ liệu mẫu, chưa phản ánh chính xác.',
           challenges: 'Chưa xác định thách thức cụ thể.',
         };
-        toast.warn(`Không thể tính chỉ số ${type} do dữ liệu không hợp lệ, sử dụng dữ liệu mẫu!`);
       } else {
         number.value = calculatedNumber;
         data.value = selectedData.json.numbers.find((item) => item.number === calculatedNumber);
 
         if (!data.value) {
-          console.warn(`No data found in ${type} JSON for number:`, calculatedNumber);
           data.value = {
             description: `Số ${type} ${calculatedNumber}.`,
             advice: 'Chưa có dữ liệu chi tiết.',
@@ -116,12 +111,10 @@ export function useNumerologyData(type, birthDate, fullName) {
           };
         }
 
-        console.log(`Data for ${type}:`, data.value);
-        toast.success(`Tạo báo cáo chỉ số ${type} hoàn tất!`);
+    
       }
     } catch (err) {
-      console.error(`Error in fetchData (${type}):`, err);
-      toast.warn(`Không thể tính chỉ số ${type}, sử dụng dữ liệu mẫu!`);
+  
       // Dữ liệu mẫu
       number.value = type === 'challenge' ? 5 : type === 'maturity' ? 4 : type === 'maturePower' ? 8 : 9;
       data.value = {
@@ -139,7 +132,6 @@ export function useNumerologyData(type, birthDate, fullName) {
   watch(
     [birthDate, fullName],
     ([newBirthDate, newFullName]) => {
-      console.log(`watch triggered for ${type} - birthDate:`, newBirthDate, 'fullName:', newFullName);
       if (newBirthDate && newFullName && /^\d{2}\/\d{2}\/\d{4}$/.test(newBirthDate)) {
         fetchData();
       } else {
@@ -151,7 +143,6 @@ export function useNumerologyData(type, birthDate, fullName) {
 
   // Gọi khi mount
   onMounted(() => {
-    console.log(`${type} composable mounted`);
     if (birthDate.value && fullName.value && /^\d{2}\/\d{2}\/\d{4}$/.test(birthDate.value)) {
       fetchData();
     } else {

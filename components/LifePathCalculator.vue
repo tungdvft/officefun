@@ -8,21 +8,26 @@
 
     <!-- Kết quả -->
     <div v-if="result" class="space-y-10">
-      <!-- Số Đường Đời - Highlight -->
-      <section class="p-6 bg-indigo-50 rounded-xl border-l-4 border-indigo-500">
-        <div class="flex items-start">
-          <div class="mr-4 flex-shrink-0">
-            <div class="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 text-xl font-bold">
-              {{ result.number }}
+      <div class="bg-gradient-to-r from-teal-50 to-blue-50 p-8 rounded-2xl border border-teal-100 shadow-sm text-center">
+            <div class="flex flex-col items-center">
+              <div class="relative">
+                <!-- Animated circle background -->
+                <svg class="w-32 h-32" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="45" fill="none" stroke="#e2e8f0" stroke-width="8"/>
+                  <circle cx="50" cy="50" r="45" fill="none" stroke="#0d9488" stroke-width="8" stroke-dasharray="283" 
+                          stroke-dashoffset="283" stroke-linecap="round">
+                    <animate attributeName="stroke-dashoffset" dur="1.5s" from="283" to="0" fill="freeze" calcMode="spline" keySplines="0.3 0 0.7 1"/>
+                  </circle>
+                </svg>
+                <!-- Number display -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="text-5xl font-bold text-teal-700">{{ result.number }}</span>
+                </div>
+              </div>
+              <h3 class="text-2xl font-bold text-teal-800 mt-6">Số đường đời {{ result.number }}</h3>
+              <p class="text-gray-600 mt-2 max-w-lg">{{ result.meaning }}</p>
             </div>
           </div>
-          <div>
-            <h2 class="text-2xl font-bold text-indigo-700 mb-3">Số Đường Đời: {{ result.number }}</h2>
-            <p class="text-gray-700 leading-relaxed">{{ result.meaning }}</p>
-          </div>
-        </div>
-      </section>
-
       <!-- Grid layout cho các phần thông tin -->
       <div class="grid md:grid-cols-2 gap-6">
         <!-- Điểm mạnh -->

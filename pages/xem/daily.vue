@@ -1,19 +1,6 @@
 <template>
   <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-    <!-- Banner chào mừng -->
-    <!-- <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-      <div class="relative z-10">
-        <h1 class="text-4xl font-bold mb-2 animate-fade-in">Thần số học mỗi ngày</h1>
-        <p class="text-lg opacity-90 mb-4">Khám phá mỗi ngày với thần số học!</p>
-        <div class="flex items-center space-x-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-          <span class="text-sm font-medium">Hôm nay là {{ currentDate }}</span>
-        </div>
-      </div>
-    </div> -->
+
      <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-6">
       <div class="flex items-center">
         <div class="p-3 rounded-full bg-white bg-opacity-20 mr-4">

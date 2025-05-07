@@ -224,16 +224,16 @@ const mainMenu = [
   {
     title: "Cá nhân",
     children: [
-      { title: "Thần số học theo chu kỳ", path: "/xem" },
+      { title: "Thần số học mỗi ngày", path: "/xem" },
       { title: "Tổng quan", path: "/xem/tong-quan" },
-      { title: "Giải đáp thắc mắc", path: "/xem/consult" },
+      { title: "Giải đáp thắc mắc", path: "/xem/giai-dap-thac-mac" },
       { title: "Đặt danh xưng quốc tế", path: "/xem/danh-xung" }
     ]
   },
   {
     title: "Mối quan hệ",
     children: [
-      { title: "Kiểm tra hợp nhau", path: "/xem/compatibility" },
+      { title: "Kiểm tra hợp nhau", path: "/xem/kiem-tra-hop-nhau" },
       { title: "Chọn ngày cưới", path: "/xem/wedding-date" }
     ]
   },

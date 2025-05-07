@@ -1,0 +1,367 @@
+<template>
+  <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
+    <div class="container mx-auto p-4">
+      <!-- Header Section -->
+      <div class="text-center mb-8 relative">
+        <!-- <div class="absolute left-0 top-1/2 transform -translate-y-1/2">
+          <svg class="w-12 h-12 text-blue-400 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+          </svg>
+        </div> -->
+        <h1 class="text-2xl md:text-3xl font-bold text-blue-800 mb-2">Thần Số Học Hôm Nay - Khám Phá Vận Mệnh Ngày Mới</h1>
+        <p class="text-gray-600">Mỗi ngày là một con số khác nhau - Hãy xem hôm nay vũ trụ dành điều gì cho bạn!</p>
+        <!-- <div class="absolute right-0 top-1/2 transform -translate-y-1/2">
+          <svg class="w-12 h-12 text-pink-400 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+          </svg>
+        </div> -->
+      </div>
+
+      <!-- Main Content -->
+      <div class="bg-white p-6 rounded-xl shadow-lg mb-8 border border-gray-100">
+        <!-- Input Form for Name and Birth Date -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Họ và tên</label>
+            <input
+              v-model="name"
+              type="text"
+              id="name"
+              placeholder="VD: Nguyễn Văn A"
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+            />
+          </div>
+
+          <div>
+            <label for="birthDate" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh (DD/MM/YYYY)</label>
+            <input
+              v-model="birthDate"
+              type="text"
+              id="birthDate"
+              placeholder="VD: 01/01/1990"
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+            />
+          </div>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <div class="mb-6">
+          <nav class="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+            <button
+              v-for="tab in tabs"
+              :key="tab"
+              @click="activeTab = tab"
+              :class="[
+                activeTab === tab
+                  ? 'bg-white text-purple-600 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-700',
+                'px-4 py-2 text-sm font-medium rounded-md transition-all duration-200'
+              ]"
+            >
+              {{ tab }}
+            </button>
+          </nav>
+        </div>
+
+        <!-- Input Form for Preferences/Plans -->
+        <form @submit.prevent="getRecommendations" class="space-y-6">
+          <div v-if="activeTab === 'Đồ ăn'">
+            <label for="foodPreferences" class="block text-sm font-medium text-gray-700 mb-3">Món ăn yêu thích (phân cách bằng ,)</label>
+            <input
+              v-model="foodPreferences"
+              type="text"
+              id="foodPreferences"
+              placeholder="VD: phở,bún,cơm tấm"
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+            />
+          </div>
+
+          <div v-else-if="activeTab === 'Đồ uống'">
+            <label for="drinkPreferences" class="block text-sm font-medium text-gray-700 mb-3">Đồ uống yêu thích (phân cách bằng ,)</label>
+            <input
+              v-model="drinkPreferences"
+              type="text"
+              id="drinkPreferences"
+              placeholder="VD: trà sữa,cà phê,nước cam"
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+            />
+          </div>
+
+          <div v-else>
+            <label for="plans" class="block text-sm font-medium text-gray-700 mb-3">Dự định hôm nay (phân cách bằng ,)</label>
+            <input
+              v-model="plans"
+              type="text"
+              id="plans"
+              placeholder="VD: gặp khách hàng,hoàn thành báo cáo,đi tập gym"
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+            />
+          </div>
+
+          <button
+            type="submit"
+            :disabled="loading"
+            class="w-full bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-4 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
+          >
+            <span v-if="loading">Đang xử lý...</span>
+            <span v-else>Xem gợi ý</span>
+          </button>
+        </form>
+
+        <!-- Error Message -->
+        <div v-if="error" class="mt-6 p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
+          {{ error }}
+        </div>
+
+        <!-- Results Section -->
+        <div v-if="recommendations" class="mt-8 space-y-6">
+          <!-- Personal Day Number -->
+          <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
+            <div class="flex items-center">
+              <div class="bg-purple-100 p-2 rounded-lg mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-lg font-semibold text-purple-800">Số ngày cá nhân: <span class="text-2xl font-bold">{{ personalDayNumber }}</span></h2>
+                <p class="text-gray-600 mt-1">Dựa trên ngày sinh của bạn, hôm nay là ngày mang năng lượng số {{ personalDayNumber }}.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Food Recommendations -->
+          <div v-if="activeTab === 'Đồ ăn' && recommendations.food" class="space-y-4">
+            <h3 class="font-medium text-purple-700 flex items-center">
+              <span class="bg-purple-100 rounded-full p-2 mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                  <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                </svg>
+              </span>
+              Gợi ý món ăn
+            </h3>
+            <div v-if="Array.isArray(recommendations.food)" class="grid gap-4 md:grid-cols-2">
+              <div v-for="(item, index) in recommendations.food" :key="index" class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                <p class="font-medium text-gray-800 flex items-center">
+                  <span class="w-6 h-6 rounded-full bg-purple-100 text-purple-800 flex items-center justify-center mr-2 text-sm">{{ index + 1 }}</span>
+                  {{ item.item }}
+                </p>
+                <p class="text-gray-600 text-sm mt-2">{{ item.explanation }}</p>
+              </div>
+            </div>
+            <div v-else class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+              <p class="font-medium text-gray-800">{{ recommendations.food.item }}</p>
+              <p class="text-gray-600 text-sm mt-2">{{ recommendations.food.explanation }}</p>
+            </div>
+          </div>
+
+          <!-- Drink Recommendations -->
+          <div v-if="activeTab === 'Đồ uống' && recommendations.drink" class="space-y-4">
+            <h3 class="font-medium text-purple-700 flex items-center">
+              <span class="bg-purple-100 rounded-full p-2 mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M7 2a1 1 0 00-.707 1.707L7 4.414v3.758a1 1 0 01-.293.707l-4 4C.817 14.769 2.156 18 4.828 18h10.343c2.673 0 4.012-3.231 2.122-5.121l-4-4A1 1 0 0113 8.172V4.414l.707-.707A1 1 0 0013 2H7zm2 6.172V4h2v4.172a3 3 0 00.879 2.12l1.027 1.028a4 4 0 00-2.171.102l-.47.156a4 4 0 01-2.53 0l-.563-.187a1.993 1.993 0 00-.114-.035l1.063-1.063A3 3 0 009 8.172z" clip-rule="evenodd" />
+                </svg>
+              </span>
+              Gợi ý đồ uống
+            </h3>
+            <div v-if="Array.isArray(recommendations.drink)" class="grid gap-4 md:grid-cols-2">
+              <div v-for="(item, index) in recommendations.drink" :key="index" class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                <p class="font-medium text-gray-800 flex items-center">
+                  <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center mr-2 text-sm">{{ index + 1 }}</span>
+                  {{ item.item }}
+                </p>
+                <p class="text-gray-600 text-sm mt-2">{{ item.explanation }}</p>
+              </div>
+            </div>
+            <div v-else class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+              <p class="font-medium text-gray-800">{{ recommendations.drink.item }}</p>
+              <p class="text-gray-600 text-sm mt-2">{{ recommendations.drink.explanation }}</p>
+            </div>
+          </div>
+
+          <!-- Insight Recommendations -->
+          <div v-if="activeTab === 'Insight hôm nay' && recommendations.insight" class="space-y-6">
+            <h3 class="font-medium text-purple-700 flex items-center">
+              <span class="bg-purple-100 rounded-full p-2 mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                </svg>
+              </span>
+              Insight hôm nay
+            </h3>
+            
+            <div v-if="recommendations.insight.selectedPlan" class="space-y-6">
+              <div class="bg-white p-5 rounded-xl border border-green-100 shadow-sm">
+                <h4 class="text-sm font-semibold text-green-600 uppercase tracking-wider mb-3">DỰ ĐỊNH TỐT NHẤT</h4>
+                <p class="text-gray-800 font-semibold text-lg">{{ recommendations.insight.selectedPlan }}</p>
+                <p class="text-gray-600 mt-2">{{ recommendations.insight.planExplanation }}</p>
+              </div>
+              
+              <div class="grid gap-5 md:grid-cols-2">
+                <div class="bg-white p-5 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow">
+                  <h4 class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    NÊN LÀM
+                  </h4>
+                  <p class="text-gray-800 font-medium">{{ recommendations.insight.doToday.activity }}</p>
+                  <p class="text-gray-600 mt-2 text-sm">{{ recommendations.insight.doToday.explanation }}</p>
+                </div>
+                
+                <div class="bg-white p-5 rounded-xl border border-red-100 shadow-sm hover:shadow-md transition-shadow">
+                  <h4 class="text-sm font-semibold text-red-600 uppercase tracking-wider mb-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                    NÊN TRÁNH
+                  </h4>
+                  <p class="text-gray-800 font-medium">{{ recommendations.insight.avoidToday.activity }}</p>
+                  <p class="text-gray-600 mt-2 text-sm">{{ recommendations.insight.avoidToday.explanation }}</p>
+                </div>
+              </div>
+            </div>
+            
+            <div v-else class="space-y-6">
+              <div class="grid gap-5 md:grid-cols-2">
+                <div class="bg-white p-5 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow">
+                  <h4 class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3">NÊN LÀM</h4>
+                  <div v-for="(item, index) in recommendations.insight.doToday" :key="'do-' + index" class="mt-4 first:mt-0">
+                    <p class="text-gray-800 font-medium">{{ item.activity }}</p>
+                    <p class="text-gray-600 mt-1 text-sm">{{ item.explanation }}</p>
+                  </div>
+                </div>
+                
+                <div class="bg-white p-5 rounded-xl border border-red-100 shadow-sm hover:shadow-md transition-shadow">
+                  <h4 class="text-sm font-semibold text-red-600 uppercase tracking-wider mb-3">NÊN TRÁNH</h4>
+                  <div v-for="(item, index) in recommendations.insight.avoidToday" :key="'avoid-' + index" class="mt-4 first:mt-0">
+                    <p class="text-gray-800 font-medium">{{ item.activity }}</p>
+                    <p class="text-gray-600 mt-1 text-sm">{{ item.explanation }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+
+const name = ref('')
+const birthDate = ref('')
+const foodPreferences = ref('')
+const drinkPreferences = ref('')
+const plans = ref('')
+const personalDayNumber = ref(null)
+const recommendations = ref(null)
+const loading = ref(false)
+const error = ref(null)
+const activeTab = ref('Insight hôm nay')
+const tabs = ['Insight hôm nay', 'Đồ ăn', 'Đồ uống']
+
+// Load saved data from localStorage on mount
+onMounted(() => {
+  const savedData = localStorage.getItem('numerologyData')
+  if (savedData) {
+    const {
+      name: savedName,
+      birthDate: savedBirthDate,
+      foodPreferences: savedFoodPreferences,
+      drinkPreferences: savedDrinkPreferences,
+      plans: savedPlans,
+      activeTab: savedActiveTab,
+      personalDayNumber: savedPersonalDayNumber,
+      recommendations: savedRecommendations
+    } = JSON.parse(savedData)
+
+    name.value = savedName || ''
+    birthDate.value = savedBirthDate || ''
+    foodPreferences.value = savedFoodPreferences || ''
+    drinkPreferences.value = savedDrinkPreferences || ''
+    plans.value = savedPlans || ''
+    activeTab.value = savedActiveTab || 'Insight hôm nay'
+    personalDayNumber.value = savedPersonalDayNumber || null
+    recommendations.value = savedRecommendations || null
+  }
+})
+
+async function getRecommendations() {
+  error.value = null
+  recommendations.value = null
+  loading.value = true
+
+  try {
+    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate.value)) {
+      throw new Error('Vui lòng nhập ngày sinh đúng định dạng DD/MM/YYYY')
+    }
+
+    let endpoint
+    let body = { birthDate: birthDate.value }
+
+    if (activeTab.value === 'Đồ ăn') {
+      endpoint = '/api/numerology/food'
+      body.preferences = foodPreferences.value
+    } else if (activeTab.value === 'Đồ uống') {
+      endpoint = '/api/numerology/drinks'
+      body.preferences = drinkPreferences.value
+    } else {
+      endpoint = '/api/numerology/insights'
+      body.plans = plans.value
+    }
+
+    const response = await $fetch(endpoint, {
+      method: 'POST',
+      body
+    })
+
+    personalDayNumber.value = response.personalDayNumber
+    recommendations.value = response.recommendations
+
+    // Save data to localStorage
+    localStorage.setItem('numerologyData', JSON.stringify({
+      name: name.value,
+      birthDate: birthDate.value,
+      foodPreferences: foodPreferences.value,
+      drinkPreferences: drinkPreferences.value,
+      plans: plans.value,
+      activeTab: activeTab.value,
+      personalDayNumber: personalDayNumber.value,
+      recommendations: recommendations.value
+    }))
+  } catch (err) {
+    error.value = err.message || 'Có lỗi xảy ra khi lấy gợi ý'
+  } finally {
+    loading.value = false
+  }
+}
+</script>
+
+<style scoped>
+/* Custom transitions */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+.slide-fade-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(10px);
+  opacity: 0;
+}
+</style>
