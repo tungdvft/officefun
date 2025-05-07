@@ -3,18 +3,8 @@
     <div class="container mx-auto p-4">
       <!-- Header Section -->
       <div class="text-center mb-8 relative">
-        <!-- <div class="absolute left-0 top-1/2 transform -translate-y-1/2">
-          <svg class="w-12 h-12 text-blue-400 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-          </svg>
-        </div> -->
-        <h1 class="text-2xl md:text-3xl font-bold text-blue-800 mb-2">Thần Số Học Hôm Nay - Khám Phá Vận Mệnh Ngày Mới</h1>
+        <h1 class="text-3xl md:text-4xl font-bold text-blue-800 mb-2">Thần Số Học Hôm Nay - Khám Phá Vận Mệnh Ngày Mới</h1>
         <p class="text-gray-600">Mỗi ngày là một con số khác nhau - Hãy xem hôm nay vũ trụ dành điều gì cho bạn!</p>
-        <!-- <div class="absolute right-0 top-1/2 transform -translate-y-1/2">
-          <svg class="w-12 h-12 text-pink-400 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-          </svg>
-        </div> -->
       </div>
 
       <!-- Main Content -->
@@ -66,7 +56,7 @@
         <!-- Input Form for Preferences/Plans -->
         <form @submit.prevent="getRecommendations" class="space-y-6">
           <div v-if="activeTab === 'Đồ ăn'">
-            <label for="foodPreferences" class="block text-sm font-medium text-gray-700 mb-3">Món ăn yêu thích (phân cách bằng ,)</label>
+            <label for="foodPreferences" class="block text-sm font-medium text-gray-700 mb-3">Món ăn yêu thích (phân cách bằng , nếu không có bỏ trống)</label>
             <input
               v-model="foodPreferences"
               type="text"
@@ -77,7 +67,7 @@
           </div>
 
           <div v-else-if="activeTab === 'Đồ uống'">
-            <label for="drinkPreferences" class="block text-sm font-medium text-gray-700 mb-3">Đồ uống yêu thích (phân cách bằng ,)</label>
+            <label for="drinkPreferences" class="block text-sm font-medium text-gray-700 mb-3">Đồ uống yêu thích (phân cách bằng , nếu không có bỏ trống)</label>
             <input
               v-model="drinkPreferences"
               type="text"
@@ -88,7 +78,7 @@
           </div>
 
           <div v-else>
-            <label for="plans" class="block text-sm font-medium text-gray-700 mb-3">Dự định hôm nay (phân cách bằng ,)</label>
+            <label for="plans" class="block text-sm font-medium text-gray-700 mb-3">Dự định hôm nay (phân cách bằng , nếu không có bỏ trống)</label>
             <input
               v-model="plans"
               type="text"
@@ -98,14 +88,17 @@
             />
           </div>
 
-          <button
-            type="submit"
-            :disabled="loading"
-            class="w-full bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-4 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
-          >
-            <span v-if="loading">Đang xử lý...</span>
-            <span v-else>Xem gợi ý</span>
-          </button>
+          <!-- Button with adjusted width -->
+          <div class="flex justify-center">
+            <button
+              type="submit"
+              :disabled="loading"
+              class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
+            >
+              <span v-if="loading">Đang xử lý...</span>
+              <span v-else>Xem gợi ý</span>
+            </button>
+          </div>
         </form>
 
         <!-- Error Message -->
@@ -237,6 +230,7 @@
                 <div class="bg-white p-5 rounded-xl border border-red-100 shadow-sm hover:shadow-md transition-shadow">
                   <h4 class="text-sm font-semibold text-red-600 uppercase tracking-wider mb-3">NÊN TRÁNH</h4>
                   <div v-for="(item, index) in recommendations.insight.avoidToday" :key="'avoid-' + index" class="mt-4 first:mt-0">
+                    viable
                     <p class="text-gray-800 font-medium">{{ item.activity }}</p>
                     <p class="text-gray-600 mt-1 text-sm">{{ item.explanation }}</p>
                   </div>
@@ -249,7 +243,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref, onMounted } from 'vue'
 

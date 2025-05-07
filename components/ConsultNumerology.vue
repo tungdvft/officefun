@@ -1,202 +1,479 @@
 <template>
-  <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-    <!-- Header -->
-    <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-6">
-      <div class="flex items-center">
-        <div class="p-3 rounded-full bg-white bg-opacity-20 mr-4">
-          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-        <div>
-          <h2 class="text-2xl font-bold text-white">Giải đáp thắc mắc</h2>
-          <p class="text-purple-100 mt-1">Hỏi đáp dựa trên thần số học</p>
-        </div>
+  <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
+    <div class="container mx-auto p-4">
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <h2 class="text-3xl md:text-4xl font-bold text-blue-800 mb-2">Đặt Tên Thương Hiệu Theo Thần Số Học</h2>
+        <p class="text-gray-600">Tạo tên thương hiệu phù hợp với năng lượng số của bạn</p>
       </div>
-    </div>
 
-    <div class="p-6 space-y-6">
-      <!-- Form -->
-      <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
-        <h3 class="text-lg font-semibold text-purple-700 mb-4">Nhập thông tin và câu hỏi</h3>
-        <div class="space-y-4">
-          <div>
-            <label for="name" class="form-label">Họ và tên</label>
-            <input v-model="formData.name" type="text" id="name" placeholder="Ví dụ: Nguyễn Văn A" class="form-input" />
-          </div>
-          <div>
-            <label for="birthDate" class="form-label">Ngày sinh (dd/mm/yyyy hoặc dd-mm-yyyy)</label>
-            <div class="relative">
-              <input v-model="formData.birthDate" type="text" id="birthDate" placeholder="15/03/1995" class="form-input pl-10" />
-              <!-- <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg> -->
+      <!-- Main Content -->
+      <div class="bg-white p-6 rounded-xl shadow-lg mb-8 border border-gray-100">
+        <!-- Form -->
+        <div class="space-y-6">
+          <h3 class="text-lg font-semibold text-purple-700 mb-4">Nhập thông tin thương hiệu</h3>
+          <!-- Input Form -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label for="industry" class="block text-sm font-medium text-gray-700 mb-2">Ngành nghề</label>
+              <input
+                v-model="formData.industry"
+                type="text"
+                id="industry"
+                placeholder="Ví dụ: Công nghệ, Thời trang"
+                :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.industry ? 'border-red-500' : 'border-gray-300']"
+              />
+              <p v-if="errors.industry" class="text-red-600 text-sm mt-1">{{ errors.industry }}</p>
+            </div>
+            <div>
+              <label for="date" class="block text-sm font-medium text-gray-700 mb-2">Ngày thành lập/sinh (DD/MM/YYYY)</label>
+              <input
+                v-model="formData.date"
+                type="text"
+                id="date"
+                placeholder="15/03/2020"
+                :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.date ? 'border-red-500' : 'border-gray-300']"
+              />
+              <p v-if="errors.date" class="text-red-600 text-sm mt-1">{{ errors.date }}</p>
             </div>
           </div>
           <div>
-            <label for="question" class="form-label">Câu hỏi của bạn</label>
-            <textarea v-model="formData.question" id="question" placeholder="Ví dụ: Tôi có nên học thạc sĩ trong năm nay không?" class="form-input h-24 resize-none"></textarea>
+            <label for="ownerName" class="block text-sm font-medium text-gray-700 mb-2">Tên chủ thương hiệu</label>
+            <input
+              v-model="formData.ownerName"
+              type="text"
+              id="ownerName"
+              placeholder="Nguyễn Văn A"
+              :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.ownerName ? 'border-red-500' : 'border-gray-300']"
+            />
+            <p v-if="errors.ownerName" class="text-red-600 text-sm mt-1">{{ errors.ownerName }}</p>
           </div>
-        </div>
-      </div>
-
-      <button @click="consult" :disabled="loading" class="w-full btn-primary">
-        <span v-if="loading" class="flex items-center justify-center">
-          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          Đang xử lý...
-        </span>
-        <span v-else>Gửi câu hỏi</span>
-      </button>
-
-      <!-- Kết quả -->
-      <transition name="fade-slide">
-        <div v-if="result" class="mt-6 space-y-6">
-          <!-- Số chủ đạo -->
-          <div class="bg-purple-50 p-6 rounded-xl border border-purple-100">
-            <h3 class="text-xl font-bold text-purple-900 mb-4">Số chủ đạo</h3>
-            <div class="flex items-center mb-2">
-              <span class="text-3xl font-bold text-purple-600 mr-3">{{ result.lifePath }}</span>
-              <div>
-                <h4 class="font-semibold text-gray-800">Đường đời</h4>
-                <p class="text-sm text-gray-500">{{ result.lifePathDesc }}</p>
+          <div>
+            <label for="extraRequest" class="block text-sm font-medium text-gray-700 mb-2">Yêu cầu bổ sung (tùy chọn)</label>
+            <textarea
+              v-model="formData.extraRequest"
+              id="extraRequest"
+              rows="3"
+              placeholder="Ví dụ: Có chữ 'hot', ngắn gọn, sang trọng..."
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+            ></textarea>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Giới tính founder (nếu dùng ngày sinh)</label>
+              <div class="flex flex-wrap gap-4">
+                <label class="flex items-center">
+                  <input type="radio" v-model="formData.gender" value="male" class="mr-2" />
+                  <span class="text-gray-700">Nam</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="radio" v-model="formData.gender" value="female" class="mr-2" />
+                  <span class="text-gray-700">Nữ</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="radio" v-model="formData.gender" value="none" class="mr-2" />
+                  <span class="text-gray-700">Không áp dụng</span>
+                </label>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Ngôn ngữ tên thương hiệu</label>
+              <div class="flex flex-wrap gap-4">
+                <label class="flex items-center">
+                  <input type="radio" v-model="formData.language" value="english" class="mr-2" />
+                  <span class="text-gray-700">Tiếng Anh</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="radio" v-model="formData.language" value="vietnamese" class="mr-2" />
+                  <span class="text-gray-700">Tiếng Việt</span>
+                </label>
               </div>
             </div>
           </div>
-
-          <!-- Số năm cá nhân -->
-          <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
-            <h3 class="text-xl font-bold text-indigo-800 mb-4">Số năm cá nhân {{ currentYear }}</h3>
-            <div class="flex items-center mb-2">
-              <span class="text-3xl font-bold text-indigo-600 mr-3">{{ result.personalYear }}</span>
-              <div>
-                <h4 class="font-semibold text-gray-800">Năng lượng năm</h4>
-                <p class="text-sm text-gray-500">{{ result.personalYearDesc }}</p>
-              </div>
-            </div>
+          <!-- Error Message -->
+          <div v-if="errors.general" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
+            {{ errors.general }}
           </div>
-
-          <!-- Phân tích -->
-          <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <h3 class="text-xl font-bold text-purple-900 mb-4 flex items-center">
-              <svg class="w-6 h-6 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Phân tích tổng quan
-            </h3>
-            <p class="text-gray-700 whitespace-pre-wrap">{{ result.analysis }}</p>
-          </div>
-
-          <!-- Cơ hội -->
-          <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <h3 class="text-xl font-bold text-green-800 mb-4 flex items-center">
-              <svg class="w-6 h-6 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-              </svg>
-              Cơ hội
-            </h3>
-            <p class="text-gray-700 whitespace-pre-wrap">{{ result.opportunities }}</p>
-          </div>
-
-          <!-- Thách thức -->
-          <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <h3 class="text-xl font-bold text-orange-800 mb-4 flex items-center">
-              <svg class="w-6 h-6 text-orange-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-              Thách thức
-            </h3>
-            <p class="text-gray-700 whitespace-pre-wrap">{{ result.challenges }}</p>
-          </div>
-
-          <!-- Lời khuyên -->
-          <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
-            <h3 class="text-xl font-bold text-indigo-800 mb-4 flex items-center">
-              <svg class="w-6 h-6 text-indigo-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Lời khuyên
-            </h3>
-            <p class="text-gray-700 whitespace-pre-wrap">{{ result.advice }}</p>
-          </div>
-
-          <!-- Nút chia sẻ -->
-          <div class="flex flex-wrap gap-3 justify-center">
-            <button @click="shareResult('facebook')" class="btn-share bg-blue-600 hover:bg-blue-700">
-              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
-              </svg>
-              Chia sẻ Facebook
-            </button>
-            <button @click="shareResult('zalo')" class="btn-share bg-blue-500 hover:bg-blue-600">
-              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.441 16.892c-2.102.144-6.784.144-8.883 0-2.276-.156-2.541-1.27-2.558-4.892.017-3.629.285-4.736 2.558-4.892 2.099-.144 6.782-.144 8.883 0 2.277.156 2.541 1.27 2.559 4.892-.018 3.629-.285 4.736-2.559 4.892zm-6.441-7.234l4.917 2.338-4.917 2.346v-4.684z"/>
-              </svg>
-              Chia sẻ Zalo
-            </button>
-            <ClientOnly>
-              <button @click="downloadResult" class="btn-share bg-gray-600 hover:bg-gray-700">
-                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+          <!-- Button -->
+          <div class="flex justify-center">
+            <button
+              @click="generateReport"
+              :disabled="loading"
+              class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
+            >
+              <span v-if="loading" class="flex items-center justify-center">
+                <svg
+                  class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
                 </svg>
-                Tải PDF
-              </button>
-            </ClientOnly>
+                Đang phân tích...
+              </span>
+              <span v-else>Tạo gợi ý tên thương hiệu</span>
+            </button>
           </div>
         </div>
-      </transition>
+
+        <!-- Results Section -->
+        <transition name="slide-fade">
+          <div v-if="numerologyData" class="mt-8 space-y-6">
+            <!-- Thông tin đầu vào -->
+            <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
+              <h3 class="text-lg font-semibold text-purple-700 flex items-center">
+                <span class="bg-purple-100 rounded-full p-2 mr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-purple-600"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                Thông tin thương hiệu
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <p class="text-sm text-gray-500">Ngành nghề</p>
+                  <p class="font-medium text-gray-800">{{ formData.industry }}</p>
+                </div>
+                <div>
+                  <p class="text-sm text-gray-500">Ngày</p>
+                  <p class="font-medium text-gray-800">{{ formData.date }}</p>
+                </div>
+                <div>
+                  <p class="text-sm text-gray-500">Tên chủ</p>
+                  <p class="font-medium text-gray-800">{{ formData.ownerName }}</p>
+                </div>
+                <div>
+                  <p class="text-sm text-gray-500">Yêu cầu</p>
+                  <p class="font-medium text-gray-800">{{ formData.extraRequest || 'Không có' }}</p>
+                </div>
+                <div>
+                  <p class="text-sm text-gray-500">Giới tính</p>
+                  <p class="font-medium text-gray-800">
+                    {{ formData.gender === 'none' ? 'Không áp dụng' : formData.gender === 'male' ? 'Nam' : 'Nữ' }}
+                  </p>
+                </div>
+                <div>
+                  <p class="text-sm text-gray-500">Ngôn ngữ</p>
+                  <p class="font-medium text-gray-800">
+                    {{ formData.language === 'english' ? 'Tiếng Anh' : 'Tiếng Việt' }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Các con số chính -->
+            <div>
+              <h3 class="text-lg font-semibold text-purple-700 mb-4 flex items-center">
+                <span class="bg-purple-100 rounded-full p-2 mr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-purple-600"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                Các con số chính
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                  <div class="flex items-center mb-2">
+                    <span class="text-3xl font-bold text-purple-600 mr-3">{{ numerologyData.lifePath }}</span>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">Số chủ đạo</h4>
+                      <p class="text-sm text-gray-500">Con số đường đời</p>
+                    </div>
+                  </div>
+                  <p class="text-gray-600">{{ numerologyData.lifePathDesc }}</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                  <div class="flex items-center mb-2">
+                    <span class="text-3xl font-bold text-purple-600 mr-3">{{ numerologyData.soul }}</span>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">Số linh hồn</h4>
+                      <p class="text-sm text-gray-500">Mong muốn nội tâm</p>
+                    </div>
+                  </div>
+                  <p class="text-gray-600">{{ numerologyData.soulDesc }}</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                  <div class="flex items-center mb-2">
+                    <span class="text-3xl font-bold text-purple-600 mr-3">{{ numerologyData.personality }}</span>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">Số nhân cách</h4>
+                      <p class="text-sm text-gray-500">Phong cách bên ngoài</p>
+                    </div>
+                  </div>
+                  <p class="text-gray-600">{{ numerologyData.personalityDesc }}</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                  <div class="flex items-center mb-2">
+                    <span class="text-3xl font-bold text-purple-600 mr-3">{{ numerologyData.destiny }}</span>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">Số định mệnh</h4>
+                      <p class="text-sm text-gray-500">Sứ mệnh thương hiệu</p>
+                    </div>
+                  </div>
+                  <p class="text-gray-600">{{ numerologyData.destinyDesc }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Phân tích tổng quan -->
+            <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+              <h3 class="text-lg font-semibold text-purple-700 flex items-center">
+                <span class="bg-purple-100 rounded-full p-2 mr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-purple-600"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                Phân tích tổng quan
+              </h3>
+              <p class="text-gray-600 mt-2 whitespace-pre-line">{{ numerologyData.generalAnalysis }}</p>
+            </div>
+
+            <!-- Gợi ý tên thương hiệu -->
+            <div>
+              <h3 class="text-lg font-semibold text-purple-700 mb-4 flex items-center">
+                <span class="bg-purple-100 rounded-full p-2 mr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-purple-600"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                    <path
+                      fill-rule="evenodd"
+                      d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                Gợi ý tên thương hiệu
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div
+                  v-for="(suggestion, index) in numerologyData.suggestions"
+                  :key="index"
+                  class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <div class="flex items-start mb-4">
+                    <span
+                      class="w-10 h-10 flex items-center justify-center bg-purple-100 text-purple-700 rounded-full font-bold mr-3"
+                    >
+                      {{ index + 1 }}
+                    </span>
+                    <div>
+                      <h4 class="text-lg font-semibold text-gray-800">{{ suggestion.name }}</h4>
+                      <p class="text-sm text-gray-500">
+                        Số linh hồn: {{ suggestion.soul }} | Số định mệnh: {{ suggestion.destiny }}
+                      </p>
+                    </div>
+                  </div>
+                  <p class="text-gray-600 mb-4">{{ suggestion.desc }}</p>
+                  <div class="p-4 bg-purple-50 rounded-lg">
+                    <p class="font-medium text-purple-700">Gợi ý logo:</p>
+                    <p class="text-gray-600">{{ suggestion.logoSuggestion }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lời khuyên -->
+            <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
+              <h3 class="text-lg font-semibold text-purple-700 flex items-center">
+                <span class="bg-purple-100 rounded-full p-2 mr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-purple-600"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                Lời khuyên phát triển thương hiệu
+              </h3>
+              <p class="text-gray-600 mt-2 whitespace-pre-line">{{ numerologyData.brandAdvice }}</p>
+            </div>
+
+            <!-- Nút tải và chia sẻ -->
+          
+          </div>
+        </transition>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { toast } from 'vue3-toastify';
-import { drawDOM, exportPDF } from '@progress/kendo-drawing';
 
 definePageMeta({ layout: 'view' });
 
 const formData = ref({
-  name: '',
-  birthDate: '',
-  question: ''
+  industry: '',
+  date: '',
+  ownerName: '',
+  extraRequest: '',
+  gender: 'none',
+  language: 'english'
+});
+const numerologyData = ref(null);
+const loading = ref(false);
+const errors = ref({
+  industry: '',
+  date: '',
+  ownerName: '',
+  general: ''
 });
 
-const result = ref(null);
-const loading = ref(false);
-const currentYear = new Date().getFullYear();
+// Load saved data from localStorage on mount
+onMounted(() => {
+  const savedData = localStorage.getItem('brandNumerologyData');
+  if (savedData) {
+    const parsed = JSON.parse(savedData);
+    formData.value = parsed.formData || {
+      industry: '',
+      date: '',
+      ownerName: '',
+      extraRequest: '',
+      gender: 'none',
+      language: 'english'
+    };
+    numerologyData.value = parsed.numerologyData || null;
+  }
+});
 
-const consult = async () => {
-  if (!formData.value.name) return toast.error('Vui lòng nhập họ và tên!', { position: 'top-center' });
-  if (!formData.value.birthDate) return toast.error('Vui lòng nhập ngày sinh!', { position: 'top-center' });
-  if (!formData.value.question) return toast.error('Vui lòng nhập câu hỏi!', { position: 'top-center' });
+// Save data to localStorage on change
+watch([formData, numerologyData], () => {
+  localStorage.setItem('brandNumerologyData', JSON.stringify({
+    formData: formData.value,
+    numerologyData: numerologyData.value
+  }));
+}, { deep: true });
+
+// Validate form
+const validateForm = () => {
+  errors.value = {
+    industry: '',
+    date: '',
+    ownerName: '',
+    general: ''
+  };
+  let isValid = true;
+
+  if (!formData.value.industry.trim()) {
+    errors.value.industry = 'Vui lòng nhập ngành nghề';
+    isValid = false;
+  }
+  if (!formData.value.date.trim()) {
+    errors.value.date = 'Vui lòng nhập ngày thành lập hoặc ngày sinh';
+    isValid = false;
+  } else if (!/^\d{2}\/\d{2}\/\d{4}$/.test(formData.value.date)) {
+    errors.value.date = 'Vui lòng nhập ngày đúng định dạng DD/MM/YYYY';
+    isValid = false;
+  } else {
+    const match = formData.value.date.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    const day = parseInt(match[1], 10);
+    const month = parseInt(match[2], 10);
+    const year = parseInt(match[3], 10);
+    const date = new Date(year, month - 1, day);
+    if (
+      date.getDate() !== day ||
+      date.getMonth() + 1 !== month ||
+      date.getFullYear() !== year ||
+      year < 1900 ||
+      year > new Date().getFullYear()
+    ) {
+      errors.value.date = 'Ngày không hợp lệ';
+      isValid = false;
+    }
+  }
+  if (!formData.value.ownerName.trim()) {
+    errors.value.ownerName = 'Vui lòng nhập tên chủ thương hiệu';
+    isValid = false;
+  }
+
+  return isValid;
+};
+
+const generateReport = async () => {
+  if (!validateForm()) return;
 
   loading.value = true;
+  errors.value.general = '';
   try {
     const username = localStorage.getItem('username') || 'guest';
-    const response = await $fetch('/api/numerology/consult', {
+    const response = await $fetch('/api/numerology/brand', {
       method: 'POST',
       headers: { 
         'x-username': encodeURIComponent(username),
         'Content-Type': 'application/json; charset=utf-8'
       },
-      body: formData.value
+      body: { 
+        ...formData.value, 
+        extraRequest: `${formData.value.extraRequest || ''} Tên bằng ${formData.value.language === 'english' ? 'tiếng Anh' : 'tiếng Việt'}` 
+      }
     });
-    result.value = response.consult;
-    toast.success('Giải đáp hoàn tất!', { position: 'top-center' });
+    numerologyData.value = response.numerology;
+    toast.success('Tạo gợi ý tên thương hiệu hoàn tất!', { position: 'top-center' });
   } catch (error) {
-    console.error('Error consulting:', error);
-    toast.error(error.data?.message || 'Có lỗi xảy ra!', { position: 'top-center' });
+    console.error('Error:', error);
+    errors.value.general = error.data?.message || 'Có lỗi xảy ra!';
   } finally {
     loading.value = false;
   }
 };
 
 const shareResult = (platform) => {
-  if (!result.value) return;
-  const text = formatResultForShare();
+  if (!numerologyData.value) return;
+  const text = [
+    `Gợi ý tên thương hiệu cho ${formData.value.ownerName} (${formData.value.industry})`,
+    `Số chủ đạo: ${numerologyData.value.lifePath} - ${numerologyData.value.lifePathDesc}`,
+    `Số linh hồn: ${numerologyData.value.soul} - ${numerologyData.value.soulDesc}`,
+    `Số nhân cách: ${numerologyData.value.personality} - ${numerologyData.value.personalityDesc}`,
+    `Số định mệnh: ${numerologyData.value.destiny} - ${numerologyData.value.destinyDesc}`,
+    `Phân tích tổng quan: ${numerologyData.value.generalAnalysis}`,
+    `Gợi ý tên thương hiệu:`,
+    ...numerologyData.value.suggestions.map(s => `- ${s.name} (Số linh hồn: ${s.soul}, Số định mệnh: ${s.destiny}): ${s.desc}\n  Logo: ${s.logoSuggestion}`),
+    `Lời khuyên: ${numerologyData.value.brandAdvice}`
+  ].join('\n\n');
 
   if (platform === 'facebook' && process.client) {
     if (typeof FB !== 'undefined') {
@@ -218,105 +495,83 @@ const shareResult = (platform) => {
   }
 };
 
-const downloadResult = async () => {
-  if (!process.client || !result.value) {
-    toast.error('Vui lòng đợi kết quả hoàn tất trước khi tải');
-    return;
-  }
+const downloadPDF = async () => {
+  if (!process.client) return toast.error('Không thể tải PDF trên server!');
+  const { jsPDF } = await import('jspdf');
+  const doc = new jsPDF();
+  doc.setFont('helvetica');
+  doc.setFontSize(12);
+  let y = 10;
 
-  try {
-    const container = document.createElement('div');
-    container.style.width = '210mm';
-    container.style.padding = '15mm';
-    container.style.fontFamily = 'Times New Roman, serif';
-    container.style.fontSize = '12pt';
-    container.style.lineHeight = '1.5';
-    container.style.color = '#333';
-    document.body.appendChild(container);
+  doc.setFontSize(16);
+  doc.text(`Gợi ý tên thương hiệu cho ${formData.value.ownerName}`, 10, y);
+  y += 10;
 
-    container.innerHTML = `
-      <h1 style="font-size: 18pt; color: #6B46C1; margin-bottom: 10mm;">Giải đáp thắc mắc - ${formData.value.name}</h1>
-      <div style="margin-bottom: 5mm;">
-        <strong>Họ và tên:</strong> ${formData.value.name}<br>
-        <strong>Ngày sinh:</strong> ${formData.value.birthDate}<br>
-        <strong>Câu hỏi:</strong> ${formData.value.question}
-      </div>
-      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Số chủ đạo: ${result.value.lifePath}</h2>
-      <p>${result.value.lifePathDesc}</p>
-      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Số năm cá nhân ${currentYear}: ${result.value.personalYear}</h2>
-      <p>${result.value.personalYearDesc}</p>
-      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Phân tích tổng quan</h2>
-      <p>${result.value.analysis}</p>
-      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Cơ hội</h2>
-      <p>${result.value.opportunities}</p>
-      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Thách thức</h2>
-      <p>${result.value.challenges}</p>
-      <h2 style="font-size: 14pt; color: #805AD5; margin: 5mm 0;">Lời khuyên</h2>
-      <p>${result.value.advice}</p>
-    `;
+  doc.setFontSize(12);
+  doc.text(`Ngành nghề: ${formData.value.industry}`, 10, y); y += 7;
+  doc.text(`Ngày: ${formData.value.date}`, 10, y); y += 7;
+  doc.text(`Tên chủ: ${formData.value.ownerName}`, 10, y); y += 7;
+  doc.text(`Yêu cầu: ${formData.value.extraRequest || 'Không có'}`, 10, y); y += 7;
+  doc.text(`Giới tính: ${formData.value.gender === 'none' ? 'Không áp dụng' : formData.value.gender === 'male' ? 'Nam' : 'Nữ'}`, 10, y); y += 7;
+  doc.text(`Ngôn ngữ: ${formData.value.language === 'english' ? 'Tiếng Anh' : 'Tiếng Việt'}`, 10, y); y += 10;
 
-    const group = await drawDOM(container, {
-      paperSize: 'A4',
-      margin: { top: '10mm', left: '10mm', right: '10mm', bottom: '10mm' },
-      scale: 0.7,
-      keepTogether: 'p'
-    });
+  const addSection = (title, content) => {
+    if (y > 260) { doc.addPage(); y = 10; }
+    doc.setFontSize(14);
+    doc.text(title, 10, y);
+    y += 7;
+    doc.setFontSize(12);
+    const lines = doc.splitTextToSize(content, 180);
+    doc.text(lines, 10, y);
+    y += lines.length * 7 + 10;
+  };
 
-    const pdfDataUri = await exportPDF(group);
-    const link = document.createElement('a');
-    link.href = pdfDataUri;
-    link.download = `giai-dap-thac-mac-${formData.value.name}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    document.body.removeChild(container);
+  addSection('Các con số chính', [
+    `Số chủ đạo: ${numerologyData.value.lifePath} - ${numerologyData.value.lifePathDesc}`,
+    `Số linh hồn: ${numerologyData.value.soul} - ${numerologyData.value.soulDesc}`,
+    `Số nhân cách: ${numerologyData.value.personality} - ${numerologyData.value.personalityDesc}`,
+    `Số định mệnh: ${numerologyData.value.destiny} - ${numerologyData.value.destinyDesc}`
+  ].join('\n'));
 
-    toast.success('Tải PDF thành công!');
-  } catch (error) {
-    console.error('Lỗi khi tạo PDF:', error);
-    toast.error('Có lỗi khi tạo PDF!');
-  }
-};
+  addSection('Phân tích tổng quan', numerologyData.value.generalAnalysis);
 
-const formatResultForShare = () => {
-  return [
-    `Giải đáp thắc mắc cho ${formData.value.name}`,
-    `Ngày sinh: ${formData.value.birthDate}`,
-    `Câu hỏi: ${formData.value.question}`,
-    `Số chủ đạo: ${result.value.lifePath}`,
-    result.value.lifePathDesc,
-    `Số năm cá nhân ${currentYear}: ${result.value.personalYear}`,
-    result.value.personalYearDesc,
-    `Phân tích:\n${result.value.analysis}`,
-    `Cơ hội:\n${result.value.opportunities}`,
-    `Thách thức:\n${result.value.challenges}`,
-    `Lời khuyên:\n${result.value.advice}`
-  ].join('\n\n');
+  doc.setFontSize(14);
+  doc.text('Gợi ý tên thương hiệu:', 10, y); y += 7;
+  doc.setFontSize(12);
+  numerologyData.value.suggestions.forEach(s => {
+    if (y > 260) { doc.addPage(); y = 10; }
+    const text = `${s.name} (Số linh hồn: ${s.soul}, Số định mệnh: ${s.destiny})\nMô tả: ${s.desc}\nLogo: ${s.logoSuggestion}`;
+    const lines = doc.splitTextToSize(text, 180);
+    doc.text(lines, 10, y);
+    y += lines.length * 7 + 5;
+  });
+
+  addSection('Lời khuyên phát triển thương hiệu', numerologyData.value.brandAdvice);
+
+  doc.save(`brand-numerology-${formData.value.ownerName}.pdf`);
 };
 </script>
 
 <style scoped>
-.fade-slide-enter-active, .fade-slide-leave-active {
-  transition: opacity 0.5s, transform 0.5s;
+/* Custom transitions */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
 }
-.fade-slide-enter-from, .fade-slide-leave-to {
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
-  transform: translateY(20px);
 }
 
-.form-label {
-  @apply block text-gray-700 font-medium mb-1;
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
 }
-
-.form-input {
-  @apply w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200;
+.slide-fade-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
 }
-
-.btn-primary {
-  @apply bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 disabled:opacity-70 disabled:cursor-not-allowed transition duration-200 shadow-md font-medium;
-}
-
-.btn-share {
-  @apply text-white px-4 py-2 rounded-lg flex items-center justify-center transition duration-200 shadow-sm;
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(10px);
+  opacity: 0;
 }
 </style>

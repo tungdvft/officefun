@@ -234,20 +234,20 @@ const mainMenu = [
     title: "Mối quan hệ",
     children: [
       { title: "Kiểm tra hợp nhau", path: "/xem/kiem-tra-hop-nhau" },
-      { title: "Chọn ngày cưới", path: "/xem/wedding-date" }
+      { title: "Chọn ngày cưới", path: "/xem/chon-ngay-cuoi" }
     ]
   },
   {
     title: "Nghề nghiệp",
     children: [
-      { title: "Định hướng nghề", path: "/xem/career" },
+      { title: "Định hướng nghề", path: "/xem/dinh-huong-nghe-nghiep" },
       { title: "Tên thương hiệu", path: "/xem/ten-thuong-hieu" }
     ]
   },
   {
     title: "Gia đình",
     children: [
-      { title: "Thần số học trẻ em", path: "/xem/child" },
+      { title: "Thần số học trẻ em", path: "/xem/than-so-hoc-tre-em" },
       { title: "Đặt tên con", path: "/xem/dat-ten-con" }
     ]
   }
