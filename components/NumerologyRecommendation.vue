@@ -246,16 +246,20 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-defineProps({
-  fullName: {
-    type: String,
-    default: ''
-  },
+const props = defineProps({
   birthDate: {
     type: String,
-    default: ''
-  }
-})
+    default: '',
+    validator: (value) => {
+      if (!value) return true;
+      return /^\d{2}\/\d{2}\/\d{4}$/.test(value);
+    },
+  },
+  fullName: {
+    type: String,
+    default: '',
+  },
+});
 
 const name = ref('')
 const birthDateInput = ref('')
@@ -272,7 +276,7 @@ const tabs = ['Insight hôm nay', 'Đồ ăn', 'Đồ uống']
 // Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
 const formatDate = (dateStr) => {
   if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
-    return ''
+    return props.birthDate; // Sử dụng giá trị mặc định từ props nếu không hợp lệ
   }
   const [year, month, day] = dateStr.split('-')
   return `${day}/${month}/${year}`
@@ -280,8 +284,8 @@ const formatDate = (dateStr) => {
 
 onMounted(() => {
   // Khởi tạo giá trị từ props
-  name.value = fullName || ''
-  birthDateInput.value = formatDate(birthDate) || ''
+  name.value = props.fullName
+  birthDateInput.value = props.birthDate
 })
 
 async function getRecommendations() {
