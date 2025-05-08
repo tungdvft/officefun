@@ -31,11 +31,11 @@ export default defineNuxtConfig({
   css: ['~/assets/css/tailwind.css'],
   app: {
     head: {
-      title: 'AuraTrust - Ứng dụng thần số học cá nhân hoá, tương tác trực quan.', 
+      title: 'Luận giải thần số học - Ứng dụng thần số học cá nhân hoá, tương tác trực quan.', 
       meta: [
         {
           name: 'description', // Sửa lại thành 'description'
-          content: 'AuraTrust - Ứng dụng thần số học cá nhân hoá, tương tác trực quan',
+          content: 'Luận giải thần số học - Ứng dụng thần số học cá nhân hoá, tương tác trực quan',
         },
       ],
     },

@@ -1,3 +1,4 @@
+```vue
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center py-8">
     <div class="container mx-auto px-4">
@@ -155,7 +156,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useGeneralStore } from '~/stores/general';
+import { useUserStore } from '@/stores/user';
 import LifePathCalculator from '~/components/LifePathCalculator.vue';
 import PersonalYearChart from '~/components/PersonalYearChart.vue';
 import PersonalityGroups from '~/components/PersonalityGroups.vue';
@@ -182,6 +183,7 @@ import ApproachMotivationDisplay from '~/components/ApproachMotivationDisplay.vu
 import ApproachCapacityDisplay from '~/components/ApproachCapacityDisplay.vue';
 import ApproachAttitudeDisplay from '~/components/ApproachAttitudeDisplay.vue';
 import NumerologyPowerChart from '~/components/NumerologyPowerChart.vue';
+import ExpressionNumber from '~/components/ExpressionNumber.vue';
 
 definePageMeta({
   layout: "view",
@@ -195,7 +197,25 @@ const result = ref(null);
 const error = ref('');
 const isLoading = ref(false);
 const startCalulation = ref(false);
-const generalStore = useGeneralStore();
+
+// Lấy thông tin người dùng từ userStore
+const userStore = useUserStore();
+const user = userStore.user || { fullname: '', birthdate: '' }; // Fallback nếu user chưa có
+
+// Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
+const formatDateToDDMMYYYY = (dateStr) => {
+  if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    return ''; // Trả về chuỗi rỗng nếu không hợp lệ
+  }
+  const [year, month, day] = dateStr.split('-');
+  return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+};
+
+// Khởi tạo giá trị từ userStore
+fullName.value = user.fullname;
+birthDate.value = formatDateToDDMMYYYY(user.birthdate);
+calculatedFullName.value = user.fullname;
+calculatedBirthDate.value = formatDateToDDMMYYYY(user.birthdate);
 
 // Khôi phục dữ liệu từ localStorage khi trang được tải
 onMounted(() => {
@@ -220,15 +240,6 @@ onMounted(() => {
     } catch (err) {
       console.error('Lỗi khi khôi phục dữ liệu từ localStorage:', err);
     }
-  }
-
-  // Kiểm tra dữ liệu từ store (như mã hiện tại)
-  if (generalStore.hasData) {
-    fullName.value = generalStore.fullname;
-    birthDate.value = generalStore.birthdate;
-    calculatedFullName.value = generalStore.fullname;
-    calculatedBirthDate.value = generalStore.birthdate;
-    calculateNumbers();
   }
 });
 
@@ -289,8 +300,6 @@ const calculateNumbers = async () => {
     }
 
     result.value = lifePathData.value;
-    generalStore.fullname = fullName.value;
-    generalStore.birthdate = birthDate.value;
     calculatedFullName.value = fullName.value;
     calculatedBirthDate.value = birthDate.value;
     startCalulation.value = true;
@@ -317,7 +326,6 @@ const calculateNumbers = async () => {
     isLoading.value = false;
   }
 };
-
 </script>
 
 <style scoped>
@@ -355,3 +363,4 @@ const calculateNumbers = async () => {
   }
 }
 </style>
+```

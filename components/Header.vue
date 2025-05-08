@@ -95,9 +95,7 @@
           </template>
         </div>
         <!-- Placeholder khi store chưa khởi tạo -->
-        <div v-else class="hidden md:flex items-center space-x-4 ml-auto">
-          <div class="w-24 h-8 bg-gray-200 rounded-lg animate-pulse"></div>
-        </div>
+      
 
         <!-- Mobile menu button -->
         <div class="md:hidden flex items-center ml-4">
