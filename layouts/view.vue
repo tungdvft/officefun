@@ -5,7 +5,7 @@
       <div class="container mx-auto px-4">
         <div class="flex justify-between items-center h-16">
           <!-- Logo -->
-          <NuxtLink to="/xem" class="flex items-center hover:opacity-90 transition-opacity">
+          <NuxtLink to="/xem">
              <img src="/logo.png" alt="Thần Số Học Logo" width="100px"  />
           </NuxtLink>
 
@@ -327,9 +327,7 @@ const logout = async () => {
 </script>
 
 <style scoped>
-.router-link-active.router-link-exact-active {
-  @apply bg-purple-100 text-purple-900 font-medium;
-}
+
 
 /* Smooth transitions for dropdowns */
 .group:hover .group-hover\:translate-y-0 {
