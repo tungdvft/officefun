@@ -33,6 +33,7 @@
             >
               <button 
                 class="flex items-center h-full px-4 hover:bg-purple-700 transition-colors duration-200 rounded-t-lg"
+                @click="toggleDropdown(index)"
               >
                 <span>{{ item.title }}</span>
                 <svg 
@@ -66,33 +67,47 @@
           </nav>
 
           <!-- User Menu -->
-          <div class="flex items-center space-x-4">
-            <template v-if="!userStore.isAuthenticated">
+          <div v-if="userStore.isStoreInitialized" class="flex items-center space-x-4">
+            <template v-if="!userStore.user || Object.keys(userStore.user).length === 0">
               <NuxtLink 
                 to="/dang-nhap"
-                class="flex items-center text-sm rounded-full px-4 py-2 text-white hover:bg-purple-700 transition-colors duration-200"
+                class="hidden md:flex px-4 py-2 rounded-lg font-medium text-white hover:bg-purple-700 transition-colors duration-200"
               >
-                <span>Đăng nhập</span>
+                Đăng nhập
+              </NuxtLink>
+              <NuxtLink 
+                to="/dang-ky"
+                class="hidden md:flex px-4 py-2 rounded-lg font-medium bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 transition-all duration-300 shadow"
+              >
+                Đăng ký
               </NuxtLink>
             </template>
             <template v-else>
-              <div class="relative group">
-                <button class="flex items-center space-x-2 focus:outline-none rounded-full px-4 py-2 hover:bg-purple-700 transition-colors duration-200">
-                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  <span class="hidden md:inline">{{ userStore.fullname || 'Tài khoản' }}</span>
+              <div 
+                class="dropdown relative hidden md:block"
+                @mouseenter="openMenu('auth')"
+                @mouseleave="closeMenu('auth')"
+              >
+                <button class="flex items-center space-x-2 focus:outline-none group">
+                  <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-400 to-indigo-400 flex items-center justify-center">
+                    <span class="text-white text-base font-bold">
+                      {{ getInitialLetter(userStore.user.fullname) }}
+                    </span>
+                  </div>
                 </button>
-                <div class="absolute right-0 top-full mt-1 w-48 bg-white rounded-lg shadow-xl py-2 z-40 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-1">
+                <div 
+                  class="dropdown-menu absolute top-full right-0 bg-white shadow-xl rounded-lg py-2 w-48 z-30 border border-gray-100"
+                  :class="{ 'block': activeMenu === 'auth', 'hidden': activeMenu !== 'auth' }"
+                >
                   <NuxtLink 
                     to="/tai-khoan"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-900 transition-colors duration-150"
+                    class="block px-4 py-2 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
                   >
                     Tài khoản
                   </NuxtLink>
                   <button
                     @click="logout"
-                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-900 transition-colors duration-150"
+                    class="block w-full text-left px-4 py-2 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
                   >
                     Đăng xuất
                   </button>
@@ -101,6 +116,23 @@
             </template>
             
             <!-- Mobile menu button -->
+            <button 
+              @click="isMobileMenuOpen = !isMobileMenuOpen"
+              class="md:hidden text-white focus:outline-none p-1 rounded-full hover:bg-purple-700 transition-colors duration-200"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path 
+                  stroke-linecap="round" 
+                  stroke-linejoin="round" 
+                  stroke-width="2" 
+                  :d="isMobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'" 
+                />
+              </svg>
+            </button>
+          </div>
+          <!-- Placeholder khi store chưa khởi tạo -->
+          <div v-else class="flex items-center space-x-4">
+            <div class="hidden md:block w-24 h-8 bg-gray-200 rounded-lg animate-pulse"></div>
             <button 
               @click="isMobileMenuOpen = !isMobileMenuOpen"
               class="md:hidden text-white focus:outline-none p-1 rounded-full hover:bg-purple-700 transition-colors duration-200"
@@ -155,31 +187,43 @@
             </div>
           </div>
           <!-- Mobile Auth Menu -->
-          <div class="pt-2 border-t border-purple-600">
-            <template v-if="!userStore.isAuthenticated">
+          <div v-if="userStore.isStoreInitialized" class="pt-2 border-t border-purple-600">
+            <template v-if="!userStore.user || Object.keys(userStore.user).length === 0">
               <NuxtLink 
                 to="/dang-nhap"
-                class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-600 transition-colors duration-200"
+                class="block w-full px-3 py-2 text-center rounded-lg font-medium bg-purple-50 text-purple-600 hover:bg-purple-100 transition-colors duration-200 mb-2"
                 @click="isMobileMenuOpen = false"
               >
                 Đăng nhập
+              </NuxtLink>
+              <NuxtLink 
+                to="/dang-ky"
+                class="block w-full px-3 py-2 text-center rounded-lg font-medium bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 transition-all duration-300 shadow"
+                @click="isMobileMenuOpen = false"
+              >
+                Đăng ký
               </NuxtLink>
             </template>
             <template v-else>
               <NuxtLink 
                 to="/tai-khoan"
-                class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-600 transition-colors duration-200"
+                class="block w-full px-3 py-2 text-center rounded-lg font-medium bg-purple-50 text-purple-600 hover:bg-purple-100 transition-colors duration-200 mb-2"
                 @click="isMobileMenuOpen = false"
               >
                 Tài khoản
               </NuxtLink>
               <button
                 @click="logout"
-                class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-600 transition-colors duration-200"
+                class="block w-full px-3 py-2 text-center rounded-lg font-medium bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 transition-all duration-300 shadow"
               >
                 Đăng xuất
               </button>
             </template>
+          </div>
+          <!-- Placeholder khi store chưa khởi tạo -->
+          <div v-else class="pt-2 border-t border-purple-600">
+            <div class="w-full h-10 bg-gray-200 rounded-lg animate-pulse mb-2"></div>
+            <div class="w-full h-10 bg-gray-200 rounded-lg animate-pulse"></div>
           </div>
         </div>
       </div>
@@ -194,32 +238,29 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { navigateTo } from '#app'
 import { useUserStore } from '~/stores/user'
+import { toast } from 'vue3-toastify'
 
 const userStore = useUserStore()
+
+// Hàm lấy chữ cái đầu hợp lệ
+const getInitialLetter = (fullname) => {
+  if (!fullname || typeof fullname !== 'string' || !fullname.trim()) {
+    return 'U'
+  }
+  const firstChar = fullname.trim().charAt(0)
+  // Chỉ lấy chữ cái (a-z, A-Z) hoặc ký tự Unicode chữ cái (như tiếng Việt)
+  return /[a-zA-Z\u00C0-\u1EF9]/.test(firstChar) ? firstChar.toUpperCase() : 'U'
+}
+
 onMounted(() => {
   if (process.client) {
-    const savedUser = localStorage.getItem('user')
-    if (savedUser) {
-      try {
-        const userData = JSON.parse(savedUser)
-        // Kiểm tra xem có đủ thông tin để coi là đã đăng nhập
-        if (userData.id && userData.isAuthenticated === true) {
-          userStore.$patch({
-            id: userData.id,
-            fullname: userData.fullname || '',
-            email: userData.email || '',
-            isAuthenticated: true
-          })
-        }
-      } catch (e) {
-        console.error('Lỗi khi parse user data từ localStorage:', e)
-      }
-    }
+    userStore.initialize()
   }
 })
+
 const mainMenu = [
   {
     title: "Cá nhân",
@@ -254,19 +295,48 @@ const mainMenu = [
 ]
 
 const isMobileMenuOpen = ref(false)
+const activeDropdown = ref(null)
 const activeMobileDropdown = ref(null)
+const activeMenu = ref(null)
+const menuTimeout = ref(null)
+
+const toggleDropdown = (index) => {
+  activeDropdown.value = activeDropdown.value === index ? null : index
+}
 
 const toggleMobileDropdown = (index) => {
   activeMobileDropdown.value = activeMobileDropdown.value === index ? null : index
+}
+
+const openMenu = (menu) => {
+  clearTimeout(menuTimeout.value)
+  activeMenu.value = menu
+}
+
+const closeMenu = (menu) => {
+  menuTimeout.value = setTimeout(() => {
+    if (activeMenu.value === menu) {
+      activeMenu.value = null
+    }
+  }, 200)
 }
 
 const logout = async () => {
   try {
     await userStore.logout()
     isMobileMenuOpen.value = false
+    activeMenu.value = null
+    toast.success('Đăng xuất thành công!', {
+      position: 'top-center',
+      theme: 'colored'
+    })
     await navigateTo('/dang-nhap')
   } catch (error) {
     console.error('Logout error:', error)
+    toast.error('Đăng xuất thất bại. Vui lòng thử lại.', {
+      position: 'top-center',
+      theme: 'colored'
+    })
   }
 }
 </script>
@@ -285,5 +355,33 @@ const logout = async () => {
 }
 .group:hover .group-hover\:visible {
   visibility: visible;
+}
+
+/* Tối ưu dropdown menu */
+.dropdown-menu {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform-origin: top center;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Đảm bảo dropdown không bị giật */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  top: 100%;
+  margin-top: 0;
 }
 </style>

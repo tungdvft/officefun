@@ -76,7 +76,6 @@
 
           <div class="mt-6">
             <GoogleLogin />
-          
           </div>
         </div>
 
@@ -94,7 +93,7 @@
 <script setup>
 import { useUserStore } from '~/stores/user'
 import { toast } from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
+import { onMounted } from 'vue'
 
 const userStore = useUserStore()
 const form = ref({
@@ -105,8 +104,12 @@ const form = ref({
 const rememberMe = ref(false)
 const isLoading = ref(false)
 
-// Khởi tạo store khi component được tạo
-
+// Khởi tạo store khi component được mount
+onMounted(() => {
+  if (process.client) {
+    userStore.initialize()
+  }
+})
 
 const handleLogin = async () => {
   if (!form.value.email || !form.value.password) {
@@ -129,6 +132,11 @@ const handleLogin = async () => {
       })
     })
 
+    // Kiểm tra dữ liệu phản hồi
+    if (!response.user || !response.user.id || !response.user.fullname || !response.user.birthdate || !response.token) {
+      throw new Error('Dữ liệu phản hồi từ API không hợp lệ')
+    }
+
     // Lưu thông tin user vào store
     userStore.setUser(response.user, response.token)
 
@@ -137,14 +145,16 @@ const handleLogin = async () => {
       theme: 'colored'
     })
 
-    // Chuyển hướng sau 1 giây
+    // Chuyển hướng nhanh hơn
     setTimeout(() => {
       navigateTo('/xem')
-    }, 1000)
+    }, 300)
   } catch (error) {
     let errorMessage = 'Đăng nhập thất bại. Vui lòng thử lại'
     
-    if (error.response && error.response._data) {
+    if (error.message) {
+      errorMessage = error.message
+    } else if (error.response && error.response._data) {
       errorMessage = error.response._data.message || errorMessage
     }
 

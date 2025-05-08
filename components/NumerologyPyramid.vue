@@ -1,129 +1,148 @@
 <template>
   <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
     <div class="p-6 space-y-6">
-      <!-- Tiêu đề với họ tên -->
-       <div data-v-2530b048="" class="text-center mb-8">
-        <h2 data-v-2530b048="" class="text-4xl font-bold text-teal-700 mb-3"> Kim Tự Tháp Thần Số Học </h2>
-        <div data-v-2530b048="" class="w-24 h-1 bg-teal-500 mx-auto mb-4 rounded-full"></div>
-        <p data-v-2530b048="" class="text-lg text-gray-600 max-w-2xl mx-auto">
-            Khám phá các chu kỳ quan trọng trong cuộc đời bạn thông qua kim tự tháp số
-          </p>
-        </div>
+      <!-- Tiêu đề -->
+      <div class="text-center mb-8">
+        <h2 class="text-4xl font-bold text-teal-700 mb-3">Kim Tự Tháp Thần Số Học</h2>
+        <div class="w-24 h-1 bg-teal-500 mx-auto mb-4 rounded-full"></div>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Khám phá các chu kỳ quan trọng trong cuộc đời bạn thông qua kim tự tháp số
+        </p>
+      </div>
+
       <!-- Biểu đồ SVG -->
       <transition name="fade-slide">
         <div v-if="peaksData && peaksData.length" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
           <div class="text-center mb-8">
-          <h3 class="text-2xl font-bold text-teal-700 mb-2">Biểu Đồ Thể Hiện 4 Giai Đoạn Đỉnh Cao Kèm Thử Thách Tương Ứng </h3>
-          <div class="w-24 h-1 bg-teal-300 mx-auto rounded-full"></div>
-        </div>
-        <div class="flex justify-center">
-          <svg width="700" height="520" viewBox="0 0 780 520" preserveAspectRatio="xMidYMid meet" class="mx-auto">
-            <defs>
-              <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#003366" />
-              </marker>
-            </defs>
+            <h3 class="text-2xl font-bold text-teal-700 mb-2">Biểu Đồ Thể Hiện 4 Giai Đoạn Đỉnh Cao Kèm Thử Thách Tương Ứng</h3>
+            <div class="w-24 h-1 bg-teal-300 mx-auto rounded-full"></div>
+          </div>
+          <div class="flex justify-center items-center w-full h-auto">
+            <svg
+              viewBox="0 0 780 520"
+              preserveAspectRatio="xMidYMid meet"
+              class="w-full max-w-[780px] h-auto mx-auto"
+            >
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#003366" />
+                </marker>
+              </defs>
 
-            <!-- Lines -->
-            <line class="line" x1="350" y1="0" x2="100" y2="200" />
-            <line class="line" x1="350" y1="0" x2="600" y2="200" />
-            <line class="line" x1="350" y1="80" x2="250" y2="140" />
-            <line class="line" x1="350" y1="80" x2="450" y2="140" />
-            <line class="line" x1="250" y1="140" x2="100" y2="200" />
-            <line class="line" x1="450" y1="140" x2="600" y2="200" />
-            <line class="line" x1="250" y1="140" x2="350" y2="200" />
-            <line class="line" x1="450" y1="140" x2="350" y2="200" />
-            <line class="line" x1="100" y1="200" x2="250" y2="260" />
-            <line class="line" x1="600" y1="200" x2="450" y2="260" />
-            <line class="line" x1="350" y1="200" x2="250" y2="260" />
-            <line class="line" x1="350" y1="200" x2="450" y2="260" />
-            <line class="line" x1="250" y1="260" x2="350" y2="320" />
-            <line class="line" x1="450" y1="260" x2="350" y2="320" />
-            <line class="line" x1="350" y1="400" x2="100" y2="200" />
-            <line class="line" x1="350" y1="400" x2="600" y2="200" />
+              <!-- Lines -->
+              <line class="line" x1="350" y1="0" x2="100" y2="200" />
+              <line class="line" x1="350" y1="0" x2="600" y2="200" />
+              <line class="line" x1="350" y1="80" x2="250" y2="140" />
+              <line class="line" x1="350" y1="80" x2="450" y2="140" />
+              <line class="line" x1="250" y1="140" x2="100" y2="200" />
+              <line class="line" x1="450" y1="140" x2="600" y2="200" />
+              <line class="line" x1="250" y1="140" x2="350" y2="200" />
+              <line class="line" x1="450" y1="140" x2="350" y2="200" />
+              <line class="line" x1="100" y1="200" x2="250" y2="260" />
+              <line class="line" x1="600" y1="200" x2="450" y2="260" />
+              <line class="line" x1="350" y1="200" x2="250" y2="260" />
+              <line class="line" x1="350" y1="200" x2="450" y2="260" />
+              <line class="line" x1="250" y1="260" x2="350" y2="320" />
+              <line class="line" x1="450" y1="260" x2="350" y2="320" />
+              <line class="line" x1="350" y1="400" x2="100" y2="200" />
+              <line class="line" x1="350" y1="400" x2="600" y2="200" />
 
-            <!-- Nodes -->
-            <!-- Topmost node (Đỉnh cao giai đoạn 4) -->
-            <g class="node" transform="translate(350,0)">
-              <circle r="20" fill="#b96cc4" />
-              <text y="5" text-anchor="middle" x="0">{{ peaksData[3].peak }}</text>
-              <text y="35" text-anchor="middle" x="0">{{ peaksData[3].age_range.split(' ')[0] }}</text>
-              <text y="50" text-anchor="middle" x="0">({{ peaksData[3].age_range.match(/\d{4}–\d{4}/)[0]}})</text>
-            </g>
+              <!-- Nodes -->
+              <!-- Topmost node (Đỉnh cao giai đoạn 4) -->
+              <g class="node" transform="translate(350,0)">
+                <circle r="20" fill="#b96cc4" />
+                <text y="5" text-anchor="middle" x="0">{{ peaksData[3].peak }}</text>
+                <text y="35" text-anchor="middle" x="0">{{ peaksData[3].age_range.split(' ')[0] }}</text>
+                <text y="50" text-anchor="middle" x="0">({{ peaksData[3].age_range.match(/\d{4}–\d{4}/)[0] }})</text>
+              </g>
 
-            <!-- Peak Stage 4 -->
-            <g class="node" transform="translate(350,80)">
-              <circle r="20" fill="#b96cc4" />
-              <text y="5" text-anchor="middle" x="0">{{ peaksData[2].peak }}</text>
-              <text y="35" text-anchor="middle" x="0">{{ peaksData[2].age_range.split(' ')[0] }}</text>
-              <text y="50" text-anchor="middle" x="0">({{ peaksData[2].age_range.match(/\d{4}–\d{4}/)[0]}})</text>
-            </g>
+              <!-- Peak Stage 4 -->
+              <g class="node" transform="translate(350,80)">
+                <circle r="20" fill="#b96cc4" />
+                <text y="5" text-anchor="middle" x="0">{{ peaksData[2].peak }}</text>
+                <text y="35" text-anchor="middle" x="0">{{ peaksData[2].age_range.split(' ')[0] }}</text>
+                <text y="50" text-anchor="middle" x="0">({{ peaksData[2].age_range.match(/\d{4}–\d{4}/)[0] }})</text>
+              </g>
 
-            <!-- Peak Stage 3 -->
-            <g class="node" transform="translate(250,140)">
-              <circle r="20" fill="#b96cc4" />
-              <text y="5" text-anchor="middle" x="0">{{ peaksData[0].peak }}</text>
-              <text y="35" text-anchor="middle" x="0">{{ peaksData[0].age_range.split(' ')[0] }}</text>
-              <text y="50" text-anchor="middle" x="0">({{ peaksData[0].age_range.match(/\d{4}–\d{4}/)[0]}})</text>
-            </g>
+              <!-- Peak Stage 3 -->
+              <g class="node" transform="translate(250,140)">
+                <circle r="20" fill="#b96cc4" />
+                <text y="5" text-anchor="middle" x="0">{{ peaksData[0].peak }}</text>
+                <text y="35" text-anchor="middle" x="0">{{ peaksData[0].age_range.split(' ')[0] }}</text>
+                <text y="50" text-anchor="middle" x="0">({{ peaksData[0].age_range.match(/\d{4}–\d{4}/)[0] }})</text>
+              </g>
 
-            <!-- Peak Stage 2 -->
-            <g class="node" transform="translate(450,140)">
-              <circle r="20" fill="#b96cc4" />
-              <text y="5" text-anchor="middle" x="0">{{ peaksData[1].peak }}</text>
-              <text y="35" text-anchor="middle" x="0">{{ peaksData[1].age_range.split(' ')[0] }}</text>
-              <text y="50" text-anchor="middle" x="0">({{ peaksData[1].age_range.match(/\d{4}–\d{4}/)[0]}})</text>
-            </g>
+              <!-- Peak Stage 2 -->
+              <g class="node" transform="translate(450,140)">
+                <circle r="20" fill="#b96cc4" />
+                <text y="5" text-anchor="middle" x="0">{{ peaksData[1].peak }}</text>
+                <text y="35" text-anchor="middle" x="0">{{ peaksData[1].age_range.split(' ')[0] }}</text>
+                <text y="50" text-anchor="middle" x="0">({{ peaksData[1].age_range.match(/\d{4}–\d{4}/)[0] }})</text>
+              </g>
 
-            <!-- Birth Month -->
-            <g class="node" transform="translate(100,200)">
-              <circle r="20" fill="#c0e6f8" />
-              <text y="5" text-anchor="middle" x="0">{{ birthDigits.month }}</text>
-              <text y="35" text-anchor="middle" x="0">Tháng {{ birthDate.split('/')[1] }}</text>
-            </g>
+              <!-- Birth Month -->
+              <g class="node" transform="translate(100,200)">
+                <circle r="20" fill="#c0e6f8" />
+                <text y="5" text-anchor="middle" x="0">{{ birthDigits.month }}</text>
+                <text y="35" text-anchor="middle" x="0">Tháng {{ birthDate.split('/')[1] }}</text>
+              </g>
 
-            <!-- Birth Day -->
-            <g class="node" transform="translate(350,200)">
-              <circle r="20" fill="#c0e6f8" />
-              <text y="5" text-anchor="middle" x="0">{{ birthDigits.day }}</text>
-              <text y="35" text-anchor="middle" x="0">Ngày {{ birthDate.split('/')[0] }}</text>
-            </g>
+              <!-- Birth Day -->
+              <g class="node" transform="translate(350,200)">
+                <circle r="20" fill="#c0e6f8" />
+                <text y="5" text-anchor="middle" x="0">{{ birthDigits.day }}</text>
+                <text y="35" text-anchor="middle" x="0">Ngày {{ birthDate.split('/')[0] }}</text>
+              </g>
 
-            <!-- Birth Year -->
-            <g class="node" transform="translate(600,200)">
-              <circle r="20" fill="#c0e6f8" />
-              <text y="5" text-anchor="middle" x="0">{{ birthDigits.year }}</text>
-              <text y="35" text-anchor="middle" x="0">{{ birthDate.split('/')[2] }}</text>
-            </g>
+              <!-- Birth Year -->
+              <g class="node" transform="translate(600,200)">
+                <circle r="20" fill="#c0e6f8" />
+                <text y="5" text-anchor="middle" x="0">{{ birthDigits.year }}</text>
+                <text y="35" text-anchor="middle" x="0">{{ birthDate.split('/')[2] }}</text>
+              </g>
 
-            <!-- Challenge Stage 1 -->
-            <g class="node" transform="translate(250,260)">
-              <circle r="20" fill="#b96cc4" />
-              <text y="5" text-anchor="middle" x="0">{{ peaksData[0].challenge }}</text>
-            </g>
+              <!-- Challenge Stage 1 -->
+              <g class="node" transform="translate(250,260)">
+                <circle r="20" fill="#b96cc4" />
+                <text y="5" text-anchor="middle" x="0">{{ peaksData[0].challenge }}</text>
+              </g>
 
-            <!-- Challenge Stage 2 -->
-            <g class="node" transform="translate(450,260)">
-              <circle r="20" fill="#b96cc4" />
-              <text y="5" text-anchor="middle" x="0">{{ peaksData[1].challenge }}</text>
-            </g>
+              <!-- Challenge Stage 2 -->
+              <g class="node" transform="translate(450,260)">
+                <circle r="20" fill="#b96cc4" />
+                <text y="5" text-anchor="middle" x="0">{{ peaksData[1].challenge }}</text>
+              </g>
 
-            <!-- Challenge Stage 3 -->
-            <g class="node" transform="translate(350,320)">
-              <circle r="20" fill="#b96cc4" />
-              <text y="5" text-anchor="middle" x="0">{{ peaksData[2].challenge }}</text>
-            </g>
+              <!-- Challenge Stage 3 -->
+              <g class="node" transform="translate(350,320)">
+                <circle r="20" fill="#b96cc4" />
+                <text y="5" text-anchor="middle" x="0">{{ peaksData[2].challenge }}</text>
+              </g>
 
-            <!-- Bottommost node (Thử thách giai đoạn 4) -->
-            <g class="node" transform="translate(350,400)">
-              <circle r="20" fill="#b96cc4" />
-              <text y="5" text-anchor="middle" x="0">{{ peaksData[3].challenge }}</text>
-            </g>
-          </svg>
+              <!-- Bottommost node (Thử thách giai đoạn 4) -->
+              <g class="node" transform="translate(350,400)">
+                <circle r="20" fill="#b96cc4" />
+                <text y="5" text-anchor="middle" x="0">{{ peaksData[3].challenge }}</text>
+              </g>
+            </svg>
           </div>
         </div>
-        <div v-else-if="loading" class="text-center text-gray-600">Đang tải dữ liệu...</div>
-        <div v-else class="text-center text-red-600">Không có dữ liệu đỉnh cao và thử thách.</div>
+        <div v-else-if="loading" class="text-center py-12">
+          <div class="inline-flex items-center">
+            <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span class="text-gray-600">Đang tải dữ liệu kim tự tháp...</span>
+          </div>
+        </div>
+        <div v-else class="text-center py-12 bg-red-50 rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-red-500 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+          </svg>
+          <h4 class="text-red-600 font-medium text-lg">Lỗi dữ liệu</h4>
+          <p class="text-gray-600 mt-1">Vui lòng nhập ngày sinh hợp lệ để xem kim tự tháp.</p>
+        </div>
       </transition>
 
       <!-- Giải thích chi tiết -->
@@ -205,6 +224,10 @@ const props = defineProps({
   birthDate: {
     type: String,
     default: '25/03/1988',
+    validator: (value) => {
+      if (!value) return true;
+      return /^\d{2}\/\d{2}\/\d{4}$/.test(value);
+    },
   },
   fullName: {
     type: String,
@@ -268,10 +291,12 @@ const fetchPeaksAndChallenges = async () => {
   console.log('fetchPeaksAndChallenges called with birthDate:', props.birthDate);
 
   if (!props.birthDate) {
+    loading.value = false;
     return;
   }
 
   if (!/^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
+    loading.value = false;
     return;
   }
 
@@ -283,6 +308,7 @@ const fetchPeaksAndChallenges = async () => {
     year < 1900 ||
     year > 2025
   ) {
+    loading.value = false;
     return;
   }
 
@@ -368,6 +394,7 @@ watch(() => props.birthDate, (newValue) => {
     fetchPeaksAndChallenges();
   } else {
     console.log('birthDate không hợp lệ khi watch:', newValue);
+    peaksData.value = null;
   }
 });
 
@@ -404,5 +431,26 @@ onMounted(() => {
   fill: #000;
   font-size: 12px;
   text-anchor: middle;
+}
+svg {
+  display: block;
+  overflow: visible;
+}
+@media (max-width: 768px) {
+  svg {
+    max-width: 90vw;
+  }
+  .container {
+    padding: 1rem;
+  }
+  .text-4xl {
+    font-size: 2rem;
+  }
+  .text-2xl {
+    font-size: 1.5rem;
+  }
+  .text-lg {
+    font-size: 1rem;
+  }
 }
 </style>

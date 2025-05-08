@@ -8,12 +8,7 @@
       <div class="flex justify-between items-center h-16">
         <!-- Logo bên trái -->
         <NuxtLink to="/" class="flex items-center space-x-2 group shrink-0">
-          <div class="w-9 h-9 rounded-full bg-purple-100 flex items-center justify-center group-hover:bg-purple-200 transition-colors duration-300">
-            <font-awesome-icon :icon="['fas', 'calculator']" class="text-lg text-purple-600" />
-          </div>
-          <h1 class="text-xl font-bold bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">
-            Thần Số Học
-          </h1>
+           <img src="/logo.png" alt="Thần Số Học Logo" width="100px"  />
         </NuxtLink>
 
         <!-- Main Menu căn giữa -->
@@ -51,13 +46,19 @@
         </nav>
 
         <!-- Auth Buttons bên phải - Ẩn trên mobile -->
-        <div class="hidden md:flex items-center space-x-4 ml-auto">
-          <template v-if="!userStore.isAuthenticated">
+        <div v-if="userStore.isStoreInitialized" class="hidden md:flex items-center space-x-4 ml-auto">
+          <template v-if="!userStore.user || Object.keys(userStore.user).length === 0">
             <NuxtLink 
               to="/dang-nhap"
-              class="block px-4 py-3 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
+              class="px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-purple-600 hover:bg-purple-50 transition-colors duration-200"
             >
               Đăng nhập
+            </NuxtLink>
+            <NuxtLink 
+              to="/dang-ky"
+              class="px-4 py-2 rounded-lg font-medium bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 transition-all duration-300 shadow"
+            >
+              Đăng ký
             </NuxtLink>
           </template>
           <template v-else>
@@ -67,8 +68,10 @@
               @mouseleave="closeMenu('auth')"
             >
               <button class="flex items-center space-x-2 focus:outline-none group">
-                <div class="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-purple-100 transition-colors duration-300">
-                  <font-awesome-icon :icon="['fas', 'user']" class="text-gray-600 group-hover:text-purple-600" />
+                <div class="w-9 h-9 rounded-full bg-gradient-to-r from-purple-400 to-indigo-400 flex items-center justify-center">
+                  <span class="text-white text-lg font-bold">
+                    {{ getInitialLetter(userStore.user.fullname) }}
+                  </span>
                 </div>
               </button>
               <div 
@@ -77,19 +80,23 @@
               >
                 <NuxtLink 
                   to="/tai-khoan"
-                  class="block px-4 py-3 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
+                  class="block px-4 py-2 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
                 >
                   Tài khoản
                 </NuxtLink>
                 <button
                   @click="logout"
-                  class="block w-full text-left px-4 py-3 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
+                  class="block w-full text-left px-4 py-2 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
                 >
                   Đăng xuất
                 </button>
               </div>
             </div>
           </template>
+        </div>
+        <!-- Placeholder khi store chưa khởi tạo -->
+        <div v-else class="hidden md:flex items-center space-x-4 ml-auto">
+          <div class="w-24 h-8 bg-gray-200 rounded-lg animate-pulse"></div>
         </div>
 
         <!-- Mobile menu button -->
@@ -99,7 +106,6 @@
             class="p-2 rounded-full hover:bg-purple-50 transition-colors duration-200 focus:outline-none"
             aria-label="Menu"
           >
-            <!-- Icon sẽ thay đổi giữa bars và times dựa trên mobileMenuOpen -->
             <font-awesome-icon 
               :icon="['fas', mobileMenuOpen ? 'times' : 'bars']" 
               class="text-xl text-purple-600" 
@@ -118,9 +124,9 @@
         leave-to-class="opacity-0 max-h-0"
       >
         <div 
-         v-show="mobileMenuOpen"
-      class="md:hidden fixed inset-x-0 top-16 bg-white shadow-lg z-40 overflow-y-auto"
-      style="max-height: calc(100vh - 64px)"
+          v-show="mobileMenuOpen"
+          class="md:hidden fixed inset-x-0 top-16 bg-white shadow-lg z-40 overflow-y-auto"
+          style="max-height: calc(100vh - 64px)"
         >
           <div class="px-2 py-3 space-y-1">
             <NuxtLink 
@@ -134,8 +140,8 @@
               {{ item.name }}
             </NuxtLink>
           </div>
-          <div class="px-4 py-3 border-t border-gray-100">
-            <template v-if="!userStore.isAuthenticated">
+          <div v-if="userStore.isStoreInitialized" class="px-4 py-3 border-t border-gray-100">
+            <template v-if="!userStore.user || Object.keys(userStore.user).length === 0">
               <NuxtLink 
                 to="/dang-nhap"
                 @click="mobileMenuOpen = false"
@@ -167,6 +173,11 @@
               </button>
             </template>
           </div>
+          <!-- Placeholder khi store chưa227 khởi tạo -->
+          <div v-else class="px-4 py-3 border-t border-gray-100">
+            <div class="w-full h-10 bg-gray-200 rounded-lg animate-pulse mb-2"></div>
+            <div class="w-full h-10 bg-gray-200 rounded-lg animate-pulse"></div>
+          </div>
         </div>
       </transition>
     </div>
@@ -175,7 +186,8 @@
 
 <script setup>
 import { useUserStore } from '~/stores/user'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onBeforeMount, onUnmounted } from 'vue'
+import { navigateTo } from '#app'
 
 // Khởi tạo userStore
 const userStore = useUserStore()
@@ -187,24 +199,22 @@ const isSticky = ref(false)
 const header = ref(null)
 const menuTimeout = ref(null)
 
-const exploreItems = [
-  { name: 'Số Đường Đời', path: '/duong-doi', icon: ['fas', 'route'] },
-  { name: 'Số Linh Hồn', path: '/linh-hon', icon: ['fas', 'heart'] },
-  { name: 'Số Nhân Cách', path: '/nhan-cach', icon: ['fas', 'user'] },
-  { name: 'Số Sứ Mệnh', path: '/su-menh', icon: ['fas', 'bullseye'] }
-]
-const toolsItems = [
-  { name: 'Tính Số Đường Đời', path: '/tinh-duong-doi', icon: ['fas', 'calculator'] },
-  { name: 'Tính Số Ngày Sinh', path: '/tinh-ngay-sinh', icon: ['fas', 'birthday-cake'] },
-  { name: 'Tên Theo Thần Số Học', path: '/ten-than-so-hoc', icon: ['fas', 'signature'] },
-  { name: 'Biểu Đồ Ngày Sinh', path: '/bieu-do-ngay-sinh', icon: ['fas', 'chart-pie'] }
-]
 const mobileMenuItems = [
   { name: 'Trang Chủ', path: '/' },
   { name: 'Về chúng tôi', path: '/gioi-thieu' },
   { name: 'Kiến thức', path: '/kien-thuc' },
   { name: 'Blog', path: '/blog' }
 ]
+
+// Hàm lấy chữ cái đầu hợp lệ
+const getInitialLetter = (fullname) => {
+  if (!fullname || typeof fullname !== 'string' || !fullname.trim()) {
+    return 'U'
+  }
+  const firstChar = fullname.trim().charAt(0)
+  // Chỉ lấy chữ cái (a-z, A-Z) hoặc ký tự Unicode chữ cái (như tiếng Việt)
+  return /[a-zA-Z\u00C0-\u1EF9]/.test(firstChar) ? firstChar.toUpperCase() : 'U'
+}
 
 // Hàm xử lý
 const toggleMobileMenu = () => {
@@ -221,7 +231,7 @@ const closeMenu = (menu) => {
     if (activeMenu.value === menu) {
       activeMenu.value = null
     }
-  }, 200) // Delay 200ms để chuột di chuyển sang submenu
+  }, 200)
 }
 
 const handleScroll = () => {
@@ -240,13 +250,17 @@ const logout = async () => {
 }
 
 // Lifecycle hooks
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
+onBeforeMount(() => {
+  if (process.client) {
+    userStore.initialize()
+  }
 })
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
-  clearTimeout(menuTimeout.value)
+  if (process.client) {
+    window.removeEventListener('scroll', handleScroll)
+    clearTimeout(menuTimeout.value)
+  }
 })
 </script>
 
@@ -261,7 +275,7 @@ onUnmounted(() => {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-4px); /* Giảm translateY để gần button hơn */
+    transform: translateY(-4px);
   }
   to {
     opacity: 1;
@@ -286,36 +300,7 @@ nav {
 }
 
 .dropdown-menu {
-  top: 100%; /* Đặt ngay sát dưới button */
-  margin-top: 0; /* Xóa margin-top */
-}
-.fixed {
-  position: fixed;
-}
-
-.inset-x-0 {
-  left: 0;
-  right: 0;
-}
-
-.top-16 {
-  top: 4rem; /* 64px - chiều cao header */
-}
-
-.shadow-lg {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-.z-40 {
-  z-index: 40;
-}
-
-.overflow-y-auto {
-  overflow-y: auto;
-}
-
-/* Đảm bảo header có z-index cao hơn */
-header {
-  z-index: 50;
+  top: 100%;
+  margin-top: 0;
 }
 </style>

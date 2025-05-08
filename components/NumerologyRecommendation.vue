@@ -25,7 +25,7 @@
           <div>
             <label for="birthDate" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh (DD/MM/YYYY)</label>
             <input
-              v-model="birthDate"
+              v-model="birthDateInput"
               type="text"
               id="birthDate"
               placeholder="VD: 01/01/1990"
@@ -230,7 +230,6 @@
                 <div class="bg-white p-5 rounded-xl border border-red-100 shadow-sm hover:shadow-md transition-shadow">
                   <h4 class="text-sm font-semibold text-red-600 uppercase tracking-wider mb-3">NÊN TRÁNH</h4>
                   <div v-for="(item, index) in recommendations.insight.avoidToday" :key="'avoid-' + index" class="mt-4 first:mt-0">
-                    viable
                     <p class="text-gray-800 font-medium">{{ item.activity }}</p>
                     <p class="text-gray-600 mt-1 text-sm">{{ item.explanation }}</p>
                   </div>
@@ -243,11 +242,23 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import { ref, onMounted } from 'vue'
 
+defineProps({
+  fullName: {
+    type: String,
+    default: ''
+  },
+  birthDate: {
+    type: String,
+    default: ''
+  }
+})
+
 const name = ref('')
-const birthDate = ref('')
+const birthDateInput = ref('')
 const foodPreferences = ref('')
 const drinkPreferences = ref('')
 const plans = ref('')
@@ -258,30 +269,19 @@ const error = ref(null)
 const activeTab = ref('Insight hôm nay')
 const tabs = ['Insight hôm nay', 'Đồ ăn', 'Đồ uống']
 
-// Load saved data from localStorage on mount
-onMounted(() => {
-  const savedData = localStorage.getItem('numerologyData')
-  if (savedData) {
-    const {
-      name: savedName,
-      birthDate: savedBirthDate,
-      foodPreferences: savedFoodPreferences,
-      drinkPreferences: savedDrinkPreferences,
-      plans: savedPlans,
-      activeTab: savedActiveTab,
-      personalDayNumber: savedPersonalDayNumber,
-      recommendations: savedRecommendations
-    } = JSON.parse(savedData)
-
-    name.value = savedName || ''
-    birthDate.value = savedBirthDate || ''
-    foodPreferences.value = savedFoodPreferences || ''
-    drinkPreferences.value = savedDrinkPreferences || ''
-    plans.value = savedPlans || ''
-    activeTab.value = savedActiveTab || 'Insight hôm nay'
-    personalDayNumber.value = savedPersonalDayNumber || null
-    recommendations.value = savedRecommendations || null
+// Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
+const formatDate = (dateStr) => {
+  if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    return ''
   }
+  const [year, month, day] = dateStr.split('-')
+  return `${day}/${month}/${year}`
+}
+
+onMounted(() => {
+  // Khởi tạo giá trị từ props
+  name.value = fullName || ''
+  birthDateInput.value = formatDate(birthDate) || ''
 })
 
 async function getRecommendations() {
@@ -290,12 +290,12 @@ async function getRecommendations() {
   loading.value = true
 
   try {
-    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate.value)) {
+    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDateInput.value)) {
       throw new Error('Vui lòng nhập ngày sinh đúng định dạng DD/MM/YYYY')
     }
 
     let endpoint
-    let body = { birthDate: birthDate.value }
+    let body = { birthDate: birthDateInput.value }
 
     if (activeTab.value === 'Đồ ăn') {
       endpoint = '/api/numerology/food'
@@ -319,7 +319,7 @@ async function getRecommendations() {
     // Save data to localStorage
     localStorage.setItem('numerologyData', JSON.stringify({
       name: name.value,
-      birthDate: birthDate.value,
+      birthDate: birthDateInput.value,
       foodPreferences: foodPreferences.value,
       drinkPreferences: drinkPreferences.value,
       plans: plans.value,

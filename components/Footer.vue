@@ -6,10 +6,7 @@
           <!-- Column 1: Brand Info -->
           <div class="md:col-span-3">
             <div class="flex items-center mb-4">
-              <div class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center mr-3">
-                <font-awesome-icon :icon="['fas', 'calculator']" class="text-white text-lg" />
-              </div>
-              <span class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">Thần Số Học</span>
+             <img src="/logo.png" alt="Thần Số Học Logo" width="100px"  />
             </div>
             <p class="text-gray-400 mb-4 leading-relaxed">
               Khám phá bản thân qua sức mạnh của các con số. Giải mã ý nghĩa cuộc đời thông qua thần số học Pitago.
@@ -53,7 +50,7 @@
         <!-- Copyright -->
         <div class="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p class="text-gray-400 mb-4 md:mb-0">
-            © 2025 <span class="text-purple-400">Thần Số Học</span>. Tất cả quyền được bảo lưu.
+            © 2025 <span class="text-purple-400">Luận giải thần số</span>. Tất cả quyền được bảo lưu.
           </p>
         </div>
       </div>
@@ -63,7 +60,7 @@
     <button
       v-if="showBackToTop"
       @click="scrollToTop"
-      class="fixed bottom-6 right-6 bg-gradient-to-r from-purple-600 to-teal-500 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 focus:outline-none z-50"
+      class="fixed bottom-6 right-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 focus:outline-none z-50"
       aria-label="Quay lại đầu trang"
     >
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
