@@ -143,6 +143,9 @@ const updateUserProfile = async () => {
     // Gọi API cập nhật thông tin user
     const response = await $fetch(`/api/users/${userId}`, {
       method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${userStore.token || ''}`, // Thêm token nếu cần
+      },
       body: {
         fullname: form.value.fullname,
         birthdate: form.value.birthdate
@@ -150,10 +153,10 @@ const updateUserProfile = async () => {
     });
 
     if (response.success) {
-      // Cập nhật store giống như trong Login.vue
+      // Cập nhật store
       userStore.setUser({
         id: userId,
-        email: userStore.user?.email || '', // Giữ email hiện tại
+        email: userStore.user?.email || '',
         fullname: form.value.fullname,
         birthdate: form.value.birthdate
       });
@@ -175,8 +178,12 @@ const updateUserProfile = async () => {
       await navigateTo('/xem');
     }
   } catch (error) {
-    console.error('Update profile error:', error);
-    errorMessage.value = error.data?.message || error.message || 'Lỗi khi cập nhật hồ sơ';
+    console.error('Update profile error:', {
+      message: error.message,
+      status: error.status,
+      data: error.data,
+    });
+    errorMessage.value = error.data?.message || 'Lỗi khi cập nhật hồ sơ. Vui lòng thử lại sau.';
     toast.error(errorMessage.value);
   } finally {
     loading.value = false;
