@@ -244,7 +244,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue';
 
 const props = defineProps({
   birthDate: {
@@ -261,82 +261,86 @@ const props = defineProps({
   },
 });
 
-const name = ref('')
-const birthDateInput = ref('')
-const foodPreferences = ref('')
-const drinkPreferences = ref('')
-const plans = ref('')
-const personalDayNumber = ref(null)
-const recommendations = ref(null)
-const loading = ref(false)
-const error = ref(null)
-const activeTab = ref('Insight hôm nay')
-const tabs = ['Insight hôm nay', 'Đồ ăn', 'Đồ uống']
-
 // Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
-const formatDate = (dateStr) => {
+const formatDateToDDMMYYYY = (dateStr) => {
   if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
-    return props.birthDate; // Sử dụng giá trị mặc định từ props nếu không hợp lệ
+    return props.birthDate; // Trả về giá trị mặc định nếu không hợp lệ
   }
-  const [year, month, day] = dateStr.split('-')
-  return `${day}/${month}/${year}`
-}
+  const [year, month, day] = dateStr.split('-');
+  return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+};
 
-onMounted(() => {
-  // Khởi tạo giá trị từ props
-  name.value = props.fullName
-  birthDateInput.value = props.birthDate
-})
+// Khởi tạo giá trị ref với giá trị từ props
+const name = ref(props.fullName);
+const birthDateInput = ref(formatDateToDDMMYYYY(props.birthDate));
+const foodPreferences = ref('');
+const drinkPreferences = ref('');
+const plans = ref('');
+const personalDayNumber = ref(null);
+const recommendations = ref(null);
+const loading = ref(false);
+const error = ref(null);
+const activeTab = ref('Insight hôm nay');
+const tabs = ['Insight hôm nay', 'Đồ ăn', 'Đồ uống'];
 
 async function getRecommendations() {
-  error.value = null
-  recommendations.value = null
-  loading.value = true
+  error.value = null;
+  recommendations.value = null;
+  loading.value = true;
 
   try {
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDateInput.value)) {
-      throw new Error('Vui lòng nhập ngày sinh đúng định dạng DD/MM/YYYY')
+      throw new Error('Vui lòng nhập ngày sinh đúng định dạng DD/MM/YYYY');
     }
 
-    let endpoint
-    let body = { birthDate: birthDateInput.value }
+    let endpoint;
+    let body = { birthDate: birthDateInput.value };
 
     if (activeTab.value === 'Đồ ăn') {
-      endpoint = '/api/numerology/food'
-      body.preferences = foodPreferences.value
+      endpoint = '/api/numerology/food';
+      body.preferences = foodPreferences.value;
     } else if (activeTab.value === 'Đồ uống') {
-      endpoint = '/api/numerology/drinks'
-      body.preferences = drinkPreferences.value
+      endpoint = '/api/numerology/drinks';
+      body.preferences = drinkPreferences.value;
     } else {
-      endpoint = '/api/numerology/insights'
-      body.plans = plans.value
+      endpoint = '/api/numerology/insights';
+      body.plans = plans.value;
     }
 
     const response = await $fetch(endpoint, {
       method: 'POST',
-      body
-    })
+      body,
+    });
 
-    personalDayNumber.value = response.personalDayNumber
-    recommendations.value = response.recommendations
+    personalDayNumber.value = response.personalDayNumber;
+    recommendations.value = response.recommendations;
 
-    // Save data to localStorage
-    localStorage.setItem('numerologyData', JSON.stringify({
-      name: name.value,
-      birthDate: birthDateInput.value,
-      foodPreferences: foodPreferences.value,
-      drinkPreferences: drinkPreferences.value,
-      plans: plans.value,
-      activeTab: activeTab.value,
-      personalDayNumber: personalDayNumber.value,
-      recommendations: recommendations.value
-    }))
+    // Lưu dữ liệu vào localStorage
+    localStorage.setItem(
+      'numerologyData',
+      JSON.stringify({
+        name: name.value,
+        birthDate: birthDateInput.value,
+        foodPreferences: foodPreferences.value,
+        drinkPreferences: drinkPreferences.value,
+        plans: plans.value,
+        activeTab: activeTab.value,
+        personalDayNumber: personalDayNumber.value,
+        recommendations: recommendations.value,
+      })
+    );
   } catch (err) {
-    error.value = err.message || 'Có lỗi xảy ra khi lấy gợi ý'
+    error.value = err.message || 'Có lỗi xảy ra khi lấy gợi ý';
   } finally {
-    loading.value = false
+    loading.value = false;
   }
 }
+onMounted(() => {
+  name.value = props.fullName;
+  birthDateInput.value = formatDateToDDMMYYYY(props.birthDate);
+  
+  
+});
 </script>
 
 <style scoped>
