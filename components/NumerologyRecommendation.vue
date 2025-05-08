@@ -1,3 +1,4 @@
+```vue
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
     <div class="container mx-auto p-4">
@@ -245,34 +246,24 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useUserStore } from '@/stores/user';
 
-const props = defineProps({
-  birthDate: {
-    type: String,
-    default: '',
-    validator: (value) => {
-      if (!value) return true;
-      return /^\d{2}\/\d{2}\/\d{4}$/.test(value);
-    },
-  },
-  fullName: {
-    type: String,
-    default: '',
-  },
-});
+// Lấy thông tin người dùng từ userStore
+const userStore = useUserStore();
+const user = userStore.user || { fullname: '', birthdate: '' }; // Fallback nếu user chưa có
 
 // Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
 const formatDateToDDMMYYYY = (dateStr) => {
   if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
-    return props.birthDate; // Trả về giá trị mặc định nếu không hợp lệ
+    return ''; // Trả về chuỗi rỗng nếu không hợp lệ
   }
   const [year, month, day] = dateStr.split('-');
   return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
 };
 
-// Khởi tạo giá trị ref với giá trị từ props
-const name = ref(props.fullName);
-const birthDateInput = ref(formatDateToDDMMYYYY(props.birthDate));
+// Khởi tạo giá trị ref từ userStore
+const name = ref(user.fullname);
+const birthDateInput = ref(formatDateToDDMMYYYY(user.birthdate));
 const foodPreferences = ref('');
 const drinkPreferences = ref('');
 const plans = ref('');
@@ -335,12 +326,6 @@ async function getRecommendations() {
     loading.value = false;
   }
 }
-onMounted(() => {
-  name.value = props.fullName;
-  birthDateInput.value = formatDateToDDMMYYYY(props.birthDate);
-  
-  
-});
 </script>
 
 <style scoped>
@@ -366,3 +351,4 @@ onMounted(() => {
   opacity: 0;
 }
 </style>
+```
