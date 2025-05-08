@@ -72,31 +72,31 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { useUserStore } from '~/stores/user'
-import { toast } from 'vue3-toastify'
+import { ref, computed, onMounted } from 'vue';
+import { useUserStore } from '~/stores/user';
+import { toast } from 'vue3-toastify';
 
-const userStore = useUserStore()
-const loading = ref(false)
-const errorMessage = ref('')
+const userStore = useUserStore();
+const loading = ref(false);
+const errorMessage = ref('');
 
 // Form data
 const form = ref({
   fullname: '',
   birthdate: ''
-})
+});
 
 // Tính toán ngày sinh tối đa (12 tuổi trở lên)
 const maxBirthdate = computed(() => {
-  const today = new Date()
-  const maxDate = new Date(today.getFullYear() - 12, today.getMonth(), today.getDate())
-  return maxDate.toISOString().split('T')[0]
-})
+  const today = new Date();
+  const maxDate = new Date(today.getFullYear() - 12, today.getMonth(), today.getDate());
+  return maxDate.toISOString().split('T')[0];
+});
 
 // Kiểm tra form hợp lệ
 const formValid = computed(() => {
-  return form.value.fullname.trim() && form.value.birthdate
-})
+  return form.value.fullname.trim() && form.value.birthdate;
+});
 
 // Khởi tạo form với dữ liệu từ store hoặc localStorage
 const initializeForm = () => {
@@ -105,39 +105,39 @@ const initializeForm = () => {
     form.value = {
       fullname: userStore.user.fullname || '',
       birthdate: userStore.user.birthdate || ''
-    }
-    return
+    };
+    return;
   }
 
   // Nếu store không có, kiểm tra localStorage
   if (process.client) {
-    const savedUser = localStorage.getItem('auth')
+    const savedUser = localStorage.getItem('auth');
     if (savedUser) {
-      const userData = JSON.parse(savedUser)
+      const userData = JSON.parse(savedUser);
       form.value = {
         fullname: userData.fullname || '',
         birthdate: userData.birthdate || ''
-      }
+      };
     }
   }
-}
+};
 
 // Cập nhật thông tin user
 const updateUserProfile = async () => {
   try {
-    loading.value = true
-    
+    loading.value = true;
+
     // Lấy user ID từ store hoặc localStorage
-    let userId = userStore.user?.id
+    let userId = userStore.user?.id;
     if (!userId && process.client) {
-      const savedUser = localStorage.getItem('auth')
+      const savedUser = localStorage.getItem('auth');
       if (savedUser) {
-        userId = JSON.parse(savedUser).id
+        userId = JSON.parse(savedUser).id;
       }
     }
 
     if (!userId) {
-      throw new Error('Không tìm thấy thông tin người dùng')
+      throw new Error('Không tìm thấy thông tin người dùng');
     }
 
     // Gọi API cập nhật thông tin user
@@ -147,48 +147,49 @@ const updateUserProfile = async () => {
         fullname: form.value.fullname,
         birthdate: form.value.birthdate
       }
-    })
+    });
 
     if (response.success) {
-      // Cập nhật store
+      // Cập nhật store giống như trong Login.vue
       userStore.setUser({
-        ...userStore.user,
+        id: userId,
+        email: userStore.user?.email || '', // Giữ email hiện tại
         fullname: form.value.fullname,
         birthdate: form.value.birthdate
-      })
+      });
 
       // Cập nhật localStorage
       if (process.client) {
-        const savedUser = localStorage.getItem('auth')
+        const savedUser = localStorage.getItem('auth');
         if (savedUser) {
-          const userData = JSON.parse(savedUser)
+          const userData = JSON.parse(savedUser);
           localStorage.setItem('auth', JSON.stringify({
             ...userData,
             fullname: form.value.fullname,
             birthdate: form.value.birthdate
-          }))
+          }));
         }
       }
 
-      toast.success('Hồ sơ đã được cập nhật!')
-      await navigateTo('/xem')
+      toast.success('Hồ sơ đã được cập nhật!');
+      await navigateTo('/xem');
     }
   } catch (error) {
-    console.error('Update profile error:', error)
-    errorMessage.value = error.data?.message || error.message || 'Lỗi khi cập nhật hồ sơ'
-    toast.error(errorMessage.value)
+    console.error('Update profile error:', error);
+    errorMessage.value = error.data?.message || error.message || 'Lỗi khi cập nhật hồ sơ';
+    toast.error(errorMessage.value);
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
 const submitProfile = () => {
-  if (!formValid.value) return
-  updateUserProfile()
-}
+  if (!formValid.value) return;
+  updateUserProfile();
+};
 
 // Khởi tạo form khi component mounted
 onMounted(() => {
-  initializeForm()
-})
+  initializeForm();
+});
 </script>

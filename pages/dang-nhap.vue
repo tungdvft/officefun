@@ -91,36 +91,35 @@
 </template>
 
 <script setup>
-import { useUserStore } from '~/stores/user'
-import { toast } from 'vue3-toastify'
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue';
+import { useUserStore } from '~/stores/user';
+import { toast } from 'vue3-toastify';
 
-const userStore = useUserStore()
+const userStore = useUserStore();
 const form = ref({
   email: '',
   password: ''
-})
-
-const rememberMe = ref(false)
-const isLoading = ref(false)
+});
+const rememberMe = ref(false);
+const isLoading = ref(false);
 
 // Khởi tạo store khi component được mount
 onMounted(() => {
   if (process.client) {
-    userStore.initialize()
+    userStore.initialize();
   }
-})
+});
 
 const handleLogin = async () => {
   if (!form.value.email || !form.value.password) {
     toast.error('Vui lòng nhập đầy đủ email và mật khẩu', {
       position: 'top-center',
       theme: 'colored'
-    })
-    return
+    });
+    return;
   }
 
-  isLoading.value = true
+  isLoading.value = true;
 
   try {
     const response = await $fetch('/api/login', {
@@ -130,40 +129,44 @@ const handleLogin = async () => {
         password: form.value.password,
         remember: rememberMe.value
       })
-    })
+    });
 
     // Kiểm tra dữ liệu phản hồi
     if (!response.user || !response.user.id || !response.user.fullname || !response.user.birthdate || !response.token) {
-      throw new Error('Dữ liệu phản hồi từ API không hợp lệ')
+      throw new Error('Dữ liệu phản hồi từ API không hợp lệ');
     }
 
     // Lưu thông tin user vào store
-    userStore.setUser(response.user, response.token)
+    userStore.setUser(response.user, response.token);
 
     toast.success('Đăng nhập thành công!', {
       position: 'top-center',
       theme: 'colored'
-    })
+    });
 
     // Chuyển hướng nhanh hơn
     setTimeout(() => {
-      navigateTo('/xem')
-    }, 300)
+      navigateTo('/xem');
+    }, 300);
   } catch (error) {
-    let errorMessage = 'Đăng nhập thất bại. Vui lòng thử lại'
-    
-    if (error.message) {
-      errorMessage = error.message
-    } else if (error.response && error.response._data) {
-      errorMessage = error.response._data.message || errorMessage
+    let errorMessage = 'Đăng nhập thất bại. Vui lòng nhập đúng email hoặc mật khẩu.';
+
+    // Kiểm tra lỗi từ API và gán thông báo thân thiện
+    if (error.response && error.response._data && error.response._data.message) {
+      // Nếu API trả về message cụ thể, sử dụng nó (nhưng đảm bảo không chứa thông tin nhạy cảm)
+      errorMessage = error.response._data.message.includes('email') || error.response._data.message.includes('password')
+        ? 'Email hoặc mật khẩu không đúng'
+        : 'Đăng nhập thất bại. Vui lòng nhập đúng email hoặc mật khẩu.';
+    } else if (error.status === 401) {
+      errorMessage = 'Email hoặc mật khẩu không đúng';
     }
 
     toast.error(errorMessage, {
       position: 'top-center',
       theme: 'colored'
-    })
+    });
   } finally {
-    isLoading.value = false
+    isLoading.value = false;
   }
-}
+};
 </script>
