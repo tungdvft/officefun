@@ -17,7 +17,8 @@
       </div>
     </section>
     <!-- About Content -->
-    <section class="py-16 bg-white">
+        <Stats />
+    <!-- <section class="py-16 bg-white">
       <div class="container mx-auto px-4">
         <div class="flex flex-col md:flex-row items-center gap-12">
           <div class="md:w-1/2">
@@ -25,7 +26,7 @@
               <div class="absolute -top-6 -left-6 w-32 h-32 bg-purple-100 rounded-full z-0"></div>
               <div class="relative z-10">
                 <img 
-                  src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                  src="/home.jpg" 
                   alt="Phân tích thần số học" 
                   class="rounded-lg shadow-lg w-full h-auto"
                 >
@@ -61,16 +62,11 @@
                 <span class="text-gray-700">Gợi ý hướng phát triển phù hợp với năng lượng số</span>
               </li>
             </ul>
-            <!-- <a href="/about" class="inline-flex items-center text-purple-600 font-medium hover:text-purple-900">
-              Tìm hiểu thêm
-              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </a> -->
+          
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
      <WhyChooseUs />
     <!-- Features Section -->
 
