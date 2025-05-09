@@ -6,7 +6,7 @@
           <!-- Column 1: Brand Info -->
           <div class="md:col-span-3">
             <div class="flex items-center mb-4">
-             <img src="/logo.png" alt="Thần Số Học Logo" width="100px"  />
+             <img src="/footer-logo.png" alt="Thần Số Học Logo" width="100px"  />
             </div>
             <p class="text-gray-400 mb-4 leading-relaxed">
               Khám phá bản thân qua sức mạnh của các con số. Giải mã ý nghĩa cuộc đời thông qua thần số học Pitago.

@@ -1,12 +1,12 @@
 <template>
   <div class="min-h-screen flex flex-col">
     <!-- Top Navigation -->
-    <header class="bg-purple-800 text-white shadow-lg sticky top-0 z-20">
+    <header class="bg-white text-purple-800 shadow-md sticky top-0 z-20 border-b">
       <div class="container mx-auto px-4">
         <div class="flex justify-between items-center h-16">
           <!-- Logo -->
           <NuxtLink to="/xem">
-             <img src="/logo.png" alt="Thần Số Học Logo" width="100px"  />
+             <img src="/logo.png" alt="Thần Số Học Logo" width="100px" />
           </NuxtLink>
 
           <!-- Desktop Navigation -->
@@ -17,7 +17,7 @@
               :key="index"
             >
               <button 
-                class="flex items-center h-full px-4 hover:bg-purple-700 transition-colors duration-200 rounded-t-lg"
+                class="flex items-center h-full px-4 hover:bg-purple-50 transition-colors duration-200 rounded-lg text-purple-800 font-medium"
                 @click="toggleDropdown(index)"
               >
                 <span>{{ item.title }}</span>
@@ -34,15 +34,15 @@
               
               <!-- Dropdown Menu -->
               <div 
-                class="absolute left-0 top-full w-56 bg-white rounded-b-lg rounded-tl-lg shadow-xl z-30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-1"
+                class="absolute left-0 top-full w-56 bg-white rounded-lg shadow-xl z-30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-1 border border-gray-100"
               >
                 <div class="py-1">
                   <NuxtLink 
                     v-for="(subItem, subIndex) in item.children" 
                     :key="subIndex"
                     :to="subItem.path"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-900 transition-colors duration-150"
-                    active-class="bg-purple-100 text-purple-900 font-medium"
+                    class="block px-4 py-2 text-sm text-purple-700 hover:bg-purple-50 hover:text-purple-900 transition-colors duration-150"
+                    active-class="bg-purple-50 text-purple-900 font-medium"
                   >
                     {{ subItem.title }}
                   </NuxtLink>
@@ -56,7 +56,7 @@
             <template v-if="!userStore.user || Object.keys(userStore.user).length === 0">
               <NuxtLink 
                 to="/dang-nhap"
-                class="hidden md:flex px-4 py-2 rounded-lg font-medium text-white hover:bg-purple-700 transition-colors duration-200"
+                class="hidden md:flex px-4 py-2 rounded-lg font-medium text-purple-700 hover:bg-purple-50 transition-colors duration-200"
               >
                 Đăng nhập
               </NuxtLink>
@@ -86,13 +86,13 @@
                 >
                   <NuxtLink 
                     to="/tai-khoan"
-                    class="block px-4 py-2 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
+                    class="block px-4 py-2 hover:bg-purple-50 text-purple-700 hover:text-purple-900 transition-colors duration-200"
                   >
                     Tài khoản
                   </NuxtLink>
                   <button
                     @click="logout"
-                    class="block w-full text-left px-4 py-2 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
+                    class="block w-full text-left px-4 py-2 hover:bg-purple-50 text-purple-700 hover:text-purple-900 transition-colors duration-200"
                   >
                     Đăng xuất
                   </button>
@@ -103,7 +103,7 @@
             <!-- Mobile menu button -->
             <button 
               @click="isMobileMenuOpen = !isMobileMenuOpen"
-              class="md:hidden text-white focus:outline-none p-1 rounded-full hover:bg-purple-700 transition-colors duration-200"
+              class="md:hidden text-purple-800 focus:outline-none p-1 rounded-full hover:bg-purple-50 transition-colors duration-200"
             >
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path 
@@ -120,7 +120,7 @@
             <div class="hidden md:block w-24 h-8 bg-gray-200 rounded-lg animate-pulse"></div>
             <button 
               @click="isMobileMenuOpen = !isMobileMenuOpen"
-              class="md:hidden text-white focus:outline-none p-1 rounded-full hover:bg-purple-700 transition-colors duration-200"
+              class="md:hidden text-purple-800 focus:outline-none p-1 rounded-full hover:bg-purple-50 transition-colors duration-200"
             >
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path 
@@ -136,12 +136,12 @@
       </div>
 
       <!-- Mobile menu -->
-      <div v-show="isMobileMenuOpen" class="md:hidden bg-purple-700 pb-4 transition-all duration-300 ease-in-out">
+      <div v-show="isMobileMenuOpen" class="md:hidden bg-white pb-4 transition-all duration-300 ease-in-out border-b">
         <div class="px-2 pt-2 pb-3 space-y-1">
           <div v-for="(item, index) in mainMenu" :key="index">
             <button 
               @click="toggleMobileDropdown(index)"
-              class="flex items-center w-full px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-600 transition-colors duration-200"
+              class="flex items-center w-full px-3 py-2 rounded-md text-base font-medium text-purple-800 hover:bg-purple-50 transition-colors duration-200"
             >
               <span>{{ item.title }}</span>
               <svg 
@@ -163,8 +163,8 @@
                 v-for="(subItem, subIndex) in item.children" 
                 :key="subIndex"
                 :to="subItem.path"
-                class="block px-3 py-2 rounded-md text-sm font-medium text-purple-100 hover:bg-purple-600 hover:text-white transition-colors duration-200"
-                active-class="bg-purple-800 text-white font-semibold"
+                class="block px-3 py-2 rounded-md text-sm font-medium text-purple-700 hover:bg-purple-50 hover:text-purple-900 transition-colors duration-200"
+                active-class="bg-purple-50 text-purple-900 font-semibold"
                 @click="isMobileMenuOpen = false"
               >
                 {{ subItem.title }}
@@ -172,11 +172,11 @@
             </div>
           </div>
           <!-- Mobile Auth Menu -->
-          <div v-if="userStore.isStoreInitialized" class="pt-2 border-t border-purple-600">
+          <div v-if="userStore.isStoreInitialized" class="pt-2 border-t border-purple-200">
             <template v-if="!userStore.user || Object.keys(userStore.user).length === 0">
               <NuxtLink 
                 to="/dang-nhap"
-                class="block w-full px-3 py-2 text-center rounded-lg font-medium bg-purple-50 text-purple-600 hover:bg-purple-100 transition-colors duration-200 mb-2"
+                class="block w-full px-3 py-2 text-center rounded-lg font-medium bg-purple-50 text-purple-700 hover:bg-purple-100 transition-colors duration-200 mb-2"
                 @click="isMobileMenuOpen = false"
               >
                 Đăng nhập
@@ -192,7 +192,7 @@
             <template v-else>
               <NuxtLink 
                 to="/tai-khoan"
-                class="block w-full px-3 py-2 text-center rounded-lg font-medium bg-purple-50 text-purple-600 hover:bg-purple-100 transition-colors duration-200 mb-2"
+                class="block w-full px-3 py-2 text-center rounded-lg font-medium bg-purple-50 text-purple-700 hover:bg-purple-100 transition-colors duration-200 mb-2"
                 @click="isMobileMenuOpen = false"
               >
                 Tài khoản
@@ -206,7 +206,7 @@
             </template>
           </div>
           <!-- Placeholder khi store chưa khởi tạo -->
-          <div v-else class="pt-2 border-t border-purple-600">
+          <div v-else class="pt-2 border-t border-purple-200">
             <div class="w-full h-10 bg-gray-200 rounded-lg animate-pulse mb-2"></div>
             <div class="w-full h-10 bg-gray-200 rounded-lg animate-pulse"></div>
           </div>
@@ -327,8 +327,6 @@ const logout = async () => {
 </script>
 
 <style scoped>
-
-
 /* Smooth transitions for dropdowns */
 .group:hover .group-hover\:translate-y-0 {
   transform: translateY(0);
