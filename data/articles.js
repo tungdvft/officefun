@@ -2,7 +2,7 @@ export const articles = [
   {
     id: "1",
         slug: "y-nghia-con-so-chu-dao",
-    image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bnVtYmVycyUyMG1lYW5pbmd8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+    image: "/blog-1.jpg",
 alt: "Các con số từ 1-9 hiện lên với hiệu ứng ánh sáng huyền ảo",
     title: "Ý Nghĩa Chi Tiết Các Con Số Chủ Đạo Từ 1 Đến 9 và các số  đặc biệt 11, 22",
     excerpt: "Khám phá sâu về ý nghĩa từng con số chủ đạo trong thần số học và cách chúng ảnh hưởng đến cuộc đời bạn.",
@@ -118,7 +118,7 @@ alt: "Các con số từ 1-9 hiện lên với hiệu ứng ánh sáng huyền �
   {
     id: "2",
       slug: "than-so-hoc-cho-tre-em",
-    image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2hpbGRyZW4lMjBwbGF5aW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+    image: "/blog-2.jpg",
 alt: "Nhóm trẻ em đang vui chơi với các con số nhiều màu sắc",
     title: "Ứng Dụng Thần Số Học Trong Nuôi Dạy Trẻ",
     excerpt: "Cách sử dụng thần số học để hiểu và phát triển tiềm năng của trẻ từ sớm.",
@@ -164,7 +164,7 @@ alt: "Nhóm trẻ em đang vui chơi với các con số nhiều màu sắc",
   {
     id: "3",
       slug: "nam-ca-nhan-than-so-hoc",
-    image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FsZW5kYXIlMjBudW1iZXJzfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+    image: "/blog-3.jpg",
 alt: "Lịch để bản với các con số năm được highlight",
     title: "Cách Tính Và Ứng Dụng Năm Cá Nhân Trong Thần Số Học",
     excerpt: "Hướng dẫn chi tiết cách xác định năm cá nhân và tận dụng năng lượng từng chu kỳ.",
