@@ -1,7 +1,16 @@
 <template>
   <section class="py-16 cosmic-bg">
-    <div class="container mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-8 text-purple-900">Bài Viết Mới Nhất</h2>
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <span class="inline-block px-4 py-1 bg-purple-100 text-purple-900 rounded-full text-sm font-semibold mb-4">BÀI VIẾT MỚI NHẤT</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-purple-900">
+           <span class="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Kiến Thức</span> Nền Tảng Trong Thần Số Học
+        </h2>
+        <p class="text-gray-600 max-w-2xl mx-auto mt-4">
+          Các bài viết hữu ích để bạn nắm được những thông tin cơ bản trước khi tìm hiểu sâu hơn.
+        </p>
+      </div>
+
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
         <!-- Render 3 bài viết đầu tiên -->
         <article 

@@ -4,32 +4,115 @@ export const articles = [
         slug: "y-nghia-con-so-chu-dao",
     image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bnVtYmVycyUyMG1lYW5pbmd8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
 alt: "Các con số từ 1-9 hiện lên với hiệu ứng ánh sáng huyền ảo",
-    title: "Ý Nghĩa Chi Tiết Các Con Số Chủ Đạo Từ 1 Đến 9",
+    title: "Ý Nghĩa Chi Tiết Các Con Số Chủ Đạo Từ 1 Đến 9 và các số  đặc biệt 11, 22",
     excerpt: "Khám phá sâu về ý nghĩa từng con số chủ đạo trong thần số học và cách chúng ảnh hưởng đến cuộc đời bạn.",
     content: `
-      <h2 class="text-2xl font-bold text-purple-900 mb-4">Con Số Chủ Đạo 1 - Lãnh Đạo Bẩm Sinh</h2>
-      <p class="mb-4">Những người có con số chủ đạo 1 thường có tính cách độc lập, sáng tạo và quyết đoán. Họ sinh ra để dẫn đầu với:</p>
-      <ul class="list-disc pl-6 mb-4 space-y-2">
-        <li>Khả năng sáng tạo vượt trội</li>
-        <li>Tinh thần tiên phong</li>
-        <li>Năng lượng dồi dào</li>
-      </ul>
-      <p class="mb-4"><strong>Lưu ý:</strong> Cần tránh xu hướng độc đoán và thiếu kiên nhẫn.</p>
+      <div class="content">
+  <h2 class="text-2xl font-bold text-purple-900 mb-4">Con Số Chủ Đạo 1 - Lãnh Đạo Bẩm Sinh</h2>
+  <p class="mb-4">Những người có con số chủ đạo 1 thường có tính cách độc lập, sáng tạo và quyết đoán. Họ sinh ra để dẫn đầu với:</p>
+  <ul class="list-disc pl-6 mb-4 space-y-2">
+    <li>Khả năng sáng tạo vượt trội</li>
+    <li>Tinh thần tiên phong</li>
+    <li>Năng lượng dồi dào</li>
+  </ul>
+  <p class="mb-4"><strong>Lưu ý:</strong> Cần tránh xu hướng độc đoán và thiếu kiên nhẫn.</p>
 
-      <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Con Số Chủ Đạo 2 - Người Hòa Giải</h2>
-      <p class="mb-4">Người số 2 có trực giác nhạy bén và khả năng ngoại giao tuyệt vời:</p>
-      <ul class="list-disc pl-6 mb-4 space-y-2">
-        <li>Nhạy cảm với cảm xúc người khác</li>
-        <li>Kỹ năng hợp tác xuất sắc</li>
-        <li>Khiếu thẩm mỹ tinh tế</li>
-      </ul>
-      <p class="mb-4"><strong>Thách thức:</strong> Dễ bị tổn thương và thiếu quyết đoán.</p>
+  <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Con Số Chủ Đạo 2 - Người Hòa Giải</h2>
+  <p class="mb-4">Người số 2 có trực giác nhạy bén và khả năng ngoại giao tuyệt vời:</p>
+  <ul class="list-disc pl-6 mb-4 space-y-2">
+    <li>Nhạy cảm với cảm xúc người khác</li>
+    <li>Kỹ năng hợp tác xuất sắc</li>
+    <li>Khiếu thẩm mỹ tinh tế</li>
+  </ul>
+  <p class="mb-4"><strong>Thách thức:</strong> Dễ bị tổn thương và thiếu quyết đoán.</p>
 
-      <div class="bg-purple-50 p-4 rounded-lg my-6">
-        <h3 class="font-bold text-purple-700 mb-2">Cách Tính Con Số Chủ Đạo</h3>
-        <p>Cộng tất cả các chữ số trong ngày sinh (dd/mm/yyyy) cho đến khi còn 1 chữ số (trừ số 11 và 22).</p>
-        <p class="mt-2"><em>Ví dụ: 15/03/1990 → 1+5+0+3+1+9+9+0 = 28 → 2+8 = 10 → 1+0 = 1</em></p>
-      </div>
+  <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Con Số Chủ Đạo 3 - Nhà Sáng Tạo</h2>
+  <p class="mb-4">Người số 3 tràn đầy năng lượng sáng tạo và khả năng biểu đạt bản thân:</p>
+  <ul class="list-disc pl-6 mb-4 space-y-2">
+    <li>Khiếu hài hước tự nhiên</li>
+    <li>Tư duy lạc quan, vui vẻ</li>
+    <li>Tài năng nghệ thuật nổi bật</li>
+  </ul>
+  <p class="mb-4"><strong>Thách thức:</strong> Dễ mất tập trung và thiếu kỷ luật.</p>
+
+  <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Con Số Chủ Đạo 4 - Người Xây Dựng</h2>
+  <p class="mb-4">Người số 4 là biểu tượng của sự ổn định và chăm chỉ:</p>
+  <ul class="list-disc pl-6 mb-4 space-y-2">
+    <li>Tinh thần trách nhiệm cao</li>
+    <li>Kỹ năng tổ chức tuyệt vời</li>
+    <li>Tính thực tế và đáng tin cậy</li>
+  </ul>
+  <p class="mb-4"><strong>Lưu ý:</strong> Tránh bảo thủ và thiếu linh hoạt.</p>
+
+  <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Con Số Chủ Đạo 5 - Nhà Thám Hiểm</h2>
+  <p class="mb-4">Người số 5 yêu tự do và luôn tìm kiếm những trải nghiệm mới:</p>
+  <ul class="list-disc pl-6 mb-4 space-y-2">
+    <li>Thích nghi nhanh với thay đổi</li>
+    <li>Năng động và đam mê khám phá</li>
+    <li>Khả năng giao tiếp linh hoạt</li>
+  </ul>
+  <p class="mb-4"><strong>Thách thức:</strong> Dễ bốc đồng và thiếu cam kết.</p>
+
+  <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Con Số Chủ Đạo 6 - Người Chăm Sóc</h2>
+  <p class="mb-4">Người số 6 mang trái tim ấm áp và tinh thần trách nhiệm với cộng đồng:</p>
+  <ul class="list-disc pl-6 mb-4 space-y-2">
+    <li>Tình yêu thương vô điều kiện</li>
+    <li>Kỹ năng chăm sóc và hỗ trợ</li>
+    <li>Cảm nhận thẩm mỹ tinh tế</li>
+  </ul>
+  <p class="mb-4"><strong>Lưu ý:</strong> Tránh  Cần tránh hy sinh bản thân quá mức.</p>
+
+  <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Con Số Chủ Đạo 7 - Nhà Tư Tưởng</h2>
+  <p class="mb-4">Người số 7 có trí tuệ sâu sắc và luôn tìm kiếm ý nghĩa cuộc sống:</p>
+  <ul class="list-disc pl-6 mb-4 space-y-2">
+    <li>Trực giác mạnh mẽ</li>
+    <li>Khả năng phân tích sắc bén</li>
+    <li>Thích khám phá triết học và tâm linh</li>
+  </ul>
+  <p class="mb-4"><strong>Thách thức:</strong> Dễ cô lập và xa cách với thực tế.</p>
+
+  <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Con Số Chủ Đạo 8 - Người Thành Công</h2>
+  <p class="mb-4">Người số 8 có tham vọng lớn và khả năng đạt được thành công vật chất:</p>
+  <ul class="list-disc pl-6 mb-4 space-y-2">
+    <li>Tinh thần lãnh đạo mạnh mẽ</li>
+    <li>Khả năng quản lý tài chính</li>
+    <li>Ý chí kiên cường</li>
+  </ul>
+  <p class="mb-4"><strong>Lưu ý:</strong> Tránh chạy theo quyền lực và vật chất quá mức.</p>
+
+  <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Con Số Chủ Đạo 9 - Nhà Nhân Đạo</h2>
+  <p class="mb-4">Người số 9 có trái tim rộng lớn và mong muốn cải thiện thế giới:</p>
+  <ul class="list-disc pl-6 mb-4 space-y-2">
+    <li>Tinh thần hy sinh vì cộng đồng</li>
+    <li>Khả năng truyền cảm hứng</li>
+    <li>Tầm nhìn toàn cầu</li>
+  </ul>
+  <p class="mb-4"><strong>Thách thức:</strong> Dễ lý tưởng hóa và bỏ qua nhu cầu cá nhân.</p>
+
+  <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Con Số Chủ Đạo 11 - Nhà Truyền Cảm Hứng</h2>
+  <p class="mb-4">Số 11 là số Master, mang năng lượng tâm linh và sáng tạo mạnh mẽ:</p>
+  <ul class="list-disc pl-6 mb-4 space-y-2">
+    <li>Trực giác siêu nhạy</li>
+    <li>Khả năng dẫn dắt bằng tầm nhìn</li>
+    <li>Năng lượng sáng tạo bùng nổ</li>
+  </ul>
+  <p class="mb-4"><strong>Lưu ý:</strong> Cần giữ cân bằng giữa tâm linh và thực tế.</p>
+
+  <h2 class="text-2xl font-bold text-purple-900 mb-4 mt-8">Con Số Chủ Đạo 22 - Nhà Kiến Tạo</h2>
+  <p class="mb-4">Số 22 là số Master, kết hợp tầm nhìn lớn và khả năng hiện thực hóa:</p>
+  <ul class="list-disc pl-6 mb-4 space-y-2">
+    <li>Khả năng xây dựng dự án lớn</li>
+    <li>Tinh thần thực tế và sáng tạo</li>
+    <li>Ảnh hưởng mạnh mẽ đến xã hội</li>
+  </ul>
+  <p class="mb-4"><strong>Thách thức:</strong> Tránh áp lực quá lớn từ kỳ vọng.</p>
+
+  <div class="bg-purple-50 p-4 rounded-lg my-6">
+    <h3 class="font-bold text-purple-700 mb-2">Cách Tính Con Số Chủ Đạo</h3>
+    <p>Cộng tất cả các chữ số trong ngày sinh (dd/mm/yyyy) cho đến khi còn 1 chữ số (trừ số 11 và 22).</p>
+    <p class="mt-2"><em>Ví dụ: 15/03/1990 → 1+5+0+3+1+9+9+0 = 28 → 2+8 = 10 → 1+0 = 1</em></p>
+  </div>
+</div>
     `
   },
   {

@@ -1,21 +1,26 @@
 <template>
-  <section class="py-16">
-    <div class="container mx-auto">
-      <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold text-purple-900 mb-4">Câu Hỏi Thường Gặp</h2>
-        <p class="text-xl text-gray-600 max-w-2xl mx-auto">Những thắc mắc phổ biến về thần số học</p>
+  <section class="py-16 bg-gradient-to-br from-purple-50 to-indigo-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <span class="inline-block px-4 py-1 bg-purple-100 text-purple-900 rounded-full text-sm font-semibold mb-4">GIẢI ĐÁP VỀ THẦN SỐ HỌC</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-purple-900">
+          Những Câu Hỏi <span class="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Thường Gặp</span>
+        </h2>
+        <p class="text-gray-600 max-w-2xl mx-auto mt-4">
+         Và những thắc mắc phổ biến về thần số học
+        </p>
       </div>
 
       <div class="space-y-4">
         <div 
           v-for="(faq, index) in faqs" 
           :key="index"
-          class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+          class="bg-white p-6 rounded-xl shadow-md border border-white hover:border-purple-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
           :class="{ 'ring-2 ring-purple-500': faq.isOpen }"
         >
           <button 
             @click="toggleFAQ(index)"
-            class="w-full p-6 text-left flex justify-between items-center hover:bg-purple-50 transition-colors duration-200"
+            class="w-full text-left flex justify-between items-center hover:bg-purple-50 transition-colors duration-200"
           >
             <h3 class="text-xl font-semibold text-gray-800">{{ faq.question }}</h3>
             <svg 
@@ -158,48 +163,48 @@ export default {
           isOpen: false
         },
         {
-        question: 'Làm thế nào để đặt tên con hợp lý theo thần số học?',
-        answer: `
+          question: 'Làm thế nào để đặt tên con hợp lý theo thần số học?',
+          answer: `
             <p>Đặt tên con theo thần số học là phương pháp khoa học giúp trẻ phát huy tiềm năng từ nhỏ. Dưới đây là 5 nguyên tắc vàng:</p>
             
             <div class="grid md:grid-cols-2 gap-6 mt-4">
-            <div>
+              <div>
                 <h4 class="font-bold text-purple-700 mb-2">Nguyên tắc cơ bản</h4>
                 <ul class="space-y-2 list-disc pl-5">
-                <li><span class="font-semibold">Cân bằng với ngày sinh:</span> Tên nên bổ sung năng lượng cho những con số thiếu trong biểu đồ ngày sinh</li>
-                <li><span class="font-semibold">Chú trọng số đường đời:</span> Tổng tên nên tạo ra số đường đời hài hòa (thường từ 2-9, tránh số 1 quá mạnh cho trẻ)</li>
-                <li><span class="font-semibold">Xem xét chu kỳ 9 năm:</span> Chọn tên phù hợp với chu kỳ phát triển đầu đời của trẻ</li>
+                  <li><span class="font-semibold">Cân bằng với ngày sinh:</span> Tên nên bổ sung năng lượng cho những con số thiếu trong biểu đồ ngày sinh</li>
+                  <li><span class="font-semibold">Chú trọng số đường đời:</span> Tổng tên nên tạo ra số đường đời hài hòa (thường từ 2-9, tránh số 1 quá mạnh cho trẻ)</li>
+                  <li><span class="font-semibold">Xem xét chu kỳ 9 năm:</span> Chọn tên phù hợp với chu kỳ phát triển đầu đời của trẻ</li>
                 </ul>
-            </div>
-            <div>
+              </div>
+              <div>
                 <h4 class="font-bold text-purple-700 mb-2">Lưu ý quan trọng</h4>
                 <ul class="space-y-2 list-disc pl-5">
-                <li>Kết hợp với văn hóa gia đình và ý nghĩa tên truyền thống</li>
-                <li>Tránh những tên tạo ra "nút thắt nghiệp" (các số 13, 14, 16, 19)</li>
-                <li>Nên có sự cân bằng giữa số linh hồn (nguyện vọng) và số nhân cách (ấn tượng xã hội)</li>
+                  <li>Kết hợp với văn hóa gia đình và ý nghĩa tên truyền thống</li>
+                  <li>Tránh những tên tạo ra "nút thắt nghiệp" (các số 13, 14, 16, 19)</li>
+                  <li>Nên có sự cân bằng giữa số linh hồn (nguyện vọng) và số nhân cách (ấn tượng xã hội)</li>
                 </ul>
-            </div>
+              </div>
             </div>
 
             <div class="mt-6 bg-purple-50 p-4 rounded-lg border border-purple-200">
-            <h4 class="font-bold text-purple-900 mb-2">Ví dụ thực tế:</h4>
-            <p>Nếu bé sinh ngày 15/12/2023 (tổng ngày sinh 1+5+1+2+2+0+2+3=16=7):</p>
-            <ul class="mt-2 space-y-1 list-disc pl-5">
+              <h4 class="font-bold text-purple-900 mb-2">Ví dụ thực tế:</h4>
+              <p>Nếu bé sinh ngày 15/12/2023 (tổng ngày sinh 1+5+1+2+2+0+2+3=16=7):</p>
+              <ul class="mt-2 space-y-1 list-disc pl-5">
                 <li>Nên chọn tên bổ sung năng lượng số 2 hoặc 6 để cân bằng</li>
                 <li>Tổng tên lý tưởng nên rơi vào 2, 3 hoặc 6</li>
                 <li>Có thể tham khảo các tên như: Minh Anh (số 6), Gia Hân (số 3), Bảo Châu (số 2)</li>
-            </ul>
+              </ul>
             </div>
 
             <p class="mt-6">Chúng tôi cung cấp <strong>dịch vụ tư vấn đặt tên chuyên sâu</strong> với các bước:</p>
             <ol class="mt-2 space-y-1 list-decimal pl-5">
-            <li>Phân tích biểu đồ ngày sinh chi tiết</li>
-            <li>Xác định năng lượng cần bổ sung</li>
-            <li>Gợi ý 5-10 tên phù hợp kèm phân tích</li>
-            <li>Tư vấn chọn tên tốt nhất dựa trên nhiều yếu tố</li>
+              <li>Phân tích biểu đồ ngày sinh chi tiết</li>
+              <li>Xác định năng lượng cần bổ sung</li>
+              <li>Gợi ý 5-10 tên phù hợp kèm phân tích</li>
+              <li>Tư vấn chọn tên tốt nhất dựa trên nhiều yếu tố</li>
             </ol>
-        `,
-        isOpen: false
+          `,
+          isOpen: false
         }
       ]
     }

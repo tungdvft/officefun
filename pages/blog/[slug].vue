@@ -10,7 +10,7 @@
         
         <div class="mt-8 pt-6 border-t border-gray-200">
           <nuxt-link 
-            to="/bai-viet" 
+            to="/blog" 
             class="text-purple-600 hover:text-purple-900 font-medium"
           >
             ← Quay lại danh sách bài viết
@@ -22,7 +22,7 @@
       <div v-else class="text-center py-12">
         <h2 class="text-2xl font-bold text-gray-700 mb-4">Bài viết không tồn tại</h2>
         <nuxt-link 
-          to="/bai-viet" 
+          to="/blog" 
           class="text-purple-600 hover:text-purple-900 font-medium"
         >
           Quay lại danh sách bài viết
