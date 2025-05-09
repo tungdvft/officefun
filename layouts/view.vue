@@ -74,7 +74,7 @@
                 @mouseleave="closeMenu('auth')"
               >
                 <button class="flex items-center space-x-2 focus:outline-none group">
-                  <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-400 to-indigo-400 flex items-center justify-center">
+                  <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-sm">
                     <span class="text-white text-base font-bold">
                       {{ getInitialLetter(userStore.user.fullname) }}
                     </span>

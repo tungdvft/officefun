@@ -2,61 +2,50 @@
   <header 
     ref="header" 
     class="bg-white text-gray-800 border-b border-gray-100 sticky top-0 z-50 transition-all duration-300"
-    :class="{ 'shadow-sm': isSticky }"
+    :class="{ 'shadow-sm bg-white/95 backdrop-blur-sm': isSticky }"
   >
     <div class="container mx-auto px-4">
-      <div class="flex justify-between items-center h-16">
+      <div class="flex justify-between items-center h-16 md:h-20">
         <!-- Logo bên trái -->
-        <NuxtLink to="/" class="flex items-center space-x-2 group shrink-0">
-           <img src="/logo.png" alt="Thần Số Học Logo" width="100px"  />
+        <NuxtLink to="/" class="flex items-center shrink-0">
+          <img src="/logo.png" alt="Thần Số Học Logo" class="h-10 md:h-12 w-auto transition-all duration-300" />
         </NuxtLink>
 
-        <!-- Main Menu căn giữa -->
+        <!-- Main Menu căn giữa - Đã chỉnh sửa gạch ngang -->
         <nav class="hidden md:flex items-center h-full absolute left-1/2 transform -translate-x-1/2">
           <div class="flex items-center h-full space-x-1">
             <NuxtLink 
-              to="/" 
-              class="px-4 py-2 rounded-lg font-medium hover:text-purple-600 hover:bg-purple-50 transition-colors duration-200 h-full flex items-center"
-              active-class="text-purple-600 bg-purple-50 font-semibold"
+              v-for="(item, index) in navItems"
+              :key="index"
+              :to="item.path" 
+              class="relative px-5 py-2 rounded-lg font-medium hover:text-purple-600 transition-colors duration-200 h-full flex items-center group"
+              :class="{ 'text-purple-600': route.path === item.path }"
             >
-              Trang Chủ
-            </NuxtLink>
-            <NuxtLink 
-              to="/gioi-thieu" 
-              class="px-4 py-2 rounded-lg font-medium hover:text-purple-600 hover:bg-purple-50 transition-colors duration-200 h-full flex items-center"
-              active-class="text-purple-600 bg-purple-50 font-semibold"
-            >
-              Về chúng tôi
-            </NuxtLink>
-            <NuxtLink 
-              to="/kien-thuc" 
-              class="px-4 py-2 rounded-lg font-medium hover:text-purple-600 hover:bg-purple-50 transition-colors duration-200 h-full flex items-center"
-              active-class="text-purple-600 bg-purple-50 font-semibold"
-            >
-              Kiến thức
-            </NuxtLink>
-            <NuxtLink 
-              to="/blog" 
-              class="px-4 py-2 rounded-lg font-medium hover:text-purple-600 hover:bg-purple-50 transition-colors duration-200 h-full flex items-center"
-              active-class="text-purple-600 bg-purple-50 font-semibold"
-            >
-              Blog
+              {{ item.name }}
+              <span 
+                v-if="route.path === item.path"
+                class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-14 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-300"
+              ></span>
+              <span 
+                v-else
+                class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-300 group-hover:w-14"
+              ></span>
             </NuxtLink>
           </div>
         </nav>
 
-        <!-- Auth Buttons bên phải - Ẩn trên mobile -->
+        <!-- Auth Buttons bên phải -->
         <div v-if="userStore.isStoreInitialized" class="hidden md:flex items-center space-x-4 ml-auto">
           <template v-if="!userStore.user || Object.keys(userStore.user).length === 0">
             <NuxtLink 
               to="/dang-nhap"
-              class="px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-purple-600 hover:bg-purple-50 transition-colors duration-200"
+              class="px-5 py-2 rounded-lg font-medium text-gray-700 hover:text-purple-600 transition-colors duration-200"
             >
               Đăng nhập
             </NuxtLink>
             <NuxtLink 
               to="/dang-ky"
-              class="px-4 py-2 rounded-lg font-medium bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 transition-all duration-300 shadow"
+              class="px-5 py-2.5 rounded-lg font-medium bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md"
             >
               Đăng ký
             </NuxtLink>
@@ -68,25 +57,26 @@
               @mouseleave="closeMenu('auth')"
             >
               <button class="flex items-center space-x-2 focus:outline-none group">
-                <div class="w-9 h-9 rounded-full bg-gradient-to-r from-purple-400 to-indigo-400 flex items-center justify-center">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-sm">
                   <span class="text-white text-lg font-bold">
                     {{ getInitialLetter(userStore.user.fullname) }}
                   </span>
                 </div>
               </button>
               <div 
-                class="dropdown-menu absolute top-full right-0 bg-white shadow-xl rounded-lg py-2 w-48 z-30 border border-gray-100"
+                class="dropdown-menu absolute top-full right-0 bg-white shadow-xl rounded-xl py-2 w-48 z-30 border border-gray-100"
                 :class="{ 'block': activeMenu === 'auth', 'hidden': activeMenu !== 'auth' }"
               >
                 <NuxtLink 
                   to="/tai-khoan"
-                  class="block px-4 py-2 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
+                  class="block px-4 py-3 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
                 >
+                  <font-awesome-icon :icon="['fas', 'user']" class="mr-2" />
                   Tài khoản
                 </NuxtLink>
                 <button
                   @click="logout"
-                  class="block w-full text-left px-4 py-2 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
+                  class="block w-full text-left px-4 py-3 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200"
                 >
                   Đăng xuất
                 </button>
@@ -94,22 +84,18 @@
             </div>
           </template>
         </div>
-        <!-- Placeholder khi store chưa khởi tạo -->
-      
 
         <!-- Mobile menu button -->
-        <div class="md:hidden flex items-center ml-4">
-          <button 
-            @click="toggleMobileMenu" 
-            class="p-2 rounded-full hover:bg-purple-50 transition-colors duration-200 focus:outline-none"
-            aria-label="Menu"
-          >
-            <font-awesome-icon 
-              :icon="['fas', mobileMenuOpen ? 'times' : 'bars']" 
-              class="text-xl text-purple-600" 
-            />
-          </button>
-        </div>
+        <button 
+          @click="toggleMobileMenu" 
+          class="md:hidden p-2 rounded-lg hover:bg-purple-50 transition-colors duration-200 focus:outline-none"
+          aria-label="Menu"
+        >
+          <font-awesome-icon 
+            :icon="['fas', mobileMenuOpen ? 'times' : 'bars']" 
+            class="text-xl text-purple-600" 
+          />
+        </button>
       </div>
 
       <!-- Mobile Menu -->
@@ -123,18 +109,19 @@
       >
         <div 
           v-show="mobileMenuOpen"
-          class="md:hidden fixed inset-x-0 top-16 bg-white shadow-lg z-40 overflow-y-auto"
+          class="md:hidden fixed inset-x-0 top-16 bg-white/95 backdrop-blur-sm shadow-lg z-40 overflow-y-auto"
           style="max-height: calc(100vh - 64px)"
         >
           <div class="px-2 py-3 space-y-1">
             <NuxtLink 
-              v-for="(item, index) in mobileMenuItems"
+              v-for="(item, index) in navItems"
               :key="index"
               :to="item.path"
               @click="mobileMenuOpen = false"
-              class="block px-4 py-3 rounded-lg font-medium hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200"
-              active-class="bg-purple-50 text-purple-600"
+              class="block px-4 py-3 rounded-lg font-medium hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200 flex items-center"
+              :class="{ 'text-purple-600': route.path === item.path }"
             >
+              <span class="w-2 h-6 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full mr-3" :class="{ 'opacity-0': route.path !== item.path }"></span>
               {{ item.name }}
             </NuxtLink>
           </div>
@@ -143,14 +130,14 @@
               <NuxtLink 
                 to="/dang-nhap"
                 @click="mobileMenuOpen = false"
-                class="block w-full px-4 py-2 text-center rounded-lg font-medium bg-purple-50 text-purple-600 hover:bg-purple-100 transition-colors duration-200 mb-2"
+                class="block w-full px-4 py-3 text-center rounded-lg font-medium text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200 mb-2"
               >
                 Đăng nhập
               </NuxtLink>
               <NuxtLink 
                 to="/dang-ky"
                 @click="mobileMenuOpen = false"
-                class="block w-full px-4 py-2 text-center rounded-lg font-medium bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 transition-all duration-300 shadow"
+                class="block w-full px-4 py-3 text-center rounded-lg font-medium bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md"
               >
                 Đăng ký
               </NuxtLink>
@@ -159,22 +146,17 @@
               <NuxtLink 
                 to="/tai-khoan"
                 @click="mobileMenuOpen = false"
-                class="block w-full px-4 py-2 text-center rounded-lg font-medium bg-purple-50 text-purple-600 hover:bg-purple-100 transition-colors duration-200 mb-2"
+                class="block w-full px-4 py-3 text-center rounded-lg font-medium text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200 mb-2"
               >
                 Tài khoản
               </NuxtLink>
               <button
                 @click="logout"
-                class="block w-full px-4 py-2 text-center rounded-lg font-medium bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 transition-all duration-300 shadow"
+                class="block w-full px-4 py-3 text-center rounded-lg font-medium bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md"
               >
                 Đăng xuất
               </button>
             </template>
-          </div>
-          <!-- Placeholder khi store chưa227 khởi tạo -->
-          <div v-else class="px-4 py-3 border-t border-gray-100">
-            <div class="w-full h-10 bg-gray-200 rounded-lg animate-pulse mb-2"></div>
-            <div class="w-full h-10 bg-gray-200 rounded-lg animate-pulse"></div>
           </div>
         </div>
       </transition>
@@ -184,37 +166,32 @@
 
 <script setup>
 import { useUserStore } from '~/stores/user'
+import { useRoute } from '#app'
 import { ref, onBeforeMount, onUnmounted } from 'vue'
 import { navigateTo } from '#app'
 
-// Khởi tạo userStore
 const userStore = useUserStore()
-
-// Khởi tạo dữ liệu
+const route = useRoute()
 const mobileMenuOpen = ref(false)
 const activeMenu = ref(null)
 const isSticky = ref(false)
 const header = ref(null)
 const menuTimeout = ref(null)
 
-const mobileMenuItems = [
+const navItems = [
   { name: 'Trang Chủ', path: '/' },
   { name: 'Về chúng tôi', path: '/gioi-thieu' },
   { name: 'Kiến thức', path: '/kien-thuc' },
   { name: 'Blog', path: '/blog' }
 ]
 
-// Hàm lấy chữ cái đầu hợp lệ
 const getInitialLetter = (fullname) => {
   if (!fullname || typeof fullname !== 'string' || !fullname.trim()) {
     return 'U'
   }
-  const firstChar = fullname.trim().charAt(0)
-  // Chỉ lấy chữ cái (a-z, A-Z) hoặc ký tự Unicode chữ cái (như tiếng Việt)
-  return /[a-zA-Z\u00C0-\u1EF9]/.test(firstChar) ? firstChar.toUpperCase() : 'U'
+  return fullname.trim().charAt(0).toUpperCase()
 }
 
-// Hàm xử lý
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
 }
@@ -247,10 +224,10 @@ const logout = async () => {
   }
 }
 
-// Lifecycle hooks
 onBeforeMount(() => {
   if (process.client) {
     userStore.initialize()
+    window.addEventListener('scroll', handleScroll)
   }
 })
 
@@ -263,10 +240,8 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* Tối ưu dropdown menu */
+/* Dropdown animation */
 .dropdown-menu {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transform-origin: top center;
   animation: fadeIn 0.2s ease-out;
 }
 
@@ -281,24 +256,18 @@ onUnmounted(() => {
   }
 }
 
-/* Đảm bảo header không bị giật khi sticky */
-header {
-  will-change: transform;
+/* Smooth transitions */
+nav a {
+  transition: color 0.3s ease;
 }
 
-/* Căn giữa main menu */
-nav {
-  left: 50%;
-  transform: translateX(-50%);
+/* Active indicator animation - Đã điều chỉnh */
+nav a span {
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
 }
 
-/* Loại bỏ khoảng trống giữa button và submenu */
-.dropdown {
-  position: relative;
-}
-
-.dropdown-menu {
-  top: 100%;
-  margin-top: 0;
+/* Hiệu ứng khi hover menu item */
+.group:hover span {
+  transition-duration: 0.3s;
 }
 </style>
