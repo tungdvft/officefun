@@ -2,10 +2,9 @@
   <div>
     <Hero />
     <Stats />
-    <WhyChooseUs />
-    
+    <Feature />
     <NumerologyBasics />
-    
+  
     <CoreNumbers />
     <Testimonials />
     <FAQ />
