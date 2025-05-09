@@ -215,7 +215,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-1 bg-gray-100 p-6">
+    <main class="flex-1 bg-gray-100">
       <slot />
     </main>
     <Footer />
