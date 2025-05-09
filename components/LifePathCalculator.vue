@@ -1,5 +1,5 @@
 <template>
-  <div class=" mx-auto p-6 bg-white rounded-xl shadow-lg">
+  <div class="mx-auto p-6 bg-white rounded-xl shadow-lg">
     <!-- Header với ngày sinh -->
     <div v-if="birthDate" class="mb-8 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100">
       <h1 class="text-2xl font-bold text-indigo-700">Kết quả thần số học</h1>
@@ -9,25 +9,29 @@
     <!-- Kết quả -->
     <div v-if="result" class="space-y-10">
       <div class="bg-gradient-to-r from-teal-50 to-blue-50 p-8 rounded-2xl border border-teal-100 shadow-sm text-center">
-            <div class="flex flex-col items-center">
-              <div class="relative">
-                <!-- Animated circle background -->
-                <svg class="w-32 h-32" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="45" fill="none" stroke="#e2e8f0" stroke-width="8"/>
-                  <circle cx="50" cy="50" r="45" fill="none" stroke="#0d9488" stroke-width="8" stroke-dasharray="283" 
-                          stroke-dashoffset="283" stroke-linecap="round">
-                    <animate attributeName="stroke-dashoffset" dur="1.5s" from="283" to="0" fill="freeze" calcMode="spline" keySplines="0.3 0 0.7 1"/>
-                  </circle>
-                </svg>
-                <!-- Number display -->
-                <div class="absolute inset-0 flex items-center justify-center">
-                  <span class="text-5xl font-bold text-teal-700">{{ result.number }}</span>
-                </div>
-              </div>
-              <h3 class="text-2xl font-bold text-teal-800 mt-6">Số đường đời {{ result.number }}</h3>
-              <p class="text-gray-600 mt-2 max-w-lg">{{ result.meaning }}</p>
+        <div class="flex flex-col items-center">
+          <div class="relative">
+            <!-- Animated circle background -->
+            <svg class="w-32 h-32" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="45" fill="none" stroke="#e2e8f0" stroke-width="8"/>
+              <circle cx="50" cy="50" r="45" fill="none" stroke="#0d9488" stroke-width="8" stroke-dasharray="283" 
+                      stroke-dashoffset="283" stroke-linecap="round">
+                <animate attributeName="stroke-dashoffset" dur="1.5s" from="283" to="0" fill="freeze" calcMode="spline" keySplines="0.3 0 0.7 1"/>
+              </circle>
+            </svg>
+            <!-- Number and Symbol display -->
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              
+              <span class="text-5xl font-bold text-teal-700">{{ result.number }}</span>
             </div>
           </div>
+          <h3 class="text-2xl font-bold text-teal-800 mt-6">Số đường đời : {{ result.number }}</h3>
+          <h3 class="text-2xl font-bold text-teal-800 mt-2"> Biểu tượng : {{ numberSymbol }}</h3>
+
+          <p class="text-gray-600 mt-2 max-w-lg">{{ result.meaning }}</p>
+        </div>
+      </div>
+
       <!-- Grid layout cho các phần thông tin -->
       <div class="grid md:grid-cols-2 gap-6">
         <!-- Điểm mạnh -->
@@ -152,8 +156,10 @@
 </template>
 
 <script setup>
-// Nhận birthDate và result từ component cha
-defineProps({
+import { computed } from 'vue'
+
+// Define props
+const { birthDate, result } = defineProps({
   birthDate: {
     type: String,
     required: true
@@ -162,5 +168,37 @@ defineProps({
     type: Object,
     default: null
   }
-});
+})
+
+// Dữ liệu lifePath với symbol
+const lifePath = {
+  1: { theme: "Người lãnh đạo", symbol: "♈", strengths: ["Độc lập", "Sáng tạo", "Quyết đoán"], challenges: ["Cứng đầu", "Thiếu kiên nhẫn", "Độc đoán"], careers: ["Doanh nhân", "Quản lý", "Nhà sáng chế"], advice: "Học cách lắng nghe và hợp tác với người khác", purpose: "Khởi xướng những ý tưởng mới và dẫn dắt người khác" },
+  2: { theme: "Người hòa giải", symbol: "♉", strengths: ["Nhạy cảm", "Hợp tác", "Kiên nhẫn"], challenges: ["Thiếu quyết đoán", "Dễ bị tổn thương", "Phụ thuộc"], careers: ["Nhà ngoại giao", "Tư vấn", "Giáo viên"], advice: "Phát triển sự tự tin và khả năng đặt ranh giới", purpose: "Mang mọi người lại gần nhau và tạo sự hòa hợp" },
+  3: { theme: "Người sáng tạo", symbol: "♊", strengths: ["Truyền cảm hứng", "Giao tiếp", "Lạc quan"], challenges: ["Thiếu tập trung", "Lãng phí tài năng", "Nông nổi"], careers: ["Nghệ sĩ", "Nhà văn", "Diễn giả"], advice: "Rèn luyện tính kỷ luật trong sáng tạo", purpose: "Truyền tải ý tưởng và cảm hứng thông qua nghệ thuật" },
+  4: { theme: "Người xây dựng", symbol: "♋", strengths: ["Thực tế", "Đáng tin cậy", "Kỷ luật"], challenges: ["Cứng nhắc", "Bảo thủ", "Thiếu linh hoạt"], careers: ["Kỹ sư", "Kiến trúc sư", "Kế toán"], advice: "Học cách thích nghi với sự thay đổi", purpose: "Tạo dựng nền tảng vững chắc cho xã hội" },
+  5: { theme: "Nhà thám hiểm", symbol: "♌", strengths: ["Linh hoạt", "Thích phiêu lưu", "Tiến bộ"], challenges: ["Bồn chồn", "Thiếu cam kết", "Nghiện ngập"], careers: ["Du lịch", "Phóng viên", "Kinh doanh"], advice: "Phát triển tính kiên định và trách nhiệm", purpose: "Trải nghiệm và khám phá thế giới đa dạng" },
+  6: { theme: "Người nuôi dưỡng", symbol: "♍", strengths: ["Trách nhiệm", "Chăm sóc", "Cân bằng"], challenges: ["Can thiệp quá mức", "Hy sinh bản thân", "Kiểm soát"], careers: ["Y tế", "Giáo dục", "Tư vấn"], advice: "Học cách chăm sóc bản thân trước khi giúp đỡ người khác", purpose: "Chữa lành và nuôi dưỡng cộng đồng" },
+  7: { theme: "Nhà hiền triết", symbol: "♎", strengths: ["Trí tuệ", "Trực giác", "Chiều sâu"], challenges: ["Xa cách", "Hoài nghi", "Lập dị"], careers: ["Nhà khoa học", "Nhà nghiên cứu", "Triết gia"], advice: "Kết nối nhiều hơn với thế giới thực tế", purpose: "Khám phá chân lý và truyền đạt tri thức" },
+  8: { theme: "Nhà quản lý", symbol: "♏", strengths: ["Tổ chức", "Tham vọng", "Hiệu quả"], challenges: ["Thao túng", "Vật chất", "Lạm dụng quyền lực"], careers: ["Giám đốc", "Ngân hàng", "Luật sư"], advice: "Cân bằng giữa vật chất và tinh thần", purpose: "Tạo ra của cải và quản lý nguồn lực hiệu quả" },
+  9: { theme: "Nhà nhân đạo", symbol: "♐", strengths: ["Rộng lượng", "Sáng suốt", "Lý tưởng"], challenges: ["Mơ mộng", "Bi quan", "Hy sinh quá mức"], careers: ["Từ thiện", "Nghệ thuật", "Hoạt động xã hội"], advice: "Thực tế hóa các lý tưởng cao đẹp", purpose: "Phục vụ nhân loại và cống hiến vì cộng đồng" },
+  11: { theme: "Bậc thầy tâm linh", symbol: "⚡", strengths: ["Truyền cảm hứng", "Nhạy cảm", "Tầm nhìn"], challenges: ["Căng thẳng", "Nhạy cảm quá mức", "Khó thực tế"], careers: ["Nhà tâm linh", "Cố vấn", "Nghệ sĩ"], advice: "Chăm sóc sức khỏe tinh thần và thể chất", purpose: "Khai sáng và nâng cao nhận thức cộng đồng" },
+  22: { theme: "Kiến trúc sư vĩ đại", symbol: "🏛️", strengths: ["Thực tế hóa", "Xây dựng", "Tầm nhìn lớn"], challenges: ["Áp lực", "Cầu toàn", "Quá tải"], careers: ["Kiến trúc sư", "Nhà quy hoạch", "Lãnh đạo"], advice: "Học cách ủy quyền và chia nhỏ mục tiêu", purpose: "Hiện thực hóa những ý tưởng vĩ đại phục vụ nhân loại" },
+  33: { theme: "Bậc thầy giáo dục", symbol: "🎓", strengths: ["Yêu thương", "Sáng tạo", "Truyền cảm hứng"], challenges: ["Quá lý tưởng", "Kiệt sức", "Khó thực tế"], careers: ["Giáo viên", "Nhà trị liệu", "Nhà hoạt động xã hội"], advice: "Cân bằng giữa cho đi và nhận lại", purpose: "Nâng đỡ và giáo dục thế hệ tương lai" }
+}
+
+// Computed property để lấy symbol dựa trên result.number
+const numberSymbol = computed(() => {
+  return lifePath[result?.number]?.symbol || '?'
+})
 </script>
+
+<style scoped>
+/* Đảm bảo symbol hiển thị đẹp */
+.symbol {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.symbol:hover {
+  transform: scale(1.1);
+}
+</style>
