@@ -5,24 +5,24 @@
       <div class="container mx-auto px-4">
         <div class="flex justify-between items-center h-16">
           <!-- Logo -->
-          <NuxtLink to="/xem">
-             <img src="/logo.png" alt="Thần Số Học Logo" width="100px" />
+          <NuxtLink to="/xem" class="flex items-center">
+            <img src="/logo.png" alt="Thần Số Học Logo" class="h-10 w-auto" />
           </NuxtLink>
 
           <!-- Desktop Navigation -->
-          <nav class="hidden md:flex items-center space-x-1">
+          <nav class="hidden md:flex items-center space-x-4">
             <div 
               class="relative h-full group"
               v-for="(item, index) in mainMenu" 
               :key="index"
             >
               <button 
-                class="flex items-center h-full px-4 hover:bg-purple-50 transition-colors duration-200 rounded-lg text-purple-800 font-medium"
+                class="flex items-center h-full px-4 py-2 hover:bg-purple-50 transition-colors duration-200 rounded-lg text-purple-800 font-medium"
                 @click="toggleDropdown(index)"
               >
                 <span>{{ item.title }}</span>
                 <svg 
-                  class="w-4 h-4 ml-1 transition-transform duration-200" 
+                  class="w-4 h-4 ml-2 transition-transform duration-200" 
                   :class="{ 'rotate-180': activeDropdown === index }"
                   fill="none" 
                   stroke="currentColor" 
@@ -52,17 +52,17 @@
           </nav>
 
           <!-- User Menu -->
-          <div v-if="userStore.isStoreInitialized" class="flex items-center space-x-4">
+          <div v-if="userStore.isStoreInitialized" class="flex items-center space-x-3">
             <template v-if="!userStore.user || Object.keys(userStore.user).length === 0">
               <NuxtLink 
                 to="/dang-nhap"
-                class="hidden md:flex px-4 py-2 rounded-lg font-medium text-purple-700 hover:bg-purple-50 transition-colors duration-200"
+                class="hidden md:flex px-3 py-1.5 rounded-lg font-medium text-purple-700 hover:bg-purple-50 transition-colors duration-200 text-sm"
               >
                 Đăng nhập
               </NuxtLink>
               <NuxtLink 
                 to="/dang-ky"
-                class="hidden md:flex px-4 py-2 rounded-lg font-medium bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 transition-all duration-300 shadow"
+                class="hidden md:flex px-3 py-1.5 rounded-lg font-medium bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 transition-all duration-300 shadow text-sm"
               >
                 Đăng ký
               </NuxtLink>
@@ -74,8 +74,8 @@
                 @mouseleave="closeMenu('auth')"
               >
                 <button class="flex items-center space-x-2 focus:outline-none group">
-                  <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-sm">
-                    <span class="text-white text-base font-bold">
+                  <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-sm">
+                    <span class="text-white text-sm font-bold">
                       {{ getInitialLetter(userStore.user.fullname) }}
                     </span>
                   </div>
@@ -86,13 +86,13 @@
                 >
                   <NuxtLink 
                     to="/tai-khoan"
-                    class="block px-4 py-2 hover:bg-purple-50 text-purple-700 hover:text-purple-900 transition-colors duration-200"
+                    class="block px-4 py-2 hover:bg-purple-50 text-purple-700 hover:text-purple-900 transition-colors duration-200 text-sm"
                   >
                     Tài khoản
                   </NuxtLink>
                   <button
                     @click="logout"
-                    class="block w-full text-left px-4 py-2 hover:bg-purple-50 text-purple-700 hover:text-purple-900 transition-colors duration-200"
+                    class="block w-full text-left px-4 py-2 hover:bg-purple-50 text-purple-700 hover:text-purple-900 transition-colors duration-200 text-sm"
                   >
                     Đăng xuất
                   </button>
@@ -103,7 +103,7 @@
             <!-- Mobile menu button -->
             <button 
               @click="isMobileMenuOpen = !isMobileMenuOpen"
-              class="md:hidden text-purple-800 focus:outline-none p-1 rounded-full hover:bg-purple-50 transition-colors duration-200"
+              class="md:hidden text-purple-800 focus:outline-none p-2 rounded-full hover:bg-purple-50 transition-colors duration-200"
             >
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path 
@@ -116,11 +116,11 @@
             </button>
           </div>
           <!-- Placeholder khi store chưa khởi tạo -->
-          <div v-else class="flex items-center space-x-4">
-            <div class="hidden md:block w-24 h-8 bg-gray-200 rounded-lg animate-pulse"></div>
+          <div v-else class="flex items-center space-x-3">
+            <div class="hidden md:block w-20 h-6 bg-gray-200 rounded-lg animate-pulse"></div>
             <button 
               @click="isMobileMenuOpen = !isMobileMenuOpen"
-              class="md:hidden text-purple-800 focus:outline-none p-1 rounded-full hover:bg-purple-50 transition-colors duration-200"
+              class="md:hidden text-purple-800 focus:outline-none p-2 rounded-full hover:bg-purple-50 transition-colors duration-200"
             >
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path 
@@ -137,7 +137,7 @@
 
       <!-- Mobile menu -->
       <div v-show="isMobileMenuOpen" class="md:hidden bg-white pb-4 transition-all duration-300 ease-in-out border-b">
-        <div class="px-2 pt-2 pb-3 space-y-1">
+        <div class="px-4 pt-2 pb-3 space-y-2">
           <div v-for="(item, index) in mainMenu" :key="index">
             <button 
               @click="toggleMobileDropdown(index)"
@@ -223,107 +223,107 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { navigateTo } from '#app'
-import { useUserStore } from '~/stores/user'
-import { toast } from 'vue3-toastify'
+import { ref, onMounted } from 'vue';
+import { navigateTo } from '#app';
+import { useUserStore } from '~/stores/user';
+import { toast } from 'vue3-toastify';
 
-const userStore = useUserStore()
+const userStore = useUserStore();
 
 // Hàm lấy chữ cái đầu hợp lệ
 const getInitialLetter = (fullname) => {
   if (!fullname || typeof fullname !== 'string' || !fullname.trim()) {
-    return 'U'
+    return 'U';
   }
-  const firstChar = fullname.trim().charAt(0)
+  const firstChar = fullname.trim().charAt(0);
   // Chỉ lấy chữ cái (a-z, A-Z) hoặc ký tự Unicode chữ cái (như tiếng Việt)
-  return /[a-zA-Z\u00C0-\u1EF9]/.test(firstChar) ? firstChar.toUpperCase() : 'U'
-}
+  return /[a-zA-Z\u00C0-\u1EF9]/.test(firstChar) ? firstChar.toUpperCase() : 'U';
+};
 
 onMounted(() => {
   if (process.client) {
-    userStore.initialize()
+    userStore.initialize();
   }
-})
+});
 
 const mainMenu = [
   {
-    title: "Cá nhân",
+    title: 'Cá nhân',
     children: [
-      { title: "Thần số học mỗi ngày", path: "/xem" },
-      { title: "Tổng quan", path: "/xem/tong-quan" },
-      { title: "Giải đáp thắc mắc", path: "/xem/giai-dap-thac-mac" },
-      { title: "Đặt danh xưng quốc tế", path: "/xem/danh-xung" }
-    ]
+      { title: 'Thần số học mỗi ngày', path: '/xem' },
+      { title: 'Tổng quan', path: '/xem/tong-quan' },
+      { title: 'Giải đáp thắc mắc', path: '/xem/giai-dap-thac-mac' },
+      { title: 'Đặt danh xưng quốc tế', path: '/xem/danh-xung' },
+    ],
   },
   {
-    title: "Mối quan hệ",
+    title: 'Mối quan hệ',
     children: [
-      { title: "Kiểm tra hợp nhau", path: "/xem/kiem-tra-hop-nhau" },
-      { title: "Chọn ngày cưới", path: "/xem/chon-ngay-cuoi" }
-    ]
+      { title: 'Kiểm tra hợp nhau', path: '/xem/kiem-tra-hop-nhau' },
+      { title: 'Chọn ngày cưới', path: '/xem/chon-ngay-cuoi' },
+    ],
   },
   {
-    title: "Nghề nghiệp",
+    title: 'Nghề nghiệp',
     children: [
-      { title: "Định hướng nghề", path: "/xem/dinh-huong-nghe-nghiep" },
-      { title: "Tên thương hiệu", path: "/xem/ten-thuong-hieu" }
-    ]
+      { title: 'Định hướng nghề', path: '/xem/dinh-huong-nghe-nghiep' },
+      { title: 'Tên thương hiệu', path: '/xem/ten-thuong-hieu' },
+    ],
   },
   {
-    title: "Gia đình",
+    title: 'Gia đình',
     children: [
-      { title: "Thần số học trẻ em", path: "/xem/than-so-hoc-tre-em" },
-      { title: "Đặt tên con", path: "/xem/dat-ten-con" }
-    ]
-  }
-]
+      { title: 'Thần số học trẻ em', path: '/xem/than-so-hoc-tre-em' },
+      { title: 'Đặt tên con', path: '/xem/dat-ten-con' },
+    ],
+  },
+];
 
-const isMobileMenuOpen = ref(false)
-const activeDropdown = ref(null)
-const activeMobileDropdown = ref(null)
-const activeMenu = ref(null)
-const menuTimeout = ref(null)
+const isMobileMenuOpen = ref(false);
+const activeDropdown = ref(null);
+const activeMobileDropdown = ref(null);
+const activeMenu = ref(null);
+const menuTimeout = ref(null);
 
 const toggleDropdown = (index) => {
-  activeDropdown.value = activeDropdown.value === index ? null : index
-}
+  activeDropdown.value = activeDropdown.value === index ? null : index;
+};
 
 const toggleMobileDropdown = (index) => {
-  activeMobileDropdown.value = activeMobileDropdown.value === index ? null : index
-}
+  activeMobileDropdown.value = activeMobileDropdown.value === index ? null : index;
+};
 
 const openMenu = (menu) => {
-  clearTimeout(menuTimeout.value)
-  activeMenu.value = menu
-}
+  clearTimeout(menuTimeout.value);
+  activeMenu.value = menu;
+};
 
 const closeMenu = (menu) => {
   menuTimeout.value = setTimeout(() => {
     if (activeMenu.value === menu) {
-      activeMenu.value = null
+      activeMenu.value = null;
     }
-  }, 200)
-}
+  }, 200);
+};
 
 const logout = async () => {
   try {
-    await userStore.logout()
-    isMobileMenuOpen.value = false
-    activeMenu.value = null
+    await userStore.logout();
+    isMobileMenuOpen.value = false;
+    activeMenu.value = null;
     toast.success('Đăng xuất thành công!', {
       position: 'top-center',
-      theme: 'colored'
-    })
-    await navigateTo('/dang-nhap')
+      theme: 'colored',
+    });
+    await navigateTo('/dang-nhap');
   } catch (error) {
-    console.error('Logout error:', error)
+    console.error('Logout error:', error);
     toast.error('Đăng xuất thất bại. Vui lòng thử lại.', {
       position: 'top-center',
-      theme: 'colored'
-    })
+      theme: 'colored',
+    });
   }
-}
+};
 </script>
 
 <style scoped>
@@ -363,6 +363,14 @@ const logout = async () => {
 
 .dropdown-menu {
   top: 100%;
-  margin-top: 0;
+  margin-top: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 </style>
