@@ -42,7 +42,7 @@
                 <p v-if="errors.brideName" class="text-red-600 text-sm mt-1">{{ errors.brideName }}</p>
               </div>
               <div>
-                <label for="brideBirthdate" class="block text-sm font-medium text-gray-700 mb-4">Ngày sinh cô dâu (DD/MM/YYYY)</label>
+                <label for="brideBirthdate" class="block text-sm font-medium text-gray-700 mt-3 mb-3">Ngày sinh cô dâu (DD/MM/YYYY)</label>
                 <input
                   v-model="formData.brideBirthdate"
                   type="text"
@@ -78,7 +78,7 @@
                 <p v-if="errors.groomName" class="text-red-600 text-sm mt-1">{{ errors.groomName }}</p>
               </div>
               <div>
-                <label for="groomBirthdate" class="block text-sm font-medium text-gray-700 mb-4">Ngày sinh chú rể (DD/MM/YYYY)</label>
+                <label for="groomBirthdate" class="block text-sm font-medium text-gray-700  mt-3 mb-3">Ngày sinh chú rể (DD/MM/YYYY)</label>
                 <input
                   v-model="formData.groomBirthdate"
                   type="text"
@@ -114,7 +114,7 @@
                 <p v-if="errors.startDate" class="text-red-600 text-sm mt-1">{{ errors.startDate }}</p>
               </div>
               <div>
-                <label for="endDate" class="block text-sm font-medium text-gray-700 mb-4">Đến ngày (DD/MM/YYYY)</label>
+                <label for="endDate" class="block text-sm font-medium text-gray-700 mt-3 mb-3">Đến ngày (DD/MM/YYYY)</label>
                 <input
                   v-model="formData.endDate"
                   type="text"
