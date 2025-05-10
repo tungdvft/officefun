@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto p-6 bg-white rounded-xl shadow-lg">
+  <div class="mx-auto p-6 bg-white rounded-xl shadow-lg sm:p-4">
     <!-- Header với ngày sinh -->
     <div v-if="birthDate" class="mb-8 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100">
       <h1 class="text-2xl font-bold text-indigo-700">Kết quả thần số học</h1>
@@ -21,12 +21,11 @@
             </svg>
             <!-- Number and Symbol display -->
             <div class="absolute inset-0 flex flex-col items-center justify-center">
-              
               <span class="text-5xl font-bold text-teal-700">{{ result.number }}</span>
             </div>
           </div>
-          <h3 class="text-2xl font-bold text-teal-800 mt-6">Số đường đời : {{ result.number }}</h3>
-          <h3 class="text-2xl font-bold text-teal-800 mt-2"> Biểu tượng : {{ numberSymbol }}</h3>
+          <h3 class="text-2xl font-bold text-teal-800 mt-6">Số đường đời: {{ result.number }}</h3>
+          <h3 class="text-2xl font-bold text-teal-800 mt-2">Biểu tượng: {{ numberSymbol }}</h3>
 
           <p class="text-gray-600 mt-2 max-w-lg">{{ result.meaning }}</p>
         </div>
@@ -156,7 +155,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed } from 'vue';
 
 // Define props
 const { birthDate, result } = defineProps({
@@ -168,7 +167,7 @@ const { birthDate, result } = defineProps({
     type: Object,
     default: null
   }
-})
+});
 
 // Dữ liệu lifePath với symbol
 const lifePath = {
@@ -184,12 +183,12 @@ const lifePath = {
   11: { theme: "Bậc thầy tâm linh", symbol: "⚡", strengths: ["Truyền cảm hứng", "Nhạy cảm", "Tầm nhìn"], challenges: ["Căng thẳng", "Nhạy cảm quá mức", "Khó thực tế"], careers: ["Nhà tâm linh", "Cố vấn", "Nghệ sĩ"], advice: "Chăm sóc sức khỏe tinh thần và thể chất", purpose: "Khai sáng và nâng cao nhận thức cộng đồng" },
   22: { theme: "Kiến trúc sư vĩ đại", symbol: "🏛️", strengths: ["Thực tế hóa", "Xây dựng", "Tầm nhìn lớn"], challenges: ["Áp lực", "Cầu toàn", "Quá tải"], careers: ["Kiến trúc sư", "Nhà quy hoạch", "Lãnh đạo"], advice: "Học cách ủy quyền và chia nhỏ mục tiêu", purpose: "Hiện thực hóa những ý tưởng vĩ đại phục vụ nhân loại" },
   33: { theme: "Bậc thầy giáo dục", symbol: "🎓", strengths: ["Yêu thương", "Sáng tạo", "Truyền cảm hứng"], challenges: ["Quá lý tưởng", "Kiệt sức", "Khó thực tế"], careers: ["Giáo viên", "Nhà trị liệu", "Nhà hoạt động xã hội"], advice: "Cân bằng giữa cho đi và nhận lại", purpose: "Nâng đỡ và giáo dục thế hệ tương lai" }
-}
+};
 
 // Computed property để lấy symbol dựa trên result.number
 const numberSymbol = computed(() => {
-  return lifePath[result?.number]?.symbol || '?'
-})
+  return lifePath[result?.number]?.symbol || '?';
+});
 </script>
 
 <style scoped>
@@ -200,5 +199,13 @@ const numberSymbol = computed(() => {
 }
 .symbol:hover {
   transform: scale(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .mx-auto {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 </style>

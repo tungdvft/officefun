@@ -1,13 +1,13 @@
 <template>
   <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-    <div class="p-6 space-y-6">
+    <div class="p-0 space-y-6 md:p-6">
       <!-- Nội dung chu kỳ vận số -->
       <transition name="fade-slide">
         <div v-if="numerologyData && Object.keys(numerologyData.cycles).length" class="mt-6">
           <div class="space-y-8">
             <!-- Biểu đồ chu kỳ vận số -->
-             <div class="text-center mb-8">
-              <h2 class="text-4xl font-bold text-teal-700 mb-3">Biểu đồ chu kỳ vận số </h2>
+            <div class="text-center mb-8">
+              <h2 class="text-4xl font-bold text-teal-700 mb-3">Biểu đồ chu kỳ vận số</h2>
               <div class="w-24 h-1 bg-teal-500 mx-auto mb-4 rounded-full"></div>
               <p class="text-lg text-gray-600 max-w-2xl mx-auto">
                 Hành trình cuộc đời qua các chu kỳ số - Khám phá những giai đoạn thịnh vượng và thử thách
@@ -138,6 +138,7 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
 import Chart from 'chart.js/auto';
+import { nextTick } from 'vue';
 
 // Bảng ánh xạ số năm cá nhân sang mức năng lượng (đã điều chỉnh)
 const energyLevelMap = {
@@ -473,5 +474,13 @@ watch(numerologyData, () => {
 }
 .prose ul::-webkit-scrollbar-thumb:hover {
   @apply bg-teal-400;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .p-6 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 </style>
