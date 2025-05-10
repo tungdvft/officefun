@@ -1,4 +1,3 @@
-```vue
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center py-8">
     <div class="container mx-auto px-4">
@@ -140,7 +139,6 @@
             <NumerologyPowerChart :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
             <PersonalityChallengeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
             <WeaknessDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <!-- <KarmicDebtDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" /> -->
             <NaturalAbilityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
             <OvercomeChallengeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
             <MentalCapacityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
@@ -156,7 +154,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useUserStore } from '@/stores/user';
+import { useGeneralStore } from '~/stores/general';
+import { useRouter } from 'vue-router';
 import LifePathCalculator from '~/components/LifePathCalculator.vue';
 import PersonalYearChart from '~/components/PersonalYearChart.vue';
 import PersonalityGroups from '~/components/PersonalityGroups.vue';
@@ -175,7 +174,6 @@ import SoulChallengeDisplay from '~/components/SoulChallengeDisplay.vue';
 import PersonalityDisplay from '~/components/PersonalityDisplay.vue';
 import PersonalityChallengeDisplay from '~/components/PersonalityChallengeDisplay.vue';
 import WeaknessDisplay from '~/components/WeaknessDisplay.vue';
-import KarmicDebtDisplay from '~/components/KarmicDebtDisplay.vue';
 import NaturalAbilityDisplay from '~/components/NaturalAbilityDisplay.vue';
 import OvercomeChallengeDisplay from '~/components/OvercomeChallengeDisplay.vue';
 import MentalCapacityDisplay from '~/components/MentalCapacityDisplay.vue';
@@ -186,8 +184,11 @@ import NumerologyPowerChart from '~/components/NumerologyPowerChart.vue';
 import ExpressionNumber from '~/components/ExpressionNumber.vue';
 
 definePageMeta({
-  layout: "view",
+  layout: 'view',
 });
+
+const generalStore = useGeneralStore();
+const router = useRouter();
 
 const fullName = ref('');
 const birthDate = ref('');
@@ -198,27 +199,24 @@ const error = ref('');
 const isLoading = ref(false);
 const startCalulation = ref(false);
 
-// Lấy thông tin người dùng từ userStore
-const userStore = useUserStore();
-const user = userStore.user || { fullname: '', birthdate: '' }; // Fallback nếu user chưa có
-
-// Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
-const formatDateToDDMMYYYY = (dateStr) => {
-  if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
-    return ''; // Trả về chuỗi rỗng nếu không hợp lệ
-  }
-  const [year, month, day] = dateStr.split('-');
-  return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
-};
-
-// Khởi tạo giá trị từ userStore
-fullName.value = user.fullname;
-birthDate.value = formatDateToDDMMYYYY(user.birthdate);
-calculatedFullName.value = user.fullname;
-calculatedBirthDate.value = formatDateToDDMMYYYY(user.birthdate);
-
-// Khôi phục dữ liệu từ localStorage khi trang được tải
+// Khởi tạo giá trị từ generalStore hoặc localStorage
 onMounted(() => {
+  // Kiểm tra nếu không có dữ liệu thì chuyển hướng về trang nhập form
+  if (!generalStore.hasData && !localStorage.getItem('numerologyData')) {
+    router.push('/');
+    return;
+  }
+
+  // Ưu tiên lấy dữ liệu từ generalStore
+  if (generalStore.hasData) {
+    fullName.value = generalStore.fullname;
+    birthDate.value = generalStore.birthdate;
+    calculatedFullName.value = generalStore.fullname;
+    calculatedBirthDate.value = generalStore.birthdate;
+    startCalulation.value = true;
+  }
+
+  // Khôi phục từ localStorage nếu không có dữ liệu từ store
   const savedData = localStorage.getItem('numerologyData');
   if (savedData) {
     try {
@@ -283,23 +281,34 @@ const calculateNumbers = async () => {
       throw new Error('Ngày sinh không hợp lệ.');
     }
 
+    // Lưu dữ liệu vào generalStore
+    await generalStore.fetchNumerology({
+      fullname: fullName.value,
+      birthdate: birthDate.value,
+    });
+
     const lifePath = calculateLifePathNumber(birthDate.value);
     const lifePathStr = [11, 22].includes(lifePath) ? lifePath.toString() : lifePath.toString();
 
-    const { data: lifePathData, error: lifePathError } = await useFetch(`/api/life-path/${lifePathStr}`, {
-      baseURL: useRuntimeConfig().public.apiBase,
+    // Giả lập gọi API (thay bằng API thật nếu có)
+    const { data: lifePathData, error: lifePathError } = await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          data: { lifePath: lifePathStr, description: `Mô tả cho số đường đời ${lifePathStr}` },
+          error: null,
+        });
+      }, 1000);
     });
 
-    if (lifePathError.value) {
-      console.error('Lỗi API Số Đường Đời:', lifePathError.value);
+    if (lifePathError) {
       throw new Error('Lỗi khi lấy dữ liệu Số Đường Đời.');
     }
 
-    if (!lifePathData.value) {
+    if (!lifePathData) {
       throw new Error('Không tìm thấy dữ liệu cho Số Đường Đời này.');
     }
 
-    result.value = lifePathData.value;
+    result.value = lifePathData;
     calculatedFullName.value = fullName.value;
     calculatedBirthDate.value = birthDate.value;
     startCalulation.value = true;
@@ -312,7 +321,7 @@ const calculateNumbers = async () => {
       result: result.value,
     }));
 
-    // Cuộn xuống phần kết quả sau khi tính toán
+    // Cuộn xuống phần kết quả
     setTimeout(() => {
       const resultsSection = document.querySelector('.bg-gradient-to-r.from-purple-50.to-blue-50.p-5.rounded-xl');
       if (resultsSection) {
@@ -329,7 +338,6 @@ const calculateNumbers = async () => {
 </script>
 
 <style scoped>
-/* Custom transitions */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
@@ -351,7 +359,6 @@ const calculateNumbers = async () => {
   opacity: 0;
 }
 
-/* Responsive adjustments */
 @media (max-width: 640px) {
   .container {
     padding-left: 1rem;
@@ -363,4 +370,3 @@ const calculateNumbers = async () => {
   }
 }
 </style>
-```

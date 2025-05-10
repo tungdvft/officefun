@@ -34,15 +34,18 @@ export const useGeneralStore = defineStore('general', {
           throw new Error('Ngày sinh không hợp lệ!');
         }
 
-        // Store the data
+        // Lưu dữ liệu vào store
         this.fullname = fullname;
         this.birthdate = birthdate;
 
-        // Simulate an API call or processing (replace with actual logic if needed)
+        // Simulate API call (thay bằng API thật nếu cần)
         await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        // Xóa lỗi nếu lưu thành công
+        this.error = null;
       } catch (err) {
         this.error = err.message;
-        throw err; // Rethrow to handle in component
+        throw err; // Rethrow để component xử lý
       } finally {
         this.isLoading = false;
       }

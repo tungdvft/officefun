@@ -31,9 +31,6 @@
       <div class="flex flex-col lg:flex-row items-center gap-8">
         <!-- Text section -->
         <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10">
-          <!-- <div class="inline-block mb-4 px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-            <span class="text-sm font-medium text-purple-200">Thần Số Học</span>
-          </div> -->
           <h2 class="text-4xl md:text-5xl font-bold mb-6 fade-in bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent leading-tight">
             Khám Phá Bản Thân Qua Con Số Vận Mệnh
           </h2>
@@ -66,13 +63,8 @@
         </div>
 
         <!-- Form section -->
-        <div class="lg:w-1/2 bg-white/10 rounded-xl p-8 shadow-2xl border border-white/20 backdrop-blur-sm transform transition-all hover:shadow-purple-900/30">
+        <div class="lg:w-1/2 bg-white/10 rounded-xl p-8 shadow-2xl border border-whiteзорз20 backdrop-blur-sm transform transition-all hover:shadow-purple-900/30">
           <div class="text-center mb-6">
-            <!-- <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div> -->
             <h3 class="text-2xl font-bold text-white">
               Luận Giải Thần Số
             </h3>
@@ -113,7 +105,7 @@
             <div class="pt-2">
               <button
                 type="submit"
-                :disabled="generalStore.isLoading"
+                :disabled="generalStore.isLoading || !form.fullname || !form.birthdate"
                 class="w-full inline-flex justify-center items-center bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 px-8 rounded-lg text-lg font-semibold hover:shadow-lg transition-all duration-300 shadow-lg hover:shadow-purple-500/30 disabled:opacity-70 disabled:cursor-not-allowed group relative overflow-hidden"
               >
                 <span class="absolute inset-0 bg-gradient-to-r from-purple-700 to-pink-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
@@ -172,13 +164,14 @@
 </template>
 
 <script setup>
-import { useGeneralStore } from "~/stores/general";
-import { useRouter } from "vue-router";
+import { ref } from 'vue';
+import { useGeneralStore } from '~/stores/general';
+import { useRouter } from 'vue-router';
 
 // Khởi tạo form
 const form = ref({
-  fullname: "",
-  birthdate: "",
+  fullname: '',
+  birthdate: '',
 });
 
 // Khởi tạo store và router
@@ -193,11 +186,13 @@ const submitForm = async () => {
       birthdate: form.value.birthdate,
     });
 
-    if (!generalStore.error) {
-      router.push("/xem/tong-quan");
+    if (generalStore.hasData) {
+      router.push('/xem/tong-quan');
+    } else {
+      generalStore.error = 'Không thể lưu dữ liệu. Vui lòng thử lại!';
     }
   } catch (err) {
-    // Error is already set in the store, no need to handle here
+    console.error('Lỗi khi gửi form:', err.message);
   }
 };
 </script>
@@ -218,7 +213,6 @@ const submitForm = async () => {
   }
 }
 
-/* Hiệu ứng nền số */
 @keyframes float {
   0%, 100% {
     transform: translateY(0);
