@@ -52,8 +52,6 @@ import { ref, watch, computed, onMounted } from 'vue';
 import { calculateKarmicDebtNumbers } from '~/utils/numerology-calculations';
 import karmicDebtDataJson from '~/data/karmicDebtData.json';
 
-console.log('[KarmicDebtDisplay] karmicDebtDataJson:', karmicDebtDataJson);
-
 const props = defineProps({
   birthDate: {
     type: String,

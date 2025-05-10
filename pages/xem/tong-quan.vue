@@ -79,10 +79,9 @@
                 Đang phân tích...
               </span>
             </button>
+            <!-- Error message -->
+            <p v-if="error" class="mt-2 text-red-600 text-center font-medium">{{ error }}</p>
           </div>
-
-          <!-- Error message -->
-          <p v-if="error" class="mt-2 text-red-600 text-center font-medium">{{ error }}</p>
         </div>
       </div>
 
@@ -200,7 +199,7 @@ const isLoading = ref(false);
 const startCalulation = ref(false);
 
 // Khởi tạo giá trị từ generalStore hoặc localStorage
-onMounted(() => {
+onMounted(async () => {
   // Kiểm tra nếu không có dữ liệu thì chuyển hướng về trang nhập form
   if (!generalStore.hasData && !localStorage.getItem('numerologyData')) {
     router.push('/');
@@ -213,7 +212,32 @@ onMounted(() => {
     birthDate.value = generalStore.birthdate;
     calculatedFullName.value = generalStore.fullname;
     calculatedBirthDate.value = generalStore.birthdate;
-    startCalulation.value = true;
+    
+    // Tính toán lại result để đảm bảo LifePathCalculator hiển thị
+    try {
+      const lifePath = calculateLifePathNumber(generalStore.birthdate);
+      const lifePathStr = [11, 22].includes(lifePath) ? lifePath.toString() : lifePath.toString();
+      const { data: lifePathData, error: lifePathError } = await useFetch(`/api/life-path/${lifePathStr}`, {
+        baseURL: useRuntimeConfig().public.apiBase,
+      });
+
+      if (lifePathError.value) {
+        console.error('Lỗi API Số Đường Đời:', lifePathError.value);
+        error.value = 'Lỗi khi lấy dữ liệu Số Đường Đời.';
+        return;
+      }
+
+      if (!lifePathData.value) {
+        error.value = 'Không tìm thấy dữ liệu cho Số Đường Đời này.';
+        return;
+      }
+
+      result.value = lifePathData.value;
+      startCalulation.value = true;
+    } catch (err) {
+      console.error('Lỗi khi tính toán result từ generalStore:', err);
+      error.value = err.message;
+    }
   }
 
   // Khôi phục từ localStorage nếu không có dữ liệu từ store
@@ -290,25 +314,20 @@ const calculateNumbers = async () => {
     const lifePath = calculateLifePathNumber(birthDate.value);
     const lifePathStr = [11, 22].includes(lifePath) ? lifePath.toString() : lifePath.toString();
 
-    // Giả lập gọi API (thay bằng API thật nếu có)
-    const { data: lifePathData, error: lifePathError } = await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          data: { lifePath: lifePathStr, description: `Mô tả cho số đường đời ${lifePathStr}` },
-          error: null,
-        });
-      }, 1000);
+    const { data: lifePathData, error: lifePathError } = await useFetch(`/api/life-path/${lifePathStr}`, {
+      baseURL: useRuntimeConfig().public.apiBase,
     });
 
-    if (lifePathError) {
+    if (lifePathError.value) {
+      console.error('Lỗi API Số Đường Đời:', lifePathError.value);
       throw new Error('Lỗi khi lấy dữ liệu Số Đường Đời.');
     }
 
-    if (!lifePathData) {
+    if (!lifePathData.value) {
       throw new Error('Không tìm thấy dữ liệu cho Số Đường Đời này.');
     }
 
-    result.value = lifePathData;
+    result.value = lifePathData.value;
     calculatedFullName.value = fullName.value;
     calculatedBirthDate.value = birthDate.value;
     startCalulation.value = true;

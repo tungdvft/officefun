@@ -1,5 +1,5 @@
 <template>
-  <div class="numerology-charts mx-auto p-6 bg-white rounded-xl shadow-lg font-inter max-w-6xl">
+  <div class="container numerology-charts mx-auto p-6 bg-white rounded-xl shadow-lg font-inter">
     <!-- Tiêu đề chính -->
     <div class="text-center mb-8">
       <h2 class="text-4xl font-bold text-teal-700 mb-3">
