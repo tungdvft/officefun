@@ -85,13 +85,11 @@ const features = [
            </svg>`,
     link: "/xem/danh-xung"
   },
-  {
-    title: "Ngày tốt quan trọng",
-    description: "Chọn ngày cưới, khai trương, ký kết hợp đồng phù hợp với vận số của bạn.",
-    icon: `<svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-           </svg>`,
+    {
+    title: "Chọn ngày cưới",
+    description: "Tìm ngày cưới lý tưởng theo vận số của bạn và đối tác, đảm bảo hòa hợp, may mắn.",
+    icon: "<svg class=\"w-6 h-6 text-purple-600\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z\" /></svg>",
     link: "/xem/chon-ngay-cuoi"
-  }
+    }
 ];
 </script>
