@@ -53,6 +53,14 @@ const features = [
            </svg>`,
     link: "/xem/tong-quan"
   },
+   {
+    title: "Thần số học mỗi ngày",
+    description: "Nhận dự báo hàng ngày dựa trên thần số học để định hướng và tối ưu năng lượng.",
+    icon: `<svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+           </svg>`,
+    link: "/xem/"
+  },
   {
     title: "Đặt tên con",
     description: "Tư vấn đặt tên con dựa trên nguyên lý cân bằng năng lượng số và ngũ hành.",
@@ -99,7 +107,7 @@ const features = [
     icon: `<svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
            </svg>`,
-    link: "/xem/ten-thuong-hieu"
+    link: "/xem/dat-ten-thuong-hieu"
   },
   {
     title: "Thần số học cho trẻ",
@@ -107,15 +115,7 @@ const features = [
     icon: `<svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
            </svg>`,
-    link: "/xem/than-so-hoc-tre-em"
-  },
-  {
-    title: "Giải đáp thắc mắc",
-    description: "Giải đáp chi tiết các câu hỏi về vận mệnh và thần số học để hiểu rõ hơn.",
-    icon: `<svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-           </svg>`,
-    link: "/xem/giai-dap-thac-mac"
+    link: "/xem/than-so-hoc-tre"
   }
 ];
 </script>

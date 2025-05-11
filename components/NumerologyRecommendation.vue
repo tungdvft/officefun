@@ -1,4 +1,3 @@
-```vue
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
     <div class="container mx-auto p-4">
@@ -6,6 +5,10 @@
       <div class="text-center mb-8 relative">
         <h1 class="text-3xl md:text-4xl font-bold text-blue-800 mb-2">Thần Số Học Hôm Nay - Khám Phá Vận Mệnh Ngày Mới</h1>
         <p class="text-gray-600">Mỗi ngày là một con số khác nhau - Hãy xem hôm nay vũ trụ dành điều gì cho bạn!</p>
+        <p class="text-gray-600 mt-2">Hôm nay: <span class="font-medium">{{ currentDate }}</span></p>
+        <div v-if="personalDayNumber" class="mt-4 inline-flex items-center px-4 py-2 bg-purple-100 text-purple-600 rounded-full text-sm font-medium">
+          Số ngày cá nhân hôm nay: <span class="font-bold ml-1">{{ personalDayNumber }}</span>
+        </div>
       </div>
 
       <!-- Main Content -->
@@ -138,7 +141,7 @@
             <div v-if="Array.isArray(recommendations.food)" class="grid gap-4 md:grid-cols-2">
               <div v-for="(item, index) in recommendations.food" :key="index" class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
                 <p class="font-medium text-gray-800 flex items-center">
-                  <span class="w-6 h-6 rounded-full bg-purple-100 text-purple-800 flex items-center justify-center mr-2 text-sm">{{ index + 1 }}</span>
+                  <span class="w-6 h-6 rounding-full bg-purple-100 text-purple-800 flex items-center justify-center mr-2 text-sm">{{ index + 1 }}</span>
                   {{ item.item }}
                 </p>
                 <p class="text-gray-600 text-sm mt-2">{{ item.explanation }}</p>
@@ -245,7 +248,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useUserStore } from '@/stores/user';
 
 // Lấy thông tin người dùng từ userStore
@@ -261,6 +264,41 @@ const formatDateToDDMMYYYY = (dateStr) => {
   return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
 };
 
+// Hàm lấy ngày hiện tại định dạng DD/MM/YYYY
+const getCurrentDate = () => {
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, '0');
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const year = today.getFullYear();
+  return `${day}/${month}/${year}`;
+};
+
+// Hàm tính số ngày cá nhân
+const calculatePersonalDayNumber = (birthDate, currentDate) => {
+  if (!birthDate || !currentDate || !/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate) || !/^\d{2}\/\d{2}\/\d{4}$/.test(currentDate)) {
+    return null;
+  }
+
+  // Chuyển đổi ngày sinh và ngày hiện tại thành số
+  const [birthDay, birthMonth, birthYear] = birthDate.split('/').map(Number);
+  const [currentDay, currentMonth, currentYear] = currentDate.split('/').map(Number);
+
+  // Tính tổng các chữ số của ngày sinh và ngày hiện tại
+  const sumBirth = (birthDay + birthMonth + birthYear)
+    .toString()
+    .split('')
+    .reduce((sum, digit) => sum + Number(digit), 0);
+  const sumCurrent = (currentDay + currentMonth + currentYear)
+    .toString()
+    .split('')
+    .reduce((sum, digit) => sum + Number(digit), 0);
+
+  // Tính số ngày cá nhân
+  let personalDay = (sumBirth + sumCurrent) % 9;
+  if (personalDay === 0) personalDay = 9; // Nếu tổng chia hết cho 9, số ngày cá nhân là 9
+  return personalDay;
+};
+
 // Khởi tạo giá trị ref từ userStore
 const name = ref(user.fullname);
 const birthDateInput = ref(formatDateToDDMMYYYY(user.birthdate));
@@ -273,6 +311,7 @@ const loading = ref(false);
 const error = ref(null);
 const activeTab = ref('Insight hôm nay');
 const tabs = ['Insight hôm nay', 'Đồ ăn', 'Đồ uống'];
+const currentDate = ref(getCurrentDate());
 
 async function getRecommendations() {
   error.value = null;
@@ -326,6 +365,13 @@ async function getRecommendations() {
     loading.value = false;
   }
 }
+
+// Tính số ngày cá nhân khi component được tải
+onMounted(() => {
+  if (birthDateInput.value && /^\d{2}\/\d{2}\/\d{4}$/.test(birthDateInput.value)) {
+    personalDayNumber.value = calculatePersonalDayNumber(birthDateInput.value, currentDate.value);
+  }
+});
 </script>
 
 <style scoped>
@@ -351,4 +397,3 @@ async function getRecommendations() {
   opacity: 0;
 }
 </style>
-```
