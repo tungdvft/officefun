@@ -51,7 +51,7 @@
             <!-- Luận giải chi tiết -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <!-- Mô tả card -->
-              <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+              <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow md:col-span-2">
                 <div class="flex items-start mb-4">
                   <div class="flex-shrink-0 p-2 bg-teal-100 rounded-lg text-teal-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -81,7 +81,7 @@
               </div>
 
               <!-- Con đường phù hợp card -->
-              <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow md:col-span-2">
+              <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
                 <div class="flex items-start mb-4">
                   <div class="flex-shrink-0 p-2 bg-teal-100 rounded-lg text-teal-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
