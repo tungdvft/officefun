@@ -60,7 +60,7 @@
                     d="M13 10V3L4 14h7v7l9-11h-7z"
                   />
                 </svg>
-                Phân tích thần số học
+                Phân tích tổng quan
               </span>
               <span v-else class="flex items-center justify-center gap-2">
                 <svg
