@@ -85,11 +85,37 @@ const features = [
            </svg>`,
     link: "/xem/danh-xung"
   },
-    {
+  {
     title: "Chọn ngày cưới",
     description: "Tìm ngày cưới lý tưởng theo vận số của bạn và đối tác, đảm bảo hòa hợp, may mắn.",
-    icon: "<svg class=\"w-6 h-6 text-purple-600\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z\" /></svg>",
+    icon: `<svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+           </svg>`,
     link: "/xem/chon-ngay-cuoi"
-    }
+  },
+  {
+    title: "Đặt tên thương hiệu",
+    description: "Tư vấn tên thương hiệu hài hòa với năng lượng số, thu hút thành công và thịnh vượng.",
+    icon: `<svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
+           </svg>`,
+    link: "/xem/ten-thuong-hieu"
+  },
+  {
+    title: "Thần số học cho trẻ",
+    description: "Khám phá tiềm năng và định hướng phát triển cho con bạn qua năng lượng số học.",
+    icon: `<svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+           </svg>`,
+    link: "/xem/than-so-hoc-tre-em"
+  },
+  {
+    title: "Giải đáp thắc mắc",
+    description: "Giải đáp chi tiết các câu hỏi về vận mệnh và thần số học để hiểu rõ hơn.",
+    icon: `<svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+           </svg>`,
+    link: "/xem/giai-dap-thac-mac"
+  }
 ];
 </script>
