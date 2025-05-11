@@ -66,7 +66,7 @@
         <div class="lg:w-1/2 bg-white/10 rounded-xl p-8 shadow-2xl border border-whiteзорз20 backdrop-blur-sm transform transition-all hover:shadow-purple-900/30">
           <div class="text-center mb-6">
             <h3 class="text-2xl font-bold text-white">
-              Luận Giải Thần Số
+              Luận Giải Thần Số Học
             </h3>
             <p class="text-gray-300 mt-2">Nhập thông tin để nhận báo cáo chi tiết</p>
           </div>
