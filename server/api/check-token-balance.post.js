@@ -2,11 +2,11 @@ import { setupDatabase } from '../db/sqlite';
 import { createError } from 'h3';
 
 export default defineEventHandler(async (event) => {
-  const db = await setupDatabase(); // Đảm bảo chờ setupDatabase hoàn tất
+  const db = await setupDatabase();
   const body = await readBody(event);
   let { userId } = body;
 
-  // Ép kiểu userId sang số, chấp nhận cả chuỗi và số nguyên
+  // Ép kiểu userId sang số
   userId = Number(userId);
   if (isNaN(userId) || userId <= 0) {
     console.error('Invalid userId:', body.userId);
@@ -17,11 +17,27 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    console.log('Checking token balance for userId:', userId); // Log để debug
-    const user = await db.get('SELECT tokens FROM users WHERE id = ?', [userId]);
+    console.log('Checking token balance for userId:', userId);
 
+    // Kiểm tra bảng users
+    const tableExists = await db.get(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name='users'"
+    );
+    if (!tableExists) {
+      console.error('Table users does not exist');
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Bảng users không tồn tại trong cơ sở dữ liệu',
+      });
+    }
+
+    // Kiểm tra người dùng
+    const user = await db.get('SELECT tokens FROM users WHERE id = ?', [userId]);
     if (!user) {
       console.error('User not found for userId:', userId);
+      // Log tất cả user IDs hiện có để debug
+      const users = await db.all('SELECT id FROM users');
+      console.log('Available user IDs:', users.map(u => u.id));
       throw createError({
         statusCode: 404,
         statusMessage: 'Không tìm thấy người dùng',
