@@ -327,18 +327,45 @@ const initializeUserData = () => {
   };
 };
 
+// Khởi tạo state từ localStorage hoặc dữ liệu người dùng
+const loadSavedData = () => {
+  if (process.client) {
+    const savedData = localStorage.getItem('numerologyData');
+    if (savedData) {
+      try {
+        const parsedData = JSON.parse(savedData);
+        return {
+          name: parsedData.name || '',
+          birthDate: parsedData.birthDate || '',
+          foodPreferences: parsedData.foodPreferences || '',
+          drinkPreferences: parsedData.drinkPreferences || '',
+          plans: parsedData.plans || '',
+          activeTab: parsedData.activeTab || 'Insight hôm nay',
+          personalDayNumber: parsedData.personalDayNumber || null,
+          recommendations: parsedData.recommendations || null,
+        };
+      } catch (error) {
+        console.error('Lỗi parse numerology data từ localStorage:', error);
+      }
+    }
+  }
+  return null;
+};
+
 const { name, birthDate, userId } = initializeUserData();
-const nameRef = ref(name);
-const birthDateInput = ref(birthDate);
+const savedData = loadSavedData();
+
+const nameRef = ref(savedData?.name || name);
+const birthDateInput = ref(savedData?.birthDate || birthDate);
 const userIdRef = ref(userId);
-const foodPreferences = ref('');
-const drinkPreferences = ref('');
-const plans = ref('');
-const personalDayNumber = ref(null);
-const recommendations = ref(null);
+const foodPreferences = ref(savedData?.foodPreferences || '');
+const drinkPreferences = ref(savedData?.drinkPreferences || '');
+const plans = ref(savedData?.plans || '');
+const personalDayNumber = ref(savedData?.personalDayNumber || null);
+const recommendations = ref(savedData?.recommendations || null);
 const loading = ref(false);
 const error = ref(null);
-const activeTab = ref('Insight hôm nay');
+const activeTab = ref(savedData?.activeTab || 'Insight hôm nay');
 const tabs = ['Insight hôm nay', 'Đồ ăn', 'Đồ uống'];
 const currentDate = ref(getCurrentDate());
 
@@ -371,15 +398,7 @@ async function getRecommendations() {
       throw new Error('Vui lòng nhập ngày sinh đúng định dạng DD/MM/YYYY');
     }
 
-    // const balance = await fetchTokenBalance(userId);
-    // if (balance === null || balance < 10) {
-    //   isTokenSufficient.value = false;
-    //   throw new Error('Số dư token không đủ (cần 10 token)');
-    // }
-
     isTokenSufficient.value = true;
-
-    // await deductTokens(userId, 10, `Gọi API thần số học: ${activeTab.value}`);
 
     let endpoint;
     let body = { birthDate: birthDateInput.value };
@@ -403,19 +422,22 @@ async function getRecommendations() {
     personalDayNumber.value = response.personalDayNumber;
     recommendations.value = response.recommendations;
 
-    localStorage.setItem(
-      'numerologyData',
-      JSON.stringify({
-        name: nameRef.value,
-        birthDate: birthDateInput.value,
-        foodPreferences: foodPreferences.value,
-        drinkPreferences: drinkPreferences.value,
-        plans: plans.value,
-        activeTab: activeTab.value,
-        personalDayNumber: personalDayNumber.value,
-        recommendations: recommendations.value,
-      })
-    );
+    // Lưu dữ liệu vào localStorage
+    if (process.client) {
+      localStorage.setItem(
+        'numerologyData',
+        JSON.stringify({
+          name: nameRef.value,
+          birthDate: birthDateInput.value,
+          foodPreferences: foodPreferences.value,
+          drinkPreferences: drinkPreferences.value,
+          plans: plans.value,
+          activeTab: activeTab.value,
+          personalDayNumber: personalDayNumber.value,
+          recommendations: recommendations.value,
+        })
+      );
+    }
   } catch (err) {
     error.value =
       err.message === 'Không tìm thấy người dùng'
@@ -433,7 +455,7 @@ onBeforeMount(() => {
     userStore.initialize();
   }
   if (birthDateInput.value && /^\d{2}\/\d{2}\/\d{4}$/.test(birthDateInput.value)) {
-    personalDayNumber.value = calculatePersonalDayNumber(birthDateInput.value, currentDate.value);
+    personalDayNumber.value = personalDayNumber.value || calculatePersonalDayNumber(birthDateInput.value, currentDate.value);
   }
 });
 </script>
