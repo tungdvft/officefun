@@ -9,15 +9,13 @@
         <div v-if="personalDayNumber" class="mt-4 inline-flex items-center px-4 py-2 bg-purple-100 text-purple-600 rounded-full text-sm font-medium">
           Số ngày cá nhân hôm nay của bạn: <span class="font-bold ml-1">{{ personalDayNumber }}</span>
         </div>
-        <!-- Hiển thị số dư token -->
-        <div v-if="tokens !== null" class="mt-2 inline-flex items-center px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-medium">
+        <!-- <div v-if="tokens !== null" class="mt-2 inline-flex items-center px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-medium">
           Số dư token: <span class="font-bold ml-1">{{ tokens }}</span>
-        </div>
+        </div> -->
       </div>
 
       <!-- Main Content -->
       <div class="bg-white p-6 rounded-xl shadow-lg mb-8 border border-gray-100">
-        <!-- Input Form for Name and Birth Date -->
         <div v-if="userStore.isStoreInitialized" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div>
             <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Họ và tên</label>
@@ -95,7 +93,7 @@
             />
           </div>
 
-          <!-- Button with adjusted width -->
+          <!-- Button -->
           <div class="flex flex-col items-center">
             <button
               type="submit"
@@ -105,7 +103,6 @@
               <span v-if="loading || isLoading">Đang xử lý...</span>
               <span v-else>Xem gợi ý</span>
             </button>
-            <!-- Thông báo số dư token không đủ -->
             <div v-if="tokens !== null && !isTokenSufficient" class="mt-2 text-red-600 text-sm font-medium">
               Số dư token không đủ (cần 10 token)
             </div>
@@ -119,7 +116,6 @@
 
         <!-- Results Section -->
         <div v-if="recommendations" class="mt-8 space-y-6">
-          <!-- Personal Day Number -->
           <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
             <div class="flex items-center">
               <div class="bg-purple-100 p-2 rounded-lg mr-4">
@@ -260,7 +256,7 @@ const userStore = useUserStore();
 // Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
 const formatDateToDDMMYYYY = (dateStr) => {
   if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
-    return ''; // Trả về chuỗi rỗng nếu không hợp lệ
+    return '';
   }
   const [year, month, day] = dateStr.split('-');
   return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
@@ -298,9 +294,43 @@ const calculatePersonalDayNumber = (birthDate, currentDate) => {
   return personalDay;
 };
 
-// Khởi tạo giá trị từ userStore
-const name = ref(userStore.user?.fullname || '');
-const birthDateInput = ref(userStore.user?.birthdate ? formatDateToDDMMYYYY(userStore.user.birthdate) : '');
+// Khởi tạo dữ liệu người dùng
+const initializeUserData = () => {
+  if (userStore.user?.fullname || userStore.user?.birthdate) {
+    return {
+      name: userStore.user.fullname?.trim() || '',
+      birthDate: userStore.user.birthdate ? formatDateToDDMMYYYY(userStore.user.birthdate) : '',
+      userId: userStore.user.id || null,
+    };
+  }
+
+  if (process.client) {
+    const authData = localStorage.getItem('auth');
+    if (authData) {
+      try {
+        const parsedData = JSON.parse(authData);
+        return {
+          name: parsedData.fullname?.trim() || '',
+          birthDate: parsedData.birthdate ? formatDateToDDMMYYYY(parsedData.birthdate) : '',
+          userId: parsedData.id || null,
+        };
+      } catch (error) {
+        console.error('Lỗi parse auth data từ localStorage:', error);
+      }
+    }
+  }
+
+  return {
+    name: '',
+    birthDate: '',
+    userId: null,
+  };
+};
+
+const { name, birthDate, userId } = initializeUserData();
+const nameRef = ref(name);
+const birthDateInput = ref(birthDate);
+const userIdRef = ref(userId);
 const foodPreferences = ref('');
 const drinkPreferences = ref('');
 const plans = ref('');
@@ -312,11 +342,8 @@ const activeTab = ref('Insight hôm nay');
 const tabs = ['Insight hôm nay', 'Đồ ăn', 'Đồ uống'];
 const currentDate = ref(getCurrentDate());
 
-// Sử dụng composable useToken để quản lý token
 const { tokens, isLoading, error: tokenError, fetchTokenBalance, deductTokens } = useToken();
-
-// Biến để kiểm tra số dư token có đủ hay không
-const isTokenSufficient = ref(true); // Mặc định cho phép nhấn nút, sẽ kiểm tra khi submit
+const isTokenSufficient = ref(true);
 
 async function getRecommendations() {
   error.value = null;
@@ -324,23 +351,27 @@ async function getRecommendations() {
   loading.value = true;
 
   try {
-    // Chờ userStore khởi tạo
     if (!userStore.isStoreInitialized) {
       throw new Error('Đang tải thông tin người dùng, vui lòng thử lại');
     }
 
-    // Kiểm tra user đã đăng nhập
-    if (!userStore.user?.id) {
+    let userId = userIdRef.value;
+    if (!userId && process.client) {
+      const authData = localStorage.getItem('auth');
+      if (authData) {
+        userId = JSON.parse(authData).id;
+      }
+    }
+
+    if (!userId) {
       throw new Error('Vui lòng đăng nhập để sử dụng tính năng này');
     }
 
-    // Kiểm tra định dạng ngày sinh
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDateInput.value)) {
       throw new Error('Vui lòng nhập ngày sinh đúng định dạng DD/MM/YYYY');
     }
 
-    // Kiểm tra số dư token
-    const balance = await fetchTokenBalance(userStore.user.id);
+    const balance = await fetchTokenBalance(userId);
     if (balance === null || balance < 10) {
       isTokenSufficient.value = false;
       throw new Error('Số dư token không đủ (cần 10 token)');
@@ -348,10 +379,8 @@ async function getRecommendations() {
 
     isTokenSufficient.value = true;
 
-    // Trừ 10 token trước khi gọi API
-    await deductTokens(userStore.user.id, 10, `Gọi API thần số học: ${activeTab.value}`);
+    await deductTokens(userId, 10, `Gọi API thần số học: ${activeTab.value}`);
 
-    // Gọi API thần số học
     let endpoint;
     let body = { birthDate: birthDateInput.value };
 
@@ -374,11 +403,10 @@ async function getRecommendations() {
     personalDayNumber.value = response.personalDayNumber;
     recommendations.value = response.recommendations;
 
-    // Lưu dữ liệu vào localStorage
     localStorage.setItem(
       'numerologyData',
       JSON.stringify({
-        name: name.value,
+        name: nameRef.value,
         birthDate: birthDateInput.value,
         foodPreferences: foodPreferences.value,
         drinkPreferences: drinkPreferences.value,
@@ -389,21 +417,21 @@ async function getRecommendations() {
       })
     );
   } catch (err) {
-    error.value = err.message || 'Có lỗi xảy ra khi lấy gợi ý';
+    error.value =
+      err.message === 'Không tìm thấy người dùng'
+        ? 'Tài khoản không tồn tại, vui lòng đăng nhập lại'
+        : err.message === 'Cơ sở dữ liệu chỉ đọc, không thể ghi'
+        ? 'Hệ thống gặp lỗi, vui lòng thử lại sau'
+        : err.message || 'Có lỗi xảy ra khi lấy gợi ý';
   } finally {
     loading.value = false;
   }
 }
 
-// Khởi tạo userStore và tính số ngày cá nhân
 onBeforeMount(() => {
   if (process.client) {
     userStore.initialize();
   }
-});
-
-// Tính số ngày cá nhân khi component được tải
-onBeforeMount(() => {
   if (birthDateInput.value && /^\d{2}\/\d{2}\/\d{4}$/.test(birthDateInput.value)) {
     personalDayNumber.value = calculatePersonalDayNumber(birthDateInput.value, currentDate.value);
   }
@@ -411,7 +439,6 @@ onBeforeMount(() => {
 </script>
 
 <style scoped>
-/* Custom transitions */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
