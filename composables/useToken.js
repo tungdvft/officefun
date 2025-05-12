@@ -73,11 +73,11 @@ export function useToken() {
 
       // Cập nhật số dư token
       tokens.value = response.remainingTokens;
-      toast.success(response.message);
+
       return response;
     } catch (err) {
       error.value = err.data?.statusMessage || 'Lỗi khi trừ token';
-      toast.error(error.value);
+    
       throw err;
     } finally {
       isLoading.value = false;

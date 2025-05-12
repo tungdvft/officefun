@@ -7,14 +7,18 @@
         <p class="text-gray-600">Mỗi ngày là một con số khác nhau - Hãy xem hôm nay vũ trụ dành điều gì cho bạn!</p>
         <p class="text-gray-600 mt-2">Hôm nay: <span class="font-medium">{{ currentDate }}</span></p>
         <div v-if="personalDayNumber" class="mt-4 inline-flex items-center px-4 py-2 bg-purple-100 text-purple-600 rounded-full text-sm font-medium">
-          Số ngày cá nhân hôm  của bạn: <span class="font-bold ml-1">{{ personalDayNumber }}</span>
+          Số ngày cá nhân hôm nay của bạn: <span class="font-bold ml-1">{{ personalDayNumber }}</span>
+        </div>
+        <!-- Hiển thị số dư token -->
+        <div v-if="tokens !== null" class="mt-2 inline-flex items-center px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-medium">
+          Số dư token: <span class="font-bold ml-1">{{ tokens }}</span>
         </div>
       </div>
 
       <!-- Main Content -->
       <div class="bg-white p-6 rounded-xl shadow-lg mb-8 border border-gray-100">
         <!-- Input Form for Name and Birth Date -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div v-if="userStore.isStoreInitialized" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div>
             <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Họ và tên</label>
             <input
@@ -25,7 +29,6 @@
               class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
             />
           </div>
-
           <div>
             <label for="birthDate" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh (DD/MM/YYYY)</label>
             <input
@@ -93,15 +96,19 @@
           </div>
 
           <!-- Button with adjusted width -->
-          <div class="flex justify-center">
+          <div class="flex flex-col items-center">
             <button
               type="submit"
-              :disabled="loading"
+              :disabled="loading || isLoading || !isTokenSufficient"
               class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
             >
-              <span v-if="loading">Đang xử lý...</span>
+              <span v-if="loading || isLoading">Đang xử lý...</span>
               <span v-else>Xem gợi ý</span>
             </button>
+            <!-- Thông báo số dư token không đủ -->
+            <div v-if="tokens !== null && !isTokenSufficient" class="mt-2 text-red-600 text-sm font-medium">
+              Số dư token không đủ (cần 10 token)
+            </div>
           </div>
         </form>
 
@@ -141,7 +148,7 @@
             <div v-if="Array.isArray(recommendations.food)" class="grid gap-4 md:grid-cols-2">
               <div v-for="(item, index) in recommendations.food" :key="index" class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
                 <p class="font-medium text-gray-800 flex items-center">
-                  <span class="w-6 h-6 rounding-full bg-purple-100 text-purple-800 flex items-center justify-center mr-2 text-sm">{{ index + 1 }}</span>
+                  <span class="w-6 h-6 rounded-full bg-purple-100 text-purple-800 flex items-center justify-center mr-2 text-sm">{{ index + 1 }}</span>
                   {{ item.item }}
                 </p>
                 <p class="text-gray-600 text-sm mt-2">{{ item.explanation }}</p>
@@ -188,14 +195,12 @@
               </span>
               Insight hôm nay
             </h3>
-            
             <div v-if="recommendations.insight.selectedPlan" class="space-y-6">
               <div class="bg-white p-5 rounded-xl border border-green-100 shadow-sm">
                 <h4 class="text-sm font-semibold text-green-600 uppercase tracking-wider mb-3">DỰ ĐỊNH TỐT NHẤT</h4>
                 <p class="text-gray-800 font-semibold text-lg">{{ recommendations.insight.selectedPlan }}</p>
                 <p class="text-gray-600 mt-2">{{ recommendations.insight.planExplanation }}</p>
               </div>
-              
               <div class="grid gap-5 md:grid-cols-2">
                 <div class="bg-white p-5 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow">
                   <h4 class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3 flex items-center">
@@ -207,7 +212,6 @@
                   <p class="text-gray-800 font-medium">{{ recommendations.insight.doToday.activity }}</p>
                   <p class="text-gray-600 mt-2 text-sm">{{ recommendations.insight.doToday.explanation }}</p>
                 </div>
-                
                 <div class="bg-white p-5 rounded-xl border border-red-100 shadow-sm hover:shadow-md transition-shadow">
                   <h4 class="text-sm font-semibold text-red-600 uppercase tracking-wider mb-3 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
@@ -220,7 +224,6 @@
                 </div>
               </div>
             </div>
-            
             <div v-else class="space-y-6">
               <div class="grid gap-5 md:grid-cols-2">
                 <div class="bg-white p-5 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow">
@@ -230,7 +233,6 @@
                     <p class="text-gray-600 mt-1 text-sm">{{ item.explanation }}</p>
                   </div>
                 </div>
-                
                 <div class="bg-white p-5 rounded-xl border border-red-100 shadow-sm hover:shadow-md transition-shadow">
                   <h4 class="text-sm font-semibold text-red-600 uppercase tracking-wider mb-3">NÊN TRÁNH</h4>
                   <div v-for="(item, index) in recommendations.insight.avoidToday" :key="'avoid-' + index" class="mt-4 first:mt-0">
@@ -248,12 +250,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import { useUserStore } from '@/stores/user';
+import { useToken } from '~/composables/useToken';
 
 // Lấy thông tin người dùng từ userStore
 const userStore = useUserStore();
-const user = userStore.user || { fullname: '', birthdate: '' }; // Fallback nếu user chưa có
 
 // Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
 const formatDateToDDMMYYYY = (dateStr) => {
@@ -279,11 +281,9 @@ const calculatePersonalDayNumber = (birthDate, currentDate) => {
     return null;
   }
 
-  // Chuyển đổi ngày sinh và ngày hiện tại thành số
   const [birthDay, birthMonth, birthYear] = birthDate.split('/').map(Number);
   const [currentDay, currentMonth, currentYear] = currentDate.split('/').map(Number);
 
-  // Tính tổng các chữ số của ngày sinh và ngày hiện tại
   const sumBirth = (birthDay + birthMonth + birthYear)
     .toString()
     .split('')
@@ -293,15 +293,14 @@ const calculatePersonalDayNumber = (birthDate, currentDate) => {
     .split('')
     .reduce((sum, digit) => sum + Number(digit), 0);
 
-  // Tính số ngày cá nhân
   let personalDay = (sumBirth + sumCurrent) % 9;
-  if (personalDay === 0) personalDay = 9; // Nếu tổng chia hết cho 9, số ngày cá nhân là 9
+  if (personalDay === 0) personalDay = 9;
   return personalDay;
 };
 
-// Khởi tạo giá trị ref từ userStore
-const name = ref(user.fullname);
-const birthDateInput = ref(formatDateToDDMMYYYY(user.birthdate));
+// Khởi tạo giá trị từ userStore
+const name = ref(userStore.user?.fullname || '');
+const birthDateInput = ref(userStore.user?.birthdate ? formatDateToDDMMYYYY(userStore.user.birthdate) : '');
 const foodPreferences = ref('');
 const drinkPreferences = ref('');
 const plans = ref('');
@@ -313,16 +312,46 @@ const activeTab = ref('Insight hôm nay');
 const tabs = ['Insight hôm nay', 'Đồ ăn', 'Đồ uống'];
 const currentDate = ref(getCurrentDate());
 
+// Sử dụng composable useToken để quản lý token
+const { tokens, isLoading, error: tokenError, fetchTokenBalance, deductTokens } = useToken();
+
+// Biến để kiểm tra số dư token có đủ hay không
+const isTokenSufficient = ref(true); // Mặc định cho phép nhấn nút, sẽ kiểm tra khi submit
+
 async function getRecommendations() {
   error.value = null;
   recommendations.value = null;
   loading.value = true;
 
   try {
+    // Chờ userStore khởi tạo
+    if (!userStore.isStoreInitialized) {
+      throw new Error('Đang tải thông tin người dùng, vui lòng thử lại');
+    }
+
+    // Kiểm tra user đã đăng nhập
+    if (!userStore.user?.id) {
+      throw new Error('Vui lòng đăng nhập để sử dụng tính năng này');
+    }
+
+    // Kiểm tra định dạng ngày sinh
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDateInput.value)) {
       throw new Error('Vui lòng nhập ngày sinh đúng định dạng DD/MM/YYYY');
     }
 
+    // Kiểm tra số dư token
+    const balance = await fetchTokenBalance(userStore.user.id);
+    if (balance === null || balance < 10) {
+      isTokenSufficient.value = false;
+      throw new Error('Số dư token không đủ (cần 10 token)');
+    }
+
+    isTokenSufficient.value = true;
+
+    // Trừ 10 token trước khi gọi API
+    await deductTokens(userStore.user.id, 10, `Gọi API thần số học: ${activeTab.value}`);
+
+    // Gọi API thần số học
     let endpoint;
     let body = { birthDate: birthDateInput.value };
 
@@ -366,8 +395,15 @@ async function getRecommendations() {
   }
 }
 
+// Khởi tạo userStore và tính số ngày cá nhân
+onBeforeMount(() => {
+  if (process.client) {
+    userStore.initialize();
+  }
+});
+
 // Tính số ngày cá nhân khi component được tải
-onMounted(() => {
+onBeforeMount(() => {
   if (birthDateInput.value && /^\d{2}\/\d{2}\/\d{4}$/.test(birthDateInput.value)) {
     personalDayNumber.value = calculatePersonalDayNumber(birthDateInput.value, currentDate.value);
   }

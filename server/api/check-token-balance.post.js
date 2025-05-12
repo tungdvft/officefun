@@ -2,7 +2,7 @@ import { setupDatabase } from '../db/sqlite';
 import { createError } from 'h3';
 
 export default defineEventHandler(async (event) => {
-  const db = setupDatabase();
+  const db = await setupDatabase(); // Đảm bảo chờ setupDatabase hoàn tất
   const body = await readBody(event);
   const { userId } = body;
 
@@ -14,8 +14,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const stmt = db.prepare('SELECT tokens FROM users WHERE id = ?');
-    const user = stmt.get(userId);
+    const user = await db.get('SELECT tokens FROM users WHERE id = ?', [userId]);
 
     if (!user) {
       throw createError({
@@ -32,6 +31,7 @@ export default defineEventHandler(async (event) => {
       tokens: user.tokens,
     };
   } catch (error) {
+    console.error('Lỗi kiểm tra số dư token:', error);
     throw createError({
       statusCode: error.statusCode || 500,
       statusMessage: error.statusMessage || 'Lỗi khi kiểm tra số dư token',
