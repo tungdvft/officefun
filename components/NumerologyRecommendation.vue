@@ -7,7 +7,7 @@
         <p class="text-gray-600">Mỗi ngày là một con số khác nhau - Hãy xem hôm nay vũ trụ dành điều gì cho bạn!</p>
         <p class="text-gray-600 mt-2">Hôm nay: <span class="font-medium">{{ currentDate }}</span></p>
         <div v-if="personalDayNumber" class="mt-4 inline-flex items-center px-4 py-2 bg-purple-100 text-purple-600 rounded-full text-sm font-medium">
-          Số ngày cá nhân hôm nay: <span class="font-bold ml-1">{{ personalDayNumber }}</span>
+          Số ngày cá nhân hôm  của bạn: <span class="font-bold ml-1">{{ personalDayNumber }}</span>
         </div>
       </div>
 
