@@ -371,11 +371,11 @@ async function getRecommendations() {
       throw new Error('Vui lòng nhập ngày sinh đúng định dạng DD/MM/YYYY');
     }
 
-    const balance = await fetchTokenBalance(userId);
-    if (balance === null || balance < 10) {
-      isTokenSufficient.value = false;
-      throw new Error('Số dư token không đủ (cần 10 token)');
-    }
+    // const balance = await fetchTokenBalance(userId);
+    // if (balance === null || balance < 10) {
+    //   isTokenSufficient.value = false;
+    //   throw new Error('Số dư token không đủ (cần 10 token)');
+    // }
 
     isTokenSufficient.value = true;
 

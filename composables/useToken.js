@@ -11,32 +11,32 @@ export function useToken() {
    * @param {number} userId - ID của người dùng
    * @returns {Promise<number>} Số dư token
    */
-  async function fetchTokenBalance(userId) {
-    if (!userId) {
-      error.value = 'Thiếu userId';
-      toast.error(error.value);
-      return null;
-    }
+//   async function fetchTokenBalance(userId) {
+//     if (!userId) {
+//       error.value = 'Thiếu userId';
+//       toast.error(error.value);
+//       return null;
+//     }
 
-    isLoading.value = true;
-    error.value = null;
+//     isLoading.value = true;
+//     error.value = null;
 
-    try {
-      const response = await $fetch('/api/check-token-balance', {
-        method: 'POST',
-        body: { userId },
-      });
+//     try {
+//       const response = await $fetch('/api/check-token-balance', {
+//         method: 'POST',
+//         body: { userId },
+//       });
 
-      tokens.value = response.tokens;
-      return response.tokens;
-    } catch (err) {
-      error.value = err.data?.statusMessage || 'Lỗi khi lấy số dư token';
-      toast.error(error.value);
-      return null;
-    } finally {
-      isLoading.value = false;
-    }
-  }
+//       tokens.value = response.tokens;
+//       return response.tokens;
+//     } catch (err) {
+//       error.value = err.data?.statusMessage || 'Lỗi khi lấy số dư token';
+//       toast.error(error.value);
+//       return null;
+//     } finally {
+//       isLoading.value = false;
+//     }
+//   }
 
   /**
    * Trừ token của người dùng
@@ -88,7 +88,7 @@ export function useToken() {
     tokens,
     isLoading,
     error,
-    fetchTokenBalance,
+    // fetchTokenBalance,
     deductTokens,
   };
 }
