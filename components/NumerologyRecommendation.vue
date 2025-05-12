@@ -379,7 +379,7 @@ async function getRecommendations() {
 
     isTokenSufficient.value = true;
 
-    await deductTokens(userId, 10, `Gọi API thần số học: ${activeTab.value}`);
+    // await deductTokens(userId, 10, `Gọi API thần số học: ${activeTab.value}`);
 
     let endpoint;
     let body = { birthDate: birthDateInput.value };
