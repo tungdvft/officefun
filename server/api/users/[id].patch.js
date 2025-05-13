@@ -1,58 +1,76 @@
 import { setupDatabase } from '../../db/sqlite';
+import { createError } from 'h3';
+
+// Hàm kiểm tra định dạng ngày sinh
+const isValidDate = (dateString) => {
+  const date = new Date(dateString);
+  return date instanceof Date && !isNaN(date) && date.getFullYear() >= 1900 && date.getFullYear() <= new Date().getFullYear();
+};
+
+// Hàm kiểm tra họ tên
+const isValidFullname = (fullname) => {
+  return typeof fullname === 'string' && fullname.trim().length > 0 && fullname.length <= 100 && /^[a-zA-Z\s]*$/.test(fullname);
+};
 
 export default defineEventHandler(async (event) => {
   const db = await setupDatabase();
   const userId = event.context.params?.id;
   const body = await readBody(event);
 
-  // Kiểm tra userId
-  if (!userId) {
+  // 1. Kiểm tra userId
+  if (!userId || isNaN(parseInt(userId))) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Thiếu ID người dùng',
+      statusMessage: 'ID người dùng không hợp lệ.',
     });
   }
 
-  // Kiểm tra dữ liệu đầu vào
-  if (!body.fullname || !body.birthdate) {
+  // 2. Kiểm tra dữ liệu đầu vào
+  if (!isValidFullname(body.fullname)) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Họ tên và ngày sinh là bắt buộc',
+      statusMessage: 'Họ tên không hợp lệ. Phải là chuỗi, không quá 100 ký tự, và chỉ chứa chữ cái và khoảng trắng.',
     });
   }
 
-  // Kiểm tra tokens nếu được cung cấp
-  if (body.tokens !== undefined) {
+  if (!body.birthdate || !isValidDate(body.birthdate)) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Ngày sinh không hợp lệ. Phải là định dạng yyyy-mm-dd và trong khoảng từ 1900 đến hiện tại.',
+    });
+  }
+
+  if (body.tokens !== undefined && body.tokens !== null) {
     if (!Number.isInteger(body.tokens) || body.tokens < 0) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Tokens phải là số nguyên không âm',
+        statusMessage: 'Tokens phải là số nguyên không âm.',
       });
     }
   }
 
   try {
-    // Bắt đầu giao dịch
+    // 3. Bắt đầu giao dịch
+    await db.run('PRAGMA journal_mode=WAL;'); // Kích hoạt chế độ WAL cho SQLite
     await db.run('BEGIN TRANSACTION');
 
-    // Lấy số dư tokens hiện tại
+    // 4. Kiểm tra người dùng tồn tại và lấy tokens hiện tại
     const currentUser = await db.get('SELECT tokens FROM users WHERE id = ?', [userId]);
     if (!currentUser) {
-      await db.run('ROLLBACK');
+      await db.run('ROLLBACK').catch((rollbackError) => {
+        console.error('Rollback failed:', rollbackError);
+      });
       throw createError({
         statusCode: 404,
-        statusMessage: 'Không tìm thấy người dùng',
+        statusMessage: 'Không tìm thấy người dùng.',
       });
     }
 
-    // Xác định giá trị tokens mới
-    let newTokens = body.tokens !== undefined ? body.tokens : currentUser.tokens;
-    if (newTokens === null || newTokens === undefined) {
-      newTokens = 100; // Gán 100 tokens mặc định nếu chưa có
-    }
+    // 5. Xác định giá trị tokens mới
+    const newTokens = body.tokens !== undefined && body.tokens !== null ? body.tokens : (currentUser.tokens !== null ? currentUser.tokens : 100);
 
-    // Cập nhật thông tin người dùng
-    await db.run(
+    // 6. Cập nhật thông tin người dùng
+    const updateResult = await db.run(
       `UPDATE users SET 
         fullname = ?, 
         birthdate = ?,
@@ -62,30 +80,47 @@ export default defineEventHandler(async (event) => {
       [body.fullname, body.birthdate, newTokens, userId]
     );
 
-    // Ghi giao dịch token nếu tokens thay đổi hoặc được khởi tạo
-    if (newTokens !== currentUser.tokens) {
-      const tokenDifference = newTokens - (currentUser.tokens || 0);
+    if (updateResult.changes === 0) {
+      await db.run('ROLLBACK').catch((rollbackError) => {
+        console.error('Rollback failed:', rollbackError);
+      });
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Không thể cập nhật thông tin người dùng.',
+      });
+    }
+
+    // 7. Ghi giao dịch token nếu tokens thay đổi
+    if (newTokens !== currentUser.tokens && currentUser.tokens !== null) {
+      const tokenDifference = newTokens - currentUser.tokens;
       await db.run(
         'INSERT INTO token_transactions (user_id, amount, description) VALUES (?, ?, ?)',
-        [userId, tokenDifference, currentUser.tokens === null ? 'Khởi tạo tokens' : 'Cập nhật tokens qua API']
+        [userId, tokenDifference, 'Cập nhật tokens qua API']
+      );
+    } else if (currentUser.tokens === null && newTokens !== 100) {
+      await db.run(
+        'INSERT INTO token_transactions (user_id, amount, description) VALUES (?, ?, ?)',
+        [userId, newTokens, 'Khởi tạo tokens']
       );
     }
 
-    // Lấy thông tin người dùng đã cập nhật
+    // 8. Lấy thông tin người dùng đã cập nhật
     const user = await db.get(
       'SELECT id, email, fullname, birthdate, tokens, created_at, updated_at FROM users WHERE id = ?',
       [userId]
     );
 
     if (!user) {
-      await db.run('ROLLBACK');
+      await db.run('ROLLBACK').catch((rollbackError) => {
+        console.error('Rollback failed:', rollbackError);
+      });
       throw createError({
         statusCode: 404,
-        statusMessage: 'Không tìm thấy người dùng',
+        statusMessage: 'Không tìm thấy người dùng sau khi cập nhật.',
       });
     }
 
-    // Hoàn tất giao dịch
+    // 9. Hoàn tất giao dịch
     await db.run('COMMIT');
 
     return {
@@ -93,11 +128,19 @@ export default defineEventHandler(async (event) => {
       user,
     };
   } catch (error) {
-    // Hoàn tác nếu có lỗi
-    await db.run('ROLLBACK');
+    // 10. Hoàn tác nếu có lỗi
+    await db.run('ROLLBACK').catch((rollbackError) => {
+      console.error('Rollback failed:', rollbackError);
+    });
+    console.error('API Error:', {
+      message: error.message,
+      stack: error.stack,
+      userId,
+      body
+    });
     throw createError({
       statusCode: error.statusCode || 500,
-      statusMessage: error.message || 'Lỗi khi cập nhật thông tin người dùng',
+      statusMessage: error.message || 'Lỗi server không xác định. Vui lòng thử lại sau.',
     });
   }
 });
