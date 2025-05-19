@@ -1,5 +1,5 @@
+import { defineEventHandler, readBody, createError } from 'h3';
 import { setupDatabase } from '../../db/sqlite';
-import { createError } from 'h3';
 
 // Hàm kiểm tra định dạng ngày sinh
 const isValidDate = (dateString) => {
@@ -7,9 +7,9 @@ const isValidDate = (dateString) => {
   return date instanceof Date && !isNaN(date) && date.getFullYear() >= 1900 && date.getFullYear() <= new Date().getFullYear();
 };
 
-// Hàm kiểm tra họ tên
+// Hàm kiểm tra họ tên (hỗ trợ tiếng Việt)
 const isValidFullname = (fullname) => {
-  return typeof fullname === 'string' && fullname.trim().length > 0 && fullname.length <= 100 && /^[a-zA-Z\s]*$/.test(fullname);
+  return typeof fullname === 'string' && fullname.trim().length > 0 && fullname.length <= 100 && /^[\p{L}\s]*$/u.test(fullname);
 };
 
 export default defineEventHandler(async (event) => {
@@ -41,17 +41,19 @@ export default defineEventHandler(async (event) => {
   }
 
   if (body.tokens !== undefined && body.tokens !== null) {
-    if (!Number.isInteger(body.tokens) || body.tokens < 0) {
+    const tokens = parseInt(body.tokens, 10);
+    if (isNaN(tokens) || tokens < 0) {
       throw createError({
         statusCode: 400,
         statusMessage: 'Tokens phải là số nguyên không âm.',
       });
     }
+    body.tokens = tokens;
   }
 
   try {
     // 3. Bắt đầu giao dịch
-    await db.run('PRAGMA journal_mode=WAL;'); // Kích hoạt chế độ WAL cho SQLite
+    await db.run('PRAGMA journal_mode=WAL;');
     await db.run('BEGIN TRANSACTION');
 
     // 4. Kiểm tra người dùng tồn tại và lấy tokens hiện tại

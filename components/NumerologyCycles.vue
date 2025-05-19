@@ -1,13 +1,14 @@
 <template>
   <div class="mb-12 p-6 bg-white rounded-xl shadow-lg">
-     <div class="text-center mb-8">
-          <h2 class="text-4xl font-bold text-teal-700 mb-3">Chu Kỳ Đường Đời</h2>
-          <div class="w-24 h-1 bg-teal-500 mx-auto mb-4 rounded-full"></div>
-          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-             Ba giai đoạn quan trọng trong cuộc đời mỗi người: Gieo Hạt, Chín Muồi và Thu Hoạch.
+    <div class="text-center mb-8">
+      <h2 class="text-4xl font-bold text-teal-700 mb-3">Chu Kỳ Đường Đời</h2>
+      <div class="w-24 h-1 bg-teal-500 mx-auto mb-4 rounded-full"></div>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Ba giai đoạn quan trọng trong cuộc đời mỗi người: Gieo Hạt, Chín Muồi và Thu Hoạch.
         Mỗi chu kỳ mang những bài học và cơ hội riêng.
-          </p>
-        </div>
+      </p>
+    </div>
+
     <div v-if="error" class="p-4 bg-red-50 rounded-lg border border-red-200 mb-6">
       <div class="flex items-center text-red-600">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -49,7 +50,7 @@
                 </svg>
                 Ý nghĩa
               </h4>
-              <p class="text-gray-600 text-sm">{{ cycle.description?.meaning || 'Đang cập nhật...' }}</p>
+              <p class="text-gray-600 text-sm">{{ cycle.description.meaning || 'Không có dữ liệu ý nghĩa.' }}</p>
             </div>
 
             <div>
@@ -59,7 +60,7 @@
                 </svg>
                 Hướng dẫn
               </h4>
-              <p class="text-gray-600 text-sm">{{ cycle.description?.advice || 'Đang cập nhật...' }}</p>
+              <p class="text-gray-600 text-sm">{{ cycle.description.advice || 'Không có dữ liệu hướng dẫn.' }}</p>
             </div>
 
             <div>
@@ -70,7 +71,7 @@
                 Tác động chính
               </h4>
               <ul class="text-gray-600 text-sm space-y-1 pl-5">
-                <li v-for="(impact, i) in (cycle.description?.impact?.split('\n') || ['Đang cập nhật...'])" 
+                <li v-for="(impact, i) in (cycle.description.impact?.split('\n') || ['Không có dữ liệu tác động.'])" 
                     :key="i" class="relative pl-3">
                   <span class="absolute left-0 top-2 w-1.5 h-1.5 rounded-full" :class="cycleDotColors[index]"></span>
                   {{ impact }}
@@ -158,14 +159,14 @@ watch(() => props.birthDate, (newDate) => {
   lifePathCycles.value = null;
 
   const datePattern = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
-  if (!datePattern.test(newDate)) {
+  if (!newDate || !datePattern.test(newDate)) {
     error.value = 'Ngày sinh không hợp lệ! Vui lòng nhập định dạng dd/mm/yyyy';
     return;
   }
 
   try {
     const [day, month, year] = newDate.split('/').map(Number);
-    if (isNaN(day) || isNaN(month) || isNaN(year) || year < 1900 || year > 2025) {
+    if (isNaN(day) || isNaN(month) || isNaN(year) || day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2025) {
       error.value = 'Ngày sinh không hợp lệ! Vui lòng kiểm tra lại';
       return;
     }
@@ -177,7 +178,7 @@ watch(() => props.birthDate, (newDate) => {
         ageRange: '0 - 29 tuổi',
         yearRange: `${year} - ${year + 29}`,
         percentage: 30,
-        description: cycleDescriptions[NumerologyUtils.reduceToSingleDigit(month)]?.['Gieo Hạt'] || {}
+        description: cycleDescriptions[NumerologyUtils.reduceToSingleDigit(month)]?.['Gieo Hạt'] || { meaning: 'Không có dữ liệu.', advice: 'Không có dữ liệu.', impact: 'Không có dữ liệu.' }
       },
       {
         cycle: 'Chín Muồi',
@@ -185,7 +186,7 @@ watch(() => props.birthDate, (newDate) => {
         ageRange: '30 - 56 tuổi',
         yearRange: `${year + 30} - ${year + 56}`,
         percentage: 40,
-        description: cycleDescriptions[NumerologyUtils.reduceToSingleDigit(day)]?.['Chín'] || {} // Sửa từ 'Chín Muồi' thành 'Chín'
+        description: cycleDescriptions[NumerologyUtils.reduceToSingleDigit(day)]?.['Chín Muồi'] || { meaning: 'Không có dữ liệu.', advice: 'Không có dữ liệu.', impact: 'Không có dữ liệu.' }
       },
       {
         cycle: 'Thu Hoạch',
@@ -193,7 +194,7 @@ watch(() => props.birthDate, (newDate) => {
         ageRange: '57 tuổi trở đi',
         yearRange: `${year + 57}+`,
         percentage: 30,
-        description: cycleDescriptions[NumerologyUtils.reduceToSingleDigit(year.toString().split('').reduce((a, b) => a + parseInt(b), 0))]?.['Thu Hoạch'] || {}
+        description: cycleDescriptions[NumerologyUtils.reduceToSingleDigit(year.toString().split('').reduce((a, b) => a + parseInt(b), 0))]?.['Thu Hoạch'] || { meaning: 'Không có dữ liệu.', advice: 'Không có dữ liệu.', impact: 'Không có dữ liệu.' }
       }
     ];
     lifePathCycles.value = cycles;

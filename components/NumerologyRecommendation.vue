@@ -9,9 +9,6 @@
         <div v-if="personalDayNumber" class="mt-4 inline-flex items-center px-4 py-2 bg-purple-100 text-purple-600 rounded-full text-sm font-medium">
           Số ngày cá nhân hôm nay của bạn: <span class="font-bold ml-1">{{ personalDayNumber }}</span>
         </div>
-        <!-- <div v-if="tokens !== null" class="mt-2 inline-flex items-center px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-medium">
-          Số dư token: <span class="font-bold ml-1">{{ tokens }}</span>
-        </div> -->
       </div>
 
       <!-- Main Content -->
@@ -97,15 +94,12 @@
           <div class="flex flex-col items-center">
             <button
               type="submit"
-              :disabled="loading || isLoading || !isTokenSufficient"
+              :disabled="loading"
               class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
             >
-              <span v-if="loading || isLoading">Đang xử lý...</span>
+              <span v-if="loading">Đang xử lý...</span>
               <span v-else>Xem gợi ý</span>
             </button>
-            <div v-if="tokens !== null && !isTokenSufficient" class="mt-2 text-red-600 text-sm font-medium">
-              Số dư token không đủ (cần 10 token)
-            </div>
           </div>
         </form>
 
@@ -246,9 +240,8 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, watch } from 'vue';
 import { useUserStore } from '@/stores/user';
-import { useToken } from '~/composables/useToken';
 
 // Lấy thông tin người dùng từ userStore
 const userStore = useUserStore();
@@ -260,6 +253,15 @@ const formatDateToDDMMYYYY = (dateStr) => {
   }
   const [year, month, day] = dateStr.split('-');
   return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+};
+
+// Hàm chuyển đổi định dạng ngày từ DD/MM/YYYY sang YYYY-MM-DD
+const formatDateToYYYYMMDD = (dateStr) => {
+  if (!dateStr || !/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+    return '';
+  }
+  const [day, month, year] = dateStr.split('/').map(Number);
+  return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 };
 
 // Hàm lấy ngày hiện tại định dạng DD/MM/YYYY
@@ -327,50 +329,138 @@ const initializeUserData = () => {
   };
 };
 
-// Khởi tạo state từ localStorage hoặc dữ liệu người dùng
+// Tải dữ liệu từ localStorage (numerologyData) nếu có
 const loadSavedData = () => {
   if (process.client) {
     const savedData = localStorage.getItem('numerologyData');
     if (savedData) {
       try {
         const parsedData = JSON.parse(savedData);
-        return {
-          name: parsedData.name || '',
-          birthDate: parsedData.birthDate || '',
-          foodPreferences: parsedData.foodPreferences || '',
-          drinkPreferences: parsedData.drinkPreferences || '',
-          plans: parsedData.plans || '',
-          activeTab: parsedData.activeTab || 'Insight hôm nay',
-          personalDayNumber: parsedData.personalDayNumber || null,
-          recommendations: parsedData.recommendations || null,
-        };
+        // Kiểm tra xem userId trong localStorage có khớp với userId hiện tại không
+        const authData = localStorage.getItem('auth');
+        const currentUserId = authData ? JSON.parse(authData).id : null;
+        if (parsedData.userId === currentUserId) {
+          return {
+            foodPreferences: parsedData.foodPreferences || '',
+            drinkPreferences: parsedData.drinkPreferences || '',
+            plans: parsedData.plans || '',
+            activeTab: parsedData.activeTab || 'Insight hôm nay',
+            personalDayNumber: parsedData.personalDayNumber || null,
+            recommendations: parsedData.recommendations || null,
+          };
+        }
       } catch (error) {
         console.error('Lỗi parse numerology data từ localStorage:', error);
       }
     }
   }
-  return null;
+  return {
+    foodPreferences: '',
+    drinkPreferences: '',
+    plans: '',
+    activeTab: 'Insight hôm nay',
+    personalDayNumber: null,
+    recommendations: null,
+  };
 };
 
+// Khởi tạo state
 const { name, birthDate, userId } = initializeUserData();
 const savedData = loadSavedData();
-
-const nameRef = ref(savedData?.name || name);
-const birthDateInput = ref(savedData?.birthDate || birthDate);
+const nameRef = ref(name);
+const birthDateInput = ref(birthDate);
 const userIdRef = ref(userId);
-const foodPreferences = ref(savedData?.foodPreferences || '');
-const drinkPreferences = ref(savedData?.drinkPreferences || '');
-const plans = ref(savedData?.plans || '');
-const personalDayNumber = ref(savedData?.personalDayNumber || null);
-const recommendations = ref(savedData?.recommendations || null);
+const foodPreferences = ref(savedData.foodPreferences);
+const drinkPreferences = ref(savedData.drinkPreferences);
+const plans = ref(savedData.plans);
+const personalDayNumber = ref(savedData.personalDayNumber);
+const recommendations = ref(savedData.recommendations);
 const loading = ref(false);
 const error = ref(null);
-const activeTab = ref(savedData?.activeTab || 'Insight hôm nay');
+const activeTab = ref(savedData.activeTab);
 const tabs = ['Insight hôm nay', 'Đồ ăn', 'Đồ uống'];
 const currentDate = ref(getCurrentDate());
 
-const { tokens, isLoading, error: tokenError, fetchTokenBalance, deductTokens } = useToken();
-const isTokenSufficient = ref(true);
+// Hàm xóa dữ liệu localStorage cũ
+const clearNumerologyData = () => {
+  if (process.client) {
+    localStorage.removeItem('numerologyData');
+    foodPreferences.value = '';
+    drinkPreferences.value = '';
+    plans.value = '';
+    personalDayNumber.value = null;
+    recommendations.value = null;
+    activeTab.value = 'Insight hôm nay';
+  }
+};
+
+// Theo dõi thay đổi userId để xóa dữ liệu localStorage khi đăng nhập tài khoản mới
+watch(
+  () => userStore.user?.id,
+  (newUserId, oldUserId) => {
+    if (newUserId && newUserId !== oldUserId && oldUserId !== undefined) {
+      // Tài khoản mới được đăng nhập
+      clearNumerologyData();
+      const { name, birthDate, userId } = initializeUserData();
+      nameRef.value = name;
+      birthDateInput.value = birthDate;
+      userIdRef.value = userId;
+      if (birthDateInput.value && /^\d{2}\/\d{2}\/\d{4}$/.test(birthDateInput.value)) {
+        personalDayNumber.value = calculatePersonalDayNumber(birthDateInput.value, currentDate.value);
+      }
+    }
+  },
+  { immediate: true }
+);
+
+// Cập nhật thông tin người dùng khi thay đổi name hoặc birthDate
+watch([nameRef, birthDateInput], async ([newName, newBirthDate]) => {
+  if (!userStore.isStoreInitialized || !userIdRef.value) return;
+
+  if (newName !== userStore.user?.fullname || formatDateToYYYYMMDD(newBirthDate) !== userStore.user?.birthdate) {
+    try {
+      const response = await $fetch(`/api/users/${userIdRef.value}`, {
+        method: 'PATCH',
+        body: {
+          fullname: newName.trim(),
+          birthdate: formatDateToYYYYMMDD(newBirthDate),
+        },
+      });
+
+      if (response.success) {
+        userStore.setUser({
+          id: userIdRef.value,
+          email: userStore.user?.email || '',
+          fullname: newName.trim(),
+          birthdate: formatDateToYYYYMMDD(newBirthDate),
+          tokens: userStore.user?.tokens || 0,
+        });
+
+        if (process.client) {
+          const authData = localStorage.getItem('auth');
+          if (authData) {
+            const parsedData = JSON.parse(authData);
+            localStorage.setItem(
+              'auth',
+              JSON.stringify({
+                ...parsedData,
+                fullname: newName.trim(),
+                birthdate: formatDateToYYYYMMDD(newBirthDate),
+              })
+            );
+          }
+        }
+
+        if (newBirthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(newBirthDate)) {
+          personalDayNumber.value = calculatePersonalDayNumber(newBirthDate, currentDate.value);
+        }
+      }
+    } catch (err) {
+      console.error('Lỗi cập nhật thông tin người dùng:', err);
+      error.value = 'Không thể cập nhật thông tin. Vui lòng thử lại.';
+    }
+  }
+});
 
 async function getRecommendations() {
   error.value = null;
@@ -397,8 +487,6 @@ async function getRecommendations() {
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDateInput.value)) {
       throw new Error('Vui lòng nhập ngày sinh đúng định dạng DD/MM/YYYY');
     }
-
-    isTokenSufficient.value = true;
 
     let endpoint;
     let body = { birthDate: birthDateInput.value };
@@ -427,6 +515,7 @@ async function getRecommendations() {
       localStorage.setItem(
         'numerologyData',
         JSON.stringify({
+          userId: userIdRef.value,
           name: nameRef.value,
           birthDate: birthDateInput.value,
           foodPreferences: foodPreferences.value,
