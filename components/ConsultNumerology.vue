@@ -98,7 +98,7 @@
                   <h3 class="text-lg font-semibold text-purple-800">
                     Số chủ đạo: <span class="text-2xl font-bold">{{ result.lifePath }}</span>
                   </h3>
-                  <p class="text-gray-600 mt-1">{{ result.lifePathDesc }}</p>
+                  <p v-text="result.lifePathDesc" class="text-gray-600 mt-1"></p>
                 </div>
               </div>
             </div>
@@ -126,7 +126,7 @@
                   <h3 class="text-lg font-semibold text-purple-800">
                     Số năm cá nhân {{ currentYear }}: <span class="text-2xl font-bold">{{ result.personalYear }}</span>
                   </h3>
-                  <p class="text-gray-600 mt-1">{{ result.personalYearDesc }}</p>
+                  <p v-text="result.personalYearDesc" class="text-gray-600 mt-1"></p>
                 </div>
               </div>
             </div>
@@ -150,7 +150,7 @@
                 </span>
                 Phân tích tổng quan
               </h3>
-              <p class="text-gray-600 mt-2">{{ result.analysis }}</p>
+              <p v-text="result.analysis" class="text-gray-600 mt-2"></p>
             </div>
 
             <!-- Cơ hội -->
@@ -173,7 +173,7 @@
                 </span>
                 Cơ hội
               </h3>
-              <p class="text-gray-600 mt-2">{{ result.opportunities }}</p>
+              <p v-text="result.opportunities" class="text-gray-600 mt-2"></p>
             </div>
 
             <!-- Thách thức -->
@@ -195,7 +195,7 @@
                 </span>
                 Thách thức
               </h3>
-              <p class="text-gray-600 mt-2">{{ result.challenges }}</p>
+              <p v-text="result.challenges" class="text-gray-600 mt-2"></p>
             </div>
 
             <!-- Lời khuyên -->
@@ -217,10 +217,8 @@
                 </span>
                 Lời khuyên
               </h3>
-              <p class="text-gray-600 mt-2">{{ result.advice }}</p>
+              <p v-text="result.advice" class="text-gray-600 mt-2"></p>
             </div>
-
-            <!-- Nút chia sẻ -->
           </div>
         </transition>
       </div>
@@ -229,9 +227,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch, onMounted, computed } from 'vue';
 import { toast } from 'vue3-toastify';
-import { drawDOM, exportPDF } from '@progress/kendo-drawing';
 
 definePageMeta({ layout: 'view' });
 
@@ -245,23 +242,135 @@ const result = ref(null);
 const loading = ref(false);
 const currentYear = new Date().getFullYear();
 
+// Hàm làm sạch dữ liệu, loại bỏ ký tự không hợp lệ
+const cleanString = (str) => {
+  if (typeof str !== 'string') return str;
+  return str.replace(/["'<]/g, '');
+};
+
+// Computed property để làm sạch formData
+const cleanedFormData = computed({
+  get: () => ({
+    name: cleanString(formData.value.name),
+    birthDate: cleanString(formData.value.birthDate),
+    question: cleanString(formData.value.question)
+  }),
+  set: (newValue) => {
+    formData.value = {
+      name: newValue.name,
+      birthDate: newValue.birthDate,
+      question: newValue.question
+    };
+  }
+});
+
+// Làm sạch dữ liệu result từ API
+const cleanResult = (data) => {
+  if (!data) return null;
+  return {
+    lifePath: cleanString(data.lifePath),
+    lifePathDesc: cleanString(data.lifePathDesc),
+    personalYear: cleanString(data.personalYear),
+    personalYearDesc: cleanString(data.personalYearDesc),
+    analysis: cleanString(data.analysis),
+    opportunities: cleanString(data.opportunities),
+    challenges: cleanString(data.challenges),
+    advice: cleanString(data.advice)
+  };
+};
+
+// Khôi phục dữ liệu từ Local Storage (chỉ ở client)
+onMounted(() => {
+  if (process.client) {
+    console.log('Running on client, restoring localStorage');
+    try {
+      const savedFormData = localStorage.getItem('numerologyFormData');
+      const savedResult = localStorage.getItem('numerologyResult');
+
+      if (savedFormData) {
+        const parsedFormData = JSON.parse(savedFormData);
+        if (parsedFormData && typeof parsedFormData === 'object') {
+          formData.value = {
+            name: cleanString(parsedFormData.name),
+            birthDate: cleanString(parsedFormData.birthDate),
+            question: cleanString(parsedFormData.question)
+          };
+          console.log('Khôi phục formData:', formData.value);
+        }
+      }
+
+      if (savedResult) {
+        const parsedResult = JSON.parse(savedResult);
+        if (parsedResult && typeof parsedResult === 'object') {
+          result.value = cleanResult(parsedResult);
+          console.log('Khôi phục result:', result.value);
+        }
+      }
+    } catch (error) {
+      console.error('Lỗi khi khôi phục dữ liệu từ Local Storage:', error);
+      toast.error('Không thể khôi phục dữ liệu cũ!', { position: 'top-center' });
+    }
+  } else {
+    console.log('Running on server, skipping localStorage');
+  }
+});
+
+// Lưu formData khi thay đổi (chỉ ở client)
+watch(
+  () => cleanedFormData.value,
+  (newFormData) => {
+    if (process.client) {
+      try {
+        localStorage.setItem('numerologyFormData', JSON.stringify(newFormData));
+        console.log('Lưu formData:', newFormData);
+      } catch (error) {
+        console.error('Lỗi khi lưu formData vào Local Storage:', error);
+        toast.error('Không thể lưu dữ liệu form!', { position: 'top-center' });
+      }
+    }
+  },
+  { deep: true, immediate: true }
+);
+
+// Lưu result khi thay đổi (chỉ ở client)
+watch(
+  () => result.value,
+  (newResult) => {
+    if (process.client) {
+      try {
+        if (newResult) {
+          localStorage.setItem('numerologyResult', JSON.stringify(newResult));
+          console.log('Lưu result:', newResult);
+        } else {
+          localStorage.removeItem('numerologyResult');
+          console.log('Xóa result khỏi Local Storage');
+        }
+      } catch (error) {
+        console.error('Lỗi khi lưu result vào Local Storage:', error);
+        toast.error('Không thể lưu kết quả!', { position: 'top-center' });
+      }
+    }
+  },
+  { immediate: true }
+);
+
 const consult = async () => {
-  if (!formData.value.name) return toast.error('Vui lòng nhập họ và tên!', { position: 'top-center' });
-  if (!formData.value.birthDate) return toast.error('Vui lòng nhập ngày sinh!', { position: 'top-center' });
-  if (!formData.value.question) return toast.error('Vui lòng nhập câu hỏi!', { position: 'top-center' });
+  if (!cleanedFormData.value.name) return toast.error('Vui lòng nhập họ và tên!', { position: 'top-center' });
+  if (!cleanedFormData.value.birthDate) return toast.error('Vui lòng nhập ngày sinh!', { position: 'top-center' });
+  if (!cleanedFormData.value.question) return toast.error('Vui lòng nhập câu hỏi!', { position: 'top-center' });
 
   loading.value = true;
   try {
-    const username = localStorage.getItem('username') || 'guest';
+    const username = process.client ? localStorage.getItem('username') || 'guest' : 'guest';
     const response = await $fetch('/api/numerology/consult', {
       method: 'POST',
-      headers: { 
+      headers: {
         'x-username': encodeURIComponent(username),
         'Content-Type': 'application/json; charset=utf-8'
       },
-      body: formData.value
+      body: cleanedFormData.value
     });
-    result.value = response.consult;
+    result.value = cleanResult(response.consult);
     toast.success('Giải đáp hoàn tất!', { position: 'top-center' });
   } catch (error) {
     console.error('Error consulting:', error);
@@ -269,106 +378,6 @@ const consult = async () => {
   } finally {
     loading.value = false;
   }
-};
-
-const shareResult = (platform) => {
-  if (!result.value) return;
-  const text = formatResultForShare();
-
-  if (platform === 'facebook' && process.client) {
-    if (typeof FB !== 'undefined') {
-      FB.ui({
-        method: 'share',
-        href: window.location.href,
-        quote: text
-      }, (response) => {
-        if (response && !response.error) toast.success('Đã chia sẻ lên Facebook!');
-        else toast.error('Có lỗi khi chia sẻ lên Facebook!');
-      });
-    } else {
-      toast.error('Facebook SDK chưa tải, thử lại sau!');
-    }
-  } else if (platform === 'zalo' && process.client) {
-    navigator.clipboard.writeText(text).then(() => {
-      toast.success('Đã sao chép kết quả! Dán vào Zalo để chia sẻ.');
-    }).catch(() => toast.error('Không thể sao chép!'));
-  }
-};
-
-const downloadResult = async () => {
-  if (!process.client || !result.value) {
-    toast.error('Vui lòng đợi kết quả hoàn tất trước khi tải');
-    return;
-  }
-
-  try {
-    const container = document.createElement('div');
-    container.style.width = '210mm';
-    container.style.padding = '15mm';
-    container.style.fontFamily = 'Times New Roman, serif';
-    container.style.fontSize = '12pt';
-    container.style.lineHeight = '1.5';
-    container.style.color = '#333';
-    document.body.appendChild(container);
-
-    container.innerHTML = `
-      <h1 style="font-size: 18pt; color: #1E40AF; margin-bottom: 10mm;">Giải đáp thắc mắc - ${formData.value.name}</h1>
-      <div style="margin-bottom: 5mm;">
-        <strong>Họ và tên:</strong> ${formData.value.name}<br>
-        <strong>Ngày sinh:</strong> ${formData.value.birthDate}<br>
-        <strong>Câu hỏi:</strong> ${formData.value.question}
-      </div>
-      <h2 style="font-size: 14pt; color: #6B46C1; margin: 5mm 0;">Số chủ đạo: ${result.value.lifePath}</h2>
-      <p>${result.value.lifePathDesc}</p>
-      <h2 style="font-size: 14pt; color: #6B46C1; margin: 5mm 0;">Số năm cá nhân ${currentYear}: ${result.value.personalYear}</h2>
-      <p>${result.value.personalYearDesc}</p>
-      <h2 style="font-size: 14pt; color: #6B46C1; margin: 5mm 0;">Phân tích tổng quan</h2>
-      <p>${result.value.analysis}</p>
-      <h2 style="font-size: 14pt; color: #6B46C1; margin: 5mm 0;">Cơ hội</h2>
-      <p>${result.value.opportunities}</p>
-      <h2 style="font-size: 14pt; color: #6B46C1; margin: 5mm 0;">Thách thức</h2>
-      <p>${result.value.challenges}</p>
-      <h2 style="font-size: 14pt; color: #6B46C1; margin: 5mm 0;">Lời khuyên</h2>
-      <p>${result.value.advice}</p>
-    `;
-
-    const group = await drawDOM(container, {
-      paperSize: 'A4',
-      margin: { top: '10mm', left: '10mm', right: '10mm', bottom: '10mm' },
-      scale: 0.7,
-      keepTogether: 'p'
-    });
-
-    const pdfDataUri = await exportPDF(group);
-    const link = document.createElement('a');
-    link.href = pdfDataUri;
-    link.download = `giai-dap-thac-mac-${formData.value.name}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    document.body.removeChild(container);
-
-    toast.success('Tải PDF thành công!');
-  } catch (error) {
-    console.error('Lỗi khi tạo PDF:', error);
-    toast.error('Có lỗi khi tạo PDF!');
-  }
-};
-
-const formatResultForShare = () => {
-  return [
-    `Giải đáp thắc mắc cho ${formData.value.name}`,
-    `Ngày sinh: ${formData.value.birthDate}`,
-    `Câu hỏi: ${formData.value.question}`,
-    `Số chủ đạo: ${result.value.lifePath}`,
-    result.value.lifePathDesc,
-    `Số năm cá nhân ${currentYear}: ${result.value.personalYear}`,
-    result.value.personalYearDesc,
-    `Phân tích:\n${result.value.analysis}`,
-    `Cơ hội:\n${result.value.opportunities}`,
-    `Thách thức:\n${result.value.challenges}`,
-    `Lời khuyên:\n${result.value.advice}`
-  ].join('\n\n');
 };
 </script>
 

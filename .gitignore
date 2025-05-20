@@ -8,7 +8,9 @@ dist
 
 # Node dependencies
 node_modules
+# Chỉ ignore database.db chính nhưng vẫn cho phép file backup
 database.db
+!database.backup
 # Logs
 logs
 *.log
@@ -20,4 +22,3 @@ logs
 
 # Local env files
 !.env.example
-*.db
