@@ -1,6 +1,10 @@
 <template>
   <div class="mx-auto p-6 bg-white rounded-xl shadow-lg sm:p-4">
     <!-- Header với ngày sinh -->
+    <div v-if="birthDate" class="mb-8 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100">
+      <h1 class="text-2xl font-bold text-indigo-700">Tổng quan về bạn</h1>
+      <p class="text-indigo-600 mt-1">Ngày sinh: {{ birthDate }}</p>
+    </div>
 
     <!-- Kết quả -->
     <div v-if="result" class="space-y-10">
