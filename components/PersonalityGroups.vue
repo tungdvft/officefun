@@ -56,12 +56,6 @@
           ></div>
         </div>
 
-        <div v-if="index === sortedGroups.length - 1" class="mt-3 px-3 py-2 bg-blue-50 rounded-lg text-sm text-blue-700">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          Đây là nhóm tính cách bạn cần tập trung cải thiện nhiều nhất
-        </div>
       </div>
     </div>
   </div>
