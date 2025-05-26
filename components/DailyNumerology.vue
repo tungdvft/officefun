@@ -4,46 +4,47 @@
     <div class="mb-8 p-4 bg-gradient-to-r from-teal-50 to-blue-50 rounded-lg border border-teal-100">
       <h1 class="text-2xl font-bold text-teal-700">Thần số học hôm nay</h1>
       <p class="text-teal-600 mt-1">Ngày: {{ currentDate }}</p>
-    
       <p v-if="dailyPrediction" class="text-teal-600 mt-1">Chủ đề: {{ universalTheme }}</p>
     </div>
     <div class="mb-10 bg-gradient-to-r from-teal-50 to-blue-50 p-8 rounded-2xl border border-teal-100 shadow-sm text-center">
-        <div class="flex flex-col items-center">
-          <div class="relative">
-            <!-- Animated circle background -->
-            <svg class="w-32 h-32" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="45" fill="none" stroke="#e2e8f0" stroke-width="8" />
-              <circle
-                cx="50"
-                cy="50"
-                r="45"
-                fill="none"
-                stroke="#0d9488"
-                stroke-width="8"
-                stroke-dasharray="283"
-                stroke-dashoffset="283"
-                stroke-linecap="round"
-              >
-                <animate
-                  attributeName="stroke-dashoffset"
-                  dur="1.5s"
-                  from="283"
-                  to="0"
-                  fill="freeze"
-                  calcMode="spline"
-                  keySplines="0.3 0 0.7 1"
-                />
-              </circle>
-            </svg>
-            <!-- Number display -->
-            <div class="absolute inset-0 flex flex-col items-center justify-center">
-              <span class="text-5xl font-bold text-teal-700">{{ personalDay }}</span>
-            </div>
+      <div class="flex flex-col items-center">
+        <div class="relative">
+          <!-- Animated circle background -->
+          <svg class="w-32 h-32" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="45" fill="none" stroke="#e2e8f0" stroke-width="8" />
+            <circle
+              cx="50"
+              cy="50"
+              r="45"
+              fill="none"
+              stroke="#0d9488"
+              stroke-width="8"
+              stroke-dasharray="283"
+              stroke-dashoffset="283"
+              stroke-linecap="round"
+            >
+              <animate
+                attributeName="stroke-dashoffset"
+                dur="1.5s"
+                from="283"
+                to="0"
+                fill="freeze"
+                calcMode="spline"
+                keySplines="0.3 0 0.7 1"
+              />
+            </circle>
+          </svg>
+          <!-- Number display -->
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <span class="text-5xl font-bold text-teal-700">{{ personalDay || 'N/A' }}</span>
           </div>
-          <h3 class="text-2xl font-bold text-teal-800 mt-6">Số ngày cá nhân: {{ personalDay }}</h3>
-          <p class="text-lg text-gray-600 mt-2 max-w-lg">{{ dailyPrediction.daily_forecast.overview }}</p>
         </div>
+        <h3 class="text-2xl font-bold text-teal-800 mt-6">Số ngày cá nhân: {{ personalDay || 'N/A' }}</h3>
+        <p v-if="dailyPrediction" class="text-lg text-gray-600 mt-2 max-w-lg">{{ dailyPrediction.daily_forecast.overview }}</p>
+        <p v-else class="text-lg text-gray-600 mt-2 max-w-lg">Không có dự đoán cho số ngày cá nhân này.</p>
       </div>
+    </div>
+
     <!-- Thông tin năng lượng vũ trụ -->
     <section v-if="currentPersonalDayData" class="mb-10 p-6 bg-teal-50 rounded-xl">
       <h3 class="text-xl font-semibold text-teal-700 mb-4 flex items-center">
@@ -59,19 +60,16 @@
       </h3>
       <div class="grid md:grid-cols-2 gap-4">
         <div class="bg-white p-4 rounded-lg shadow-sm">
-          <p class="text-gray-700"><strong>Pha mặt trăng:</strong> {{ currentPersonalDayData.universal_energy.moon_phase }}</p>
+          <p class="text-gray-700"><strong>Pha mặt trăng:</strong> {{ currentPersonalDayData.universal_energy?.moon_phase || 'Không có' }}</p>
         </div>
         <div class="bg-white p-4 rounded-lg shadow-sm">
-          <p class="text-gray-700"><strong>Ảnh hưởng chiêm tinh:</strong> {{ currentPersonalDayData.universal_energy.astrological_impact }}</p>
+          <p class="text-gray-700"><strong>Ảnh hưởng chiêm tinh:</strong> {{ currentPersonalDayData.universal_energy?.astrological_impact || 'Không có' }}</p>
         </div>
       </div>
     </section>
 
     <!-- Kết quả dự đoán -->
     <div v-if="dailyPrediction" class="space-y-10">
-      <!-- Số ngày cá nhân -->
-      
-
       <!-- Hồ sơ cá nhân -->
       <section class="p-6 bg-blue-50 rounded-xl">
         <h3 class="text-xl font-semibold text-blue-700 mb-4 flex items-center">
@@ -87,16 +85,16 @@
         </h3>
         <div class="grid md:grid-cols-2 gap-4">
           <div class="bg-white p-4 rounded-lg shadow-sm">
-            <p class="text-gray-700"><strong>Nguyên mẫu:</strong> {{ dailyPrediction.profile.archetype }}</p>
+            <p class="text-gray-700"><strong>Nguyên mẫu:</strong> {{ dailyPrediction.profile?.archetype || 'Không có' }}</p>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
-            <p class="text-gray-700"><strong>Nguyên tố:</strong> {{ dailyPrediction.profile.element }}</p>
+            <p class="text-gray-700"><strong>Nguyên tố:</strong> {{ dailyPrediction.profile?.element || 'Không có' }}</p>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
-            <p class="text-gray-700"><strong>Số tương thích:</strong> {{ dailyPrediction.profile.compatible_numbers.join(', ') }}</p>
+            <p class="text-gray-700"><strong>Số tương thích:</strong> {{ dailyPrediction.profile?.compatible_numbers?.join(', ') || 'Không có' }}</p>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
-            <p class="text-gray-700"><strong>Luân xa:</strong> {{ dailyPrediction.profile.chakra }}</p>
+            <p class="text-gray-700"><strong>Luân xa:</strong> {{ dailyPrediction.profile?.chakra || 'Không có' }}</p>
           </div>
         </div>
       </section>
@@ -118,25 +116,25 @@
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-teal-600 mb-2">Buổi sáng</h4>
             <ul class="space-y-2 text-gray-700">
-              <li><strong>Trọng tâm:</strong> {{ dailyPrediction.daily_forecast.time_slots.morning.focus }}</li>
-              <li><strong>Hành động:</strong> {{ dailyPrediction.daily_forecast.time_slots.morning.action }}</li>
-              <li><strong>Cảnh báo:</strong> {{ dailyPrediction.daily_forecast.time_slots.morning.warning }}</li>
+              <li><strong>Trọng tâm:</strong> {{ dailyPrediction.daily_forecast?.time_slots?.morning?.focus || 'Không có' }}</li>
+              <li><strong>Hành động:</strong> {{ dailyPrediction.daily_forecast?.time_slots?.morning?.action || 'Không có' }}</li>
+              <li v-if="dailyPrediction.daily_forecast?.time_slots?.morning?.warning"><strong>Cảnh báo:</strong> {{ dailyPrediction.daily_forecast.time_slots.morning.warning }}</li>
             </ul>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-teal-600 mb-2">Buổi chiều</h4>
             <ul class="space-y-2 text-gray-700">
-              <li><strong>Trọng tâm:</strong> {{ dailyPrediction.daily_forecast.time_slots.afternoon.focus }}</li>
-              <li><strong>Thời điểm vàng:</strong> {{ dailyPrediction.daily_forecast.time_slots.afternoon.golden_hour }}</li>
-              <li><strong>Đề xuất:</strong> {{ dailyPrediction.daily_forecast.time_slots.afternoon.recommendation }}</li>
-              <li v-if="dailyPrediction.daily_forecast.time_slots.afternoon.warning"><strong>Cảnh báo:</strong> {{ dailyPrediction.daily_forecast.time_slots.afternoon.warning }}</li>
+              <li><strong>Trọng tâm:</strong> {{ dailyPrediction.daily_forecast?.time_slots?.afternoon?.focus || 'Không có' }}</li>
+              <li><strong>Thời gian vàng:</strong> {{ dailyPrediction.daily_forecast?.time_slots?.afternoon?.golden_hour || 'Không có' }}</li>
+              <li><strong>Đề xuất:</strong> {{ dailyPrediction.daily_forecast?.time_slots?.afternoon?.recommendation || 'Không có' }}</li>
+              <li v-if="dailyPrediction.daily_forecast?.time_slots?.afternoon?.warning"><strong>Cảnh báo:</strong> {{ dailyPrediction.daily_forecast.time_slots.afternoon.warning }}</li>
             </ul>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-teal-600 mb-2">Buổi tối</h4>
             <ul class="space-y-2 text-gray-700">
-              <li><strong>Trọng tâm:</strong> {{ dailyPrediction.daily_forecast.time_slots.evening.focus }}</li>
-              <li><strong>Hoạt động:</strong> {{ dailyPrediction.daily_forecast.time_slots.evening.activity }}</li>
+              <li><strong>Trọng tâm:</strong> {{ dailyPrediction.daily_forecast?.time_slots?.evening?.focus || 'Không có' }}</li>
+              <li><strong>Hoạt động:</strong> {{ dailyPrediction.daily_forecast?.time_slots?.evening?.activity || 'Không có' }}</li>
             </ul>
           </div>
         </div>
@@ -155,15 +153,15 @@
           <ul class="space-y-3 text-gray-700">
             <li class="flex items-start">
               <span class="text-green-500 mr-2">•</span>
-              <span><strong>Công việc:</strong> {{ dailyPrediction.success_tools.advice.career }}</span>
+              <span><strong>Công việc:</strong> {{ dailyPrediction.success_tools?.advice?.career || 'Không có' }}</span>
             </li>
             <li class="flex items-start">
               <span class="text-green-500 mr-2">•</span>
-              <span><strong>Tình yêu:</strong> {{ dailyPrediction.success_tools.advice.love }}</span>
+              <span><strong>Tình yêu:</strong> {{ dailyPrediction.success_tools?.advice?.love || 'Không có' }}</span>
             </li>
             <li class="flex items-start">
               <span class="text-green-500 mr-2">•</span>
-              <span><strong>Tài chính:</strong> {{ dailyPrediction.success_tools.advice.finance }}</span>
+              <span><strong>Tài chính:</strong> {{ dailyPrediction.success_tools?.advice?.finance || 'Không có' }}</span>
             </li>
           </ul>
         </section>
@@ -184,11 +182,11 @@
           <ul class="space-y-3 text-gray-700">
             <li class="flex items-start">
               <span class="text-amber-500 mr-2">•</span>
-              <span>{{ dailyPrediction.success_tools.challenge.description }}</span>
+              <span>{{ dailyPrediction.success_tools?.challenge?.description || 'Không có' }}</span>
             </li>
             <li class="flex items-start">
               <span class="text-amber-500 mr-2">•</span>
-              <span><strong>Giải pháp:</strong> {{ dailyPrediction.success_tools.challenge.solution }}</span>
+              <span><strong>Giải pháp:</strong> {{ dailyPrediction.success_tools?.challenge?.solution || 'Không có' }}</span>
             </li>
           </ul>
         </section>
@@ -210,15 +208,15 @@
         <div class="grid md:grid-cols-3 gap-4">
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-teal-600 mb-2">Thông điệp</h4>
-            <p class="text-gray-700">{{ dailyPrediction.spiritual_guidance.message }}</p>
+            <p class="text-gray-700">{{ dailyPrediction.spiritual_guidance?.message || 'Không có' }}</p>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-teal-600 mb-2">Thiền</h4>
-            <p class="text-gray-700">{{ dailyPrediction.spiritual_guidance.meditation }}</p>
+            <p class="text-gray-700">{{ dailyPrediction.spiritual_guidance?.meditation || 'Không có' }}</p>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-teal-600 mb-2">Khẳng định</h4>
-            <p class="text-gray-700">{{ dailyPrediction.spiritual_guidance.affirmation }}</p>
+            <p class="text-gray-700">{{ dailyPrediction.spiritual_guidance?.affirmation || 'Không có' }}</p>
           </div>
         </div>
       </section>
@@ -239,25 +237,24 @@
         <div class="grid md:grid-cols-4 gap-4">
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-blue-600 mb-2">Màu sắc</h4>
-            <p class="text-gray-700">
-              {{ dailyPrediction.luck.color.usage }}
-            </p>
+            <p class="text-gray-700">{{ dailyPrediction.luck?.color?.usage || 'Không có' }}</p>
             <div
+              v-if="dailyPrediction.luck?.color?.hex"
               class="w-6 h-6 rounded-full mt-2 border border-gray-300"
               :style="{ backgroundColor: dailyPrediction.luck.color.hex }"
             ></div>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-blue-600 mb-2">Con số</h4>
-            <p class="text-gray-700">{{ dailyPrediction.luck.number }}</p>
+            <p class="text-gray-700">{{ dailyPrediction.luck?.number || 'Không có' }}</p>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-blue-600 mb-2">Hướng</h4>
-            <p class="text-gray-700">{{ dailyPrediction.luck.direction }}</p>
+            <p class="text-gray-700">{{ dailyPrediction.luck?.direction || 'Không có' }}</p>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-blue-600 mb-2">Vật may mắn</h4>
-            <p class="text-gray-700">{{ dailyPrediction.luck.object }}</p>
+            <p class="text-gray-700">{{ dailyPrediction.luck?.object || 'Không có' }}</p>
           </div>
         </div>
       </section>
@@ -278,11 +275,11 @@
         <div class="grid md:grid-cols-2 gap-4">
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-pink-600 mb-2">Câu hỏi nhật ký</h4>
-            <p class="text-gray-700">{{ dailyPrediction.interactive.journal_prompt }}</p>
+            <p class="text-gray-700">{{ dailyPrediction.interactive?.journal_prompt || 'Không có' }}</p>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-pink-600 mb-2">Câu hỏi phản hồi</h4>
-            <p class="text-gray-700">{{ dailyPrediction.interactive.feedback_question }}</p>
+            <p class="text-gray-700">{{ dailyPrediction.interactive?.feedback_question || 'Không có' }}</p>
           </div>
         </div>
       </section>
@@ -303,15 +300,15 @@
         <div class="grid md:grid-cols-3 gap-4">
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-teal-600 mb-2">Không gian làm việc</h4>
-            <p class="text-gray-700">{{ dailyPrediction.daily_tips.workspace }}</p>
+            <p class="text-gray-700">{{ dailyPrediction.daily_tips?.workspace || 'Không có' }}</p>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-teal-600 mb-2">Tăng năng lượng</h4>
-            <p class="text-gray-700">{{ dailyPrediction.daily_tips.energy }}</p>
+            <p class="text-gray-700">{{ dailyPrediction.daily_tips?.energy || 'Không có' }}</p>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-teal-600 mb-2">Thói quen</h4>
-            <p class="text-gray-700">{{ dailyPrediction.daily_tips.routine }}</p>
+            <p class="text-gray-700">{{ dailyPrediction.daily_tips?.routine || 'Không có' }}</p>
           </div>
         </div>
       </section>
@@ -333,15 +330,14 @@
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-purple-600 mb-2">Cá nhân hóa</h4>
             <ul class="space-y-2 text-gray-700">
-              <li><strong>Tương thích biểu đồ sinh:</strong> {{ currentPersonalDayData.premium_features.personalized.birth_chart_compatibility }}</li>
-              <!-- <li><strong>Nhiệm vụ tùy chỉnh:</strong> {{ currentPersonalDayData.premium_features.personalized.custom_quest }}</li> -->
+              <li><strong>Tương thích biểu đồ sinh:</strong> {{ currentPersonalDayData.premium_features?.personalized?.birth_chart_compatibility || 'Không có' }}</li>
             </ul>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
             <h4 class="text-lg font-medium text-purple-600 mb-2">Cộng đồng</h4>
             <ul class="space-y-2 text-gray-700">
-              <li><strong>Hashtag thịnh hành:</strong> {{ currentPersonalDayData.premium_features.community.trending_hashtag }}</li>
-              <li><strong>Hoạt động nhóm:</strong> {{ currentPersonalDayData.premium_features.community.group_activity }}</li>
+              <li><strong>Hashtag thịnh hành:</strong> {{ currentPersonalDayData.premium_features?.community?.trending_hashtag || 'Không có' }}</li>
+              <li><strong>Hoạt động nhóm:</strong> {{ currentPersonalDayData.premium_features?.community?.group_activity || 'Không có' }}</li>
             </ul>
           </div>
         </div>
@@ -392,12 +388,9 @@ const currentDate = computed(() => {
 
 // Hàm tính Số đường đời
 const calculateLifePath = (birthDate) => {
-  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate)) {
-    throw new Error('Ngày sinh không đúng định dạng DD/MM/YYYY.');
-  }
   const digits = birthDate.replace(/[^0-9]/g, '').split('').map(Number);
   let sum = digits.reduce((acc, curr) => acc + curr, 0);
-  while (sum > 9 && sum !== 11 && sum !== 22 && sum !== 33) {
+  while (sum > 9 && ![11, 22, 33].includes(sum)) {
     sum = sum.toString().split('').map(Number).reduce((acc, curr) => acc + curr, 0);
   }
   return sum;
@@ -405,9 +398,6 @@ const calculateLifePath = (birthDate) => {
 
 // Hàm tính Số ngày cá nhân
 const calculatePersonalDay = (birthDate, currentDate) => {
-  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate)) {
-    throw new Error('Ngày sinh không đúng định dạng DD/MM/YYYY.');
-  }
   const [day, month] = birthDate.split('/').map(Number);
   const [currentDay, currentMonth, currentYear] = currentDate.split('/').map(Number);
   const sum = day + month + currentDay + currentMonth + currentYear;
@@ -423,43 +413,36 @@ const calculatePersonalDay = (birthDate, currentDate) => {
 watch(
   () => props.birthDate,
   async (newBirthDate) => {
-    if (!newBirthDate) {
-      error.value = 'Vui lòng cung cấp ngày sinh.';
-      dailyPrediction.value = null;
-      currentPersonalDayData.value = null;
-      return;
-    }
     isLoading.value = true;
     error.value = '';
     dailyPrediction.value = null;
     universalTheme.value = '';
     currentPersonalDayData.value = null;
+    personalDay.value = null;
+    lifePath.value = null;
 
     try {
       // Kiểm tra định dạng birthDate
       if (!/^\d{2}\/\d{2}\/\d{4}$/.test(newBirthDate)) {
-        throw new Error('Ngày sinh không đúng định dạng DD/MM/YYYY.');
+        throw new Error('Ngày sinh phải có định dạng DD/MM/YYYY.');
       }
 
       // Tính Số đường đời
       lifePath.value = calculateLifePath(newBirthDate);
+      console.log('Life Path:', lifePath.value);
 
       // Tính Số ngày cá nhân
       personalDay.value = calculatePersonalDay(newBirthDate, currentDate.value);
+      console.log('Personal Day:', personalDay.value);
 
       // Kiểm tra personalDay hợp lệ
-      const validPersonalDays = Object.keys(personalDayData).map(Number);
-      if (!validPersonalDays.includes(personalDay.value)) {
-        throw new Error(`Số ngày cá nhân ${personalDay.value} không được hỗ trợ. Vui lòng kiểm tra dữ liệu JSON.`);
-      }
-
-      // Kiểm tra xem personalDayData có dữ liệu cho personalDay.value
       if (!personalDayData[personalDay.value]) {
-        throw new Error(`Không tìm thấy dữ liệu cho Số ngày cá nhân ${personalDay.value}. Vui lòng thêm file JSON tương ứng.`);
+        throw new Error(`Không có dữ liệu cho Số ngày cá nhân ${personalDay.value}. Vui lòng thêm file JSON tương ứng.`);
       }
 
-      // Lấy dữ liệu JSON trực tiếp
+      // Lấy dữ liệu JSON
       currentPersonalDayData.value = personalDayData[personalDay.value];
+      console.log('Personal Day Data:', currentPersonalDayData.value);
 
       // Lấy universal theme
       universalTheme.value = currentPersonalDayData.value.universal_energy?.theme || 'Không có chủ đề';
@@ -474,6 +457,7 @@ watch(
       if (!dailyPrediction.value) {
         throw new Error(`Không tìm thấy dự đoán cho Số đường đời ${lifePath.value} với Số ngày cá nhân ${personalDay.value}.`);
       }
+      console.log('Daily Prediction:', dailyPrediction.value);
     } catch (err) {
       console.error('Lỗi khi xử lý dự đoán hàng ngày:', err);
       error.value = err.message || 'Đã xảy ra lỗi khi tải dự đoán. Vui lòng thử lại.';
