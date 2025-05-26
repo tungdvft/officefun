@@ -334,7 +334,7 @@
             <h4 class="text-lg font-medium text-purple-600 mb-2">Cá nhân hóa</h4>
             <ul class="space-y-2 text-gray-700">
               <li><strong>Tương thích biểu đồ sinh:</strong> {{ currentPersonalDayData.premium_features.personalized.birth_chart_compatibility }}</li>
-              <li><strong>Nhiệm vụ tùy chỉnh:</strong> {{ currentPersonalDayData.premium_features.personalized.custom_quest }}</li>
+              <!-- <li><strong>Nhiệm vụ tùy chỉnh:</strong> {{ currentPersonalDayData.premium_features.personalized.custom_quest }}</li> -->
             </ul>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
