@@ -32,15 +32,21 @@
           <!-- Birthdate field -->
           <div>
             <label for="birthdate" class="block text-sm font-medium text-gray-700 mb-1">Ngày sinh</label>
-            <input
+            <VueDatePicker
               v-model="form.birthdate"
-              type="date"
               id="birthdate"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              required
+              :format="'dd/MM/yyyy'"
+              :max-date="maxBirthdate"
+              placeholder="dd/mm/yyyy"
+              :enable-time="false"
               :disabled="loading"
-              :max="maxBirthdate"
-            >
+              class="w-full"
+              required
+              :clearable="false"
+              :auto-apply="true"
+              :text-input="{ format: 'dd/MM/yyyy' }"
+              input-class-name="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            />
           </div>
 
           <!-- Submit button -->
@@ -75,6 +81,8 @@
 import { ref, computed, onMounted } from 'vue';
 import { useUserStore } from '~/stores/user';
 import { toast } from 'vue3-toastify';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
 
 const userStore = useUserStore();
 const loading = ref(false);
@@ -83,28 +91,33 @@ const errorMessage = ref('');
 // Form data
 const form = ref({
   fullname: '',
-  birthdate: ''
+  birthdate: null // Lưu dưới dạng Date object
 });
 
 // Tính toán ngày sinh tối đa (12 tuổi trở lên)
 const maxBirthdate = computed(() => {
   const today = new Date();
-  const maxDate = new Date(today.getFullYear() - 12, today.getMonth(), today.getDate());
-  return maxDate.toISOString().split('T')[0];
+  return new Date(today.getFullYear() - 12, today.getMonth(), today.getDate());
 });
 
 // Kiểm tra form hợp lệ
 const formValid = computed(() => {
-  return form.value.fullname.trim() && form.value.birthdate;
+  return form.value.fullname.trim() && form.value.birthdate instanceof Date;
 });
+
+// Format ngày thành yyyy-mm-dd cho API
+const formatDateForApi = (date) => {
+  if (!(date instanceof Date)) return '';
+  return date.toISOString().split('T')[0]; // yyyy-mm-dd
+};
 
 // Khởi tạo form với dữ liệu từ store hoặc localStorage
 const initializeForm = () => {
-  // Ưu tiên lấy từ store trước
+  // Ưưu tiên lấy từ store
   if (userStore.user?.fullname || userStore.user?.birthdate) {
     form.value = {
       fullname: userStore.user.fullname || '',
-      birthdate: userStore.user.birthdate || ''
+      birthdate: userStore.user.birthdate ? new Date(userStore.user.birthdate) : null
     };
     return;
   }
@@ -116,7 +129,7 @@ const initializeForm = () => {
       const userData = JSON.parse(savedUser);
       form.value = {
         fullname: userData.fullname || '',
-        birthdate: userData.birthdate || ''
+        birthdate: userData.birthdate ? new Date(userData.birthdate) : null
       };
     }
   }
@@ -144,11 +157,11 @@ const updateUserProfile = async () => {
     const response = await $fetch(`/api/users/${userId}`, {
       method: 'PATCH',
       headers: {
-        Authorization: `Bearer ${userStore.token || ''}`, // Thêm token nếu cần
+        Authorization: `Bearer ${userStore.token || ''}`,
       },
       body: {
         fullname: form.value.fullname,
-        birthdate: form.value.birthdate
+        birthdate: formatDateForApi(form.value.birthdate) // Gửi yyyy-mm-dd
       }
     });
 
@@ -158,7 +171,7 @@ const updateUserProfile = async () => {
         id: userId,
         email: userStore.user?.email || '',
         fullname: form.value.fullname,
-        birthdate: form.value.birthdate
+        birthdate: formatDateForApi(form.value.birthdate)
       });
 
       // Cập nhật localStorage
@@ -169,7 +182,7 @@ const updateUserProfile = async () => {
           localStorage.setItem('auth', JSON.stringify({
             ...userData,
             fullname: form.value.fullname,
-            birthdate: form.value.birthdate
+            birthdate: formatDateForApi(form.value.birthdate)
           }));
         }
       }
@@ -183,7 +196,7 @@ const updateUserProfile = async () => {
       status: error.status,
       data: error.data,
     });
-    errorMessage.value = error.data?.message || 'Lỗi khi cập nhật hồ sơ. Vui lòng thử lại sau.';
+    errorMessage.value = error.data?.message || 'Lỗi khi cập nhật hồ sơ. Vui lòng thử lại sau!';
     toast.error(errorMessage.value);
   } finally {
     loading.value = false;
@@ -200,3 +213,10 @@ onMounted(() => {
   initializeForm();
 });
 </script>
+
+<style scoped>
+/* Tùy chỉnh thêm nếu cần */
+.dp__input {
+  padding: 0 !important;
+}
+</style>
