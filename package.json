@@ -7,8 +7,6 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "predeploy": "node scripts/db-backup-restore.js backup",
-    "postdeploy": "node scripts/db-backup-restore.js restore",
     "postinstall": "nuxt prepare",
     "start": "nuxt start"
   },
