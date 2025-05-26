@@ -1,126 +1,769 @@
 {
-  "personal_day": 5,
-  "date": "2025-05-25",
+  "metadata": {
+    "date": "2025-05-29",
+    "personal_day": 5,
+    "update_frequency": "hàng ngày",
+    "version": "2.0"
+  },
+  "universal_energy": {
+    "theme": "Tự do khám phá, đón nhận thay đổi",
+    "moon_phase": "Trăng lưỡi liềm đầu tháng",
+    "astrological_impact": "Năng lượng thúc đẩy sự linh hoạt, sáng tạo và sẵn sàng thử nghiệm những điều mới"
+  },
   "predictions": [
     {
       "life_path": 1,
-      "advice": "Số ngày cá nhân 5 mang đến năng lượng của sự thay đổi và tự do, thúc đẩy bạn thể hiện vai trò lãnh đạo thông qua những ý tưởng táo bạo. Hôm nay, hãy bước ra khỏi vùng an toàn, thử nghiệm một cách tiếp cận mới trong công việc hoặc cuộc sống cá nhân. Sự tự tin của bạn sẽ thu hút những cơ hội bất ngờ, nhưng hãy đảm bảo rằng bạn cân nhắc trước khi hành động.",
-      "strength": "Khả năng lãnh đạo sáng tạo, tinh thần tiên phong và sự tự tin trong việc đón nhận thay đổi.",
-      "challenge": "Nguy cơ hành động bốc đồng hoặc thiếu kế hoạch có thể dẫn đến sai lầm. Tránh phân tán năng lượng vào quá nhiều hướng.",
-      "action": "Thử một cách tiếp cận mới trong một dự án hiện tại, như áp dụng một công cụ mới hoặc thay đổi chiến lược kinh doanh.",
-      "spiritual_message": "Vũ trụ đang mở ra những con đường mới. Hãy tin vào khả năng dẫn đầu và đón nhận sự thay đổi.",
-      "lucky_color": "Cam cháy - biểu tượng của sự năng động và đam mê.",
-      "lucky_number": 5
+      "profile": {
+        "archetype": "Người dẫn đầu",
+        "element": "Lửa",
+        "compatible_numbers": [3, 5, 7],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 5 thúc đẩy bạn dẫn đầu bằng sự táo bạo và sẵn sàng thử nghiệm. Hãy bước ra khỏi vùng an toàn, thử một cách tiếp cận mới trong công việc hoặc cuộc sống. Một quyết định bất ngờ có thể mở ra cơ hội lớn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Khám phá ý tưởng",
+            "action": "Ghi 3 ý tưởng mới để thử, như 'Đề xuất sáng kiến trong cuộc họp' hoặc 'Thay đổi cách trình bày báo cáo'. Chọn một để bắt đầu.",
+            "warning": "Tránh do dự. Hãy hành động ngay với ý tưởng đầu tiên bạn cảm thấy hào hứng."
+          },
+          "afternoon": {
+            "focus": "Thử nghiệm",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Thực hiện ý tưởng đã chọn, như thử công cụ làm việc mới hoặc thay đổi cách giao tiếp với nhóm. Ghi chú kết quả."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết nhật ký về trải nghiệm hôm nay. Thư giãn với một bài hát sôi động hoặc đi dạo để giữ năng lượng tích cực."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Đề xuất một cách làm mới trong dự án, như áp dụng công nghệ mới. Sự táo bạo của bạn sẽ được chú ý.",
+          "love": "Thử một hoạt động mới với người yêu, như đi khiêu vũ. Nếu độc thân, bắt chuyện với ai đó bất ngờ ở sự kiện xã hội.",
+          "finance": "Tìm hiểu cơ hội đầu tư mới, như quỹ sáng tạo. Đặt mục tiêu nhỏ để thử nghiệm, như đầu tư 5% thu nhập."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy áp lực khi thử điều mới mà không chắc kết quả.",
+          "solution": "Chia nhỏ thử nghiệm thành các bước, như thử trong 1 giờ trước khi quyết định tiếp tục."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự dẫn đầu của bạn tỏa sáng khi bạn đón nhận thay đổi. Hôm nay, hãy thử nghiệm với sự tự tin và linh hoạt.",
+        "meditation": "Ngồi yên 5 phút, nhắm mắt và tưởng tượng một ngọn lửa bùng cháy rực rỡ. Hít thở sâu, cảm nhận năng lượng tự do.",
+        "affirmation": "Tôi dẫn đầu với sự táo bạo và đón nhận thay đổi."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF4500",
+          "usage": "Mặc áo hoặc mang phụ kiện màu cam để tăng sự năng động."
+        },
+        "number": 5,
+        "direction": "Hướng Tây Bắc",
+        "object": "Bút màu"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã thử điều gì mới? Hãy viết về trải nghiệm và cảm giác của bạn.",
+        "feedback_question": "Bạn đã khám phá hoặc thay đổi gì hôm nay? Hãy chia sẻ khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một bộ bút màu trên bàn để khơi dậy sáng tạo. Thử vẽ sơ đồ ý tưởng mới.",
+        "energy": "Nghe một bài nhạc sôi động vào buổi sáng để kích thích năng lượng khám phá.",
+        "routine": "Dành 5 phút buổi sáng để chọn một hoạt động mới, như thử công cụ quản lý thời gian."
+      }
     },
     {
       "life_path": 2,
-      "advice": "Hôm nay, năng lượng của Số ngày cá nhân 5 khuyến khích bạn kết hợp trực giác với sự linh hoạt để khám phá những cơ hội mới. Hãy tham gia vào các cuộc trò chuyện hoặc hoạt động nhóm để xây dựng mối quan hệ, nhưng đồng thời cho phép bản thân trải nghiệm sự tự do. Sự nhạy cảm của bạn sẽ giúp bạn thích nghi với những thay đổi bất ngờ.",
-      "strength": "Trực giác nhạy bén, khả năng hòa hợp và sự linh hoạt trong giao tiếp.",
-      "challenge": "Bạn có thể cảm thấy khó chịu khi phải đối mặt với sự không chắc chắn. Tránh để cảm xúc lấn át hoặc phụ thuộc quá nhiều vào người khác.",
-      "action": "Tham gia một sự kiện xã hội hoặc một cuộc thảo luận nhóm để mở rộng mạng lưới quan hệ và khám phá ý tưởng mới.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến sự tự do qua sự kết nối. Hãy mở lòng với những trải nghiệm mới.",
-      "lucky_color": "Xanh lam sáng - biểu tượng của sự hòa hợp và tự do.",
-      "lucky_number": 2
+      "profile": {
+        "archetype": "Người kết nối",
+        "element": "Nước",
+        "compatible_numbers": [4, 6, 8],
+        "chakra": "Năng lượng vùng bụng dưới"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 5 khuyến khích bạn kết nối thông qua sự linh hoạt và cởi mở. Hãy thử giao tiếp theo cách mới, như tham gia một nhóm hoặc bắt chuyện với người lạ. Một mối liên kết bất ngờ sẽ mang lại niềm vui.",
+        "time_slots": {
+          "morning": {
+            "focus": "Mở rộng kết nối",
+            "action": "Gửi tin nhắn hoặc email đến một người bạn chưa liên lạc lâu, như 'Lâu rồi không gặp, cậu khỏe không?'",
+            "warning": "Tránh ngại ngùng. Hãy bước qua rào cản ban đầu để trò chuyện."
+          },
+          "afternoon": {
+            "focus": "Tham gia",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Tham gia một sự kiện hoặc nhóm mới, như buổi họp mặt hoặc lớp học ngắn. Ví dụ: thử một buổi học yoga online."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết về những người bạn gặp hôm nay. Thư giãn với một tách trà và nhạc nhẹ để cân bằng năng lượng."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Thử một cách giao tiếp mới với đồng nghiệp, như dùng bảng tin nhóm. Sự cởi mở của bạn sẽ tăng gắn kết.",
+          "love": "Thử một hoạt động bất ngờ với người yêu, như đi xem triển lãm. Nếu độc thân, tham gia sự kiện để gặp người mới.",
+          "finance": "Tìm hiểu cách quản lý tài chính mới, như ứng dụng theo dõi chi tiêu. Thử nghiệm với ngân sách nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy khó chịu khi phải thay đổi cách giao tiếp quen thuộc.",
+          "solution": "Bắt đầu với một hành động nhỏ, như gửi một tin nhắn ngắn, để làm quen với sự thay đổi."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự kết nối của bạn mạnh mẽ hơn khi bạn linh hoạt. Hôm nay, hãy mở lòng để đón nhận những mối quan hệ mới.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một dòng sông chảy tự do. Hít thở sâu, cảm nhận sự cởi mở.",
+        "affirmation": "Tôi kết nối với sự linh hoạt và niềm vui."
+      },
+      "luck": {
+        "color": {
+          "hex": "#00CED1",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh lam để tăng sự cởi mở."
+        },
+        "number": 2,
+        "direction": "Hướng Bắc",
+        "object": "Ứng dụng nhắn tin"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã kết nối với ai theo cách mới? Hãy viết về trải nghiệm và cảm giác của bạn.",
+        "feedback_question": "Bạn đã trò chuyện hoặc gặp ai thú vị hôm nay? Hãy chia sẻ câu chuyện!"
+      },
+      "daily_tips": {
+        "workspace": "Cài một ứng dụng nhắn tin mới trên máy tính để giao tiếp nhanh hơn. Nó giúp bạn cởi mở hơn.",
+        "energy": "Gửi một tin nhắn tích cực cho đồng nghiệp hoặc bạn bè. Hành động này lan tỏa năng lượng tốt.",
+        "routine": "Dành 5 phút buổi sáng để kiểm tra danh bạ và chọn một người để liên lạc lại."
+      }
     },
     {
       "life_path": 3,
-      "advice": "Số ngày cá nhân 5 kết hợp với Số đường đời 3 tạo ra một ngày tràn đầy năng lượng sáng tạo và phiêu lưu. Hôm nay, hãy để sự sáng tạo của bạn dẫn lối qua các hoạt động như viết lách, nghệ thuật hoặc giao tiếp. Sự táo bạo trong việc thể hiện bản thân sẽ mang lại những cơ hội thú vị, nhưng hãy tập trung để hoàn thành một mục tiêu cụ thể.",
-      "strength": "Sự sáng tạo vượt trội, năng lượng tích cực và khả năng truyền cảm hứng qua giao tiếp.",
-      "challenge": "Nguy cơ bị cuốn vào quá nhiều ý tưởng hoặc hoạt động có thể khiến bạn mất tập trung. Tránh phân tán năng lượng.",
-      "action": "Thử một hoạt động sáng tạo mới, như tham gia một lớp vẽ hoặc viết một câu chuyện ngắn để chia sẻ.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn lan tỏa niềm vui qua sự sáng tạo. Hãy để tinh thần tự do dẫn lối.",
-      "lucky_color": "Vàng chanh - biểu tượng của sự sáng tạo và năng lượng.",
-      "lucky_number": 3
+      "profile": {
+        "archetype": "Người sáng tạo",
+        "element": "Lửa",
+        "compatible_numbers": [1, 5, 9],
+        "chakra": "Năng lượng vùng cổ"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 5 là sân chơi cho sự sáng tạo của bạn. Hãy thử nghiệm ý tưởng mới, như viết một bài thơ hoặc thiết kế lại dự án. Sự tự do sẽ giúp bạn tỏa sáng, nhưng hãy chọn một ý tưởng để tập trung.",
+        "time_slots": {
+          "morning": {
+            "focus": "Khơi dậy ý tưởng",
+            "action": "Ghi 3 ý tưởng sáng tạo, như 'Vẽ một bức tranh' hoặc 'Viết bài blog'. Chọn một để bắt đầu ngay.",
+            "warning": "Tránh phân tán. Hãy tập trung vào một dự án chính."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "12h-2h chiều",
+            "recommendation": "Thực hiện ý tưởng, như viết đoạn đầu bài blog hoặc hoàn thành bản vẽ. Chia sẻ thử với bạn bè."
+          },
+          "evening": {
+            "focus": "Chia sẻ",
+            "activity": "Đăng sản phẩm sáng tạo lên mạng xã hội hoặc gửi cho bạn bè. Thư giãn với một bộ phim hài để giữ năng lượng vui tươi."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Thử một cách trình bày mới cho dự án, như dùng video. Sự sáng tạo của bạn sẽ thu hút sự chú ý.",
+          "love": "Thử một buổi hẹn sáng tạo, như vẽ tranh cùng người yêu. Nếu độc thân, viết về hình mẫu lý tưởng của bạn.",
+          "finance": "Tìm hiểu cách kiếm tiền từ sáng tạo, như bán thiết kế online. Thử với khoản đầu tư nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể bị cuốn vào quá nhiều ý tưởng mà không hoàn thành.",
+          "solution": "Đặt thời gian 1 giờ cho một ý tưởng và hoàn thành bước đầu tiên trước khi chuyển sang ý tưởng khác."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sáng tạo của bạn bùng nổ khi bạn đón nhận tự do. Hôm nay, hãy thử nghiệm với niềm vui và sự linh hoạt.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một bảng màu rực rỡ. Hít thở sâu, cảm nhận năng lượng sáng tạo.",
+        "affirmation": "Tôi sáng tạo với sự tự do và niềm vui."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF69B4",
+          "usage": "Mặc áo hoặc mang phụ kiện màu hồng để tăng sự sáng tạo."
+        },
+        "number": 3,
+        "direction": "Hướng Tây",
+        "object": "Sổ phác thảo"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã sáng tạo điều gì mới? Hãy viết về ý tưởng và cảm giác khi thực hiện.",
+        "feedback_question": "Bạn đã thử nghiệm sáng tạo gì hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một sổ phác thảo trên bàn để ghi ý tưởng bất chợt. Nó giúp bạn giữ sự sáng tạo.",
+        "energy": "Nghe một danh sách nhạc sôi động để khơi dậy ý tưởng. Thử viết một câu chuyện ngắn trong 5 phút.",
+        "routine": "Dành 5 phút buổi sáng để vẽ hoặc viết tự do, kích thích năng lượng sáng tạo."
+      }
     },
     {
       "life_path": 4,
-      "advice": "Số ngày cá nhân 5 mang đến cơ hội để bạn cân bằng giữa tính kỷ luật và sự tự do. Hãy sử dụng khả năng tổ chức của mình để khám phá những ý tưởng mới hoặc thử nghiệm một cách tiếp cận sáng tạo trong công việc. Sự linh hoạt kết hợp với kế hoạch chi tiết sẽ giúp bạn đạt được kết quả đáng kinh ngạc.",
-      "strength": "Tính kỷ luật, khả năng tổ chức và sự kiên trì trong việc đón nhận thay đổi.",
-      "challenge": "Bạn có thể cảm thấy khó chịu khi phải đối mặt với sự không chắc chắn. Tránh bám vào thói quen cũ nếu chúng cản trở sự phát triển.",
-      "action": "Lên kế hoạch cho một chuyến đi ngắn hoặc thử một công cụ mới trong công việc để tăng hiệu quả.",
-      "spiritual_message": "Vũ trụ đang hỗ trợ bạn khám phá những chân trời mới. Hãy tin vào sự kiên định của mình.",
-      "lucky_color": "Xanh lá cây sáng - biểu tượng của sự phát triển và tự do.",
-      "lucky_number": 4
+      "profile": {
+        "archetype": "Người tổ chức",
+        "element": "Đất",
+        "compatible_numbers": [2, 6, 8],
+        "chakra": "Năng lượng vùng chân"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 5 mời gọi bạn tổ chức theo cách linh hoạt hơn. Thay vì kế hoạch cứng nhắc, hãy thử một phương pháp quản lý mới hoặc thay đổi lịch trình. Sự thay đổi nhỏ sẽ mang lại hiệu quả bất ngờ.",
+        "time_slots": {
+          "morning": {
+            "focus": "Thay đổi kế hoạch",
+            "action": "Xem lại lịch làm việc và thử sắp xếp lại, như di chuyển cuộc họp hoặc dùng ứng dụng quản lý mới.",
+            "warning": "Tránh kháng cự thay đổi. Hãy thử một lần để xem kết quả."
+          },
+          "afternoon": {
+            "focus": "Thử nghiệm",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Áp dụng một cách làm mới, như dùng bảng Kanban kỹ thuật số thay cho danh sách giấy. Ghi chú cảm nhận."
+          },
+          "evening": {
+            "focus": "Đánh giá",
+            "activity": "Viết về hiệu quả của thay đổi hôm nay. Thư giãn với một cuốn sách về quản lý thời gian hiện đại."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Thử một công cụ quản lý mới, như Trello. Sự linh hoạt của bạn sẽ tăng hiệu suất nhóm.",
+          "love": "Thử một hoạt động mới với người yêu, như đi công viên giải trí. Nếu độc thân, thử ứng dụng hẹn hò mới.",
+          "finance": "Tìm hiểu cách quản lý tài chính mới, như quỹ đầu tư tự động. Thử với khoản nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy không thoải mái khi thay đổi thói quen tổ chức.",
+          "solution": "Thử một thay đổi nhỏ, như dùng ứng dụng 1 ngày, trước khi quyết định áp dụng lâu dài."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự tổ chức của bạn mạnh mẽ hơn khi linh hoạt. Hôm nay, hãy đón nhận thay đổi với sự tự tin.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngôi nhà với cửa sổ rộng mở. Hít thở sâu, cảm nhận sự tự do.",
+        "affirmation": "Tôi tổ chức với sự linh hoạt và sáng tạo."
+      },
+      "luck": {
+        "color": {
+          "hex": "#228B22",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh lá để tăng sự linh hoạt."
+        },
+        "number": 4,
+        "direction": "Hướng Đông Nam",
+        "object": "Ứng dụng quản lý"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã thay đổi cách tổ chức nào? Hãy viết về trải nghiệm và cảm giác của bạn.",
+        "feedback_question": "Bạn đã thử công cụ hoặc cách tổ chức mới nào hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Cài một ứng dụng quản lý như Notion trên máy tính. Nó giúp bạn tổ chức linh hoạt hơn.",
+        "energy": "Thử một cách ghi chú mới, như vẽ sơ đồ tư duy. Hành động này tăng năng lượng sáng tạo.",
+        "routine": "Dành 5 phút buổi sáng để thử sắp xếp lịch theo cách mới, như ưu tiên việc thú vị nhất."
+      }
     },
     {
       "life_path": 5,
-      "advice": "Số ngày cá nhân 5 kết hợp với Số đường đời 5 tạo ra một ngày tràn đầy năng lượng phiêu lưu và tự do. Hôm nay, hãy nắm bắt mọi cơ hội để khám phá, thử nghiệm và mở rộng tầm nhìn. Sự linh hoạt và tinh thần cởi mở của bạn sẽ thu hút những trải nghiệm thú vị, nhưng hãy đảm bảo bạn không hành động quá bốc đồng.",
-      "strength": "Tinh thần phiêu lưu, khả năng thích nghi nhanh và năng lượng thu hút trong mọi tình huống.",
-      "challenge": "Nguy cơ hành động bốc đồng hoặc thiếu kế hoạch có thể dẫn đến sai lầm. Hãy cân nhắc trước khi hành động.",
-      "action": "Tham gia một hoạt động mới, như du lịch, học một kỹ năng mới hoặc tham gia một sự kiện xã hội.",
-      "spiritual_message": "Vũ trụ đang mở ra những cánh cửa mới. Hãy đón nhận sự tự do với trái tim rộng mở.",
-      "lucky_color": "Cam rực rỡ - biểu tượng của sự năng động và phiêu lưu.",
-      "lucky_number": 5
+      "profile": {
+        "archetype": "Người khám phá",
+        "element": "Khí",
+        "compatible_numbers": [1, 3, 7],
+        "chakra": "Năng lượng vùng cổ"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 5 cộng hưởng mạnh với bản chất khám phá của bạn. Đây là ngày lý tưởng để thử nghiệm, thay đổi, và đón nhận cơ hội mới. Một trải nghiệm bất ngờ sẽ đưa bạn đến những chân trời mới.",
+        "time_slots": {
+          "morning": {
+            "focus": "Khám phá",
+            "action": "Lên danh sách 3 hoạt động mới để thử, như 'Tham gia lớp học nấu ăn' hoặc 'Đi đường mới về nhà'. Chọn một để làm.",
+            "warning": "Tránh làm quá nhiều cùng lúc. Hãy tập trung vào một trải nghiệm chính."
+          },
+          "afternoon": {
+            "focus": "Trải nghiệm",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Thực hiện hoạt động đã chọn, như tham gia workshop hoặc thử món ăn mới. Ghi lại cảm nhận."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết nhật ký về trải nghiệm hôm nay. Thư giãn với nhạc acoustic hoặc đi dạo dưới ánh trăng."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Thử một dự án mới hoặc cách làm việc khác, như làm việc từ xa. Sự táo bạo của bạn sẽ mở ra cơ hội.",
+          "love": "Thử một buổi hẹn phiêu lưu, như leo núi. Nếu độc thân, tham gia sự kiện để gặp người mới.",
+          "finance": "Tìm hiểu cơ hội đầu tư mới, như cổ phiếu công nghệ. Thử với khoản nhỏ để học hỏi."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy bồn chồn nếu không thấy kết quả ngay.",
+          "solution": "Tập trung vào hành trình, không phải đích đến. Ghi chú những gì bạn học được từ trải nghiệm."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự khám phá của bạn dẫn bạn đến sự thật. Hôm nay, hãy đón nhận thay đổi với trái tim rộng mở.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một con đường trải dài vô tận. Hít thở sâu, cảm nhận sự tự do.",
+        "affirmation": "Tôi khám phá với sự táo bạo và niềm vui."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFD700",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng để tăng sự năng động."
+        },
+        "number": 5,
+        "direction": "Hướng Tây Bắc",
+        "object": "Bản đồ"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã khám phá điều gì mới? Hãy viết về trải nghiệm và cảm giác của bạn.",
+        "feedback_question": "Bạn đã thử nghiệm hoặc khám phá gì hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một bản đồ nhỏ trên bàn để nhắc nhở về sự khám phá. Nó khơi dậy tinh thần phiêu lưu.",
+        "energy": "Thử một hoạt động ngắn, như đi bộ 10 phút ở nơi mới. Nó tăng năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để chọn một trải nghiệm mới, như thử món ăn sáng khác."
+      }
     },
     {
       "life_path": 6,
-      "advice": "Hôm nay, Số ngày cá nhân 5 khuyến khích bạn kết hợp lòng trắc ẩn với tinh thần phiêu lưu. Hãy sử dụng sự quan tâm của mình để khám phá những cách mới để hỗ trợ gia đình hoặc cộng đồng. Một chuyến đi ngắn hoặc một hoạt động sáng tạo sẽ giúp bạn kết nối sâu sắc hơn với những người xung quanh.",
-      "strength": "Lòng trắc ẩn, khả năng chăm sóc và sự cởi mở trong việc đón nhận thay đổi.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải cân bằng giữa nhu cầu cá nhân và trách nhiệm với người khác. Hãy dành thời gian cho bản thân.",
-      "action": "Tổ chức một chuyến đi ngắn cùng gia đình hoặc bạn bè để tạo ra những kỷ niệm đáng nhớ.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn lan tỏa tình yêu qua sự tự do. Hãy để trái tim dẫn lối.",
-      "lucky_color": "Hồng đào - biểu tượng của tình yêu và năng lượng tích cực.",
-      "lucky_number": 6
+      "profile": {
+        "archetype": "Người chăm sóc",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 9],
+        "chakra": "Năng lượng vùng tim"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 5 khuyến khích bạn chăm sóc người khác theo cách sáng tạo và linh hoạt. Thử một cách hỗ trợ mới, như tổ chức một hoạt động bất ngờ cho gia đình. Sự thay đổi sẽ mang lại niềm vui cho mọi người.",
+        "time_slots": {
+          "morning": {
+            "focus": "Sáng tạo chăm sóc",
+            "action": "Lên kế hoạch làm điều gì đó bất ngờ, như chuẩn bị một món quà nhỏ hoặc tổ chức buổi ăn sáng đặc biệt.",
+            "warning": "Đừng quên chăm sóc bản thân. Hãy dành thời gian để nạp năng lượng."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện kế hoạch, như tổ chức một buổi chơi trò chơi gia đình hoặc giúp bạn bè thử một sở thích mới."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết về cách bạn đã chăm sóc mọi người hôm nay. Thư giãn với một tách trà và nhạc nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Thử một cách hỗ trợ nhóm mới, như tổ chức buổi brainstorming. Sự quan tâm của bạn sẽ tạo động lực.",
+          "love": "Thử một hoạt động bất ngờ với người yêu, như làm đồ thủ công. Nếu độc thân, tham gia nhóm để gặp người mới.",
+          "finance": "Tìm hiểu cách chi tiêu sáng tạo, như mua quà nhỏ cho gia đình. Thử ngân sách mới."
+        },
+        "challenge": {
+          "description": "Bạn có thể quên chăm sóc bản thân khi tập trung vào người khác.",
+          "solution": "Dành 10 phút nghỉ ngơi buổi trưa, như thiền ngắn hoặc đi dạo để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Tình yêu của bạn lan tỏa khi bạn linh hoạt. Hôm nay, hãy chăm sóc với sự sáng tạo và niềm vui.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một trái tim tỏa ánh sáng hồng. Hít thở sâu, cảm nhận sự ấm áp.",
+        "affirmation": "Tôi chăm sóc với sự sáng tạo và tình yêu."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF69B4",
+          "usage": "Mặc áo hoặc mang phụ kiện màu hồng để tăng sự ấm áp."
+        },
+        "number": 6,
+        "direction": "Hướng Tây Nam",
+        "object": "Quà nhỏ"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chăm sóc ai theo cách sáng tạo? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã làm điều gì bất ngờ cho ai hôm nay? Hãy chia sẻ câu chuyện!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một món quà nhỏ trên bàn để nhắc nhở về sự chăm sóc. Nó khơi dậy năng lượng tích cực.",
+        "energy": "Làm một việc bất ngờ, như viết lời nhắn cho người thân. Hành động này lan tỏa niềm vui.",
+        "routine": "Dành 5 phút buổi sáng để lên kế hoạch chăm sóc, như chuẩn bị một bất ngờ nhỏ."
+      }
     },
     {
       "life_path": 7,
-      "advice": "Số ngày cá nhân 5 mang đến cơ hội để bạn khám phá trí tuệ và trực giác thông qua những trải nghiệm mới. Hãy dành thời gian để suy ngẫm hoặc thử nghiệm một lĩnh vực học thuật hoặc tâm linh mới. Sự tò mò của bạn sẽ dẫn bạn đến những khám phá sâu sắc, nhưng hãy chia sẻ ý tưởng để kết nối với người khác.",
-      "strength": "Trí tuệ sâu sắc, trực giác nhạy bén và sự tò mò trong việc khám phá tri thức.",
-      "challenge": "Tránh cô lập bản thân hoặc bị cuốn vào những suy nghĩ quá trừu tượng. Hãy mở lòng với những người xung quanh.",
-      "action": "Tham gia một lớp học mới hoặc đọc một cuốn sách về một chủ đề bạn chưa từng khám phá.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến sự thật qua sự khám phá. Hãy tin vào trực giác của mình.",
-      "lucky_color": "Tím nhạt - biểu tượng của sự tâm linh và tự do.",
-      "lucky_number": 7
+      "profile": {
+        "archetype": "Người tìm kiếm",
+        "element": "Nước",
+        "compatible_numbers": [1, 5, 9],
+        "chakra": "Năng lượng vùng trán"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 5 mời gọi bạn khám phá tri thức theo cách mới. Thử một phương pháp học tập khác, như xem TED Talk hoặc đọc một chủ đề lạ. Sự tò mò sẽ dẫn bạn đến những khám phá sâu sắc.",
+        "time_slots": {
+          "morning": {
+            "focus": "Tò mò",
+            "action": "Chọn 3 chủ đề mới để tìm hiểu, như 'Vũ trụ học' hoặc 'Lịch sử nghệ thuật'. Bắt đầu với một chủ đề bằng cách đọc hoặc xem video.",
+            "warning": "Tránh phân tâm bởi quá nhiều thông tin. Hãy tập trung vào một chủ đề."
+          },
+          "afternoon": {
+            "focus": "Nghiên cứu",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Đi sâu vào chủ đề đã chọn, như đọc một bài báo dài hoặc ghi chú từ video. Chia sẻ ý tưởng với bạn bè."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết nhật ký về những gì bạn học được. Thư giãn với nhạc không lời để giữ sự tĩnh lặng."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Thử một cách nghiên cứu mới, như dùng podcast để học. Sự tò mò của bạn sẽ mở ra cơ hội.",
+          "love": "Thử trò chuyện về một chủ đề mới với người yêu, như khoa học. Nếu độc thân, tham gia nhóm học tập để gặp người mới.",
+          "finance": "Tìm hiểu cơ hội đầu tư vào học tập, như khóa học online. Thử với khoản nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể muốn ở một mình quá lâu, bỏ lỡ cơ hội chia sẻ kiến thức.",
+          "solution": "Gửi một tin nhắn ngắn hoặc đăng bài về điều bạn học được để kết nối với người khác."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Trí tuệ của bạn tỏa sáng khi bạn khám phá tự do. Hôm nay, hãy học hỏi với sự tò mò và cởi mở.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một bầu trời đầy sao. Hít thở sâu, cảm nhận sự tò mò.",
+        "affirmation": "Tôi tìm kiếm sự thật với sự tò mò và tự do."
+      },
+      "luck": {
+        "color": {
+          "hex": "#800080",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím để tăng trực giác."
+        },
+        "number": 7,
+        "direction": "Hướng Đông Bắc",
+        "object": "Sách mới"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã học gì mới? Hãy viết về chủ đề và cảm giác khi khám phá.",
+        "feedback_question": "Bạn đã nghiên cứu hoặc khám phá tri thức gì hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một cuốn sách mới trên bàn để khơi dậy sự tò mò. Nó nhắc bạn khám phá tri thức.",
+        "energy": "Xem một video ngắn về chủ đề mới để kích thích trí tuệ. Ghi lại ý chính để nhớ.",
+        "routine": "Dành 5 phút buổi sáng để chọn một chủ đề mới để đọc hoặc xem."
+      }
     },
     {
       "life_path": 8,
-      "advice": "Hôm nay, Số ngày cá nhân 5 khuyến khích bạn sử dụng tham vọng của mình để khám phá những cơ hội tài chính hoặc sự nghiệp mới. Hãy thử nghiệm một chiến lược kinh doanh táo bạo hoặc mở rộng mạng lưới quan hệ. Sự linh hoạt và quyết đoán sẽ giúp bạn đạt được thành công lớn.",
-      "strength": "Khả năng lãnh đạo, sự linh hoạt và năng lượng thu hút trong các cơ hội tài chính.",
-      "challenge": "Nguy cơ hành động bốc đồng hoặc thiếu kế hoạch có thể dẫn đến rủi ro. Hãy cân nhắc kỹ trước khi quyết định.",
-      "action": "Tìm kiếm một cơ hội kinh doanh mới hoặc tham gia một sự kiện networking để mở rộng mối quan hệ.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn đạt được thành công qua sự đổi mới. Hãy tin vào khả năng của mình.",
-      "lucky_color": "Vàng kim - biểu tượng của sự thịnh vượng và năng động.",
-      "lucky_number": 8
+      "profile": {
+        "archetype": "Người quản lý",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 6],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 5 khuyến khích bạn quản lý với sự linh hoạt và táo bạo. Thử một chiến lược lãnh đạo mới hoặc thay đổi cách phân bổ nguồn lực. Một quyết định sáng tạo sẽ đưa bạn đến thành công.",
+        "time_slots": {
+          "morning": {
+            "focus": "Đổi mới",
+            "action": "Ghi 3 cách quản lý mới, như 'Thử họp đứng' hoặc 'Dùng công cụ quản lý mới'. Chọn một để thử.",
+            "warning": "Tránh bám vào cách làm cũ. Hãy thử nghiệm để thấy hiệu quả."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Áp dụng chiến lược đã chọn, như dùng phần mềm quản lý dự án mới. Ghi chú kết quả và phản hồi từ nhóm."
+          },
+          "evening": {
+            "focus": "Đánh giá",
+            "activity": "Viết về hiệu quả của thay đổi hôm nay. Thư giãn với một bài thiền ngắn hoặc đọc sách về lãnh đạo."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Thử một cách lãnh đạo mới, như phân quyền nhiều hơn. Sự táo bạo của bạn sẽ thúc đẩy nhóm.",
+          "love": "Thử một hoạt động mới với người yêu, như đi xem hòa nhạc. Nếu độc thân, thử cách tiếp cận mới trong hẹn hò.",
+          "finance": "Tìm hiểu cơ hội đầu tư mới, như quỹ khởi nghiệp. Thử với khoản nhỏ để học hỏi."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy không an toàn khi thử cách quản lý mới.",
+          "solution": "Bắt đầu với một thay đổi nhỏ, như thử công cụ mới trong 1 ngày, để làm quen."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự lãnh đạo của bạn mạnh mẽ khi bạn linh hoạt. Hôm nay, hãy quản lý với sự táo bạo và sáng tạo.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một con thuyền lướt trên sóng. Hít thở sâu, cảm nhận sự linh hoạt.",
+        "affirmation": "Tôi lãnh đạo với sự linh hoạt và thành công."
+      },
+      "luck": {
+        "color": {
+          "hex": "#C0C0C0",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xám để tăng sự tập trung."
+        },
+        "number": 8,
+        "direction": "Hướng Nam",
+        "object": "Phần mềm quản lý"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã quản lý theo cách mới nào? Hãy viết về trải nghiệm và cảm giác của bạn.",
+        "feedback_question": "Bạn đã thử chiến lược lãnh đạo mới nào hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Cài một phần mềm quản lý mới trên máy tính. Nó giúp bạn lãnh đạo linh hoạt hơn.",
+        "energy": "Thử một cách họp mới, như đứng thay vì ngồi. Hành động này tăng năng lượng nhóm.",
+        "routine": "Dành 5 phút buổi sáng để chọn một chiến lược quản lý mới để thử."
+      }
     },
     {
       "life_path": 9,
-      "advice": "Số ngày cá nhân 5 mang đến cơ hội để bạn lan tỏa lòng nhân ái thông qua những trải nghiệm mới. Hãy sử dụng tầm nhìn lớn của mình để khám phá những cách hỗ trợ cộng đồng hoặc truyền cảm hứng cho người khác. Sự cởi mở và hào phóng của bạn sẽ tạo ra tác động tích cực lâu dài.",
-      "strength": "Tinh thần nhân đạo, khả năng truyền cảm hứng và sự cởi mở trong việc đón nhận thay đổi.",
-      "challenge": "Bạn có thể cảm thấy thất vọng nếu kết quả không đến ngay lập tức. Hãy tập trung vào hành trình thay vì đích đến.",
-      "action": "Tham gia một sự kiện từ thiện hoặc chia sẻ một thông điệp tích cực trên mạng xã hội để truyền cảm hứng.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa ánh sáng qua sự tự do. Hãy để lòng nhân ái dẫn lối.",
-      "lucky_color": "Trắng ngọc trai - biểu tượng của sự tinh khiết và năng lượng tích cực.",
-      "lucky_number": 9
+      "profile": {
+        "archetype": "Người chia sẻ",
+        "element": "Lửa",
+        "compatible_numbers": [3, 6, 9],
+        "chakra": "Năng lượng vùng đầu"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 5 khuyến khích bạn chia sẻ lòng nhân ái theo cách sáng tạo. Thử một cách giúp đỡ mới, như tổ chức sự kiện cộng đồng hoặc chia sẻ bài viết truyền cảm hứng. Sự thay đổi sẽ lan tỏa năng lượng tích cực.",
+        "time_slots": {
+          "morning": {
+            "focus": "Sáng tạo chia sẻ",
+            "action": "Ghi 3 cách chia sẻ mới, như 'Viết bài truyền cảm hứng' hoặc 'Tổ chức quyên góp'. Chọn một để bắt đầu.",
+            "warning": "Tránh ôm đồm. Hãy tập trung vào một hành động ý nghĩa."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện hành động đã chọn, như đăng bài viết hoặc tổ chức một buổi gặp gỡ nhỏ. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết về cách bạn đã chia sẻ hôm nay. Thư giãn với một cuốn sách về lòng nhân ái hoặc nhạc nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Thử một cách hỗ trợ cộng đồng, như tổ chức webinar miễn phí. Sự nhiệt huyết của bạn sẽ truyền cảm hứng.",
+          "love": "Thử một hành động bất ngờ với người yêu, như viết thư tay. Nếu độc thân, tham gia sự kiện để gặp người mới.",
+          "finance": "Tìm hiểu cách chi tiêu cho cộng đồng, như ủng hộ từ thiện. Thử với khoản nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể mệt mỏi nếu cố gắng giúp quá nhiều người.",
+          "solution": "Chọn một hành động chính để thực hiện trước 3h chiều. Nghỉ ngơi để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Lòng nhân ái của bạn lan tỏa khi bạn sáng tạo. Hôm nay, hãy chia sẻ với sự tự do và niềm vui.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một cánh đồng ánh sáng trắng. Hít thở sâu, cảm nhận sự thanh thản.",
+        "affirmation": "Tôi chia sẻ lòng nhân ái với sự sáng tạo và tự do."
+      },
+      "luck": {
+        "color": {
+          "hex": "#F5F5F5",
+          "usage": "Mặc áo hoặc mang phụ kiện màu trắng để tăng sự thanh thản."
+        },
+        "number": 9,
+        "direction": "Hướng Tây",
+        "object": "Bài viết truyền cảm hứng"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chia sẻ gì theo cách sáng tạo? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã làm gì để truyền cảm hứng hôm nay? Hãy kể lại câu chuyện!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một tờ giấy trắng trên bàn để viết ý tưởng chia sẻ. Nó khơi dậy sự sáng tạo.",
+        "energy": "Viết một câu truyền cảm hứng và chia sẻ với bạn bè. Hành động này lan tỏa năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để lên kế hoạch chia sẻ, như viết một bài đăng ngắn."
+      }
     },
     {
       "life_path": 11,
-      "advice": "Số ngày cá nhân 5 kết hợp với Số đường đời 11 tạo ra một ngày tràn đầy năng lượng tâm linh và tự do. Hãy sử dụng trực giác của mình để khám phá những ý tưởng cao cả hoặc tham gia vào các hoạt động sáng tạo. Hôm nay, bạn có thể truyền cảm hứng mạnh mẽ cho những người xung quanh.",
-      "strength": "Trực giác nhạy bén, khả năng truyền cảm hứng và tầm nhìn tâm linh vượt thời gian.",
-      "challenge": "Sự nhạy cảm quá mức có thể khiến bạn dễ bị phân tâm. Hãy giữ sự tập trung vào mục tiêu chính.",
-      "action": "Thực hành thiền hoặc viết một bài viết tâm linh để chia sẻ với cộng đồng.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến ánh sáng qua sự tự do. Hãy tin vào trực giác của mình.",
-      "lucky_color": "Bạc ánh kim - biểu tượng của sự trực giác và năng lượng.",
-      "lucky_number": 11
+      "profile": {
+        "archetype": "Người truyền cảm hứng",
+        "element": "Khí",
+        "compatible_numbers": [2, 4, 7],
+        "chakra": "Năng lượng vùng trán"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 5 giúp bạn truyền cảm hứng bằng sự táo bạo và sáng tạo. Thử một cách chia sẻ mới, như tổ chức buổi nói chuyện hoặc đăng video. Một hành động bất ngờ sẽ lan tỏa ánh sáng của bạn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Sáng tạo ý tưởng",
+            "action": "Ghi 3 cách truyền cảm hứng mới, như 'Quay video ngắn' hoặc 'Viết bài chia sẻ'. Chọn một để bắt đầu.",
+            "warning": "Tránh nghi ngờ bản thân. Hãy tin vào trực giác của bạn."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Thực hiện ý tưởng, như đăng bài hoặc tổ chức buổi nói chuyện nhỏ. Ghi chú phản hồi từ mọi người."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Thiền nhẹ hoặc đọc sách về lãnh đạo tinh thần. Suy ngẫm về cách bạn đã truyền cảm hứng."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Thử một cách chia sẻ tầm nhìn mới, như dùng mạng xã hội. Sự nhiệt huyết của bạn sẽ thu hút sự chú ý.",
+          "love": "Thử một hoạt động bất ngờ với người yêu, như viết thơ. Nếu độc thân, tham gia sự kiện để gặp người mới.",
+          "finance": "Tìm hiểu cơ hội đầu tư vào sáng tạo, như khóa học truyền thông. Thử với khoản nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể mệt mỏi nếu cảm nhận quá nhiều năng lượng từ người khác.",
+          "solution": "Dành 10 phút thiền hoặc đi dạo để nạp năng lượng. Tập trung vào hành động chính."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Truyền cảm hứng của bạn mạnh mẽ khi bạn tự do. Hôm nay, hãy chia sẻ với sự táo bạo và ánh sáng.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngọn đèn tỏa ánh sáng tím. Hít thở sâu, cảm nhận sự tự do.",
+        "affirmation": "Tôi truyền cảm hứng với sự sáng tạo và ánh sáng."
+      },
+      "luck": {
+        "color": {
+          "hex": "#E6E6FA",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím nhạt để tăng trực giác."
+        },
+        "number": 11,
+        "direction": "Hướng Đông",
+        "object": "Máy quay video"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã truyền cảm hứng theo cách nào mới? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã chia sẻ gì để truyền cảm hứng hôm nay? Hãy kể câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một máy quay hoặc điện thoại trên bàn để ghi lại ý tưởng. Nó khơi dậy sự sáng tạo.",
+        "energy": "Quay một video ngắn về một ý tưởng và chia sẻ. Hành động này tăng năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để lên kế hoạch truyền cảm hứng, như viết một câu nói động viên."
+      }
     },
     {
       "life_path": 22,
-      "advice": "Hôm nay, Số ngày cá nhân 5 hỗ trợ bạn kết hợp tầm nhìn thực tế với tinh thần phiêu lưu. Hãy sử dụng khả năng tổ chức của mình để khám phá những ý tưởng mới hoặc bắt đầu một dự án lớn. Sự linh hoạt và kỷ luật sẽ giúp bạn biến ý tưởng thành hiện thực.",
-      "strength": "Tầm nhìn thực tế, khả năng tổ chức và sự kiên trì trong việc đón nhận thay đổi.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải cân bằng giữa tự do và kỷ luật. Tránh ôm đồm quá nhiều nhiệm vụ.",
-      "action": "Lên kế hoạch cho một dự án mới hoặc thử nghiệm một cách tiếp cận sáng tạo trong công việc hiện tại.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng những giá trị bền vững qua sự đổi mới. Hãy tin vào khả năng của mình.",
-      "lucky_color": "Xám ánh kim - biểu tượng của sự ổn định và năng động.",
-      "lucky_number": 22
+      "profile": {
+        "archetype": "Người xây dựng",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 8],
+        "chakra": "Năng lượng vùng chân"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 5 khuyến khích bạn xây dựng với sự linh hoạt và sáng tạo. Thử một cách tiếp cận mới cho dự án lớn, như thay đổi thiết kế hoặc thử công nghệ mới. Một thay đổi táo bạo sẽ đưa bạn tiến xa.",
+        "time_slots": {
+          "morning": {
+            "focus": "Đổi mới",
+            "action": "Ghi 3 cách tiếp cận mới cho dự án, như 'Thử phần mềm thiết kế mới' hoặc 'Tái cấu trúc kế hoạch'. Chọn một để bắt đầu.",
+            "warning": "Tránh bám vào kế hoạch cũ. Hãy thử nghiệm để thấy cơ hội."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Áp dụng cách tiếp cận mới, như vẽ lại sơ đồ hoặc thử công cụ mới. Ghi chú kết quả."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết về tiến độ dự án hôm nay. Thư giãn với một cuốn sách về kiến trúc hoặc công nghệ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Thử một công nghệ mới cho dự án, như phần mềm quản lý. Sự táo bạo của bạn sẽ dẫn dắt thành công.",
+          "love": "Thử một hoạt động mới với người yêu, như tham quan bảo tàng. Nếu độc thân, thử cách tiếp cận mới trong hẹn hò.",
+          "finance": "Tìm hiểu cơ hội đầu tư mới, như công nghệ xanh. Thử với khoản nhỏ để học hỏi."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy áp lực khi thử cách làm mới cho dự án lớn.",
+          "solution": "Chia thay đổi thành các bước nhỏ, như thử công cụ trong 1 giờ, để làm quen."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Tầm nhìn của bạn thành hiện thực khi bạn linh hoạt. Hôm nay, hãy xây dựng với sự sáng tạo và táo bạo.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một tòa nhà với thiết kế mới lạ. Hít thở sâu, cảm nhận sự tự do.",
+        "affirmation": "Tôi xây dựng với sự linh hoạt và sáng tạo."
+      },
+      "luck": {
+        "color": {
+          "hex": "#2F4F4F",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xám đậm để tăng sự tập trung."
+        },
+        "number": 22,
+        "direction": "Hướng Nam",
+        "object": "Phần mềm thiết kế"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã thử cách xây dựng mới nào? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã đổi mới dự án gì hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Cài một phần mềm thiết kế mới trên máy tính. Nó giúp bạn xây dựng sáng tạo hơn.",
+        "energy": "Thử một cách lập kế hoạch mới, như vẽ sơ đồ. Hành động này tăng năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để chọn một công cụ hoặc cách tiếp cận mới cho dự án."
+      }
     },
     {
       "life_path": 33,
-      "advice": "Số ngày cá nhân 5 kết hợp với Số đường đời 33 mang đến một ngày tràn đầy năng lượng của lòng trắc ẩn và tự do. Hãy sử dụng khả năng lãnh đạo tâm linh của bạn để khám phá những cách mới để hỗ trợ cộng đồng. Hôm nay, sự cởi mở và tình yêu thương của bạn sẽ tạo ra những thay đổi tích cực lớn lao.",
-      "strength": "Lòng trắc ẩn vô điều kiện, khả năng truyền cảm hứng và sự cởi mở trong việc đón nhận thay đổi.",
-      "challenge": "Nguy cơ hy sinh bản thân quá nhiều có thể khiến bạn kiệt sức. Hãy dành thời gian để tái tạo năng lượng.",
-      "action": "Tham gia một hoạt động cộng đồng hoặc chia sẻ một thông điệp truyền cảm hứng để hỗ trợ người khác.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa ánh sáng qua sự tự do. Hãy để tình yêu dẫn lối.",
-      "lucky_color": "Vàng nhạt - biểu tượng của sự chữa lành và năng lượng tích cực.",
-      "lucky_number": 33
+      "profile": {
+        "archetype": "Người giáo dục",
+        "element": "Khí sáng",
+        "compatible_numbers": [3, 6, 9],
+        "chakra": "Năng lượng ánh sáng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 5 khuyến khích bạn dạy học với sự sáng tạo và tự do. Thử một cách chia sẻ kiến thức mới, như quay video bài giảng hoặc tổ chức workshop. Một phương pháp bất ngờ sẽ truyền cảm hứng mạnh mẽ.",
+        "time_slots": {
+          "morning": {
+            "focus": "Sáng tạo giảng dạy",
+            "action": "Ghi 3 cách chia sẻ kiến thức mới, như 'Quay video bài học' hoặc 'Viết bài về kỹ năng sống'. Chọn một để bắt đầu.",
+            "warning": "Tránh ôm đồm quá nhiều. Hãy tập trung vào một phương pháp chính."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện phương pháp đã chọn, như đăng video hoặc hướng dẫn nhóm về một kỹ năng. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Thiền nhẹ hoặc đọc sách về giáo dục sáng tạo. Suy ngẫm về cách bạn đã truyền cảm hứng hôm nay."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Thử một cách giảng dạy mới, như dùng bảng tương tác. Sự nhiệt huyết của bạn sẽ truyền cảm hứng.",
+          "love": "Thử một hoạt động sáng tạo với người yêu, như học khiêu vũ. Nếu độc thân, tham gia nhóm học tập để gặp người mới.",
+          "finance": "Tìm hiểu cơ hội đầu tư vào giáo dục, như khóa học online. Thử với khoản nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể kiệt sức nếu cố gắng dạy quá nhiều.",
+          "solution": "Chọn một phương pháp chính để thực hiện trước 3h chiều. Dành 10 phút nghỉ ngơi để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sứ mệnh giáo dục của bạn tỏa sáng khi bạn tự do. Hôm nay, hãy dạy học với sự sáng tạo và ánh sáng.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngọn lửa tỏa ánh sáng vàng. Hít thở sâu, cảm nhận sự truyền cảm hứng.",
+        "affirmation": "Tôi dạy học với sự sáng tạo và tự do."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFFACD",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng nhạt để tăng sự sáng tạo."
+        },
+        "number": 33,
+        "direction": "Hướng Đông",
+        "object": "Máy quay video"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã dạy gì theo cách sáng tạo? Hãy viết về phương pháp và cảm giác của bạn.",
+        "feedback_question": "Bạn đã truyền cảm hứng qua bài học nào hôm nay? Hãy kể câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một máy quay hoặc điện thoại trên bàn để ghi bài giảng. Nó khơi dậy sự sáng tạo.",
+        "energy": "Chia sẻ một mẹo học tập với đồng nghiệp, như 'Thử ghi chú bằng màu!' Hành động này lan tỏa năng lượng.",
+        "routine": "Dành 5 phút buổi sáng để lên kế hoạch giảng dạy, như chọn một cách chia sẻ mới."
+      }
     }
-  ]
+  ],
+  "premium_features": {
+    "personalized": {
+      "birth_chart_compatibility": "Hôm nay bạn hợp với người số 5, đặc biệt trong các hoạt động sáng tạo và khám phá.",
+      "custom_ritual": "Vào 10h sáng, bạn hãy dành 5 phút để viết một ý tưởng mới và hít thở sâu để đón nhận năng lượng tự do."
+    },
+    "community": {
+      "trending_hashtag": "#KhámPháHômNay",
+      "group_activity": "Thử thách 24h: Thử một hoạt động mới và chia sẻ trải nghiệm với cộng đồng!"
+    }
+  }
 }

@@ -1,126 +1,781 @@
 {
-  "personal_day": 33,
-  "date": "2025-05-25",
+  "metadata": {
+    "date": "2025-06-26",
+    "personal_day": 33,
+    "update_frequency": "hàng ngày",
+    "version": "2.0"
+  },
+  "universal_energy": {
+    "theme": "Lan tỏa tri thức và nhân ái",
+    "moon_phase": "Trăng khuyết cuối tháng",
+    "astrological_impact": "Năng lượng thúc đẩy chia sẻ kiến thức, truyền cảm hứng, và xây dựng giá trị cộng đồng với tầm nhìn cao cả"
+  },
   "predictions": [
     {
       "life_path": 1,
-      "advice": "Số ngày cá nhân 33, một Master Number, mang đến năng lượng của lòng trắc ẩn và lãnh đạo tâm linh, thúc đẩy bạn dẫn đầu bằng tình yêu. Hôm nay, hãy sử dụng khả năng lãnh đạo để truyền cảm hứng và hỗ trợ cộng đồng. Sự tự tin và lòng nhân ái của bạn sẽ tạo ra những thay đổi tích cực lớn lao.",
-      "strength": "Sự tự tin, khả năng lãnh đạo và lòng trắc ẩn trong việc giúp đỡ người khác.",
-      "challenge": "Tránh hành động quá vội vàng hoặc bỏ qua nhu cầu cá nhân. Hãy giữ sự cân bằng giữa lãnh đạo và chăm sóc bản thân.",
-      "action": "Chia sẻ một thông điệp truyền cảm hứng hoặc hỗ trợ một tổ chức cộng đồng với vai trò lãnh đạo.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn dẫn đầu bằng tình yêu. Hãy tin vào khả năng lan tỏa ánh sáng.",
-      "lucky_color": "Đỏ ánh kim - biểu tượng của sự đam mê và trắc ẩn.",
-      "lucky_number": 33
+      "profile": {
+        "archetype": "Người dẫn đầu",
+        "element": "Lửa",
+        "compatible_numbers": [3, 5, 7],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 33 khuyến khích bạn dẫn đầu bằng cách chia sẻ tri thức. Hãy truyền cảm hứng cho đội nhóm hoặc cộng đồng với tầm nhìn nhân ái.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên ý tưởng",
+            "action": "Viết 3 cách truyền cảm hứng, như 'Tổ chức họp chia sẻ' hoặc 'Viết bài lãnh đạo'. Chọn một để bắt đầu.",
+            "warning": "Tránh áp đặt. Hãy lắng nghe ý kiến nhóm."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Thực hiện hành động, như dẫn dắt cuộc họp hoặc đăng bài. Ghi chú phản hồi từ nhóm.",
+            "warning": "Đừng để cảm xúc lấn át khi nhận góp ý."
+          },
+          "evening": {
+            "focus": "Phản ánh",
+            "activity": "Viết nhật ký về cách bạn truyền cảm hứng. Thư giãn với sách lãnh đạo hoặc thiền nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ tầm nhìn qua bài nói hoặc bài viết. Đọc về lãnh đạo nhân ái để cải thiện.",
+          "love": "Trò chuyện với người yêu về giá trị chung. Nếu độc thân, viết về phẩm chất đối tác lý tưởng.",
+          "finance": "Lập kế hoạch chi tiêu cho mục tiêu cộng đồng. Tìm hiểu về đầu tư xã hội."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy áp lực khi dẫn dắt với nhân ái.",
+          "solution": "Bắt đầu với một hành động nhỏ, như gửi email động viên, và thiền 5 phút."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự dẫn đầu đầy nhân ái. Hôm nay, hãy lan tỏa với trái tim.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ngọn lửa ấm áp. Hít thở sâu, cảm nhận sự kết nối.",
+        "affirmation": "Tôi dẫn đầu với tri thức và nhân ái."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF4500",
+          "usage": "Mặc áo hoặc mang phụ kiện màu cam để tăng năng lượng."
+        },
+        "number": 1,
+        "direction": "Hướng Nam",
+        "object": "Sổ kế hoạch"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chia sẻ tri thức gì để dẫn dắt? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã truyền cảm hứng cho nhóm như thế nào hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một sổ kế hoạch để ghi ý tưởng lãnh đạo nhân ái.",
+        "energy": "Nghe podcast về lãnh đạo để tăng cảm hứng.",
+        "routine": "Dành 5 phút buổi sáng để suy ngẫm về cách truyền cảm hứng."
+      }
     },
     {
       "life_path": 2,
-      "advice": "Hôm nay, Số ngày cá nhân 33 kết hợp với Số đường đời 2 tạo ra một ngày tràn đầy năng lượng của trực giác và lòng trắc ẩn. Hãy sử dụng sự nhạy cảm để hòa giải và hỗ trợ những người xung quanh. Sự hợp tác và lòng nhân ái của bạn sẽ mang lại sự hài hòa sâu sắc.",
-      "strength": "Trực giác nhạy bén, khả năng hòa giải và sự tận tâm trong việc xây dựng mối quan hệ.",
-      "challenge": "Sự nhạy cảm quá mức có thể khiến bạn dễ bị kiệt sức. Hãy bảo vệ năng lượng của mình.",
-      "action": "Chia sẻ một lời khuyên chân thành với một người bạn hoặc tham gia một hoạt động từ thiện để hỗ trợ cộng đồng.",
-      "spiritual_message": "Vũ trụ nhắc bạn rằng tình yêu là chìa khóa của sự hòa hợp. Hãy mở lòng và lan tỏa lòng tốt.",
-      "lucky_color": "Xanh ngọc ánh kim - biểu tượng của sự hòa hợp và trắc ẩn.",
-      "lucky_number": 2
+      "profile": {
+        "archetype": "Người kết nối",
+        "element": "Nước",
+        "compatible_numbers": [4, 6, 8],
+        "chakra": "Năng lượng vùng bụng dưới"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 33 thúc đẩy bạn kết nối cộng đồng qua việc chia sẻ tri thức. Hãy xây dựng cầu nối bằng cách lắng nghe và lan tỏa nhân ái.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên kế hoạch",
+            "action": "Ghi 3 cách kết nối, như 'Tổ chức trò chuyện nhóm' hoặc 'Gửi tin nhắn động viên'. Chọn một để bắt đầu.",
+            "warning": "Tránh rụt rè. Hãy chủ động chia sẻ."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện kết nối, như trò chuyện hoặc tham gia sự kiện cộng đồng. Ghi chú phản hồi.",
+            "warning": "Đừng để sự nhạy cảm ngăn bạn hành động."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về mối quan hệ bạn xây dựng. Thư giãn với trà và nhạc nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ ý tưởng hợp tác qua nhóm. Đọc về giao tiếp nhân ái để cải thiện.",
+          "love": "Trò chuyện với người yêu về mục tiêu chung. Nếu độc thân, viết về mối quan hệ lý tưởng.",
+          "finance": "Lập kế hoạch chi tiêu cho hoạt động cộng đồng. Tìm hiểu về tiết kiệm nhóm."
+        },
+        "challenge": {
+          "description": "Bạn có thể ngại đứng ra kết nối.",
+          "solution": "Bắt đầu với một tin nhắn đơn giản và thiền để tăng tự tin."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự kết nối đầy nhân ái. Hôm nay, hãy lan tỏa với trái tim.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng dòng nước chảy nhẹ. Hít thở sâu, cảm nhận sự hài hòa.",
+        "affirmation": "Tôi kết nối với tri thức và nhân ái."
+      },
+      "luck": {
+        "color": {
+          "hex": "#00CED1",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh lam để tăng sự hài hòa."
+        },
+        "number": 2,
+        "direction": "Hướng Bắc",
+        "object": "Danh bạ"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã xây dựng kết nối nào qua chia sẻ tri thức? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã kết nối với ai hôm nay? Hãy chia sẻ câu chuyện!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một danh bạ hoặc ứng dụng liên lạc để nhắc nhở về kết nối.",
+        "energy": "Gửi tin nhắn động viên ai đó. Hành động này tăng năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để chọn một người để liên hệ."
+      }
     },
     {
       "life_path": 3,
-      "advice": "Số ngày cá nhân 33 mang đến cơ hội để bạn kết hợp sự sáng tạo với lòng trắc ẩn. Hãy sử dụng năng lượng tích cực để truyền cảm hứng qua nghệ thuật, viết lách hoặc giao tiếp. Sự lạc quan và lòng nhân ái của bạn sẽ tạo ra những tác phẩm đầy ý nghĩa.",
-      "strength": "Sự sáng tạo, năng lượng tích cực và khả năng truyền cảm hứng qua giao tiếp.",
-      "challenge": "Tránh bị cuốn vào những ý tưởng trừu tượng hoặc thiếu tập trung vào mục tiêu chính.",
-      "action": "Viết một bài đăng truyền cảm hứng hoặc tạo một tác phẩm nghệ thuật để lan tỏa lòng nhân ái.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn lan tỏa niềm vui qua sự sáng tạo. Hãy để lòng trắc ẩn dẫn lối.",
-      "lucky_color": "Vàng ánh kim - biểu tượng của sự sáng tạo và trắc ẩn.",
-      "lucky_number": 3
+      "profile": {
+        "archetype": "Người sáng tạo",
+        "element": "Lửa",
+        "compatible_numbers": [1, 5, 9],
+        "chakra": "Năng lượng vùng cổ"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 33 thúc đẩy bạn chia sẻ tri thức qua sáng tạo. Hãy lan tỏa thông điệp nhân ái thông qua nghệ thuật hoặc truyền thông.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên ý tưởng",
+            "action": "Ghi 3 ý tưởng sáng tạo, như 'Viết bài truyền cảm hứng' hoặc 'Thiết kế poster'. Chọn một để bắt đầu.",
+            "warning": "Tránh phân tâm. Hãy tập trung vào một dự án."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "12h-2h chiều",
+            "recommendation": "Thực hiện dự án, như viết bài hoặc đăng thiết kế. Ghi chú phản hồi.",
+            "warning": "Đừng để sự cầu toàn làm chậm tiến độ."
+          },
+          "evening": {
+            "focus": "Phản ánh",
+            "activity": "Viết nhật ký về sáng tạo hôm nay. Thư giãn với nhạc hoặc sách nghệ thuật."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ ý tưởng sáng tạo qua bài viết hoặc sản phẩm. Đọc về tiếp thị sáng tạo để cải thiện.",
+          "love": "Tạo món quà sáng tạo cho người yêu. Nếu độc thân, viết về tình yêu lý tưởng.",
+          "finance": "Lập kế hoạch chi tiêu cho dự án sáng tạo. Tìm hiểu về đầu tư nghệ thuật."
+        },
+        "challenge": {
+          "description": "Bạn có thể thiếu tập trung khi có nhiều ý tưởng.",
+          "solution": "Ưu tiên một ý tưởng và làm việc trong 30 phút."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sáng tạo của bạn lan tỏa khi mang thông điệp nhân ái. Hôm nay, hãy chia sẻ với trái tim.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng bảng màu rực rỡ. Hít thở sâu, cảm nhận sự tự do.",
+        "affirmation": "Tôi sáng tạo với tri thức và nhân ái."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF69B4",
+          "usage": "Mặc áo hoặc mang phụ kiện màu hồng để tăng cảm hứng."
+        },
+        "number": 3,
+        "direction": "Hướng Tây",
+        "object": "Bút vẽ"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chia sẻ tri thức qua sáng tạo nào? Hãy viết về ý tưởng và cảm giác của bạn.",
+        "feedback_question": "Bạn đã lan tỏa sáng tạo gì hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một bút vẽ hoặc bảng phác thảo để khơi cảm hứng.",
+        "energy": "Chia sẻ một ý tưởng sáng tạo trên mạng. Hành động này tăng năng lượng.",
+        "routine": "Dành 5 phút buổi sáng để chọn một ý tưởng sáng tạo để bắt đầu."
+      }
     },
     {
       "life_path": 4,
-      "advice": "Hôm nay, Số ngày cá nhân 33 khuyến khích bạn kết hợp tính kỷ luật với lòng trắc ẩn để xây dựng các giá trị lâu dài. Hãy tập trung vào việc tổ chức các hoạt động từ thiện hoặc hỗ trợ cộng đồng. Sự kiên nhẫn và lòng nhân ái của bạn sẽ mang lại sự ổn định và ý nghĩa.",
-      "strength": "Tính kỷ luật, khả năng tổ chức và sự tận tâm trong việc giúp đỡ người khác.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải cân bằng giữa trách nhiệm và lòng nhân ái. Hãy ưu tiên sức khỏe của mình.",
-      "action": "Lên kế hoạch cho một dự án từ thiện hoặc hỗ trợ một tổ chức cộng đồng với chiến lược chi tiết.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng sự ổn định qua lòng trắc ẩn. Hãy tin vào khả năng của mình.",
-      "lucky_color": "Xanh lá cây ánh kim - biểu tượng của sự ổn định và trắc ẩn.",
-      "lucky_number": 4
+      "profile": {
+        "archetype": "Người tổ chức",
+        "element": "Đất",
+        "compatible_numbers": [2, 6, 8],
+        "chakra": "Năng lượng vùng chân"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 33 khuyến khích bạn tổ chức các hoạt động chia sẻ tri thức. Hãy xây dựng nền tảng bền vững để lan tỏa giá trị cộng đồng.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên kế hoạch",
+            "action": "Ghi 3 cách tổ chức, như 'Lên lịch sự kiện cộng đồng' hoặc 'Tạo tài liệu chia sẻ'. Chọn một để bắt đầu.",
+            "warning": "Tránh cứng nhắc. Hãy kết hợp cảm hứng."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Thực hiện kế hoạch, như tổ chức sự kiện hoặc gửi tài liệu. Ghi chú tiến độ.",
+            "warning": "Đừng để chi tiết nhỏ làm chậm bạn."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về hệ thống bạn xây dựng. Thư giãn với sách tổ chức hoặc đi bộ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức sự kiện hoặc tài liệu chia sẻ tri thức. Đọc về quản lý dự án để học thêm.",
+          "love": "Trò chuyện với người yêu về kế hoạch cộng đồng. Nếu độc thân, viết về mục tiêu tình cảm.",
+          "finance": "Lập kế hoạch chi tiêu cho sự kiện cộng đồng. Tìm hiểu về đầu tư xã hội."
+        },
+        "challenge": {
+          "description": "Bạn có thể ngại thay đổi cách tổ chức cũ.",
+          "solution": "Thử một phương pháp mới trong 30 phút và đánh giá."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự tổ chức đầy nhân ái. Hôm nay, hãy lan tỏa với tầm nhìn.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng một tòa nhà vững chắc. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi tổ chức với tri thức và nhân ái."
+      },
+      "luck": {
+        "color": {
+          "hex": "#228B22",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh lá để tăng sự ổn định."
+        },
+        "number": 4,
+        "direction": "Hướng Đông Nam",
+        "object": "Ứng dụng quản lý"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã tổ chức hoạt động chia sẻ tri thức nào? Hãy viết về kế hoạch và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tổ chức gì để lan tỏa tri thức hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một ứng dụng quản lý để theo dõi kế hoạch.",
+        "energy": "Hoàn thành một nhiệm vụ tổ chức nhỏ và đánh dấu. Hành động này tăng tự tin.",
+        "routine": "Dành 5 phút buổi sáng để ưu tiên một hoạt động tổ chức."
+      }
     },
     {
       "life_path": 5,
-      "advice": "Số ngày cá nhân 33 mang đến cơ hội để bạn kết hợp tinh thần phiêu lưu với lòng trắc ẩn. Hãy khám phá những cách mới để hỗ trợ cộng đồng hoặc chia sẻ ý tưởng tích cực. Sự linh hoạt và lòng nhân ái của bạn sẽ mang lại những kết nối sâu sắc và ý nghĩa.",
-      "strength": "Tinh thần cởi mở, khả năng thích nghi và sự hào phóng trong việc giúp đỡ người khác.",
-      "challenge": "Tránh bị cuốn vào quá nhiều hoạt động mà quên mất mục tiêu chính. Hãy ưu tiên những việc quan trọng.",
-      "action": "Tham gia một sự kiện từ thiện hoặc chia sẻ một thông điệp tích cực để truyền cảm hứng.",
-      "spiritual_message": "Vũ trụ đang mở ra những cơ hội để lan tỏa lòng tốt. Hãy đón nhận chúng với trái tim rộng mở.",
-      "lucky_color": "Cam ánh kim - biểu tượng của sự năng động và trắc ẩn.",
-      "lucky_number": 5
+      "profile": {
+        "archetype": "Người khám phá",
+        "element": "Khí",
+        "compatible_numbers": [1, 3, 7],
+        "chakra": "Năng lượng vùng cổ"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 33 thúc đẩy bạn khám phá tri thức mới để chia sẻ với cộng đồng. Hãy lan tỏa những gì bạn học được với tinh thần nhân ái.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên kế hoạch",
+            "action": "Ghi 3 chủ đề muốn khám phá, như 'Kỹ năng mới' hoặc 'Văn hóa cộng đồng'. Chọn một để bắt đầu.",
+            "warning": "Tránh phân tán. Hãy tập trung vào một chủ đề."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Học và chia sẻ, như viết bài hoặc trò chuyện về chủ đề. Ghi chú phản hồi.",
+            "warning": "Đừng để sự tò mò làm bạn lạc hướng."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về tri thức bạn chia sẻ. Thư giãn với nhạc acoustic hoặc đi dạo."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ kiến thức mới qua bài viết hoặc nói. Đọc về quản lý thời gian để tối ưu hóa.",
+          "love": "Trò chuyện với người yêu về những gì bạn học được. Nếu độc thân, viết về mục tiêu tình cảm.",
+          "finance": "Lập kế hoạch chi tiêu cho học tập. Tìm hiểu về đầu tư linh hoạt."
+        },
+        "challenge": {
+          "description": "Bạn có thể thiếu kiên nhẫn khi chia sẻ dài hạn.",
+          "solution": "Chia nhỏ công việc thành 20 phút và nghỉ ngơi."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự khám phá đầy nhân ái. Hôm nay, hãy lan tỏa với sự tò mò.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng con đường rộng mở. Hít thở sâu, cảm nhận sự tự do.",
+        "affirmation": "Tôi khám phá và chia sẻ với tri thức và nhân ái."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFD700",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng để tăng sự hứng khởi."
+        },
+        "number": 5,
+        "direction": "Hướng Tây Bắc",
+        "object": "Sổ hành trình"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chia sẻ tri thức gì từ hành trình khám phá? Hãy viết về chủ đề và cảm giác của bạn.",
+        "feedback_question": "Bạn đã chia sẻ trải nghiệm nào hôm nay? Hãy kể lại!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một sổ hành trình để ghi ý tưởng khám phá.",
+        "energy": "Chia sẻ một bài học mới trên mạng. Hành động này tăng năng lượng.",
+        "routine": "Dành 5 phút buổi sáng để chọn một chủ đề để học và chia sẻ."
+      }
     },
     {
       "life_path": 6,
-      "advice": "Hôm nay, Số ngày cá nhân 33 kết hợp với Số đường đời 6 tạo ra một ngày tràn đầy năng lượng của tình yêu và lòng trắc ẩn. Hãy tập trung vào việc chăm sóc gia đình hoặc cộng đồng, sử dụng sự tận tâm để lan tỏa sự hài hòa. Sự hào phóng của bạn sẽ mang lại những kết nối sâu sắc.",
-      "strength": "Lòng trắc ẩn vô điều kiện, khả năng chăm sóc và sự tận tâm trong việc giúp đỡ người khác.",
-      "challenge": "Nguy cơ ôm đồm quá nhiều trách nhiệm có thể khiến bạn kiệt sức. Hãy dành thời gian để tái tạo năng lượng.",
-      "action": "Tổ chức một hoạt động gia đình hoặc hỗ trợ một người thân với một hành động cụ thể.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa tình yêu qua lòng trắc ẩn. Hãy để trái tim dẫn lối.",
-      "lucky_color": "Hồng ánh kim - biểu tượng của tình yêu và trắc ẩn.",
-      "lucky_number": 6
+      "profile": {
+        "archetype": "Người chăm sóc",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 9],
+        "chakra": "Năng lượng vùng tim"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 33 khuyến khích bạn chia sẻ tri thức qua chăm sóc cộng đồng. Hãy lan tỏa yêu thương bằng cách hỗ trợ và giáo dục.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên kế hoạch",
+            "action": "Ghi 3 cách chăm sóc, như 'Tổ chức workshop cộng đồng' hoặc 'Hỗ trợ ai đó học hỏi'. Chọn một để bắt đầu.",
+            "warning": "Tránh ôm đồm. Hãy ưu tiên một hành động."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện hỗ trợ, như hướng dẫn hoặc tổ chức sự kiện. Ghi chú phản hồi.",
+            "warning": "Đừng để cảm xúc làm bạn kiệt sức."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về cách bạn chăm sóc. Thư giãn với tắm nước ấm hoặc nhạc nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ tri thức qua hỗ trợ nhóm. Đọc về giao tiếp nhân ái để cải thiện.",
+          "love": "Trò chuyện với người yêu về giá trị chăm sóc. Nếu độc thân, viết về giá trị tình cảm.",
+          "finance": "Lập kế hoạch chi tiêu cho cộng đồng. Tìm hiểu về tiết kiệm bền vững."
+        },
+        "challenge": {
+          "description": "Bạn có thể kiệt sức nếu chăm sóc quá nhiều.",
+          "solution": "Ưu tiên một hành động và nghỉ ngơi 10 phút."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự chăm sóc đầy nhân ái. Hôm nay, hãy lan tỏa với yêu thương.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng trái tim xanh rực rỡ. Hít thở sâu, cảm nhận sự yêu thương.",
+        "affirmation": "Tôi chăm sóc và chia sẻ với tri thức và nhân ái."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF69B4",
+          "usage": "Mặc áo hoặc mang phụ kiện màu hồng để tăng sự ấm áp."
+        },
+        "number": 6,
+        "direction": "Hướng Tây Nam",
+        "object": "Lịch gia đình"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chia sẻ tri thức qua chăm sóc nào? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã hỗ trợ ai hôm nay? Hãy chia sẻ câu chuyện!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một lịch gia đình để theo dõi trách nhiệm.",
+        "energy": "Viết lời cảm ơn cho người bạn hỗ trợ. Hành động này lan tỏa năng lượng.",
+        "routine": "Dành 5 phút buổi sáng để chọn một cách chăm sóc."
+      }
     },
     {
       "life_path": 7,
-      "advice": "Số ngày cá nhân 33 mang đến cơ hội để bạn kết hợp trí tuệ sâu sắc với lòng trắc ẩn. Hãy sử dụng trực giác để suy ngẫm về cách hỗ trợ cộng đồng hoặc chia sẻ kiến thức tâm linh. Sự tĩnh lặng và lòng nhân ái của bạn sẽ mang lại những khám phá ý nghĩa.",
-      "strength": "Trí tuệ sâu sắc, trực giác nhạy bén và sự hào phóng trong việc chia sẻ tri thức.",
-      "challenge": "Tránh cô lập bản thân hoặc từ chối sự hỗ trợ từ người khác. Hãy mở lòng để kết nối.",
-      "action": "Chia sẻ một bài học tâm linh hoặc tham gia một cuộc thảo luận sâu sắc với cộng đồng.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến sự thật qua lòng trắc ẩn. Hãy tin vào trực giác của mình.",
-      "lucky_color": "Tím ánh kim - biểu tượng của sự tâm linh và trắc ẩn.",
-      "lucky_number": 7
+      "profile": {
+        "archetype": "Người tìm kiếm",
+        "element": "Nước",
+        "compatible_numbers": [1, 5, 7],
+        "chakra": "Năng lượng vùng trán"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 33 thúc đẩy bạn chia sẻ tri thức qua nghiên cứu sâu sắc. Hãy lan tỏa những gì bạn học được với cộng đồng một cách nhân ái.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên kế hoạch",
+            "action": "Ghi 3 chủ đề nghiên cứu, như 'Triết lý sống' hoặc 'Kỹ năng chuyên sâu'. Chọn một để bắt đầu.",
+            "warning": "Tránh cô lập. Hãy nghĩ đến cách chia sẻ."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Nghiên cứu và chia sẻ, như viết bài hoặc trò chuyện. Ghi chú phản hồi.",
+            "warning": "Đừng để sự cầu toàn ngăn bạn chia sẻ."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về tri thức bạn chia sẻ. Thư giãn với sách hoặc thiền."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ nghiên cứu qua bài viết hoặc nói. Đọc về kỹ năng thực tế để cải thiện.",
+          "love": "Trò chuyện với người yêu về tri thức bạn khám phá. Nếu độc thân, viết về giá trị trí tuệ.",
+          "finance": "Lập kế hoạch đầu tư cho học tập. Tìm hiểu về tài chính cá nhân."
+        },
+        "challenge": {
+          "description": "Bạn có thể ngại chia sẻ ý tưởng sâu sắc.",
+          "solution": "Bắt đầu với một bài viết ngắn và thiền để tăng tự tin."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở trí tuệ đầy nhân ái. Hôm nay, hãy lan tỏa với sự minh triết.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng thư viện sáng rõ. Hít thở sâu, cảm nhận sự minh triết.",
+        "affirmation": "Tôi chia sẻ tri thức với nhân ái và minh triết."
+      },
+      "luck": {
+        "color": {
+          "hex": "#800080",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím để tăng sự tập trung."
+        },
+        "number": 7,
+        "direction": "Hướng Đông Bắc",
+        "object": "Sách học tập"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chia sẻ tri thức nào từ nghiên cứu? Hãy viết về chủ đề và cảm giác của bạn.",
+        "feedback_question": "Bạn đã chia sẻ kiến thức gì hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một cuốn sách học tập để nhắc nhở về mục tiêu.",
+        "energy": "Viết tóm tắt một bài học mới. Hành động này tăng hiệu quả.",
+        "routine": "Dành 5 phút buổi sáng để chọn một chủ đề nghiên cứu để chia sẻ."
+      }
     },
     {
       "life_path": 8,
-      "advice": "Hôm nay, Số ngày cá nhân 33 khuyến khích bạn sử dụng tham vọng để hỗ trợ cộng đồng hoặc xây dựng các dự án mang tính nhân đạo. Hãy tập trung vào việc lãnh đạo với lòng trắc ẩn, sử dụng sự tổ chức để tạo ra giá trị lâu dài. Sự hào phóng của bạn sẽ mang lại thành công lớn.",
-      "strength": "Khả năng lãnh đạo, sự tổ chức và lòng trắc ẩn trong việc đạt được mục tiêu lớn.",
-      "challenge": "Tránh tập trung quá nhiều vào quyền lực hoặc bỏ qua cảm xúc của người khác. Hãy giữ sự cân bằng.",
-      "action": "Lên kế hoạch cho một dự án từ thiện hoặc hỗ trợ một tổ chức cộng đồng với vai trò lãnh đạo.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn đạt được thành công qua lòng trắc ẩn. Hãy dẫn dắt bằng trái tim.",
-      "lucky_color": "Vàng kim ánh kim - biểu tượng của sự thịnh vượng và trắc ẩn.",
-      "lucky_number": 8
+      "profile": {
+        "archetype": "Người quản lý",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 6],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 33 khuyến khích bạn chia sẻ tri thức qua quản lý cộng đồng. Hãy lan tỏa giá trị nhân ái bằng cách dẫn dắt với chiến lược.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên kế hoạch",
+            "action": "Ghi 3 chiến lược quản lý, như 'Tổ chức sự kiện cộng đồng' hoặc 'Chia sẻ tài liệu'. Chọn một để bắt đầu.",
+            "warning": "Tránh kiểm soát quá mức. Hãy lắng nghe."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Thực hiện chiến lược, như tổ chức họp hoặc gửi tài liệu. Ghi chú phản hồi.",
+            "warning": "Đừng để áp lực làm bạn mất kiên nhẫn."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về cách bạn quản lý. Thư giãn với sách lãnh đạo hoặc yoga."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ tri thức qua quản lý dự án. Đọc về quản lý nhân ái để cải thiện.",
+          "love": "Trò chuyện với người yêu về mục tiêu cộng đồng. Nếu độc thân, viết về mục tiêu tình cảm.",
+          "finance": "Lập kế hoạch đầu tư cho cộng đồng. Tìm hiểu về quản lý tài chính xã hội."
+        },
+        "challenge": {
+          "description": "Bạn có thể áp lực khi dẫn dắt với nhân ái.",
+          "solution": "Chia nhỏ công việc và nghỉ 10 phút để giảm căng thẳng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự quản lý đầy nhân ái. Hôm nay, hãy lan tỏa với tầm nhìn.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ngọn núi vững chắc. Hít thở sâu, cảm nhận sự tự tin.",
+        "affirmation": "Tôi quản lý và chia sẻ với tri thức và nhân ái."
+      },
+      "luck": {
+        "color": {
+          "hex": "#C0C0C0",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xám để tăng sự ổn định."
+        },
+        "number": 8,
+        "direction": "Hướng Nam",
+        "object": "Bảng kế hoạch"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chia sẻ tri thức qua quản lý nào? Hãy viết về chiến lược và cảm giác của bạn.",
+        "feedback_question": "Bạn đã dẫn dắt cộng đồng như thế nào hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một bảng kế hoạch để theo dõi chiến lược.",
+        "energy": "Viết một mục tiêu quản lý và chia sẻ với nhóm. Hành động này tăng tự tin.",
+        "routine": "Dành 5 phút buổi sáng để ưu tiên một chiến lược."
+      }
     },
     {
       "life_path": 9,
-      "advice": "Số ngày cá nhân 33 mang đến cơ hội để bạn lan tỏa lòng nhân ái qua các hành động lãnh đạo tâm linh. Hãy sử dụng tầm nhìn lớn để hỗ trợ cộng đồng hoặc truyền cảm hứng cho những người xung quanh. Sự hào phóng và trực giác của bạn sẽ tạo ra tác động tích cực lâu dài.",
-      "strength": "Tinh thần nhân đạo, khả năng truyền cảm hứng và sự tận tâm trong việc giúp đỡ người khác.",
-      "challenge": "Bạn có thể cảm thấy thất vọng nếu kết quả không đến ngay lập tức. Hãy tập trung vào hành trình.",
-      "action": "Chia sẻ một thông điệp truyền cảm hứng hoặc tham gia một hoạt động từ thiện để hỗ trợ cộng đồng.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa ánh sáng qua lòng trắc ẩn. Hãy để lòng nhân ái dẫn lối.",
-      "lucky_color": "Trắng ánh kim - biểu tượng của sự tinh khiết và trắc ẩn.",
-      "lucky_number": 9
+      "profile": {
+        "archetype": "Người chia sẻ",
+        "element": "Lửa",
+        "compatible_numbers": [3, 6, 9],
+        "chakra": "Năng lượng vùng đầu"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 33 cộng hưởng với bạn, thúc đẩy lan tỏa tri thức qua các hoạt động nhân ái. Hãy chia sẻ giá trị cộng đồng với tầm nhìn lớn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên kế hoạch",
+            "action": "Ghi 3 cách chia sẻ, như 'Viết bài truyền cảm hứng' hoặc 'Tổ chức sự kiện từ thiện'. Chọn một để bắt đầu.",
+            "warning": "Tránh ôm đồm. Hãy tập trung vào một hành động."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện chia sẻ, như đăng bài hoặc tham gia hoạt động cộng đồng. Ghi chú phản hồi.",
+            "warning": "Đừng để cảm xúc làm bạn kiệt sức."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về cách bạn lan tỏa. Thư giãn với sách nhân văn hoặc nhạc nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ tri thức qua dự án cộng đồng. Đọc về trách nhiệm xã hội để tìm cảm hứng.",
+          "love": "Trò chuyện với người yêu về giá trị nhân ái. Nếu độc thân, viết về giá trị bạn muốn lan tỏa.",
+          "finance": "Lập kế hoạch chi tiêu cho cộng đồng. Tìm hiểu về tài trợ từ thiện."
+        },
+        "challenge": {
+          "description": "Bạn có thể mệt nếu cố gắng giúp quá nhiều.",
+          "solution": "Chọn một hành động cụ thể và nghỉ 10 phút để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự chia sẻ đầy nhân ái. Hôm nay, hãy lan tỏa với trái tim.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ánh sáng trắng tỏa ra. Hít thở sâu, cảm nhận sự thanh thản.",
+        "affirmation": "Tôi chia sẻ với tri thức và nhân ái."
+      },
+      "luck": {
+        "color": {
+          "hex": "#F5F5F5",
+          "usage": "Mặc áo hoặc mang phụ kiện màu trắng để tăng sự thanh thản."
+        },
+        "number": 9,
+        "direction": "Hướng Tây",
+        "object": "Sổ ý tưởng"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã lan tỏa tri thức gì với cộng đồng? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã truyền cảm hứng cho ai hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một sổ ý tưởng để ghi cách hỗ trợ cộng đồng.",
+        "energy": "Viết câu truyền cảm hứng và chia sẻ. Hành động này lan tỏa năng lượng.",
+        "routine": "Dành 5 phút buổi sáng để suy ngẫm về cách chia sẻ."
+      }
     },
     {
       "life_path": 11,
-      "advice": "Số ngày cá nhân 33 kết hợp với Số đường đời 11 mang đến một ngày tràn đầy năng lượng tâm linh và lòng trắc ẩn. Hãy sử dụng trực giác để truyền cảm hứng và hỗ trợ cộng đồng. Sự nhạy cảm và tầm nhìn của bạn sẽ mang lại những thay đổi sâu sắc.",
-      "strength": "Trực giác nhạy bén, khả năng truyền cảm hứng và tầm nhìn tâm linh vượt thời gian.",
-      "challenge": "Sự nhạy cảm quá mức có thể khiến bạn dễ bị kiệt sức. Hãy bảo vệ năng lượng của mình.",
-      "action": "Chia sẻ một thông điệp tâm linh hoặc tham gia một hoạt động từ thiện để hỗ trợ cộng đồng.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến ánh sáng qua lòng trắc ẩn. Hãy tin vào sứ mệnh của mình.",
-      "lucky_color": "Bạc ánh kim - biểu tượng của sự trực giác và trắc ẩn.",
-      "lucky_number": 11
+      "profile": {
+        "archetype": "Người truyền cảm hứng",
+        "element": "Khí",
+        "compatible_numbers": [2, 4, 7],
+        "chakra": "Năng lượng vùng trán"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 33 thúc đẩy bạn lan tỏa tri thức qua truyền cảm hứng. Hãy chia sẻ trực giác và tầm nhìn để dẫn dắt cộng đồng với nhân ái.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên ý tưởng",
+            "action": "Ghi 3 ý tưởng truyền cảm hứng, như 'Viết bài về nhân ái' hoặc 'Dẫn dắt workshop'. Chọn một để bắt đầu.",
+            "warning": "Tránh nghi ngờ trực giác. Hãy tin vào ánh sáng của bạn."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Thực hiện ý tưởng, như đăng bài hoặc tổ chức sự kiện. Ghi chú phản hồi.",
+            "warning": "Đừng để năng lượng mạnh làm bạn kiệt sức."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về cách bạn truyền cảm hứng. Thư giãn với thiền hoặc sách tinh thần."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ tầm nhìn qua bài nói hoặc viết. Đọc về lãnh đạo tinh thần để cải thiện.",
+          "love": "Trò chuyện với người yêu về giá trị nhân ái. Nếu độc thân, viết về giá trị bạn muốn lan tỏa.",
+          "finance": "Lập kế hoạch tài chính cho mục tiêu cộng đồng. Tìm hiểu về đầu tư sáng tạo."
+        },
+        "challenge": {
+          "description": "Bạn có thể kiệt sức nếu cảm nhận quá nhiều năng lượng.",
+          "solution": "Nghỉ ngơi 10 phút thiền để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự truyền cảm hứng đầy nhân ái. Hôm nay, hãy lan tỏa với trực giác.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ánh sáng tím tỏa ra. Hít thở sâu, cảm nhận sự ảnh hưởng.",
+        "affirmation": "Tôi truyền cảm hứng với tri thức và nhân ái."
+      },
+      "luck": {
+        "color": {
+          "hex": "#E6E6FA",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím nhạt để tăng trực giác."
+        },
+        "number": 11,
+        "direction": "Hướng Đông",
+        "object": "Sổ ghi chú"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã lan tỏa tri thức qua truyền cảm hứng nào? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã truyền cảm hứng gì hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một sổ ghi chú để ghi ý tưởng truyền cảm hứng.",
+        "energy": "Viết câu truyền cảm hứng và chia sẻ. Hành động này lan tỏa năng lượng.",
+        "routine": "Dành 5 phút buổi sáng để suy ngẫm về cách truyền cảm hứng."
+      }
     },
     {
       "life_path": 22,
-      "advice": "Hôm nay, Số ngày cá nhân 33 khuyến khích bạn kết hợp tầm nhìn thực tế với lòng trắc ẩn để xây dựng các giá trị lâu dài. Hãy sử dụng khả năng tổ chức để hỗ trợ cộng đồng hoặc hoàn thành một dự án mang tính nhân đạo. Sự kiên nhẫn và lòng nhân ái của bạn sẽ mang lại thành công bền vững.",
-      "strength": "Tầm nhìn thực tế, khả năng tổ chức và sự tận tâm trong việc giúp đỡ người khác.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải cân bằng giữa thực tế và lòng nhân ái. Hãy ưu tiên sức khỏe của mình.",
-      "action": "Lên kế hoạch cho một dự án từ thiện hoặc hỗ trợ một tổ chức cộng đồng với chiến lược chi tiết.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng những di sản qua lòng trắc ẩn. Hãy tin vào khả năng của mình.",
-      "lucky_color": "Xám ánh kim - biểu tượng của sự ổn định và trắc ẩn.",
-      "lucky_number": 22
+      "profile": {
+        "archetype": "Người xây dựng",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 8],
+        "chakra": "Năng lượng vùng chân"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 33 khuyến khích bạn xây dựng dự án cộng đồng để lan tỏa tri thức. Hãy thiết kế nền tảng bền vững với tinh thần nhân ái.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên kế hoạch",
+            "action": "Ghi 3 dự án cộng đồng, như 'Tổ chức workshop' hoặc 'Xây dựng tài liệu'. Chọn một để phác thảo.",
+            "warning": "Tránh chi tiết nhỏ. Hãy nhìn vào bức tranh lớn."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Thực hiện bước đầu, như vẽ sơ đồ hoặc họp nhóm. Ghi chú tiến độ.",
+            "warning": "Đừng để áp lực làm bạn chậm lại."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về dự án cộng đồng. Thư giãn với sách quản lý hoặc thiền."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Xây dựng dự án cộng đồng với kế hoạch dài hạn. Đọc về quản trị để học thêm.",
+          "love": "Trò chuyện với người yêu về mục tiêu cộng đồng. Nếu độc thân, viết về mục tiêu tình cảm.",
+          "finance": "Lập kế hoạch đầu tư cho cộng đồng. Tìm hiểu về tài chính bền vững."
+        },
+        "challenge": {
+          "description": "Bạn có thể áp lực với quy mô dự án.",
+          "solution": "Chia kế hoạch thành các bước nhỏ và nghỉ 10 phút để giảm căng thẳng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự xây dựng đầy nhân ái. Hôm nay, hãy lan tỏa với tầm nhìn.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng một công trình vĩ đại. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi xây dựng và chia sẻ với tri thức và nhân ái."
+      },
+      "luck": {
+        "color": {
+          "hex": "#2F4F4F",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xám đậm để tăng sự tập trung."
+        },
+        "number": 22,
+        "direction": "Hướng Nam",
+        "object": "Sơ đồ kế hoạch"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã xây dựng dự án nào để lan tỏa tri thức? Hãy viết về kế hoạch và cảm giác của bạn.",
+        "feedback_question": "Bạn đã bắt đầu dự án cộng đồng nào hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một sơ đồ kế hoạch để theo dõi dự án.",
+        "energy": "Vẽ sơ đồ ý tưởng dự án cộng đồng. Hành động này tăng sáng tạo.",
+        "routine": "Dành 5 phút buổi sáng để suy ngẫm về mục tiêu dự án."
+      }
     },
     {
       "life_path": 33,
-      "advice": "Số ngày cá nhân 33 kết hợp với Số đường đời 33 tạo ra một ngày tràn đầy năng lượng của lòng trắc ẩn và lãnh đạo tâm linh. Hôm nay, hãy tập trung vào việc lan tỏa tình yêu thương và hỗ trợ cộng đồng. Sự tận tâm và sứ mệnh của bạn sẽ tạo ra những thay đổi tích cực lớn lao.",
-      "strength": "Lòng trắc ẩn vô điều kiện, khả năng truyền cảm hứng và sự tận tâm trong việc giúp đỡ người khác.",
-      "challenge": "Nguy cơ hy sinh bản thân quá nhiều có thể khiến bạn kiệt sức. Hãy dành thời gian để tái tạo năng lượng.",
-      "action": "Hỗ trợ một người đang cần giúp đỡ hoặc tham gia một hoạt động cộng đồng với vai trò lãnh đạo.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa ánh sáng qua lòng trắc ẩn. Hãy để tình yêu dẫn lối.",
-      "lucky_color": "Vàng ánh kim - biểu tượng của sự chữa lành và trắc ẩn.",
-      "lucky_number": 33
+      "profile": {
+        "archetype": "Người giáo dục",
+        "element": "Khí Sáng",
+        "compatible_numbers": [3, 6, 9],
+        "chakra": "Năng lượng ánh sáng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 33 cộng hưởng mạnh với bạn, thúc đẩy lan tỏa tri thức qua giáo dục nhân ái. Hãy chia sẻ bài học để truyền cảm hứng với tầm nhìn cao cả.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên kế hoạch",
+            "action": "Ghi 3 cách giáo dục, như 'Viết bài giảng' hoặc 'Tổ chức workshop cộng đồng'. Chọn một để bắt đầu.",
+            "warning": "Tránh ôm đồm. Hãy tập trung vào một chủ đề."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện giáo dục, như giảng dạy hoặc đăng bài. Ghi chú phản hồi.",
+            "warning": "Đừng để năng lượng mạnh làm bạn kiệt sức."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về cách bạn giáo dục. Thư giãn với sách giáo dục hoặc thiền."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ tri thức qua bài giảng hoặc dự án giáo dục. Đọc về giáo dục sáng tạo để học thêm.",
+          "love": "Trò chuyện với người yêu về giá trị giáo dục. Nếu độc thân, viết về giá trị bạn muốn chia sẻ.",
+          "finance": "Lập kế hoạch tài trợ giáo dục. Tìm hiểu về tài trợ học tập."
+        },
+        "challenge": {
+          "description": "Bạn có thể kiệt sức nếu dạy quá nhiều.",
+          "solution": "Chọn một nhiệm vụ cụ thể và nghỉ 10 phút để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn tỏa sáng khi bạn dạy với nhân ái. Hôm nay, hãy lan tỏa với triết lý.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ánh sáng vàng tỏa ra. Hít thở sâu, cảm nhận sự truyền cảm.",
+        "affirmation": "Tôi giáo dục với tri thức và nhân ái."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFFACD",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng sáng để tăng sự sáng tạo."
+        },
+        "number": 33,
+        "direction": "Hướng Đông",
+        "object": "Sổ giáo dục"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã lan tỏa tri thức qua giáo dục nào? Hãy viết về chủ đề và cảm giác của bạn.",
+        "feedback_question": "Bạn đã truyền cảm hứng qua bài học gì hôm nay? Hãy kể lại!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một sổ giáo dục để ghi ý tưởng giảng dạy.",
+        "energy": "Chia sẻ mẹo học với nhóm. Hành động này lan tỏa năng lượng.",
+        "routine": "Dành 5 phút buổi sáng để suy ngẫm về cách chia sẻ tri thức."
+      }
     }
-  ]
+  ],
+  "premium_features": {
+    "personalized": {
+      "birth_chart_compatibility": "Hôm nay bạn hợp với người số 33, đặc biệt trong các hoạt động giáo dục và lan tỏa nhân ái.",
+      "custom_quest": "Vào 10h sáng, viết 3 cách bạn muốn chia sẻ tri thức với cộng đồng và chọn một để thực hiện hôm nay."
+    },
+    "community": {
+      "trending_hashtag": "#LanToaTriThuc",
+      "group_activity": "Thử thách 24h: Chia sẻ một bài học hoặc ý tưởng nhân ái và đăng với hashtag #LanToaTriThuc!"
+    }
+  }
 }

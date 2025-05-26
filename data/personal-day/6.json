@@ -1,126 +1,769 @@
 {
-  "personal_day": 6,
-  "date": "2025-05-25",
+  "metadata": {
+    "date": "2025-05-30",
+    "personal_day": 6,
+    "update_frequency": "hàng ngày",
+    "version": "2.0"
+  },
+  "universal_energy": {
+    "theme": "Chăm sóc và xây dựng sự hài hòa",
+    "moon_phase": "Trăng lưỡi liềm đầu tháng",
+    "astrological_impact": "Năng lượng thúc đẩy sự quan tâm, trách nhiệm và tạo sự cân bằng trong các mối quan hệ"
+  },
   "predictions": [
     {
       "life_path": 1,
-      "advice": "Số ngày cá nhân 6 mang đến năng lượng của tình yêu và trách nhiệm, thúc đẩy bạn dẫn đầu bằng trái tim. Hôm nay, hãy sử dụng khả năng lãnh đạo của mình để hỗ trợ gia đình, bạn bè hoặc cộng đồng. Sự tự tin kết hợp với lòng trắc ẩn sẽ giúp bạn tạo ra những kết nối sâu sắc và ý nghĩa.",
-      "strength": "Sự tự tin, khả năng lãnh đạo và lòng trắc ẩn trong việc hỗ trợ người khác.",
-      "challenge": "Tránh áp đặt ý kiến của mình hoặc bỏ qua nhu cầu cá nhân khi chăm sóc người khác.",
-      "action": "Tổ chức một buổi gặp mặt gia đình hoặc hỗ trợ một đồng nghiệp trong một nhiệm vụ cụ thể.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn dẫn đầu bằng tình yêu. Hãy để trái tim dẫn lối.",
-      "lucky_color": "Đỏ hồng - biểu tượng của sự đam mê và tình yêu.",
-      "lucky_number": 6
+      "profile": {
+        "archetype": "Người dẫn đầu",
+        "element": "Lửa",
+        "compatible_numbers": [3, 5, 7],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 6 khuyến khích bạn dẫn đầu bằng sự quan tâm và trách nhiệm. Hãy hỗ trợ nhóm hoặc gia đình bằng cách tổ chức một hoạt động chung. Sự lãnh đạo chu đáo của bạn sẽ củng cố sự gắn kết.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch chăm sóc",
+            "action": "Ghi 3 cách hỗ trợ nhóm hoặc gia đình, như 'Tổ chức họp nhóm' hoặc 'Chuẩn bị bữa sáng chung'. Chọn một để bắt đầu.",
+            "warning": "Tránh tập trung chỉ vào mục tiêu cá nhân. Hãy ưu tiên lợi ích chung."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Thực hiện kế hoạch, như tổ chức một buổi họp hoặc chuẩn bị không gian cho gia đình. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết nhật ký về cách bạn đã hỗ trợ mọi người. Thư giãn với một bài thiền ngắn hoặc nghe nhạc nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một hoạt động nhóm, như phân công nhiệm vụ rõ ràng. Sự quan tâm của bạn sẽ tăng hiệu suất.",
+          "love": "Tổ chức một buổi tối ấm cúng với người yêu, như nấu ăn cùng nhau. Nếu độc thân, viết ra phẩm chất bạn muốn ở mối quan hệ.",
+          "finance": "Lập ngân sách hỗ trợ gia đình, như mua đồ dùng chung. Đặt mục tiêu tiết kiệm nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy khó cân bằng giữa lãnh đạo và chăm sóc.",
+          "solution": "Dành thời gian lắng nghe ý kiến nhóm trước khi quyết định. Viết ưu tiên để rõ ràng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự lãnh đạo của bạn tỏa sáng khi bạn chăm sóc. Hôm nay, hãy xây dựng sự hài hòa với trách nhiệm.",
+        "meditation": "Ngồi yên 5 phút, nhắm mắt và tưởng tượng một ngọn lửa ấm áp. Hít thở sâu, cảm nhận sự quan tâm.",
+        "affirmation": "Tôi dẫn đầu với sự chăm sóc và trách nhiệm."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF4500",
+          "usage": "Mặc áo hoặc mang phụ kiện màu cam để tăng sự ấm áp."
+        },
+        "number": 6,
+        "direction": "Hướng Tây Nam",
+        "object": "Lịch gia đình"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã hỗ trợ ai để xây dựng sự hài hòa? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tổ chức hoặc chăm sóc điều gì hôm nay? Hãy chia sẻ khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một lịch gia đình trên bàn để nhắc nhở về sự quan tâm. Nó giúp bạn tổ chức chu đáo.",
+        "energy": "Gửi một tin nhắn quan tâm đến đồng nghiệp hoặc gia đình. Hành động này lan tỏa năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để lên kế hoạch hỗ trợ, như gọi hỏi thăm người thân."
+      }
     },
     {
       "life_path": 2,
-      "advice": "Hôm nay, Số ngày cá nhân 6 kết hợp với Số đường đời 2 tạo ra một ngày tràn đầy năng lượng của sự hòa hợp và chăm sóc. Hãy sử dụng trực giác của mình để xây dựng mối quan hệ bền vững và giải quyết xung đột. Sự nhạy cảm và lòng trắc ẩn của bạn sẽ mang lại sự hài hòa cho những người xung quanh.",
-      "strength": "Trực giác nhạy bén, khả năng hòa giải và sự tận tâm trong việc chăm sóc người khác.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải đáp ứng nhu cầu của mọi người. Hãy giữ ranh giới cá nhân để tránh kiệt sức.",
-      "action": "Gọi điện hoặc gặp gỡ một người thân để chia sẻ và củng cố mối quan hệ.",
-      "spiritual_message": "Vũ trụ nhắc bạn rằng tình yêu là chìa khóa của sự hòa hợp. Hãy mở lòng và lắng nghe.",
-      "lucky_color": "Xanh ngọc bích - biểu tượng của sự hòa hợp và tình yêu.",
-      "lucky_number": 2
+      "profile": {
+        "archetype": "Người kết nối",
+        "element": "Nước",
+        "compatible_numbers": [4, 6, 8],
+        "chakra": "Năng lượng vùng bụng dưới"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 6 cộng hưởng với khả năng kết nối của bạn. Hãy xây dựng sự hài hòa bằng cách hỗ trợ bạn bè hoặc gia đình. Một hành động chu đáo, như tổ chức một buổi gặp mặt, sẽ củng cố mối quan hệ.",
+        "time_slots": {
+          "morning": {
+            "focus": "Quan tâm",
+            "action": "Liên lạc với một người bạn hoặc người thân, như gửi tin nhắn 'Cậu khỏe không? Tụi mình gặp nhau nhé!'",
+            "warning": "Đừng quên bày tỏ nhu cầu của bản thân. Hãy tìm sự cân bằng."
+          },
+          "afternoon": {
+            "focus": "Tổ chức",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Tổ chức một hoạt động chung, như buổi ăn trưa gia đình hoặc họp nhóm bạn. Ví dụ: chuẩn bị một bữa ăn nhẹ."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Suy ngẫm về các mối quan hệ hôm nay. Thư giãn với một tách trà và nhạc nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hỗ trợ đồng nghiệp bằng cách tổ chức tài liệu hoặc lịch họp. Sự tinh tế của bạn sẽ tăng gắn kết.",
+          "love": "Tổ chức một buổi tối ấm áp với người yêu, như xem phim tại nhà. Nếu độc thân, viết ra giá trị bạn muốn trong tình yêu.",
+          "finance": "Lập ngân sách cho gia đình hoặc bạn bè, như mua quà nhỏ. Đặt mục tiêu tiết kiệm."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy kiệt sức nếu chăm sóc quá nhiều người.",
+          "solution": "Dành 10 phút nghỉ ngơi buổi trưa, như nhắm mắt thư giãn, để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự kết nối của bạn mạnh mẽ khi bạn chăm sóc. Hôm nay, hãy xây dựng sự hài hòa với lòng đồng cảm.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một hồ nước phẳng lặng. Hít thở sâu, cảm nhận sự cân bằng.",
+        "affirmation": "Tôi kết nối với sự chăm sóc và hài hòa."
+      },
+      "luck": {
+        "color": {
+          "hex": "#00CED1",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh lam để tăng sự dịu dàng."
+        },
+        "number": 2,
+        "direction": "Hướng Bắc",
+        "object": "Hộp quà"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã xây dựng sự hài hòa với ai? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã hỗ trợ hoặc kết nối với ai hôm nay? Hãy chia sẻ câu chuyện!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một hộp quà nhỏ trên bàn để nhắc nhở về sự quan tâm. Nó lan tỏa năng lượng tích cực.",
+        "energy": "Viết một lời cảm ơn ngắn cho bạn bè hoặc đồng nghiệp. Hành động này tăng sự gắn kết.",
+        "routine": "Dành 5 phút buổi sáng để lên kế hoạch kết nối, như gọi điện cho người thân."
+      }
     },
     {
       "life_path": 3,
-      "advice": "Số ngày cá nhân 6 khuyến khích bạn sử dụng sự sáng tạo để lan tỏa tình yêu và niềm vui trong gia đình hoặc cộng đồng. Hãy tổ chức một hoạt động vui vẻ hoặc chia sẻ ý tưởng tích cực để kết nối mọi người. Sự lạc quan của bạn sẽ mang lại những khoảnh khắc đáng nhớ.",
-      "strength": "Sự sáng tạo, năng lượng tích cực và khả năng truyền cảm hứng qua giao tiếp.",
-      "challenge": "Tránh bị cuốn vào việc làm hài lòng mọi người mà quên mất nhu cầu cá nhân. Hãy giữ sự cân bằng.",
-      "action": "Tổ chức một buổi tiệc nhỏ hoặc chia sẻ một bài viết sáng tạo để lan tỏa niềm vui.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn lan tỏa niềm vui qua tình yêu. Hãy để sự sáng tạo của bạn tỏa sáng.",
-      "lucky_color": "Hồng phấn - biểu tượng của niềm vui và tình yêu.",
-      "lucky_number": 3
+      "profile": {
+        "archetype": "Người sáng tạo",
+        "element": "Lửa",
+        "compatible_numbers": [1, 5, 9],
+        "chakra": "Năng lượng vùng cổ"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 6 mời gọi bạn sáng tạo để chăm sóc và xây dựng sự hài hòa. Hãy dùng tài năng của mình, như vẽ tranh hoặc viết thư, để hỗ trợ gia đình hoặc bạn bè. Một tác phẩm chu đáo sẽ lan tỏa niềm vui.",
+        "time_slots": {
+          "morning": {
+            "focus": "Sáng tạo chăm sóc",
+            "action": "Ghi 3 ý tưởng sáng tạo để hỗ trợ, như 'Vẽ tranh tặng bạn' hoặc 'Viết thư cảm ơn'. Chọn một để bắt đầu.",
+            "warning": "Tránh phân tán. Hãy tập trung vào một dự án ý nghĩa."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "12h-2h chiều",
+            "recommendation": "Hoàn thành ý tưởng, như gửi thư hoặc tặng tranh. Chia sẻ với người nhận để lan tỏa niềm vui."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết về cách sáng tạo của bạn đã giúp ai đó. Thư giãn với một bộ phim gia đình hoặc nhạc vui tươi."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Sử dụng sáng tạo để hỗ trợ nhóm, như thiết kế slide đẹp cho họp. Tài năng của bạn sẽ được đánh giá cao.",
+          "love": "Tạo một món quà sáng tạo cho người yêu, như bài thơ. Nếu độc thân, viết về tình yêu lý tưởng của bạn.",
+          "finance": "Lập ngân sách cho sáng tạo, như mua dụng cụ vẽ. Đặt mục tiêu tiết kiệm nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể quên chăm sóc bản thân khi tập trung vào sáng tạo cho người khác.",
+          "solution": "Dành 10 phút nghỉ ngơi, như nghe nhạc, để nạp năng lượng trước khi tiếp tục."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sáng tạo của bạn lan tỏa khi bạn chăm sóc. Hôm nay, hãy xây dựng sự hài hòa với niềm vui.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một bức tranh đầy màu sắc. Hít thở sâu, cảm nhận sự ấm áp.",
+        "affirmation": "Tôi sáng tạo với sự chăm sóc và hài hòa."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF69B4",
+          "usage": "Mặc áo hoặc mang phụ kiện màu hồng để tăng sự ấm áp."
+        },
+        "number": 3,
+        "direction": "Hướng Tây",
+        "object": "Bút màu"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã dùng sáng tạo để chăm sóc ai? Hãy viết về tác phẩm và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tạo gì để lan tỏa niềm vui hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một bộ bút màu trên bàn để khơi dậy sáng tạo. Nó nhắc bạn chăm sóc qua nghệ thuật.",
+        "energy": "Vẽ một hình nhỏ tặng đồng nghiệp hoặc gia đình. Hành động này lan tỏa năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để viết hoặc vẽ một ý tưởng chăm sóc, như thư cảm ơn."
+      }
     },
     {
       "life_path": 4,
-      "advice": "Hôm nay, Số ngày cá nhân 6 mang đến cơ hội để bạn xây dựng sự ổn định thông qua việc chăm sóc người khác. Hãy sử dụng tính kỷ luật của mình để tổ chức các hoạt động gia đình hoặc cộng đồng. Sự tận tâm và kiên nhẫn của bạn sẽ mang lại sự hài hòa lâu dài.",
-      "strength": "Tính kỷ luật, khả năng tổ chức và sự tận tâm trong việc hỗ trợ người khác.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải cân bằng giữa công việc và trách nhiệm cá nhân. Hãy dành thời gian cho bản thân.",
-      "action": "Lên kế hoạch cho một hoạt động gia đình hoặc hỗ trợ một dự án cộng đồng với vai trò tổ chức.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng sự ổn định qua tình yêu. Hãy tin vào sự kiên định của mình.",
-      "lucky_color": "Xanh lá cây nhạt - biểu tượng của sự ổn định và chăm sóc.",
-      "lucky_number": 4
+      "profile": {
+        "archetype": "Người tổ chức",
+        "element": "Đất",
+        "compatible_numbers": [2, 6, 8],
+        "chakra": "Năng lượng vùng chân"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 6 cộng hưởng với khả năng tổ chức của bạn. Hãy sắp xếp các hoạt động để chăm sóc gia đình hoặc nhóm, như lập lịch nấu ăn hoặc họp nhóm. Sự chu đáo của bạn sẽ tạo sự hài hòa.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi danh sách công việc chăm sóc, như 'Lên lịch nấu ăn' hoặc 'Sắp xếp họp nhóm'. Sử dụng màu để ưu tiên.",
+            "warning": "Tránh cứng nhắc. Hãy để chỗ cho sự linh hoạt trong kế hoạch."
+          },
+          "afternoon": {
+            "focus": "Tổ chức",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Thực hiện kế hoạch, như chuẩn bị bữa tối gia đình hoặc sắp xếp tài liệu nhóm. Ghi chú kết quả."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Suy ngẫm về cách bạn đã chăm sóc. Thư giãn với một cuốn sách về quản lý hoặc làm đồ thủ công."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một buổi họp với kế hoạch rõ ràng, như bảng phân công. Sự chu đáo của bạn sẽ truyền cảm hứng.",
+          "love": "Tổ chức một buổi tối có cấu trúc với người yêu, như làm bánh. Nếu độc thân, viết ra mục tiêu tình cảm.",
+          "finance": "Lập ngân sách hỗ trợ gia đình, như mua đồ dùng. Đặt mục tiêu tiết kiệm."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy căng thẳng nếu kế hoạch bị gián đoạn.",
+          "solution": "Dành 5 phút hít thở sâu khi căng thẳng. Điều chỉnh kế hoạch linh hoạt hơn."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự tổ chức của bạn tạo sự hài hòa. Hôm nay, hãy chăm sóc với trách nhiệm và kiên nhẫn.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngôi nhà ấm áp. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi tổ chức với sự chăm sóc và hài hòa."
+      },
+      "luck": {
+        "color": {
+          "hex": "#228B22",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh lá để tăng sự ổn định."
+        },
+        "number": 4,
+        "direction": "Hướng Đông Nam",
+        "object": "Hộp lưu trữ"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã tổ chức gì để chăm sóc mọi người? Hãy viết về kế hoạch và cảm giác của bạn.",
+        "feedback_question": "Bạn đã sắp xếp hoặc hỗ trợ điều gì hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một hộp lưu trữ trên bàn để sắp xếp đồ dùng. Nó giúp bạn tổ chức chu đáo.",
+        "energy": "Viết danh sách '3 việc chăm sóc' và đánh dấu khi hoàn thành. Hành động này mang lại sự hài lòng.",
+        "routine": "Dành 5 phút buổi sáng để lên kế hoạch chăm sóc, như chuẩn bị bữa ăn."
+      }
     },
     {
       "life_path": 5,
-      "advice": "Số ngày cá nhân 6 khuyến khích bạn kết hợp tinh thần phiêu lưu với lòng trắc ẩn. Hãy khám phá những cách mới để hỗ trợ gia đình hoặc cộng đồng, như tổ chức một sự kiện hoặc tham gia một hoạt động sáng tạo. Sự linh hoạt của bạn sẽ mang lại những kết nối ý nghĩa.",
-      "strength": "Tinh thần cởi mở, khả năng thích nghi và sự quan tâm đến người khác.",
-      "challenge": "Tránh bị cuốn vào quá nhiều hoạt động mà quên mất trách nhiệm chính. Hãy ưu tiên những việc quan trọng.",
-      "action": "Tổ chức một chuyến đi ngắn cùng gia đình hoặc tham gia một sự kiện cộng đồng để kết nối.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn lan tỏa tình yêu qua sự tự do. Hãy để trái tim dẫn lối.",
-      "lucky_color": "Cam nhạt - biểu tượng của sự năng động và tình yêu.",
-      "lucky_number": 5
+      "profile": {
+        "archetype": "Người khám phá",
+        "element": "Khí",
+        "compatible_numbers": [1, 3, 7],
+        "chakra": "Năng lượng vùng cổ"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 6 mời gọi bạn khám phá cách chăm sóc và xây dựng sự hài hòa. Thử một hoạt động mới để hỗ trợ gia đình hoặc bạn bè, như tổ chức một buổi picnic. Sự linh hoạt của bạn sẽ mang lại niềm vui.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên ý tưởng",
+            "action": "Ghi 3 hoạt động chăm sóc mới, như 'Tổ chức picnic' hoặc 'Giúp bạn bè dọn nhà'. Chọn một để thực hiện.",
+            "warning": "Tránh làm quá nhiều. Hãy tập trung vào một hoạt động chính."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Thực hiện hoạt động, như chuẩn bị picnic hoặc hỗ trợ bạn bè. Ghi chú cảm nhận của mọi người."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết nhật ký về trải nghiệm chăm sóc hôm nay. Thư giãn với nhạc acoustic hoặc đi dạo."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hỗ trợ nhóm bằng cách tổ chức một hoạt động mới, như team-building. Sự sáng tạo của bạn sẽ tăng gắn kết.",
+          "love": "Tổ chức một buổi hẹn thú vị, như đi công viên. Nếu độc thân, tham gia nhóm để gặp người mới.",
+          "finance": "Lập ngân sách cho hoạt động gia đình, như mua đồ picnic. Đặt mục tiêu tiết kiệm nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy khó tập trung vào chăm sóc khi muốn tự do.",
+          "solution": "Chọn một hoạt động chăm sóc ngắn, như 1 giờ, để cân bằng giữa tự do và trách nhiệm."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự khám phá của bạn ý nghĩa hơn khi bạn chăm sóc. Hôm nay, hãy xây dựng sự hài hòa với niềm vui.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một cánh đồng xanh. Hít thở sâu, cảm nhận sự cân bằng.",
+        "affirmation": "Tôi khám phá với sự chăm sóc và hài hòa."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFD700",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng để tăng sự năng động."
+        },
+        "number": 5,
+        "direction": "Hướng Tây Bắc",
+        "object": "Túi picnic"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chăm sóc ai qua hoạt động mới? Hãy viết về trải nghiệm và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tổ chức hoặc hỗ trợ gì hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một túi picnic nhỏ trên bàn để nhắc nhở về sự chăm sóc. Nó khơi dậy tinh thần thoải mái.",
+        "energy": "Chuẩn bị một món ăn nhẹ cho gia đình hoặc bạn bè. Hành động này lan tỏa niềm vui.",
+        "routine": "Dành 5 phút buổi sáng để lên kế hoạch chăm sóc, như chọn địa điểm picnic."
+      }
     },
     {
       "life_path": 6,
-      "advice": "Số ngày cá nhân 6 kết hợp với Số đường đời 6 tạo ra một ngày tràn đầy năng lượng của tình yêu và trách nhiệm. Hôm nay, hãy tập trung vào việc chăm sóc gia đình, bạn bè hoặc cộng đồng. Sự tận tâm và lòng trắc ẩn của bạn sẽ mang lại sự hài hòa và những kết nối sâu sắc.",
-      "strength": "Lòng trắc ẩn vô điều kiện, khả năng chăm sóc và sự tận tâm trong việc xây dựng mối quan hệ.",
-      "challenge": "Nguy cơ ôm đồm quá nhiều trách nhiệm có thể khiến bạn kiệt sức. Hãy dành thời gian để tái tạo năng lượng.",
-      "action": "Tổ chức một bữa ăn gia đình hoặc hỗ trợ một người thân trong một vấn đề cụ thể.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa tình yêu. Hãy để trái tim dẫn lối trong mọi hành động.",
-      "lucky_color": "Hồng phấn đậm - biểu tượng của tình yêu và trách nhiệm.",
-      "lucky_number": 6
+      "profile": {
+        "archetype": "Người chăm sóc",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 9],
+        "chakra": "Năng lượng vùng tim"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 6 cộng hưởng mạnh với bản chất chăm sóc của bạn. Đây là ngày lý tưởng để hỗ trợ gia đình, bạn bè hoặc cộng đồng. Hãy tổ chức một hoạt động chung, như bữa ăn gia đình, để lan tỏa sự hài hòa.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 cách chăm sóc, như 'Chuẩn bị bữa tối' hoặc 'Giúp đồng nghiệp hoàn thành công việc'. Chọn một để bắt đầu.",
+            "warning": "Đừng quên chăm sóc bản thân. Hãy dành thời gian cho bạn."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện kế hoạch, như nấu ăn cho gia đình hoặc hỗ trợ đồng nghiệp. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Suy ngẫm về cách bạn đã chăm sóc. Thư giãn với tắm nước ấm hoặc đọc sách thiếu nhi."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một hoạt động nhóm, như phân công công việc rõ ràng. Sự quan tâm của bạn sẽ tạo môi trường tích cực.",
+          "love": "Tổ chức một buổi tối ấm áp với người yêu, như làm bánh. Nếu độc thân, viết ra giá trị bạn muốn trong tình yêu.",
+          "finance": "Lập ngân sách cho gia đình, như mua đồ dùng cần thiết. Đặt mục tiêu tiết kiệm."
+        },
+        "challenge": {
+          "description": "Bạn có thể quên chăm sóc bản thân khi tập trung vào người khác.",
+          "solution": "Dành 10 phút buổi trưa nghỉ ngơi, như nhắm mắt thư giãn hoặc ăn nhẹ."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Tình yêu của bạn là nền tảng hài hòa. Hôm nay, hãy chăm sóc với trách nhiệm và niềm vui.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một trái tim tỏa ánh sáng xanh lá. Hít thở sâu, cảm nhận sự ấm áp.",
+        "affirmation": "Tôi chăm sóc với tình yêu và hài hòa."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF69B4",
+          "usage": "Mặc áo hoặc mang phụ kiện màu hồng để tăng sự ấm áp."
+        },
+        "number": 6,
+        "direction": "Hướng Tây Nam",
+        "object": "Lịch nấu ăn"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chăm sóc ai để tạo sự hài hòa? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã hỗ trợ hoặc tổ chức gì hôm nay? Hãy chia sẻ câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một lịch nấu ăn trên bàn để nhắc nhở về sự chăm sóc. Nó lan tỏa năng lượng ấm áp.",
+        "energy": "Chuẩn bị một món ăn nhẹ cho gia đình hoặc đồng nghiệp. Hành động này tăng sự gắn kết.",
+        "routine": "Dành 5 phút buổi sáng để lên kế hoạch chăm sóc, như chọn món ăn tối."
+      }
     },
     {
       "life_path": 7,
-      "advice": "Hôm nay, Số ngày cá nhân 6 khuyến khích bạn sử dụng trí tuệ và trực giác để chăm sóc người khác. Hãy chia sẻ kiến thức hoặc suy ngẫm của bạn với gia đình hoặc cộng đồng để tạo ra sự kết nối sâu sắc. Sự tĩnh lặng và lòng trắc ẩn sẽ giúp bạn tìm thấy ý nghĩa trong ngày hôm nay.",
-      "strength": "Trí tuệ sâu sắc, trực giác nhạy bén và khả năng chia sẻ kiến thức một cách ý nghĩa.",
-      "challenge": "Tránh cô lập bản thân hoặc từ chối sự hỗ trợ từ người khác. Hãy mở lòng để kết nối.",
-      "action": "Chia sẻ một câu chuyện hoặc bài học tâm linh với một người thân hoặc bạn bè để truyền cảm hứng.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến sự thật qua tình yêu. Hãy tin vào trực giác của mình.",
-      "lucky_color": "Tím nhạt - biểu tượng của sự tâm linh và chăm sóc.",
-      "lucky_number": 7
+      "profile": {
+        "archetype": "Người tìm kiếm",
+        "element": "Nước",
+        "compatible_numbers": [1, 5, 9],
+        "chakra": "Năng lượng vùng trán"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 6 khuyến khích bạn chăm sóc bằng trí tuệ. Hãy chia sẻ kiến thức hoặc hỗ trợ ai đó bằng cách lắng nghe và tư vấn. Một cuộc trò chuyện sâu sắc sẽ xây dựng sự hài hòa.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lắng nghe",
+            "action": "Liên lạc với ai đó để trò chuyện, như hỏi 'Cậu đang nghĩ gì về dự án này?' Ghi chú ý tưởng hỗ trợ.",
+            "warning": "Tránh cô lập bản thân. Hãy mở lòng để kết nối."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Hỗ trợ bằng cách chia sẻ kiến thức, như tư vấn cho bạn bè hoặc viết bài chia sẻ. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết nhật ký về cách bạn đã giúp ai đó. Thư giãn với nhạc không lời hoặc đọc sách triết học."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hỗ trợ đồng nghiệp bằng cách chia sẻ tài liệu hoặc tư vấn. Sự thông thái của bạn sẽ được đánh giá cao.",
+          "love": "Trò chuyện sâu sắc với người yêu về ước mơ. Nếu độc thân, tham gia nhóm học tập để gặp người mới.",
+          "finance": "Lập ngân sách cho học tập, như mua sách. Đặt mục tiêu tiết kiệm nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể muốn ở một mình thay vì chăm sóc người khác.",
+          "solution": "Dành 10 phút trò chuyện ngắn với bạn bè để cân bằng giữa suy ngẫm và kết nối."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Trí tuệ của bạn lan tỏa khi bạn chăm sóc. Hôm nay, hãy xây dựng sự hài hòa với sự lắng nghe.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một thư viện yên tĩnh. Hít thở sâu, cảm nhận sự cân bằng.",
+        "affirmation": "Tôi chia sẻ trí tuệ với sự chăm sóc và hài hòa."
+      },
+      "luck": {
+        "color": {
+          "hex": "#800080",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím để tăng trực giác."
+        },
+        "number": 7,
+        "direction": "Hướng Đông Bắc",
+        "object": "Sổ ghi chú"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chia sẻ kiến thức để chăm sóc ai? Hãy viết về cuộc trò chuyện và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tư vấn hoặc hỗ trợ ai hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một sổ ghi chú trên bàn để ghi ý tưởng hỗ trợ. Nó nhắc bạn chia sẻ kiến thức.",
+        "energy": "Gửi một bài viết hoặc ý tưởng cho đồng nghiệp. Hành động này lan tỏa năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để lên kế hoạch trò chuyện, như chọn một người để tư vấn."
+      }
     },
     {
       "life_path": 8,
-      "advice": "Số ngày cá nhân 6 mang đến cơ hội để bạn sử dụng tham vọng của mình để hỗ trợ cộng đồng hoặc gia đình. Hãy tập trung vào việc xây dựng mối quan hệ chiến lược hoặc tổ chức các hoạt động mang lại lợi ích lâu dài. Sự lãnh đạo và lòng trắc ẩn của bạn sẽ mang lại thành công lớn.",
-      "strength": "Khả năng lãnh đạo, sự tổ chức và lòng trắc ẩn trong việc hỗ trợ người khác.",
-      "challenge": "Tránh tập trung quá nhiều vào quyền lực hoặc bỏ qua nhu cầu cảm xúc của người khác.",
-      "action": "Lên kế hoạch cho một dự án cộng đồng hoặc hỗ trợ một đồng nghiệp trong một nhiệm vụ quan trọng.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn đạt được thành công qua tình yêu. Hãy dẫn dắt bằng trái tim.",
-      "lucky_color": "Vàng kim nhạt - biểu tượng của sự thịnh vượng và chăm sóc.",
-      "lucky_number": 8
+      "profile": {
+        "archetype": "Người quản lý",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 6],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 6 khuyến khích bạn quản lý với sự quan tâm và trách nhiệm. Hãy tổ chức các hoạt động để hỗ trợ nhóm hoặc gia đình, như phân công công việc hoặc lập kế hoạch chung. Sự chu đáo của bạn sẽ tạo sự hài hòa.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi danh sách công việc hỗ trợ, như 'Phân công nhiệm vụ nhóm' hoặc 'Lên lịch gia đình'. Sử dụng bảng để theo dõi.",
+            "warning": "Tránh kiểm soát quá mức. Hãy lắng nghe ý kiến nhóm."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Thực hiện kế hoạch, như họp nhóm hoặc chuẩn bị không gian gia đình. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Suy ngẫm về cách bạn đã quản lý. Thư giãn với yoga hoặc đọc sách về lãnh đạo."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một dự án với sự quan tâm, như họp để lắng nghe nhóm. Sự lãnh đạo của bạn sẽ thúc đẩy thành công.",
+          "love": "Tổ chức một buổi tối với người yêu, như đi ăn tối. Nếu độc thân, viết ra mục tiêu tình cảm.",
+          "finance": "Lập ngân sách hỗ trợ gia đình, như mua đồ dùng chung. Đặt mục tiêu tiết kiệm."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy căng thẳng nếu nhóm không đồng thuận.",
+          "solution": "Dành 5 phút hít thở sâu và giao tiếp rõ ràng. Điều chỉnh kế hoạch nếu cần."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự lãnh đạo của bạn mạnh mẽ khi bạn chăm sóc. Hôm nay, hãy xây dựng sự hài hòa với trách nhiệm.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một tòa nhà ấm áp. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi lãnh đạo với sự chăm sóc và hài hòa."
+      },
+      "luck": {
+        "color": {
+          "hex": "#C0C0C0",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xám để tăng sự tập trung."
+        },
+        "number": 8,
+        "direction": "Hướng Nam",
+        "object": "Bảng quản lý"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã quản lý gì để chăm sóc nhóm? Hãy viết về kế hoạch và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tổ chức hoặc hỗ trợ gì hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một bảng quản lý trên bàn để theo dõi công việc nhóm. Nó giúp bạn quản lý chu đáo.",
+        "energy": "Viết một mục tiêu hỗ trợ nhóm và chia sẻ. Hành động này tăng sự gắn kết.",
+        "routine": "Dành 5 phút buổi sáng để lên kế hoạch quản lý, như kiểm tra tiến độ nhóm."
+      }
     },
     {
       "life_path": 9,
-      "advice": "Hôm nay, Số ngày cá nhân 6 khuyến khích bạn lan tỏa lòng nhân ái qua các hành động chăm sóc cộng đồng. Hãy sử dụng tầm nhìn lớn của mình để tổ chức các hoạt động từ thiện hoặc hỗ trợ những người cần giúp đỡ. Sự hào phóng của bạn sẽ tạo ra tác động tích cực lâu dài.",
-      "strength": "Tinh thần nhân đạo, khả năng truyền cảm hứng và sự tận tâm trong việc giúp đỡ người khác.",
-      "challenge": "Bạn có thể cảm thấy thất vọng nếu kết quả không đến ngay lập tức. Hãy tập trung vào hành trình thay vì đích đến.",
-      "action": "Tham gia một dự án từ thiện hoặc hỗ trợ một người cần giúp đỡ với một hành động cụ thể.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa ánh sáng qua tình yêu. Hãy để lòng nhân ái dẫn lối.",
-      "lucky_color": "Trắng ngọc trai - biểu tượng của sự tinh khiết và chăm sóc.",
-      "lucky_number": 9
+      "profile": {
+        "archetype": "Người chia sẻ",
+        "element": "Lửa",
+        "compatible_numbers": [3, 6, 9],
+        "chakra": "Năng lượng vùng đầu"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 6 khuyến khích bạn chia sẻ lòng nhân ái để xây dựng sự hài hòa. Hãy tổ chức một hoạt động cộng đồng hoặc hỗ trợ ai đó bằng hành động chu đáo. Sự quan tâm của bạn sẽ lan tỏa niềm vui.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 cách chia sẻ, như 'Tổ chức quyên góp' hoặc 'Giúp bạn bè'. Chọn một để bắt đầu.",
+            "warning": "Tránh ôm đồm. Hãy tập trung vào một hành động ý nghĩa."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện hành động, như gửi quà hoặc tham gia hoạt động cộng đồng. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết về cách bạn đã chia sẻ. Thư giãn với một cuốn sách về lòng nhân ái hoặc nhạc nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một hoạt động cộng đồng, như ngày hội từ thiện. Sự nhiệt huyết của bạn sẽ truyền cảm hứng.",
+          "love": "Tổ chức một buổi tối ý nghĩa với người yêu, như làm đồ handmade. Nếu độc thân, viết ra giá trị bạn muốn chia sẻ.",
+          "finance": "Lập ngân sách cho việc thiện nguyện, như mua quà nhỏ. Đặt mục tiêu tiết kiệm."
+        },
+        "challenge": {
+          "description": "Bạn có thể mệt mỏi nếu cố gắng giúp quá nhiều người.",
+          "solution": "Chọn một hành động chính để thực hiện trước 3h chiều. Nghỉ ngơi để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Lòng nhân ái của bạn tạo sự hài hòa. Hôm nay, hãy chia sẻ với sự chăm sóc và trách nhiệm.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một cánh đồng ánh sáng trắng. Hít thở sâu, cảm nhận sự thanh thản.",
+        "affirmation": "Tôi chia sẻ lòng nhân ái với sự chăm sóc và hài hòa."
+      },
+      "luck": {
+        "color": {
+          "hex": "#F5F5F5",
+          "usage": "Mặc áo hoặc mang phụ kiện màu trắng để tăng sự thanh thản."
+        },
+        "number": 9,
+        "direction": "Hướng Tây",
+        "object": "Hộp quà"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chia sẻ gì để xây dựng sự hài hòa? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã hỗ trợ hoặc chia sẻ gì hôm nay? Hãy kể lại câu chuyện!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một hộp quà trên bàn để nhắc nhở về sự chia sẻ. Nó lan tỏa năng lượng tích cực.",
+        "energy": "Viết một hành động tử tế, như tặng quà nhỏ. Hành động này tăng sự gắn kết.",
+        "routine": "Dành 5 phút buổi sáng để lên kế hoạch chia sẻ, như viết lời nhắn cảm ơn."
+      }
     },
     {
       "life_path": 11,
-      "advice": "Số ngày cá nhân 6 kết hợp với Số đường đời 11 tạo ra một ngày tràn đầy năng lượng tâm linh và tình yêu. Hãy sử dụng trực giác của mình để hỗ trợ và truyền cảm hứng cho cộng đồng. Hôm nay, sự nhạy cảm và tầm nhìn tâm linh của bạn sẽ mang lại những kết nối sâu sắc.",
-      "strength": "Trực giác nhạy bén, khả năng truyền cảm hứng và tầm nhìn tâm linh vượt thời gian.",
-      "challenge": "Sự nhạy cảm quá mức có thể khiến bạn dễ bị kiệt sức. Hãy bảo vệ năng lượng của mình.",
-      "action": "Thực hành thiền hoặc chia sẻ một thông điệp tâm linh để hỗ trợ một người thân hoặc cộng đồng.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến ánh sáng qua tình yêu. Hãy tin vào trực giác của mình.",
-      "lucky_color": "Bạc ánh kim - biểu tượng của sự trực giác và chăm sóc.",
-      "lucky_number": 11
+      "profile": {
+        "archetype": "Người truyền cảm hứng",
+        "element": "Khí",
+        "compatible_numbers": [2, 4, 7],
+        "chakra": "Năng lượng vùng trán"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 6 giúp bạn truyền cảm hứng bằng sự chăm sóc. Hãy tổ chức một hoạt động để hỗ trợ nhóm hoặc cộng đồng, như buổi nói chuyện hoặc sự kiện chung. Sự chu đáo của bạn sẽ lan tỏa ánh sáng.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 cách truyền cảm hứng, như 'Tổ chức buổi nói chuyện' hoặc 'Viết bài chia sẻ'. Chọn một để bắt đầu.",
+            "warning": "Tránh nghi ngờ trực giác. Hãy tin vào khả năng của bạn."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Thực hiện kế hoạch, như tổ chức buổi nói chuyện hoặc đăng bài truyền cảm hứng. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Thiền nhẹ hoặc đọc sách về lãnh đạo tinh thần. Suy ngẫm về cách bạn đã truyền cảm hứng."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một buổi chia sẻ tầm nhìn, như workshop. Sự nhiệt huyết của bạn sẽ truyền cảm hứng.",
+          "love": "Tổ chức một buổi tối sâu sắc với người yêu, như nói về ước mơ. Nếu độc thân, viết ra giá trị bạn muốn chia sẻ.",
+          "finance": "Lập ngân sách cho học tập, như khóa học lãnh đạo. Đặt mục tiêu tiết kiệm nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể mệt mỏi nếu cảm nhận quá nhiều năng lượng từ người khác.",
+          "solution": "Dành 10 phút thiền hoặc đi dạo để nạp năng lượng. Tập trung vào hành động chính."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Truyền cảm hứng của bạn lan tỏa khi bạn chăm sóc. Hôm nay, hãy xây dựng sự hài hòa với ánh sáng.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngọn đèn tỏa ánh sáng tím. Hít thở sâu, cảm nhận sự ấm áp.",
+        "affirmation": "Tôi truyền cảm hứng với sự chăm sóc và ánh sáng."
+      },
+      "luck": {
+        "color": {
+          "hex": "#E6E6FA",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím nhạt để tăng trực giác."
+        },
+        "number": 11,
+        "direction": "Hướng Đông",
+        "object": "Sổ ghi chú"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã truyền cảm hứng để chăm sóc ai? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã chia sẻ gì để truyền cảm hứng hôm nay? Hãy kể câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một sổ ghi chú trên bàn để ghi ý tưởng truyền cảm hứng. Nó giúp bạn tổ chức chu đáo.",
+        "energy": "Viết một câu nói truyền cảm hứng và chia sẻ. Hành động này lan tỏa năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để lên kế hoạch truyền cảm hứng, như viết bài chia sẻ."
+      }
     },
     {
       "life_path": 22,
-      "advice": "Hôm nay, Số ngày cá nhân 6 hỗ trợ bạn xây dựng những dự án lớn với lòng trắc ẩn. Hãy sử dụng tầm nhìn thực tế và khả năng tổ chức của mình để hỗ trợ cộng đồng hoặc gia đình. Sự tận tâm và kỷ luật của bạn sẽ mang lại những giá trị bền vững.",
-      "strength": "Tầm nhìn thực tế, khả năng tổ chức và sự tận tâm trong việc xây dựng những giá trị lâu dài.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải cân bằng giữa trách nhiệm và mục tiêu cá nhân. Hãy ưu tiên sức khỏe của mình.",
-      "action": "Lên kế hoạch cho một dự án cộng đồng hoặc hỗ trợ một người thân với một kế hoạch chi tiết.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng những di sản qua tình yêu. Hãy tin vào khả năng của mình.",
-      "lucky_color": "Xám nhạt - biểu tượng của sự ổn định và chăm sóc.",
-      "lucky_number": 22
+      "profile": {
+        "archetype": "Người xây dựng",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 8],
+        "chakra": "Năng lượng vùng chân"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 6 khuyến khích bạn xây dựng sự hài hòa qua các dự án chăm sóc. Hãy tổ chức một hoạt động chung, như lập kế hoạch gia đình hoặc dự án nhóm. Sự chu đáo của bạn sẽ tạo nền tảng vững chắc.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 cách hỗ trợ dự án, như 'Lên kế hoạch gia đình' hoặc 'Phân công nhiệm vụ nhóm'. Chọn một để bắt đầu.",
+            "warning": "Tránh tập trung vào chi tiết nhỏ. Hãy ưu tiên bức tranh lớn."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Thực hiện kế hoạch, như chuẩn bị không gian gia đình hoặc họp nhóm. Ghi chú tiến độ."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết về tiến độ dự án. Thư giãn với một cuốn sách về quản lý hoặc làm đồ thủ công."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một dự án với sự quan tâm, như phân bổ nguồn lực hợp lý. Tầm nhìn của bạn sẽ dẫn dắt thành công.",
+          "love": "Tổ chức một buổi tối với người yêu, như đi dạo công viên. Nếu độc thân, viết ra mục tiêu tình cảm.",
+          "finance": "Lập ngân sách cho dự án chung, như mua đồ dùng gia đình. Đặt mục tiêu tiết kiệm."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy áp lực khi tổ chức dự án lớn.",
+          "solution": "Chia dự án thành các bước nhỏ, mỗi ngày làm một phần. Nghỉ ngơi để giữ bình tĩnh."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Tầm nhìn của bạn tạo sự hài hòa khi bạn chăm sóc. Hôm nay, hãy xây dựng với trách nhiệm.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một tòa nhà ấm áp. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi xây dựng với sự chăm sóc và hài hòa."
+      },
+      "luck": {
+        "color": {
+          "hex": "#2F4F4F",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xám đậm để tăng sự tập trung."
+        },
+        "number": 22,
+        "direction": "Hướng Nam",
+        "object": "Sơ đồ quy trình"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã xây dựng gì để chăm sóc mọi người? Hãy viết về kế hoạch và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tổ chức hoặc hỗ trợ gì hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một sơ đồ quy trình trên bàn để theo dõi dự án. Nó giúp bạn xây dựng chu đáo.",
+        "energy": "Viết 3 bước nhỏ cho dự án chăm sóc và làm một bước. Hành động này tăng sự tự tin.",
+        "routine": "Dành 5 phút buổi sáng để lên kế hoạch hỗ trợ, như kiểm tra tiến độ dự án."
+      }
     },
     {
       "life_path": 33,
-      "advice": "Số ngày cá nhân 6 kết hợp với Số đường đời 33 mang đến một ngày tràn đầy năng lượng của lòng trắc ẩn và sự hy sinh. Hãy sử dụng khả năng lãnh đạo tâm linh của bạn để hỗ trợ và nâng đỡ cộng đồng. Hôm nay, sự tận tâm của bạn sẽ tạo ra những thay đổi tích cực lớn lao.",
-      "strength": "Lòng trắc ẩn vô điều kiện, khả năng truyền cảm hứng và sự hy sinh vì lợi ích lớn hơn.",
-      "challenge": "Nguy cơ hy sinh bản thân quá nhiều có thể khiến bạn kiệt sức. Hãy dành thời gian để tái tạo năng lượng.",
-      "action": "Hỗ trợ một người đang cần giúp đỡ hoặc tham gia một hoạt động cộng đồng với vai trò lãnh đạo.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa ánh sáng qua tình yêu. Hãy để trái tim dẫn lối.",
-      "lucky_color": "Vàng nhạt - biểu tượng của sự chữa lành và tình yêu.",
-      "lucky_number": 33
+      "profile": {
+        "archetype": "Người giáo dục",
+        "element": "Khí sáng",
+        "compatible_numbers": [3, 6, 9],
+        "chakra": "Năng lượng ánh sáng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 6 khuyến khích bạn dạy học để chăm sóc và xây dựng sự hài hòa. Hãy tổ chức một buổi chia sẻ kiến thức, như workshop hoặc bài giảng, để hỗ trợ cộng đồng. Sự chu đáo của bạn sẽ lan tỏa ánh sáng.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 cách chia sẻ kiến thức, như 'Tổ chức workshop' hoặc 'Viết bài về chăm sóc'. Chọn một để bắt đầu.",
+            "warning": "Tránh ôm đồm quá nhiều. Hãy tập trung vào một chủ đề ý nghĩa."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện kế hoạch, như hướng dẫn nhóm về một kỹ năng hoặc đăng bài chia sẻ. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Thiền nhẹ hoặc đọc sách về giáo dục. Suy ngẫm về cách bạn đã truyền cảm hứng."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một buổi chia sẻ kiến thức, như workshop. Sự nhiệt huyết của bạn sẽ truyền cảm hứng.",
+          "love": "Tổ chức một buổi trò chuyện sâu sắc với người yêu về hỗ trợ lẫn nhau. Nếu độc thân, viết ra giá trị bạn muốn chia sẻ.",
+          "finance": "Lập ngân sách cho giáo dục, như mua khóa học. Đặt mục tiêu tiết kiệm nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể kiệt sức nếu cố gắng dạy quá nhiều.",
+          "solution": "Chọn một chủ đề chính để chia sẻ trước 3h chiều. Dành 10 phút nghỉ ngơi để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sứ mệnh giáo dục của bạn lan tỏa khi bạn chăm sóc. Hôm nay, hãy dạy học với sự hài hòa và ánh sáng.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngọn lửa tỏa ánh sáng vàng. Hít thở sâu, cảm nhận sự truyền cảm hứng.",
+        "affirmation": "Tôi dạy học với sự chăm sóc và hài hòa."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFFACD",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng nhạt để tăng sự sáng tạo."
+        },
+        "number": 33,
+        "direction": "Hướng Đông",
+        "object": "Sổ giảng dạy"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã dạy gì để chăm sóc cộng đồng? Hãy viết về chủ đề và cảm giác của bạn.",
+        "feedback_question": "Bạn đã truyền cảm hứng qua bài học nào hôm nay? Hãy kể câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một sổ giảng dạy trên bàn để ghi ý tưởng. Nó giúp bạn tổ chức chu đáo.",
+        "energy": "Chia sẻ một mẹo chăm sóc với đồng nghiệp, như 'Thử viết lời cảm ơn!' Hành động này lan tỏa năng lượng.",
+        "routine": "Dành 5 phút buổi sáng để lên kế hoạch giảng dạy, như chọn một chủ đề chia sẻ."
+      }
     }
-  ]
+  ],
+  "premium_features": {
+    "personalized": {
+      "birth_chart_compatibility": "Hôm nay bạn hợp với người số 6, đặc biệt trong các hoạt động chăm sóc và xây dựng sự hài hòa.",
+      "custom_ritual": "Vào 11h sáng, bạn hãy dành 5 phút để viết một lời cảm ơn và hít thở sâu để lan tỏa sự quan tâm."
+    },
+    "community": {
+      "trending_hashtag": "#ChămSócHômNay",
+      "group_activity": "Thử thách 24h: Tổ chức một hoạt động chung và chia sẻ niềm vui với cộng đồng!"
+    }
+  }
 }

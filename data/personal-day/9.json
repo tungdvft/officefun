@@ -1,126 +1,149 @@
 {
-  "personal_day": 9,
-  "date": "2025-05-25",
+  "metadata": {
+    "date": "2025-06-02",
+    "personal_day": 9,
+    "update_frequency": "hàng ngày",
+    "version": "2.0"
+  },
+  "universal_energy": {
+    "theme": "Hoàn thiện và kết thúc chu kỳ",
+    "moon_phase": "Trăng lưỡi liềm đầu tháng",
+    "astrological_impact": "Năng lượng thúc đẩy phản ánh, buông bỏ những gì không còn phù hợp, và chuẩn bị cho khởi đầu mới"
+  },
   "predictions": [
     {
       "life_path": 1,
-      "advice": "Số ngày cá nhân 9 mang đến năng lượng của lòng nhân ái và sự hoàn thiện, thúc đẩy bạn dẫn đầu bằng trái tim. Hôm nay, hãy sử dụng khả năng lãnh đạo của mình để hỗ trợ cộng đồng hoặc hoàn thành một dự án quan trọng. Sự hào phóng và tầm nhìn lớn sẽ mang lại thành công lâu dài.",
-      "strength": "Sự tự tin, khả năng lãnh đạo và lòng trắc ẩn trong việc giúp đỡ người khác.",
-      "challenge": "Tránh hành động quá vội vàng hoặc bỏ qua chi tiết quan trọng. Hãy cân nhắc trước khi quyết định.",
-      "action": "Tham gia một hoạt động từ thiện hoặc hoàn thành một nhiệm vụ quan trọng với tinh thần hào phóng.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn dẫn đầu bằng lòng nhân ái. Hãy để trái tim dẫn lối.",
-      "lucky_color": "Đỏ hồng - biểu tượng của sự đam mê và nhân ái.",
-      "lucky_number": 9
+      "profile": {
+        "archetype": "Người dẫn đầu",
+        "element": "Lửa",
+        "compatible_numbers": [3, 5, 7],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 9 khuyến khích bạn hoàn thiện các dự án và đánh giá hành trình lãnh đạo. Hãy buông bỏ những kế hoạch không còn phù hợp và chuẩn bị cho mục tiêu mới.",
+        "time_slots": {
+          "morning": {
+            "focus": "Phản ánh",
+            "action": "Viết 3 thành tựu quan trọng gần đây, như 'Hoàn thành dự án' hoặc 'Thuyết phục đối tác'. Ghi chú điều bạn muốn buông bỏ.",
+            "warning": "Tránh bắt đầu mới. Hãy tập trung vào hoàn thiện."
+          },
+          "afternoon": {
+            "focus": "Kết thúc",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Hoàn thành một nhiệm vụ còn dang dở, như gửi email cuối hoặc lưu hồ sơ. Ghi chú cảm giác nhẹ nhõm."
+          },
+          "evening": {
+            "focus": "Chuẩn bị",
+            "activity": "Viết nhật ký về mục tiêu mới. Thư giãn với sách về chiến lược hoặc thiền nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hoàn thiện báo cáo hoặc dự án. Đọc về lập kế hoạch để chuẩn bị cho giai đoạn mới.",
+          "love": "Trò chuyện với người yêu về mục tiêu tương lai. Nếu độc thân, viết về phẩm chất bạn muốn ở đối tác.",
+          "finance": "Đánh giá ngân sách và loại bỏ chi tiêu không cần thiết. Tìm hiểu về tiết kiệm."
+        },
+        "challenge": {
+          "description": "Bạn có thể khó buông bỏ những kế hoạch cũ.",
+          "solution": "Viết lý do cần buông bỏ và tập trung vào mục tiêu mới."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Hoàn thiện là bước đệm cho khởi đầu mới. Hôm nay, hãy buông bỏ với lòng tin.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ngọn lửa cháy hết những gì cũ. Hít thở sâu, cảm nhận sự tự do.",
+        "affirmation": "Tôi hoàn thiện và sẵn sàng cho chu kỳ mới."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF4500",
+          "usage": "Mặc áo hoặc mang phụ kiện màu cam để tăng năng lượng giải phóng."
+        },
+        "number": 1,
+        "direction": "Hướng Nam",
+        "object": "Sổ ghi chú"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã buông bỏ gì để hoàn thiện? Hãy viết về quyết định và cảm giác của bạn.",
+        "feedback_question": "Bạn đã hoàn thành gì quan trọng hôm nay? Hãy chia sẻ khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn làm việc, loại bỏ giấy tờ cũ để tạo không gian mới.",
+        "energy": "Nghe podcast về buông bỏ để tăng cảm hứng.",
+        "routine": "Dành 5 phút buổi sáng để liệt kê 3 việc cần hoàn thiện."
+      }
     },
     {
       "life_path": 2,
-      "advice": "Hôm nay, Số ngày cá nhân 9 khuyến khích bạn sử dụng trực giác để lan tỏa lòng nhân ái trong các mối quan hệ. Hãy tập trung vào việc hòa giải và hỗ trợ những người xung quanh. Sự nhạy cảm và sự hào phóng của bạn sẽ mang lại sự hài hòa sâu sắc.",
-      "strength": "Trực giác nhạy bén, khả năng hòa giải và sự tận tâm trong việc giúp đỡ người khác.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải đáp ứng nhu cầu của mọi người. Hãy giữ ranh giới cá nhân để tránh kiệt sức.",
-      "action": "Chia sẻ một lời khuyên chân thành với một người bạn hoặc tham gia một hoạt động từ thiện để hỗ trợ cộng đồng.",
-      "spiritual_message": "Vũ trụ nhắc bạn rằng tình yêu là chìa khóa của sự hòa hợp. Hãy mở lòng và lan tỏa lòng tốt.",
-      "lucky_color": "Xanh ngọc bích - biểu tượng của sự hòa hợp và nhân ái.",
-      "lucky_number": 2
-    },
-    {
-      "life_path": 3,
-      "advice": "Số ngày cá nhân 9 mang đến cơ hội để bạn sử dụng sự sáng tạo để lan tỏa lòng nhân ái. Hãy chia sẻ ý tưởng tích cực hoặc tổ chức một hoạt động vui vẻ để truyền cảm hứng cho cộng đồng. Sự lạc quan và hào phóng của bạn sẽ tạo ra những khoảnh khắc đáng nhớ.",
-      "strength": "Sự sáng tạo, năng lượng tích cực và khả năng truyền cảm hứng qua giao tiếp.",
-      "challenge": "Tránh bị cuốn vào những ý tưởng không thực tế hoặc thiếu tập trung vào mục tiêu chính.",
-      "action": "Viết một bài đăng truyền cảm hứng trên mạng xã hội hoặc tổ chức một sự kiện sáng tạo để hỗ trợ cộng đồng.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn lan tỏa niềm vui qua sự sáng tạo. Hãy để lòng nhân ái dẫn lối.",
-      "lucky_color": "Vàng chanh - biểu tượng của sự sáng tạo và nhân ái.",
-      "lucky_number": 3
-    },
-    {
-      "life_path": 4,
-      "advice": "Hôm nay, Số ngày cá nhân 9 khuyến khích bạn kết hợp tính kỷ luật với lòng nhân ái để xây dựng những giá trị lâu dài. Hãy tập trung vào việc tổ chức các hoạt động từ thiện hoặc hoàn thành một dự án mang lại lợi ích cho cộng đồng. Sự kiên nhẫn của bạn sẽ mang lại thành công bền vững.",
-      "strength": "Tính kỷ luật, khả năng tổ chức và sự tận tâm trong việc giúp đỡ người khác.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải cân bằng giữa trách nhiệm và lòng hào phóng. Hãy ưu tiên sức khỏe của mình.",
-      "action": "Lên kế hoạch cho một dự án từ thiện hoặc hỗ trợ một tổ chức cộng đồng với một chiến lược chi tiết.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng sự ổn định qua lòng nhân ái. Hãy tin vào sự kiên định của mình.",
-      "lucky_color": "Xanh lá cây nhạt - biểu tượng của sự ổn định và nhân ái.",
-      "lucky_number": 4
-    },
-    {
-      "life_path": 5,
-      "advice": "Số ngày cá nhân 9 mang đến cơ hội để bạn kết hợp tinh thần phiêu lưu với lòng nhân ái. Hãy khám phá những cách mới để hỗ trợ cộng đồng hoặc chia sẻ ý tưởng tích cực. Sự linh hoạt và hào phóng của bạn sẽ mang lại những kết nối ý nghĩa và sâu sắc.",
-      "strength": "Tinh thần cởi mở, khả năng thích nghi và sự hào phóng trong việc giúp đỡ người khác.",
-      "challenge": "Tránh bị cuốn vào quá nhiều hoạt động mà quên mất mục tiêu chính. Hãy ưu tiên những việc quan trọng.",
-      "action": "Tham gia một sự kiện từ thiện hoặc chia sẻ một thông điệp tích cực để truyền cảm hứng.",
-      "spiritual_message": "Vũ trụ đang mở ra những cơ hội để lan tỏa lòng tốt. Hãy đón nhận chúng với trái tim rộng mở.",
-      "lucky_color": "Cam nhạt - biểu tượng của sự năng động và nhân ái.",
-      "lucky_number": 5
-    },
-    {
-      "life_path": 6,
-      "advice": "Hôm nay, Số ngày cá nhân 9 kết hợp với Số đường đời 6 tạo ra một ngày tràn đầy năng lượng của tình yêu và lòng nhân ái. Hãy tập trung vào việc chăm sóc gia đình hoặc cộng đồng, sử dụng sự tận tâm để lan tỏa sự hài hòa. Sự hào phóng của bạn sẽ mang lại những kết nối sâu sắc.",
-      "strength": "Lòng trắc ẩn vô điều kiện, khả năng chăm sóc và sự tận tâm trong việc giúp đỡ người khác.",
-      "challenge": "Nguy cơ ôm đồm quá nhiều trách nhiệm có thể khiến bạn kiệt sức. Hãy dành thời gian để tái tạo năng lượng.",
-      "action": "Tổ chức một hoạt động gia đình hoặc hỗ trợ một người thân với một hành động cụ thể.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa tình yêu qua lòng nhân ái. Hãy để trái tim dẫn lối.",
-      "lucky_color": "Hồng phấn đậm - biểu tượng của tình yêu và nhân ái.",
-      "lucky_number": 6
-    },
-    {
-      "life_path": 7,
-      "advice": "Số ngày cá nhân 9 mang đến cơ hội để bạn kết hợp trí tuệ sâu sắc với lòng nhân ái. Hãy sử dụng trực giác của mình để suy ngẫm về cách hỗ trợ cộng đồng hoặc chia sẻ kiến thức. Sự tĩnh lặng và hào phóng của bạn sẽ mang lại những khám phá ý nghĩa.",
-      "strength": "Trí tuệ sâu sắc, trực giác nhạy bén và sự hào phóng trong việc chia sẻ tri thức.",
-      "challenge": "Tránh cô lập bản thân hoặc từ chối sự hỗ trợ từ người khác. Hãy mở lòng để kết nối.",
-      "action": "Chia sẻ một bài học tâm linh hoặc tham gia một cuộc thảo luận sâu sắc với cộng đồng.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến sự thật qua lòng nhân ái. Hãy tin vào trực giác của mình.",
-      "lucky_color": "Tím nhạt - biểu tượng của sự tâm linh và nhân ái.",
-      "lucky_number": 7
-    },
-    {
-      "life_path": 8,
-      "advice": "Hôm nay, Số ngày cá nhân 9 khuyến khích bạn sử dụng tham vọng của mình để hỗ trợ cộng đồng hoặc hoàn thành một dự án lớn. Hãy tập trung vào việc xây dựng các giá trị lâu dài thông qua sự hào phóng và công bằng. Sự lãnh đạo của bạn sẽ mang lại tác động tích cực.",
-      "strength": "Khả năng lãnh đạo, sự tổ chức và lòng hào phóng trong việc đạt được mục tiêu lớn.",
-      "challenge": "Tránh tập trung quá nhiều vào quyền lực hoặc bỏ qua cảm xúc của người khác. Hãy giữ sự cân bằng.",
-      "action": "Lên kế hoạch cho một dự án cộng đồng hoặc hỗ trợ một tổ chức từ thiện với một chiến lược cụ thể.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn đạt được thành công qua lòng nhân ái. Hãy dẫn dắt bằng trái tim.",
-      "lucky_color": "Vàng kim nhạt - biểu tượng của sự thịnh vượng và nhân ái.",
-      "lucky_number": 8
-    },
-    {
-      "life_path": 9,
-      "advice": "Số ngày cá nhân 9 kết hợp với Số đường đời 9 tạo ra một ngày tràn đầy năng lượng của lòng nhân ái và sự hoàn thiện. Hôm nay, hãy tập trung vào việc lan tỏa lòng tốt, hỗ trợ cộng đồng hoặc hoàn thành một dự án mang lại giá trị lâu dài. Sự hào phóng của bạn sẽ tạo ra tác động lớn lao.",
-      "strength": "Tinh thần nhân đạo, khả năng truyền cảm hứng và sự tận tâm trong việc giúp đỡ người khác.",
-      "challenge": "Bạn có thể cảm thấy thất vọng nếu kết quả không đến ngay lập tức. Hãy tập trung vào hành trình thay vì đích đến.",
-      "action": "Tham gia một hoạt động từ thiện hoặc chia sẻ một thông điệp truyền cảm hứng để hỗ trợ cộng đồng.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa ánh sáng qua lòng nhân ái. Hãy để lòng tốt dẫn lối.",
-      "lucky_color": "Trắng ngọc trai - biểu tượng của sự tinh khiết và nhân ái.",
-      "lucky_number": 9
-    },
-    {
-      "life_path": 11,
-      "advice": "Số ngày cá nhân 9 kết hợp với Số đường đời 11 mang đến một ngày tràn đầy năng lượng tâm linh và lòng nhân ái. Hãy sử dụng trực giác của mình để truyền cảm hứng và hỗ trợ cộng đồng. Hôm nay, sự nhạy cảm và tầm nhìn của bạn sẽ mang lại những kết nối sâu sắc.",
-      "strength": "Trực giác nhạy bén, khả năng truyền cảm hứng và tầm nhìn tâm linh vượt thời gian.",
-      "challenge": "Sự nhạy cảm quá mức có thể khiến bạn dễ bị kiệt sức. Hãy bảo vệ năng lượng của mình.",
-      "action": "Chia sẻ một thông điệp tâm linh hoặc tham gia một hoạt động từ thiện để hỗ trợ cộng đồng.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến ánh sáng qua lòng nhân ái. Hãy tin vào trực giác của mình.",
-      "lucky_color": "Bạc ánh kim - biểu tượng của sự trực giác và nhân ái.",
-      "lucky_number": 11
-    },
-    {
-      "life_path": 22,
-      "advice": "Hôm nay, Số ngày cá nhân 9 hỗ trợ bạn xây dựng những dự án lớn với lòng nhân ái. Hãy sử dụng tầm nhìn thực tế và khả năng tổ chức của mình để hỗ trợ cộng đồng hoặc hoàn thành một dự án mang lại giá trị lâu dài. Sự hào phóng và kỷ luật sẽ mang lại thành công bền vững.",
-      "strength": "Tầm nhìn thực tế, khả năng tổ chức và sự tận tâm trong việc giúp đỡ người khác.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải cân bằng giữa tham vọng và lòng nhân ái. Hãy ưu tiên sức khỏe của mình.",
-      "action": "Lên kế hoạch cho một dự án từ thiện hoặc hỗ trợ một tổ chức cộng đồng với một chiến lược chi tiết.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng những di sản qua lòng nhân ái. Hãy tin vào khả năng của mình.",
-      "lucky_color": "Xám nhạt - biểu tượng của sự ổn định và nhân ái.",
-      "lucky_number": 22
-    },
-    {
-      "life_path": 33,
-      "advice": "Số ngày cá nhân 9 kết hợp với Số đường đời 33 mang đến một ngày tràn đầy năng lượng của lòng trắc ẩn và sự hoàn thiện. Hãy sử dụng khả năng lãnh đạo tâm linh của bạn để hỗ trợ cộng đồng hoặc lan tỏa tình yêu thương. Hôm nay, sự tận tâm của bạn sẽ tạo ra những thay đổi tích cực lớn lao.",
-      "strength": "Lòng trắc ẩn vô điều kiện, khả năng truyền cảm hứng và sự tận tâm trong việc giúp đỡ người khác.",
-      "challenge": "Nguy cơ hy sinh bản thân quá nhiều có thể khiến bạn kiệt sức. Hãy dành thời gian để tái tạo năng lượng.",
-      "action": "Hỗ trợ một người đang cần giúp đỡ hoặc tham gia một hoạt động cộng đồng với vai trò lãnh đạo.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa ánh sáng qua lòng nhân ái. Hãy để tình yêu dẫn lối.",
-      "lucky_color": "Vàng nhạt - biểu tượng của sự chữa lành và nhân ái.",
-      "lucky_number": 33
+      "profile": {
+        "archetype": "Người kết nối",
+        "element": "Nước",
+        "compatible_numbers": [4, 6, 8],
+        "chakra": "Năng lượng vùng bụng dưới"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 9 thúc đẩy bạn hoàn thiện các mối quan hệ và hợp tác. Hãy đánh giá sự hỗ trợ của bạn và buông bỏ những kết nối không còn ý nghĩa.",
+        "time_slots": {
+          "morning": {
+            "focus": "Phản ánh",
+            "action": "Viết 3 cách bạn đã hỗ trợ nhóm hoặc gia đình. Ghi chú một mối quan hệ cần hoàn thiện hoặc buông bỏ.",
+            "warning": "Tránh giữ những kết nối không lành mạnh. Hãy ưu tiên bản thân."
+          },
+          "afternoon": {
+            "focus": "Hành động",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Gửi tin nhắn cảm ơn hoặc xin lỗi để hoàn thiện mối quan hệ. Ghi chú cảm giác."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về các mối quan hệ quan trọng. Thư giãn với trà và nhạc nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hoàn thiện công việc nhóm. Đọc về giao tiếp để cải thiện hợp tác.",
+          "love": "Chia sẻ cảm xúc với người yêu để tăng gắn kết. Nếu độc thân, viết về mối quan hệ lý tưởng.",
+          "finance": "Kiểm tra chi tiêu chung và loại bỏ lãng phí. Lập kế hoạch tiết kiệm."
+        },
+        "challenge": {
+          "description": "Bạn có thể khó buông bỏ những mối quan hệ cũ.",
+          "solution": "Viết lý do buông bỏ và tập trung vào những người tích cực."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự kết nối chân thành. Hôm nay, hãy hoàn thiện với sự cân bằng.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng dòng nước rửa trôi những gì cũ. Hít thở sâu, cảm nhận sự thanh thản.",
+        "affirmation": "Tôi kết nối và hoàn thiện với lòng chân thành."
+      },
+      "luck": {
+        "color": {
+          "hex": "#00CED1",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh lam để tăng sự hài hòa."
+        },
+        "number": 2,
+        "direction": "Hướng Bắc",
+        "object": "Thư cảm ơn"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã hoàn thiện mối quan hệ nào? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã kết nối lại với ai hôm nay? Hãy chia sẻ câu chuyện!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một bức ảnh nhóm trên bàn để nhắc nhở về kết nối.",
+        "energy": "Viết lời cảm ơn cho đồng nghiệp. Hành động này tăng năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để chọn một mối quan hệ để hoàn thiện."
+      }
     }
-  ]
+  ],
+  "premium_features": {
+    "personalized": {
+      "birth_chart_compatibility": "Hôm nay bạn hợp với người số 9, đặc biệt trong việc chia sẻ và hoàn thiện mục tiêu chung.",
+      "custom_plan": "Vào 10h sáng, viết danh sách 3 việc cần hoàn thiện và cách bạn sẽ buông bỏ những gì không cần thiết."
+    },
+    "community": {
+      "trending_hashtag": "#HoanThien",
+      "group_activity": "Thử thách 24h: Hoàn thiện một nhiệm vụ và chia sẻ bài học với cộng đồng!"
+    }
+  }
 }

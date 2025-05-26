@@ -1,126 +1,769 @@
 {
-  "personal_day": 22,
-  "date": "2025-05-25",
+  "metadata": {
+    "date": "2025-06-15",
+    "personal_day": 22,
+    "update_frequency": "hàng ngày",
+    "version": "2.0"
+  },
+  "universal_energy": {
+    "theme": "Xây dựng nền tảng và tầm nhìn lớn",
+    "moon_phase": "Trăng tròn",
+    "astrological_impact": "Năng lượng thúc đẩy lập kế hoạch dài hạn, thực hiện dự án quy mô, và kết hợp trực giác với thực tế"
+  },
   "predictions": [
     {
       "life_path": 1,
-      "advice": "Số ngày cá nhân 22, một Master Number, mang đến năng lượng của tầm nhìn thực tế và xây dựng di sản, thúc đẩy bạn dẫn đầu với sự đổi mới. Hôm nay, hãy sử dụng khả năng lãnh đạo để khởi động hoặc hoàn thành một dự án lớn. Sự tự tin và tính thực tế của bạn sẽ biến ý tưởng thành hiện thực, nhưng hãy đảm bảo bạn có kế hoạch chi tiết.",
-      "strength": "Sự tự tin, khả năng lãnh đạo và tư duy thực tế trong việc xây dựng giá trị lâu dài.",
-      "challenge": "Tránh hành động quá vội vàng hoặc bỏ qua các chi tiết nhỏ. Hãy giữ sự kiên nhẫn để đảm bảo thành công.",
-      "action": "Lập kế hoạch chi tiết cho một dự án kinh doanh hoặc sáng tạo, tập trung vào các bước thực tế để đạt được mục tiêu.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng di sản qua sự lãnh đạo. Hãy tin vào khả năng biến tầm nhìn thành hiện thực.",
-      "lucky_color": "Đỏ ánh kim - biểu tượng của sự đam mê và xây dựng.",
-      "lucky_number": 22
+      "profile": {
+        "archetype": "Người dẫn đầu",
+        "element": "Lửa",
+        "compatible_numbers": [3, 5, 7],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 22 thúc đẩy bạn dẫn đầu một dự án lớn với tầm nhìn dài hạn. Hãy lập kế hoạch chi tiết và bắt đầu xây dựng nền tảng cho thành công bền vững.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Viết 3 mục tiêu lãnh đạo dài hạn, như 'Khởi động doanh nghiệp' hoặc 'Dẫn dắt đội nhóm'. Chọn một để phác thảo kế hoạch.",
+            "warning": "Tránh hành động vội vàng. Hãy ưu tiên chiến lược."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Bắt đầu bước đầu, như họp nhóm hoặc viết đề xuất. Ghi chú tiến độ ban đầu."
+          },
+          "evening": {
+            "focus": "Đánh giá",
+            "activity": "Viết nhật ký về kế hoạch hôm nay. Thư giãn với sách chiến lược hoặc thiền nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lập kế hoạch cho dự án lớn. Đọc về lãnh đạo chiến lược để tìm cảm hứng.",
+          "love": "Trò chuyện với người yêu về mục tiêu dài hạn. Nếu độc thân, viết về phẩm chất đối tác lý tưởng.",
+          "finance": "Lập kế hoạch đầu tư dài hạn. Tìm hiểu về quản lý tài chính."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy áp lực với quy mô dự án.",
+          "solution": "Chia kế hoạch thành các bước nhỏ và thiền 5 phút để giảm căng thẳng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự dẫn đầu có tầm nhìn. Hôm nay, hãy xây dựng với niềm tin.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ngọn lửa dẫn đường. Hít thở sâu, cảm nhận sự tự tin.",
+        "affirmation": "Tôi dẫn đầu với tầm nhìn và sự kiên định."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF4500",
+          "usage": "Mặc áo hoặc mang phụ kiện màu cam để tăng năng lượng."
+        },
+        "number": 1,
+        "direction": "Hướng Nam",
+        "object": "Sổ kế hoạch"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã lập kế hoạch lãnh đạo nào? Hãy viết về mục tiêu và cảm giác của bạn.",
+        "feedback_question": "Bạn đã bắt đầu dự án lớn nào hôm nay? Hãy chia sẻ khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một sổ kế hoạch để ghi mục tiêu lãnh đạo.",
+        "energy": "Nghe podcast về chiến lược để tăng cảm hứng.",
+        "routine": "Dành 5 phút buổi sáng để ưu tiên một mục tiêu lớn."
+      }
     },
     {
       "life_path": 2,
-      "advice": "Hôm nay, Số ngày cá nhân 22 khuyến khích bạn sử dụng trực giác để hỗ trợ các dự án nhóm hoặc xây dựng mối quan hệ bền vững. Hãy kết hợp sự nhạy cảm với năng lượng thực tế để tạo ra giá trị lâu dài. Sự hợp tác và kiên nhẫn của bạn sẽ mang lại sự hài hòa và thành công.",
-      "strength": "Trực giác nhạy bén, khả năng hòa giải và sự tận tâm trong việc xây dựng mối quan hệ.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải cân bằng giữa trực giác và thực tế. Hãy giữ ranh giới để tránh kiệt sức.",
-      "action": "Tham gia một cuộc họp nhóm để lập kế hoạch cho một dự án lớn hoặc hỗ trợ một đồng nghiệp với một chiến lược chi tiết.",
-      "spiritual_message": "Vũ trụ nhắc bạn rằng sự hòa hợp đến từ sự hợp tác. Hãy tin vào trực giác để xây dựng giá trị.",
-      "lucky_color": "Xanh ngọc ánh kim - biểu tượng của sự hòa hợp và xây dựng.",
-      "lucky_number": 2
+      "profile": {
+        "archetype": "Người kết nối",
+        "element": "Nước",
+        "compatible_numbers": [4, 6, 8],
+        "chakra": "Năng lượng vùng bụng dưới"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 22 khuyến khích bạn xây dựng các mối quan hệ hợp tác dài hạn. Hãy thiết lập nền tảng cho sự gắn kết với kế hoạch rõ ràng.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên kế hoạch",
+            "action": "Ghi 3 cách xây dựng quan hệ, như 'Lên lịch họp nhóm' hoặc 'Gửi email hợp tác'. Chọn một để bắt đầu.",
+            "warning": "Tránh phụ thuộc vào người khác. Hãy chủ động."
+          },
+          "afternoon": {
+            "focus": "Hành động",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện kết nối, như gọi điện hoặc tham gia sự kiện nhóm. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về mối quan hệ mới. Thư giãn với trà và nhạc nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lập kế hoạch hợp tác nhóm. Đọc về giao tiếp hiệu quả để cải thiện.",
+          "love": "Trò chuyện với người yêu về mục tiêu chung. Nếu độc thân, viết về mối quan hệ lý tưởng.",
+          "finance": "Lập kế hoạch chi tiêu chung với đối tác. Tìm hiểu về tiết kiệm nhóm."
+        },
+        "challenge": {
+          "description": "Bạn có thể ngại dẫn dắt trong hợp tác.",
+          "solution": "Bắt đầu với một hành động nhỏ, như gửi tin nhắn, và thiền để tăng tự tin."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự kết nối bền vững. Hôm nay, hãy xây dựng với sự hài hòa.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng dòng nước chảy êm. Hít thở sâu, cảm nhận sự cân bằng.",
+        "affirmation": "Tôi kết nối với sự hài hòa và bền vững."
+      },
+      "luck": {
+        "color": {
+          "hex": "#00CED1",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh lam để tăng sự hài hòa."
+        },
+        "number": 2,
+        "direction": "Hướng Bắc",
+        "object": "Danh bạ"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã xây dựng mối quan hệ hợp tác nào? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã kết nối với ai để xây dựng hôm nay? Hãy chia sẻ câu chuyện!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một danh bạ hoặc ứng dụng liên lạc trên bàn để nhắc nhở về hợp tác.",
+        "energy": "Gửi tin nhắn cảm ơn đến đối tác. Hành động này tăng năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để chọn một người để liên hệ."
+      }
     },
     {
       "life_path": 3,
-      "advice": "Số ngày cá nhân 22 mang đến cơ hội để bạn kết hợp sự sáng tạo với tầm nhìn thực tế. Hãy sử dụng năng lượng tích cực để phát triển một dự án nghệ thuật hoặc kinh doanh mang tính bền vững. Sự lạc quan và tính tổ chức của bạn sẽ tạo ra những tác phẩm có giá trị lâu dài.",
-      "strength": "Sự sáng tạo, năng lượng tích cực và khả năng biến ý tưởng thành hiện thực.",
-      "challenge": "Tránh bị cuốn vào những ý tưởng không thực tế hoặc thiếu tập trung vào mục tiêu chính.",
-      "action": "Bắt đầu một dự án sáng tạo, như viết một cuốn sách hoặc thiết kế một sản phẩm, với kế hoạch chi tiết.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn lan tỏa niềm vui qua sự sáng tạo thực tế. Hãy để tầm nhìn dẫn lối.",
-      "lucky_color": "Vàng ánh kim - biểu tượng của sự sáng tạo và xây dựng.",
-      "lucky_number": 3
+      "profile": {
+        "archetype": "Người sáng tạo",
+        "element": "Lửa",
+        "compatible_numbers": [1, 5, 9],
+        "chakra": "Năng lượng vùng cổ"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 22 thúc đẩy bạn xây dựng một dự án sáng tạo với quy mô lớn. Hãy lập kế hoạch chi tiết và bắt đầu thực hiện ý tưởng độc đáo.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên kế hoạch",
+            "action": "Ghi 3 ý tưởng sáng tạo lớn, như 'Ra mắt sản phẩm mới' hoặc 'Viết sách'. Chọn một để phác thảo.",
+            "warning": "Tránh phân tán. Hãy tập trung vào một ý tưởng."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "12h-2h chiều",
+            "recommendation": "Bắt đầu dự án, như phác thảo thiết kế hoặc viết chương đầu. Ghi chú tiến độ."
+          },
+          "evening": {
+            "focus": "Đánh giá",
+            "activity": "Viết nhật ký về dự án sáng tạo. Thư giãn với nhạc hoặc sách nghệ thuật."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lập kế hoạch cho dự án sáng tạo. Đọc về tiếp thị sáng tạo để tìm cảm hứng.",
+          "love": "Tạo món quà sáng tạo cho người yêu. Nếu độc thân, viết về tình yêu lý tưởng.",
+          "finance": "Lập kế hoạch chi tiêu cho sáng tạo. Tìm hiểu về đầu tư vào nghệ thuật."
+        },
+        "challenge": {
+          "description": "Bạn có thể thiếu kiên nhẫn với kế hoạch dài hạn.",
+          "solution": "Chia kế hoạch thành các bước nhỏ và làm việc 30 phút mỗi lần."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sáng tạo của bạn tỏa sáng khi có kế hoạch lớn. Hôm nay, hãy xây dựng với cảm hứng.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng bảng màu rực rỡ. Hít thở sâu, cảm nhận sự tự do.",
+        "affirmation": "Tôi sáng tạo với tầm nhìn và kiên trì."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF69B4",
+          "usage": "Mặc áo hoặc mang phụ kiện màu hồng để tăng cảm hứng."
+        },
+        "number": 3,
+        "direction": "Hướng Tây",
+        "object": "Bút vẽ"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã lập kế hoạch sáng tạo nào? Hãy viết về ý tưởng và cảm giác của bạn.",
+        "feedback_question": "Bạn đã bắt đầu dự án sáng tạo nào hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một bút vẽ hoặc bảng phác thảo để khơi cảm hứng.",
+        "energy": "Chia sẻ ý tưởng sáng tạo trên mạng. Hành động này tăng năng lượng.",
+        "routine": "Dành 5 phút buổi sáng để chọn một ý tưởng sáng tạo để bắt đầu."
+      }
     },
     {
       "life_path": 4,
-      "advice": "Hôm nay, Số ngày cá nhân 22 kết hợp với Số đường đời 4 tạo ra một ngày tràn đầy năng lượng của sự ổn định và xây dựng. Hãy sử dụng tính kỷ luật để lập kế hoạch và thực hiện một dự án lớn. Sự kiên nhẫn và thực tế của bạn sẽ mang lại thành công bền vững.",
-      "strength": "Tính kỷ luật, khả năng tổ chức và sự kiên trì trong việc xây dựng giá trị lâu dài.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải đối mặt với những nhiệm vụ lớn. Tránh bám vào sự cứng nhắc.",
-      "action": "Lên kế hoạch chi tiết cho một dự án công việc hoặc cá nhân, tập trung vào các bước thực tế.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng sự ổn định qua sự kiên định. Hãy tin vào khả năng của mình.",
-      "lucky_color": "Xanh lá cây ánh kim - biểu tượng của sự ổn định và xây dựng.",
-      "lucky_number": 4
+      "profile": {
+        "archetype": "Người tổ chức",
+        "element": "Đất",
+        "compatible_numbers": [2, 6, 8],
+        "chakra": "Năng lượng vùng chân"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 22 khuyến khích bạn xây dựng một hệ thống tổ chức với tầm nhìn dài hạn. Hãy thiết kế quy trình bền vững để hỗ trợ mục tiêu lớn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 quy trình tổ chức, như 'Tạo lịch dài hạn' hoặc 'Tối ưu công cụ'. Chọn một để bắt đầu.",
+            "warning": "Tránh cứng nhắc. Hãy kết hợp trực giác."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Thực hiện quy trình, như cập nhật lịch hoặc thử công cụ mới. Ghi chú tiến độ."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về hệ thống mới. Thư giãn với sách tổ chức hoặc đi bộ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lập kế hoạch cải thiện quy trình làm việc. Đọc về quản lý dự án để học thêm.",
+          "love": "Trò chuyện với người yêu về kế hoạch chung. Nếu độc thân, viết về mục tiêu tình cảm.",
+          "finance": "Lập kế hoạch ngân sách dài hạn. Tìm hiểu về đầu tư an toàn."
+        },
+        "challenge": {
+          "description": "Bạn có thể ngại thay đổi quy trình cũ.",
+          "solution": "Thử một phương pháp mới trong 30 phút và đánh giá."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự tổ chức bền vững. Hôm nay, hãy xây dựng với tầm nhìn.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng một tòa nhà vững chắc. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi tổ chức với tầm nhìn và kiên định."
+      },
+      "luck": {
+        "color": {
+          "hex": "#228B22",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh lá để tăng sự ổn định."
+        },
+        "number": 4,
+        "direction": "Hướng Đông Nam",
+        "object": "Ứng dụng quản lý"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã xây dựng hệ thống tổ chức nào? Hãy viết về kế hoạch và cảm giác của bạn.",
+        "feedback_question": "Bạn đã cải thiện quy trình nào hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một ứng dụng quản lý trên màn hình để theo dõi kế hoạch.",
+        "energy": "Hoàn thành một nhiệm vụ tổ chức nhỏ và đánh dấu. Hành động này tăng tự tin.",
+        "routine": "Dành 5 phút buổi sáng để ưu tiên một quy trình."
+      }
     },
     {
       "life_path": 5,
-      "advice": "Số ngày cá nhân 22 mang đến cơ hội để bạn kết hợp tinh thần phiêu lưu với tầm nhìn thực tế. Hãy khám phá những ý tưởng mới hoặc bắt đầu một dự án mang tính đổi mới. Sự linh hoạt và tính tổ chức của bạn sẽ giúp bạn biến cơ hội thành hiện thực.",
-      "strength": "Tinh thần cởi mở, khả năng thích nghi và sự sáng tạo trong việc xây dựng giá trị.",
-      "challenge": "Tránh hành động bốc đồng hoặc thiếu kế hoạch, vì điều này có thể làm chậm tiến độ.",
-      "action": "Tìm kiếm một cơ hội kinh doanh mới hoặc tham gia một dự án sáng tạo với chiến lược rõ ràng.",
-      "spiritual_message": "Vũ trụ đang mở ra những cơ hội để xây dựng tương lai. Hãy đón nhận chúng với sự tự tin.",
-      "lucky_color": "Cam ánh kim - biểu tượng của sự năng động và xây dựng.",
-      "lucky_number": 5
+      "profile": {
+        "archetype": "Người khám phá",
+        "element": "Khí",
+        "compatible_numbers": [1, 3, 7],
+        "chakra": "Năng lượng vùng cổ"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 22 thúc đẩy bạn xây dựng một hành trình khám phá với kế hoạch dài hạn. Hãy lập chiến lược cho các trải nghiệm mới để phát triển bản thân.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên kế hoạch",
+            "action": "Ghi 3 trải nghiệm lớn, như 'Học kỹ năng mới' hoặc 'Lên kế hoạch du lịch dài hạn'. Chọn một để phác thảo.",
+            "warning": "Tránh phân tán. Hãy tập trung vào một mục tiêu."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Bắt đầu trải nghiệm, như đăng ký khóa học hoặc đặt vé. Ghi chú tiến độ."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về hành trình mới. Thư giãn với nhạc acoustic hoặc đi dạo."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lập kế hoạch phát triển kỹ năng mới. Đọc về quản lý thời gian để tối ưu hóa.",
+          "love": "Trò chuyện với người yêu về hành trình khám phá. Nếu độc thân, viết về mục tiêu tình cảm.",
+          "finance": "Lập kế hoạch chi tiêu cho trải nghiệm. Tìm hiểu về đầu tư linh hoạt."
+        },
+        "challenge": {
+          "description": "Bạn có thể thiếu kiên nhẫn với kế hoạch dài hạn.",
+          "solution": "Chia kế hoạch thành các bước nhỏ và làm việc 20 phút mỗi lần."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự khám phá có chiến lược. Hôm nay, hãy xây dựng với sự tò mò.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng con đường rộng mở. Hít thở sâu, cảm nhận sự tự do.",
+        "affirmation": "Tôi khám phá với tầm nhìn và tò mò."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFD700",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng để tăng sự hứng khởi."
+        },
+        "number": 5,
+        "direction": "Hướng Tây Bắc",
+        "object": "Sổ hành trình"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã lập kế hoạch khám phá nào? Hãy viết về hành trình và cảm giác của bạn.",
+        "feedback_question": "Bạn đã bắt đầu trải nghiệm nào hôm nay? Hãy chia sẻ khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một sổ hành trình để ghi ý tưởng khám phá.",
+        "energy": "Chia sẻ kế hoạch trải nghiệm trên mạng. Hành động này tăng năng lượng.",
+        "routine": "Dành 5 phút buổi sáng để chọn một trải nghiệm để bắt đầu."
+      }
     },
     {
       "life_path": 6,
-      "advice": "Hôm nay, Số ngày cá nhân 22 khuyến khích bạn sử dụng lòng trắc ẩn để xây dựng các giá trị lâu dài cho gia đình hoặc cộng đồng. Hãy tập trung vào việc tổ chức các hoạt động mang lại sự hài hòa và ổn định. Sự tận tâm và thực tế của bạn sẽ mang lại kết quả bền vững.",
-      "strength": "Lòng trắc ẩn, khả năng chăm sóc và sự tận tâm trong việc xây dựng mối quan hệ.",
-      "challenge": "Nguy cơ ôm đồm quá nhiều trách nhiệm có thể khiến bạn kiệt sức. Hãy dành thời gian cho bản thân.",
-      "action": "Lên kế hoạch cho một hoạt động gia đình hoặc hỗ trợ một dự án cộng đồng với chiến lược chi tiết.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa tình yêu qua sự xây dựng. Hãy để trái tim dẫn lối.",
-      "lucky_color": "Hồng ánh kim - biểu tượng của tình yêu và xây dựng.",
-      "lucky_number": 6
+      "profile": {
+        "archetype": "Người chăm sóc",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 9],
+        "chakra": "Năng lượng vùng tim"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 22 khuyến khích bạn xây dựng một hệ thống chăm sóc dài hạn. Hãy lập kế hoạch hỗ trợ gia đình hoặc nhóm với tầm nhìn bền vững.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 cách chăm sóc, như 'Lên lịch gia đình' hoặc 'Hỗ trợ dự án nhóm'. Chọn một để bắt đầu.",
+            "warning": "Tránh ôm đồm. Hãy ưu tiên một mục tiêu."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện hỗ trợ, như tổ chức hoạt động hoặc gọi điện. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về cách bạn chăm sóc. Thư giãn với tắm nước ấm hoặc nhạc nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lập kế hoạch hỗ trợ nhóm. Đọc về giao tiếp nhóm để cải thiện.",
+          "love": "Trò chuyện với người yêu về kế hoạch chăm sóc. Nếu độc thân, viết về giá trị tình cảm.",
+          "finance": "Lập kế hoạch chi tiêu gia đình dài hạn. Tìm hiểu về tiết kiệm bền vững."
+        },
+        "challenge": {
+          "description": "Bạn có thể kiệt sức nếu chăm sóc quá nhiều.",
+          "solution": "Ưu tiên một hành động và nghỉ ngơi 10 phút."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự chăm sóc bền vững. Hôm nay, hãy xây dựng với yêu thương.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng trái tim xanh rực rỡ. Hít thở sâu, cảm nhận sự yêu thương.",
+        "affirmation": "Tôi chăm sóc với tầm nhìn và yêu thương."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF69B4",
+          "usage": "Mặc áo hoặc mang phụ kiện màu hồng để tăng sự ấm áp."
+        },
+        "number": 6,
+        "direction": "Hướng Tây Nam",
+        "object": "Lịch gia đình"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã lập kế hoạch chăm sóc nào? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã hỗ trợ ai hôm nay? Hãy chia sẻ câu chuyện!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một lịch gia đình để theo dõi trách nhiệm.",
+        "energy": "Viết lời cảm ơn cho người bạn hỗ trợ. Hành động này lan tỏa năng lượng.",
+        "routine": "Dành 5 phút buổi sáng để chọn một cách chăm sóc."
+      }
     },
     {
       "life_path": 7,
-      "advice": "Số ngày cá nhân 22 mang đến cơ hội để bạn kết hợp trí tuệ sâu sắc với tầm nhìn thực tế. Hãy sử dụng trực giác để nghiên cứu hoặc lập kế hoạch cho một dự án mang tính bền vững. Sự tĩnh lặng và tính tổ chức của bạn sẽ mang lại những khám phá ý nghĩa.",
-      "strength": "Trí tuệ sâu sắc, trực giác nhạy bén và khả năng xây dựng giá trị qua sự suy ngẫm.",
-      "challenge": "Tránh cô lập bản thân hoặc từ chối sự hỗ trợ từ người khác. Hãy mở lòng để kết nối.",
-      "action": "Nghiên cứu một chủ đề mới hoặc lập kế hoạch chi tiết cho một dự án tâm linh hoặc học thuật.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến sự thật qua sự xây dựng. Hãy tin vào trực giác của mình.",
-      "lucky_color": "Tím ánh kim - biểu tượng của sự tâm linh và xây dựng.",
-      "lucky_number": 7
+      "profile": {
+        "archetype": "Người tìm kiếm",
+        "element": "Nước",
+        "compatible_numbers": [1, 5, 7],
+        "chakra": "Năng lượng vùng trán"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 22 thúc đẩy bạn xây dựng một hành trình tri thức với kế hoạch dài hạn. Hãy lập chiến lược học hỏi để phát triển trí tuệ.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 chủ đề học hỏi, như 'Kỹ năng chuyên môn' hoặc 'Triết lý sống'. Chọn một để bắt đầu.",
+            "warning": "Tránh mơ mộng. Hãy tập trung vào ứng dụng thực tế."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Bắt đầu học, như đọc sách hoặc tham gia khóa học. Ghi chú những gì bạn học được."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về tri thức mới. Thư giãn với sách hoặc thiền."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lập kế hoạch áp dụng tri thức vào công việc. Đọc về kỹ năng thực tế để cải thiện.",
+          "love": "Trò chuyện với người yêu về mục tiêu học hỏi. Nếu độc thân, viết về giá trị trí tuệ.",
+          "finance": "Lập kế hoạch đầu tư cho học tập. Tìm hiểu về tài chính cá nhân."
+        },
+        "challenge": {
+          "description": "Bạn có thể thiếu kiên nhẫn với kế hoạch dài hạn.",
+          "solution": "Chia thời gian học thành 20 phút và nghỉ ngơi."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở trí tuệ bền vững. Hôm nay, hãy xây dựng với sự minh triết.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng thư viện sáng rõ. Hít thở sâu, cảm nhận sự minh triết.",
+        "affirmation": "Tôi tìm kiếm với tầm nhìn và minh triết."
+      },
+      "luck": {
+        "color": {
+          "hex": "#800080",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím để tăng sự tập trung."
+        },
+        "number": 7,
+        "direction": "Hướng Đông Bắc",
+        "object": "Sách học tập"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã lập kế hoạch học hỏi gì? Hãy viết về tri thức và cảm giác của bạn.",
+        "feedback_question": "Bạn đã khám phá kiến thức gì hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một cuốn sách học tập để nhắc nhở về mục tiêu.",
+        "energy": "Viết tóm tắt một bài học mới. Hành động này tăng hiệu quả.",
+        "routine": "Dành 5 phút buổi sáng để chọn một chủ đề học hỏi."
+      }
     },
     {
       "life_path": 8,
-      "advice": "Hôm nay, Số ngày cá nhân 22 khuyến khích bạn sử dụng tham vọng để xây dựng các dự án lớn mang tính bền vững. Hãy tập trung vào việc lập kế hoạch tài chính hoặc sự nghiệp với tầm nhìn thực tế. Sự lãnh đạo và tính tổ chức của bạn sẽ mang lại thành công lâu dài.",
-      "strength": "Khả năng lãnh đạo, sự tổ chức và năng lượng thu hút trong việc xây dựng giá trị.",
-      "challenge": "Tránh tập trung quá nhiều vào quyền lực hoặc bỏ qua chi tiết thực tế. Hãy giữ sự cân bằng.",
-      "action": "Lập kế hoạch chi tiết cho một dự án kinh doanh hoặc đàm phán một thỏa thuận tài chính.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn đạt được thành công qua sự xây dựng. Hãy dẫn dắt bằng tầm nhìn.",
-      "lucky_color": "Vàng kim ánh kim - biểu tượng của sự thịnh vượng và xây dựng.",
-      "lucky_number": 8
+      "profile": {
+        "archetype": "Người quản lý",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 6],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 22 thúc đẩy bạn xây dựng một chiến lược quản lý với tầm nhìn lớn. Hãy lập kế hoạch chi tiết để đạt được thành công lâu dài.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 chiến lược quản lý, như 'Tăng doanh thu' hoặc 'Cải thiện đội nhóm'. Chọn một để phác thảo.",
+            "warning": "Tránh kiểm soát quá mức. Hãy linh hoạt."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Thực hiện chiến lược, như gửi đề xuất hoặc họp nhóm. Ghi chú kết quả."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về chiến lược mới. Thư giãn với sách lãnh đạo hoặc yoga."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lập kế hoạch kinh doanh dài hạn. Đọc về quản lý hiệu quả để cải thiện.",
+          "love": "Trò chuyện với người yêu về mục tiêu dài hạn. Nếu độc thân, viết về mục tiêu tình cảm.",
+          "finance": "Lập kế hoạch đầu tư lớn. Tìm hiểu về quản lý tài chính."
+        },
+        "challenge": {
+          "description": "Bạn có thể áp lực với mục tiêu lớn.",
+          "solution": "Chia kế hoạch thành các bước nhỏ và nghỉ 10 phút để giảm căng thẳng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự quản lý có tầm nhìn. Hôm nay, hãy xây dựng với sự tự tin.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ngọn núi vững chắc. Hít thở sâu, cảm nhận sự tự tin.",
+        "affirmation": "Tôi quản lý với tầm nhìn và kiên định."
+      },
+      "luck": {
+        "color": {
+          "hex": "#C0C0C0",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xám để tăng sự ổn định."
+        },
+        "number": 8,
+        "direction": "Hướng Nam",
+        "object": "Bảng kế hoạch"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã lập kế hoạch quản lý nào? Hãy viết về chiến lược và cảm giác của bạn.",
+        "feedback_question": "Bạn đã cải thiện quản lý gì hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một bảng kế hoạch để theo dõi chiến lược.",
+        "energy": "Viết một mục tiêu quản lý và chia sẻ với nhóm. Hành động này tăng tự tin.",
+        "routine": "Dành 5 phút buổi sáng để ưu tiên một chiến lược."
+      }
     },
     {
       "life_path": 9,
-      "advice": "Số ngày cá nhân 22 mang đến cơ hội để bạn lan tỏa lòng nhân ái qua các dự án mang tính xây dựng. Hãy sử dụng tầm nhìn lớn để hỗ trợ cộng đồng hoặc hoàn thành một dự án mang lại giá trị lâu dài. Sự hào phóng và thực tế của bạn sẽ tạo ra tác động tích cực.",
-      "strength": "Tinh thần nhân đạo, khả năng truyền cảm hứng và sự tận tâm trong việc xây dựng giá trị.",
-      "challenge": "Bạn có thể cảm thấy thất vọng nếu kết quả không đến ngay lập tức. Hãy tập trung vào hành trình.",
-      "action": "Lên kế hoạch cho một dự án từ thiện hoặc hỗ trợ một tổ chức cộng đồng với chiến lược chi tiết.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa ánh sáng qua sự xây dựng. Hãy để lòng nhân ái dẫn lối.",
-      "lucky_color": "Trắng ánh kim - biểu tượng của sự tinh khiết và xây dựng.",
-      "lucky_number": 9
+      "profile": {
+        "archetype": "Người chia sẻ",
+        "element": "Lửa",
+        "compatible_numbers": [3, 6, 9],
+        "chakra": "Năng lượng vùng đầu"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 22 khuyến khích bạn xây dựng một dự án chia sẻ cộng đồng với tầm nhìn lớn. Hãy lập kế hoạch để lan tỏa giá trị nhân văn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 cách chia sẻ, như 'Tổ chức sự kiện cộng đồng' hoặc 'Viết bài truyền cảm hứng'. Chọn một để phác thảo.",
+            "warning": "Tránh ôm đồm. Hãy tập trung vào một mục tiêu."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện chia sẻ, như đăng bài hoặc tham gia hoạt động cộng đồng. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về cách bạn truyền cảm hứng. Thư giãn với sách nhân văn hoặc nhạc nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lập kế hoạch dự án cộng đồng. Đọc về trách nhiệm xã hội để tìm cảm hứng.",
+          "love": "Trò chuyện với người yêu về mục tiêu nhân văn. Nếu độc thân, viết về giá trị bạn muốn lan tỏa.",
+          "finance": "Lập kế hoạch chi tiêu cho cộng đồng. Tìm hiểu về tài trợ từ thiện."
+        },
+        "challenge": {
+          "description": "Bạn có thể mệt nếu cố gắng giúp quá nhiều.",
+          "solution": "Chọn một hành động cụ thể và nghỉ 10 phút để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự chia sẻ có tầm nhìn. Hôm nay, hãy xây dựng với lòng nhân ái.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ánh sáng trắng tỏa ra. Hít thở sâu, cảm nhận sự thanh thản.",
+        "affirmation": "Tôi chia sẻ với tầm nhìn và lòng nhân ái."
+      },
+      "luck": {
+        "color": {
+          "hex": "#F5F5F5",
+          "usage": "Mặc áo hoặc mang phụ kiện màu trắng để tăng sự thanh thản."
+        },
+        "number": 9,
+        "direction": "Hướng Tây",
+        "object": "Sổ ý tưởng"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã lập kế hoạch chia sẻ gì với cộng đồng? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã truyền cảm hứng cho ai hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một sổ ý tưởng để ghi cách hỗ trợ cộng đồng.",
+        "energy": "Viết câu truyền cảm hứng và chia sẻ. Hành động này lan tỏa năng lượng.",
+        "routine": "Dành 5 phút buổi sáng để suy ngẫm về cách chia sẻ."
+      }
     },
     {
       "life_path": 11,
-      "advice": "Số ngày cá nhân 22 kết hợp với Số đường đời 11 mang đến một ngày tràn đầy năng lượng tâm linh và xây dựng. Hãy sử dụng trực giác để truyền cảm hứng và lập kế hoạch cho một dự án mang tính bền vững. Sự nhạy cảm và tầm nhìn của bạn sẽ mang lại những thay đổi sâu sắc.",
-      "strength": "Trực giác nhạy bén, khả năng truyền cảm hứng và tầm nhìn tâm linh vượt thời gian.",
-      "challenge": "Sự nhạy cảm quá mức có thể khiến bạn dễ bị kiệt sức. Hãy bảo vệ năng lượng của mình.",
-      "action": "Chia sẻ một thông điệp tâm linh hoặc lập kế hoạch cho một dự án sáng tạo với chiến lược chi tiết.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến ánh sáng qua sự xây dựng. Hãy tin vào sứ mệnh của mình.",
-      "lucky_color": "Bạc ánh kim - biểu tượng của sự trực giác và xây dựng.",
-      "lucky_number": 11
+      "profile": {
+        "archetype": "Người truyền cảm hứng",
+        "element": "Khí",
+        "compatible_numbers": [2, 4, 7],
+        "chakra": "Năng lượng vùng trán"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 22 thúc đẩy bạn xây dựng một sứ mệnh truyền cảm hứng với tầm nhìn lớn. Hãy lập kế hoạch chia sẻ trực giác để dẫn dắt cộng đồng.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 ý tưởng truyền cảm hứng, như 'Viết bài về tầm nhìn' hoặc 'Dẫn dắt workshop'. Chọn một để phác thảo.",
+            "warning": "Tránh nghi ngờ trực giác. Hãy tin vào ánh sáng của bạn."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Thực hiện ý tưởng, như đăng bài hoặc tổ chức sự kiện. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về cách bạn truyền cảm hứng. Thư giãn với thiền hoặc sách tinh thần."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lập kế hoạch chia sẻ tầm nhìn qua bài nói hoặc viết. Đọc về lãnh đạo tinh thần để cải thiện.",
+          "love": "Trò chuyện với người yêu về ước mơ lớn. Nếu độc thân, viết về giá trị bạn muốn lan tỏa.",
+          "finance": "Lập kế hoạch tài chính cho mục tiêu sáng tạo. Tìm hiểu về đầu tư sáng tạo."
+        },
+        "challenge": {
+          "description": "Bạn có thể kiệt sức nếu cảm nhận quá nhiều năng lượng.",
+          "solution": "Nghỉ ngơi 10 phút thiền để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự truyền cảm hứng có tầm nhìn. Hôm nay, hãy xây dựng với trực giác.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ánh sáng tím tỏa ra. Hít thở sâu, cảm nhận sự ảnh hưởng.",
+        "affirmation": "Tôi truyền cảm hứng với tầm nhìn và trực giác."
+      },
+      "luck": {
+        "color": {
+          "hex": "#E6E6FA",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím nhạt để tăng trực giác."
+        },
+        "number": 11,
+        "direction": "Hướng Đông",
+        "object": "Sổ ghi chú"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã lập kế hoạch truyền cảm hứng nào? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã chia sẻ gì để truyền cảm hứng hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một sổ ghi chú để ghi ý tưởng truyền cảm hứng.",
+        "energy": "Viết câu truyền cảm hứng và chia sẻ. Hành động này lan tỏa năng lượng.",
+        "routine": "Dành 5 phút buổi sáng để suy ngẫm về cách truyền cảm hứng."
+      }
     },
     {
       "life_path": 22,
-      "advice": "Số ngày cá nhân 22 kết hợp với Số đường đời 22 tạo ra một ngày tràn đầy năng lượng của tầm nhìn thực tế và xây dựng di sản. Hôm nay, hãy tập trung vào việc lập kế hoạch và thực hiện một dự án lớn. Sự kiên nhẫn và tính tổ chức của bạn sẽ mang lại thành công vượt bậc.",
-      "strength": "Tầm nhìn thực tế, khả năng tổ chức và sự kiên trì trong việc xây dựng giá trị lâu dài.",
-      "challenge": "Nguy cơ ôm đồm quá nhiều nhiệm vụ có thể khiến bạn mất tập trung. Hãy ưu tiên các mục tiêu chính.",
-      "action": "Lập kế hoạch chi tiết cho một dự án lớn hoặc bắt đầu một bước nhỏ trong việc xây dựng ý tưởng.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng những di sản vĩ đại. Hãy tin vào khả năng của mình.",
-      "lucky_color": "Xám ánh kim - biểu tượng của sự ổn định và xây dựng.",
-      "lucky_number": 22
+      "profile": {
+        "archetype": "Người xây dựng",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 8],
+        "chakra": "Năng lượng vùng chân"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 22 cộng hưởng mạnh với bạn, thúc đẩy xây dựng một dự án lớn với tầm nhìn vĩ đại. Hãy lập kế hoạch chi tiết và bắt đầu đặt nền móng.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 dự án lớn, như 'Thiết kế công trình' hoặc 'Quản lý tổ chức'. Chọn một để phác thảo chi tiết.",
+            "warning": "Tránh chi tiết nhỏ. Hãy nhìn vào bức tranh lớn."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Thực hiện bước đầu, như vẽ sơ đồ hoặc họp nhóm. Ghi chú tiến độ."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về dự án mới. Thư giãn với sách quản lý hoặc thiền."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lập kế hoạch dự án lớn với chiến lược dài hạn. Đọc về quản trị để học thêm.",
+          "love": "Trò chuyện với người yêu về mục tiêu lớn. Nếu độc thân, viết về mục tiêu tình cảm.",
+          "finance": "Lập kế hoạch đầu tư dài hạn. Tìm hiểu về tài chính bền vững."
+        },
+        "challenge": {
+          "description": "Bạn có thể áp lực với quy mô dự án.",
+          "solution": "Chia kế hoạch thành các bước nhỏ và nghỉ 10 phút để giảm căng thẳng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn nằm ở sự xây dựng vĩ đại. Hôm nay, hãy xây dựng với tầm nhìn.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng một công trình vĩ đại. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi xây dựng với tầm nhìn và kiên định."
+      },
+      "luck": {
+        "color": {
+          "hex": "#2F4F4F",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xám đậm để tăng sự tập trung."
+        },
+        "number": 22,
+        "direction": "Hướng Nam",
+        "object": "Sơ đồ kế hoạch"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã lập kế hoạch dự án lớn nào? Hãy viết về kế hoạch và cảm giác của bạn.",
+        "feedback_question": "Bạn đã bắt đầu dự án lớn nào hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một sơ đồ kế hoạch để theo dõi dự án.",
+        "energy": "Vẽ sơ đồ ý tưởng dự án lớn. Hành động này tăng sáng tạo.",
+        "routine": "Dành 5 phút buổi sáng để suy ngẫm về mục tiêu dự án."
+      }
     },
     {
       "life_path": 33,
-      "advice": "Số ngày cá nhân 22 kết hợp với Số đường đời 33 mang đến một ngày tràn đầy năng lượng của lòng trắc ẩn và xây dựng. Hãy sử dụng khả năng lãnh đạo tâm linh để hỗ trợ cộng đồng hoặc lập kế hoạch cho một dự án mang lại giá trị lâu dài. Sự tận tâm của bạn sẽ tạo ra những thay đổi tích cực lớn lao.",
-      "strength": "Lòng trắc ẩn vô điều kiện, khả năng truyền cảm hứng và sự tận tâm trong việc xây dựng giá trị.",
-      "challenge": "Nguy cơ hy sinh bản thân quá nhiều có thể khiến bạn kiệt sức. Hãy dành thời gian để tái tạo năng lượng.",
-      "action": "Lên kế hoạch cho một dự án cộng đồng hoặc hỗ trợ một tổ chức từ thiện với chiến lược chi tiết.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa ánh sáng qua sự xây dựng. Hãy để tình yêu dẫn lối.",
-      "lucky_color": "Vàng ánh kim - biểu tượng của sự chữa lành và xây dựng.",
-      "lucky_number": 33
+      "profile": {
+        "archetype": "Người giáo dục",
+        "element": "Khí Sáng",
+        "compatible_numbers": [3, 6, 9],
+        "chakra": "Năng lượng ánh sáng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 22 thúc đẩy bạn xây dựng một sứ mệnh giáo dục với tầm nhìn lớn. Hãy lập kế hoạch chia sẻ tri thức để lan tỏa giá trị nhân văn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 cách chia sẻ tri thức, như 'Viết sách giáo dục' hoặc 'Tổ chức workshop'. Chọn một để phác thảo.",
+            "warning": "Tránh ôm đồm. Hãy tập trung vào một mục tiêu."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện, như viết bài hoặc hướng dẫn nhóm. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về cách bạn chia sẻ tri thức. Thư giãn với sách giáo dục hoặc thiền."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lập kế hoạch bài giảng hoặc dự án giáo dục. Đọc về giáo dục sáng tạo để học thêm.",
+          "love": "Trò chuyện với người yêu về giá trị giáo dục. Nếu độc thân, viết về giá trị bạn muốn chia sẻ.",
+          "finance": "Lập kế hoạch tài trợ giáo dục. Tìm hiểu về tài trợ học tập."
+        },
+        "challenge": {
+          "description": "Bạn có thể kiệt sức nếu dạy quá nhiều.",
+          "solution": "Chọn một nhiệm vụ cụ thể và nghỉ 10 phút để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn tỏa sáng khi bạn dạy với tầm nhìn. Hôm nay, hãy xây dựng với triết lý.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ánh sáng vàng tỏa ra. Hít thở sâu, cảm nhận sự truyền cảm.",
+        "affirmation": "Tôi giáo dục với tầm nhìn và triết lý."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFFACD",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng sáng để tăng sự sáng tạo."
+        },
+        "number": 33,
+        "direction": "Hướng Đông",
+        "object": "Sổ giáo dục"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã lập kế hoạch chia sẻ tri thức nào? Hãy viết về chủ đề và cảm giác của bạn.",
+        "feedback_question": "Bạn đã truyền cảm hứng qua bài học gì hôm nay? Hãy kể lại!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn bàn, đặt một sổ giáo dục để ghi ý tưởng giảng dạy.",
+        "energy": "Chia sẻ mẹo học với nhóm. Hành động này lan tỏa năng lượng.",
+        "routine": "Dành 5 phút buổi sáng để suy ngẫm về cách chia sẻ tri thức."
+      }
     }
-  ]
+  ],
+  "premium_features": {
+    "personalized": {
+      "birth_chart_compatibility": "Hôm nay bạn hợp với người số 22, đặc biệt trong các dự án lớn và xây dựng nền tảng bền vững.",
+      "custom_quest": "Vào 10h sáng, viết 3 mục tiêu dài hạn bạn muốn xây dựng và chọn một để bắt đầu lập kế hoạch chi tiết."
+    },
+    "community": {
+      "trending_hashtag": "#XayDungTamNhinh",
+      "group_activity": "Thử thách 24h: Lập kế hoạch cho một dự án lớn và chia sẻ chiến lược với cộng đồng!"
+    }
+  }
 }

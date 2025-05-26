@@ -1,126 +1,769 @@
 {
-  "personal_day": 6,
-  "date": "2025-05-25",
+  "metadata": {
+    "date": "2025-05-31",
+    "personal_day": 7,
+    "update_frequency": "hàng ngày",
+    "version": "2.0"
+  },
+  "universal_energy": {
+    "theme": "Suy ngẫm và tìm kiếm sự thật",
+    "moon_phase": "Trăng lưỡi liềm đầu tháng",
+    "astrological_impact": "Năng lượng thúc đẩy sự tĩnh lặng, trực giác và khám phá tri thức sâu sắc"
+  },
   "predictions": [
     {
       "life_path": 1,
-      "advice": "Số ngày cá nhân 6 mang đến năng lượng của tình yêu và trách nhiệm, thúc đẩy bạn dẫn đầu bằng trái tim. Hôm nay, hãy sử dụng khả năng lãnh đạo của mình để hỗ trợ gia đình, bạn bè hoặc cộng đồng. Sự tự tin kết hợp với lòng trắc ẩn sẽ giúp bạn tạo ra những kết nối sâu sắc và ý nghĩa.",
-      "strength": "Sự tự tin, khả năng lãnh đạo và lòng trắc ẩn trong việc hỗ trợ người khác.",
-      "challenge": "Tránh áp đặt ý kiến của mình hoặc bỏ qua nhu cầu cá nhân khi chăm sóc người khác.",
-      "action": "Tổ chức một buổi gặp mặt gia đình hoặc hỗ trợ một đồng nghiệp trong một nhiệm vụ cụ thể.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn dẫn đầu bằng tình yêu. Hãy để trái tim dẫn lối.",
-      "lucky_color": "Đỏ hồng - biểu tượng của sự đam mê và tình yêu.",
-      "lucky_number": 6
+      "profile": {
+        "archetype": "Người dẫn đầu",
+        "element": "Lửa",
+        "compatible_numbers": [3, 5, 7],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 7 mời gọi bạn dẫn đầu bằng sự suy ngẫm. Hãy dành thời gian đánh giá mục tiêu cá nhân và tìm kiếm hướng đi mới. Một khoảnh khắc tĩnh lặng sẽ giúp bạn khám phá trực giác sâu sắc.",
+        "time_slots": {
+          "morning": {
+            "focus": "Suy ngẫm",
+            "action": "Viết 3 mục tiêu dài hạn và đánh giá mức độ phù hợp với bạn. Ví dụ: 'Dẫn dắt dự án mới' hoặc 'Phát triển kỹ năng lãnh đạo'.",
+            "warning": "Tránh hành động vội vàng. Hãy ưu tiên thời gian suy nghĩ."
+          },
+          "afternoon": {
+            "focus": "Học hỏi",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Đọc một bài báo hoặc xem video về lãnh đạo. Ghi chú một ý tưởng để áp dụng vào mục tiêu của bạn."
+          },
+          "evening": {
+            "focus": "Thiền",
+            "activity": "Thiền 5 phút để kết nối với trực giác. Thư giãn với nhạc không lời hoặc viết nhật ký về những gì bạn học được hôm nay."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Đánh giá lại chiến lược công việc. Xem xét một khóa học hoặc sách về quản lý để củng cố kỹ năng lãnh đạo.",
+          "love": "Trò chuyện sâu sắc với người yêu về mục tiêu chung. Nếu độc thân, viết ra phẩm chất bạn muốn ở đối tác.",
+          "finance": "Xem xét kế hoạch tài chính dài hạn. Đọc về đầu tư để tìm hướng đi mới."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy bồn chồn khi phải chậm lại để suy ngẫm.",
+          "solution": "Dành 10 phút đi bộ yên tĩnh để làm dịu tâm trí trước khi thiền hoặc viết."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự lãnh đạo của bạn mạnh mẽ hơn khi bạn lắng nghe trực giác. Hôm nay, hãy tìm kiếm sự thật bên trong.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngọn lửa sáng rực. Hít thở sâu, cảm nhận sự rõ ràng.",
+        "affirmation": "Tôi dẫn đầu với trực giác và sự thật."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF4500",
+          "usage": "Mặc áo hoặc mang phụ kiện màu cam để tăng sự tập trung."
+        },
+        "number": 7,
+        "direction": "Hướng Đông Bắc",
+        "object": "Sổ ghi chú"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã suy ngẫm gì về mục tiêu của mình? Hãy viết về những khám phá và cảm giác của bạn.",
+        "feedback_question": "Bạn đã học được điều gì sâu sắc hôm nay? Hãy chia sẻ khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một sổ ghi chú trên bàn để ghi lại những ý tưởng bất chợt. Nó giúp bạn suy ngẫm rõ ràng hơn.",
+        "energy": "Nghe một podcast về phát triển cá nhân để khơi dậy trực giác.",
+        "routine": "Dành 5 phút buổi sáng để viết một câu hỏi lớn, như 'Mục tiêu thực sự của tôi là gì?'"
+      }
     },
     {
       "life_path": 2,
-      "advice": "Hôm nay, Số ngày cá nhân 6 kết hợp với Số đường đời 2 tạo ra một ngày tràn đầy năng lượng của sự hòa hợp và chăm sóc. Hãy sử dụng trực giác của mình để xây dựng mối quan hệ bền vững và giải quyết xung đột. Sự nhạy cảm và lòng trắc ẩn của bạn sẽ mang lại sự hài hòa cho những người xung quanh.",
-      "strength": "Trực giác nhạy bén, khả năng hòa giải và sự tận tâm trong việc chăm sóc người khác.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải đáp ứng nhu cầu của mọi người. Hãy giữ ranh giới cá nhân để tránh kiệt sức.",
-      "action": "Gọi điện hoặc gặp gỡ một người thân để chia sẻ và củng cố mối quan hệ.",
-      "spiritual_message": "Vũ trụ nhắc bạn rằng tình yêu là chìa khóa của sự hòa hợp. Hãy mở lòng và lắng nghe.",
-      "lucky_color": "Xanh ngọc bích - biểu tượng của sự hòa hợp và tình yêu.",
-      "lucky_number": 2
+      "profile": {
+        "archetype": "Người kết nối",
+        "element": "Nước",
+        "compatible_numbers": [4, 6, 8],
+        "chakra": "Năng lượng vùng bụng dưới"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 7 khuyến khích bạn kết nối qua sự suy ngẫm sâu sắc. Hãy lắng nghe trực giác và trò chuyện chân thành với ai đó. Một cuộc đối thoại ý nghĩa sẽ củng cố mối quan hệ.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lắng nghe",
+            "action": "Gửi tin nhắn đến một người bạn hoặc người thân để hỏi về cảm nhận của họ, như 'Dạo này cậu thấy thế nào?'",
+            "warning": "Tránh vội vàng trả lời. Hãy dành thời gian để hiểu sâu."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Trò chuyện sâu sắc với một người bạn hoặc đồng nghiệp. Ghi chú những gì bạn học được từ họ."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về các mối quan hệ hôm nay. Thư giãn với một tách trà và nhạc nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lắng nghe ý kiến đồng nghiệp để cải thiện dự án. Đọc về giao tiếp hiệu quả để tăng kỹ năng.",
+          "love": "Chia sẻ cảm xúc chân thành với người yêu. Nếu độc thân, suy ngẫm về giá trị bạn muốn trong tình yêu.",
+          "finance": "Đánh giá chi tiêu để ưu tiên các mối quan hệ, như dành cho quà tặng hoặc gặp gỡ."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy khó mở lòng khi trò chuyện sâu sắc.",
+          "solution": "Bắt đầu với một câu hỏi đơn giản và lắng nghe trước khi chia sẻ."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự kết nối của bạn sâu sắc hơn khi bạn tin vào trực giác. Hôm nay, hãy lắng nghe và chia sẻ sự thật.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một dòng sông êm đềm. Hít thở sâu, cảm nhận sự tĩnh lặng.",
+        "affirmation": "Tôi kết nối với trực giác và sự thật."
+      },
+      "luck": {
+        "color": {
+          "hex": "#00CED1",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh lam để tăng sự tĩnh lặng."
+        },
+        "number": 2,
+        "direction": "Hướng Bắc",
+        "object": "Tách trà"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã trò chuyện sâu với ai? Hãy viết về cuộc đối thoại và cảm giác của bạn.",
+        "feedback_question": "Bạn đã khám phá điều gì từ một mối quan hệ hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một tách trà trên bàn để tạo không gian thư giãn. Nó giúp bạn tập trung vào suy ngẫm.",
+        "energy": "Viết một lời cảm ơn ngắn cho ai đó. Hành động này tăng năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để chọn một người để trò chuyện sâu sắc."
+      }
     },
     {
       "life_path": 3,
-      "advice": "Số ngày cá nhân 6 khuyến khích bạn sử dụng sự sáng tạo để lan tỏa tình yêu và niềm vui trong gia đình hoặc cộng đồng. Hãy tổ chức một hoạt động vui vẻ hoặc chia sẻ ý tưởng tích cực để kết nối mọi người. Sự lạc quan của bạn sẽ mang lại những khoảnh khắc đáng nhớ.",
-      "strength": "Sự sáng tạo, năng lượng tích cực và khả năng truyền cảm hứng qua giao tiếp.",
-      "challenge": "Tránh bị cuốn vào việc làm hài lòng mọi người mà quên mất nhu cầu cá nhân. Hãy giữ sự cân bằng.",
-      "action": "Tổ chức một buổi tiệc nhỏ hoặc chia sẻ một bài viết sáng tạo để lan tỏa niềm vui.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn lan tỏa niềm vui qua tình yêu. Hãy để sự sáng tạo của bạn tỏa sáng.",
-      "lucky_color": "Hồng phấn - biểu tượng của niềm vui và tình yêu.",
-      "lucky_number": 3
+      "profile": {
+        "archetype": "Người sáng tạo",
+        "element": "Lửa",
+        "compatible_numbers": [1, 5, 9],
+        "chakra": "Năng lượng vùng cổ"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 7 mời gọi bạn sáng tạo qua sự suy ngẫm. Hãy dùng nghệ thuật để khám phá cảm xúc, như viết thơ hoặc vẽ tranh. Một khoảnh khắc tĩnh lặng sẽ khơi dậy ý tưởng sâu sắc.",
+        "time_slots": {
+          "morning": {
+            "focus": "Khám phá cảm xúc",
+            "action": "Ghi 3 ý tưởng sáng tạo, như 'Viết một bài thơ' hoặc 'Vẽ cảm xúc hôm nay'. Chọn một để bắt đầu.",
+            "warning": "Tránh phân tán. Hãy tập trung vào một dự án sáng tạo."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "12h-2h chiều",
+            "recommendation": "Hoàn thành ý tưởng, như viết xong bài thơ hoặc vẽ tranh. Chia sẻ với một người bạn để nhận phản hồi."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết nhật ký về quá trình sáng tạo. Thư giãn với nhạc nhẹ hoặc một cuốn sách nghệ thuật."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Sử dụng sáng tạo để cải thiện công việc, như thiết kế slide mới. Đọc về sáng tạo để tìm cảm hứng.",
+          "love": "Tạo một món quà sáng tạo cho người yêu, như bài thơ. Nếu độc thân, viết về tình yêu lý tưởng của bạn.",
+          "finance": "Suy ngẫm về cách dùng tiền cho sáng tạo, như mua dụng cụ vẽ. Lập kế hoạch tiết kiệm."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy khó tập trung khi sáng tạo sâu sắc.",
+          "solution": "Đặt thời gian 30 phút không bị gián đoạn để làm việc sáng tạo."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sáng tạo của bạn tỏa sáng khi bạn suy ngẫm. Hôm nay, hãy khám phá sự thật qua nghệ thuật.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một bảng màu rực rỡ. Hít thở sâu, cảm nhận sự tự do.",
+        "affirmation": "Tôi sáng tạo với trực giác và sự thật."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF69B4",
+          "usage": "Mặc áo hoặc mang phụ kiện màu hồng để tăng cảm hứng."
+        },
+        "number": 3,
+        "direction": "Hướng Tây",
+        "object": "Sổ phác thảo"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã sáng tạo gì để khám phá cảm xúc? Hãy viết về tác phẩm và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tạo gì để thể hiện bản thân hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một sổ phác thảo trên bàn để ghi ý tưởng sáng tạo. Nó khơi dậy cảm hứng.",
+        "energy": "Vẽ một hình nhỏ để thể hiện tâm trạng. Hành động này tăng năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để viết hoặc vẽ tự do, khám phá cảm xúc."
+      }
     },
     {
       "life_path": 4,
-      "advice": "Hôm nay, Số ngày cá nhân 6 mang đến cơ hội để bạn xây dựng sự ổn định thông qua việc chăm sóc người khác. Hãy sử dụng tính kỷ luật của mình để tổ chức các hoạt động gia đình hoặc cộng đồng. Sự tận tâm và kiên nhẫn của bạn sẽ mang lại sự hài hòa lâu dài.",
-      "strength": "Tính kỷ luật, khả năng tổ chức và sự tận tâm trong việc hỗ trợ người khác.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải cân bằng giữa công việc và trách nhiệm cá nhân. Hãy dành thời gian cho bản thân.",
-      "action": "Lên kế hoạch cho một hoạt động gia đình hoặc hỗ trợ một dự án cộng đồng với vai trò tổ chức.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng sự ổn định qua tình yêu. Hãy tin vào sự kiên định của mình.",
-      "lucky_color": "Xanh lá cây nhạt - biểu tượng của sự ổn định và chăm sóc.",
-      "lucky_number": 4
+      "profile": {
+        "archetype": "Người tổ chức",
+        "element": "Đất",
+        "compatible_numbers": [2, 6, 8],
+        "chakra": "Năng lượng vùng chân"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 7 khuyến khích bạn tổ chức với sự suy ngẫm. Hãy xem xét lại kế hoạch dài hạn và tinh chỉnh chúng. Một khoảnh khắc tĩnh lặng sẽ giúp bạn tìm ra hướng đi rõ ràng hơn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Đánh giá",
+            "action": "Xem lại danh sách công việc hoặc kế hoạch. Ghi 3 điều cần cải thiện, như 'Tối ưu lịch họp' hoặc 'Sắp xếp tài liệu'.",
+            "warning": "Tránh làm việc máy móc. Hãy dành thời gian suy nghĩ sâu."
+          },
+          "afternoon": {
+            "focus": "Tinh chỉnh",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Cập nhật kế hoạch, như sắp xếp lại lịch hoặc thử một công cụ quản lý mới. Ghi chú cảm nhận."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về kế hoạch đã cải thiện. Thư giãn với một cuốn sách về tổ chức hoặc thiền nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Xem xét lại quy trình làm việc để tăng hiệu quả. Đọc về quản lý thời gian để tìm ý tưởng mới.",
+          "love": "Suy ngẫm về cách cải thiện mối quan hệ với người yêu. Nếu độc thân, viết ra mục tiêu tình cảm.",
+          "finance": "Đánh giá kế hoạch tiết kiệm. Tìm hiểu về quản lý tài chính để củng cố nền tảng."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy khó chậm lại để suy ngẫm.",
+          "solution": "Dành 10 phút đi bộ hoặc hít thở sâu để làm dịu tâm trí trước khi đánh giá."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự tổ chức của bạn vững chắc hơn khi bạn suy ngẫm. Hôm nay, hãy tìm kiếm sự thật trong kế hoạch.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngôi nhà gọn gàng. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi tổ chức với trực giác và sự thật."
+      },
+      "luck": {
+        "color": {
+          "hex": "#228B22",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh lá để tăng sự tập trung."
+        },
+        "number": 4,
+        "direction": "Hướng Đông Nam",
+        "object": "Ứng dụng quản lý"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã cải thiện kế hoạch nào qua suy ngẫm? Hãy viết về thay đổi và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tinh chỉnh gì để tổ chức tốt hơn hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một ứng dụng quản lý trên màn hình để nhắc nhở về suy ngẫm. Nó giúp bạn tổ chức rõ ràng.",
+        "energy": "Viết một mục tiêu nhỏ và đánh dấu khi hoàn thành. Hành động này tăng sự tự tin.",
+        "routine": "Dành 5 phút buổi sáng để xem lại kế hoạch và ghi chú cải tiến."
+      }
     },
     {
       "life_path": 5,
-      "advice": "Số ngày cá nhân 6 khuyến khích bạn kết hợp tinh thần phiêu lưu với lòng trắc ẩn. Hãy khám phá những cách mới để hỗ trợ gia đình hoặc cộng đồng, như tổ chức một sự kiện hoặc tham gia một hoạt động sáng tạo. Sự linh hoạt của bạn sẽ mang lại những kết nối ý nghĩa.",
-      "strength": "Tinh thần cởi mở, khả năng thích nghi và sự quan tâm đến người khác.",
-      "challenge": "Tránh bị cuốn vào quá nhiều hoạt động mà quên mất trách nhiệm chính. Hãy ưu tiên những việc quan trọng.",
-      "action": "Tổ chức một chuyến đi ngắn cùng gia đình hoặc tham gia một sự kiện cộng đồng để kết nối.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn lan tỏa tình yêu qua sự tự do. Hãy để trái tim dẫn lối.",
-      "lucky_color": "Cam nhạt - biểu tượng của sự năng động và tình yêu.",
-      "lucky_number": 5
+      "profile": {
+        "archetype": "Người khám phá",
+        "element": "Khí",
+        "compatible_numbers": [1, 3, 7],
+        "chakra": "Năng lượng vùng cổ"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 7 mời gọi bạn khám phá tri thức và trực giác. Hãy thử một phương pháp học mới, như đọc sách hoặc thiền định. Một khoảnh khắc tĩnh lặng sẽ dẫn bạn đến những hiểu biết sâu sắc.",
+        "time_slots": {
+          "morning": {
+            "focus": "Tò mò",
+            "action": "Chọn 3 chủ đề mới để khám phá, như 'Triết học' hoặc 'Thiền định'. Bắt đầu bằng cách đọc một bài viết hoặc video.",
+            "warning": "Tránh phân tán. Hãy tập trung vào một chủ đề chính."
+          },
+          "afternoon": {
+            "focus": "Học sâu",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Đi sâu vào chủ đề, như ghi chú từ sách hoặc thử bài thiền ngắn. Ghi lại cảm nhận."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết nhật ký về những gì đã học. Thư giãn với nhạc acoustic hoặc đi dạo dưới ánh trăng."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tìm hiểu kỹ năng mới qua sách hoặc khóa học online. Sự tò mò của bạn sẽ mở ra cơ hội.",
+          "love": "Trò chuyện với người yêu về một chủ đề mới, như du lịch. Nếu độc thân, suy ngẫm về giá trị bạn muốn trong tình yêu.",
+          "finance": "Đọc về đầu tư để khám phá cơ hội. Lập kế hoạch tiết kiệm nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể bồn chồn khi phải tập trung vào học hỏi sâu.",
+          "solution": "Chia thời gian thành các buổi 20 phút để giữ sự hứng thú."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự khám phá của bạn dẫn đến sự thật. Hôm nay, hãy học hỏi với trực giác và tĩnh lặng.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một con đường đầy sao. Hít thở sâu, cảm nhận sự tò mò.",
+        "affirmation": "Tôi khám phá với trực giác và sự thật."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFD700",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng để tăng sự hứng khởi."
+        },
+        "number": 5,
+        "direction": "Hướng Tây Bắc",
+        "object": "Sách mới"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã học được gì mới? Hãy viết về chủ đề và cảm giác khi khám phá.",
+        "feedback_question": "Bạn đã khám phá tri thức gì hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một cuốn sách mới để khơi dậy sự tò mò. Nó nhắc bạn về hành trình học hỏi.",
+        "energy": "Xem một video ngắn về chủ đề mới. Ghi lại ý chính để nhớ.",
+        "routine": "Dành 5 phút buổi sáng để chọn một chủ đề mới để đọc hoặc xem."
+      }
     },
     {
       "life_path": 6,
-      "advice": "Số ngày cá nhân 6 kết hợp với Số đường đời 6 tạo ra một ngày tràn đầy năng lượng của tình yêu và trách nhiệm. Hôm nay, hãy tập trung vào việc chăm sóc gia đình, bạn bè hoặc cộng đồng. Sự tận tâm và lòng trắc ẩn của bạn sẽ mang lại sự hài hòa và những kết nối sâu sắc.",
-      "strength": "Lòng trắc ẩn vô điều kiện, khả năng chăm sóc và sự tận tâm trong việc xây dựng mối quan hệ.",
-      "challenge": "Nguy cơ ôm đồm quá nhiều trách nhiệm có thể khiến bạn kiệt sức. Hãy dành thời gian để tái tạo năng lượng.",
-      "action": "Tổ chức một bữa ăn gia đình hoặc hỗ trợ một người thân trong một vấn đề cụ thể.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa tình yêu. Hãy để trái tim dẫn lối trong mọi hành động.",
-      "lucky_color": "Hồng phấn đậm - biểu tượng của tình yêu và trách nhiệm.",
-      "lucky_number": 6
+      "profile": {
+        "archetype": "Người chăm sóc",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 9],
+        "chakra": "Năng lượng vùng tim"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 7 khuyến khích bạn chăm sóc bản thân và người khác qua sự suy ngẫm. Hãy dành thời gian để hiểu nhu cầu cảm xúc và chia sẻ lòng yêu thương. Một khoảnh khắc tĩnh lặng sẽ mang lại sự rõ ràng.",
+        "time_slots": {
+          "morning": {
+            "focus": "Suy ngẫm",
+            "action": "Viết 3 nhu cầu cảm xúc của bạn hoặc người thân, như 'Cần thời gian nghỉ ngơi' hoặc 'Cần lắng nghe'. Chọn một để hỗ trợ.",
+            "warning": "Đừng quên chăm sóc chính bạn. Hãy ưu tiên sức khỏe tinh thần."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Trò chuyện hoặc làm điều gì đó để chăm sóc, như viết thư cảm ơn hoặc gọi điện hỏi thăm."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về cách bạn đã chăm sóc. Thư giãn với tắm nước ấm hoặc nhạc nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Suy ngẫm về cách hỗ trợ nhóm tốt hơn. Đọc về kỹ năng giao tiếp để cải thiện.",
+          "love": "Chia sẻ cảm xúc với người yêu để tăng sự gắn kết. Nếu độc thân, viết về giá trị bạn muốn chia sẻ.",
+          "finance": "Đánh giá chi tiêu để ưu tiên chăm sóc gia đình. Lập kế hoạch tiết kiệm nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy khó cân bằng giữa chăm sóc người khác và bản thân.",
+          "solution": "Dành 10 phút thiền hoặc nghỉ ngơi để nạp năng lượng trước khi hỗ trợ."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Tình yêu của bạn sâu sắc hơn khi bạn suy ngẫm. Hôm nay, hãy chăm sóc với trực giác.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một trái tim tỏa sáng xanh. Hít thở sâu, cảm nhận sự yêu thương.",
+        "affirmation": "Tôi chăm sóc với trực giác và sự thật."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF69B4",
+          "usage": "Mặc áo hoặc mang phụ kiện màu hồng để tăng sự ấm áp."
+        },
+        "number": 6,
+        "direction": "Hướng Tây Nam",
+        "object": "Nến thơm"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chăm sóc bản thân hoặc ai đó như thế nào? Hãy viết về hành động và cảm xúc của bạn.",
+        "feedback_question": "Bạn đã quan tâm đến ai hôm nay? Hãy chia sẻ câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một cây nến thơm trên bàn để tạo không gian thư giãn. Nó giúp bạn suy ngẫm về việc chăm sóc.",
+        "energy": "Viết một lời nhắn yêu thương cho gia đình hoặc bạn bè. Hành động này lan tỏa năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để suy ngẫm về nhu cầu cảm xúc của bạn."
+      }
     },
     {
       "life_path": 7,
-      "advice": "Hôm nay, Số ngày cá nhân 6 khuyến khích bạn sử dụng trí tuệ và trực giác để chăm sóc người khác. Hãy chia sẻ kiến thức hoặc suy ngẫm của bạn với gia đình hoặc cộng đồng để tạo ra sự kết nối sâu sắc. Sự tĩnh lặng và lòng trắc ẩn sẽ giúp bạn tìm thấy ý nghĩa trong ngày hôm nay.",
-      "strength": "Trí tuệ sâu sắc, trực giác nhạy bén và khả năng chia sẻ kiến thức một cách ý nghĩa.",
-      "challenge": "Tránh cô lập bản thân hoặc từ chối sự hỗ trợ từ người khác. Hãy mở lòng để kết nối.",
-      "action": "Chia sẻ một câu chuyện hoặc bài học tâm linh với một người thân hoặc bạn bè để truyền cảm hứng.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến sự thật qua tình yêu. Hãy tin vào trực giác của mình.",
-      "lucky_color": "Tím nhạt - biểu tượng của sự tâm linh và chăm sóc.",
-      "lucky_number": 7
+      "profile": {
+        "archetype": "Người tìm kiếm",
+        "element": "Nước",
+        "compatible_numbers": [1, 5, 7],
+        "chakra": "Năng lượng vùng trán"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 7 cộng hưởng mạnh mẽ với bản chất tìm kiếm của bạn. Đây là ngày lý tưởng để khám phá tri thức hoặc trực giác sâu sắc. Hãy thiền, đọc sách, hoặc suy ngẫm về ý nghĩa cuộc sống.",
+        "time_slots": {
+          "morning": {
+            "focus": "Khám phá",
+            "action": "Chọn 3 chủ đề để nghiên cứu, như 'Tâm lý học' hoặc 'Vũ trụ học'. Bắt đầu bằng cách đọc một chương sách hoặc xem video.",
+            "notification": "Tránh phân tích quá mức. Hãy để trực giác dẫn lối."
+          },
+          "afternoon": {
+            "focus": "Sâu sắc",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Đi sâu vào chủ đề, như viết bài phân tích ngắn hoặc thử thiền định hướng. Ghi chú những gì bạn cảm nhận."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về hành trình tri thức hôm nay. Thư giãn với nhạc không lời hoặc đọc sách triết học."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tìm kiếm cơ hội học hỏi mới, như khóa học hoặc nghiên cứu. Trí tuệ của bạn sẽ mở ra con đường mới.",
+          "love": "Trò chuyện sâu sắc với người yêu về ý nghĩa cuộc sống. Nếu độc thân, suy ngẫm về tình yêu lý tưởng.",
+          "finance": "Đọc về đầu tư dài hạn để củng cố kế hoạch tài chính. Lập mục tiêu tiết kiệm nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể muốn ở một mình quá lâu, bỏ lỡ kết nối với người khác.",
+          "solution": "Chia sẻ một ý tưởng bạn học được với bạn bè để cân bằng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Trí tuệ của bạn tỏa sáng khi bạn tìm kiếm sự thật. Hôm nay, hãy khám phá với sự tĩnh lặng.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một bầu trời đầy sao. Hít thở sâu, cảm nhận sự tò mò.",
+        "affirmation": "Tôi tìm kiếm sự thật với trực giác và tĩnh lặng."
+      },
+      "luck": {
+        "color": {
+          "hex": "#800080",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím để tăng trực giác."
+        },
+        "number": 7,
+        "direction": "Hướng Đông Bắc",
+        "object": "Sách triết học"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã khám phá tri thức gì mới? Hãy viết về chủ đề và cảm giác của bạn.",
+        "feedback_question": "Bạn đã học được điều gì sâu sắc hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một cuốn sách triết học trên bàn để khơi dậy sự tò mò. Nó thúc đẩy bạn tìm kiếm sự thật.",
+        "energy": "Xem một bài TED Talk ngắn. Ghi lại ý tưởng chính để học hỏi sâu hơn.",
+        "routine": "Dành 5 phút buổi sáng để chọn một chủ đề để nghiên cứu."
+      }
     },
     {
       "life_path": 8,
-      "advice": "Số ngày cá nhân 6 mang đến cơ hội để bạn sử dụng tham vọng của mình để hỗ trợ cộng đồng hoặc gia đình. Hãy tập trung vào việc xây dựng mối quan hệ chiến lược hoặc tổ chức các hoạt động mang lại lợi ích lâu dài. Sự lãnh đạo và lòng trắc ẩn của bạn sẽ mang lại thành công lớn.",
-      "strength": "Khả năng lãnh đạo, sự tổ chức và lòng trắc ẩn trong việc hỗ trợ người khác.",
-      "challenge": "Tránh tập trung quá nhiều vào quyền lực hoặc bỏ qua nhu cầu cảm xúc của người khác.",
-      "action": "Lên kế hoạch cho một dự án cộng đồng hoặc hỗ trợ một đồng nghiệp trong một nhiệm vụ quan trọng.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn đạt được thành công qua tình yêu. Hãy dẫn dắt bằng trái tim.",
-      "lucky_color": "Vàng kim nhạt - biểu tượng của sự thịnh vượng và chăm sóc.",
-      "lucky_number": 8
+      "profile": {
+        "archetype": "Người quản lý",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 6],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 7 khuyến khích bạn quản lý với sự suy ngẫm. Hãy đánh giá chiến lược dài hạn và tìm kiếm chất lượng hơn số lượng trong công việc. Một khoảnh khắc tĩnh lặng sẽ mang lại sự rõ ràng.",
+        "time_slots": {
+          "morning": {
+            "focus": "Đánh giá",
+            "action": "Xem xét 3 chiến lược hoặc dự án, như 'Tối ưu ngân sách' hoặc 'Cải tiến nhóm'. Ghi chú điểm mạnh và yếu.",
+            "warning": "Tránh hành động vội vàng. Hãy ưu tiên suy ngẫm."
+          },
+          "afternoon": {
+            "focus": "Tinh chỉnh",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Cập nhật một chiến lược, như điều chỉnh kế hoạch tài chính hoặc cải thiện giao tiếp nhóm. Ghi chú kết quả."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về những cải tiến hôm nay. Thư giãn với yoga hoặc đọc sách về lãnh đạo."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Đọc về quản trị chiến lược để cải thiện kế hoạch. Suy ngẫm về cách lãnh đạo hiệu quả hơn.",
+          "love": "Suy ngẫm về cách hỗ trợ người yêu trong mục tiêu dài hạn. Nếu độc thân, viết về mục tiêu tình cảm.",
+          "finance": "Đánh giá danh mục đầu tư. Tìm hiểu về tài chính để quản lý tốt hơn."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy khó chậm lại để suy ngẫm.",
+          "solution": "Dành 10 phút thiền hoặc đi bộ để làm dịu tâm trí trước khi đánh giá."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự lãnh đạo của bạn mạnh mẽ khi bạn suy ngẫm. Hôm nay, hãy tìm kiếm sự thật trong chiến lược.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một con đường rõ ràng. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi quản lý với trực giác và hiệu quả."
+      },
+      "luck": {
+        "color": {
+          "hex": "#C0C0C0",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xám để tăng sự tập trung."
+        },
+        "number": 8,
+        "direction": "Hướng Nam",
+        "object": "Bảng kế hoạch"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã cải thiện chiến lược nào qua suy ngẫm? Hãy viết về kế hoạch và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tinh chỉnh gì để quản lý tốt hơn hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một bảng kế hoạch trên bàn để theo dõi chiến lược. Nó giúp bạn suy ngẫm rõ ràng.",
+        "energy": "Viết một mục tiêu chiến lược và chia sẻ với nhóm. Hành động này tăng sự tự tin.",
+        "routine": "Dành 5 phút buổi sáng để xem lại kế hoạch và ghi chú cải tiến."
+      }
     },
     {
       "life_path": 9,
-      "advice": "Hôm nay, Số ngày cá nhân 6 khuyến khích bạn lan tỏa lòng nhân ái qua các hành động chăm sóc cộng đồng. Hãy sử dụng tầm nhìn lớn của mình để tổ chức các hoạt động từ thiện hoặc hỗ trợ những người cần giúp đỡ. Sự hào phóng của bạn sẽ tạo ra tác động tích cực lâu dài.",
-      "strength": "Tinh thần nhân đạo, khả năng truyền cảm hứng và sự tận tâm trong việc giúp đỡ người khác.",
-      "challenge": "Bạn có thể cảm thấy thất vọng nếu kết quả không đến ngay lập tức. Hãy tập trung vào hành trình thay vì đích đến.",
-      "action": "Tham gia một dự án từ thiện hoặc hỗ trợ một người cần giúp đỡ với một hành động cụ thể.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa ánh sáng qua tình yêu. Hãy để lòng nhân ái dẫn lối.",
-      "lucky_color": "Trắng ngọc trai - biểu tượng của sự tinh khiết và chăm sóc.",
-      "lucky_number": 9
+      "profile": {
+        "archetype": "Người chia sẻ",
+        "element": "Lửa",
+        "compatible_numbers": [3, 6, 9],
+        "chakra": "Năng lượng vùng đầu"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 7 khuyến khích bạn chia sẻ lòng nhân ái qua sự suy ngẫm. Hãy dành thời gian suy nghĩ về cách đóng góp cho cộng đồng hoặc truyền cảm hứng. Một khoảnh khắc tĩnh lặng sẽ dẫn bạn đến những giá trị sâu sắc.",
+        "time_slots": {
+          "morning": {
+            "focus": "Suy ngẫm",
+            "action": "Ghi 3 cách đóng góp, như 'Viết bài truyền cảm hứng' hoặc 'Hỗ trợ cộng đồng'. Chọn một để bắt đầu.",
+            "warning": "Tránh ôm đồm. Hãy tập trung vào một hành động ý nghĩa."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện hành động, như đăng bài hoặc hỗ trợ một tổ chức. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về cách bạn đã truyền cảm hứng. Thư giãn với sách về lòng nhân ái hoặc nhạc nhẹ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Suy ngẫm về cách đóng góp cho cộng đồng qua công việc. Đọc về trách nhiệm xã hội để tìm ý tưởng.",
+          "love": "Chia sẻ một tầm nhìn lớn với người yêu. Nếu độc thân, viết về giá trị bạn muốn lan tỏa.",
+          "finance": "Đánh giá chi tiêu để hỗ trợ cộng đồng. Lập kế hoạch tiết kiệm nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy mệt mỏi nếu cố gắng truyền cảm hứng quá nhiều.",
+          "solution": "Chọn một hành động chính để thực hiện. Nghỉ ngơi 10 phút để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Lòng nhân ái của bạn lan tỏa khi bạn suy ngẫm. Hôm nay, hãy chia sẻ với sự thật.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng ánh sáng trắng tỏa ra từ bạn. Hít thở sâu, cảm nhận sự thanh thản.",
+        "affirmation": "Tôi chia sẻ với trực giác và lòng nhân ái."
+      },
+      "luck": {
+        "color": {
+          "hex": "#F5F5F5",
+          "usage": "Mặc áo hoặc mang phụ kiện màu trắng để tăng sự thanh thản."
+        },
+        "number": 9,
+        "direction": "Hướng Tây",
+        "object": "Sổ ghi chú"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chia sẻ gì qua sự suy ngẫm nào? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã truyền cảm hứng gì hôm nay? Hãy kể lại câu chuyện!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một sổ ghi chú trên bàn để ghi ý tưởng truyền cảm hứng. Nó giúp bạn suy ngẫm rõ ràng.",
+        "energy": "Viết một câu truyền cảm hứng và chia sẻ. Hành động này lan tỏa năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để suy ngẫm về cách đóng góp cho cộng đồng."
+      }
     },
     {
       "life_path": 11,
-      "advice": "Số ngày cá nhân 6 kết hợp với Số đường đời 11 tạo ra một ngày tràn đầy năng lượng tâm linh và tình yêu. Hãy sử dụng trực giác của mình để hỗ trợ và truyền cảm hứng cho cộng đồng. Hôm nay, sự nhạy cảm và tầm nhìn tâm linh của bạn sẽ mang lại những kết nối sâu sắc.",
-      "strength": "Trực giác nhạy bén, khả năng truyền cảm hứng và tầm nhìn tâm linh vượt thời gian.",
-      "challenge": "Sự nhạy cảm quá mức có thể khiến bạn dễ bị kiệt sức. Hãy bảo vệ năng lượng của mình.",
-      "action": "Thực hành thiền hoặc chia sẻ một thông điệp tâm linh để hỗ trợ một người thân hoặc cộng đồng.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến ánh sáng qua tình yêu. Hãy tin vào trực giác của mình.",
-      "lucky_color": "Bạc ánh kim - biểu tượng của sự trực giác và chăm sóc.",
-      "lucky_number": 11
+      "profile": {
+        "archetype": "Người truyền cảm hứng",
+        "element": "Khí",
+        "compatible_numbers": [2, 4, 7],
+        "chakra": "Năng lượng vùng trán"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 7 giúp bạn truyền cảm hứng qua sự suy ngẫm sâu sắc. Hãy chia sẻ trực giác hoặc tầm nhìn qua bài viết hoặc trò chuyện. Một khoảnh khắc tĩnh lặng sẽ khơi dậy ánh sáng của bạn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Suy ngẫm",
+            "action": "Ghi 3 ý tưởng truyền cảm hứng, như 'Viết bài về ước mơ' hoặc 'Trò chuyện về trực giác'. Chọn một để bắt đầu.",
+            "warning": "Tránh nghi ngờ trực giác. Hãy tin vào ánh sáng của bạn."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Thực hiện ý tưởng, như đăng bài hoặc trò chuyện sâu sắc. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Thiền nhẹ hoặc đọc sách về tinh thần. Suy ngẫm về cách bạn đã truyền cảm hứng."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ tầm nhìn qua bài viết hoặc buổi nói chuyện. Đọc về lãnh đạo tinh thần để tăng cảm hứng.",
+          "love": "Trò chuyện sâu sắc với người yêu về ước mơ. Nếu độc thân, viết về giá trị bạn muốn chia sẻ.",
+          "finance": "Suy ngẫm về cách dùng tiền cho mục tiêu lớn. Tìm hiểu về đầu tư sáng tạo."
+        },
+        "challenge": {
+          "description": "Bạn có thể mệt mỏi nếu cảm nhận quá nhiều năng lượng từ người khác.",
+          "solution": "Dành 10 phút thiền hoặc đi dạo để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Truyền cảm hứng của bạn tỏa sáng khi bạn suy ngẫm. Hôm nay, hãy chia sẻ với trực giác.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngọn đèn tỏa sáng tím. Hít thở sâu, cảm nhận ánh sáng.",
+        "affirmation": "Tôi truyền cảm hứng với trực giác và sự thật."
+      },
+      "luck": {
+        "color": {
+          "hex": "#E6E6FA",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím nhạt để tăng trực giác."
+        },
+        "number": 11,
+        "direction": "Hướng Đông",
+        "object": "Sổ ghi chú"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã truyền cảm hứng qua suy ngẫm nào? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã chia sẻ gì để truyền cảm hứng hôm nay? Hãy kể câu chuyện!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một sổ ghi chú trên bàn để ghi ý tưởng. Nó giúp bạn truyền cảm hứng rõ ràng.",
+        "energy": "Viết một câu truyền cảm hứng và chia sẻ. Hành động này lan tỏa năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để suy ngẫm về cách chia sẻ ánh sáng của bạn."
+      }
     },
     {
       "life_path": 22,
-      "advice": "Hôm nay, Số ngày cá nhân 6 hỗ trợ bạn xây dựng những dự án lớn với lòng trắc ẩn. Hãy sử dụng tầm nhìn thực tế và khả năng tổ chức của mình để hỗ trợ cộng đồng hoặc gia đình. Sự tận tâm và kỷ luật của bạn sẽ mang lại những giá trị bền vững.",
-      "strength": "Tầm nhìn thực tế, khả năng tổ chức và sự tận tâm trong việc xây dựng những giá trị lâu dài.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải cân bằng giữa trách nhiệm và mục tiêu cá nhân. Hãy ưu tiên sức khỏe của mình.",
-      "action": "Lên kế hoạch cho một dự án cộng đồng hoặc hỗ trợ một người thân với một kế hoạch chi tiết.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng những di sản qua tình yêu. Hãy tin vào khả năng của mình.",
-      "lucky_color": "Xám nhạt - biểu tượng của sự ổn định và chăm sóc.",
-      "lucky_number": 22
+      "profile": {
+        "archetype": "Người xây dựng",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 8],
+        "chakra": "Năng lượng vùng chân"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 7 khuyến khích bạn xây dựng với sự suy ngẫm. Hãy đánh giá các dự án lớn và tìm cách cải thiện chúng bền vững. Một khoảnh khắc tĩnh lặng sẽ dẫn bạn đến những giải pháp sâu sắc.",
+        "time_slots": {
+          "morning": {
+            "focus": "Đánh giá",
+            "action": "Ghi 3 khía cạnh của dự án để cải thiện, như 'Tối ưu thiết kế' hoặc 'Cải thiện quản lý'. Chọn một để suy ngẫm.",
+            "warning": "Tránh tập trung vào chi tiết nhỏ. Hãy nhìn bức tranh lớn."
+          },
+          "afternoon": {
+            "focus": "Tinh chỉnh",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Cập nhật dự án, như vẽ lại kế hoạch hoặc đọc về công nghệ mới. Ghi chú kết quả."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về tiến độ dự án. Thư giãn với sách về quản lý hoặc thiền định."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Suy ngẫm về cách cải thiện dự án lớn. Đọc về quản lý đổi mới để tìm cảm hứng.",
+          "love": "Trò chuyện với người yêu về mục tiêu lớn. Nếu độc thân, viết về mục tiêu tình cảm dài hạn.",
+          "finance": "Đánh giá kế hoạch đầu tư dài hạn. Tìm hiểu về tài chính bền vững."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy áp lực khi suy ngẫm về các dự án lớn.",
+          "solution": "Chia nhỏ thành các bước, mỗi ngày làm một phần. Nghỉ ngơi để giữ bình tĩnh."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Tầm nhìn của bạn vững chắc khi bạn suy ngẫm. Hôm nay, hãy xây dựng với sự thật.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngôi nhà vững chắc. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi xây dựng với trực giác và sự thật."
+      },
+      "luck": {
+        "color": {
+          "hex": "#2F4F4F",
+          "usage": "Mặc quần áo hoặc phụ kiện màu xám đậm để tăng sự tập trung."
+        },
+        "number": 22,
+        "direction": "Hướng Nam",
+        "object": "Sơ đồ kế hoạch"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã cải thiện dự án nào qua suy ngẫm? Hãy viết về kế hoạch và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tinh chỉnh gì để xây dựng tốt hơn hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một sơ đồ kế hoạch trên bàn để theo dõi dự án. Nó giúp bạn suy ngẫm rõ ràng.",
+        "energy": "Vẽ sơ đồ ý tưởng cho dự án lớn. Hành động này tăng sự sáng tạo.",
+        "routine": "Dành 5 phút buổi sáng để suy ngẫm về mục tiêu dự án."
+      }
     },
     {
       "life_path": 33,
-      "advice": "Số ngày cá nhân 6 kết hợp với Số đường đời 33 mang đến một ngày tràn đầy năng lượng của lòng trắc ẩn và sự hy sinh. Hãy sử dụng khả năng lãnh đạo tâm linh của bạn để hỗ trợ và nâng đỡ cộng đồng. Hôm nay, sự tận tâm của bạn sẽ tạo ra những thay đổi tích cực lớn lao.",
-      "strength": "Lòng trắc ẩn vô điều kiện, khả năng truyền cảm hứng và sự hy sinh vì lợi ích lớn hơn.",
-      "challenge": "Nguy cơ hy sinh bản thân quá nhiều có thể khiến bạn kiệt sức. Hãy dành thời gian để tái tạo năng lượng.",
-      "action": "Hỗ trợ một người đang cần giúp đỡ hoặc tham gia một hoạt động cộng đồng với vai trò lãnh đạo.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa ánh sáng qua tình yêu. Hãy để trái tim dẫn lối.",
-      "lucky_color": "Vàng nhạt - biểu tượng của sự chữa lành và tình yêu.",
-      "lucky_number": 33
+      "profile": {
+        "archetype": "Người giáo dục",
+        "element": "Khí sáng",
+        "compatible_numbers": [3, 6, 9],
+        "chakra": "Năng lượng ánh sáng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 7 khuyến khích bạn dạy dỗ qua sự suy ngẫm. Hãy chia sẻ tri thức hoặc trực giác qua bài giảng hoặc viết lách. Một khoảnh khắc tĩnh lặng sẽ giúp bạn truyền cảm hứng sâu sắc.",
+        "time_slots": {
+          "morning": {
+            "focus": "Suy ngẫm",
+            "action": "Ghi 3 ý tưởng chia sẻ tri thức, như 'Viết bài giảng' hoặc 'Hướng dẫn kỹ năng'. Chọn một để bắt đầu.",
+            "warning": "Tránh ôm đồm. Hãy tập trung vào một chủ đề ý nghĩa."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện kế hoạch, như đăng bài hoặc hướng dẫn học. Ghi chú phản hồi."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Thiền nhẹ hoặc đọc sách giáo dục. Suy ngẫm về cách bạn đã truyền cảm hứng."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ kiến thức qua workshop hoặc bài viết. Đọc về giáo dục sáng tạo để tăng cảm hứng.",
+          "love": "Trò chuyện với người yêu về cách hỗ trợ cộng đồng. Nếu độc thân, viết về giá trị bạn muốn chia sẻ.",
+          "finance": "Suy ngẫm về cách dùng tiền cho giáo dục. Tìm hiểu về tài trợ học tập."
+        },
+        "challenge": {
+          "description": "Bạn có thể kiệt sức nếu cố gắng dạy quá nhiều.",
+          "solution": "Chọn một chủ đề chính để chia sẻ. Nghỉ ngơi 10 phút để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sứ mệnh của bạn tỏa sáng khi bạn suy ngẫm. Hôm nay, hãy dạy học với tri thức.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngọn lửa tỏa sáng vàng. Hít thở sâu, cảm nhận sự truyền cảm hứng.",
+        "affirmation": "Tôi dạy học với trực giác và sự thật."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFFACD",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng nhạt để tăng sự sáng tạo."
+        },
+        "number": 33,
+        "direction": "Hướng Đông",
+        "object": "Sổ giảng dạy"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chia sẻ tri thức nào qua suy ngẫm? Hãy viết về chủ đề và cảm giác của bạn.",
+        "feedback_question": "Bạn đã truyền cảm hứng qua bài học nào hôm nay? Hãy kể câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một sổ giảng dạy trên bàn để ghi ý tưởng. Nó giúp bạn tổ chức tri thức rõ ràng.",
+        "energy": "Chia sẻ một mẹo học với đồng nghiệp, như 'Thử viết ghi chú bằng màu!' Hành động này lan tỏa năng lượng.",
+        "routine": "Dành 5 phút buổi sáng để suy ngẫm về cách chia sẻ tri thức."
+      }
     }
-  ]
+  ],
+  "premium_features": {
+    "personalized": {
+      "birth_chart_compatibility": "Hôm nay bạn hợp với người số 7, đặc biệt trong các hoạt động suy ngẫm và khám phá tri thức.",
+      "custom_quest": "Vào 11h sáng, hãy dành 5 phút thiền và viết một câu hỏi lớn, như 'Sứ mệnh của tôi là gì?'"
+    },
+    "community": {
+      "trending_hashtag": "#SuyNghiemHomNay",
+      "group_activity": "Thử thách 24h: Chia sẻ một bài học sâu sắc và thảo luận với cộng đồng!"
+    }
+  }
 }

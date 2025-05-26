@@ -1,126 +1,769 @@
 {
-  "personal_day": 4,
-  "date": "2025-05-25",
+  "metadata": {
+    "date": "2025-05-28",
+    "personal_day": 4,
+    "update_frequency": "hàng ngày",
+    "version": "2.0"
+  },
+  "universal_energy": {
+    "theme": "Xây dựng vững chắc, từng bước tiến lên",
+    "moon_phase": "Trăng lưỡi liềm đầu tháng",
+    "astrological_impact": "Năng lượng thúc đẩy sự ổn định, tổ chức và xây dựng nền tảng"
+  },
   "predictions": [
     {
       "life_path": 1,
-      "advice": "Số ngày cá nhân 4 mang đến năng lượng của sự ổn định và tổ chức, giúp bạn củng cố vai trò lãnh đạo của mình. Hôm nay, hãy tập trung vào việc lập kế hoạch chi tiết và xây dựng nền tảng vững chắc cho các dự án cá nhân hoặc công việc. Sự kiên nhẫn và kỷ luật sẽ giúp bạn đạt được thành công lâu dài.",
-      "strength": "Sự tự tin, khả năng lãnh đạo và tính kỷ luật trong việc xây dựng kế hoạch.",
-      "challenge": "Tránh cảm giác bị kìm hãm bởi các chi tiết nhỏ hoặc trở nên quá cứng nhắc trong cách tiếp cận.",
-      "action": "Lập một danh sách công việc chi tiết cho tuần tới hoặc bắt đầu một dự án cá nhân với kế hoạch rõ ràng.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng những nền tảng vững chắc. Hãy tin vào sự kiên định của mình.",
-      "lucky_color": "Đỏ sẫm - biểu tượng của sự tự tin và ổn định.",
-      "lucky_number": 4
+      "profile": {
+        "archetype": "Người dẫn đầu",
+        "element": "Lửa",
+        "compatible_numbers": [3, 5, 7],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 4 khuyến khích bạn dẫn đầu bằng cách xây dựng nền tảng vững chắc. Đây là thời điểm để lập kế hoạch chi tiết, tổ chức công việc, và đặt mục tiêu dài hạn. Một danh sách công việc rõ ràng hoặc một dự án được sắp xếp sẽ giúp bạn tiến xa.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 mục tiêu quan trọng cho ngày, như 'Hoàn thành báo cáo' hoặc 'Bắt đầu dự án mới'. Sử dụng sổ tay để theo dõi tiến độ.",
+            "warning": "Tránh bắt đầu quá nhiều việc cùng lúc. Hãy ưu tiên những nhiệm vụ quan trọng."
+          },
+          "afternoon": {
+            "focus": "Tổ chức",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Sắp xếp lại không gian làm việc hoặc lịch trình. Ví dụ: dọn bàn làm việc hoặc cập nhật lịch họp với nhóm."
+          },
+          "evening": {
+            "focus": "Đánh giá",
+            "activity": "Xem lại danh sách công việc và đánh dấu những gì đã hoàn thành. Dành thời gian thư giãn với một cuốn sách về quản lý thời gian."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lập kế hoạch chi tiết cho dự án mới, như phân chia công việc cho nhóm. Sự lãnh đạo có tổ chức của bạn sẽ được đánh giá cao.",
+          "love": "Tổ chức một buổi tối có kế hoạch với người yêu, như ăn tối tại nhà. Nếu độc thân, hãy viết ra những phẩm chất bạn muốn ở một mối quan hệ lý tưởng.",
+          "finance": "Lập ngân sách chi tiêu hàng tuần. Đặt mục tiêu tiết kiệm nhỏ, như tiết kiệm 10% thu nhập cho mục tiêu lớn."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy sốt ruột nếu kết quả chưa rõ ràng ngay lập tức.",
+          "solution": "Chia nhỏ mục tiêu thành các bước cụ thể. Ví dụ: nếu muốn hoàn thành báo cáo, hãy chia thành nghiên cứu, viết, và chỉnh sửa."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự dẫn đầu của bạn trở nên mạnh mẽ khi có nền tảng vững chắc. Hôm nay, hãy xây dựng từng bước để tiến gần hơn đến ước mơ.",
+        "meditation": "Ngồi yên 5 phút, nhắm mắt và tưởng tượng một ngọn núi vững chãi. Hít thở sâu, cảm nhận sức mạnh của sự ổn định.",
+        "affirmation": "Tôi dẫn đầu với sự tổ chức và xây dựng vững chắc."
+      },
+      "luck": {
+        "color": {
+          "hex": "#228B22",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh lá cây để tăng sự ổn định."
+        },
+        "number": 4,
+        "direction": "Hướng Đông Nam",
+        "object": "Sổ kế hoạch"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn sẽ xây dựng nền tảng nào cho mục tiêu của mình? Hãy viết về kế hoạch và cảm giác khi hoàn thành.",
+        "feedback_question": "Bạn đã tổ chức hoặc hoàn thành điều gì quan trọng hôm nay? Hãy chia sẻ khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Sắp xếp bàn làm việc gọn gàng và đặt một cuốn sổ kế hoạch ở trung tâm. Một không gian ngăn nắp sẽ tăng hiệu suất.",
+        "energy": "Viết danh sách '3 việc phải làm' trên giấy và dán lên bàn. Hoàn thành từng việc sẽ mang lại cảm giác thành tựu.",
+        "routine": "Bắt đầu ngày bằng cách kiểm tra lịch làm việc và ưu tiên nhiệm vụ quan trọng nhất."
+      }
     },
     {
       "life_path": 2,
-      "advice": "Hôm nay, Số ngày cá nhân 4 khuyến khích bạn sử dụng trực giác để xây dựng sự hòa hợp trong các mối quan hệ. Hãy tập trung vào việc tổ chức và củng cố các kết nối cá nhân hoặc công việc. Sự nhạy cảm của bạn sẽ giúp bạn tạo ra môi trường làm việc hiệu quả và hài hòa.",
-      "strength": "Trực giác nhạy bén, khả năng tổ chức và sự kiên nhẫn trong việc xây dựng mối quan hệ.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải làm việc trong một môi trường quá nghiêm ngặt. Tránh để cảm xúc lấn át quyết định của bạn.",
-      "action": "Sắp xếp lại lịch làm việc hoặc tổ chức một buổi gặp mặt để củng cố mối quan hệ với đồng nghiệp hoặc bạn bè.",
-      "spiritual_message": "Vũ trụ nhắc bạn rằng sự hòa hợp được xây dựng từ sự kiên nhẫn. Hãy tin vào trực giác của mình.",
-      "lucky_color": "Xanh lam đậm - biểu tượng của sự hòa hợp và ổn định.",
-      "lucky_number": 2
+      "profile": {
+        "archetype": "Người kết nối",
+        "element": "Nước",
+        "compatible_numbers": [4, 6, 8],
+        "chakra": "Năng lượng vùng bụng dưới"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 4 giúp bạn kết nối và xây dựng mối quan hệ bền vững thông qua sự tổ chức. Khả năng đồng cảm của bạn sẽ tỏa sáng khi bạn lập kế hoạch cho nhóm hoặc hỗ trợ người khác sắp xếp công việc. Một hành động chu đáo sẽ củng cố sự gắn kết.",
+        "time_slots": {
+          "morning": {
+            "focus": "Hỗ trợ",
+            "action": "Gửi tin nhắn hỏi thăm một đồng nghiệp hoặc bạn bè về công việc của họ. Ví dụ: 'Cậu cần mình giúp gì cho dự án hôm nay không?'",
+            "warning": "Đừng ôm đồm việc của người khác. Hãy ưu tiên hỗ trợ trong khả năng."
+          },
+          "afternoon": {
+            "focus": "Tổ chức",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Giúp nhóm sắp xếp công việc, như phân chia nhiệm vụ hoặc làm bảng theo dõi tiến độ. Ví dụ: cùng đồng nghiệp lập danh sách việc cần làm."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Sắp xếp lại góc riêng của bạn, như tủ quần áo hoặc giá sách. Sau đó, thư giãn với một tách trà và suy ngẫm về ngày."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Đề xuất cách cải thiện giao tiếp nhóm, như họp định kỳ. Sự tinh tế của bạn sẽ giúp mọi thứ trơn tru.",
+          "love": "Lập kế hoạch cho một buổi tối ấm cúng với người yêu, như xem phim tại nhà. Nếu độc thân, viết ra những giá trị bạn tìm kiếm trong một mối quan hệ.",
+          "finance": "Kiểm tra chi tiêu gần đây và đặt mục tiêu tiết kiệm. Một ví dụ: dành 5% thu nhập cho quỹ khẩn cấp."
+        },
+        "challenge": {
+          "description": "Bạn có thể do dự khi phải đưa ra quyết định thay vì người khác.",
+          "solution": "Thảo luận với đồng nghiệp hoặc bạn bè trước khi quyết định. Viết ưu và nhược điểm để rõ ràng hơn."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự kết nối của bạn mạnh mẽ hơn khi có nền tảng. Hôm nay, hãy xây dựng sự hỗ trợ và ổn định cho chính mình và người khác.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một hồ nước phẳng lặng. Hít thở sâu, cảm nhận sự hài hòa và ổn định.",
+        "affirmation": "Tôi kết nối và xây dựng với sự đồng cảm và tổ chức."
+      },
+      "luck": {
+        "color": {
+          "hex": "#4682B4",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh dương để tăng sự hài hòa."
+        },
+        "number": 6,
+        "direction": "Hướng Bắc",
+        "object": "Hộp lưu trữ"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã hỗ trợ ai xây dựng điều gì? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tổ chức hoặc hỗ trợ điều gì hôm nay? Hãy chia sẻ câu chuyện!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một hộp lưu trữ trên bàn để sắp xếp giấy tờ hoặc đồ dùng. Một không gian gọn gàng giúp bạn tập trung.",
+        "energy": "Viết một lời cảm ơn ngắn cho ai đó đã giúp bạn. Hành động này tăng cường sự kết nối và năng lượng tích cực.",
+        "routine": "Sáng sớm, dành 5 phút để sắp xếp lịch trình và hít thở sâu để bắt đầu ngày."
+      }
     },
     {
       "life_path": 3,
-      "advice": "Số ngày cá nhân 4 mang đến cơ hội để bạn kết hợp sự sáng tạo với tính kỷ luật. Hãy sử dụng năng lượng tích cực của mình để tổ chức một dự án sáng tạo hoặc hoàn thành một nhiệm vụ quan trọng. Hôm nay, sự tập trung vào chi tiết sẽ giúp bạn biến ý tưởng thành hiện thực.",
-      "strength": "Năng lượng lạc quan, khả năng sáng tạo và sự tập trung vào chi tiết.",
-      "challenge": "Bạn có thể cảm thấy khó chịu khi phải tuân theo một cấu trúc nghiêm ngặt. Tránh phân tán năng lượng vào những ý tưởng không thiết thực.",
-      "action": "Lên kế hoạch chi tiết cho một dự án sáng tạo, như viết một bài báo hoặc thiết kế một sản phẩm mới.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn biến sáng tạo thành hiện thực. Hãy tin vào khả năng tổ chức của mình.",
-      "lucky_color": "Vàng đất - biểu tượng của sự sáng tạo và ổn định.",
-      "lucky_number": 3
+      "profile": {
+        "archetype": "Người sáng tạo",
+        "element": "Lửa",
+        "compatible_numbers": [1, 5, 9],
+        "chakra": "Năng lượng vùng cổ"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 4 mời gọi bạn kết hợp sự vui tươi với tổ chức để sáng tạo hiệu quả. Thay vì để ý tưởng bay bổng, hãy xây dựng một kế hoạch để biến chúng thành hiện thực. Một dự án được sắp xếp sẽ giúp bạn tỏa sáng.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch sáng tạo",
+            "action": "Ghi ý tưởng vào một danh sách có thứ tự. Ví dụ: '1. Vẽ phác thảo logo, 2. Viết nội dung bài đăng.' Sử dụng bút màu để làm nổi bật.",
+            "warning": "Tránh phân tán. Hãy tập trung vào một dự án chính."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "12h-2h chiều",
+            "recommendation": "Bắt đầu thực hiện một ý tưởng, như viết một bài blog hoặc hoàn thành bản vẽ. Chia nhỏ công việc để dễ quản lý."
+          },
+          "evening": {
+            "focus": "Đánh giá",
+            "activity": "Xem lại tiến độ dự án và ghi chú những gì cần cải thiện. Thư giãn với một bộ phim tài liệu về nghệ thuật."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lập kế hoạch cho dự án sáng tạo, như thiết kế mới. Sự tổ chức của bạn sẽ thu hút sự chú ý.",
+          "love": "Lên kế hoạch cho một buổi hẹn thú vị, như đi triển lãm nghệ thuật. Nếu độc thân, viết về ước mơ tình yêu của bạn.",
+          "finance": "Lập ngân sách cho sở thích sáng tạo, như mua bút vẽ. Đặt mục tiêu tiết kiệm để đầu tư lâu dài."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy gò bó khi phải tổ chức ý tưởng.",
+          "solution": "Dùng công cụ đơn giản như bảng Kanban để sắp xếp. Ví dụ: chia ý tưởng thành 'Đang làm', 'Chưa làm', 'Hoàn thành'."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sáng tạo của bạn tỏa sáng khi có cấu trúc. Hôm nay, hãy xây dựng nền tảng để ý tưởng bay xa.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một bức tranh được vẽ trên khung chắc chắn. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi sáng tạo với sự tổ chức và xây dựng vững chắc."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFD700",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng để tăng sự sáng tạo."
+        },
+        "number": 3,
+        "direction": "Hướng Tây",
+        "object": "Bảng Kanban"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn sẽ tổ chức ý tưởng sáng tạo nào? Hãy viết về kế hoạch và cảm giác khi thực hiện.",
+        "feedback_question": "Bạn đã xây dựng hoặc sáng tạo điều gì hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một bảng Kanban nhỏ trên bàn để sắp xếp ý tưởng. Nó giúp bạn theo dõi tiến độ và giữ sáng tạo.",
+        "energy": "Viết 3 ý tưởng sáng tạo vào buổi sáng và chọn một để làm. Hành động này mang lại năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để sắp xếp công việc sáng tạo, như chọn màu cho bản vẽ."
+      }
     },
     {
       "life_path": 4,
-      "advice": "Số ngày cá nhân 4 kết hợp với Số đường đời 4 tạo ra một ngày tràn đầy năng lượng của sự ổn định và hiệu quả. Hôm nay, hãy tập trung vào việc xây dựng nền tảng vững chắc cho công việc, tài chính hoặc cuộc sống cá nhân. Sự kiên nhẫn và tính kỷ luật của bạn sẽ mang lại kết quả lâu dài.",
-      "strength": "Tính kỷ luật vượt trội, khả năng tổ chức và sự kiên trì trong việc hoàn thành công việc.",
-      "challenge": "Tránh trở nên quá cứng nhắc hoặc từ chối những thay đổi cần thiết. Hãy linh hoạt khi cần thiết.",
-      "action": "Sắp xếp lại không gian làm việc hoặc lập một kế hoạch tài chính chi tiết cho tháng tới.",
-      "spiritual_message": "Vũ trụ đang hỗ trợ bạn xây dựng những giá trị bền vững. Hãy tin vào sự kiên định của mình.",
-      "lucky_color": "Xanh lá cây đậm - biểu tượng của sự ổn định và phát triển.",
-      "lucky_number": 4
+      "profile": {
+        "archetype": "Người tổ chức",
+        "element": "Đất",
+        "compatible_numbers": [2, 6, 8],
+        "chakra": "Năng lượng vùng chân"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 4 cộng hưởng mạnh với bản chất tổ chức của bạn. Đây là ngày lý tưởng để xây dựng nền tảng, lập kế hoạch dài hạn, và sắp xếp mọi thứ ngăn nắp. Một lịch trình rõ ràng sẽ giúp bạn cảm thấy tự tin và kiểm soát.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Viết danh sách công việc chi tiết, như '1. Họp nhóm, 2. Kiểm tra email, 3. Hoàn thành báo cáo'. Sử dụng bút màu để phân loại mức độ ưu tiên.",
+            "warning": "Tránh cứng nhắc. Hãy để chỗ cho những thay đổi nhỏ."
+          },
+          "afternoon": {
+            "focus": "Tổ chức",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Sắp xếp lại không gian làm việc hoặc hồ sơ. Ví dụ: phân loại tài liệu hoặc dọn dẹp ổ cứng máy tính."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Đọc một cuốn sách về quản lý thời gian hoặc làm đồ thủ công như xếp giấy. Những hoạt động này củng cố sự ổn định."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một buổi họp với kế hoạch rõ ràng, như bảng phân công nhiệm vụ. Sự ngăn nắp của bạn sẽ truyền cảm hứng.",
+          "love": "Lên kế hoạch cho một buổi tối có cấu trúc với người yêu, như nấu ăn cùng nhau. Nếu độc thân, viết ra mục tiêu tình cảm.",
+          "finance": "Kiểm tra tài khoản và lập kế hoạch tiết kiệm. Ví dụ: dành 10% thu nhập cho quỹ đầu tư."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy căng thẳng nếu kế hoạch bị gián đoạn.",
+          "solution": "Dành 5 phút hít thở sâu khi căng thẳng. Điều chỉnh kế hoạch linh hoạt hơn, như dự phòng thời gian cho việc bất ngờ."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự ổn định là sức mạnh của bạn. Hôm nay, hãy xây dựng từng bước để tạo nên thành công lâu dài.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngôi nhà vững chắc. Hít thở sâu, cảm nhận sự an toàn và ổn định.",
+        "affirmation": "Tôi xây dựng với sự tổ chức và kiên nhẫn."
+      },
+      "luck": {
+        "color": {
+          "hex": "#32CD32",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh lá để tăng sự ổn định."
+        },
+        "number": 4,
+        "direction": "Hướng Đông Nam",
+        "object": "Hộp lưu trữ"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn sẽ tổ chức gì để xây dựng nền tảng? Hãy viết về kế hoạch và cảm giác của bạn.",
+        "feedback_question": "Bạn đã sắp xếp hoặc hoàn thành điều gì hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một hộp lưu trữ trên bàn để sắp xếp đồ dùng. Một không gian gọn gàng giúp bạn tập trung.",
+        "energy": "Viết danh sách '3 việc ưu tiên' và đánh dấu khi hoàn thành. Hành động này mang lại cảm giác thành công.",
+        "routine": "Dành 5 phút buổi sáng để kiểm tra lịch và sắp xếp công việc theo thứ tự quan trọng."
+      }
     },
     {
       "life_path": 5,
-      "advice": "Hôm nay, Số ngày cá nhân 4 khuyến khích bạn cân bằng giữa tinh thần phiêu lưu và tính kỷ luật. Hãy sử dụng sự linh hoạt của mình để tổ chức một kế hoạch khám phá hoặc thử nghiệm một ý tưởng mới. Sự tập trung vào chi tiết sẽ giúp bạn biến cơ hội thành thành công.",
-      "strength": "Khả năng thích nghi, tinh thần cởi mở và năng lượng khám phá trong một môi trường có tổ chức.",
-      "challenge": "Bạn có thể cảm thấy bị kìm hãm bởi các quy tắc hoặc lịch trình. Tránh hành động bốc đồng dẫn đến sai lầm.",
-      "action": "Lên kế hoạch cho một chuyến đi ngắn hoặc thử một hoạt động mới trong một khung thời gian cụ thể.",
-      "spiritual_message": "Vũ trụ đang mở ra những cơ hội mới. Hãy đón nhận chúng với sự kỷ luật.",
-      "lucky_color": "Cam đất - biểu tượng của sự năng động và ổn định.",
-      "lucky_number": 5
+      "profile": {
+        "archetype": "Người khám phá",
+        "element": "Khí",
+        "compatible_numbers": [1, 3, 7],
+        "chakra": "Năng lượng vùng cổ"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 4 khuyến khích bạn cân bằng sự tự do với tổ chức. Thay vì phiêu lưu ngẫu hứng, hãy lập kế hoạch để khám phá hiệu quả hơn. Một lịch trình linh hoạt sẽ giúp bạn tận hưởng ngày mà vẫn đạt mục tiêu.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 hoạt động bạn muốn thử, như 'Tham gia workshop' hoặc 'Đọc sách mới'. Sắp xếp thời gian cụ thể cho từng việc.",
+            "warning": "Tránh làm quá nhiều việc cùng lúc. Hãy chọn 1-2 ưu tiên."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Thực hiện một hoạt động đã lên kế hoạch, như tham gia lớp học online hoặc đi dạo ở nơi mới. Ghi chú cảm nhận."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết nhật ký về trải nghiệm hôm nay. Thư giãn với nhạc acoustic để giữ năng lượng tích cực."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lập kế hoạch cho một ý tưởng mới, như dự án khám phá thị trường. Sự linh hoạt có tổ chức của bạn sẽ gây ấn tượng.",
+          "love": "Lên kế hoạch cho một buổi hẹn phiêu lưu, như đi công viên. Nếu độc thân, viết ra những trải nghiệm bạn muốn chia sẻ với người đặc biệt.",
+          "finance": "Kiểm tra chi tiêu và đặt mục tiêu tiết kiệm cho chuyến đi. Ví dụ: tiết kiệm 5% cho kỳ nghỉ sắp tới."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy gò bó khi phải theo kế hoạch.",
+          "solution": "Tạo lịch trình linh hoạt với thời gian tự do. Ví dụ: dành 1 giờ chiều để làm điều bạn thích."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự tự do của bạn mạnh mẽ hơn khi có nền tảng. Hôm nay, hãy xây dựng cấu trúc để khám phá thế giới.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một con đường rộng mở với những cột mốc. Hít thở sâu, cảm nhận sự cân bằng.",
+        "affirmation": "Tôi khám phá với sự tổ chức và tự do."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF8C00",
+          "usage": "Mặc áo hoặc mang phụ kiện màu cam để tăng sự năng động."
+        },
+        "number": 5,
+        "direction": "Hướng Tây Bắc",
+        "object": "Lịch để bàn"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn sẽ khám phá gì với kế hoạch rõ ràng? Hãy viết về ý tưởng và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tổ chức hoặc trải nghiệm điều gì hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một lịch để bàn trên bàn làm việc. Nó giúp bạn theo dõi kế hoạch mà vẫn cảm thấy tự do.",
+        "energy": "Viết 3 điều bạn muốn thử hôm nay và chọn một để làm. Hành động này khơi dậy năng lượng khám phá.",
+        "routine": "Dành 5 phút buổi sáng để lên lịch linh hoạt, để lại thời gian cho những ý tưởng bất chợt."
+      }
     },
     {
       "life_path": 6,
-      "advice": "Số ngày cá nhân 4 mang đến cơ hội để bạn xây dựng sự ổn định trong gia đình hoặc cộng đồng. Hãy sử dụng lòng trắc ẩn của mình để tổ chức các hoạt động chăm sóc hoặc hỗ trợ người khác. Hôm nay, sự kiên nhẫn và trách nhiệm của bạn sẽ mang lại sự hài hòa lâu dài.",
-      "strength": "Lòng trắc ẩn, khả năng tổ chức và sự tận tâm trong việc chăm sóc người khác.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải đáp ứng nhu cầu của mọi người. Hãy dành thời gian để chăm sóc bản thân.",
-      "action": "Tổ chức một bữa ăn gia đình hoặc lên kế hoạch cho một hoạt động cộng đồng để kết nối mọi người.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn xây dựng sự hòa hợp qua sự chăm sóc. Hãy để tình yêu dẫn lối.",
-      "lucky_color": "Hồng nhạt - biểu tượng của tình yêu và ổn định.",
-      "lucky_number": 6
+      "profile": {
+        "archetype": "Người chăm sóc",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 9],
+        "chakra": "Năng lượng vùng tim"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 4 giúp bạn chăm sóc người khác bằng cách tổ chức và xây dựng nền tảng. Khả năng quan tâm của bạn sẽ tỏa sáng khi lập kế hoạch cho gia đình, bạn bè hoặc nhóm. Một hành động chu đáo sẽ mang lại sự ổn định và niềm vui.",
+        "time_slots": {
+          "morning": {
+            "focus": "Quan tâm",
+            "action": "Lập kế hoạch hỗ trợ ai đó, như chuẩn bị bữa trưa cho gia đình hoặc giúp đồng nghiệp sắp xếp công việc.",
+            "warning": "Đừng quên chăm sóc bản thân. Hãy dành thời gian cho chính bạn."
+          },
+          "afternoon": {
+            "focus": "Tổ chức",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Sắp xếp một hoạt động nhóm, như phân công nhiệm vụ cho dự án hoặc tổ chức nhà cửa. Ví dụ: làm lịch nấu ăn gia đình."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Tắm nước ấm hoặc đọc sách thiếu nhi. Suy ngẫm về cách bạn đã giúp đỡ mọi người hôm nay."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một hoạt động nhóm, như phân công công việc rõ ràng. Sự quan tâm của bạn sẽ tạo môi trường tích cực.",
+          "love": "Lên kế hoạch cho một buổi tối ấm áp với người yêu, như làm bánh cùng nhau. Nếu độc thân, viết ra những giá trị bạn muốn trong tình yêu.",
+          "finance": "Lập kế hoạch chi tiêu cho gia đình, như mua đồ dùng cần thiết. Đặt mục tiêu tiết kiệm nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể quên chăm sóc bản thân khi tập trung vào người khác.",
+          "solution": "Dành 10 phút buổi trưa nghỉ ngơi, như nhắm mắt thư giãn hoặc ăn một bữa nhẹ."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Tình yêu của bạn là nền tảng vững chắc. Hôm nay, hãy xây dựng sự chăm sóc với sự tổ chức và kiên nhẫn.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một trái tim tỏa ánh sáng xanh lá. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi chăm sóc với sự tổ chức và tình yêu."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF69B4",
+          "usage": "Mặc áo hoặc mang phụ kiện màu hồng để tăng sự ấm áp."
+        },
+        "number": 6,
+        "direction": "Hướng Tây Nam",
+        "object": "Lịch gia đình"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chăm sóc ai với kế hoạch rõ ràng? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tổ chức hoặc chăm sóc điều gì hôm nay? Hãy chia sẻ câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một lịch gia đình trên bàn làm việc. Nó nhắc bạn về sự quan tâm và tổ chức.",
+        "energy": "Viết một lời cảm ơn ngắn cho người thân hoặc đồng nghiệp. Hành động này lan tỏa năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để lập kế hoạch chăm sóc, như gọi hỏi thăm người thân."
+      }
     },
     {
       "life_path": 7,
-      "advice": "Hôm nay, Số ngày cá nhân 4 khuyến khích bạn kết hợp trí tuệ sâu sắc với tính kỷ luật. Hãy sử dụng trực giác của mình để nghiên cứu hoặc tổ chức một dự án cá nhân. Sự tập trung vào chi tiết sẽ giúp bạn khám phá những sự thật sâu sắc và đạt được tiến bộ trong học tập hoặc công việc.",
-      "strength": "Trí tuệ sâu sắc, khả năng phân tích và sự tập trung vào chi tiết.",
-      "challenge": "Tránh trở nên quá khép kín hoặc từ chối sự hỗ trợ từ người khác. Hãy chia sẻ ý tưởng của bạn khi cần thiết.",
-      "action": "Lên kế hoạch cho một buổi nghiên cứu hoặc viết nhật ký để ghi lại những suy ngẫm sâu sắc của bạn.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến sự thật qua sự kiên nhẫn. Hãy tin vào trực giác của mình.",
-      "lucky_color": "Tím đậm - biểu tượng của sự tâm linh và ổn định.",
-      "lucky_number": 7
+      "profile": {
+        "archetype": "Người tìm kiếm",
+        "element": "Nước",
+        "compatible_numbers": [1, 5, 9],
+        "chakra": "Năng lượng vùng trán"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 4 mời gọi bạn tổ chức trí tuệ và tìm kiếm sự thật. Thay vì suy ngẫm tự do, hãy lập kế hoạch để nghiên cứu hoặc học hỏi. Một lịch trình rõ ràng sẽ giúp bạn khám phá sâu sắc hơn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 chủ đề bạn muốn tìm hiểu, như 'Đọc sách triết học' hoặc 'Xem video khoa học'. Lên lịch thời gian cụ thể.",
+            "warning": "Tránh phân tâm bởi quá nhiều ý tưởng. Hãy tập trung vào một chủ đề."
+          },
+          "afternoon": {
+            "focus": "Nghiên cứu",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Dành thời gian đọc hoặc xem tài liệu về chủ đề đã chọn. Ghi chú những ý chính để dễ theo dõi."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết nhật ký về những gì bạn học được. Thư giãn với nhạc không lời để giữ sự tĩnh lặng."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lập kế hoạch nghiên cứu cho dự án, như tìm hiểu thị trường. Sự thông thái của bạn sẽ được đánh giá cao.",
+          "love": "Lên kế hoạch trò chuyện sâu sắc với người yêu về một chủ đề ý nghĩa. Nếu độc thân, viết ra những giá trị bạn muốn chia sẻ.",
+          "finance": "Kiểm tra tài khoản và lập kế hoạch đầu tư vào học tập, như mua sách. Đặt mục tiêu tiết kiệm nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể muốn ở một mình quá lâu, bỏ lỡ cơ hội chia sẻ kiến thức.",
+          "solution": "Nhắn tin hoặc trò chuyện ngắn với bạn bè về điều bạn học được. Điều này giúp bạn cân bằng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Trí tuệ của bạn tỏa sáng khi có cấu trúc. Hôm nay, hãy xây dựng nền tảng để khám phá sự thật.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một thư viện yên tĩnh. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi tìm kiếm sự thật với sự tổ chức và kiên nhẫn."
+      },
+      "luck": {
+        "color": {
+          "hex": "#800080",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím để tăng trực giác."
+        },
+        "number": 7,
+        "direction": "Hướng Đông Bắc",
+        "object": "Sổ ghi chú"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã học được gì với kế hoạch rõ ràng? Hãy viết về chủ đề và cảm giác của bạn.",
+        "feedback_question": "Bạn đã nghiên cứu hoặc tổ chức điều gì hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một sổ ghi chú trên bàn làm việc. Nó giúp bạn theo dõi ý tưởng và giữ tổ chức.",
+        "energy": "Viết một câu hỏi thú vị để nghiên cứu, như 'Hôm nay mình sẽ học gì mới?' Nó khơi dậy sự tò mò.",
+        "routine": "Dành 5 phút buổi sáng để lên lịch học tập, như chọn một bài báo để đọc."
+      }
     },
     {
       "life_path": 8,
-      "advice": "Số ngày cá nhân 4 mang đến cơ hội để bạn xây dựng nền tảng vững chắc cho mục tiêu tài chính và sự nghiệp. Hãy sử dụng khả năng lãnh đạo của mình để tổ chức các kế hoạch chi tiết và thực hiện các bước cụ thể. Sự kiên nhẫn và kỷ luật sẽ giúp bạn đạt được thành công lâu dài.",
-      "strength": "Khả năng quản lý, tổ chức và sự kiên trì trong việc đạt được mục tiêu lớn.",
-      "challenge": "Tránh trở nên quá kiểm soát hoặc thiếu linh hoạt với những thay đổi bất ngờ. Hãy tin tưởng vào đội nhóm của bạn.",
-      "action": "Xem lại kế hoạch tài chính hoặc lập một chiến lược kinh doanh chi tiết cho tháng tới.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng thành công qua sự kỷ luật. Hãy tin vào khả năng của mình.",
-      "lucky_color": "Vàng kim đậm - biểu tượng của sự thịnh vượng và ổn định.",
-      "lucky_number": 8
+      "profile": {
+        "archetype": "Người quản lý",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 6],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 4 cộng hưởng với khả năng lãnh đạo của bạn. Hãy tập trung vào tổ chức và xây dựng nền tảng cho thành công lâu dài. Một kế hoạch chi tiết hoặc hệ thống quản lý sẽ giúp bạn đạt được mục tiêu lớn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi danh sách nhiệm vụ cho nhóm, như '1. Họp chiến lược, 2. Kiểm tra tiến độ dự án'. Sử dụng bảng để theo dõi.",
+            "warning": "Tránh kiểm soát quá mức. Hãy tin tưởng nhóm của bạn."
+          },
+          "afternoon": {
+            "focus": "Tổ chức",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Sắp xếp lại quy trình làm việc hoặc hồ sơ dự án. Ví dụ: cập nhật bảng quản lý công việc hoặc phân loại email."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Đọc một cuốn sách về lãnh đạo hoặc tập yoga. Suy ngẫm về cách bạn quản lý hôm nay."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một dự án với kế hoạch rõ ràng, như phân bổ ngân sách. Sự lãnh đạo của bạn sẽ thúc đẩy thành công.",
+          "love": "Lên kế hoạch cho một buổi tối có cấu trúc với người yêu, như đi ăn tối. Nếu độc thân, viết ra mục tiêu tình cảm.",
+          "finance": "Kiểm tra tài khoản và lập kế hoạch đầu tư. Ví dụ: dành 15% thu nhập cho quỹ dài hạn."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy căng thẳng nếu nhóm không theo kế hoạch.",
+          "solution": "Dành 5 phút hít thở sâu và giao tiếp rõ ràng với nhóm. Điều chỉnh kế hoạch nếu cần."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự lãnh đạo của bạn mạnh hơn khi có nền tảng. Hôm nay, hãy xây dựng với sự tổ chức và kiên định.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một tòa nhà vững chắc. Hít thở sâu, cảm nhận sự tự tin.",
+        "affirmation": "Tôi lãnh đạo với sự tổ chức và xây dựng thành công."
+      },
+      "luck": {
+        "color": {
+          "hex": "#C0C0C0",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xám để tăng sự ổn định."
+        },
+        "number": 8,
+        "direction": "Hướng Nam",
+        "object": "Bảng quản lý"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã lãnh đạo và tổ chức gì? Hãy viết về kế hoạch và cảm giác của bạn.",
+        "feedback_question": "Bạn đã quản lý hoặc xây dựng điều gì hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một bảng quản lý trên bàn để theo dõi tiến độ nhóm. Nó giúp bạn lãnh đạo hiệu quả.",
+        "energy": "Viết một mục tiêu lớn và chia thành 3 bước nhỏ. Hành động này tăng sự tự tin.",
+        "routine": "Dành 5 phút buổi sáng để kiểm tra tiến độ dự án và ưu tiên nhiệm vụ."
+      }
     },
     {
       "life_path": 9,
-      "advice": "Hôm nay, Số ngày cá nhân 4 khuyến khích bạn sử dụng lòng nhân ái để xây dựng những giá trị bền vững cho cộng đồng. Hãy tập trung vào việc tổ chức các hoạt động từ thiện hoặc hỗ trợ người khác một cách có hệ thống. Sự kiên nhẫn của bạn sẽ tạo ra tác động tích cực lâu dài.",
-      "strength": "Tinh thần nhân đạo, khả năng tổ chức và sự tận tâm trong việc giúp đỡ người khác.",
-      "challenge": "Bạn có thể cảm thấy thất vọng nếu kết quả không đến ngay lập tức. Hãy tập trung vào quá trình thay vì kết quả.",
-      "action": "Lên kế hoạch cho một dự án từ thiện hoặc hỗ trợ một người cần giúp đỡ với một kế hoạch cụ thể.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa lòng nhân ái qua sự kiên định. Hãy để lòng tốt dẫn lối.",
-      "lucky_color": "Trắng ngọc trai - biểu tượng của sự tinh khiết và ổn định.",
-      "lucky_number": 9
+      "profile": {
+        "archetype": "Người chia sẻ",
+        "element": "Lửa",
+        "compatible_numbers": [3, 6, 9],
+        "chakra": "Năng lượng vùng đầu"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 4 khuyến khích bạn xây dựng nền tảng để chia sẻ lòng nhân ái. Hãy tổ chức các hoạt động hoặc lập kế hoạch để hỗ trợ cộng đồng. Một hành động tử tế được tổ chức tốt sẽ tạo ra tác động lớn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi 3 cách bạn có thể giúp đỡ, như 'Tổ chức quyên góp' hoặc 'Hỗ trợ bạn bè'. Sắp xếp thời gian cụ thể.",
+            "warning": "Tránh ôm đồm quá nhiều. Hãy tập trung vào một hành động ý nghĩa."
+          },
+          "afternoon": {
+            "focus": "Thực hiện",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Thực hiện một hành động đã lên kế hoạch, như gửi quà cho bạn bè hoặc tham gia hoạt động cộng đồng. Ghi chú cảm nhận."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết nhật ký về cách bạn chia sẻ hôm nay. Thư giãn với một cuốn sách về lòng nhân ái."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một hoạt động cộng đồng, như ngày hội từ thiện. Sự nhiệt huyết của bạn sẽ truyền cảm hứng.",
+          "love": "Lên kế hoạch cho một buổi tối ý nghĩa với người yêu, như làm đồ handmade. Nếu độc thân, viết ra những giá trị bạn muốn chia sẻ.",
+          "finance": "Lập kế hoạch chi tiêu cho việc thiện nguyện, như mua quà nhỏ. Đặt mục tiêu tiết kiệm cho mục đích ý nghĩa."
+        },
+        "challenge": {
+          "description": "Bạn có thể mệt mỏi nếu cố gắng giúp quá nhiều người.",
+          "solution": "Chọn một hành động chính để thực hiện trước 3h chiều. Nghỉ ngơi để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Lòng nhân ái của bạn là nền tảng cho thế giới tốt đẹp hơn. Hôm nay, hãy xây dựng với sự tổ chức và tình yêu.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một cánh đồng tỏa ánh sáng vàng. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi chia sẻ lòng nhân ái với sự tổ chức và kiên nhẫn."
+      },
+      "luck": {
+        "color": {
+          "hex": "#F5F5F5",
+          "usage": "Mặc áo hoặc mang phụ kiện màu trắng để tăng sự thanh thản."
+        },
+        "number": 9,
+        "direction": "Hướng Tây",
+        "object": "Hộp quà"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chia sẻ gì với kế hoạch rõ ràng? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tổ chức hoặc chia sẻ điều gì hôm nay? Hãy kể lại câu chuyện!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một hộp quà nhỏ trên bàn để nhắc nhở về việc chia sẻ. Nó truyền cảm hứng cho sự tổ chức.",
+        "energy": "Viết một hành động tử tế để làm hôm nay, như tặng quà. Hành động này lan tỏa năng lượng tích cực.",
+        "routine": "Dành 5 phút buổi sáng để lên kế hoạch chia sẻ, như viết lời nhắn cảm ơn."
+      }
     },
     {
       "life_path": 11,
-      "advice": "Số ngày cá nhân 4 kết hợp với Số đường đời 11 mang đến một ngày tràn đầy năng lượng tâm linh và kỷ luật. Hãy sử dụng trực giác của mình để tổ chức các ý tưởng cao cả và biến chúng thành hiện thực. Hôm nay, sự tập trung vào chi tiết sẽ giúp bạn truyền cảm hứng cho người khác.",
-      "strength": "Trực giác nhạy bén, khả năng tổ chức và tầm nhìn tâm linh sâu sắc.",
-      "challenge": "Sự nhạy cảm quá mức có thể khiến bạn dễ bị phân tâm. Hãy giữ sự tập trung vào mục tiêu chính.",
-      "action": "Lập kế hoạch cho một dự án tâm linh hoặc viết một bài viết truyền cảm hứng để chia sẻ với cộng đồng.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến ánh sáng qua sự kiên định. Hãy tin vào trực giác của mình.",
-      "lucky_color": "Bạc ánh kim - biểu tượng của sự trực giác và ổn định.",
-      "lucky_number": 11
+      "profile": {
+        "archetype": "Người truyền cảm hứng",
+        "element": "Khí",
+        "compatible_numbers": [2, 4, 7],
+        "chakra": "Năng lượng vùng trán"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 4 giúp bạn truyền cảm hứng bằng cách tổ chức tầm nhìn lớn. Hãy lập kế hoạch để chia sẻ ý tưởng hoặc dẫn dắt nhóm. Một kế hoạch rõ ràng sẽ làm bạn tỏa sáng và truyền cảm hứng mạnh mẽ.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi ý tưởng truyền cảm hứng, như 'Tổ chức workshop' hoặc 'Viết bài về chia sẻ'. Sắp xếp thời gian cụ thể.",
+            "warning": "Hãy tin vào trực giác và tránh nghi ngờ bản thân."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Thực hiện ý tưởng, như tổ chức buổi nói chuyện hoặc chia sẻ bài viết trên mạng xã hội."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Thiền nhẹ hoặc đọc sách về lãnh đạo tinh thần. Suy ngẫm về cách bạn truyền cảm hứng."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một buổi họp để chia sẻ tầm nhìn, như kế hoạch mới. Sự nhiệt huyết của bạn sẽ truyền cảm hứng.",
+          "love": "Lên kế hoạch trò chuyện sâu sắc với người yêu, như nói về ước mơ. Nếu độc thân, viết ra những giá trị bạn muốn chia sẻ.",
+          "finance": "Lập kế hoạch đầu tư vào học tập, như khóa học lãnh đạo. Đặt mục tiêu tiết kiệm nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể mệt mỏi nếu cảm nhận quá nhiều năng lượng.",
+          "solution": "Dành 10 phút đi dạo hoặc thiền để nạp năng lượng. Hít thở sâu để cân bằng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Truyền cảm hứng của bạn mạnh mẽ khi có nền tảng. Hôm nay, hãy xây dựng với sự tổ chức và trực giác.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngọn đèn sáng tỏa ánh sáng tím. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi truyền cảm hứng với sự tổ chức và ánh sáng."
+      },
+      "luck": {
+        "color": {
+          "hex": "#E6E6FA",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím nhạt để tăng trực giác."
+        },
+        "number": 11,
+        "direction": "Hướng Đông",
+        "object": "Sổ ghi chú"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã truyền cảm hứng gì với kế hoạch rõ ràng? Hãy viết về ý tưởng và cách bạn thực hiện.",
+        "feedback_question": "Bạn đã chia sẻ hoặc truyền cảm hứng gì hôm nay? Hãy kể câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một sổ ghi chú trên bàn để ghi ý tưởng truyền cảm hứng. Nó giúp bạn tổ chức và sáng tạo.",
+        "energy": "Viết một câu nói truyền cảm hứng, như 'Hôm nay mình sẽ dẫn dắt!' Nó khơi dậy năng lượng.",
+        "routine": "Dành 5 phút buổi sáng để lên lịch chia sẻ, như viết bài hoặc gọi điện."
+      }
     },
     {
       "life_path": 22,
-      "advice": "Hôm nay, Số ngày cá nhân 4 hỗ trợ bạn xây dựng những dự án lớn với sự kỷ luật và tổ chức. Hãy sử dụng tầm nhìn thực tế của mình để lập kế hoạch chi tiết và thực hiện các bước cụ thể. Sự kiên nhẫn và cấu trúc sẽ giúp bạn biến ý tưởng thành hiện thực.",
-      "strength": "Tầm nhìn thực tế, khả năng tổ chức và sự kiên trì trong việc xây dựng những di sản lâu dài.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải tuân theo một cấu trúc nghiêm ngặt. Tránh ôm đồm quá nhiều nhiệm vụ.",
-      "action": "Lập kế hoạch chi tiết cho một dự án lớn hoặc bắt đầu một bước nhỏ trong việc xây dựng ý tưởng của bạn.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng những giá trị bền vững. Hãy tin vào khả năng của mình.",
-      "lucky_color": "Xám đá - biểu tượng của sự ổn định và thực tế.",
-      "lucky_number": 22
+      "profile": {
+        "archetype": "Người xây dựng",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 8],
+        "chakra": "Năng lượng vùng chân"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 4 cộng hưởng mạnh với khả năng xây dựng của bạn. Đây là ngày lý tưởng để tổ chức các dự án lớn và lập kế hoạch dài hạn. Một hệ thống rõ ràng sẽ giúp bạn biến tầm nhìn thành hiện thực.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi ý tưởng cho dự án lớn, như 'Xây dựng kế hoạch kinh doanh' hoặc 'Thiết kế sản phẩm mới'. Sử dụng bảng để phân chia công việc.",
+            "warning": "Tránh tập trung vào chi tiết nhỏ. Hãy ưu tiên bức tranh lớn."
+          },
+          "afternoon": {
+            "focus": "Tổ chức",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Bắt đầu thực hiện dự án, như làm bảng phân công hoặc phác thảo ý tưởng. Ví dụ: vẽ sơ đồ quy trình."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết nhật ký về tiến độ dự án. Thư giãn với một cuốn sách về kiến trúc hoặc quản lý."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một dự án lớn với kế hoạch chi tiết, như phát triển sản phẩm. Tầm nhìn của bạn sẽ dẫn dắt thành công.",
+          "love": "Lên kế hoạch cho một buổi tối có cấu trúc với người yêu, như đi dạo công viên. Nếu độc thân, viết ra mục tiêu tình cảm.",
+          "finance": "Lập kế hoạch đầu tư dài hạn, như mua cổ phiếu. Đặt mục tiêu tiết kiệm 10% thu nhập."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy áp lực khi tổ chức dự án lớn.",
+          "solution": "Chia dự án thành các bước nhỏ, mỗi ngày làm một phần. Nghỉ ngơi để giữ bình tĩnh."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Tầm nhìn của bạn trở thành hiện thực khi có nền tảng. Hôm nay, hãy xây dựng với sự tổ chức và kiên định.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một tòa nhà cao tầng vững chắc. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi xây dựng tầm nhìn với sự tổ chức và sức mạnh."
+      },
+      "luck": {
+        "color": {
+          "hex": "#2F4F4F",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xám đậm để tăng sự tập trung."
+        },
+        "number": 22,
+        "direction": "Hướng Nam",
+        "object": "Sơ đồ quy trình"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã xây dựng gì cho dự án lớn? Hãy viết về kế hoạch và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tổ chức hoặc tiến triển dự án gì hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một sơ đồ quy trình trên bàn để theo dõi dự án. Nó giúp bạn tổ chức và giữ tầm nhìn.",
+        "energy": "Viết 3 bước nhỏ cho dự án lớn và làm một bước. Hành động này tăng sự tự tin.",
+        "routine": "Dành 5 phút buổi sáng để kiểm tra tiến độ và ưu tiên nhiệm vụ dự án."
+      }
     },
     {
       "life_path": 33,
-      "advice": "Số ngày cá nhân 4 kết hợp với Số đường đời 33 mang đến một ngày tràn đầy năng lượng của lòng trắc ẩn và sự kỷ luật. Hãy sử dụng khả năng lãnh đạo tâm linh của bạn để tổ chức các hoạt động hỗ trợ cộng đồng. Hôm nay, sự kiên nhẫn và tình yêu thương của bạn sẽ tạo ra những thay đổi tích cực lớn lao.",
-      "strength": "Lòng trắc ẩn vô điều kiện, khả năng tổ chức và sự hy sinh vì lợi ích lớn hơn.",
-      "challenge": "Nguy cơ hy sinh bản thân quá nhiều có thể khiến bạn kiệt sức. Hãy dành thời gian để tái tạo năng lượng.",
-      "action": "Lên kế hoạch cho một hoạt động cộng đồng hoặc hỗ trợ một người cần giúp đỡ với một kế hoạch cụ thể.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa ánh sáng qua sự kiên định. Hãy để tình yêu dẫn lối.",
-      "lucky_color": "Vàng nhạt - biểu tượng của sự chữa lành và ổn định.",
-      "lucky_number": 33
+      "profile": {
+        "archetype": "Người giáo dục",
+        "element": "Khí sáng",
+        "compatible_numbers": [3, 6, 9],
+        "chakra": "Năng lượng ánh sáng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 4 khuyến khích bạn dạy học và truyền cảm hứng bằng cách tổ chức kiến thức. Hãy lập kế hoạch để chia sẻ hoặc học hỏi, giúp cộng đồng phát triển. Một bài giảng hoặc kế hoạch rõ ràng sẽ lan tỏa ánh sáng.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi ý tưởng chia sẻ, như 'Tổ chức buổi giảng dạy' hoặc 'Viết bài về kỹ năng sống'. Sắp xếp thời gian cụ thể.",
+            "warning": "Tránh ôm đồm quá nhiều. Hãy tập trung vào một chủ đề ý nghĩa."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Hướng dẫn bạn bè hoặc nhóm về một kỹ năng, như quản lý thời gian. Ví dụ: chia sẻ mẹo lập kế hoạch."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Thiền nhẹ hoặc đọc sách về giáo dục. Suy ngẫm về cách bạn truyền cảm hứng hôm nay."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một buổi chia sẻ kiến thức, như workshop. Sự nhiệt huyết của bạn sẽ truyền cảm hứng.",
+          "love": "Lên kế hoạch trò chuyện sâu sắc với người yêu về hỗ trợ lẫn nhau. Nếu độc thân, viết ra những giá trị bạn muốn chia sẻ.",
+          "finance": "Lập kế hoạch đầu tư vào giáo dục, như mua khóa học. Đặt mục tiêu tiết kiệm nhỏ."
+        },
+        "challenge": {
+          "description": "Bạn có thể kiệt sức nếu cố gắng dạy quá nhiều.",
+          "solution": "Dành 10 phút đi dạo ngắn để nạp năng lượng. Chọn một nhiệm vụ chính để thực hiện."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sứ mệnh giáo dục của bạn tỏa sáng khi có nền tảng. Hôm nay, hãy xây dựng với sự tổ chức và ánh sáng.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngọn lửa tỏa ánh sáng vàng. Hít thở sâu, cảm nhận sự truyền cảm hứng.",
+        "affirmation": "Tôi dạy học và truyền cảm hứng với sự tổ chức."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFFACD",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng nhạt để tăng sự sáng tạo."
+        },
+        "number": 33,
+        "direction": "Hướng Đông",
+        "object": "Sổ giảng dạy"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã dạy hoặc học gì với kế hoạch rõ ràng? Hãy viết về ý tưởng và cách bạn thực hiện.",
+        "feedback_question": "Bạn đã chia sẻ hoặc truyền cảm hứng gì hôm nay? Hãy kể câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một sổ giảng dạy trên bàn để ghi ý tưởng. Nó giúp bạn tổ chức và truyền cảm hứng.",
+        "energy": "Chia sẻ một mẹo tổ chức với đồng nghiệp, như 'Thử lập lịch bằng giấy!'",
+        "routine": "Dành 5 phút buổi sáng để viết một câu truyền cảm hứng, như 'Hôm nay mình sẽ chia sẻ!'"
+      }
     }
-  ]
+  ],
+  "premium_features": {
+    "personalized": {
+      "birth_chart_compatibility": "Hôm nay bạn hợp với người số 4, đặc biệt trong các hoạt động tổ chức và xây dựng.",
+      "custom_ritual": "Vào 11h sáng, bạn hãy dành 5 phút để lập danh sách công việc và hít thở sâu để tập trung."
+    },
+    "community": {
+      "trending_hashtag": "#XâyDựngHômNay",
+      "group_activity": "Thử thách 24h: Lập kế hoạch chi tiết cho một mục tiêu và chia sẻ tiến độ với cộng đồng!"
+    }
+  }
 }

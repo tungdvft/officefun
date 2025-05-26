@@ -1,126 +1,769 @@
 {
-  "personal_day": 3,
-  "date": "2025-05-25",
+  "metadata": {
+    "date": "2025-05-27",
+    "personal_day": 3,
+    "update_frequency": "hàng ngày",
+    "version": "2.0"
+  },
+  "universal_energy": {
+    "theme": "Bày tỏ niềm vui và sáng tạo",
+    "moon_phase": "Trăng lưỡi liềm đầu tháng",
+    "astrological_impact": "Năng lượng thúc đẩy sự sáng tạo, giao tiếp và niềm vui"
+  },
   "predictions": [
     {
       "life_path": 1,
-      "advice": "Số ngày cá nhân 3 mang đến năng lượng sáng tạo và giao tiếp, giúp bạn tỏa sáng trong vai trò lãnh đạo. Hãy sử dụng sự tự tin của mình để chia sẻ ý tưởng mới hoặc truyền cảm hứng cho đội nhóm. Hôm nay là ngày để bạn thể hiện bản thân một cách độc đáo, nhưng hãy đảm bảo rằng bạn tập trung vào một mục tiêu cụ thể.",
-      "strength": "Sự tự tin, khả năng lãnh đạo sáng tạo và năng lượng tích cực thu hút mọi người.",
-      "challenge": "Tránh phân tán năng lượng vào quá nhiều ý tưởng hoặc hành động thiếu kế hoạch. Hãy ưu tiên chất lượng hơn số lượng.",
-      "action": "Viết một bài blog, tạo một bài thuyết trình hoặc chia sẻ một ý tưởng sáng tạo với đồng nghiệp hoặc bạn bè.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn lan tỏa ánh sáng. Hãy để sự sáng tạo dẫn lối cho hành động của bạn.",
-      "lucky_color": "Vàng sáng - biểu tượng của sự lạc quan và sáng tạo.",
-      "lucky_number": 3
+      "profile": {
+        "archetype": "Người dẫn đầu",
+        "element": "Lửa",
+        "compatible_numbers": [3, 5, 7],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 3 khơi dậy sự sáng tạo trong vai trò lãnh đạo của bạn. Đây là thời điểm để bạn chia sẻ ý tưởng táo bạo, truyền cảm hứng qua hành động, và lan tỏa niềm vui. Một bài thuyết trình, một câu chuyện, hoặc một dự án mới sẽ giúp bạn tỏa sáng.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên ý tưởng",
+            "action": "Ghi 3 ý tưởng táo bạo vào sổ tay, như cách cải thiện công việc hoặc một dự án cá nhân. Ví dụ: 'Tổ chức một buổi họp sáng tạo với nhóm'.",
+            "warning": "Đừng lo ý tưởng có khả thi ngay lập tức. Hãy để trí tưởng tượng tự do bay bổng."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Trình bày ý tưởng với đồng nghiệp hoặc đăng một bài viết truyền cảm hứng lên mạng xã hội. Ví dụ: kể về mục tiêu bạn đang theo đuổi."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Vẽ một bức tranh đơn giản hoặc nghe nhạc vui tươi. Những hoạt động này giúp bạn duy trì năng lượng sáng tạo."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Đề xuất một ý tưởng mới trong cuộc họp, như cải tiến quy trình. Sự tự tin của bạn sẽ thu hút sự ủng hộ.",
+          "love": "Chia sẻ một câu chuyện vui hoặc tổ chức một buổi hẹn sáng tạo, như vẽ tranh cùng người yêu. Nếu độc thân, hãy bắt chuyện với nụ cười.",
+          "finance": "Nghĩ về cách kiếm tiền từ ý tưởng sáng tạo, như bán sản phẩm handmade. Hôm nay là ngày tốt để lên kế hoạch."
+        },
+        "challenge": {
+          "description": "Bạn có thể vội vàng và bỏ qua chi tiết khi hào hứng với ý tưởng mới.",
+          "solution": "Dành 5 phút kiểm tra lại kế hoạch trước khi chia sẻ. Ví dụ: đọc lại email hoặc xác nhận ý tưởng với bạn bè."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự sáng tạo của bạn là ngọn lửa dẫn đường. Hôm nay, hãy để niềm vui và ý tưởng mới truyền cảm hứng cho chính bạn và mọi người.",
+        "meditation": "Ngồi yên 5 phút, nhắm mắt và tưởng tượng một ngọn lửa rực rỡ. Hít thở sâu, cảm nhận năng lượng sáng tạo lan tỏa.",
+        "affirmation": "Tôi dẫn dắt với sự sáng tạo và lan tỏa niềm vui."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF4500",
+          "usage": "Mặc áo hoặc đeo phụ kiện màu cam đậm để tăng sự tự tin và sáng tạo."
+        },
+        "number": 3,
+        "direction": "Hướng Đông",
+        "object": "Bút màu"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn muốn chia sẻ ý tưởng sáng tạo nào? Hãy viết về nó và cảm giác khi thực hiện.",
+        "feedback_question": "Bạn đã truyền cảm hứng hoặc sáng tạo điều gì hôm nay? Hãy chia sẻ khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Trang trí bàn làm việc bằng bút màu hoặc sticker vui nhộn. Một không gian sáng tạo sẽ khơi dậy ý tưởng mới.",
+        "energy": "Đặt một quả cam trên bàn. Màu sắc tươi sáng sẽ nhắc bạn lan tỏa niềm vui và năng lượng tích cực.",
+        "routine": "Nghe một bài nhạc vui tươi vào buổi sáng để khởi động ngày với sự hứng khởi."
+      }
     },
     {
       "life_path": 2,
-      "advice": "Hôm nay, năng lượng của Số ngày cá nhân 3 thúc đẩy bạn thể hiện sự nhạy cảm thông qua giao tiếp sáng tạo. Hãy sử dụng trực giác của mình để kết nối với người khác qua những cuộc trò chuyện ý nghĩa hoặc các hoạt động nghệ thuật. Sự hòa hợp và sáng tạo sẽ giúp bạn xây dựng mối quan hệ sâu sắc hơn.",
-      "strength": "Trực giác nhạy bén, khả năng giao tiếp cảm xúc và sự sáng tạo trong việc kết nối.",
-      "challenge": "Bạn có thể bị cuốn vào những cuộc trò chuyện vui vẻ mà quên mất mục tiêu chính. Tránh phân tâm hoặc thiếu tập trung.",
-      "action": "Tổ chức một buổi gặp gỡ thân mật hoặc tham gia một hoạt động sáng tạo nhóm, như vẽ tranh hoặc viết lách.",
-      "spiritual_message": "Vũ trụ đang mở ra con đường sáng tạo. Hãy để trái tim dẫn dắt lời nói của bạn.",
-      "lucky_color": "Xanh ngọc - biểu tượng của sự hòa hợp và sáng tạo.",
-      "lucky_number": 6
+      "profile": {
+        "archetype": "Người kết nối",
+        "element": "Nước",
+        "compatible_numbers": [4, 6, 8],
+        "chakra": "Năng lượng vùng bụng dưới"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 3 khuyến khích bạn thể hiện niềm vui và kết nối qua sự sáng tạo. Khả năng đồng cảm của bạn sẽ tỏa sáng khi chia sẻ câu chuyện, ý tưởng, hoặc cảm xúc với mọi người. Một nụ cười hoặc hành động tử tế sẽ lan tỏa năng lượng tích cực.",
+        "time_slots": {
+          "morning": {
+            "focus": "Bày tỏ",
+            "action": "Gửi một tin nhắn vui vẻ hoặc hình ảnh tích cực cho bạn bè. Ví dụ: 'Chúc cậu ngày mới rực rỡ, mình vừa thấy một bức ảnh siêu dễ thương!'",
+            "warning": "Đừng ngại thể hiện cảm xúc. Hãy để sự chân thành dẫn lối."
+          },
+          "afternoon": {
+            "focus": "Sáng tạo",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Làm một việc sáng tạo cùng nhóm, như viết câu chuyện ngắn hoặc trang trí không gian. Ví dụ: cùng đồng nghiệp làm bảng ý tưởng."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Nghe nhạc acoustic hoặc xem phim hài. Nếu có thể, trò chuyện với bạn bè để chia sẻ niềm vui trong ngày."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ ý tưởng cải thiện giao tiếp nhóm, như tổ chức một buổi họp vui vẻ. Sự tinh tế của bạn sẽ được đánh giá cao.",
+          "love": "Tổ chức một buổi hẹn nhẹ nhàng, như đi dạo và kể chuyện vui. Nếu độc thân, hãy bắt chuyện với ai đó bằng một lời khen.",
+          "finance": "Cân nhắc mua một món đồ nhỏ để làm đẹp không gian, như khung ảnh. Nó sẽ khơi dậy niềm vui và sáng tạo."
+        },
+        "challenge": {
+          "description": "Bạn có thể do dự khi thể hiện bản thân trước đám đông.",
+          "solution": "Bắt đầu bằng việc chia sẻ với một người bạn thân. Viết ý tưởng ra trước để cảm thấy tự tin hơn."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Niềm vui của bạn là món quà cho thế giới. Hôm nay, hãy để sự sáng tạo và sự đồng cảm lan tỏa qua từng hành động.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một dòng sông lấp lánh ánh nắng. Hít thở sâu, cảm nhận niềm vui chảy qua bạn.",
+        "affirmation": "Tôi lan tỏa niềm vui và kết nối qua sự sáng tạo."
+      },
+      "luck": {
+        "color": {
+          "hex": "#87CEEB",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh dương nhạt để tăng sự hài hòa."
+        },
+        "number": 6,
+        "direction": "Hướng Bắc",
+        "object": "Khung ảnh"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn muốn chia sẻ niềm vui với ai? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã làm gì để lan tỏa niềm vui hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một khung ảnh vui vẻ trên bàn làm việc, như ảnh bạn bè hoặc thú cưng. Nó sẽ nhắc bạn lan tỏa niềm vui.",
+        "energy": "Tặng một nụ cười hoặc lời khen cho đồng nghiệp. Hành động nhỏ này sẽ làm ngày của mọi người tươi sáng hơn.",
+        "routine": "Viết một câu nói tích cực vào buổi sáng, như 'Hôm nay mình sẽ làm ai đó cười!'"
+      }
     },
     {
       "life_path": 3,
-      "advice": "Số ngày cá nhân 3 kết hợp với Số đường đời 3 tạo ra một ngày bùng nổ với năng lượng sáng tạo và niềm vui. Hôm nay, hãy để bản thân tự do thể hiện qua nghệ thuật, viết lách, hoặc giao tiếp. Sự tích cực và sức hút của bạn sẽ truyền cảm hứng cho mọi người xung quanh, nhưng hãy đảm bảo bạn hoàn thành một dự án cụ thể.",
-      "strength": "Sự sáng tạo vượt trội, năng lượng lạc quan và khả năng truyền cảm hứng qua lời nói hoặc hành động.",
-      "challenge": "Nguy cơ phân tán năng lượng vào quá nhiều ý tưởng có thể khiến bạn không hoàn thành được gì. Hãy tập trung vào một mục tiêu.",
-      "action": "Hoàn thành một dự án sáng tạo nhỏ, như viết một bài thơ, vẽ một bức tranh hoặc đăng một bài viết truyền cảm hứng.",
-      "spiritual_message": "Vũ trụ đang khuyến khích bạn lan tỏa niềm vui. Hãy để sự sáng tạo của bạn tỏa sáng.",
-      "lucky_color": "Hồng đào - biểu tượng của sự vui vẻ và sáng tạo.",
-      "lucky_number": 3
+      "profile": {
+        "archetype": "Người sáng tạo",
+        "element": "Lửa",
+        "compatible_numbers": [1, 5, 9],
+        "chakra": "Năng lượng vùng cổ"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay là ngày lý tưởng để bạn tỏa sáng với sự sáng tạo! Năng lượng ngày 3 cộng hưởng mạnh với bản chất vui tươi và nghệ thuật của bạn. Hãy vẽ, viết, kể chuyện, hoặc chia sẻ ý tưởng để lan tỏa niềm vui và truyền cảm hứng cho mọi người.",
+        "time_slots": {
+          "morning": {
+            "focus": "Sáng tạo",
+            "action": "Vẽ một bức doodle hoặc viết một đoạn văn ngắn về điều bạn yêu thích. Ví dụ: viết về một giấc mơ hoặc một kỷ niệm vui.",
+            "warning": "Đừng lo ý tưởng của bạn có hoàn hảo hay không. Hãy cứ bắt đầu!"
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "12h-2h chiều",
+            "recommendation": "Đăng một bài viết, ảnh, hoặc video sáng tạo lên mạng xã hội. Ví dụ: chia sẻ bức tranh bạn vẽ hoặc một câu chuyện hài hước."
+          },
+          "evening": {
+            "focus": "Kết nối",
+            "activity": "Gặp bạn bè để trò chuyện hoặc tham gia một buổi workshop nghệ thuật. Những cuộc gặp này sẽ khơi dậy cảm hứng."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Đề xuất một ý tưởng sáng tạo, như thiết kế mới hoặc cách trình bày độc đáo. Sự độc đáo của bạn sẽ thu hút sự chú ý.",
+          "love": "Tổ chức một buổi hẹn vui vẻ, như đi xem phim hài hoặc cùng vẽ tranh. Nếu độc thân, hãy bắt chuyện bằng một câu đùa thú vị.",
+          "finance": "Nghĩ về cách kiếm tiền từ sở thích, như bán tranh hoặc viết blog. Hôm nay là ngày tốt để bắt đầu."
+        },
+        "challenge": {
+          "description": "Bạn có thể bị phân tâm bởi quá nhiều ý tưởng cùng lúc.",
+          "solution": "Chọn một ý tưởng chính để làm trước 3h chiều. Ghi các ý tưởng khác vào sổ để xử lý sau."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sáng tạo là cách bạn kết nối với vũ trụ. Hôm nay, hãy để tâm hồn tự do bay bổng và lan tỏa niềm vui qua nghệ thuật.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một bức tranh đầy màu sắc. Hít thở sâu, cảm nhận niềm vui sáng tạo lan tỏa.",
+        "affirmation": "Tôi tỏa sáng qua sự sáng tạo và mang niềm vui đến mọi người."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFD700",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng để tăng sự sáng tạo."
+        },
+        "number": 3,
+        "direction": "Hướng Tây",
+        "object": "Bút chì màu"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn muốn sáng tạo điều gì để thể hiện bản thân? Hãy viết chi tiết về ý tưởng và cảm giác khi hoàn thành.",
+        "feedback_question": "Bạn đã tạo ra hoặc chia sẻ điều gì sáng tạo hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một hộp bút chì màu trên bàn làm việc. Màu sắc rực rỡ sẽ khơi dậy ý tưởng và niềm vui.",
+        "energy": "Vẽ một hình nhỏ trên giấy mỗi khi nghỉ giải lao. Hành động này giúp bạn duy trì năng lượng sáng tạo.",
+        "routine": "Nghe một playlist nhạc pop vui tươi vào buổi sáng để khởi động ngày với sự hứng khởi."
+      }
     },
     {
       "life_path": 4,
-      "advice": "Hôm nay, Số ngày cá nhân 3 khuyến khích bạn kết hợp tính kỷ luật với sự sáng tạo. Hãy sử dụng khả năng tổ chức của mình để biến một ý tưởng sáng tạo thành hiện thực, như lập kế hoạch cho một dự án nghệ thuật hoặc công việc. Sự cân bằng giữa cấu trúc và tự do sẽ giúp bạn đạt được kết quả đáng kinh ngạc.",
-      "strength": "Tính kỷ luật, khả năng tổ chức và sự kiên trì trong việc hoàn thành các dự án sáng tạo.",
-      "challenge": "Bạn có thể cảm thấy khó chịu khi năng lượng sáng tạo của ngày làm gián đoạn thói quen của bạn. Tránh bám vào sự cứng nhắc.",
-      "action": "Lên kế hoạch chi tiết cho một dự án sáng tạo, như thiết kế một sản phẩm hoặc tổ chức một sự kiện nhỏ.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng những giá trị lâu dài qua sự sáng tạo. Hãy tin vào khả năng của mình.",
-      "lucky_color": "Xanh lá cây - biểu tượng của sự ổn định và phát triển.",
-      "lucky_number": 4
+      "profile": {
+        "archetype": "Người tổ chức",
+        "element": "Đất",
+        "compatible_numbers": [2, 6, 8],
+        "chakra": "Năng lượng vùng chân"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 3 khuyến khích bạn kết hợp sự ngăn nắp với sáng tạo. Thay vì chỉ tập trung vào công việc, hãy thêm niềm vui vào kế hoạch của bạn, như tổ chức một sự kiện thú vị hoặc trang trí không gian. Sự ổn định của bạn sẽ làm mọi thứ trở nên sinh động.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên kế hoạch",
+            "action": "Ghi danh sách công việc nhưng thêm một hoạt động vui, như 'Tổ chức giờ nghỉ trưa với trò chơi nhóm'.",
+            "warning": "Đừng quá cứng nhắc với kế hoạch. Hãy để chỗ cho sự sáng tạo."
+          },
+          "afternoon": {
+            "focus": "Sáng tạo",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Trang trí không gian làm việc hoặc tổ chức một hoạt động nhóm, như làm bảng ý tưởng hoặc trang trí văn phòng."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Nấu một món ăn mới hoặc làm đồ thủ công. Những hoạt động này giúp bạn thư giãn và giữ niềm vui."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một buổi họp sáng tạo, như brainstorm với bảng trắng. Sự ngăn nắp của bạn sẽ làm ý tưởng nhóm nổi bật.",
+          "love": "Lên kế hoạch cho một buổi tối vui vẻ với người yêu, như nấu ăn cùng nhau. Nếu độc thân, hãy mời bạn bè làm điều gì đó thú vị.",
+          "finance": "Lập kế hoạch chi tiêu sáng tạo, như mua đồ trang trí rẻ để làm đẹp nhà. Hôm nay là ngày tốt để thử điều mới."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy khó chịu nếu kế hoạch bị rối vì sự sáng tạo tự do.",
+          "solution": "Đặt khung thời gian cho hoạt động sáng tạo, như 30 phút brainstorm, để giữ sự ngăn nắp."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự ổn định của bạn là nền tảng cho niềm vui. Hôm nay, hãy để sáng tạo làm cuộc sống của bạn thêm màu sắc.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một khu vườn đầy hoa rực rỡ. Hít thở sâu, cảm nhận sự cân bằng và niềm vui.",
+        "affirmation": "Tôi kết hợp sự ngăn nắp và sáng tạo để lan tỏa niềm vui."
+      },
+      "luck": {
+        "color": {
+          "hex": "#32CD32",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh lá để tăng sự ổn định và sáng tạo."
+        },
+        "number": 4,
+        "direction": "Hướng Đông Nam",
+        "object": "Sổ kế hoạch"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn sẽ thêm niềm vui vào kế hoạch nào? Hãy viết về ý tưởng và cảm giác khi thực hiện.",
+        "feedback_question": "Bạn đã tổ chức hoặc sáng tạo điều gì thú vị hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một cuốn sổ kế hoạch đầy màu sắc trên bàn. Nó giúp bạn ghi ý tưởng sáng tạo mà vẫn ngăn nắp.",
+        "energy": "Đặt một chậu cây nhỏ trên bàn, như cây lưỡi hổ. Màu xanh sẽ truyền cảm hứng và niềm vui.",
+        "routine": "Thêm một hoạt động vui vào lịch sáng, như nghe một bài nhạc yêu thích trước khi làm việc."
+      }
     },
     {
       "life_path": 5,
-      "advice": "Số ngày cá nhân 3 mang đến cơ hội để bạn khám phá sự sáng tạo và tự do. Hãy tận dụng tinh thần phiêu lưu của mình để thử những ý tưởng mới hoặc tham gia các hoạt động giao tiếp sôi nổi. Hôm nay là ngày để bạn tỏa sáng trong các cuộc trò chuyện hoặc dự án sáng tạo, nhưng hãy đảm bảo bạn không mất tập trung.",
-      "strength": "Tinh thần cởi mở, khả năng thích nghi và năng lượng sáng tạo thu hút mọi người.",
-      "challenge": "Nguy cơ bị cuốn vào quá nhiều hoạt động có thể khiến bạn kiệt sức. Hãy ưu tiên những ý tưởng quan trọng nhất.",
-      "action": "Tham gia một lớp học sáng tạo, như hội họa, viết lách hoặc nhảy múa, để khám phá tiềm năng của bạn.",
-      "spiritual_message": "Vũ trụ đang mở ra những cơ hội sáng tạo. Hãy đón nhận sự tự do và niềm vui.",
-      "lucky_color": "Cam sáng - biểu tượng của sự năng động và sáng tạo.",
-      "lucky_number": 5
+      "profile": {
+        "archetype": "Người khám phá",
+        "element": "Khí",
+        "compatible_numbers": [1, 3, 7],
+        "chakra": "Năng lượng vùng cổ"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 3 cộng hưởng với tinh thần tự do của bạn, tạo cơ hội để khám phá và chia sẻ niềm vui. Hãy thử điều mới, như học một kỹ năng hoặc kể chuyện, để lan tỏa năng lượng tích cực. Sự linh hoạt của bạn sẽ làm mọi người hứng khởi.",
+        "time_slots": {
+          "morning": {
+            "focus": "Khám phá",
+            "action": "Thử một hoạt động mới, như xem video dạy vẽ hoặc nấu món ăn lạ. Ví dụ: 'Hôm nay mình sẽ thử làm bánh quy!'",
+            "warning": "Đừng làm quá nhiều việc cùng lúc. Tập trung vào một trải nghiệm để tận hưởng."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Kể một câu chuyện thú vị hoặc đăng bài về trải nghiệm mới. Ví dụ: chia sẻ ảnh món ăn bạn vừa nấu lên mạng xã hội."
+          },
+          "evening": {
+            "focus": "Kết nối",
+            "activity": "Gặp bạn bè để chia sẻ về ngày của bạn hoặc tham gia một sự kiện xã hội. Những cuộc gặp sẽ mang lại niềm vui."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Đề xuất một ý tưởng mới, như tổ chức team-building ngoài trời. Sự năng động của bạn sẽ truyền cảm hứng.",
+          "love": "Rủ người yêu thử một hoạt động mới, như học nhảy. Nếu độc thân, hãy bắt chuyện với ai đó bằng một câu chuyện thú vị.",
+          "finance": "Cân nhắc kiếm tiền từ sở thích, như làm video về du lịch. Hôm nay là ngày tốt để lên ý tưởng."
+        },
+        "challenge": {
+          "description": "Bạn có thể bị phân tâm bởi quá nhiều ý tưởng hoặc trải nghiệm mới.",
+          "solution": "Chọn một hoạt động để làm trước 2h chiều. Ghi các ý tưởng khác vào sổ để xử lý sau."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự tự do của bạn là nguồn sáng tạo vô tận. Hôm nay, hãy để những trải nghiệm mới lan tỏa niềm vui và kết nối.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một cánh chim bay tự do trên bầu trời. Hít thở sâu, cảm nhận niềm vui.",
+        "affirmation": "Tôi khám phá và lan tỏa niềm vui qua sự sáng tạo."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF8C00",
+          "usage": "Mặc áo hoặc mang phụ kiện màu cam để tăng sự năng động."
+        },
+        "number": 5,
+        "direction": "Hướng Tây Bắc",
+        "object": "Tạp chí"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn muốn khám phá điều gì mới để lan tỏa niềm vui? Hãy viết về ý tưởng và cảm giác của bạn.",
+        "feedback_question": "Bạn đã thử hoặc chia sẻ điều gì thú vị hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một cuốn tạp chí đầy màu sắc trên bàn. Nó sẽ truyền cảm hứng để bạn khám phá và sáng tạo.",
+        "energy": "Mở cửa sổ để không khí trong lành tràn vào. Điều này giúp bạn cảm thấy sảng khoái và sẵn sàng thử điều mới.",
+        "routine": "Thử một con đường mới khi đi làm hoặc đi học. Hành động nhỏ này mang lại cảm giác phiêu lưu và vui tươi."
+      }
     },
     {
       "life_path": 6,
-      "advice": "Hôm nay, Số ngày cá nhân 3 khuyến khích bạn sử dụng lòng trắc ẩn của mình để lan tỏa niềm vui và sáng tạo trong gia đình hoặc cộng đồng. Hãy tổ chức một hoạt động vui vẻ hoặc chia sẻ một ý tưởng tích cực để kết nối mọi người. Sự quan tâm của bạn sẽ tạo ra những khoảnh khắc đáng nhớ.",
-      "strength": "Lòng trắc ẩn, khả năng chăm sóc và sự sáng tạo trong việc xây dựng mối quan hệ.",
-      "challenge": "Bạn có thể bị cuốn vào việc làm hài lòng người khác mà quên mất nhu cầu cá nhân. Hãy giữ sự cân bằng.",
-      "action": "Tổ chức một buổi gặp mặt gia đình hoặc bạn bè, như một bữa tiệc nhỏ hoặc một hoạt động sáng tạo chung.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn lan tỏa tình yêu qua sự sáng tạo. Hãy để trái tim dẫn lối.",
-      "lucky_color": "Hồng phấn - biểu tượng của tình yêu và niềm vui.",
-      "lucky_number": 6
+      "profile": {
+        "archetype": "Người chăm sóc",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 9],
+        "chakra": "Năng lượng vùng tim"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 3 khuyến khích bạn lan tỏa tình yêu và niềm vui qua sự sáng tạo. Khả năng chăm sóc của bạn sẽ tỏa sáng khi bạn tổ chức các hoạt động vui vẻ hoặc chia sẻ cảm xúc tích cực với gia đình, bạn bè. Một hành động tử tế sẽ làm ngày thêm ý nghĩa.",
+        "time_slots": {
+          "morning": {
+            "focus": "Quan tâm",
+            "action": "Làm một món quà nhỏ, như viết thiệp cảm ơn hoặc chuẩn bị bữa sáng cho gia đình. Ví dụ: 'Chúc bố mẹ ngày mới vui, con làm bánh đây!'",
+            "warning": "Đừng ôm đồm quá nhiều. Hãy làm những việc nhỏ nhưng ý nghĩa."
+          },
+          "afternoon": {
+            "focus": "Sáng tạo",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Tổ chức một hoạt động vui cho nhóm, như làm đồ thủ công hoặc trang trí nhà. Ví dụ: cùng bạn bè làm vòng hoa."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Tắm nước ấm với tinh dầu hoặc đọc sách thiếu nhi. Những hoạt động này giúp bạn thư giãn và giữ niềm vui."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một hoạt động nhóm vui vẻ, như giờ nghỉ trưa với trò chơi. Sự quan tâm của bạn sẽ tạo môi trường tích cực.",
+          "love": "Làm một món quà handmade cho người yêu, như khung ảnh. Nếu độc thân, hãy chia sẻ niềm vui với bạn bè.",
+          "finance": "Mua một món đồ nhỏ để làm đẹp nhà, như nến thơm. Nó sẽ mang lại niềm vui và năng lượng tích cực."
+        },
+        "challenge": {
+          "description": "Bạn có thể quên chăm sóc bản thân khi tập trung vào người khác.",
+          "solution": "Dành 10 phút buổi trưa nghỉ ngơi, như nhắm mắt thư giãn hoặc ăn một bữa nhẹ."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Tình yêu của bạn là nguồn sáng tạo mạnh mẽ. Hôm nay, hãy để sự chăm sóc và niềm vui lan tỏa qua từng hành động.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một trái tim tỏa ánh sáng hồng. Hít thở sâu, cảm nhận niềm vui lan tỏa.",
+        "affirmation": "Tôi lan tỏa tình yêu và niềm vui qua sự sáng tạo."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF69B4",
+          "usage": "Mặc áo hoặc mang phụ kiện màu hồng để tăng sự ấm áp."
+        },
+        "number": 6,
+        "direction": "Hướng Tây Nam",
+        "object": "Nến thơm"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn muốn làm gì để lan tỏa niềm vui? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tạo ra khoảnh khắc yêu thương nào hôm nay? Hãy chia sẻ câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một cây nến thơm trên bàn làm việc, như mùi lavender. Hương thơm sẽ tạo không khí vui vẻ và thư giãn.",
+        "energy": "Làm một món quà nhỏ cho đồng nghiệp, như bánh quy. Hành động này lan tỏa niềm vui và sự quan tâm.",
+        "routine": "Hát một bài hát yêu thích vào buổi sáng để khởi động ngày với sự hứng khởi."
+      }
     },
     {
       "life_path": 7,
-      "advice": "Số ngày cá nhân 3 mang đến cơ hội để bạn kết hợp trí tuệ sâu sắc với sự sáng tạo. Hãy sử dụng trực giác của mình để khám phá những ý tưởng mới hoặc tham gia các cuộc thảo luận triết học. Hôm nay, việc chia sẻ suy nghĩ của bạn sẽ giúp bạn kết nối với những người có cùng chí hướng.",
-      "strength": "Trí tuệ sâu sắc, trực giác nhạy bén và khả năng sáng tạo trong tư duy.",
-      "challenge": "Tránh cô lập bản thân hoặc bị cuốn vào những suy nghĩ quá trừu tượng. Hãy chia sẻ ý tưởng của bạn với người khác.",
-      "action": "Viết một bài luận ngắn hoặc tham gia một cuộc thảo luận về một chủ đề tâm linh hoặc triết học mà bạn yêu thích.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến sự thật qua sự sáng tạo. Hãy tin vào trực giác của mình.",
-      "lucky_color": "Tím - biểu tượng của sự tâm linh và sáng tạo.",
-      "lucky_number": 7
+      "profile": {
+        "archetype": "Người tìm kiếm",
+        "element": "Nước",
+        "compatible_numbers": [1, 5, 9],
+        "chakra": "Năng lượng vùng trán"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 3 mời gọi bạn chia sẻ trí tuệ qua sự sáng tạo. Thay vì suy ngẫm một mình, hãy viết, vẽ, hoặc kể chuyện để lan tỏa niềm vui và kết nối. Một ý tưởng sâu sắc được chia sẻ sẽ truyền cảm hứng cho người khác.",
+        "time_slots": {
+          "morning": {
+            "focus": "Sáng tạo",
+            "action": "Viết một đoạn nhật ký về điều bạn đang tò mò, như một câu hỏi triết lý hoặc một ý tưởng mới. Ví dụ: 'Hạnh phúc thực sự là gì?'",
+            "warning": "Đừng giữ ý tưởng cho riêng mình. Hãy chia sẻ để lan tỏa niềm vui."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Đăng một bài viết hoặc kể chuyện về điều bạn học được. Ví dụ: chia sẻ một bài học từ sách hoặc một trải nghiệm sâu sắc."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Nghe nhạc không lời hoặc vẽ một bức tranh trừu tượng. Những hoạt động này giúp bạn thư giãn và giữ năng lượng sáng tạo."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ một ý tưởng sâu sắc trong cuộc họp, như cách cải thiện quy trình. Sự thông thái của bạn sẽ được đánh giá cao.",
+          "love": "Trò chuyện với người yêu về một cuốn sách hoặc ý tưởng bạn yêu thích. Cuộc nói chuyện sâu sắc sẽ tăng sự gắn kết.",
+          "finance": "Cân nhắc mua sách hoặc khóa học để học điều mới. Hôm nay là ngày tốt để đầu tư vào tri thức."
+        },
+        "challenge": {
+          "description": "Bạn có thể muốn ở một mình quá lâu, bỏ lỡ cơ hội chia sẻ niềm vui.",
+          "solution": "Nhắn tin hoặc trò chuyện ngắn với bạn bè để chia sẻ ý tưởng. Điều này giúp bạn cân bằng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Trí tuệ của bạn là ánh sáng sáng tạo. Hôm nay, hãy chia sẻ để lan tỏa niềm vui và kết nối với mọi người.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một bầu trời đầy sao lấp lánh. Hít thở sâu, cảm nhận niềm vui sáng tạo.",
+        "affirmation": "Tôi chia sẻ trí tuệ và niềm vui qua sự sáng tạo."
+      },
+      "luck": {
+        "color": {
+          "hex": "#800080",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím để tăng trực giác."
+        },
+        "number": 7,
+        "direction": "Hướng Đông Bắc",
+        "object": "Sách"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn muốn chia sẻ ý tưởng sâu sắc nào? Hãy viết về nó và cảm giác khi thực hiện.",
+        "feedback_question": "Bạn đã chia sẻ hoặc học được điều gì thú vị hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một cuốn sách yêu thích trên bàn làm việc. Nó sẽ truyền cảm hứng để bạn chia sẻ trí tuệ và sáng tạo.",
+        "energy": "Viết một câu hỏi thú vị trên giấy, như 'Điều gì làm mình cười hôm nay?' Nó sẽ khơi dậy niềm vui.",
+        "routine": "Đọc một trang sách hoặc bài viết ngắn vào buổi sáng để khởi động ngày với sự tò mò."
+      }
     },
     {
       "life_path": 8,
-      "advice": "Hôm nay, Số ngày cá nhân 3 khuyến khích bạn sử dụng sự sáng tạo để thúc đẩy mục tiêu tài chính và sự nghiệp. Hãy nghĩ ra những cách tiếp cận mới mẻ để giải quyết vấn đề hoặc trình bày ý tưởng của bạn một cách thu hút. Sự tự tin và sáng tạo sẽ giúp bạn đạt được thành công lớn.",
-      "strength": "Khả năng lãnh đạo, sự sáng tạo trong chiến lược và năng lượng thu hút trong giao tiếp.",
-      "challenge": "Tránh bị cuốn vào những ý tưởng không thực tế hoặc thiếu tập trung vào mục tiêu chính.",
-      "action": "Tạo một bài thuyết trình sáng tạo hoặc viết một kế hoạch kinh doanh mới để trình bày với đối tác hoặc cấp trên.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn đạt được thành công qua sự sáng tạo. Hãy tin vào khả năng lãnh đạo của mình.",
-      "lucky_color": "Vàng kim - biểu tượng của sự thịnh vượng và sáng tạo.",
-      "lucky_number": 8
+      "profile": {
+        "archetype": "Người quản lý",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 6],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 3 khuyến khích bạn lãnh đạo với sự sáng tạo và niềm vui. Thay vì chỉ tập trung vào mục tiêu, hãy tổ chức các hoạt động thú vị hoặc chia sẻ ý tưởng để truyền cảm hứng cho nhóm. Khả năng quản lý của bạn sẽ làm mọi thứ sinh động.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên kế hoạch",
+            "action": "Ghi danh sách nhiệm vụ nhưng thêm một hoạt động vui, như 'Tổ chức buổi họp với trò chơi khởi động'.",
+            "warning": "Đừng quá nghiêm túc. Hãy để niềm vui làm nhóm gắn kết hơn."
+          },
+          "afternoon": {
+            "focus": "Sáng tạo",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Tổ chức một buổi brainstorm sáng tạo hoặc trang trí không gian làm việc. Ví dụ: làm bảng ý tưởng với sticker."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Tập yoga hoặc làm đồ thủ công. Những hoạt động này giúp bạn thư giãn và giữ năng lượng sáng tạo."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tổ chức một hoạt động nhóm sáng tạo, như team-building. Sự lãnh đạo của bạn sẽ truyền cảm hứng.",
+          "love": "Lên kế hoạch cho một buổi tối vui vẻ với người yêu, như đi xem show hài. Nếu độc thân, hãy mời bạn bè làm điều thú vị.",
+          "finance": "Cân nhắc đầu tư vào một dự án sáng tạo, như làm nội dung online. Hôm nay là ngày tốt để lên ý tưởng."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy căng thẳng nếu nhóm không theo kế hoạch sáng tạo.",
+          "solution": "Đặt khung thời gian linh hoạt cho hoạt động sáng tạo, như 1 giờ brainstorm. Hít thở sâu để giữ bình tĩnh."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự lãnh đạo của bạn trở nên mạnh mẽ hơn khi có niềm vui. Hôm nay, hãy để sáng tạo làm nhóm của bạn tỏa sáng.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một sân khấu rực rỡ. Hít thở sâu, cảm nhận niềm vui lãnh đạo.",
+        "affirmation": "Tôi lãnh đạo với sự sáng tạo và lan tỏa niềm vui."
+      },
+      "luck": {
+        "color": {
+          "hex": "#C0C0C0",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xám để tăng sự ổn định."
+        },
+        "number": 8,
+        "direction": "Hướng Nam",
+        "object": "Bảng trắng"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn sẽ lãnh đạo nhóm sáng tạo như thế nào? Hãy viết về kế hoạch và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tổ chức hoặc truyền cảm hứng điều gì hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một bảng trắng nhỏ trên bàn để ghi ý tưởng nhóm. Nó giúp bạn lãnh đạo sáng tạo và ngăn nắp.",
+        "energy": "Viết một câu slogan vui cho nhóm, như 'Cùng sáng tạo, cùng tỏa sáng!' Nó sẽ truyền cảm hứng.",
+        "routine": "Tổ chức một hoạt động ngắn vào buổi sáng, như kể một câu chuyện vui để khởi động nhóm."
+      }
     },
     {
       "life_path": 9,
-      "advice": "Số ngày cá nhân 3 mang đến cơ hội để bạn lan tỏa lòng nhân ái qua sự sáng tạo. Hãy sử dụng tầm nhìn lớn của mình để truyền cảm hứng cho cộng đồng, như viết một bài đăng cảm động hoặc tổ chức một sự kiện từ thiện. Hôm nay, sự sáng tạo của bạn sẽ tạo ra tác động tích cực lâu dài.",
-      "strength": "Tinh thần nhân đạo, khả năng sáng tạo và sự truyền cảm hứng qua hành động.",
-      "challenge": "Bạn có thể cảm thấy thất vọng nếu kết quả không như mong đợi. Hãy tập trung vào quá trình thay vì kết quả.",
-      "action": "Viết một bài đăng truyền cảm hứng trên mạng xã hội hoặc tham gia một dự án sáng tạo vì cộng đồng.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa ánh sáng qua sự sáng tạo. Hãy để lòng nhân ái dẫn lối.",
-      "lucky_color": "Trắng ngọc trai - biểu tượng của sự tinh khiết và sáng tạo.",
-      "lucky_number": 9
+      "profile": {
+        "archetype": "Người chia sẻ",
+        "element": "Lửa",
+        "compatible_numbers": [3, 6, 9],
+        "chakra": "Năng lượng vùng đầu"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 3 cộng hưởng với lòng nhân ái và sự sáng tạo của bạn. Đây là ngày để bạn lan tỏa niềm vui qua nghệ thuật, câu chuyện, hoặc hành động tử tế. Một bài viết hoặc món quà nhỏ sẽ làm thế giới thêm đẹp.",
+        "time_slots": {
+          "morning": {
+            "focus": "Chia sẻ",
+            "action": "Đăng một câu chuyện tích cực hoặc hình ảnh vui lên mạng xã hội. Ví dụ: 'Hôm nay, hãy làm ai đó cười!'",
+            "warning": "Đừng để cảm xúc tiêu cực làm bạn chùn bước. Hãy tập trung vào niềm vui."
+          },
+          "afternoon": {
+            "focus": "Sáng tạo",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Làm một món quà handmade hoặc viết một bài thơ ngắn để tặng bạn bè. Hành động này lan tỏa niềm vui."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết nhật ký về những khoảnh khắc vui hôm nay. Điều này giúp bạn cảm nhận giá trị của sự chia sẻ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ ý tưởng cải thiện môi trường làm việc, như tổ chức ngày hội sáng tạo. Sự nhiệt huyết của bạn sẽ truyền cảm hứng.",
+          "love": "Làm một món quà nhỏ cho người yêu, như viết thư tay. Nếu độc thân, hãy chia sẻ niềm vui với bạn bè.",
+          "finance": "Mua một món đồ nhỏ để tặng ai đó, như sách. Hành động này mang lại niềm vui và ý nghĩa."
+        },
+        "challenge": {
+          "description": "Bạn có thể mệt mỏi nếu cố gắng làm quá nhiều việc sáng tạo.",
+          "solution": "Đặt giới hạn thời gian, như 1 giờ làm quà handmade. Nghỉ ngơi để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Lòng nhân ái của bạn là nguồn sáng tạo vô tận. Hôm nay, hãy để niềm vui lan tỏa qua từng hành động tử tế.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng ánh sáng ấm áp tỏa ra từ bạn. Hít thở sâu, cảm nhận niềm vui chia sẻ.",
+        "affirmation": "Tôi lan tỏa niềm vui và lòng nhân ái qua sự sáng tạo."
+      },
+      "luck": {
+        "color": {
+          "hex": "#F5F5F5",
+          "usage": "Mặc áo hoặc mang phụ kiện màu trắng để tăng sự thanh thản."
+        },
+        "number": 9,
+        "direction": "Hướng Tây",
+        "object": "Giấy màu"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã làm gì để lan tỏa niềm vui? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã chia sẻ hoặc sáng tạo điều gì hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một tập giấy màu trên bàn làm việc. Màu sắc rực rỡ sẽ truyền cảm hứng để bạn sáng tạo và chia sẻ.",
+        "energy": "Tặng một lời khen hoặc món quà nhỏ cho đồng nghiệp. Hành động này lan tỏa niềm vui và năng lượng tích cực.",
+        "routine": "Vẽ một hình nhỏ vào buổi sáng, như mặt cười. Hành động này khởi động ngày với sự vui tươi."
+      }
     },
     {
       "life_path": 11,
-      "advice": "Số ngày cá nhân 3 kết hợp với Số đường đời 11 tạo ra một ngày tràn đầy năng lượng sáng tạo và tâm linh. Hãy sử dụng trực giác của mình để thể hiện những ý tưởng cao cả thông qua nghệ thuật, viết lách hoặc giao tiếp. Hôm nay, bạn có thể truyền cảm hứng mạnh mẽ cho những người xung quanh.",
-      "strength": "Trực giác nhạy bén, khả năng sáng tạo và tầm nhìn tâm linh vượt thời gian.",
-      "challenge": "Sự nhạy cảm quá mức có thể khiến bạn dễ bị phân tâm. Hãy giữ sự tập trung vào mục tiêu chính.",
-      "action": "Viết một bài viết tâm linh hoặc tạo một tác phẩm nghệ thuật để chia sẻ thông điệp tích cực với cộng đồng.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến ánh sáng qua sự sáng tạo. Hãy tin vào trực giác của mình.",
-      "lucky_color": "Bạc ánh kim - biểu tượng của sự trực giác và sáng tạo.",
-      "lucky_number": 11
+      "profile": {
+        "archetype": "Người truyền cảm hứng",
+        "element": "Khí",
+        "compatible_numbers": [2, 4, 7],
+        "chakra": "Năng lượng vùng trán"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 3 cộng hưởng với khả năng truyền cảm hứng của bạn. Hãy chia sẻ tầm nhìn, câu chuyện, hoặc ý tưởng sáng tạo để lan tỏa niềm vui. Một bài viết hoặc cuộc trò chuyện sâu sắc sẽ làm mọi người cảm thấy được truyền cảm hứng.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lắng nghe",
+            "action": "Viết một ý tưởng truyền cảm hứng vào sổ, như 'Hôm nay mình sẽ kể một câu chuyện thay đổi ai đó.'",
+            "warning": "Đừng nghi ngờ trực giác. Hãy tin rằng bạn đang truyền cảm hứng đúng cách."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Đăng một bài viết truyền cảm hứng hoặc kể một câu chuyện ý nghĩa. Ví dụ: chia sẻ về cách bạn vượt qua khó khăn."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Ngắm hoàng hôn hoặc vẽ một bức tranh trừu tượng. Những hoạt động này giúp bạn nạp năng lượng sáng tạo."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ tầm nhìn lớn với nhóm, như kế hoạch cải thiện dự án. Sự nhiệt huyết của bạn sẽ truyền cảm hứng.",
+          "love": "Trò chuyện sâu sắc với người yêu về ước mơ. Cuộc nói chuyện này sẽ tăng sự gắn kết.",
+          "finance": "Cân nhắc đầu tư vào học tập, như khóa học sáng tạo. Hôm nay là ngày tốt để nghĩ lớn."
+        },
+        "challenge": {
+          "description": "Bạn có thể mệt mỏi nếu cảm nhận quá nhiều năng lượng sáng tạo.",
+          "solution": "Dành 10 phút đi dạo hoặc thiền để nạp năng lượng. Hít thở sâu để cân bằng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Trực giác của bạn là nguồn sáng tạo mạnh mẽ. Hôm nay, hãy chia sẻ ánh sáng để truyền cảm hứng và lan tỏa niềm vui.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngọn đèn sáng tỏa ánh sáng tím. Hít thở sâu, cảm nhận niềm vui sáng tạo.",
+        "affirmation": "Tôi truyền cảm hứng và lan tỏa niềm vui qua sự sáng tạo."
+      },
+      "luck": {
+        "color": {
+          "hex": "#E6E6FA",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím nhạt để tăng trực giác."
+        },
+        "number": 11,
+        "direction": "Hướng Đông",
+        "object": "Nến tím"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn muốn truyền cảm hứng điều gì? Hãy viết về ý tưởng và cách bạn sẽ làm.",
+        "feedback_question": "Bạn đã truyền cảm hứng hoặc sáng tạo điều gì hôm nay? Hãy chia sẻ câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một cây nến tím trên bàn làm việc. Ánh sáng dịu dàng sẽ truyền cảm hứng để bạn chia sẻ ý tưởng.",
+        "energy": "Viết một câu nói truyền cảm hứng, như 'Hôm nay mình sẽ lan tỏa ánh sáng!' Nó sẽ khơi dậy niềm vui.",
+        "routine": "Nghe một bài nhạc không lời vào buổi sáng để khởi động ngày với sự sáng tạo."
+      }
     },
     {
       "life_path": 22,
-      "advice": "Hôm nay, Số ngày cá nhân 3 khuyến khích bạn kết hợp tầm nhìn thực tế với sự sáng tạo. Hãy sử dụng khả năng tổ chức của mình để biến một ý tưởng sáng tạo thành hiện thực, như lập kế hoạch cho một dự án lớn hoặc thiết kế một sản phẩm mới. Sự cân bằng giữa thực tế và sáng tạo sẽ dẫn bạn đến thành công.",
-      "strength": "Tầm nhìn thực tế, khả năng tổ chức và sự sáng tạo trong việc xây dựng những giá trị lâu dài.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải cân bằng giữa sáng tạo và kỷ luật. Tránh ôm đồm quá nhiều ý tưởng.",
-      "action": "Lập kế hoạch chi tiết cho một dự án sáng tạo, như thiết kế một sản phẩm hoặc tổ chức một sự kiện.",
-      "spiritual_message": "Vũ trụ hỗ trợ bạn xây dựng những di sản qua sự sáng tạo. Hãy tin vào khả năng của mình.",
-      "lucky_color": "Xám đá - biểu tượng của sự ổn định và sáng tạo.",
-      "lucky_number": 22
+      "profile": {
+        "archetype": "Người xây dựng",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 8],
+        "chakra": "Năng lượng vùng chân"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 3 khuyến khích bạn xây dựng dự án với sự sáng tạo và niềm vui. Tầm nhìn lớn của bạn sẽ tỏa sáng khi bạn thêm màu sắc vào kế hoạch, như tổ chức sự kiện thú vị hoặc thiết kế mới. Hãy lan tỏa năng lượng tích cực qua hành động.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lên kế hoạch",
+            "action": "Ghi ý tưởng cho dự án sáng tạo, như thiết kế mới hoặc sự kiện nhóm. Ví dụ: 'Tổ chức ngày hội sáng tạo cho công ty.'",
+            "warning": "Đừng quá tập trung vào chi tiết. Hãy ưu tiên niềm vui trong kế hoạch."
+          },
+          "afternoon": {
+            "focus": "Sáng tạo",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Bắt đầu dự án sáng tạo, như làm mô hình hoặc thiết kế. Ví dụ: vẽ phác thảo cho ý tưởng mới."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết nhật ký về tiến độ dự án và niềm vui hôm nay. Điều này giúp bạn cảm thấy tự hào."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lãnh đạo một dự án sáng tạo, như thiết kế sản phẩm mới. Sự tầm nhìn của bạn sẽ truyền cảm hứng.",
+          "love": "Lên kế hoạch cho một buổi tối sáng tạo với người yêu, như làm đồ thủ công. Nếu độc thân, hãy mời bạn bè làm điều thú vị.",
+          "finance": "Cân nhắc đầu tư vào dự án sáng tạo, như mở cửa hàng online. Hôm nay là ngày tốt để lên ý tưởng."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy áp lực khi kết hợp sáng tạo và mục tiêu lớn.",
+          "solution": "Chia dự án thành các bước nhỏ, như hoàn thành một phần mỗi ngày. Nghỉ ngơi để giữ niềm vui."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Tầm nhìn của bạn trở nên mạnh mẽ hơn khi có sáng tạo. Hôm nay, hãy để niềm vui dẫn dắt hành trình xây dựng.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một tòa nhà đầy màu sắc. Hít thở sâu, cảm nhận niềm vui sáng tạo.",
+        "affirmation": "Tôi xây dựng với sự sáng tạo và lan tỏa niềm vui."
+      },
+     "luck": {
+        "color": {
+          "hex": "#2F4F4F",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xám đậm để tăng sự tập trung."
+        },
+        "number": 22,
+        "direction": "Hướng Nam",
+        "object": "Mô hình nhà"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn sẽ xây dựng sáng tạo nào? Hãy viết về kế hoạch và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tiến bộ sáng tạo như thế nào trong dự án hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một mô hình nhà trên bàn làm việc. Nó nhắc bạn về tầm nhìn lớn và sáng tạo.",
+        "energy": "Vẽ một phác thảo nhỏ cho dự án, như logo hoặc ý tưởng. Hành động này khơi dậy niềm vui.",
+        "routine": "Viết một câu mục tiêu sáng tạo vào buổi sáng, như 'Hôm nay mình sẽ bắt đầu thiết kế!'"
+      }
     },
     {
       "life_path": 33,
-      "advice": "Số ngày cá nhân 3 kết hợp với Số đường đời 33 mang đến một ngày tràn đầy năng lượng sáng tạo và lòng trắc ẩn. Hãy sử dụng khả năng lãnh đạo tâm linh của bạn để truyền cảm hứng qua nghệ thuật hoặc giao tiếp. Hôm nay, sự sáng tạo của bạn sẽ giúp nâng đỡ cộng đồng và lan tỏa tình yêu thương.",
-      "strength": "Lòng trắc ẩn vô điều kiện, khả năng sáng tạo và sự truyền cảm hứng qua hành động.",
-      "challenge": "Nguy cơ hy sinh bản thân quá nhiều có thể khiến bạn kiệt sức. Hãy dành thời gian để tái tạo năng lượng.",
-      "action": "Tạo một tác phẩm nghệ thuật hoặc viết một bài đăng truyền cảm hứng để hỗ trợ cộng đồng.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa ánh sáng qua sự sáng tạo. Hãy để tình yêu dẫn lối.",
-      "lucky_color": "Vàng nhạt - biểu tượng của sự chữa lành và sáng tạo.",
-      "lucky_number": 33
+      "profile": {
+        "archetype": "Người truyền cảm hứng",
+        "element": "Khói",
+        "compatible_numbers": [3, 6, 9],
+        "chakra": "Năng lượng vùng sáng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 3 cộng hưởng với sứ mệnh truyền cảm hứng của bạn. Đây là ngày để chia sẻ kiến thức, câu chuyện, hoặc sáng tạo để lan tỏa niềm vui. Một bài giảng, bài viết, hoặc hành động tử tế sẽ nâng cao tinh thần mọi người.",
+        "time_slots": {
+          "morning": {
+            "focus": "Chia sẻ",
+            "action": "Đăng một mẹo hoặc câu chuyện sáng tạo, mạng xã hội như 'Hôm nay, hãy vẽ một điều bạn mơ ước!'",
+            "warning": "Tránh bị cuốn vào chi tiết. Hãy tập trung vào việc lan tỏa niềm vui."
+          },
+          "afternoon": {
+            "focus": "Dạy học",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Hướng dẫn bạn bè hoặc đồng nghiệp về kỹ năng sáng tạo, như viết hoặc vẽ. Ví dụ: dạy cách làm thiệp handmade."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Thiền nhẹ hoặc nghe nhạc vui tươi. Suy ngẫm về cách bạn truyền cảm hứng hôm nay."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ kinh nghiệm trong một buổi họp, như cách tổ chức sáng tạo. Sự nhiệt huyết của bạn sẽ truyền cảm.",
+          "love": "Kể một câu chuyện truyền cảm hứng cho người yêu, như ước mơ của bạn. Cuộc trò chuyện này sẽ tăng sự gắn kết.",
+          "finance": "Đầu tư vào học tập, như mua khóa học nghệ thuật. Hôm nay là ngày tốt để chia sẻ và sáng tạo."
+        },
+        "challenge": {
+          "description": "Bạn có thể kiệt sức nếu cố gắng truyền cảm hứng quá nhiều.",
+          "solution": "Dành 10 phút nghỉ ngơi, như uống trà hoặc đi dạo ngắn để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sứ mệnh của bạn là lan tỏa niềm vui và sáng tạo. Hôm nay, hãy để mọi hành động trở thành ánh sáng truyền cảm hứng.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngọn đèn tỏa sáng. Hít thở sâu, cảm nhận niềm vui lan tỏa.",
+        "affirmation": "Tôi chia sẻ kiến thức và niềm vui với sự sáng tạo."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFFACD",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng nhạt để tăng sự sáng tạo."
+        },
+        "number": 33,
+        "direction": "Hướng Đông",
+        "object": "Sổ sáng tạo"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn muốn truyền cảm hứng điều gì qua sáng tạo? Hãy viết về ý tưởng và cách bạn thực hiện.",
+        "feedback_question": "Bạn đã chia sẻ hoặc truyền cảm hứng gì hôm nay? Hãy kể câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một cuốn sổ sáng tạo trên bàn để ghi ý tưởng. Một cuốn sổ màu sắc sẽ truyền cảm hứng để bạn chia sẻ.",
+        "energy": "Chia sẻ một mẹo sáng tạo với đồng nghiệp, như 'Thử vẽ ý tưởng trước khi họp!'",
+        "routine": "Viết một câu nói vui vào buổi sáng, như 'Hôm nay mình sẽ truyền cảm hứng!'"
+      }
     }
-  ]
+  ],
+  "premium_features": {
+    "personalized": {
+      "birth_chart_compatibility": "Hôm nay bạn hợp với người số 3, đặc biệt trong các hoạt động sáng tạo và vui chơi.",
+      "custom_ritual": "Vào 1h chiều, bạn hãy thử vẽ một bức tranh nhỏ hoặc nghe một bài nhạc yêu thích để khơi dậy niềm vui."
+    },
+    "community": {
+      "trending_hashtag": "#SángTạoHômNay",
+      "group_activity": "Thử thách 24h: Làm một điều sáng tạo, như vẽ, viết, hoặc kể chuyện, và chia sẻ với cộng đồng!"
+    }
+  }
 }

@@ -1,14 +1,13 @@
 <template>
-  <div class="mx-auto p-6 bg-white rounded-xl shadow-lg sm:p-4">
-    <!-- Header với ngày hiện tại -->
-    <div class="mb-8 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100">
-      <h1 class="text-2xl font-bold text-indigo-700">Thần số học hôm nay</h1>
-      <p class="text-indigo-600 mt-1">Ngày: {{ currentDate }}</p>
+  <div class="mx-auto container p-6 bg-white rounded-xl shadow-lg sm:p-4">
+    <!-- Header với thông tin metadata -->
+    <div class="mb-8 p-4 bg-gradient-to-r from-teal-50 to-blue-50 rounded-lg border border-teal-100">
+      <h1 class="text-2xl font-bold text-teal-700">Thần số học hôm nay</h1>
+      <p class="text-teal-600 mt-1">Ngày: {{ currentDate }}</p>
+    
+      <p v-if="dailyPrediction" class="text-teal-600 mt-1">Chủ đề: {{ universalTheme }}</p>
     </div>
-
-    <!-- Kết quả -->
-    <div v-if="dailyPrediction" class="space-y-10">
-      <div class="bg-gradient-to-r from-teal-50 to-blue-50 p-8 rounded-2xl border border-teal-100 shadow-sm text-center">
+    <div class="mb-10 bg-gradient-to-r from-teal-50 to-blue-50 p-8 rounded-2xl border border-teal-100 shadow-sm text-center">
         <div class="flex flex-col items-center">
           <div class="relative">
             <!-- Animated circle background -->
@@ -42,10 +41,108 @@
             </div>
           </div>
           <h3 class="text-2xl font-bold text-teal-800 mt-6">Số ngày cá nhân: {{ personalDay }}</h3>
+          <p class="text-lg text-gray-600 mt-2 max-w-lg">{{ dailyPrediction.daily_forecast.overview }}</p>
         </div>
       </div>
+    <!-- Thông tin năng lượng vũ trụ -->
+    <section v-if="currentPersonalDayData" class="mb-10 p-6 bg-teal-50 rounded-xl">
+      <h3 class="text-xl font-semibold text-teal-700 mb-4 flex items-center">
+        <svg class="h-6 w-6 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+          />
+        </svg>
+        Năng lượng vũ trụ
+      </h3>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-white p-4 rounded-lg shadow-sm">
+          <p class="text-gray-700"><strong>Pha mặt trăng:</strong> {{ currentPersonalDayData.universal_energy.moon_phase }}</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-sm">
+          <p class="text-gray-700"><strong>Ảnh hưởng chiêm tinh:</strong> {{ currentPersonalDayData.universal_energy.astrological_impact }}</p>
+        </div>
+      </div>
+    </section>
 
-      <!-- Grid layout cho các thông tin dự đoán -->
+    <!-- Kết quả dự đoán -->
+    <div v-if="dailyPrediction" class="space-y-10">
+      <!-- Số ngày cá nhân -->
+      
+
+      <!-- Hồ sơ cá nhân -->
+      <section class="p-6 bg-blue-50 rounded-xl">
+        <h3 class="text-xl font-semibold text-blue-700 mb-4 flex items-center">
+          <svg class="h-6 w-6 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+            />
+          </svg>
+          Hồ sơ cá nhân
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <p class="text-gray-700"><strong>Nguyên mẫu:</strong> {{ dailyPrediction.profile.archetype }}</p>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <p class="text-gray-700"><strong>Nguyên tố:</strong> {{ dailyPrediction.profile.element }}</p>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <p class="text-gray-700"><strong>Số tương thích:</strong> {{ dailyPrediction.profile.compatible_numbers.join(', ') }}</p>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <p class="text-gray-700"><strong>Luân xa:</strong> {{ dailyPrediction.profile.chakra }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lịch trình hàng ngày -->
+      <section class="p-6 bg-teal-50 rounded-xl">
+        <h3 class="text-xl font-semibold text-teal-700 mb-4 flex items-center">
+          <svg class="h-6 w-6 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
+          </svg>
+          Lịch trình hôm nay
+        </h3>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h4 class="text-lg font-medium text-teal-600 mb-2">Buổi sáng</h4>
+            <ul class="space-y-2 text-gray-700">
+              <li><strong>Trọng tâm:</strong> {{ dailyPrediction.daily_forecast.time_slots.morning.focus }}</li>
+              <li><strong>Hành động:</strong> {{ dailyPrediction.daily_forecast.time_slots.morning.action }}</li>
+              <li><strong>Cảnh báo:</strong> {{ dailyPrediction.daily_forecast.time_slots.morning.warning }}</li>
+            </ul>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h4 class="text-lg font-medium text-teal-600 mb-2">Buổi chiều</h4>
+            <ul class="space-y-2 text-gray-700">
+              <li><strong>Trọng tâm:</strong> {{ dailyPrediction.daily_forecast.time_slots.afternoon.focus }}</li>
+              <li><strong>Thời điểm vàng:</strong> {{ dailyPrediction.daily_forecast.time_slots.afternoon.golden_hour }}</li>
+              <li><strong>Đề xuất:</strong> {{ dailyPrediction.daily_forecast.time_slots.afternoon.recommendation }}</li>
+              <li v-if="dailyPrediction.daily_forecast.time_slots.afternoon.warning"><strong>Cảnh báo:</strong> {{ dailyPrediction.daily_forecast.time_slots.afternoon.warning }}</li>
+            </ul>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h4 class="text-lg font-medium text-teal-600 mb-2">Buổi tối</h4>
+            <ul class="space-y-2 text-gray-700">
+              <li><strong>Trọng tâm:</strong> {{ dailyPrediction.daily_forecast.time_slots.evening.focus }}</li>
+              <li><strong>Hoạt động:</strong> {{ dailyPrediction.daily_forecast.time_slots.evening.activity }}</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grid layout cho lời khuyên và thách thức -->
       <div class="grid md:grid-cols-2 gap-6">
         <!-- Lời khuyên -->
         <section class="p-5 bg-green-50 rounded-lg">
@@ -55,23 +152,20 @@
             </svg>
             <h3 class="text-xl font-semibold text-green-700">Lời khuyên</h3>
           </div>
-          <p class="text-gray-700">{{ dailyPrediction.advice }}</p>
-        </section>
-
-        <!-- Điểm mạnh -->
-        <section class="p-5 bg-blue-50 rounded-lg">
-          <div class="flex items-center mb-3">
-            <svg class="h-5 w-5 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 10V3L4 14h7v7l9-11h-7z"
-              />
-            </svg>
-            <h3 class="text-xl font-semibold text-blue-700">Điểm mạnh</h3>
-          </div>
-          <p class="text-gray-700">{{ dailyPrediction.strength }}</p>
+          <ul class="space-y-3 text-gray-700">
+            <li class="flex items-start">
+              <span class="text-green-500 mr-2">•</span>
+              <span><strong>Công việc:</strong> {{ dailyPrediction.success_tools.advice.career }}</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-green-500 mr-2">•</span>
+              <span><strong>Tình yêu:</strong> {{ dailyPrediction.success_tools.advice.love }}</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-green-500 mr-2">•</span>
+              <span><strong>Tài chính:</strong> {{ dailyPrediction.success_tools.advice.finance }}</span>
+            </li>
+          </ul>
         </section>
 
         <!-- Thách thức -->
@@ -87,27 +181,142 @@
             </svg>
             <h3 class="text-xl font-semibold text-amber-700">Thách thức</h3>
           </div>
-          <p class="text-gray-700">{{ dailyPrediction.challenge }}</p>
-        </section>
-
-        <!-- Hành động đề xuất -->
-        <section class="p-5 bg-pink-50 rounded-lg">
-          <div class="flex items-center mb-3">
-            <svg class="h-5 w-5 text-pink-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <h3 class="text-xl font-semibold text-pink-700">Hành động đề xuất</h3>
-          </div>
-          <p class="text-gray-700">{{ dailyPrediction.action }}</p>
+          <ul class="space-y-3 text-gray-700">
+            <li class="flex items-start">
+              <span class="text-amber-500 mr-2">•</span>
+              <span>{{ dailyPrediction.success_tools.challenge.description }}</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-amber-500 mr-2">•</span>
+              <span><strong>Giải pháp:</strong> {{ dailyPrediction.success_tools.challenge.solution }}</span>
+            </li>
+          </ul>
         </section>
       </div>
 
-      <!-- Thông điệp tâm linh, màu sắc và con số may mắn -->
+      <!-- Hướng dẫn tâm linh -->
+      <section class="p-6 bg-teal-50 rounded-xl">
+        <h3 class="text-xl font-semibold text-teal-700 mb-4 flex items-center">
+          <svg class="h-6 w-6 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+            />
+          </svg>
+          Hướng dẫn tâm linh
+        </h3>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h4 class="text-lg font-medium text-teal-600 mb-2">Thông điệp</h4>
+            <p class="text-gray-700">{{ dailyPrediction.spiritual_guidance.message }}</p>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h4 class="text-lg font-medium text-teal-600 mb-2">Thiền</h4>
+            <p class="text-gray-700">{{ dailyPrediction.spiritual_guidance.meditation }}</p>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h4 class="text-lg font-medium text-teal-600 mb-2">Khẳng định</h4>
+            <p class="text-gray-700">{{ dailyPrediction.spiritual_guidance.affirmation }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- May mắn -->
+      <section class="p-6 bg-blue-50 rounded-xl">
+        <h3 class="text-xl font-semibold text-blue-700 mb-4 flex items-center">
+          <svg class="h-6 w-6 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          May mắn
+        </h3>
+        <div class="grid md:grid-cols-4 gap-4">
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h4 class="text-lg font-medium text-blue-600 mb-2">Màu sắc</h4>
+            <p class="text-gray-700">
+              {{ dailyPrediction.luck.color.usage }}
+            </p>
+            <div
+              class="w-6 h-6 rounded-full mt-2 border border-gray-300"
+              :style="{ backgroundColor: dailyPrediction.luck.color.hex }"
+            ></div>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h4 class="text-lg font-medium text-blue-600 mb-2">Con số</h4>
+            <p class="text-gray-700">{{ dailyPrediction.luck.number }}</p>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h4 class="text-lg font-medium text-blue-600 mb-2">Hướng</h4>
+            <p class="text-gray-700">{{ dailyPrediction.luck.direction }}</p>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h4 class="text-lg font-medium text-blue-600 mb-2">Vật may mắn</h4>
+            <p class="text-gray-700">{{ dailyPrediction.luck.object }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tương tác -->
+      <section class="p-6 bg-pink-50 rounded-xl">
+        <h3 class="text-xl font-semibold text-pink-700 mb-4 flex items-center">
+          <svg class="h-6 w-6 text-pink-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15.828a2 2 0 01-2.828 0l-4.243-4.243a2 2 0 010-2.828 2 2 0 012.828 0l2.829 2.829a2 2 0 002.828 0l4.243-4.243z"
+            />
+          </svg>
+          Tương tác
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h4 class="text-lg font-medium text-pink-600 mb-2">Câu hỏi nhật ký</h4>
+            <p class="text-gray-700">{{ dailyPrediction.interactive.journal_prompt }}</p>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h4 class="text-lg font-medium text-pink-600 mb-2">Câu hỏi phản hồi</h4>
+            <p class="text-gray-700">{{ dailyPrediction.interactive.feedback_question }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gợi ý hàng ngày -->
+      <section class="p-6 bg-teal-50 rounded-xl">
+        <h3 class="text-xl font-semibold text-teal-700 mb-4 flex items-center">
+          <svg class="h-6 w-6 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          Gợi ý hàng ngày
+        </h3>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h4 class="text-lg font-medium text-teal-600 mb-2">Không gian làm việc</h4>
+            <p class="text-gray-700">{{ dailyPrediction.daily_tips.workspace }}</p>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h4 class="text-lg font-medium text-teal-600 mb-2">Tăng năng lượng</h4>
+            <p class="text-gray-700">{{ dailyPrediction.daily_tips.energy }}</p>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h4 class="text-lg font-medium text-teal-600 mb-2">Thói quen</h4>
+            <p class="text-gray-700">{{ dailyPrediction.daily_tips.routine }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cá nhân và cộng đồng -->
       <section class="p-6 bg-purple-50 rounded-xl">
         <h3 class="text-xl font-semibold text-purple-700 mb-4 flex items-center">
           <svg class="h-6 w-6 text-purple-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -115,25 +324,25 @@
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
-              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
             />
           </svg>
-          Thông tin hôm nay
+          Cá nhân và cộng đồng
         </h3>
-        <div class="grid md:grid-cols-3 gap-6">
+        <div class="grid md:grid-cols-2 gap-4">
           <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-purple-600 mb-2">Thông điệp tâm linh</h4>
-            <p class="text-gray-700">{{ dailyPrediction.spiritual_message }}</p>
+            <h4 class="text-lg font-medium text-purple-600 mb-2">Cá nhân hóa</h4>
+            <ul class="space-y-2 text-gray-700">
+              <li><strong>Tương thích biểu đồ sinh:</strong> {{ currentPersonalDayData.premium_features.personalized.birth_chart_compatibility }}</li>
+              <li><strong>Nhiệm vụ tùy chỉnh:</strong> {{ currentPersonalDayData.premium_features.personalized.custom_quest }}</li>
+            </ul>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-purple-600 mb-2">Màu sắc may mắn</h4>
-            <p class="text-gray-700" :style="{ color: luckyColorHex }">
-              {{ dailyPrediction.lucky_color }}
-            </p>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-purple-600 mb-2">Con số may mắn</h4>
-            <p class="text-gray-700">{{ dailyPrediction.lucky_number }}</p>
+            <h4 class="text-lg font-medium text-purple-600 mb-2">Cộng đồng</h4>
+            <ul class="space-y-2 text-gray-700">
+              <li><strong>Hashtag thịnh hành:</strong> {{ currentPersonalDayData.premium_features.community.trending_hashtag }}</li>
+              <li><strong>Hoạt động nhóm:</strong> {{ currentPersonalDayData.premium_features.community.group_activity }}</li>
+            </ul>
           </div>
         </div>
       </section>
@@ -173,6 +382,9 @@ const error = ref('');
 const dailyPrediction = ref(null);
 const personalDay = ref(null);
 const lifePath = ref(null);
+const universalTheme = ref('');
+const currentPersonalDayData = ref(null);
+
 const currentDate = computed(() => {
   const today = new Date();
   return `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
@@ -207,54 +419,21 @@ const calculatePersonalDay = (birthDate, currentDate) => {
   return reduced;
 };
 
-// Hàm chuyển đổi màu sắc sang mã hex
-const luckyColorHex = computed(() => {
-  if (!dailyPrediction.value) return '#000000';
-  const colorMap = {
-    'Đỏ ánh kim': '#FF4040',
-    'Xanh ngọc ánh kim': '#40E0D0',
-    'Vàng ánh kim': '#FFD700',
-    'Xanh lá cây ánh kim': '#228B22',
-    'Cam ánh kim': '#FF8C00',
-    'Hồng ánh kim': '#FF69B4',
-    'Tím ánh kim': '#800080',
-    'Bạc ánh kim': '#C0C0C0',
-    'Xám ánh kim': '#808080',
-    'Trắng ánh kim': '#F5F5F5',
-    'Đỏ đậm': '#8B0000',
-    'Xanh lam đậm': '#00008B',
-    'Vàng sáng': '#FFFF00',
-    'Xanh lá cây đậm': '#006400',
-    'Cam rực rỡ': '#FF4500',
-    'Hồng phấn': '#FFC1CC',
-    'Tím đậm': '#4B0082',
-    'Vàng kim đậm': '#B8860B',
-    'Trắng ngọc trai': '#F5F6F5',
-    'Vàng nhạt': '#FFFACD',
-    'Xanh ngọc bích': '#00CED1',
-    'Vàng chanh': '#FFF44F',
-    'Xanh lá cây nhạt': '#98FB98',
-    'Cam nhạt': '#FFDAB9',
-    'Hồng phấn đậm': '#FF82AB',
-    'Tím nhạt': '#E6E6FA',
-    'Xám đậm': '#2F4F4F',
-    'Đỏ hồng': '#FF4040',
-    'Hồng nhạt': '#FFB6C1',
-  };
-  return colorMap[dailyPrediction.value.lucky_color] || '#000000';
-});
-
 // Tải dự đoán khi birthDate thay đổi
 watch(
   () => props.birthDate,
   async (newBirthDate) => {
     if (!newBirthDate) {
       error.value = 'Vui lòng cung cấp ngày sinh.';
+      dailyPrediction.value = null;
+      currentPersonalDayData.value = null;
       return;
     }
     isLoading.value = true;
     error.value = '';
     dailyPrediction.value = null;
+    universalTheme.value = '';
+    currentPersonalDayData.value = null;
 
     try {
       // Kiểm tra định dạng birthDate
@@ -269,12 +448,24 @@ watch(
       personalDay.value = calculatePersonalDay(newBirthDate, currentDate.value);
 
       // Kiểm tra personalDay hợp lệ
-      if (!personalDayData[personalDay.value]) {
-        throw new Error(`Không tìm thấy dữ liệu cho Số ngày cá nhân ${personalDay.value}.`);
+      const validPersonalDays = Object.keys(personalDayData).map(Number);
+      if (!validPersonalDays.includes(personalDay.value)) {
+        throw new Error(`Số ngày cá nhân ${personalDay.value} không được hỗ trợ. Vui lòng kiểm tra dữ liệu JSON.`);
       }
 
+      // Kiểm tra xem personalDayData có dữ liệu cho personalDay.value
+      if (!personalDayData[personalDay.value]) {
+        throw new Error(`Không tìm thấy dữ liệu cho Số ngày cá nhân ${personalDay.value}. Vui lòng thêm file JSON tương ứng.`);
+      }
+
+      // Lấy dữ liệu JSON trực tiếp
+      currentPersonalDayData.value = personalDayData[personalDay.value];
+
+      // Lấy universal theme
+      universalTheme.value = currentPersonalDayData.value.universal_energy?.theme || 'Không có chủ đề';
+
       // Tìm dự đoán phù hợp với lifePath
-      const predictions = personalDayData[personalDay.value].predictions;
+      const predictions = currentPersonalDayData.value.predictions;
       if (!predictions || !Array.isArray(predictions)) {
         throw new Error(`Dữ liệu dự đoán không hợp lệ cho Số ngày cá nhân ${personalDay.value}.`);
       }
@@ -285,7 +476,7 @@ watch(
       }
     } catch (err) {
       console.error('Lỗi khi xử lý dự đoán hàng ngày:', err);
-      error.value = err.message;
+      error.value = err.message || 'Đã xảy ra lỗi khi tải dự đoán. Vui lòng thử lại.';
     } finally {
       isLoading.value = false;
     }
@@ -293,13 +484,3 @@ watch(
   { immediate: true }
 );
 </script>
-
-<style scoped>
-/* Responsive adjustments */
-@media (max-width: 640px) {
-  .mx-auto {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-}
-</style>

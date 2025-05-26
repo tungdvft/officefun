@@ -1,126 +1,769 @@
 {
-  "personal_day": 2,
-  "date": "2025-05-25",
+  "metadata": {
+    "date": "2025-05-26",
+    "personal_day": 2,
+    "update_frequency": "hàng ngày",
+    "version": "2.0"
+  },
+  "universal_energy": {
+    "theme": "Xây dựng mối quan hệ và hòa hợp",
+    "moon_phase": "Trăng lưỡi liềm đầu tháng",
+    "astrological_impact": "Năng lượng khuyến khích sự đồng cảm và hợp tác"
+  },
   "predictions": [
     {
       "life_path": 1,
-      "advice": "Hôm nay, năng lượng của Số ngày cá nhân 2 khuyến khích bạn làm việc nhóm và tìm kiếm sự hòa hợp, dù bản chất lãnh đạo của bạn muốn dẫn đầu. Hãy sử dụng khả năng thuyết phục của mình để xây dựng mối quan hệ bền vững và hỗ trợ đồng đội đạt được mục tiêu chung. Sự kiên nhẫn và lắng nghe sẽ giúp bạn tạo ra kết quả tích cực.",
-      "strength": "Khả năng lãnh đạo mềm dẻo, sự tự tin trong giao tiếp và tinh thần hợp tác khi cần thiết.",
-      "challenge": "Bạn có thể cảm thấy khó chịu khi phải làm việc nhóm hoặc phụ thuộc vào người khác. Tránh áp đặt ý kiến của mình quá mạnh mẽ.",
-      "action": "Tổ chức một cuộc họp hoặc trò chuyện với đồng nghiệp để chia sẻ ý tưởng và xây dựng kế hoạch chung. Ghi chú lại các ý kiến để đảm bảo mọi người được lắng nghe.",
-      "spiritual_message": "Vũ trụ nhắc bạn rằng sức mạnh thực sự đến từ sự kết nối. Hãy mở lòng để đồng hành cùng người khác.",
-      "lucky_color": "Xanh lam nhạt - biểu tượng của sự hòa hợp và tin cậy.",
-      "lucky_number": 2
+      "profile": {
+        "archetype": "Người dẫn đầu",
+        "element": "Lửa",
+        "compatible_numbers": [3, 5, 7],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng của ngày 2 khuyến khích bạn chậm lại và tập trung vào việc xây dựng mối quan hệ với người khác. Dù bạn thường thích dẫn đầu, đây là cơ hội để lắng nghe, hợp tác, và tạo sự hòa hợp trong nhóm. Một cuộc trò chuyện chân thành hoặc một hành động hỗ trợ sẽ giúp bạn củng cố vị trí của mình.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lắng nghe",
+            "action": "Dành 10 phút trò chuyện với đồng nghiệp hoặc bạn bè, hỏi về kế hoạch của họ hôm nay. Ví dụ: 'Cậu có dự định gì thú vị không?' Điều này giúp bạn xây dựng sự kết nối.",
+            "warning": "Đừng cố kiểm soát cuộc trò chuyện. Hãy để người khác chia sẻ và cảm nhận sự đồng cảm."
+          },
+          "afternoon": {
+            "focus": "Hợp tác",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Tham gia làm việc nhóm hoặc hỗ trợ một dự án chung. Ví dụ: giúp đồng nghiệp hoàn thành slide thuyết trình hoặc cùng bạn bè lên kế hoạch cho một sự kiện."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Ngồi cà phê với một người bạn hoặc gọi điện trò chuyện với gia đình. Những khoảnh khắc kết nối này sẽ làm bạn cảm thấy ấm áp và trọn vẹn."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hỗ trợ một đồng nghiệp, như chia sẻ tài liệu hoặc đưa ra ý kiến xây dựng. Sự hợp tác của bạn sẽ tạo ấn tượng tốt và mở ra cơ hội mới.",
+          "love": "Lắng nghe người bạn thích hoặc người yêu. Hỏi họ về một ngày của họ và chia sẻ cảm xúc chân thành, như 'Anh thấy vui khi nghe em kể chuyện'.",
+          "finance": "Cân nhắc chia sẻ chi phí với bạn bè hoặc gia đình, như mua chung một món đồ. Điều này giúp tiết kiệm và tăng sự gắn kết."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy khó chịu nếu phải phụ thuộc vào người khác hoặc làm việc nhóm.",
+          "solution": "Thử tin tưởng người khác một chút. Giao một nhiệm vụ nhỏ cho đồng nghiệp và tập trung vào kết quả chung."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Hôm nay, sức mạnh của bạn nằm ở sự đồng cảm và kết nối. Một hành động tử tế hoặc một lời nói chân thành có thể tạo nên sự khác biệt lớn trong mối quan hệ của bạn.",
+        "meditation": "Ngồi yên 5 phút, nhắm mắt và tưởng tượng một chiếc cầu nối bạn với những người xung quanh. Hít thở sâu, cảm nhận sự hài hòa lan tỏa.",
+        "affirmation": "Tôi xây dựng mối quan hệ bền vững với sự chân thành và đồng cảm."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFA500",
+          "usage": "Mặc áo hoặc đeo phụ kiện màu cam để tăng sự ấm áp và kết nối."
+        },
+        "number": 2,
+        "direction": "Hướng Tây",
+        "object": "Khăn tay"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn muốn kết nối với ai, và bạn sẽ làm gì để xây dựng mối quan hệ đó? Hãy viết chi tiết.",
+        "feedback_question": "Bạn đã làm gì để tăng sự hòa hợp với người khác hôm nay? Hãy chia sẻ khoảnh khắc của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Sắp xếp lại bàn làm việc để tạo không gian mời gọi. Dọn sạch giấy tờ lộn xộn và đặt một món đồ nhỏ như khung ảnh bạn bè để nhắc nhở về sự kết nối.",
+        "energy": "Đặt một cốc nước trên bàn làm việc. Nước tượng trưng cho sự hài hòa và giúp bạn cảm thấy bình yên khi làm việc.",
+        "routine": "Gửi một tin nhắn hỏi thăm ai đó vào buổi sáng, như 'Chúc cậu ngày mới vui!' Hành động này khởi động ngày với năng lượng tích cực."
+      }
     },
     {
       "life_path": 2,
-      "advice": "Số ngày cá nhân 2 kết hợp với Số đường đời 2 tạo ra một ngày tràn đầy năng lượng hòa hợp và trực giác. Hôm nay, hãy tập trung vào việc xây dựng mối quan hệ, giải quyết xung đột và lắng nghe cảm xúc của chính mình cũng như người khác. Sự nhạy cảm của bạn sẽ là chìa khóa để tạo ra sự cân bằng trong mọi khía cạnh của cuộc sống.",
-      "strength": "Trực giác nhạy bén, khả năng thấu hiểu sâu sắc và tài năng hòa giải trong các tình huống căng thẳng.",
-      "challenge": "Bạn có thể dễ bị ảnh hưởng bởi cảm xúc của người khác, dẫn đến sự thiếu quyết đoán. Hãy giữ ranh giới cá nhân để tránh kiệt sức.",
-      "action": "Dành thời gian viết một lá thư hoặc tin nhắn chân thành cho một người quan trọng trong cuộc sống của bạn, thể hiện sự quan tâm và hỗ trợ.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến với sự hòa hợp. Hãy tin vào trái tim và để tình yêu dẫn lối.",
-      "lucky_color": "Xanh ngọc - biểu tượng của sự dịu dàng và kết nối cảm xúc.",
-      "lucky_number": 6
+      "profile": {
+        "archetype": "Người kết nối",
+        "element": "Nước",
+        "compatible_numbers": [4, 6, 8],
+        "chakra": "Năng lượng vùng bụng dưới"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay là ngày lý tưởng để bạn tỏa sáng với khả năng kết nối và tạo sự hòa hợp. Năng lượng của ngày 2 cộng hưởng mạnh với bản chất nhạy cảm và đồng cảm của bạn. Hãy tận dụng cơ hội để trò chuyện, hỗ trợ, và xây dựng mối quan hệ sâu sắc hơn với mọi người xung quanh.",
+        "time_slots": {
+          "morning": {
+            "focus": "Giao tiếp",
+            "action": "Gọi điện hoặc nhắn tin cho một người bạn hoặc người thân để hỏi thăm. Ví dụ: 'Mẹ ơi, hôm nay mẹ khỏe không? Con muốn nghe mẹ kể chuyện.'",
+            "warning": "Đừng để cảm xúc làm bạn chùn bước. Nếu thấy ngại, hãy bắt đầu bằng một tin nhắn ngắn."
+          },
+          "afternoon": {
+            "focus": "Hỗ trợ",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Giúp một đồng nghiệp hoặc bạn bè với việc nhỏ, như hướng dẫn cách làm việc hoặc cùng lên ý tưởng cho một dự án. Sự tử tế của bạn sẽ được đón nhận nồng nhiệt."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Xem một bộ phim tình cảm hoặc nghe nhạc nhẹ nhàng. Nếu có thể, mời một người bạn cùng xem để tăng sự gắn kết."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Tham gia một cuộc họp nhóm và đóng góp ý kiến nhẹ nhàng. Ví dụ: đề xuất cách cải thiện giao tiếp trong nhóm. Sự tinh tế của bạn sẽ được đánh giá cao.",
+          "love": "Dành thời gian lắng nghe người yêu hoặc người bạn thích. Một cuộc trò chuyện chân thành, như chia sẻ ước mơ, sẽ làm mối quan hệ sâu sắc hơn.",
+          "finance": "Kiểm tra chi tiêu và tránh mua sắm bốc đồng. Nếu có thể, chia sẻ chi phí ăn uống với bạn bè để tiết kiệm."
+        },
+        "challenge": {
+          "description": "Bạn có thể dễ bị ảnh hưởng bởi ý kiến người khác, dẫn đến do dự khi đưa ra quyết định.",
+          "solution": "Dành 5 phút suy nghĩ một mình trước khi đồng ý với bất kỳ đề xuất nào. Viết ra ưu và nhược điểm nếu cần."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự tử tế và nhạy cảm của bạn là chìa khóa để tạo ra sự hòa hợp. Hôm nay, hãy để trái tim dẫn lối, bạn sẽ nhận lại nhiều hơn những gì bạn cho đi.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một hồ nước phẳng lặng phản chiếu ánh trăng. Hít thở sâu, cảm nhận sự bình yên và kết nối.",
+        "affirmation": "Tôi lan tỏa sự hòa hợp và yêu thương đến mọi người xung quanh."
+      },
+      "luck": {
+        "color": {
+          "hex": "#ADD8E6",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh nhạt để tăng sự đồng cảm."
+        },
+        "number": 6,
+        "direction": "Hướng Bắc",
+        "object": "Vòng tay"
+      },
+      "interactive": {
+        "journal_prompt": "Ai là người bạn muốn trò chuyện sâu sắc hơn hôm nay? Hãy viết về lý do và cách bạn sẽ làm điều đó.",
+        "feedback_question": "Hôm nay bạn đã tạo được mối liên kết nào ý nghĩa? Hãy chia sẻ câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một bức ảnh gia đình hoặc bạn bè trên bàn làm việc. Nhìn vào nó sẽ nhắc bạn về những mối quan hệ quý giá và làm bạn cảm thấy ấm áp.",
+        "energy": "Đeo một chiếc vòng tay đơn giản để nhắc nhở về sự kết nối. Mỗi lần nhìn thấy, bạn sẽ cảm thấy gần gũi hơn với mọi người.",
+        "routine": "Dành 5 phút buổi sáng viết lời cảm ơn cho ai đó, dù chỉ là trong tâm trí. Ví dụ: 'Cảm ơn cậu vì luôn lắng nghe mình.'"
+      }
     },
     {
       "life_path": 3,
-      "advice": "Hôm nay, năng lượng của Số ngày cá nhân 2 khuyến khích bạn sử dụng sự sáng tạo của mình để kết nối với người khác. Hãy chia sẻ ý tưởng, tham gia các cuộc trò chuyện vui vẻ hoặc tổ chức một hoạt động nhóm. Sự tích cực và khả năng giao tiếp của bạn sẽ giúp xây dựng mối quan hệ bền chặt hơn.",
-      "strength": "Năng lượng lạc quan, khả năng truyền cảm hứng qua lời nói và sự sáng tạo trong giao tiếp.",
-      "challenge": "Tránh phân tán năng lượng vào những cuộc trò chuyện không hiệu quả hoặc bị cuốn vào cảm xúc của người khác.",
-      "action": "Tổ chức một buổi gặp mặt nhỏ với bạn bè hoặc đồng nghiệp để chia sẻ ý tưởng sáng tạo hoặc thảo luận về một dự án chung.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn lan tỏa niềm vui. Hãy để sự sáng tạo của bạn kết nối mọi người.",
-      "lucky_color": "Hồng đào - biểu tượng của sự vui vẻ và kết nối.",
-      "lucky_number": 3
+      "profile": {
+        "archetype": "Người sáng tạo",
+        "element": "Lửa",
+        "compatible_numbers": [1, 5, 9],
+        "chakra": "Năng lượng vùng cổ"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng của ngày 2 khuyến khích bạn sử dụng sự sáng tạo để kết nối với người khác. Thay vì chỉ tập trung vào ý tưởng cá nhân, hãy chia sẻ niềm vui và cảm hứng qua các cuộc trò chuyện, nghệ thuật, hoặc hoạt động nhóm. Một nụ cười hoặc câu chuyện thú vị sẽ làm ngày của bạn rực rỡ hơn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Chia sẻ",
+            "action": "Đăng một câu nói vui hoặc hình ảnh sáng tạo lên mạng xã hội. Ví dụ: một bức vẽ doodle hoặc một câu quote như 'Hôm nay, hãy cười thật tươi!'",
+            "warning": "Đừng lo lắng về việc ý tưởng của bạn có hoàn hảo hay không. Hãy chia sẻ với sự tự nhiên."
+          },
+          "afternoon": {
+            "focus": "Hợp tác",
+            "golden_hour": "12h-2h chiều",
+            "recommendation": "Cùng đồng nghiệp hoặc bạn bè làm một việc sáng tạo, như brainstorm ý tưởng cho dự án hoặc tổ chức một buổi họp vui vẻ."
+          },
+          "evening": {
+            "focus": "Kết nối",
+            "activity": "Gặp bạn bè để trò chuyện hoặc tham gia một sự kiện nghệ thuật, như xem triển lãm. Những hoạt động này sẽ nuôi dưỡng tâm hồn bạn."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Đề xuất một ý tưởng sáng tạo trong nhóm, như thiết kế mới hoặc cách trình bày thú vị. Sự độc đáo của bạn sẽ thu hút sự chú ý.",
+          "love": "Tổ chức một buổi hẹn vui vẻ, như vẽ tranh cùng người yêu hoặc đi xem phim hài. Nếu độc thân, hãy bắt chuyện với ai đó bằng một câu đùa vui.",
+          "finance": "Cân nhắc kiếm tiền từ sở thích, như bán tranh hoặc viết nội dung. Hôm nay là ngày tốt để chia sẻ ý tưởng với người khác."
+        },
+        "challenge": {
+          "description": "Bạn có thể bị phân tâm bởi quá nhiều ý tưởng hoặc không muốn làm việc nhóm.",
+          "solution": "Chọn một ý tưởng để chia sẻ với nhóm trước 3h chiều. Ghi các ý tưởng khác vào sổ để xử lý sau."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự sáng tạo của bạn là cầu nối đưa mọi người lại gần nhau. Hôm nay, hãy dùng nghệ thuật và niềm vui để lan tỏa năng lượng tích cực.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một bức tranh đầy màu sắc. Hít thở sâu, cảm nhận niềm vui lan tỏa từ bạn đến mọi người.",
+        "affirmation": "Tôi kết nối với người khác qua sự sáng tạo và niềm vui."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFFFE0",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng nhạt để tăng sự sáng tạo."
+        },
+        "number": 3,
+        "direction": "Hướng Đông",
+        "object": "Sổ tay"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn muốn chia sẻ điều sáng tạo nào với ai? Hãy viết về ý tưởng và cảm giác khi thực hiện.",
+        "feedback_question": "Bạn đã lan tỏa niềm vui hoặc sáng tạo như thế nào hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Trang trí bàn làm việc bằng một món đồ vui nhộn, như sticker hoặc khung ảnh màu sắc. Một không gian sinh động sẽ khơi dậy cảm hứng.",
+        "energy": "Đặt một cuốn sổ tay nhỏ trên bàn để ghi ý tưởng bất chợt. Nó sẽ nhắc bạn chia sẻ sáng tạo với người khác.",
+        "routine": "Viết một câu nói vui vào buổi sáng, như 'Hôm nay mình sẽ làm ai đó cười!' Đọc lại để khởi động ngày mới."
+      }
     },
     {
       "life_path": 4,
-      "advice": "Số ngày cá nhân 2 mang đến cơ hội để bạn xây dựng nền tảng vững chắc thông qua hợp tác. Hãy tập trung vào việc làm việc nhóm, chia sẻ trách nhiệm và tổ chức công việc một cách hiệu quả. Sự kiên nhẫn của bạn sẽ giúp củng cố các mối quan hệ và đạt được mục tiêu chung.",
-      "strength": "Tính kỷ luật, khả năng tổ chức và sự đáng tin cậy trong các dự án nhóm.",
-      "challenge": "Bạn có thể cảm thấy khó chịu khi phải điều chỉnh kế hoạch để phù hợp với người khác. Tránh bám vào sự cứng nhắc.",
-      "action": "Hợp tác với một đồng nghiệp hoặc bạn bè để hoàn thành một nhiệm vụ cụ thể, như sắp xếp lại lịch làm việc hoặc lập kế hoạch cho một dự án.",
-      "spiritual_message": "Vũ trụ nhắc bạn rằng sự ổn định được xây dựng từ sự hợp tác. Hãy tin tưởng vào sức mạnh của tập thể.",
-      "lucky_color": "Nâu đất - biểu tượng của sự ổn định và đáng tin cậy.",
-      "lucky_number": 4
+      "profile": {
+        "archetype": "Người tổ chức",
+        "element": "Đất",
+        "compatible_numbers": [2, 6, 8],
+        "chakra": "Năng lượng vùng chân"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 2 khuyến khích bạn xây dựng sự ổn định thông qua hợp tác. Thay vì làm việc một mình, hãy làm việc nhóm và hỗ trợ người khác. Khả năng tổ chức của bạn sẽ giúp mọi người cảm thấy an tâm và tạo ra kết quả tốt hơn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Sắp xếp",
+            "action": "Dành 15 phút lên lịch làm việc nhóm hoặc phân chia nhiệm vụ. Ví dụ: gửi email xác nhận vai trò của từng người trong dự án.",
+            "warning": "Đừng quá cứng nhắc với kế hoạch. Hãy linh hoạt để mọi người cảm thấy thoải mái."
+          },
+          "afternoon": {
+            "focus": "Hỗ trợ",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Giúp một đồng nghiệp hoàn thành công việc, như kiểm tra tài liệu hoặc giải đáp thắc mắc. Sự hỗ trợ của bạn sẽ tạo sự đoàn kết."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Nấu ăn cùng gia đình hoặc đi dạo với bạn bè. Những hoạt động chung sẽ giúp bạn cảm thấy thư giãn và kết nối."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hỗ trợ nhóm hoàn thành một nhiệm vụ, như sắp xếp lịch họp hoặc chuẩn bị tài liệu. Sự đáng tin cậy của bạn sẽ được đánh giá cao.",
+          "love": "Cùng người yêu làm việc nhà, như dọn dẹp hoặc đi chợ. Những khoảnh khắc chung sẽ tăng sự gắn kết.",
+          "finance": "Lập kế hoạch chi tiêu chung với gia đình hoặc bạn bè, như chia sẻ chi phí đi chơi. Điều này giúp tiết kiệm và tăng sự hòa hợp."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy khó chịu nếu người khác không làm đúng kế hoạch.",
+          "solution": "Thử chấp nhận sự linh hoạt. Nếu có thay đổi, hãy trò chuyện với nhóm để tìm giải pháp chung."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự ổn định của bạn là nền tảng cho sự hòa hợp. Hôm nay, hãy dùng khả năng tổ chức để mang mọi người lại gần nhau.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một khu vườn gọn gàng, nơi mọi người cùng chăm sóc. Hít thở sâu, cảm nhận sự đoàn kết.",
+        "affirmation": "Tôi tạo ra sự ổn định và hòa hợp qua sự hợp tác."
+      },
+      "luck": {
+        "color": {
+          "hex": "#228B22",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh lá để tăng sự ổn định."
+        },
+        "number": 4,
+        "direction": "Hướng Đông Nam",
+        "object": "Hộp đựng bút"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn sẽ hỗ trợ ai để tạo sự hòa hợp? Hãy viết về kế hoạch và cảm giác khi thực hiện.",
+        "feedback_question": "Bạn đã làm gì để giúp nhóm hoặc ai đó hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Sắp xếp lại hộp bút hoặc tài liệu trên bàn để làm việc hiệu quả hơn. Một không gian ngăn nắp sẽ giúp bạn tập trung khi hợp tác.",
+        "energy": "Đặt một chậu cây nhỏ trên bàn, như cây thường xuân. Nó tượng trưng cho sự ổn định và làm bạn cảm thấy gần gũi với nhóm.",
+        "routine": "Ghi chú vai trò của từng người trong nhóm vào sổ tay. Việc này giúp bạn phối hợp tốt hơn và tránh nhầm lẫn."
+      }
     },
     {
       "life_path": 5,
-      "advice": "Hôm nay, Số ngày cá nhân 2 khuyến khích bạn cân bằng giữa tinh thần phiêu lưu và sự hợp tác. Hãy khám phá những cơ hội mới thông qua làm việc nhóm hoặc kết nối với những người có cùng sở thích. Sự linh hoạt của bạn sẽ giúp tạo ra những trải nghiệm thú vị và ý nghĩa.",
-      "strength": "Khả năng thích nghi nhanh, tinh thần cởi mở và năng lượng thu hút trong các mối quan hệ.",
-      "challenge": "Tránh bốc đồng hoặc thiếu tập trung khi làm việc với người khác. Hãy đảm bảo bạn tôn trọng ý kiến của đồng đội.",
-      "action": "Tham gia một hoạt động nhóm mới, như một buổi workshop hoặc sự kiện cộng đồng, để mở rộng mạng lưới quan hệ.",
-      "spiritual_message": "Vũ trụ đang mở ra những cơ hội kết nối. Hãy đón nhận sự thay đổi với trái tim rộng mở.",
-      "lucky_color": "Cam sáng - biểu tượng của sự năng động và hòa nhập.",
-      "lucky_number": 5
+      "profile": {
+        "archetype": "Người khám phá",
+        "element": "Khí",
+        "compatible_numbers": [1, 3, 7],
+        "chakra": "Năng lượng vùng cổ"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 2 mời gọi bạn khám phá sự tự do thông qua kết nối. Thay vì phiêu lưu một mình, hãy chia sẻ trải nghiệm với người khác, như đi chơi hoặc trò chuyện về những ý tưởng mới. Sự linh hoạt của bạn sẽ làm mọi người cảm thấy hứng khởi.",
+        "time_slots": {
+          "morning": {
+            "focus": "Khám phá",
+            "action": "Rủ một người bạn đi ăn sáng ở quán mới hoặc thử món ăn lạ. Ví dụ: 'Cậu muốn thử bánh mì mới ở quán gần công ty không?'",
+            "warning": "Đừng làm quá nhiều việc cùng lúc. Tập trung vào một trải nghiệm để tận hưởng trọn vẹn."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Kể một câu chuyện thú vị hoặc chia sẻ kinh nghiệm với đồng nghiệp, bạn bè. Ví dụ: kể về chuyến đi gần đây hoặc một bài học bạn mới học."
+          },
+          "evening": {
+            "focus": "Kết nối",
+            "activity": "Tham gia một sự kiện xã hội, như tiệc nhỏ hoặc câu lạc bộ. Những cuộc gặp gỡ sẽ mang lại niềm vui và ý tưởng mới."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Đề xuất một hoạt động nhóm mới, như team-building hoặc brainstorm ngoài trời. Sự năng động của bạn sẽ truyền cảm hứng.",
+          "love": "Rủ người yêu đi khám phá một địa điểm mới, như công viên hoặc quán cà phê. Nếu độc thân, hãy bắt chuyện với ai đó thú vị.",
+          "finance": "Cân nhắc chia sẻ chi phí đi chơi với bạn bè, như mua vé xem phim chung. Điều này giúp tiết kiệm và tăng sự gắn kết."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy khó tập trung khi làm việc nhóm hoặc bị phân tâm bởi quá nhiều ý tưởng.",
+          "solution": "Chọn một hoạt động để chia sẻ với nhóm trước 2h chiều. Ghi các ý tưởng khác vào sổ để xử lý sau."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự tự do của bạn trở nên ý nghĩa hơn khi được chia sẻ. Hôm nay, hãy để những trải nghiệm mới kết nối bạn với mọi người.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một cơn gió nhẹ nhàng nối bạn với những người xung quanh. Hít thở sâu, cảm nhận sự tự do.",
+        "affirmation": "Tôi khám phá thế giới và kết nối với người khác qua niềm vui."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF8C00",
+          "usage": "Mặc áo hoặc mang phụ kiện màu cam để tăng sự năng động."
+        },
+        "number": 5,
+        "direction": "Hướng Tây Bắc",
+        "object": "Balo nhỏ"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn muốn chia sẻ trải nghiệm nào với ai? Hãy viết về nó và cảm giác khi thực hiện.",
+        "feedback_question": "Bạn đã khám phá hoặc chia sẻ điều gì thú vị hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một chiếc balo nhỏ gần bàn làm việc để nhắc nhở về sự khám phá. Nó sẽ truyền cảm hứng để bạn chia sẻ trải nghiệm với người khác.",
+        "energy": "Mở cửa sổ để không khí trong lành tràn vào. Điều này giúp bạn cảm thấy sảng khoái và sẵn sàng kết nối.",
+        "routine": "Rủ một người bạn đi dạo ngắn vào buổi sáng. Hành động này khởi động ngày với sự hứng khởi và gắn kết."
+      }
     },
     {
       "life_path": 6,
-      "advice": "Số ngày cá nhân 2 kết hợp với Số đường đời 6 tạo ra một ngày lý tưởng để chăm sóc gia đình, bạn bè và cộng đồng. Hãy sử dụng lòng trắc ẩn của bạn để xây dựng sự hòa hợp và hỗ trợ những người xung quanh. Hôm nay, sự quan tâm của bạn sẽ mang lại những kết nối sâu sắc và lâu dài.",
-      "strength": "Lòng trắc ẩn, khả năng chăm sóc và xây dựng mối quan hệ bền vững. Bạn là người mang lại sự an ủi và hỗ trợ.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải đáp ứng nhu cầu của người khác. Hãy dành thời gian để chăm sóc bản thân.",
-      "action": "Tổ chức một bữa ăn tối gia đình hoặc gọi điện cho một người thân để chia sẻ và kết nối.",
-      "spiritual_message": "Vũ trụ khuyến khích bạn lan tỏa tình yêu. Hãy để trái tim dẫn lối trong mọi hành động.",
-      "lucky_color": "Hồng phấn - biểu tượng của tình yêu và sự chăm sóc.",
-      "lucky_number": 6
+      "profile": {
+        "archetype": "Người chăm sóc",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 9],
+        "chakra": "Năng lượng vùng tim"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 2 cộng hưởng mạnh với bản chất yêu thương và chăm sóc của bạn. Đây là ngày để bạn lan tỏa sự tử tế, hỗ trợ người khác, và xây dựng mối quan hệ bền vững. Một hành động quan tâm nhỏ cũng có thể tạo ra sự khác biệt lớn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Quan tâm",
+            "action": "Nấu bữa sáng cho gia đình hoặc gửi tin nhắn yêu thương cho người thân. Ví dụ: 'Chúc anh ngày mới vui, em luôn ở đây nếu anh cần!'",
+            "warning": "Đừng ôm đồm quá nhiều việc. Hãy ưu tiên chăm sóc bản thân trước khi giúp người khác."
+          },
+          "afternoon": {
+            "focus": "Hỗ trợ",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Giúp một người bạn hoặc đồng nghiệp với việc nhỏ, như mang đồ ăn trưa hoặc lắng nghe họ chia sẻ. Sự quan tâm của bạn sẽ được trân trọng."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Tắm nước ấm hoặc đọc sách nhẹ nhàng. Nếu có thể, trò chuyện với gia đình để cảm nhận sự ấm áp."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hỗ trợ đồng nghiệp hoàn thành công việc, như giúp chỉnh sửa tài liệu. Sự tử tế của bạn sẽ tạo môi trường làm việc tích cực.",
+          "love": "Làm điều gì đó đặc biệt cho người yêu, như viết thư tay hoặc nấu món ăn yêu thích. Nếu độc thân, hãy quan tâm đến một người bạn thích.",
+          "finance": "Mua một món quà nhỏ cho gia đình, như bánh ngọt, để thể hiện sự quan tâm. Điều này mang lại niềm vui và ý nghĩa."
+        },
+        "challenge": {
+          "description": "Bạn có thể quên chăm sóc bản thân khi quá tập trung vào người khác.",
+          "solution": "Dành 10 phút buổi trưa nghỉ ngơi, như nhắm mắt thư giãn hoặc ăn một bữa nhẹ lành mạnh."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Tình yêu và sự chăm sóc của bạn là nguồn năng lượng mạnh mẽ. Hôm nay, hãy để trái tim dẫn lối, bạn sẽ tạo ra những khoảnh khắc đáng nhớ.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một trái tim tỏa ánh sáng hồng. Hít thở sâu, cảm nhận tình yêu lan tỏa đến mọi người.",
+        "affirmation": "Tôi lan tỏa tình yêu và sự chăm sóc đến những người xung quanh."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF69B4",
+          "usage": "Mặc áo hoặc mang phụ kiện màu hồng để tăng sự ấm áp."
+        },
+        "number": 6,
+        "direction": "Hướng Tây Nam",
+        "object": "Lọ hoa"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn muốn làm gì để thể hiện sự quan tâm? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã tạo ra khoảnh khắc yêu thương nào hôm nay? Hãy chia sẻ câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một lọ hoa nhỏ trên bàn làm việc, như hoa cúc. Màu sắc và hương thơm sẽ tạo không khí ấm áp, giúp bạn cảm thấy thư giãn.",
+        "energy": "Đốt một cây nến thơm mùi vani vào buổi chiều. Ánh sáng dịu dàng sẽ làm bạn cảm thấy bình yên và yêu đời hơn.",
+        "routine": "Gửi một lời chúc tốt lành cho ai đó vào buổi sáng, như 'Chúc mẹ ngày mới an lành!' Hành động này lan tỏa tình yêu."
+      }
     },
     {
       "life_path": 7,
-      "advice": "Hôm nay, năng lượng của Số ngày cá nhân 2 khuyến khích bạn kết nối với người khác để chia sẻ kiến thức và suy ngẫm. Dù bạn thường thích sự tĩnh lặng, hãy mở lòng tham gia các cuộc thảo luận sâu sắc hoặc tìm kiếm sự hỗ trợ từ những người bạn tin cậy. Trực giác của bạn sẽ dẫn bạn đến những khám phá mới.",
-      "strength": "Trí tuệ sâu sắc, khả năng phân tích và trực giác nhạy bén. Bạn có thể truyền cảm hứng qua những cuộc trò chuyện ý nghĩa.",
-      "challenge": "Tránh cô lập bản thân hoặc từ chối sự hỗ trợ từ người khác. Hãy cân bằng giữa suy ngẫm cá nhân và kết nối xã hội.",
-      "action": "Tham gia một cuộc thảo luận triết học hoặc tâm linh với một người bạn, hoặc đọc một cuốn sách cùng nhau và chia sẻ cảm nhận.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến sự thật qua sự kết nối. Hãy lắng nghe và chia sẻ từ trái tim.",
-      "lucky_color": "Tím nhạt - biểu tượng của sự tâm linh và trực giác.",
-      "lucky_number": 7
+      "profile": {
+        "archetype": "Người tìm kiếm",
+        "element": "Nước",
+        "compatible_numbers": [1, 5, 9],
+        "chakra": "Năng lượng vùng trán"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 2 khuyến khích bạn kết nối với người khác thông qua sự sâu sắc và trí tuệ. Thay vì ở một mình, hãy chia sẻ suy nghĩ hoặc học hỏi từ cuộc trò chuyện. Một ý tưởng mới từ ai đó có thể mở ra cánh cửa mới cho bạn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Học hỏi",
+            "action": "Trò chuyện với một người bạn hoặc đồng nghiệp về chủ đề bạn tò mò, như sách, khoa học, hoặc triết lý. Ví dụ: 'Cậu đọc cuốn sách nào hay gần đây?'",
+            "warning": "Đừng quá khép mình. Hãy mở lòng để đón nhận ý kiến từ người khác."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Viết một bài đăng hoặc trò chuyện về điều bạn mới học được. Ví dụ: chia sẻ một bài học từ sách hoặc một ý tưởng sâu sắc."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Nghe nhạc không lời hoặc đi dạo dưới ánh trăng. Nếu có thể, trò chuyện với một người bạn thân để cảm nhận sự kết nối."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ một ý tưởng sâu sắc trong cuộc họp, như cách cải thiện quy trình. Sự thông thái của bạn sẽ được đánh giá cao.",
+          "love": "Trò chuyện với người yêu về ước mơ hoặc triết lý sống. Một cuộc nói chuyện sâu sắc sẽ tăng sự gắn kết.",
+          "finance": "Tìm hiểu về đầu tư hoặc tiết kiệm từ một người bạn đáng tin. Hôm nay là ngày tốt để học hỏi từ người khác."
+        },
+        "challenge": {
+          "description": "Bạn có thể muốn ở một mình quá lâu, dẫn đến cảm giác cô lập.",
+          "solution": "Nhắn tin hoặc gọi điện cho một người bạn để trò chuyện ngắn. Điều này giúp bạn cân bằng giữa suy ngẫm và kết nối."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Trí tuệ của bạn trở nên mạnh mẽ hơn khi được chia sẻ. Hôm nay, hãy để những cuộc trò chuyện sâu sắc kết nối bạn với thế giới.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một bầu trời đầy sao. Hít thở sâu, cảm nhận sự kết nối với trí tuệ và mọi người.",
+        "affirmation": "Tôi chia sẻ trí tuệ và học hỏi từ những người xung quanh."
+      },
+      "luck": {
+        "color": {
+          "hex": "#800080",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím để tăng trực giác."
+        },
+        "number": 7,
+        "direction": "Hướng Đông Bắc",
+        "object": "Đá thạch anh"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn học được gì từ một cuộc trò chuyện? Hãy viết về nó và cảm giác của bạn.",
+        "feedback_question": "Bạn đã chia sẻ hoặc học được điều gì sâu sắc hôm nay? Hãy kể lại khoảnh khắc đó!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn kệ sách hoặc góc làm việc để dễ tìm tài liệu. Sắp xếp sách theo chủ đề để tạo cảm giác ngăn nắp và truyền cảm hứng.",
+        "energy": "Đặt một viên đá thạch anh trên bàn. Nó giúp bạn tập trung và cảm nhận sự tĩnh lặng khi trò chuyện hoặc suy ngẫm.",
+        "routine": "Uống một cốc trà hoa cúc vào buổi chiều. Hương vị nhẹ nhàng sẽ giúp bạn thư giãn và sẵn sàng kết nối."
+      }
     },
     {
       "life_path": 8,
-      "advice": "Số ngày cá nhân 2 mang đến cơ hội để bạn xây dựng mối quan hệ trong công việc và đạt được thành công thông qua hợp tác. Hãy sử dụng khả năng lãnh đạo của mình để truyền cảm hứng và hỗ trợ đồng đội, thay vì tập trung vào quyền lực cá nhân. Sự công bằng và minh bạch sẽ giúp bạn đạt được mục tiêu lớn.",
-      "strength": "Khả năng quản lý, tổ chức và xây dựng mối quan hệ chiến lược. Bạn có sức mạnh để dẫn dắt nhóm đạt thành công.",
-      "challenge": "Tránh xu hướng kiểm soát quá mức hoặc thiếu kiên nhẫn với tiến độ của người khác. Hãy tôn trọng nhịp độ của đội nhóm.",
-      "action": "Lên kế hoạch cho một dự án nhóm hoặc đàm phán một thỏa thuận công bằng với đối tác hoặc đồng nghiệp.",
-      "spiritual_message": "Vũ trụ nhắc bạn rằng thành công thực sự đến từ sự hợp tác và công bằng. Hãy dẫn dắt bằng tấm lòng.",
-      "lucky_color": "Vàng kim - biểu tượng của sự thịnh vượng và đoàn kết.",
-      "lucky_number": 8
+      "profile": {
+        "archetype": "Người quản lý",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 6],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 2 khuyến khích bạn lãnh đạo thông qua hợp tác. Thay vì chỉ đạo, hãy lắng nghe và làm việc cùng nhóm để đạt mục tiêu. Khả năng quản lý của bạn sẽ tỏa sáng khi bạn tạo sự hòa hợp và hỗ trợ người khác.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi danh sách nhiệm vụ nhóm và phân chia công việc. Ví dụ: gửi email xác nhận vai trò của từng người trong dự án.",
+            "warning": "Đừng kiểm soát mọi thứ quá mức. Hãy tin tưởng nhóm và để họ đóng góp ý kiến."
+          },
+          "afternoon": {
+            "focus": "Hợp tác",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Làm việc cùng nhóm để hoàn thành một mục tiêu, như chuẩn bị báo cáo hoặc tổ chức sự kiện. Sự lãnh đạo nhẹ nhàng của bạn sẽ mang lại kết quả."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Tập yoga hoặc đi dạo với người thân. Những hoạt động này giúp bạn thư giãn và cảm nhận sự kết nối."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hỗ trợ nhóm hoàn thành công việc, như kiểm tra tiến độ hoặc giải đáp thắc mắc. Sự lãnh đạo của bạn sẽ tạo sự đoàn kết.",
+          "love": "Lên kế hoạch cho một buổi tối với người yêu, như đi ăn ngoài. Lắng nghe họ để tăng sự gắn kết.",
+          "finance": "Thảo luận với gia đình hoặc bạn bè về kế hoạch tài chính chung, như tiết kiệm cho chuyến đi chơi. Điều này giúp tăng sự hòa hợp."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy căng thẳng nếu nhóm không làm đúng kế hoạch.",
+          "solution": "Trò chuyện với nhóm để hiểu vấn đề và tìm giải pháp chung. Hít thở sâu để giữ bình tĩnh."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự lãnh đạo của bạn trở nên mạnh mẽ hơn khi kết hợp với sự đồng cảm. Hôm nay, hãy dẫn dắt với trái tim để tạo sự hòa hợp.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một nhóm người cùng làm việc trong sự đoàn kết. Hít thở sâu, cảm nhận sức mạnh của sự hợp tác.",
+        "affirmation": "Tôi lãnh đạo với sự đồng cảm và tạo ra sự hòa hợp."
+      },
+      "luck": {
+        "color": {
+          "hex": "#C0C0C0",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xám để tăng sự ổn định."
+        },
+        "number": 8,
+        "direction": "Hướng Nam",
+        "object": "Sổ kế hoạch"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn sẽ lãnh đạo nhóm như thế nào để tạo sự hòa hợp? Hãy viết về kế hoạch và cảm giác của bạn.",
+        "feedback_question": "Bạn đã hỗ trợ nhóm đạt mục tiêu nào hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Sắp xếp dây cáp và thiết bị trên bàn để không gian gọn gàng. Một góc làm việc ngăn nắp giúp bạn lãnh đạo nhóm hiệu quả hơn.",
+        "energy": "Đặt một cuốn sổ kế hoạch trên bàn để ghi nhiệm vụ nhóm. Nó nhắc bạn về sự hợp tác và tổ chức.",
+        "routine": "Gửi một email cảm ơn nhóm vào buổi tối, như 'Cảm ơn mọi người đã làm việc tuyệt vời!' Điều này tăng sự đoàn kết."
+      }
     },
     {
       "life_path": 9,
-      "advice": "Hôm nay, Số ngày cá nhân 2 khuyến khích bạn lan tỏa lòng nhân ái thông qua các mối quan hệ. Hãy sử dụng tầm nhìn lớn của mình để kết nối với cộng đồng và hỗ trợ những người cần giúp đỡ. Sự hào phóng và tinh thần nhân đạo của bạn sẽ tạo ra tác động tích cực lâu dài.",
-      "strength": "Tinh thần nhân đạo, khả năng truyền cảm hứng và sự sáng tạo trong việc giúp đỡ người khác.",
-      "challenge": "Bạn có thể cảm thấy thất vọng nếu kết quả không như mong đợi. Tránh để cảm xúc tiêu cực làm lu mờ lòng tốt của bạn.",
-      "action": "Tham gia một hoạt động từ thiện hoặc chia sẻ một thông điệp tích cực trên mạng xã hội để truyền cảm hứng.",
-      "spiritual_message": "Vũ trụ đang kêu gọi bạn lan tỏa ánh sáng. Hãy để lòng nhân ái dẫn lối.",
-      "lucky_color": "Trắng ngọc trai - biểu tượng của sự tinh khiết và nhân ái.",
-      "lucky_number": 9
+      "profile": {
+        "archetype": "Người chia sẻ",
+        "element": "Lửa",
+        "compatible_numbers": [3, 6, 9],
+        "chakra": "Năng lượng vùng đầu"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 2 cộng hưởng với lòng nhân ái của bạn, tạo cơ hội để bạn lan tỏa niềm vui và kết nối mọi người. Một hành động tử tế hoặc một cuộc trò chuyện ấm áp sẽ làm ngày của bạn và người khác trở nên ý nghĩa hơn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Chia sẻ",
+            "action": "Đăng một câu nói tích cực lên mạng xã hội, như 'Hôm nay, hãy làm điều gì đó tử tế!' Hoặc nhắn tin động viên một người bạn.",
+            "warning": "Đừng để cảm xúc tiêu cực làm bạn chùn bước. Nếu thấy buồn, hãy trò chuyện với ai đó để lấy lại năng lượng."
+          },
+          "afternoon": {
+            "focus": "Hỗ trợ",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Làm một việc tốt, như giúp đồng nghiệp với công việc hoặc tặng ai đó một món quà nhỏ. Hành động của bạn sẽ lan tỏa niềm vui."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết nhật ký về những khoảnh khắc kết nối hôm nay. Điều này giúp bạn cảm nhận giá trị của sự tử tế."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ ý tưởng cải thiện môi trường làm việc, như tổ chức hoạt động nhóm. Sự nhiệt huyết của bạn sẽ truyền cảm hứng.",
+          "love": "Nói lời cảm ơn với người yêu hoặc làm điều gì đó ý nghĩa, như tặng hoa. Nếu độc thân, hãy quan tâm đến một người bạn thích.",
+          "finance": "Quyên góp một khoản nhỏ hoặc mua quà cho bạn bè. Hành động này mang lại niềm vui và ý nghĩa."
+        },
+        "challenge": {
+          "description": "Bạn có thể mệt mỏi nếu cố gắng giúp quá nhiều người cùng lúc.",
+          "solution": "Đặt giới hạn thời gian cho việc hỗ trợ, như chỉ giúp trong 1 giờ. Nghỉ ngơi để nạp năng lượng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Lòng nhân ái của bạn là ánh sáng kết nối mọi người. Hôm nay, hãy để mỗi hành động tử tế trở thành một món quà cho thế giới.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng ánh sáng ấm áp tỏa ra từ bạn. Hít thở sâu, cảm nhận niềm vui của sự chia sẻ.",
+        "affirmation": "Tôi lan tỏa niềm vui và lòng nhân ái đến mọi người."
+      },
+      "luck": {
+        "color": {
+          "hex": "#F5F5F5",
+          "usage": "Mặc áo hoặc mang phụ kiện màu trắng để tăng sự thanh thản."
+        },
+        "number": 9,
+        "direction": "Hướng Tây",
+        "object": "Nến trắng"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã làm gì để lan tỏa niềm vui? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã giúp đỡ hoặc truyền cảm hứng cho ai hôm nay? Hãy chia sẻ câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một cây nến trắng nhỏ trên bàn làm việc. Ánh sáng dịu dàng sẽ tạo không khí tích cực và nhắc bạn về lòng tử tế.",
+        "energy": "Tặng một nụ cười hoặc lời khen cho đồng nghiệp. Hành động nhỏ này sẽ lan tỏa niềm vui và làm ngày của mọi người tốt hơn.",
+        "routine": "Viết một lời chúc tốt lành cho ai đó vào buổi sáng, như 'Chúc cậu ngày mới tràn đầy năng lượng!'"
+      }
     },
     {
       "life_path": 11,
-      "advice": "Số ngày cá nhân 2 kết hợp với Số đường đời 11 tạo ra một ngày tràn đầy năng lượng tâm linh và kết nối. Hãy sử dụng trực giác của mình để xây dựng mối quan hệ sâu sắc và truyền cảm hứng cho người khác. Hôm nay, bạn có thể trở thành cầu nối cho những ý tưởng cao cả và sự hòa hợp.",
-      "strength": "Trực giác nhạy bén, khả năng truyền cảm hứng và tầm nhìn tâm linh sâu sắc.",
-      "challenge": "Sự nhạy cảm quá mức có thể khiến bạn dễ bị ảnh hưởng bởi năng lượng tiêu cực. Hãy giữ sự cân bằng và bảo vệ năng lượng của mình.",
-      "action": "Thực hành thiền hoặc viết nhật ký để kết nối với trực giác, sau đó chia sẻ một thông điệp truyền cảm hứng với cộng đồng.",
-      "spiritual_message": "Vũ trụ đang dẫn bạn đến ánh sáng. Hãy tin vào trực giác và lan tỏa năng lượng tích cực.",
-      "lucky_color": "Bạc ánh kim - biểu tượng của sự trực giác và tâm linh.",
-      "lucky_number": 11
+      "profile": {
+        "archetype": "Người truyền cảm hứng",
+        "element": "Khí",
+        "compatible_numbers": [2, 4, 7],
+        "chakra": "Năng lượng vùng trán"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 2 khuyến khích bạn lan tỏa cảm hứng thông qua kết nối. Khả năng trực giác và tầm nhìn của bạn sẽ giúp mọi người cảm thấy được truyền cảm hứng. Một câu chuyện hoặc ý tưởng chia sẻ đúng lúc có thể tạo ra sự khác biệt lớn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lắng nghe",
+            "action": "Dành 5 phút ngồi yên và trò chuyện với một người bạn về ước mơ của họ. Hỏi: 'Cậu đang mơ ước điều gì lớn lao?'",
+            "warning": "Đừng nghi ngờ trực giác của bạn. Hãy tin rằng bạn đang truyền cảm hứng đúng cách."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "3h-5h chiều",
+            "recommendation": "Đăng một bài viết truyền cảm hứng hoặc kể một câu chuyện ý nghĩa với đồng nghiệp. Ví dụ: chia sẻ về cách bạn vượt qua khó khăn."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Ngắm hoàng hôn hoặc thiền nhẹ nhàng. Nếu có thể, trò chuyện với một người thân để cảm nhận sự kết nối."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ tầm nhìn lớn với nhóm, như kế hoạch cải thiện dự án. Sự nhiệt huyết của bạn sẽ truyền cảm hứng.",
+          "love": "Trò chuyện sâu sắc với người yêu về ước mơ hoặc niềm tin. Cuộc nói chuyện này sẽ tăng sự gắn kết.",
+          "finance": "Thảo luận với bạn bè về ý tưởng đầu tư hoặc tiết kiệm. Hôm nay là ngày tốt để học hỏi từ người khác."
+        },
+        "challenge": {
+          "description": "Bạn có thể mệt mỏi nếu cảm nhận quá nhiều năng lượng từ người khác.",
+          "solution": "Dành 10 phút đi dạo hoặc ngồi yên để nạp năng lượng. Hít thở sâu để cân bằng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Trực giác của bạn là ngọn đèn dẫn lối. Hôm nay, hãy chia sẻ ánh sáng đó để truyền cảm hứng và kết nối với mọi người.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngọn đèn sáng tỏa ánh sáng tím. Hít thở sâu, cảm nhận sự kết nối tâm linh.",
+        "affirmation": "Tôi truyền cảm hứng và kết nối với mọi người qua trực giác."
+      },
+      "luck": {
+        "color": {
+          "hex": "#E6E6FA",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím nhạt để tăng trực giác."
+        },
+        "number": 11,
+        "direction": "Hướng Đông",
+        "object": "Chuông gió"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn muốn truyền cảm hứng cho ai? Hãy viết về ý tưởng và cách bạn sẽ làm.",
+        "feedback_question": "Bạn đã truyền cảm hứng hoặc kết nối với ai hôm nay? Hãy chia sẻ câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một chiếc chuông gió nhỏ gần bàn làm việc. Âm thanh nhẹ nhàng sẽ nhắc bạn về sự kết nối và cảm hứng.",
+        "energy": "Viết một câu nói truyền cảm hứng trên giấy và dán lên bàn, như 'Hôm nay mình sẽ lan tỏa ánh sáng!'",
+        "routine": "Nghe một bài nhạc êm dịu vào buổi sáng để khởi động ngày với sự bình yên và kết nối."
+      }
     },
     {
       "life_path": 22,
-      "advice": "Hôm nay, năng lượng của Số ngày cá nhân 2 hỗ trợ bạn xây dựng các dự án lớn thông qua hợp tác. Hãy sử dụng tầm nhìn thực tế và khả năng tổ chức của mình để làm việc cùng đội nhóm, biến ý tưởng thành hiện thực. Sự kiên nhẫn và lắng nghe sẽ giúp bạn đạt được thành công bền vững.",
-      "strength": "Tầm nhìn thực tế, khả năng tổ chức và sự kiên trì trong việc xây dựng những di sản lâu dài.",
-      "challenge": "Bạn có thể cảm thấy áp lực khi phải điều chỉnh kế hoạch để phù hợp với người khác. Tránh sự cứng nhắc trong cách làm việc.",
-      "action": "Hợp tác với một nhóm để bắt đầu hoặc hoàn thành một bước trong dự án lớn của bạn. Lập kế hoạch chi tiết để đảm bảo tiến độ.",
-      "spiritual_message": "Vũ trụ đang hỗ trợ bạn xây dựng những giá trị bền vững. Hãy tin vào sức mạnh của sự hợp tác.",
-      "lucky_color": "Xám đá - biểu tượng của sự ổn định và thực tế.",
-      "lucky_number": 22
+      "profile": {
+        "archetype": "Người xây dựng",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 8],
+        "chakra": "Năng lượng vùng chân"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 2 khuyến khích bạn xây dựng dự án thông qua hợp tác. Tầm nhìn lớn của bạn sẽ được củng cố khi làm việc cùng nhóm. Hãy lắng nghe và hỗ trợ để tạo nền tảng vững chắc cho mục tiêu lâu dài.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Ghi ý tưởng cho dự án nhóm, như tổ chức sự kiện hoặc cải thiện quy trình. Phân chia nhiệm vụ cho từng người trong nhóm.",
+            "warning": "Đừng quá tập trung vào chi tiết. Hãy ưu tiên sự hòa hợp trong nhóm."
+          },
+          "afternoon": {
+            "focus": "Hợp tác",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Làm việc với nhóm để bắt đầu dự án, như họp để thống nhất ý tưởng hoặc phân công công việc. Sự lãnh đạo của bạn sẽ tạo động lực."
+          },
+          "evening": {
+            "focus": "Suy ngẫm",
+            "activity": "Viết nhật ký về tiến độ dự án và cách nhóm đã hợp tác. Điều này giúp bạn cảm thấy tự hào về những bước tiến."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Lãnh đạo nhóm hoàn thành một nhiệm vụ, như chuẩn bị kế hoạch dự án. Lắng nghe ý kiến để tăng sự đoàn kết.",
+          "love": "Lên kế hoạch dài hạn với người yêu, như đi du lịch. Trò chuyện về mục tiêu chung sẽ tăng sự gắn kết.",
+          "finance": "Thảo luận với nhóm về kế hoạch tài chính chung, như tiết kiệm cho dự án. Hôm nay là ngày tốt để hợp tác."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy áp lực khi lãnh đạo nhóm hoặc dự án lớn.",
+          "solution": "Chia dự án thành các bước nhỏ và phân công rõ ràng. Nghỉ ngơi ngắn để giảm căng thẳng."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Tầm nhìn của bạn trở nên mạnh mẽ hơn khi được xây dựng cùng người khác. Hôm nay, hãy hợp tác để tạo ra điều vĩ đại.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một tòa nhà được xây dựng bởi nhiều người. Hít thở sâu, cảm nhận sự đoàn kết.",
+        "affirmation": "Tôi xây dựng tương lai với sự hợp tác và tầm nhìn."
+      },
+      "luck": {
+        "color": {
+          "hex": "#2F4F4F",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xám đậm để tăng sự tập trung."
+        },
+        "number": 22,
+        "direction": "Hướng Nam",
+        "object": "Mô hình nhà"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn sẽ hợp tác với ai để xây dựng dự án? Hãy viết về kế hoạch và cảm giác của bạn.",
+        "feedback_question": "Bạn đã làm gì để nhóm tiến gần hơn đến mục tiêu hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Dọn dẹp góc làm việc để tập trung vào dự án nhóm. Sắp xếp tài liệu và giữ không gian trống để dễ trao đổi.",
+        "energy": "Đặt một mô hình nhà nhỏ trên bàn. Nó nhắc bạn về mục tiêu lớn và sự hợp tác.",
+        "routine": "Gửi một tin nhắn cảm ơn nhóm vào buổi tối, như 'Cảm ơn mọi người đã làm việc chăm chỉ!'"
+      }
     },
     {
       "life_path": 33,
-      "advice": "Số ngày cá nhân 2 kết hợp với Số đường đời 33 mang đến một ngày tràn đầy năng lượng của lòng trắc ẩn và sự hòa hợp. Hãy sử dụng khả năng lãnh đạo tâm linh của bạn để hỗ trợ và nâng đỡ cộng đồng. Hôm nay, sự hy sinh và tình yêu thương của bạn sẽ tạo ra những thay đổi tích cực lớn lao.",
-      "strength": "Lòng trắc ẩn vô điều kiện, khả năng truyền cảm hứng và sự hy sinh vì lợi ích lớn hơn.",
-      "challenge": "Nguy cơ hy sinh bản thân quá nhiều có thể khiến bạn kiệt sức. Hãy dành thời gian để tái tạo năng lượng.",
-      "action": "Hỗ trợ một người đang cần sự giúp đỡ, như tư vấn, chia sẻ kinh nghiệm hoặc tham gia một hoạt động cộng đồng.",
-      "spiritual_message": "Vũ trụ kêu gọi bạn lan tỏa tình yêu. Hãy là ánh sáng dẫn đường cho mọi người.",
-      "lucky_color": "Vàng nhạt - biểu tượng của sự chữa lành và tình yêu thương.",
-      "lucky_number": 33
+      "profile": {
+        "archetype": "Người truyền dạy",
+        "element": "Khí",
+        "compatible_numbers": [3, 6, 9],
+        "chakra": "Năng lượng vùng đầu"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 2 cộng hưởng với sứ mệnh truyền dạy của bạn. Đây là ngày để bạn chia sẻ kiến thức, lan tỏa cảm hứng, và kết nối mọi người thông qua sự tử tế. Một bài học nhỏ hoặc lời khuyên chân thành sẽ tạo ra tác động lớn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Chia sẻ",
+            "action": "Đăng một mẹo hay lên mạng xã hội, như cách quản lý thời gian hoặc một câu chuyện truyền cảm hứng. Ví dụ: 'Hôm nay, hãy thử lắng nghe ai đó thật sâu sắc!'",
+            "warning": "Tránh tranh luận không cần thiết. Hãy tập trung vào việc lan tỏa điều tích cực."
+          },
+          "afternoon": {
+            "focus": "Dạy học",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Hướng dẫn một đồng nghiệp hoặc bạn bè về kỹ năng bạn giỏi, như viết email hoặc tổ chức công việc. Sự hào phóng của bạn sẽ được trân trọng."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Thiền nhẹ nhàng hoặc nghe nhạc không lời. Suy ngẫm về cách bạn đã truyền cảm hứng hôm nay."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Chia sẻ kinh nghiệm với đồng nghiệp, như cách giải quyết vấn đề. Sự hào phóng của bạn sẽ tạo ấn tượng tốt.",
+          "love": "Kể một bài học cuộc sống cho người yêu, như cách bạn vượt qua khó khăn. Cuộc trò chuyện này sẽ tăng sự thấu hiểu.",
+          "finance": "Đầu tư vào học tập, như mua sách hoặc khóa học. Hôm nay là ngày tốt để chia sẻ kiến thức."
+        },
+        "challenge": {
+          "description": "Bạn có thể kiệt sức nếu cố gắng dạy dỗ quá nhiều người.",
+          "solution": "Dành 10 phút nghỉ ngơi giữa các hoạt động, như uống nước hoặc đi dạo ngắn."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sứ mệnh của bạn là nâng cao ý thức và kết nối mọi người. Hôm nay, hãy để mỗi lời nói trở thành ánh sáng dẫn đường.",
+        "meditation": "Ngồi yên, nhắm mắt và tưởng tượng một ngọn đèn tỏa sáng từ bạn. Hít thở sâu, cảm nhận năng lượng lan tỏa.",
+        "affirmation": "Tôi chia sẻ kiến thức và cảm hứng với tình yêu."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFFACD",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng nhạt để tăng sự sáng tạo."
+        },
+        "number": 33,
+        "direction": "Hướng Đông",
+        "object": "Sổ ghi chú"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn muốn truyền dạy điều gì cho ai? Hãy viết về bài học và lý do bạn chọn nó.",
+        "feedback_question": "Bạn đã chia sẻ kiến thức hoặc cảm hứng gì hôm nay? Hãy kể câu chuyện của bạn!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một cuốn sổ ghi chú đẹp trên bàn để ghi ý tưởng chia sẻ. Một cuốn sổ đặc biệt sẽ truyền cảm hứng để bạn viết.",
+        "energy": "Chia sẻ một mẹo nhỏ với đồng nghiệp, như 'Thử sắp xếp email theo ưu tiên!' Hành động này lan tỏa năng lượng tích cực.",
+        "routine": "Viết một câu nói truyền cảm hứng vào buổi sáng, như 'Hôm nay mình sẽ giúp ai đó học điều mới!'"
+      }
     }
-  ]
+  ],
+  "premium_features": {
+    "personalized": {
+      "birth_chart_compatibility": "Hôm nay bạn hợp với người có số 6, đặc biệt trong việc xây dựng mối quan hệ lâu dài.",
+      "custom_ritual": "Vào 3h chiều, hãy uống một cốc trà hoa cúc để thư giãn và tăng sự đồng cảm."
+    },
+    "community": {
+      "trending_hashtag": "#HòaHợpHômNay",
+      "group_activity": "Thử thách 24h: Gửi một lời nhắn yêu thương hoặc hỗ trợ ai đó. Chia sẻ trải nghiệm của bạn với cộng đồng!"
+    }
+  }
 }
