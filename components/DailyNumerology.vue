@@ -298,7 +298,7 @@
               d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          Gợi ý hàng ngày
+          Gợi ý hôm nay
         </h3>
         <div class="grid md:grid-cols-3 gap-4">
           <div class="bg-white p-4 rounded-lg shadow-sm">
