@@ -118,7 +118,7 @@
 
           <!-- Components grid -->
           <div class="grid grid-cols-1 gap-8">
-            <DailyNumerology :birth-date="calculatedBirthDate" />
+          
             <LifePathCalculator :birth-date="calculatedBirthDate" :result="result" />
             <PersonalYearChart :birth-date="calculatedBirthDate" />
             <PersonalityGroups :birth-date="calculatedBirthDate" />
