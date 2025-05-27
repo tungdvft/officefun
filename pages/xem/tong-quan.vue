@@ -116,36 +116,74 @@
             </div>
           </div>
 
-          <!-- Components grid -->
+          <!-- DailyNumerology component -->
           <div class="grid grid-cols-1 gap-8">
             <DailyNumerology :birth-date="calculatedBirthDate" />
-            <LifePathCalculator :birth-date="calculatedBirthDate" :result="result" />
-            <PersonalYearChart :birth-date="calculatedBirthDate" />
-            <PersonalityGroups :birth-date="calculatedBirthDate" />
-            <NumerologyCycles :birth-date="calculatedBirthDate" />
-            <NumerologyPyramid :birth-date="calculatedBirthDate" />
-            <PersonalYearIndex :birth-date="calculatedBirthDate" />
-            <PersonalMonthCycle :birth-date="calculatedBirthDate" />
-            <DestinyNumber :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <LifePathDestinyDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <ChallengeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <MaturityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <MaturePowerDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <ExpressionNumber :full-name="calculatedFullName" />
-            <SoulUrgeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <LifePathAndSoulUrge :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <SoulChallengeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <PersonalityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <NumerologyPowerChart :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <PersonalityChallengeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <WeaknessDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <NaturalAbilityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <OvercomeChallengeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <MentalCapacityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <ApproachMotivationDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <ApproachCapacityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
-            <ApproachAttitudeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
           </div>
+
+          <!-- Button to show detailed components -->
+          <div v-if="!showDetailedComponents" class="flex justify-center">
+            <button
+              @click="showDetails"
+              class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 shadow-md"
+            >
+              <span class="flex items-center justify-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                  />
+                </svg>
+                Xem diễn giải chi tiết
+              </span>
+            </button>
+          </div>
+
+          <!-- Detailed components (shown when showDetails is true) -->
+          <transition name="slide-fade">
+            <div v-if="showDetailedComponents" class="grid grid-cols-1 gap-8" id="detailed-components">
+              <LifePathCalculator :birth-date="calculatedBirthDate" :result="result" />
+              <PersonalYearChart :birth-date="calculatedBirthDate" />
+              <PersonalityGroups :birth-date="calculatedBirthDate" />
+              <NumerologyCycles :birth-date="calculatedBirthDate" />
+              <NumerologyPyramid :birth-date="calculatedBirthDate" />
+              <PersonalYearIndex :birth-date="calculatedBirthDate" />
+              <PersonalMonthCycle :birth-date="calculatedBirthDate" />
+              <DestinyNumber :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <LifePathDestinyDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <ChallengeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <MaturityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <MaturePowerDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <ExpressionNumber :full-name="calculatedFullName" />
+              <SoulUrgeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <LifePathAndSoulUrge :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <SoulChallengeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <PersonalityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <NumerologyPowerChart :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <PersonalityChallengeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <WeaknessDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <NaturalAbilityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <OvercomeChallengeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <MentalCapacityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <ApproachMotivationDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <ApproachCapacityDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+              <ApproachAttitudeDisplay :birth-date="calculatedBirthDate" :full-name="calculatedFullName" />
+            </div>
+          </transition>
         </div>
       </transition>
     </div>
@@ -156,6 +194,7 @@
 import { ref, onMounted } from 'vue';
 import { useGeneralStore } from '~/stores/general';
 import { useRouter } from 'vue-router';
+import { useHead } from '@unhead/vue';
 import LifePathCalculator from '~/components/LifePathCalculator.vue';
 import PersonalYearChart from '~/components/PersonalYearChart.vue';
 import PersonalityGroups from '~/components/PersonalityGroups.vue';
@@ -182,9 +221,27 @@ import ApproachCapacityDisplay from '~/components/ApproachCapacityDisplay.vue';
 import ApproachAttitudeDisplay from '~/components/ApproachAttitudeDisplay.vue';
 import NumerologyPowerChart from '~/components/NumerologyPowerChart.vue';
 import ExpressionNumber from '~/components/ExpressionNumber.vue';
+import DailyNumerology from '~/components/DailyNumerology.vue';
 
 definePageMeta({
   layout: 'view',
+});
+
+// Thiết lập SEO với useHead
+useHead({
+  title: 'Thần Số Học Toàn Diện - Khám Phá Con Số Chủ Đạo Của Bạn',
+  meta: [
+    { name: 'description', content: 'Khám phá ý nghĩa con số chủ đạo, số đường đời, và các chỉ số thần số học khác dựa trên ngày sinh và tên của bạn. Phân tích chi tiết giúp bạn hiểu rõ bản thân và định hướng cuộc sống.' },
+    { name: 'keywords', content: 'thần số học, con số chủ đạo, số đường đời, phân tích thần số học, dự đoán tương lai, ý nghĩa ngày sinh' },
+    { name: 'robots', content: 'index, follow' },
+    { property: 'og:title', content: 'Thần Số Học Toàn Diện - Khám Phá Con Số Chủ Đạo' },
+    { property: 'og:description', content: 'Tìm hiểu con số chủ đạo và các chỉ số thần số học quan trọng của bạn. Nhập ngày sinh và tên để nhận phân tích chi tiết.' },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:url', content: 'https://luangiaithanso.com/xem' }, // Thay bằng URL thực tế của trang
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://luangiaithanso.com/xem' }, // Thay bằng URL thực tế
+  ],
 });
 
 const generalStore = useGeneralStore();
@@ -198,6 +255,19 @@ const result = ref(null);
 const error = ref('');
 const isLoading = ref(false);
 const startCalulation = ref(false);
+const showDetailedComponents = ref(false);
+
+// Hàm để hiển thị các component chi tiết và cuộn xuống
+const showDetails = () => {
+  showDetailedComponents.value = true;
+  // Cuộn xuống phần component chi tiết
+  setTimeout(() => {
+    const detailedSection = document.getElementById('detailed-components');
+    if (detailedSection) {
+      detailedSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, 100);
+};
 
 // Khởi tạo giá trị từ generalStore hoặc localStorage
 onMounted(async () => {

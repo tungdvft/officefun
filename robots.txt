@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Allow: /than-so-hoc
+Allow: /tra-cuu-than-so-hoc
+Allow: /luan-giai-than-so-hoc
+Disallow: /dashboard/
+Disallow: /*.pdf$
+Disallow: /*?*print=
+Sitemap: https://luangiathanso.com/sitemap.xml
