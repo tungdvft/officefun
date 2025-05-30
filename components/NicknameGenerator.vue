@@ -216,7 +216,7 @@
               </h3>
               <transition-group name="slide-fade" tag="div" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div
-                  v-for="(suggestion, index) in numerologyData.suggestions.slice(0, Math.min(totalSuggestions, 18))"
+                  v-for="(suggestion, index) in numerologyData.suggestions.slice(0, Math.min(totalSuggestions, 30))"
                   :key="suggestion.name"
                   class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow"
                 >
@@ -237,7 +237,7 @@
                   <p class="text-sm text-gray-500 italic">Ví dụ: {{ suggestion.famous }}</p>
                 </div>
               </transition-group>
-              <div v-if="numerologyData && totalSuggestions < 18" class="flex justify-center mt-6">
+              <div v-if="numerologyData && totalSuggestions < 30" class="flex justify-center mt-6">
                 <button
                   @click="showMoreSuggestions"
                   :disabled="loadingMore"
@@ -341,7 +341,7 @@ const generateNickname = async () => {
 };
 
 const showMoreSuggestions = async () => {
-  if (totalSuggestions.value >= 18) return;
+  if (totalSuggestions.value >= 30) return;
 
   loadingMore.value = true;
   try {

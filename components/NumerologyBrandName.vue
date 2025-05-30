@@ -308,7 +308,7 @@
                 </div>
               </div>
               <!-- Show More Suggestions Button -->
-              <div v-if="numerologyData.suggestions.length < 18" class="flex justify-center mt-6">
+              <div v-if="numerologyData.suggestions.length < 30" class="flex justify-center mt-6">
                 <button
                   @click="showMoreSuggestions"
                   :disabled="loading"
@@ -495,7 +495,7 @@ const generateReport = async () => {
 };
 
 const showMoreSuggestions = async () => {
-  if (totalSuggestions.value >= 18) return;
+  if (totalSuggestions.value >= 30) return;
 
   loading.value = true;
   errors.value.general = '';
