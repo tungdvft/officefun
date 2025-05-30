@@ -307,6 +307,32 @@
                   </div>
                 </div>
               </div>
+              <!-- Show More Suggestions Button -->
+              <div v-if="numerologyData.suggestions.length < 18" class="flex justify-center mt-6">
+                <button
+                  @click="showMoreSuggestions"
+                  :disabled="loading"
+                  class="w-auto bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-2 px-6 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
+                >
+                  <span v-if="loading" class="flex items-center justify-center">
+                    <svg
+                      class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path
+                        class="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    Đang tải...
+                  </span>
+                  <span v-else>Xem thêm gợi ý </span>
+                </button>
+              </div>
             </div>
 
             <!-- Lời khuyên -->
@@ -330,9 +356,6 @@
               </h3>
               <p class="text-gray-600 mt-2 whitespace-pre-line">{{ numerologyData.brandAdvice }}</p>
             </div>
-
-            <!-- Nút tải và chia sẻ -->
-         
           </div>
         </transition>
       </div>
@@ -362,6 +385,8 @@ const errors = ref({
   ownerName: '',
   general: ''
 });
+const totalSuggestions = ref(0);
+const existingNames = ref([]);
 
 // Load saved data from localStorage on mount
 onMounted(() => {
@@ -377,6 +402,10 @@ onMounted(() => {
       language: 'english'
     };
     numerologyData.value = parsed.numerologyData || null;
+    if (numerologyData.value?.suggestions) {
+      totalSuggestions.value = numerologyData.value.suggestions.length;
+      existingNames.value = numerologyData.value.suggestions.map(s => s.name);
+    }
   }
 });
 
@@ -421,7 +450,7 @@ const validateForm = () => {
       year < 1900 ||
       year > new Date().getFullYear()
     ) {
-      errors.value.date = 'Ngày không hợp lệ';
+      errors.value.date = 'Invalid date';
       isValid = false;
     }
   }
@@ -442,16 +471,20 @@ const generateReport = async () => {
     const username = localStorage.getItem('username') || 'guest';
     const response = await $fetch('/api/numerology/brand', {
       method: 'POST',
-      headers: { 
+      headers: {
         'x-username': encodeURIComponent(username),
-        'Content-Type': 'application/json; charset=utf-8'
+        'Content-Type': 'application/json; charset=UTF-8'
       },
-      body: { 
-        ...formData.value, 
-        extraRequest: `${formData.value.extraRequest || ''} Tên bằng ${formData.value.language === 'english' ? 'tiếng Anh' : 'tiếng Việt'}` 
+      body: {
+        ...formData.value,
+        extraRequest: `${formData.value.extraRequest || ''} Tên bằng ${formData.value.language === 'english' ? 'tiếng Anh' : 'tiếng Việt'}`.trim(),
+        count: 3,
+        excludeNames: []
       }
     });
     numerologyData.value = response.numerology;
+    totalSuggestions.value = response.numerology.suggestions.length;
+    existingNames.value = response.numerology.suggestions.map(s => s.name);
     toast.success('Tạo gợi ý tên thương hiệu hoàn tất!', { position: 'top-center' });
   } catch (error) {
     console.error('Error:', error);
@@ -461,7 +494,43 @@ const generateReport = async () => {
   }
 };
 
+const showMoreSuggestions = async () => {
+  if (totalSuggestions.value >= 18) return;
 
+  loading.value = true;
+  errors.value.general = '';
+  try {
+    const username = localStorage.getItem('username') || 'guest';
+    const response = await $fetch('/api/numerology/brand', {
+      method: 'POST',
+      headers: {
+        'x-username': encodeURIComponent(username),
+        'Content-Type': 'application/json; charset=UTF-8'
+      },
+      body: {
+        ...formData.value,
+        extraRequest: `${formData.value.extraRequest || ''} Tên bằng ${formData.value.language === 'english' ? 'tiếng Anh' : 'tiếng Việt'}`.trim(),
+        count: 3,
+        excludeNames: existingNames.value
+      }
+    });
+
+    if (response.numerology && response.numerology.suggestions) {
+      numerologyData.value.suggestions = [
+        ...numerologyData.value.suggestions,
+        ...response.numerology.suggestions
+      ];
+      totalSuggestions.value = numerologyData.value.suggestions.length;
+      existingNames.value = numerologyData.value.suggestions.map(s => s.name);
+      toast.success('Đã thêm gợi ý mới!', { position: 'top-center' });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    errors.value.general = error.data?.message || 'Không thể tải thêm gợi ý!';
+  } finally {
+    loading.value = false;
+  }
+};
 </script>
 
 <style scoped>
@@ -472,7 +541,7 @@ const generateReport = async () => {
 }
 .fade-enter-from,
 .fade-leave-to {
-  opacity: 0;
+  opacity: opacity 0;
 }
 
 .slide-fade-enter-active {
@@ -483,7 +552,7 @@ const generateReport = async () => {
 }
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-  transform: translateY(10px);
+  transform: translateY(20px);
   opacity: 0;
 }
 </style>
