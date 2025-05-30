@@ -1,18 +1,20 @@
+import { useUserStore } from '~/stores/userStore';
+import { navigateTo } from '#app';
+
 export default defineNuxtRouteMiddleware((to, from) => {
-  const userStore = useUserStore()
-  
-  // Nếu chưa khởi tạo thì khởi tạo
-  if (!userStore.isAuthenticated) {
-    userStore.initialize()
-  }
+  // Chỉ chạy phía client để tránh lỗi server-side
+  if (process.client) {
+    const userStore = useUserStore();
 
-  // Nếu truy cập route yêu cầu auth mà chưa đăng nhập
-  if (to.meta.requiresAuth && !userStore.isAuthenticated) {
-    return navigateTo('/dang-nhap')
-  }
+    // Đợi store khởi tạo nếu chưa sẵn sàng
+    if (!userStore.isStoreInitialized) {
+      userStore.initialize();
+    }
 
-  // Nếu truy cập route login/register khi đã đăng nhập
-  if ((to.path === '/dang-nhap' || to.path === '/dang-ky') && userStore.isAuthenticated) {
-    return navigateTo('/')
+    // Kiểm tra trạng thái đăng nhập
+    if (!userStore.user || Object.keys(userStore.user).length === 0) {
+      // Chuyển hướng đến trang đăng nhập
+      return navigateTo('/dang-nhap', { redirect: true });
+    }
   }
-})
+});

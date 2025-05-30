@@ -227,7 +227,6 @@ definePageMeta({
   layout: 'view',
 });
 
-// Thiết lập SEO với useHead
 useHead({
   title: 'Thần Số Học Toàn Diện - Khám Phá Con Số Chủ Đạo Của Bạn',
   meta: [
@@ -237,10 +236,10 @@ useHead({
     { property: 'og:title', content: 'Thần Số Học Toàn Diện - Khám Phá Con Số Chủ Đạo' },
     { property: 'og:description', content: 'Tìm hiểu con số chủ đạo và các chỉ số thần số học quan trọng của bạn. Nhập ngày sinh và tên để nhận phân tích chi tiết.' },
     { property: 'og:type', content: 'website' },
-    { property: 'og:url', content: 'https://luangiaithanso.com/xem' }, // Thay bằng URL thực tế của trang
+    { property: 'og:url', content: 'https://luangiaithanso.com/xem' },
   ],
   link: [
-    { rel: 'canonical', href: 'https://luangiaithanso.com/xem' }, // Thay bằng URL thực tế
+    { rel: 'canonical', href: 'https://luangiaithanso.com/xem' },
   ],
 });
 
@@ -260,7 +259,6 @@ const showDetailedComponents = ref(false);
 // Hàm để hiển thị các component chi tiết và cuộn xuống
 const showDetails = () => {
   showDetailedComponents.value = true;
-  // Cuộn xuống phần component chi tiết
   setTimeout(() => {
     const detailedSection = document.getElementById('detailed-components');
     if (detailedSection) {
@@ -269,22 +267,40 @@ const showDetails = () => {
   }, 100);
 };
 
-// Khởi tạo giá trị từ generalStore hoặc localStorage
+// Khởi tạo giá trị từ localStorage hoặc generalStore
 onMounted(async () => {
-  // Kiểm tra nếu không có dữ liệu thì chuyển hướng về trang nhập form
-  if (!generalStore.hasData && !localStorage.getItem('numerologyData')) {
-    router.push('/');
-    return;
+  // Ưu tiên khôi phục từ localStorage với key 'auth'
+  const savedAuthData = localStorage.getItem('auth');
+  if (savedAuthData) {
+    try {
+      const parsedData = JSON.parse(savedAuthData);
+      const { fullName: savedFullName, birthDate: savedBirthDate, startCalulation: savedStartCalulation, result: savedResult } = parsedData;
+      if (
+        savedFullName &&
+        savedBirthDate &&
+        /^\d{2}\/\d{2}\/\d{4}$/.test(savedBirthDate) &&
+        savedResult
+      ) {
+        fullName.value = savedFullName;
+        birthDate.value = savedBirthDate;
+        calculatedFullName.value = savedFullName;
+        calculatedBirthDate.value = savedBirthDate;
+        result.value = savedResult;
+        startCalulation.value = savedStartCalulation;
+        return; // Thoát sớm nếu dữ liệu từ 'auth' hợp lệ
+      }
+    } catch (err) {
+      console.error('Lỗi khi khôi phục dữ liệu từ localStorage (auth):', err);
+    }
   }
 
-  // Ưu tiên lấy dữ liệu từ generalStore
+  // Nếu không có dữ liệu hợp lệ từ 'auth', kiểm tra generalStore
   if (generalStore.hasData) {
     fullName.value = generalStore.fullname;
     birthDate.value = generalStore.birthdate;
     calculatedFullName.value = generalStore.fullname;
     calculatedBirthDate.value = generalStore.birthdate;
     
-    // Tính toán lại result để đảm bảo LifePathCalculator hiển thị
     try {
       const lifePath = calculateLifePathNumber(generalStore.birthdate);
       const lifePathStr = [11, 22].includes(lifePath) ? lifePath.toString() : lifePath.toString();
@@ -309,31 +325,11 @@ onMounted(async () => {
       console.error('Lỗi khi tính toán result từ generalStore:', err);
       error.value = err.message;
     }
+    return;
   }
 
-  // Khôi phục từ localStorage nếu không có dữ liệu từ store
-  const savedData = localStorage.getItem('numerologyData');
-  if (savedData) {
-    try {
-      const parsedData = JSON.parse(savedData);
-      const { fullName: savedFullName, birthDate: savedBirthDate, startCalulation: savedStartCalulation, result: savedResult } = parsedData;
-      if (
-        savedFullName &&
-        savedBirthDate &&
-        /^\d{2}\/\d{2}\/\d{4}$/.test(savedBirthDate) &&
-        savedResult
-      ) {
-        fullName.value = savedFullName;
-        birthDate.value = savedBirthDate;
-        calculatedFullName.value = savedFullName;
-        calculatedBirthDate.value = savedBirthDate;
-        result.value = savedResult;
-        startCalulation.value = savedStartCalulation;
-      }
-    } catch (err) {
-      console.error('Lỗi khi khôi phục dữ liệu từ localStorage:', err);
-    }
-  }
+  // Nếu không có dữ liệu từ cả 'auth' và generalStore, chuyển hướng về trang chủ
+  router.push('/');
 });
 
 const formatDateInput = (event) => {
@@ -403,8 +399,8 @@ const calculateNumbers = async () => {
     calculatedBirthDate.value = birthDate.value;
     startCalulation.value = true;
 
-    // Lưu dữ liệu vào localStorage
-    localStorage.setItem('numerologyData', JSON.stringify({
+    // Lưu dữ liệu vào localStorage với key 'auth'
+    localStorage.setItem('auth', JSON.stringify({
       fullName: calculatedFullName.value,
       birthDate: calculatedBirthDate.value,
       startCalulation: startCalulation.value,

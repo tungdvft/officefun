@@ -214,10 +214,10 @@
                 </span>
                 Gợi ý danh xưng quốc tế
               </h3>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <transition-group name="slide-fade" tag="div" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div
-                  v-for="(suggestion, index) in numerologyData.suggestions"
-                  :key="index"
+                  v-for="(suggestion, index) in numerologyData.suggestions.slice(0, Math.min(totalSuggestions, 18))"
+                  :key="suggestion.name"
                   class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow"
                 >
                   <div class="flex items-start mb-2">
@@ -236,6 +236,31 @@
                   <p class="text-gray-600 text-sm mb-2">{{ suggestion.desc }}</p>
                   <p class="text-sm text-gray-500 italic">Ví dụ: {{ suggestion.famous }}</p>
                 </div>
+              </transition-group>
+              <div v-if="numerologyData && totalSuggestions < 18" class="flex justify-center mt-6">
+                <button
+                  @click="showMoreSuggestions"
+                  :disabled="loadingMore"
+                  class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
+                >
+                  <span v-if="loadingMore" class="flex items-center justify-center">
+                    <svg
+                      class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path
+                        class="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    Đang tải...
+                  </span>
+                  <span v-else>Xem thêm gợi ý</span>
+                </button>
               </div>
             </div>
 
@@ -260,43 +285,6 @@
               </h3>
               <p class="text-gray-600 mt-2">{{ numerologyData.advice }}</p>
             </div>
-
-            <!-- Nút chia sẻ và tải -->
-            <!-- <div class="flex flex-wrap gap-3 justify-center">
-              <button
-                @click="shareViaMessenger"
-                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center justify-center transition duration-200 shadow-sm"
-              >
-                <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"
-                  />
-                </svg>
-                Messenger
-              </button>
-              <button
-                @click="copyToClipboard"
-                class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg flex items-center justify-center transition duration-200 shadow-sm"
-              >
-                <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
-                  />
-                </svg>
-                Sao chép Zalo
-              </button>
-              <ClientOnly>
-                <button
-                  @click="downloadPDF"
-                  class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center justify-center transition duration-200 shadow-sm"
-                >
-                  <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-                  </svg>
-                  Tải PDF
-                </button>
-              </ClientOnly>
-            </div> -->
           </div>
         </transition>
       </div>
@@ -316,12 +304,16 @@ const formData = ref({
 });
 const numerologyData = ref(null);
 const loading = ref(false);
+const loadingMore = ref(false);
+const totalSuggestions = ref(3);
 
 const generateNickname = async () => {
   if (!formData.value.name) return toast.error('Vui lòng nhập họ và tên!');
   if (!formData.value.birthdate) return toast.error('Vui lòng nhập ngày sinh!');
   if (!formData.value.gender) return toast.error('Vui lòng chọn giới tính!');
-  if (formData.value.startLetter && !/^[A-Z]$/.test(formData.value.startLetter)) return toast.error('Chữ cái đầu tiên phải là A-Z!');
+  if (formData.value.startLetter && !/^[A-Z]$/.test(formData.value.startLetter)) {
+    return toast.error('Chữ cái đầu tiên phải là A-Z!');
+  }
 
   loading.value = true;
   try {
@@ -332,11 +324,13 @@ const generateNickname = async () => {
         name: formData.value.name,
         birthdate: formData.value.birthdate,
         gender: formData.value.gender,
-        startLetter: formData.value.startLetter || undefined
+        startLetter: formData.value.startLetter || undefined,
+        count: 3
       },
     });
     console.log('Response from API:', response);
     numerologyData.value = response.numerology;
+    totalSuggestions.value = 3;
     toast.success('Tạo danh xưng hoàn tất!');
   } catch (error) {
     console.error('Error details:', error);
@@ -346,99 +340,33 @@ const generateNickname = async () => {
   }
 };
 
-const shareViaMessenger = () => {
-  if (!process.client || typeof FB === 'undefined') {
-    toast.error('Facebook SDK chưa tải xong, thử lại sau!');
-    return;
+const showMoreSuggestions = async () => {
+  if (totalSuggestions.value >= 18) return;
+
+  loadingMore.value = true;
+  try {
+    const excludeNames = numerologyData.value.suggestions.map(s => s.name);
+    console.log('Fetching more suggestions, excluding:', excludeNames);
+    const response = await $fetch('/api/numerology/nickname', {
+      method: 'POST',
+      body: {
+        name: formData.value.name,
+        birthdate: formData.value.birthdate,
+        gender: formData.value.gender,
+        startLetter: formData.value.startLetter || undefined,
+        count: 3,
+        excludeNames
+      },
+    });
+    numerologyData.value.suggestions.push(...response.numerology.suggestions);
+    totalSuggestions.value += 3;
+    toast.success('Đã tải thêm gợi ý!');
+  } catch (error) {
+    console.error('Error fetching more suggestions:', error);
+    toast.error(error.data?.message || 'Không thể tải thêm gợi ý!');
+  } finally {
+    loadingMore.value = false;
   }
-  const text = formatResultForShare();
-  FB.ui({
-    method: 'send',
-    link: window.location.href,
-    quote: text,
-  }, (response) => {
-    if (response && !response.error) toast.success('Đã chia sẻ qua Messenger!');
-    else toast.error('Có lỗi khi chia sẻ qua Messenger!');
-  });
-};
-
-const copyToClipboard = () => {
-  if (!process.client) return;
-  const text = formatResultForShare();
-  navigator.clipboard.writeText(text).then(() => {
-    toast.success('Đã sao chép kết quả! Dán vào Zalo để chia sẻ.');
-  }).catch(() => {
-    toast.error('Không thể sao chép!');
-  });
-};
-
-const downloadPDF = async () => {
-  if (!process.client) {
-    toast.error('Không thể tải PDF trên server-side!');
-    return;
-  }
-  const { jsPDF } = await import('jspdf');
-  const doc = new jsPDF();
-  doc.setFont('helvetica');
-  doc.setFontSize(12);
-  let y = 10;
-
-  doc.setFontSize(16);
-  doc.text(`Danh xưng quốc tế cho ${formData.value.name}`, 10, y);
-  y += 10;
-
-  doc.setFontSize(12);
-  doc.text(`Họ và tên: ${formData.value.name}`, 10, y); y += 7;
-  doc.text(`Ngày sinh: ${formData.value.birthdate}`, 10, y); y += 7;
-  doc.text(`Giới tính: ${formData.value.gender === 'male' ? 'Nam' : 'Nữ'}`, 10, y); y += 7;
-  doc.text(`Chữ cái đầu: ${formData.value.startLetter || 'Không có'}`, 10, y); y += 10;
-
-  const addSection = (title, content) => {
-    if (y > 260) { doc.addPage(); y = 10; }
-    doc.setFontSize(14);
-    doc.text(title, 10, y);
-    y += 7;
-    doc.setFontSize(12);
-    const lines = doc.splitTextToSize(content, 180);
-    doc.text(lines, 10, y);
-    y += lines.length * 7 + 10;
-  };
-
-  addSection('Các con số chính', [
-    `Số chủ đạo: ${numerologyData.value.lifePath} - ${numerologyData.value.lifePathDesc}`,
-    `Số linh hồn: ${numerologyData.value.soul} - ${numerologyData.value.soulDesc}`,
-    `Số nhân cách: ${numerologyData.value.personality} - ${numerologyData.value.personalityDesc}`,
-    `Số định mệnh: ${numerologyData.value.destiny} - ${numerologyData.value.destinyDesc}`
-  ].join('\n'));
-
-  doc.setFontSize(14);
-  doc.text('Gợi ý danh xưng:', 10, y); y += 7;
-  doc.setFontSize(12);
-  numerologyData.value.suggestions.forEach(s => {
-    if (y > 260) { doc.addPage(); y = 10; }
-    const text = `${s.name} (Số linh hồn: ${s.soul}, Số định mệnh: ${s.destiny})\nMô tả: ${s.desc}\nVí dụ: ${s.famous}`;
-    const lines = doc.splitTextToSize(text, 180);
-    doc.text(lines, 10, y);
-    y += lines.length * 7 + 5;
-  });
-
-  addSection('Lời khuyên', numerologyData.value.advice);
-
-  doc.save(`nickname-${formData.value.name}.pdf`);
-};
-
-const formatResultForShare = () => {
-  if (!numerologyData.value) return '';
-  return [
-    `Danh xưng quốc tế cho ${formData.value.name}`,
-    `Số chủ đạo: ${numerologyData.value.lifePath} - ${numerologyData.value.lifePathDesc}`,
-    `Số linh hồn: ${numerologyData.value.soul} - ${numerologyData.value.soulDesc}`,
-    `Số nhân cách: ${numerologyData.value.personality} - ${numerologyData.value.personalityDesc}`,
-    `Số định mệnh: ${numerologyData.value.destiny} - ${numerologyData.value.destinyDesc}`,
-    `Gợi ý danh xưng:`,
-    ...numerologyData.value.suggestions.map(s => `- ${s.name} (Số linh hồn: ${s.soul}, Số định mệnh: ${s.destiny}): ${s.desc} (${s.famous})`),
-    `Lời khuyên: ${numerologyData.value.advice}`
-  ].join('\n');
 };
 </script>
 

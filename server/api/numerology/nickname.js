@@ -33,10 +33,10 @@ function getDestinyNumber(name) {
   return NumerologyUtils.reduceToSingleDigit(sum) || 1;
 }
 
-const apiKey = process.env.GEMINI_API_KEY||'AIzaSyBUmUduPG0zvD4URlJEmNnxDRsxMsTpaR8';
+const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyBUmUduPG0zvD4URlJEmNnxDRsxMsTpaR8';
 
 export default defineEventHandler(async (event) => {
-  const { name, birthdate, gender, startLetter } = await readBody(event);
+  const { name, birthdate, gender, startLetter, count = 3, excludeNames = [] } = await readBody(event);
 
   if (!name || !birthdate || !gender) {
     throw createError({
@@ -49,6 +49,13 @@ export default defineEventHandler(async (event) => {
     throw createError({
       statusCode: 400,
       message: 'Ngày sinh phải có định dạng dd/mm/yyyy hoặc dd-mm-yyyy (ví dụ: 15/03/1995 hoặc 15-03-1995).',
+    });
+  }
+
+  if (count < 1 || count > 18) {
+    throw createError({
+      statusCode: 400,
+      message: 'Số lượng gợi ý phải từ 1 đến 18.',
     });
   }
 
@@ -73,13 +80,13 @@ export default defineEventHandler(async (event) => {
     2. "soul": Số ${soulNumber}, "soulDesc": Mô tả ngắn (1-2 câu) về ${soulData.desire} dựa trên ${soulData.motivation}.
     3. "personality": Số ${personalityNumber}, "personalityDesc": Mô tả ngắn (1-2 câu) về ${personalityData.theme} dựa trên ${personalityData.workStyle}.
     4. "destiny": Số ${destinyNumber}, "destinyDesc": Mô tả ngắn (1-2 câu) về ${destinyData.theme} dựa trên ${destinyData.talents.join(', ')}.
-    5. "suggestions": Mảng 3 danh xưng quốc tế, mỗi danh xưng có:
+    5. "suggestions": Mảng ${count} danh xưng quốc tế, mỗi danh xưng có:
        - "name": Tên định dạng "Tên tiếng Anh + ${lastName}" (không dùng tên đầy đủ tiếng Việt),
        - "soul": Số linh hồn của tên,
        - "destiny": Số định mệnh của tên,
        - "desc": Lý do ngắn (1-2 câu) dựa trên ${lifePathData.theme}, ${soulData.desire}, ${personalityData.theme}, ${destinyData.theme},
        - "famous": Một người nổi tiếng cùng tên (ví dụ: "David Beckham - cầu thủ bóng đá nổi tiếng").
-       Tên phải ngắn gọn, dễ gọi, phong cách quốc tế; nếu "male" thì nam tính, nếu "female" thì nữ tính${startLetter ? `, bắt đầu bằng "${startLetter}"` : ''}. Đảm bảo 3 tên khác nhau.
+       Tên phải khác biệt, không trùng lặp với ${JSON.stringify(excludeNames)}, ngắn gọn, dễ gọi, phong cách quốc tế; nếu "male" thì nam tính, nếu "female" thì nữ tính${startLetter ? `, bắt đầu bằng "${startLetter}"` : ''}.
     6. "advice": Lời khuyên ngắn (1-2 câu) cho "bạn" về cách dùng danh xưng.
     Không dùng Markdown trong JSON, chỉ trả về chuỗi JSON thuần túy!`;
 
@@ -90,7 +97,7 @@ export default defineEventHandler(async (event) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
+          contents: [{ parts: [{ text: prompt }]}],
         }),
       }
     );
@@ -109,21 +116,21 @@ export default defineEventHandler(async (event) => {
     rawText = rawText.replace(/```json|```/g, '').trim();
     try {
       const parsedData = JSON.parse(rawText);
-      if (!parsedData || !parsedData.numerology || !parsedData.numerology.suggestions) {
-        throw new Error('Gemini API không trả về dữ liệu đầy đủ');
+      if (!parsedData?.numerology?.suggestions || parsedData.numerology.suggestions.length < count) {
+        throw new Error('Gemini API không trả về đủ gợi ý');
       }
       return parsedData;
     } catch (parseError) {
       console.error('Lỗi parse JSON từ Gemini:', parseError, 'Raw text:', rawText);
-      return getDynamicNickname(dominantNumber, soulNumber, personalityNumber, destinyNumber, lastName, gender, startLetter, lifePathData, soulData, personalityData, destinyData);
+      return getDynamicNickname(dominantNumber, soulNumber, personalityNumber, destinyNumber, count, lastName, gender, startLetter, excludeNames, lifePathData, soulData, personalityData, destinyData);
     }
   } catch (error) {
     console.error('Lỗi gọi Gemini:', error);
-    return getDynamicNickname(dominantNumber, soulNumber, personalityNumber, destinyNumber, lastName, gender, startLetter, lifePathData, soulData, personalityData, destinyData);
+    return getDynamicNickname(dominantNumber, soulNumber, personalityNumber, destinyNumber, count, lastName, gender, startLetter, excludeNames, lifePathData, soulData, personalityData, destinyData);
   }
 });
 
-function getDynamicNickname(dominantNumber, soulNumber, personalityNumber, destinyNumber, lastName, gender, startLetter, lifePathData, soulData, personalityData, destinyData) {
+function getDynamicNickname(dominantNumber, soulNumber, personalityNumber, destinyNumber, count, lastName, gender, startLetter, excludeNames, lifePathData, soulData, personalityData, destinyData) {
   const maleNames = [
     { name: 'Ethan', famous: 'Ethan Hawke - diễn viên nổi tiếng' },
     { name: 'Liam', famous: 'Liam Hemsworth - diễn viên người Úc' },
@@ -133,7 +140,13 @@ function getDynamicNickname(dominantNumber, soulNumber, personalityNumber, desti
     { name: 'Lucas', famous: 'Lucasfilm - công ty của George Lucas' },
     { name: 'Henry', famous: 'Henry Cavill - diễn viên nổi tiếng' },
     { name: 'Hugo', famous: 'Hugo Chávez - chính trị gia nổi tiếng' },
-    { name: 'Hector', famous: 'Hector Bellerin - cầu thủ bóng đá' }
+    { name: 'Hector', famous: 'Hector Bellerin - cầu thủ bóng đá' },
+    { name: 'Oliver', famous: 'Oliver Twist - nhân vật của Charles Dickens' },
+    { name: 'William', famous: 'William Shakespeare - nhà văn vĩ đại' },
+    { name: 'Alexander', famous: 'Alexander Skarsgård - diễn viên nổi tiếng' },
+    { name: 'Daniel', famous: 'Daniel Craig - diễn viên James Bond' },
+    { name: 'Benjamin', famous: 'Benjamin Franklin - nhà phát minh' },
+    { name: 'Thomas', famous: 'Thomas Edison - nhà phát minh bóng đèn' }
   ];
 
   const femaleNames = [
@@ -145,28 +158,43 @@ function getDynamicNickname(dominantNumber, soulNumber, personalityNumber, desti
     { name: 'Sophie', famous: 'Sophie Turner - diễn viên nổi tiếng' },
     { name: 'Hannah', famous: 'Hannah Arendt - triết gia nổi tiếng' },
     { name: 'Hazel', famous: 'Hazel Grace - nhân vật trong The Fault in Our Stars' },
-    { name: 'Heidi', famous: 'Heidi Klum - siêu mẫu nổi tiếng' }
+    { name: 'Heidi', famous: 'Heidi Klum - siêu mẫu nổi tiếng' },
+    { name: 'Isabella', famous: 'Isabella Rossellini - nữ diễn viên nổi tiếng' },
+    { name: 'Charlotte', famous: 'Charlotte Brontë - tác giả Jane Eyre' },
+    { name: 'Amelia', famous: 'Amelia Earhart - phi công tiên phong' },
+    { name: 'Olivia', famous: 'Olivia Newton-John - ca sĩ và diễn viên' },
+    { name: 'Emily', famous: 'Emily Dickinson - nhà thơ nổi tiếng' },
+    { name: 'Grace', famous: 'Grace Kelly - công nương Monaco' }
   ];
 
   let nameList = gender === 'male' ? maleNames : femaleNames;
 
   if (startLetter) {
-    nameList = nameList.filter(n => n.name.toUpperCase().startsWith(startLetter.toUpperCase()));
-    if (nameList.length < 3) {
-      throw createError({
-        statusCode: 400,
-        message: `Không đủ tên bắt đầu bằng "${startLetter}" trong danh sách. Vui lòng thử chữ cái khác!`,
-      });
-    }
+    nameList = nameList.filter(n => n.name.toLowerCase().startsWith(startLetter.toLowerCase()));
   }
 
-  const shuffleAndPick = (array, count) => {
-    const shuffled = [...array].sort(() => 0.5 - Math.random());
+  nameList = nameList.filter(n => !excludeNames.includes(`${n.name} ${lastName}`));
+  if (nameList.length < count) {
+    throw createError({
+      statusCode: 400,
+      message: `Không đủ tên${startLetter ? ` bắt đầu bằng "${startLetter}"` : ''} sau khi loại trừ. Còn ${nameList.length} tên, cần ${count}.`,
+    });
+  }
+
+  const shuffleAndSelect = (array, count) => {
+    const shuffled = [...array].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, count);
   };
 
-  const selectedNames = shuffleAndPick(nameList, 3);
-  const [name1, name2, name3] = selectedNames;
+  const selectedNames = shuffleAndSelect(nameList, count);
+
+  const suggestions = selectedNames.map((n, index) => ({
+    name: `${n.name} ${lastName}`,
+    soul: getSoulNumber(n.name),
+    destiny: getDestinyNumber(`${n.name} ${lastName}`),
+    desc: `Tên này phù hợp với ${[lifePathData.theme, soulData.desire, personalityData.theme, destinyData.theme][index % 4].toLowerCase()} từ số ${[dominantNumber, soulNumber, personalityNumber, destinyNumber][index % 4]}.`,
+    famous: n.famous
+  }));
 
   const numerology = {
     lifePath: dominantNumber,
@@ -177,29 +205,7 @@ function getDynamicNickname(dominantNumber, soulNumber, personalityNumber, desti
     personalityDesc: `${personalityData.theme} (${personalityNumber}) cho thấy phong cách ${personalityData.workStyle.toLowerCase()} trong danh xưng.`,
     destiny: destinyNumber,
     destinyDesc: `${destinyData.theme} (${destinyNumber}) định hình tương lai với ${destinyData.talents[0].toLowerCase()} và ${destinyData.talents[1].toLowerCase()}.`,
-    suggestions: [
-      {
-        name: `${name1.name} ${lastName}`,
-        soul: getSoulNumber(name1.name),
-        destiny: getDestinyNumber(`${name1.name} ${lastName}`),
-        desc: `Tên này phù hợp với ${lifePathData.theme.toLowerCase()} từ số chủ đạo ${dominantNumber}, thể hiện ${lifePathData.strengths[0].toLowerCase()}.`,
-        famous: name1.famous
-      },
-      {
-        name: `${name2.name} ${lastName}`,
-        soul: getSoulNumber(name2.name),
-        destiny: getDestinyNumber(`${name2.name} ${lastName}`),
-        desc: `Tên này phản ánh ${soulData.desire.toLowerCase()} của số linh hồn ${soulNumber}, nổi bật với ${soulData.motivation.toLowerCase()}.`,
-        famous: name2.famous
-      },
-      {
-        name: `${name3.name} ${lastName}`,
-        soul: getSoulNumber(name3.name),
-        destiny: getDestinyNumber(`${name3.name} ${lastName}`),
-        desc: `Tên này kết nối với ${personalityData.theme.toLowerCase()} từ số nhân cách ${personalityNumber}, phù hợp với ${personalityData.workStyle.toLowerCase()}.`,
-        famous: name3.famous
-      }
-    ],
+    suggestions,
     advice: `Bạn nên chọn danh xưng phù hợp với phong cách cá nhân và mục tiêu nghề nghiệp để tạo dấu ấn riêng!`
   };
 
