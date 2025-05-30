@@ -2,13 +2,37 @@
   <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
     <div class="p-6 space-y-6">
       <!-- Tiêu đề -->
-      <div class="text-center mb-8">
-        <h2 class="text-4xl font-bold text-teal-700 mb-3">Kim Tự Tháp Thần Số Học</h2>
-        <div class="w-24 h-1 bg-teal-500 mx-auto mb-4 rounded-full"></div>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          Khám phá các chu kỳ quan trọng trong cuộc đời bạn thông qua kim tự tháp số
-        </p>
+      <!-- Tiêu đề -->
+    <div class="text-center mb-8">
+      <h2 class="text-4xl font-bold text-teal-700 mb-3">Kim Tự Tháp Thần Số Học</h2>
+      <div class="w-24 h-1 bg-teal-500 mx-auto mb-4 rounded-full"></div>
+      <div class="text-lg text-gray-600 max-w-3xl mx-auto space-y-3 text-left px-4">
+        <p>Kim tự tháp thần số học là công cụ mạnh mẽ giúp bạn khám phá 4 giai đoạn đỉnh cao quan trọng trong cuộc đời, mỗi giai đoạn kéo dài khoảng 9 năm, cùng những thử thách tương ứng bạn cần vượt qua.</p>
+        
+        <p>Mỗi đỉnh kim tự tháp đại diện cho:</p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li><span class="font-medium">Đỉnh cao 1 (27-36 tuổi):</span> Nền tảng sự nghiệp và cá nhân</li>
+          <li><span class="font-medium">Đỉnh cao 2 (36-45 tuổi):</span> Phát triển bản thân và mối quan hệ</li>
+          <li><span class="font-medium">Đỉnh cao 3 (45-54 tuổi):</span> Đóng góp cho xã hội và cộng đồng</li>
+          <li><span class="font-medium">Đỉnh cao 4 (54 tuổi trở lên):</span> Tổng kết và để lại di sản</li>
+        </ul>
+        
+       <p class="font-medium">Cấu trúc kim tự tháp gồm 3 lớp chính:</p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li><span class="font-medium">Nền móng:</span> Ngày, tháng, năm sinh (dữ liệu đầu vào)</li>
+            <li><span class="font-medium">Đỉnh tháp:</span> 4 đỉnh cao tương ứng 4 giai đoạn</li>
+            <li><span class="font-medium">Đáy tháp:</span> Thử thách cần vượt qua ở mỗi giai đoạn</li>
+          </ul>
+          
+          <p>Bằng cách phân tích các con số từ ngày sinh của bạn, kim tự tháp này sẽ tiết lộ:</p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Thời điểm vàng để phát triển sự nghiệp</li>
+            <li>Giai đoạn thuận lợi cho các mối quan hệ</li>
+            <li>Thời điểm cần tập trung vào đời sống tinh thần</li>
+            <li>Những bài học cuộc sống quan trọng</li>
+          </ul>
       </div>
+    </div>
 
       <!-- Biểu đồ SVG -->
       <transition name="fade-slide">

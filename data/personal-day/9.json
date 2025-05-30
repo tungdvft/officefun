@@ -134,6 +134,254 @@
         "energy": "Viết lời cảm ơn cho đồng nghiệp. Hành động này tăng năng lượng tích cực.",
         "routine": "Dành 5 phút buổi sáng để chọn một mối quan hệ để hoàn thiện."
       }
+    },
+    {
+      "life_path": 9,
+      "profile": {
+        "archetype": "Người nhân đạo",
+        "element": "Nước",
+        "compatible_numbers": [2, 6, 9],
+        "chakra": "Năng lượng vùng tim"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 9 khuyến khích bạn tập trung vào việc giúp đỡ cộng đồng và hoàn thiện các mục tiêu nhân đạo. Hãy buông bỏ những gì không còn phù hợp với giá trị của bạn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Phản ánh",
+            "action": "Viết 3 cách bạn đã giúp đỡ người khác gần đây. Ghi chú một điều bạn muốn buông bỏ để tiến tới mục tiêu lớn hơn.",
+            "warning": "Tránh giữ những cảm xúc tiêu cực. Hãy tập trung vào lòng biết ơn."
+          },
+          "afternoon": {
+            "focus": "Hành động",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Tham gia một hoạt động từ thiện hoặc chia sẻ kiến thức với người khác. Ghi chú cảm giác."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về những giá trị quan trọng với bạn. Thư giãn với âm nhạc hoặc thiền."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hoàn thiện một dự án vì cộng đồng. Đọc về lãnh đạo nhân đạo để truyền cảm hứng.",
+          "love": "Chia sẻ lòng biết ơn với người thân yêu. Nếu độc thân, viết về tình yêu lý tưởng của bạn.",
+          "finance": "Đánh giá chi tiêu cho các hoạt động từ thiện. Lập kế hoạch đóng góp ý nghĩa."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy quá tải khi giúp đỡ người khác.",
+          "solution": "Đặt ranh giới rõ ràng và ưu tiên sức khỏe tinh thần của bạn."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Tình yêu và lòng trắc ẩn là sức mạnh của bạn. Hãy hoàn thiện với sự hào phóng.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ánh sáng trắng lan tỏa từ trái tim bạn. Hít thở sâu, cảm nhận sự kết nối.",
+        "affirmation": "Tôi hoàn thiện với tình yêu và lòng trắc ẩn."
+      },
+      "luck": {
+        "color": {
+          "hex": "#800080",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím để tăng năng lượng nhân đạo."
+        },
+        "number": 9,
+        "direction": "Hướng Đông Bắc",
+        "object": "Nến trắng"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã giúp đỡ ai hoặc điều gì? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã làm gì để tạo ra sự thay đổi tích cực hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một vật phẩm nhắc nhở về lòng trắc ẩn trên bàn, như một bức ảnh cộng đồng.",
+        "energy": "Nghe một bài nói về lòng nhân ái để tăng cảm hứng.",
+        "routine": "Dành 5 phút buổi sáng để viết về một hành động tử tế bạn sẽ thực hiện."
+      }
+    },
+    {
+      "life_path": 11,
+      "profile": {
+        "archetype": "Người truyền cảm hứng",
+        "element": "Không khí",
+        "compatible_numbers": [2, 4, 9],
+        "chakra": "Năng lượng vùng đỉnh đầu"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 9 thúc đẩy bạn hoàn thiện tầm nhìn tâm linh và truyền cảm hứng cho người khác. Hãy buông bỏ những nghi ngờ để tỏa sáng ánh sáng nội tại.",
+        "time_slots": {
+          "morning": {
+            "focus": "Tự phản ánh",
+            "action": "Viết 3 khoảnh khắc bạn đã truyền cảm hứng cho ai đó. Ghi chú một nỗi sợ bạn muốn buông bỏ.",
+            "warning": "Tránh tự nghi ngờ. Tin vào trực giác của bạn."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Chia sẻ một ý tưởng sáng tạo hoặc bài viết truyền cảm hứng. Ghi chú phản hồi bạn nhận được."
+          },
+          "evening": {
+            "focus": "Kết nối tâm linh",
+            "activity": "Thiền hoặc viết nhật ký về sứ mệnh tâm linh của bạn. Nghe nhạc nâng cao tinh thần."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hoàn thiện một dự án sáng tạo hoặc truyền cảm hứng. Đọc về lãnh đạo tinh thần.",
+          "love": "Chia sẻ tầm nhìn với người yêu để tăng kết nối. Nếu độc thân, viết về một mối quan hệ tâm linh lý tưởng.",
+          "finance": "Đánh giá chi tiêu cho các hoạt động sáng tạo. Lập kế hoạch đầu tư vào đam mê."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy áp lực từ kỳ vọng cao.",
+          "solution": "Thiền để kết nối với trực giác và buông bỏ áp lực."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Ánh sáng của bạn dẫn dắt người khác. Hãy hoàn thiện với sự tự tin và lòng tin vào vũ trụ.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ánh sáng tím từ đỉnh đầu lan tỏa. Hít thở sâu, cảm nhận sự kết nối với vũ trụ.",
+        "affirmation": "Tôi truyền cảm hứng và hoàn thiện với ánh sáng tâm linh."
+      },
+      "luck": {
+        "color": {
+          "hex": "#4B0082",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím đậm để tăng trực giác."
+        },
+        "number": 11,
+        "direction": "Hướng Đông",
+        "object": "Đá thạch anh tím"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã truyền cảm hứng cho ai? Hãy viết về khoảnh khắc đó và cảm giác của bạn.",
+        "feedback_question": "Bạn đã chia sẻ điều gì để nâng cao tinh thần người khác hôm nay? Hãy kể lại!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một viên đá thạch anh trên bàn để tăng năng lượng tâm linh.",
+        "energy": "Nghe nhạc cổ điển hoặc thiền định để nâng cao trực giác.",
+        "routine": "Dành 5 phút buổi sáng để viết về một tầm nhìn truyền cảm hứng."
+      }
+    },
+    {
+      "life_path": 22,
+      "profile": {
+        "archetype": "Người kiến tạo",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 8],
+        "chakra": "Năng lượng vùng gốc"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 9 khuyến khích bạn hoàn thiện các dự án lớn và xây dựng nền tảng bền vững. Hãy buông bỏ những chi tiết không cần thiết để tập trung vào mục tiêu dài hạn.",
+        "time_slots": {
+          "morning": {
+            "focus": "Lập kế hoạch",
+            "action": "Viết 3 thành tựu lớn trong dự án của bạn. Ghi chú một yếu tố bạn muốn đơn giản hóa.",
+            "warning": "Tránh sa lầy vào chi tiết nhỏ. Hãy nhìn bức tranh toàn cảnh."
+          },
+          "afternoon": {
+            "focus": "Hành động",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Hoàn thiện một phần của dự án lớn, như kế hoạch hoặc tài liệu. Ghi chú tiến độ."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về mục tiêu dài hạn. Thư giãn với sách về quản lý dự án hoặc đi bộ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hoàn thiện một giai đoạn của dự án lớn. Đọc về quản lý để cải thiện hiệu quả.",
+          "love": "Chia sẻ kế hoạch dài hạn với người yêu để tăng hỗ trợ. Nếu độc thân, viết về mục tiêu chung lý tưởng.",
+          "finance": "Đánh giá đầu tư dài hạn. Loại bỏ chi tiêu không cần thiết."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy áp lực từ các dự án lớn.",
+          "solution": "Chia nhỏ công việc và tập trung vào từng bước."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sức mạnh của bạn là xây dựng những điều bền vững. Hãy hoàn thiện với sự kiên nhẫn.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng một nền tảng vững chắc dưới chân bạn. Hít thở sâu, cảm nhận sự ổn định.",
+        "affirmation": "Tôi xây dựng và hoàn thiện với sự bền vững."
+      },
+      "luck": {
+        "color": {
+          "hex": "#228B22",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh lá để tăng năng lượng ổn định."
+        },
+        "number": 22,
+        "direction": "Hướng Tây",
+        "object": "Mô hình kiến trúc"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã hoàn thiện gì trong dự án lớn của mình? Hãy viết về bước tiến và cảm giác của bạn.",
+        "feedback_question": "Bạn đã xây dựng gì bền vững hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Sắp xếp bàn làm việc gọn gàng, đặt một mô hình nhỏ để nhắc nhở về mục tiêu lớn.",
+        "energy": "Nghe podcast về quản lý dự án để tăng động lực.",
+        "routine": "Dành 5 phút buổi sáng để viết kế hoạch cho một bước nhỏ trong dự án."
+      }
+    },
+    {
+      "life_path": 33,
+      "profile": {
+        "archetype": "Người thầy tâm linh",
+        "element": "Không khí",
+        "compatible_numbers": [6, 9, 11],
+        "chakra": "Năng lượng vùng cổ họng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 9 khuyến khích bạn hoàn thiện vai trò hướng dẫn và chia sẻ trí tuệ. Hãy buông bỏ những kỳ vọng không thực tế để lan tỏa tình yêu thương.",
+        "time_slots": {
+          "morning": {
+            "focus": "Phản ánh",
+            "action": "Viết 3 cách bạn đã giúp ai đó phát triển. Ghi chú một kỳ vọng bạn muốn buông bỏ.",
+            "warning": "Tránh áp đặt ý kiến. Hãy lắng nghe và hướng dẫn nhẹ nhàng."
+          },
+          "afternoon": {
+            "focus": "Chia sẻ",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Dạy hoặc chia sẻ một bài học với ai đó. Ghi chú cảm giác khi giúp đỡ."
+          },
+          "evening": {
+            "focus": "Kết nối",
+            "activity": "Viết nhật ký về sứ mệnh hướng dẫn của bạn. Thư giãn với sách tâm linh hoặc thiền."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hoàn thiện một bài giảng hoặc chia sẻ kiến thức. Đọc về giáo dục tâm linh.",
+          "love": "Chia sẻ lời khuyên với người yêu để tăng hiểu biết. Nếu độc thân, viết về vai trò hướng dẫn trong tình yêu.",
+          "finance": "Đánh giá chi tiêu cho việc học tập hoặc từ thiện. Lập kế hoạch hỗ trợ cộng đồng."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy áp lực từ vai trò hướng dẫn.",
+          "solution": "Thiền để kết nối với sự bình an và tin vào hành trình của bạn."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Trí tuệ của bạn nâng cao người khác. Hãy hoàn thiện với tình yêu và sự khiêm tốn.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ánh sáng xanh lam từ cổ họng lan tỏa. Hít thở sâu, cảm nhận sự rõ ràng.",
+        "affirmation": "Tôi hướng dẫn và hoàn thiện với tình yêu thương."
+      },
+      "luck": {
+        "color": {
+          "hex": "#4682B4",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh dương để tăng năng lượng giao tiếp."
+        },
+        "number": 33,
+        "direction": "Hướng Đông Nam",
+        "object": "Sách tâm linh"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã hướng dẫn ai như thế nào? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã chia sẻ trí tuệ gì hôm nay? Hãy kể lại câu chuyện!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một cuốn sách tâm linh trên bàn để nhắc nhở sứ mệnh của bạn.",
+        "energy": "Nghe bài giảng tâm linh để tăng cảm hứng.",
+        "routine": "Dành 5 phút buổi sáng để viết về một bài học bạn muốn chia sẻ."
+      }
     }
   ],
   "premium_features": {
