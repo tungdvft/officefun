@@ -12,26 +12,56 @@
               <p class="text-lg text-gray-600 max-w-2xl mx-auto">
                 Hành trình cuộc đời qua các chu kỳ số - Khám phá những giai đoạn thịnh vượng và thử thách
               </p>
+              <div class="text-sm text-gray-600 mt-2">
+                <p>Năm cá nhân được tính từ ngày sinh và năm hiện tại, thể hiện chu kỳ năng lượng riêng.</p>
+              </div>
             </div>
             <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
               <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
                 <div class="mt-2 md:mt-0 flex items-center text-sm text-gray-600">
                   <span class="inline-block w-3 h-3 rounded-full bg-teal-500 mr-1"></span>
-                  <span>Mức năng lượng (1-9)</span>
+                  <span>Mức năng lượng (1-10)</span>
                 </div>
               </div>
               <ClientOnly>
-                <div class="relative h-80">
+                <div class="relative h-96">
                   <canvas ref="cycleChart"></canvas>
                 </div>
               </ClientOnly>
               <div class="mt-4 text-sm text-gray-500">
-                <p>Biểu đồ thể hiện mức năng lượng và xu hướng của từng năm cá nhân trong chu kỳ 10 năm.</p>
+                <p>Biểu đồ thể hiện mức năng lượng và xu hướng của từng năm cá nhân trong chu kỳ 15 năm.</p>
+              </div>
+              <!-- Thông tin chi tiết khi click -->
+              <div v-if="selectedYear" class="mt-4 bg-teal-50 p-4 rounded-lg">
+                <h5 class="font-semibold text-teal-700 mb-2">Chi tiết năm {{ selectedYear }}</h5>
+                <p class="text-gray-700 mb-2">{{ numerologyData.cycles[selectedYear].description }}</p>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <h6 class="font-semibold text-green-700">Điểm mạnh</h6>
+                    <ul class="list-disc pl-5 text-gray-700">
+                      <li v-for="(strength, index) in numerologyData.cycles[selectedYear].strengths" :key="index">{{ strength }}</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h6 class="font-semibold text-amber-700">Điểm yếu</h6>
+                    <ul class="list-disc pl-5 text-gray-700">
+                      <li v-for="(weakness, index) in numerologyData.cycles[selectedYear].weaknesses" :key="index">{{ weakness }}</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <h6 class="font-semibold text-blue-700">Lời khuyên</h6>
+                  <ul class="list-disc pl-5 text-gray-700">
+                    <li v-for="(advice, index) in numerologyData.cycles[selectedYear].advice" :key="index">{{ advice }}</li>
+                  </ul>
+                </div>
               </div>
             </div>
 
             <!-- Danh sách các năm -->
-            <div v-for="(yearData, year) in sortedCycles" :key="year" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+            <div v-for="(yearData, year) in sortedCycles" :key="year" 
+                 class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm"
+                 :class="{ 'ring-2 ring-teal-500': highlightedYear === year }">
               <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
                 <div class="flex items-center mb-3 sm:mb-0">
                   <span class="w-10 h-10 flex items-center justify-center bg-teal-100 text-teal-700 rounded-full font-bold mr-3">{{ year }}</span>
@@ -43,7 +73,7 @@
                         Số {{ yearData.number }}
                       </span>
                       <span class="ml-2 text-sm text-gray-500">
-                        Năng lượng: {{ yearData.energyLevel }}/9
+                        Năng lượng: {{ yearData.energyLevel }}/10
                       </span>
                     </div>
                   </div>
@@ -51,7 +81,7 @@
                 <div class="flex items-center">
                   <div class="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
                     <div class="h-full bg-teal-500" 
-                         :style="{ width: `${(yearData.energyLevel / 9) * 100}%` }"></div>
+                         :style="{ width: `${(yearData.energyLevel / 10) * 100}%` }"></div>
                   </div>
                 </div>
               </div>
@@ -139,20 +169,21 @@
 import { ref, computed, watch, onMounted } from 'vue';
 import Chart from 'chart.js/auto';
 import { nextTick } from 'vue';
+import 'chartjs-plugin-annotation';
 
-// Bảng ánh xạ số năm cá nhân sang mức năng lượng (đã điều chỉnh)
+// Bảng ánh xạ số năm cá nhân sang mức năng lượng
 const energyLevelMap = {
-  1: 3,  // Khởi đầu - năng lượng trung bình (tăng từ 1 lên 3)
-  2: 5,  // Hợp tác - năng lượng cao hơn
-  3: 7,  // Sáng tạo - năng lượng rất cao
-  4: 4,  // Ổn định - năng lượng trung bình
-  5: 6,  // Thay đổi - năng lượng cao
-  6: 5,  // Gia đình - năng lượng trung bình cao
-  7: 3,  // Nội tâm - năng lượng thấp
-  8: 8,  // Thành công - năng lượng rất cao
-  9: 4,  // Hoàn thiện - năng lượng trung bình
-  11: 6, // Trực giác - năng lượng cao
-  22: 9  // Vượt trội - năng lượng cao nhất
+  1: 7,  // Khởi đầu - năng lượng cao
+  2: 4,  // Hợp tác - năng lượng cảm xúc, trung bình
+  3: 6,  // Sáng tạo - năng lượng khá cao
+  4: 5,  // Ổn định - năng lượng trung bình
+  5: 8,  // Thay đổi - năng lượng cao
+  6: 5,  // Gia đình - năng lượng trung bình
+  7: 7,  // Nội tâm - năng lượng cao
+  8: 9,  // Thành công - năng lượng rất cao
+  9: 4,  // Hoàn thiện - năng lượng cảm xúc, trung bình
+  11: 8, // Trực giác - năng lượng cao (Master)
+  22: 10 // Vượt trội - năng lượng cao nhất (Master)
 };
 
 const props = defineProps({
@@ -165,7 +196,26 @@ const props = defineProps({
 const numerologyData = ref(null);
 const loading = ref(false);
 const cycleChart = ref(null);
+const selectedYear = ref(null);
+const highlightedYear = ref(null);
 let chartInstance = null;
+
+// Hàm giảm số về một chữ số, giữ nguyên Master Numbers
+const reduceToSingleDigit = (num) => {
+  if (num === 11 || num === 22) return num;
+  while (num > 9) {
+    num = String(num).split('').reduce((sum, digit) => sum + Number(digit), 0);
+  }
+  return num || 9;
+};
+
+// Hàm tính năm cá nhân
+const calculatePersonalYear = (day, month, targetYear) => {
+  const dayMonthSum = reduceToSingleDigit(day + month);
+  const yearSum = reduceToSingleDigit(targetYear);
+  const personalYear = reduceToSingleDigit(dayMonthSum + yearSum);
+  return personalYear;
+};
 
 // Sắp xếp các năm theo thứ tự tăng dần
 const sortedCycles = computed(() => {
@@ -195,6 +245,24 @@ const getNumberClass = (number) => {
     22: 'bg-amber-100 text-amber-800'
   };
   return classes[number] || 'bg-gray-100 text-gray-800';
+};
+
+// Màu sắc cho điểm trên biểu đồ, đồng bộ với getNumberClass
+const getPointColor = (number) => {
+  const colors = {
+    1: '#8b5cf6', // purple
+    2: '#3b82f6', // blue
+    3: '#10b981', // green
+    4: '#f59e0b', // yellow
+    5: '#ef4444', // red
+    6: '#ec4899', // pink
+    7: '#6366f1', // indigo
+    8: '#0d9488', // teal
+    9: '#f97316', // orange
+    11: '#06b6d4', // cyan
+    22: '#f59e0b' // amber
+  };
+  return colors[number] || '#6b7280'; // gray
 };
 
 // Tạo biểu đồ chu kỳ vận số
@@ -233,7 +301,7 @@ const createCycleChart = () => {
             return getPointColor(number);
           },
           pointBorderColor: '#fff',
-          pointHoverRadius: 7,
+          pointHoverRadius: 8,
           pointRadius: 5,
           pointHitRadius: 10,
         },
@@ -258,27 +326,71 @@ const createCycleChart = () => {
               const description = sortedCycles.value[year].description.split('.')[0];
               return [
                 `Năm ${year} - Số ${number}`,
-                `Mức năng lượng: ${context.raw}/9`,
+                `Mức năng lượng: ${context.raw}/10`,
                 `${description}`
               ];
             },
           },
         },
+        annotation: {
+          annotations: {
+            line1: {
+              type: 'line',
+              yMin: 5,
+              yMax: 5,
+              borderColor: '#6b7280',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              label: {
+                content: 'Trung bình (5)',
+                enabled: true,
+                position: 'end',
+                backgroundColor: '#6b7280',
+                color: '#fff'
+              }
+            },
+            lowBand: {
+              type: 'box',
+              yMin: 1,
+              yMax: 4,
+              backgroundColor: 'rgba(255, 99, 132, 0.1)',
+              borderColor: 'rgba(255, 99, 132, 0.3)',
+              borderWidth: 1
+            },
+            mediumBand: {
+              type: 'box',
+              yMin: 4,
+              yMax: 7,
+              backgroundColor: 'rgba(255, 206, 86, 0.1)',
+              borderColor: 'rgba(255, 206, 86, 0.3)',
+              borderWidth: 1
+            },
+            highBand: {
+              type: 'box',
+              yMin: 7,
+              yMax: 10,
+              backgroundColor: 'rgba(75, 192, 192, 0.1)',
+              borderColor: 'rgba(75, 192, 192, 0.3)',
+              borderWidth: 1
+            }
+          }
+        }
       },
       scales: {
         y: {
           beginAtZero: false,
           min: 1,
-          max: 9,
+          max: 10,
           ticks: {
             stepSize: 1,
             callback: (value) => {
               const labels = {
                 1: 'Rất thấp',
-                3: 'Thấp',
+                4: 'Trung bình thấp',
                 5: 'Trung bình',
                 7: 'Cao',
-                9: 'Rất cao'
+                8: 'Rất cao',
+                10: 'Cực cao'
               };
               return labels[value] || value;
             }
@@ -300,6 +412,10 @@ const createCycleChart = () => {
           },
           grid: {
             display: false
+          },
+          ticks: {
+            maxTicksLimit: 15,
+            rotation: 45
           }
         },
       },
@@ -307,26 +423,22 @@ const createCycleChart = () => {
         intersect: false,
         mode: 'index',
       },
+      onHover: (event, chartElement) => {
+        if (chartElement.length) {
+          const index = chartElement[0].index;
+          highlightedYear.value = years[index];
+        } else {
+          highlightedYear.value = null;
+        }
+      },
+      onClick: (event, chartElement) => {
+        if (chartElement.length) {
+          const index = chartElement[0].index;
+          selectedYear.value = years[index];
+        }
+      }
     },
   });
-};
-
-// Màu sắc cho điểm trên biểu đồ theo số
-const getPointColor = (number) => {
-  const colors = {
-    1: '#8b5cf6', // purple
-    2: '#3b82f6', // blue
-    3: '#10b981', // green
-    4: '#f59e0b', // yellow
-    5: '#ef4444', // red
-    6: '#ec4899', // pink
-    7: '#6366f1', // indigo
-    8: '#0d9488', // teal
-    9: '#f97316', // orange
-    11: '#06b6d4', // cyan
-    22: '#f59e0b' // amber
-  };
-  return colors[number] || '#6b7280'; // gray
 };
 
 // Gọi API để lấy dữ liệu chu kỳ vận số
@@ -342,20 +454,17 @@ const fetchNumerologyData = async () => {
     // Giả lập API call với dữ liệu mẫu
     await new Promise(resolve => setTimeout(resolve, 800));
     
-    // Tạo dữ liệu mẫu cho 9 năm tiếp theo từ năm hiện tại
+    const [day, month] = props.birthDate.split('/').map(Number);
     const currentYear = new Date().getFullYear();
     const cycles = {};
     
-    for (let i = 0; i < 9; i++) {
+    // Tạo dữ liệu cho 15 năm: 3 năm trước và 12 năm từ hiện tại trở đi
+    for (let i = -3; i <= 12; i++) {
       const year = currentYear + i;
-      const number = (i % 9) + 1; // Chu kỳ 1-9
-      const energyLevel = energyLevelMap[number];
-      
+      const number = calculatePersonalYear(day, month, year);
+      const energyLevel = energyLevelMap[number] || 5;
       cycles[year] = generateYearData(year, number, energyLevel);
     }
-    
-    // Thêm năm đặc biệt (Master Number)
-    cycles[currentYear + 9] = generateYearData(currentYear + 9, 22, energyLevelMap[22]);
     
     numerologyData.value = { cycles };
     
