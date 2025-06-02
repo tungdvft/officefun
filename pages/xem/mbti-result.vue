@@ -77,7 +77,9 @@ import { computed } from 'vue';
 import { useAssessmentStore } from '~/stores/assessment';
 import { useRouter } from 'vue-router';
 import { useHead } from '#app';
-
+definePageMeta({
+  layout: 'view'
+});
 const store = useAssessmentStore();
 const router = useRouter();
 
