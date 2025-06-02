@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useAssessmentStore } from '~/stores/assessment';
 import DISCQuiz from '~/components/DISCQuiz.vue';
 import { useHead } from '#app';
@@ -39,8 +39,18 @@ useHead({
 const store = useAssessmentStore();
 const showQuiz = ref(false);
 
+// Reset quiz data when entering the page
+onMounted(() => {
+  console.log('DISC page mounted, resetting quiz');
+  if (process.client) {
+    store.loadFromLocalStorage(); // Sync with localStorage
+    store.resetDisc(); // Reset quiz data
+  }
+  showQuiz.value = false; // Ensure intro screen is shown
+});
+
 const startQuiz = () => {
-  console.log('Starting quiz'); // Debug
+  console.log('Starting quiz');
   showQuiz.value = true;
 };
 </script>
