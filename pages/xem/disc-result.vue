@@ -390,7 +390,7 @@ import { useAssessmentStore } from '~/stores/assessment';
 import { useRouter } from 'vue-router';
 import { useHead } from '#app';
 import RadarChart from '~/components/RadarChart.vue';
-
+definePageMeta({ layout: 'view' });
 const store = useAssessmentStore();
 const router = useRouter();
 const scoresKey = ref(0);
