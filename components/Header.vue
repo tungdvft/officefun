@@ -38,24 +38,19 @@
               @mouseenter="openMenu('trac-nghiem')"
               @mouseleave="closeMenu('trac-nghiem')"
             >
-              <button 
-                class="relative px-5 py-2 rounded-lg font-medium hover:text-purple-600 transition-colors duration-200 h-full flex items-center group whitespace-nowrap"
-                :class="{ 'text-purple-600': ['/disc', '/mbti'].includes(route.path) }"
-              >
-                Trắc nghiệm
-                <font-awesome-icon 
-                  :icon="['fas', 'chevron-down']" 
-                  class="ml-2 text-sm text-purple-600 group-hover:text-purple-600 transition-colors duration-200"
-                />
-                <span 
-                  v-if="['/disc', '/mbti'].includes(route.path)"
-                  class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-14 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-300"
-                ></span>
-                <span 
-                  v-else
-                  class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-300 group-hover:w-14"
-                ></span>
-              </button>
+            <!-- Thay đổi phần dropdown button -->
+            <button 
+              class="relative px-5 py-2 rounded-lg font-medium hover:text-purple-600 transition-colors duration-200 h-full flex items-center group whitespace-nowrap"
+              :class="{ 'text-purple-600': ['/disc', '/mbti'].includes(route.path) }"
+            >
+              Trắc nghiệm
+              <font-awesome-icon 
+                :icon="['fas', 'chevron-down']" 
+                class="ml-2 w-3 h-3 text-purple-600 group-hover:text-purple-600 transition-all duration-200"
+                :style="{ transform: activeMenu === 'trac-nghiem' ? 'rotate(180deg)' : 'rotate(0)' }"
+              />
+              <!-- Phần indicator giữ nguyên -->
+            </button>
               <div 
                 class="dropdown-menu absolute top-full left-0 bg-white shadow-xl rounded-xl py-2 w-48 z-30 border border-gray-100"
                 :class="{ 'block': activeMenu === 'trac-nghiem', 'hidden': activeMenu !== 'trac-nghiem' }"
@@ -341,7 +336,15 @@ onUnmounted(() => {
 .dropdown-menu {
   animation: fadeIn 0.3s ease-in-out;
 }
-
+/* Thêm vào phần style scoped */
+.font-awesome-icon {
+  font-display: block;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  transition: transform 0.2s ease-in-out;
+}
 @keyframes fadeIn {
   from {
     opacity: 0;
