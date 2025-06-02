@@ -1,0 +1,422 @@
+{
+  "questions": [
+    {
+      "text": "Bạn cảm thấy thoải mái nhất khi nào?",
+      "dimension": "E/I",
+      "options": [
+        { "text": "Ở nơi đông người, giao tiếp và kết nối", "type": "E" },
+        { "text": "Ở một mình, suy ngẫm và làm việc độc lập", "type": "I" }
+      ]
+    },
+    {
+      "text": "Bạn thường bắt đầu cuộc trò chuyện như thế nào?",
+      "dimension": "E/I",
+      "options": [
+        { "text": "Dễ dàng bắt chuyện với người lạ", "type": "E" },
+        { "text": "Chờ người khác bắt chuyện trước", "type": "I" }
+      ]
+    },
+    {
+      "text": "Bạn thích làm việc ở đâu?",
+      "dimension": "E/I",
+      "options": [
+        { "text": "Môi trường năng động với nhiều người", "type": "E" },
+        { "text": "Không gian yên tĩnh để tập trung", "type": "I" }
+      ]
+    },
+    {
+      "text": "Sau một ngày dài, bạn làm gì để nạp năng lượng?",
+      "dimension": "E/I",
+      "options": [
+        { "text": "Gặp gỡ bạn bè hoặc tham gia hoạt động xã hội", "type": "E" },
+        { "text": "Thư giãn một mình với sách hoặc phim", "type": "I" }
+      ]
+    },
+    {
+      "text": "Bạn thường chia sẻ suy nghĩ của mình như thế nào?",
+      "dimension": "E/I",
+      "options": [
+        { "text": "Nói ra ngay khi nghĩ đến", "type": "E" },
+        { "text": "Suy nghĩ kỹ trước khi chia sẻ", "type": "I" }
+      ]
+    },
+    {
+      "text": "Bạn thích tham gia sự kiện nào?",
+      "dimension": "E/I",
+      "options": [
+        { "text": "Tiệc tùng hoặc hội họp đông người", "type": "E" },
+        { "text": "Buổi gặp mặt thân mật hoặc ở nhà", "type": "I" }
+      ]
+    },
+    {
+      "text": "Bạn cảm thấy thế nào khi gặp người mới?",
+      "dimension": "E/I",
+      "options": [
+        { "text": "Hào hứng và dễ làm quen", "type": "E" },
+        { "text": "Cẩn trọng và cần thời gian", "type": "I" }
+      ]
+    },
+    {
+      "text": "Bạn xử lý công việc nhóm ra sao?",
+      "dimension": "E/I",
+      "options": [
+        { "text": "Thích thảo luận và làm việc cùng nhau", "type": "E" },
+        { "text": "Thích làm việc độc lập trước khi chia sẻ", "type": "I" }
+      ]
+    },
+    {
+      "text": "Bạn thường phản ứng thế nào trong cuộc họp?",
+      "dimension": "E/I",
+      "options": [
+        { "text": "Tham gia tích cực và đưa ý kiến", "type": "E" },
+        { "text": "Lắng nghe và chỉ nói khi cần", "type": "I" }
+      ]
+    },
+    {
+      "text": "Bạn thích cách giao tiếp nào?",
+      "dimension": "E/I",
+      "options": [
+        { "text": "Trò chuyện trực tiếp hoặc qua điện thoại", "type": "E" },
+        { "text": "Gửi email hoặc tin nhắn", "type": "I" }
+      ]
+    },
+    {
+      "text": "Bạn tập trung vào điều gì khi đưa ra quyết định?",
+      "dimension": "S/N",
+      "options": [
+        { "text": "Thông tin cụ thể và thực tế", "type": "S" },
+        { "text": "Khả năng và ý tưởng sáng tạo", "type": "N" }
+      ]
+    },
+    {
+      "text": "Bạn thích làm việc với gì?",
+      "dimension": "S/N",
+      "options": [
+        { "text": "Dữ liệu rõ ràng và chi tiết", "type": "S" },
+        { "text": "Khái niệm và bức tranh lớn", "type": "N" }
+      ]
+    },
+    {
+      "text": "Bạn mô tả bản thân như thế nào?",
+      "dimension": "S/N",
+      "options": [
+        { "text": "Thực tế và chú ý hiện tại", "type": "S" },
+        { "text": "Sáng tạo và hướng tới tương lai", "type": "N" }
+      ]
+    },
+    {
+      "text": "Khi học điều mới, bạn thích gì?",
+      "dimension": "S/N",
+      "options": [
+        { "text": "Học qua ví dụ cụ thể", "type": "S" },
+        { "text": "Hiểu ý nghĩa và tiềm năng", "type": "N" }
+      ]
+    },
+    {
+      "text": "Bạn chú ý điều gì khi gặp một tình huống mới?",
+      "dimension": "S/N",
+      "options": [
+        { "text": "Những gì đang xảy ra", "type": "S" },
+        { "text": "Những gì có thể xảy ra", "type": "N" }
+      ]
+    },
+    {
+      "text": "Bạn tiếp cận vấn đề như thế nào?",
+      "dimension": "S/N",
+      "options": [
+        { "text": "Dựa vào kinh nghiệm trước đây", "type": "S" },
+        { "text": "Tìm kiếm giải pháp sáng tạo", "type": "N" }
+      ]
+    },
+    {
+      "text": "Bạn quan tâm đến điều gì khi đọc tin tức?",
+      "dimension": "S/N",
+      "options": [
+        { "text": "Sự kiện cụ thể và chi tiết", "type": "S" },
+        { "text": "Xu hướng và ý nghĩa lớn hơn", "type": "N" }
+      ]
+    },
+    {
+      "text": "Bạn thích câu chuyện nào hơn?",
+      "dimension": "S/N",
+      "options": [
+        { "text": "Câu chuyện thực tế và chi tiết", "type": "S" },
+        { "text": "Câu chuyện giàu trí tưởng tượng", "type": "N" }
+      ]
+    },
+    {
+      "text": "Bạn làm việc tốt nhất với gì?",
+      "dimension": "S/N",
+      "options": [
+        { "text": "Quy trình rõ ràng và thực tế", "type": "S" },
+        { "text": "Ý tưởng mới và sáng tạo", "type": "N" }
+      ]
+    },
+    {
+      "text": "Bạn đánh giá thông tin dựa trên gì?",
+      "dimension": "S/N",
+      "options": [
+        { "text": "Sự thật đã được kiểm chứng", "type": "S" },
+        { "text": "Khả năng và tiềm năng", "type": "N" }
+      ]
+    },
+    {
+      "text": "Khi ra quyết định, bạn dựa vào đâu?",
+      "dimension": "T/F",
+      "options": [
+        { "text": "Logic và phân tích khách quan", "type": "T" },
+        { "text": "Giá trị cá nhân và cảm xúc", "type": "F" }
+      ]
+    },
+    {
+      "text": "Bạn phản ứng thế nào khi tranh luận?",
+      "dimension": "T/F",
+      "options": [
+        { "text": "Tập trung vào sự thật và logic", "type": "T" },
+        { "text": "Cân nhắc cảm xúc của mọi người", "type": "F" }
+      ]
+    },
+    {
+      "text": "Bạn ưu tiên điều gì khi giúp người khác?",
+      "dimension": "T/F",
+      "options": [
+        { "text": "Đưa ra giải pháp hợp lý", "type": "T" },
+        { "text": "Lắng nghe và đồng cảm", "type": "F" }
+      ]
+    },
+    {
+      "text": "Bạn đánh giá người khác dựa trên gì?",
+      "dimension": "T/F",
+      "options": [
+        { "text": "Khả năng và thành tích", "type": "T" },
+        { "text": "Tính cách và giá trị", "type": "F" }
+      ]
+    },
+    {
+      "text": "Bạn xử lý xung đột như thế nào?",
+      "dimension": "T/F",
+      "options": [
+        { "text": "Tìm giải pháp dựa trên lý lẽ", "type": "T" },
+        { "text": "Giải quyết dựa trên cảm xúc", "type": "F" }
+      ]
+    },
+    {
+      "text": "Bạn phản hồi lời phê bình ra sao?",
+      "dimension": "T/F",
+      "options": [
+        { "text": "Phân tích để cải thiện", "type": "T" },
+        { "text": "Cân nhắc cảm xúc trước", "type": "F" }
+      ]
+    },
+    {
+      "text": "Bạn ưu tiên điều gì khi làm việc nhóm?",
+      "dimension": "T/F",
+      "options": [
+        { "text": "Kết quả và hiệu quả", "type": "T" },
+        { "text": "Sự hòa hợp và tinh thần nhóm", "type": "F" }
+      ]
+    },
+    {
+      "text": "Bạn đưa ra lời khuyên như thế nào?",
+      "dimension": "T/F",
+      "options": [
+        { "text": "Dựa trên phân tích logic", "type": "T" },
+        { "text": "Dựa trên sự đồng cảm", "type": "F" }
+      ]
+    },
+    {
+      "text": "Bạn cảm thấy thế nào khi đưa ra quyết định khó khăn?",
+      "dimension": "T/F",
+      "options": [
+        { "text": "Tập trung vào sự công bằng", "type": "T" },
+        { "text": "Cân nhắc tác động cảm xúc", "type": "F" }
+      ]
+    },
+    {
+      "text": "Bạn tiếp cận vấn đề đạo đức như thế nào?",
+      "dimension": "T/F",
+      "options": [
+        { "text": "Dựa trên nguyên tắc logic", "type": "T" },
+        { "text": "Dựa trên giá trị cá nhân", "type": "F" }
+      ]
+    },
+    {
+      "text": "Bạn thích cuộc sống như thế nào?",
+      "dimension": "J/P",
+      "options": [
+        { "text": "Có kế hoạch và tổ chức", "type": "J" },
+        { "text": "Linh hoạt và tự do", "type": "P" }
+      ]
+    },
+    {
+      "text": "Bạn làm việc tốt nhất khi nào?",
+      "dimension": "J/P",
+      "options": [
+        { "text": "Có lịch trình rõ ràng", "type": "J" },
+        { "text": "Có thể ứng biến theo tình huống", "type": "P" }
+      ]
+    },
+    {
+      "text": "Bạn bắt đầu một dự án như thế nào?",
+      "dimension": "J/P",
+      "options": [
+        { "text": "Lập kế hoạch chi tiết trước", "type": "J" },
+        { "text": "Bắt đầu và điều chỉnh dần", "type": "P" }
+      ]
+    },
+    {
+      "text": "Bạn cảm thấy thế nào về thời hạn?",
+      "dimension": "J/P",
+      "options": [
+        { "text": "Thích hoàn thành sớm", "type": "J" },
+        { "text": "Thoải mái làm gần hạn chót", "type": "P" }
+      ]
+    },
+    {
+      "text": "Bạn quản lý công việc cá nhân ra sao?",
+      "dimension": "J/P",
+      "options": [
+        { "text": "Theo danh sách việc cần làm", "type": "J" },
+        { "text": "Tùy theo cảm hứng", "type": "P" }
+      ]
+    },
+    {
+      "text": "Bạn phản ứng thế nào với sự thay đổi kế hoạch?",
+      "dimension": "J/P",
+      "options": [
+        { "text": "Cảm thấy khó chịu và muốn giữ nguyên", "type": "J" },
+        { "text": "Thích nghi dễ dàng", "type": "P" }
+      ]
+    },
+    {
+      "text": "Bạn chuẩn bị cho một chuyến đi như thế nào?",
+      "dimension": "J/P",
+      "options": [
+        { "text": "Lên lịch trình chi tiết", "type": "J" },
+        { "text": "Chuẩn bị linh hoạt theo tình hình", "type": "P" }
+      ]
+    },
+    {
+      "text": "Bạn cảm thấy thế nào về công việc chưa hoàn thành?",
+      "dimension": "J/P",
+      "options": [
+        { "text": "Muốn hoàn thành ngay", "type": "J" },
+        { "text": "Thoải mái để sau", "type": "P" }
+      ]
+    },
+    {
+      "text": "Bạn tổ chức không gian làm việc ra sao?",
+      "dimension": "J/P",
+      "options": [
+        { "text": "Gọn gàng và có tổ chức", "type": "J" },
+        { "text": "Tự do và tùy hứng", "type": "P" }
+      ]
+    },
+    {
+      "text": "Bạn tiếp cận cơ hội mới như thế nào?",
+      "dimension": "J/P",
+      "options": [
+        { "text": "Lập kế hoạch trước khi hành động", "type": "J" },
+        { "text": "Nhảy vào và khám phá", "type": "P" }
+      ]
+    }
+  ],
+  "results": {
+    "INTJ": {
+      "type": "INTJ",
+      "name": "Nhà chiến lược",
+      "description": "Bạn là người có tầm nhìn, độc lập, và luôn tìm cách tối ưu hóa mọi thứ. Bạn thích lập kế hoạch dài hạn và làm việc một cách logic.",
+      "traits": ["Chiến lược", "Độc lập", "Tư duy logic", "Tầm nhìn xa"]
+    },
+    "INTP": {
+      "type": "INTP",
+      "name": "Nhà tư duy",
+      "description": "Bạn yêu thích khám phá ý tưởng mới, phân tích vấn đề và tìm hiểu bản chất sự việc. Bạn thường sáng tạo và tò mò.",
+      "traits": ["Sáng tạo", "Tò mò", "Phân tích", "Độc lập"]
+    },
+    "ENTJ": {
+      "type": "ENTJ",
+      "name": "Nhà lãnh đạo",
+      "description": "Bạn là người quyết đoán, tự tin, và thích dẫn dắt người khác để đạt mục tiêu. Bạn giỏi tổ chức và có tầm nhìn chiến lược.",
+      "traits": ["Lãnh đạo", "Tự tin", "Chiến lược", "Tổ chức"]
+    },
+    "ENTP": {
+      "type": "ENTP",
+      "name": "Nhà tranh luận",
+      "description": "Bạn sáng tạo, năng động, và thích thách thức ý tưởng. Bạn giỏi tranh luận và tìm kiếm cơ hội mới.",
+      "traits": ["Sáng tạo", "Năng động", "Tranh luận", "Linh hoạt"]
+    },
+    "INFJ": {
+      "type": "INFJ",
+      "name": "Người bảo vệ",
+      "description": "Bạn nhạy bén, lý tưởng, và luôn tìm cách giúp đỡ người khác. Bạn có trực giác mạnh và tầm nhìn sâu sắc.",
+      "traits": ["Nhạy bén", "Lý tưởng", "Trực giác", "Giúp đỡ"]
+    },
+    "INFP": {
+      "type": "INFP",
+      "name": "Người hòa giải",
+      "description": "Bạn sống theo giá trị cá nhân, sáng tạo, và luôn tìm kiếm ý nghĩa trong cuộc sống. Bạn nhạy cảm và đồng cảm.",
+      "traits": ["Sáng tạo", "Nhạy cảm", "Đồng cảm", "Giá trị"]
+    },
+    "ENFJ": {
+      "type": "ENFJ",
+      "name": "Người truyền cảm hứng",
+      "description": "Bạn ấm áp, truyền cảm hứng, và giỏi kết nối mọi người. Bạn quan tâm đến cảm xúc và luôn hỗ trợ người khác.",
+      "traits": ["Truyền cảm hứng", "Ấm áp", "Kết nối", "Hỗ trợ"]
+    },
+    "ENFP": {
+      "type": "ENFP",
+      "name": "Người vận động",
+      "description": "Bạn nhiệt tình, sáng tạo, và yêu thích khám phá. Bạn dễ dàng truyền năng lượng tích cực cho mọi người.",
+      "traits": ["Nhiệt tình", "Sáng tạo", "Khám phá", "Tích cực"]
+    },
+    "ISTJ": {
+      "type": "ISTJ",
+      "name": "Người trách nhiệm",
+      "description": "Bạn đáng tin cậy, có tổ chức, và luôn làm việc theo quy tắc. Bạn chú trọng chi tiết và hoàn thành nhiệm vụ.",
+      "traits": ["Đáng tin", "Tổ chức", "Chi tiết", "Trách nhiệm"]
+    },
+    "ISFJ": {
+      "type": "ISFJ",
+      "name": "Người che chở",
+      "description": "Bạn tận tâm, chu đáo, và luôn quan tâm đến người khác. Bạn thích duy trì sự ổn định và hỗ trợ cộng đồng.",
+      "traits": ["Tận tâm", "Chu đáo", "Hỗ trợ", "Ổn định"]
+    },
+    "ESTJ": {
+      "type": "ESTJ",
+      "name": "Người quản lý",
+      "description": "Bạn thực tế, quyết đoán, và giỏi tổ chức công việc. Bạn thích lãnh đạo và duy trì trật tự.",
+      "traits": ["Thực tế", "Quyết đoán", "Lãnh đạo", "Tổ chức"]
+    },
+    "ESFJ": {
+      "type": "ESFJ",
+      "name": "Người quan tâm",
+      "description": "Bạn thân thiện, hợp tác, và luôn quan tâm đến nhu cầu của người khác. Bạn thích tạo môi trường hòa hợp.",
+      "traits": ["Thân thiện", "Hợp tác", "Quan tâm", "Hòa hợp"]
+    },
+    "ISTP": {
+      "type": "ISTP",
+      "name": "Người thợ",
+      "description": "Bạn thực tế, linh hoạt, và giỏi giải quyết vấn đề. Bạn thích làm việc với tay chân và khám phá thế giới.",
+      "traits": ["Thực tế", "Linh hoạt", "Giải quyết vấn đề", "Khám phá"]
+    },
+    "ISFP": {
+      "type": "ISFP",
+      "name": "Nghệ sĩ",
+      "description": "Bạn nhạy cảm, sáng tạo, và sống theo cảm xúc. Bạn thích tự do và thể hiện bản thân qua nghệ thuật.",
+      "traits": ["Nhạy cảm", "Sáng tạo", "Tự do", "Nghệ thuật"]
+    },
+    "ESTP": {
+      "type": "ESTP",
+      "name": "Người hành động",
+      "description": "Bạn năng động, thực tế, và thích hành động ngay lập tức. Bạn giỏi ứng biến và tận hưởng thử thách.",
+      "traits": ["Năng động", "Thực tế", "Ứng biến", "Thử thách"]
+    },
+    "ESFP": {
+      "type": "ESFP",
+      "name": "Người biểu diễn",
+      "description": "Bạn vui vẻ, nhiệt tình, và yêu thích sự chú ý. Bạn sống cho hiện tại và mang lại niềm vui cho mọi người.",
+      "traits": ["Vui vẻ", "Nhiệt tình", "Hiện tại", "Niềm vui"]
+    }
+  }
+}

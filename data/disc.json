@@ -1,0 +1,210 @@
+{
+  "questions": [
+    {
+      "text": "Bạn thường hành động như thế nào trong một nhóm?",
+      "options": [
+        { "text": "Dẫn dắt và đưa ra quyết định nhanh chóng", "type": "D" },
+        { "text": "Thuyết phục và tạo động lực cho mọi người", "type": "I" },
+        { "text": "Hỗ trợ và duy trì sự hòa hợp", "type": "S" },
+        { "text": "Phân tích và đảm bảo chất lượng", "type": "C" }
+      ]
+    },
+    {
+      "text": "Khi đối mặt với vấn đề, bạn ưu tiên điều gì?",
+      "options": [
+        { "text": "Tìm giải pháp nhanh và hiệu quả", "type": "D" },
+        { "text": "Thảo luận để có ý tưởng sáng tạo", "type": "I" },
+        { "text": "Giữ bình tĩnh và giải quyết từ từ", "type": "S" },
+        { "text": "Nghiên cứu kỹ lưỡng trước khi hành động", "type": "C" }
+      ]
+    },
+    {
+      "text": "Phong cách làm việc của bạn là gì?",
+      "options": [
+        { "text": "Tập trung vào mục tiêu và kết quả", "type": "D" },
+        { "text": "Thích giao tiếp và xây dựng mối quan hệ", "type": "I" },
+        { "text": "Ổn định và làm việc có hệ thống", "type": "S" },
+        { "text": "Cẩn thận và chú ý chi tiết", "type": "C" }
+      ]
+    },
+    {
+      "text": "Bạn phản ứng thế nào với áp lực?",
+      "options": [
+        { "text": "Đối mặt trực tiếp và hành động ngay", "type": "D" },
+        { "text": "Tìm cách truyền cảm hứng để vượt qua", "type": "I" },
+        { "text": "Giữ bình tĩnh và tìm cách giảm căng thẳng", "type": "S" },
+        { "text": "Phân tích để tìm giải pháp tối ưu", "type": "C" }
+      ]
+    },
+    {
+      "text": "Bạn thích môi trường làm việc nào?",
+      "options": [
+        { "text": "Năng động và cạnh tranh", "type": "D" },
+        { "text": "Vui vẻ và nhiều tương tác", "type": "I" },
+        { "text": "Ổn định và thân thiện", "type": "S" },
+        { "text": "Có tổ chức và quy trình rõ ràng", "type": "C" }
+      ]
+    },
+    {
+      "text": "Bạn thường giao tiếp như thế nào?",
+      "options": [
+        { "text": "Trực tiếp và thẳng thắn", "type": "D" },
+        { "text": "Nhiệt tình và thuyết phục", "type": "I" },
+        { "text": "Lắng nghe và nhẹ nhàng", "type": "S" },
+        { "text": "Chính xác và dựa trên dữ kiện", "type": "C" }
+      ]
+    },
+    {
+      "text": "Khi làm việc nhóm, bạn thường đảm nhận vai trò gì?",
+      "options": [
+        { "text": "Lãnh đạo và định hướng", "type": "D" },
+        { "text": "Kết nối mọi người", "type": "I" },
+        { "text": "Hỗ trợ và phối hợp", "type": "S" },
+        { "text": "Kiểm tra và đảm bảo chất lượng", "type": "C" }
+      ]
+    },
+    {
+      "text": "Bạn đánh giá thành công dựa trên điều gì?",
+      "options": [
+        { "text": "Đạt được mục tiêu lớn", "type": "D" },
+        { "text": "Tạo được ảnh hưởng tích cực", "type": "I" },
+        { "text": "Duy trì sự ổn định", "type": "S" },
+        { "text": "Đạt được độ chính xác cao", "type": "C" }
+      ]
+    },
+    {
+      "text": "Bạn phản ứng thế nào với sự thay đổi?",
+      "options": [
+        { "text": "Chấp nhận và dẫn đầu thay đổi", "type": "D" },
+        { "text": "Hào hứng và thích nghi nhanh", "type": "I" },
+        { "text": "Cẩn trọng nhưng sẵn sàng", "type": "S" },
+        { "text": "Phân tích trước khi thích nghi", "type": "C" }
+      ]
+    },
+    {
+      "text": "Bạn ưu tiên điều gì khi ra quyết định?",
+      "options": [
+        { "text": "Kết quả và hiệu quả", "type": "D" },
+        { "text": "Cảm xúc và sự đồng thuận", "type": "I" },
+        { "text": "Sự ổn định và an toàn", "type": "S" },
+        { "text": "Dữ liệu và tính chính xác", "type": "C" }
+      ]
+    },
+    {
+      "text": "Bạn tiếp cận một dự án mới như thế nào?",
+      "options": [
+        { "text": "Xác định mục tiêu và hành động ngay", "type": "D" },
+        { "text": "Tìm cảm hứng và chia sẻ ý tưởng", "type": "I" },
+        { "text": "Lập kế hoạch ổn định và thực hiện", "type": "S" },
+        { "text": "Nghiên cứu kỹ và lên kế hoạch chi tiết", "type": "C" }
+      ]
+    },
+    {
+      "text": "Bạn xử lý xung đột trong nhóm ra sao?",
+      "options": [
+        { "text": "Giải quyết nhanh bằng cách ra lệnh", "type": "D" },
+        { "text": "Thuyết phục để đạt đồng thuận", "type": "I" },
+        { "text": "Lắng nghe và tìm cách hòa giải", "type": "S" },
+        { "text": "Phân tích nguyên nhân và đề xuất giải pháp", "type": "C" }
+      ]
+    },
+    {
+      "text": "Bạn cảm thấy thế nào về thời hạn công việc?",
+      "options": [
+        { "text": "Thích thử thách để hoàn thành sớm", "type": "D" },
+        { "text": "Thích làm việc với sự linh hoạt", "type": "I" },
+        { "text": "Ưu tiên hoàn thành đúng hạn", "type": "S" },
+        { "text": "Lập kế hoạch để đảm bảo đúng tiến độ", "type": "C" }
+      ]
+    },
+    {
+      "text": "Bạn học hỏi tốt nhất qua cách nào?",
+      "options": [
+        { "text": "Thử và sai để đạt kết quả", "type": "D" },
+        { "text": "Thảo luận và chia sẻ với người khác", "type": "I" },
+        { "text": "Học qua quy trình đã được chứng minh", "type": "S" },
+        { "text": "Nghiên cứu và phân tích dữ liệu", "type": "C" }
+      ]
+    },
+    {
+      "text": "Bạn thường phản hồi phản hồi tiêu cực như thế nào?",
+      "options": [
+        { "text": "Chấp nhận và cải thiện ngay", "type": "D" },
+        { "text": "Tìm cách giải thích và thuyết phục", "type": "I" },
+        { "text": "Lắng nghe và cải thiện dần", "type": "S" },
+        { "text": "Phân tích phản hồi để cải thiện chính xác", "type": "C" }
+      ]
+    },
+    {
+      "text": "Bạn tổ chức công việc cá nhân ra sao?",
+      "options": [
+        { "text": "Tập trung vào việc quan trọng nhất", "type": "D" },
+        { "text": "Linh hoạt theo cảm hứng", "type": "I" },
+        { "text": "Theo thói quen ổn định", "type": "S" },
+        { "text": "Lập danh sách chi tiết", "type": "C" }
+      ]
+    },
+    {
+      "text": "Bạn khuyến khích đồng nghiệp như thế nào?",
+      "options": [
+        { "text": "Đặt mục tiêu và thúc đẩy hành động", "type": "D" },
+        { "text": "Truyền cảm hứng và động viên", "type": "I" },
+        { "text": "Hỗ trợ và tạo sự thoải mái", "type": "S" },
+        { "text": "Đưa ra hướng dẫn rõ ràng", "type": "C" }
+      ]
+    },
+    {
+      "text": "Bạn cảm thấy thế nào về rủi ro?",
+      "options": [
+        { "text": "Sẵn sàng chấp nhận để đạt mục tiêu", "type": "D" },
+        { "text": "Thấy thú vị và muốn thử", "type": "I" },
+        { "text": "Thận trọng và cần sự an toàn", "type": "S" },
+        { "text": "Phân tích để giảm thiểu rủi ro", "type": "C" }
+      ]
+    },
+    {
+      "text": "Bạn tiếp cận khách hàng như thế nào?",
+      "options": [
+        { "text": "Trực tiếp và tập trung vào lợi ích", "type": "D" },
+        { "text": "Thân thiện và xây dựng mối quan hệ", "type": "I" },
+        { "text": "Lắng nghe và hỗ trợ", "type": "S" },
+        { "text": "Cung cấp thông tin chi tiết", "type": "C" }
+      ]
+    },
+    {
+      "text": "Bạn đánh giá bản thân dựa trên gì?",
+      "options": [
+        { "text": "Khả năng đạt được thành công", "type": "D" },
+        { "text": "Mối quan hệ và ảnh hưởng", "type": "I" },
+        { "text": "Sự ổn định và hỗ trợ", "type": "S" },
+        { "text": "Độ chính xác và chất lượng", "type": "C" }
+      ]
+    }
+  ],
+  "results": {
+    "D": {
+      "type": "D",
+      "name": "Thống trị",
+      "description": "Bạn là người quyết đoán, mạnh mẽ, thích dẫn dắt và đạt được mục tiêu. Bạn thường hành động nhanh, tự tin và không ngại thử thách.",
+      "traits": ["Tự tin", "Tham vọng", "Quyết định nhanh", "Định hướng mục tiêu"]
+    },
+    "I": {
+      "type": "I",
+      "name": "Ảnh hưởng",
+      "description": "Bạn thân thiện, nhiệt tình, giỏi thuyết phục và truyền cảm hứng. Bạn thích giao tiếp, xây dựng mối quan hệ và tạo không khí tích cực.",
+      "traits": ["Giao tiếp tốt", "Nhiệt tình", "Truyền cảm hứng", "Kết nối mọi người"]
+    },
+    "S": {
+      "type": "S",
+      "name": "Ổn định",
+      "description": "Bạn đáng tin cậy, kiên nhẫn, và luôn tìm cách duy trì sự hòa hợp. Bạn làm việc có hệ thống, hỗ trợ người khác và thích môi trường ổn định.",
+      "traits": ["Kiên nhẫn", "Hỗ trợ", "Đáng tin cậy", "Hòa hợp"]
+    },
+    "C": {
+      "type": "C",
+      "name": "Tuân thủ",
+      "description": "Bạn cẩn thận, chú ý chi tiết, và luôn đảm bảo chất lượng. Bạn thích làm việc theo quy trình, phân tích kỹ lưỡng và đưa ra quyết định dựa trên dữ liệu.",
+      "traits": ["Cẩn thận", "Chú ý chi tiết", "Phân tích", "Chính xác"]
+    }
+  }
+}
