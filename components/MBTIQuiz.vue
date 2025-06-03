@@ -1,4 +1,4 @@
-
+```vue
 <template>
   <div class="bg-white rounded-xl shadow-lg overflow-hidden">
     <!-- Header section -->
@@ -8,14 +8,14 @@
     </div>
 
     <!-- Error states -->
-    <div v-if="!mbtiData" class="p-6 text-center">
+    <div v-if="!mbtiData || errorMessage" class="p-6 text-center">
       <div class="inline-flex items-center justify-center bg-red-100 rounded-full p-4 mb-4">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
         </svg>
       </div>
       <h3 class="text-xl font-semibold text-red-600 mb-2">Không thể tải câu hỏi</h3>
-      <p class="text-gray-600 mb-4">Vui lòng kiểm tra kết nối mạng và thử lại</p>
+      <p class="text-gray-600 mb-4">{{ errorMessage || 'Vui lòng kiểm tra kết nối mạng và thử lại' }}</p>
       <button @click="retryLoading" class="btn-primary">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -25,7 +25,7 @@
     </div>
 
     <!-- Quiz in progress -->
-    <div v-else-if="!isCompleted" class="p-4 sm:p-6 space-y-6">
+    <div v-else-if="!isCompleted && questions.length > 0" class="p-4 sm:p-6 space-y-6">
       <!-- Progress bar with animation -->
       <div class="space-y-2">
         <div class="flex justify-between items-center">
@@ -144,33 +144,47 @@ import mbtiData from '~/data/mbti.json';
 
 const store = useAssessmentStore();
 const router = useRouter();
-const questions = ref(mbtiData?.questions || []);
+const questions = ref([]);
 const currentQuestionIndex = ref(0);
 const answers = ref(store.mbtiAnswers);
 const isCompleted = ref(store.mbtiCompleted);
 const errorMessage = ref('');
 const isLoading = ref(true);
 
-onMounted(() => {
-  console.log('MbtiQuiz mounted, initial state:', { isCompleted: isCompleted.value, storeCompleted: store.mbtiCompleted });
-  setTimeout(() => {
-    isLoading.value = false;
+onMounted(async () => {
+  console.log('MbtiQuiz mounted, mbtiData:', mbtiData);
+  try {
+    store.resetMbti(); // Reset store state
+    questions.value = mbtiData?.questions || [];
+    currentQuestionIndex.value = 0;
+    answers.value = store.mbtiAnswers;
+    isCompleted.value = store.mbtiCompleted;
     if (!questions.value.length) {
       errorMessage.value = 'Không thể tải câu hỏi. Vui lòng thử lại.';
     }
-  }, 500);
+  } catch (error) {
+    console.error('Error in onMounted:', error);
+    errorMessage.value = 'Đã xảy ra lỗi khi tải dữ liệu. Vui lòng thử lại.';
+  } finally {
+    isLoading.value = false;
+  }
 });
 
-const retryLoading = () => {
+const retryLoading = async () => {
   console.log('Retrying to load MBTI questions');
   isLoading.value = true;
-  setTimeout(() => {
-    isLoading.value = false;
+  errorMessage.value = '';
+  try {
     questions.value = mbtiData?.questions || [];
     if (!questions.value.length) {
       errorMessage.value = 'Không thể tải câu hỏi. Vui lòng thử lại.';
     }
-  }, 800);
+  } catch (error) {
+    console.error('Error in retryLoading:', error);
+    errorMessage.value = 'Đã xảy ra lỗi khi tải dữ liệu. Vui lòng thử lại.';
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const nextQuestion = () => {
@@ -184,7 +198,6 @@ const nextQuestion = () => {
       console.log('Completing MBTI quiz');
       store.completeMbti();
       isCompleted.value = true;
-      console.log('After complete:', { isCompleted: isCompleted.value, storeCompleted: store.mbtiCompleted });
     }
   }, 150);
 };
@@ -200,7 +213,7 @@ const restartQuiz = () => {
   console.log('Restarting MBTI quiz');
   store.resetMbti();
   currentQuestionIndex.value = 0;
-  answers.value = {};
+  answers.value = store.mbtiAnswers;
   isCompleted.value = false;
   errorMessage.value = '';
 };
