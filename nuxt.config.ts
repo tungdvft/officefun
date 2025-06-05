@@ -29,6 +29,7 @@ export default defineNuxtConfig({
     }
   },
   css: ['~/assets/css/tailwind.css'],
+  
   app: {
     head: {
       title: 'Luận giải thần số học - Ứng dụng thần số học cá nhân hoá, tương tác trực quan.', 

@@ -13,15 +13,15 @@ export default defineEventHandler(async (event) => {
 
   try {
     // Kiểm tra email có tồn tại trong database không
-    const user = await db.get(
+    const user = await db.query(
       `SELECT 
         id, 
         is_google_account,
         email_verified
        FROM users 
-       WHERE email = ?`, 
+       WHERE email = $1`, 
       [email]
-    )
+    ).then((rows: { id: number; is_google_account: number; email_verified: number }[]) => rows[0]);
 
     return {
       exists: !!user,
