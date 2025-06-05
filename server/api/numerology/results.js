@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
 
   if (method === 'GET') {
     const results = await db.query(
-      'SELECT type, result FROM numerology_results WHERE username = ?$1ORDER BY created_at DESC',
+      'SELECT type, result FROM numerology_results WHERE username =  $1O RDER BY created_at DESC',
       [username]
     ).then(res => res.rows);
     const formattedResults = {};
