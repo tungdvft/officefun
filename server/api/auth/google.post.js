@@ -15,19 +15,19 @@ export default defineEventHandler(async (event) => {
 
   try {
     // Bắt đầu giao dịch
-    await db.run('BEGIN TRANSACTION');
+    await db.query('BEGIN TRANSACTION');
 
     // Kiểm tra người dùng đã tồn tại
-    let user = await db.get(
-      'SELECT id, email, fullname, birthdate, tokens, avatar, is_google_account, email_verified FROM users WHERE email = ?',
+    let user = await db.query(
+      'SELECT id, email, fullname, birthdate, tokens, avatar, is_google_account, email_verified FROM users WHERE email = $1',
       [body.email]
-    );
+    ).then(res => res.rows[0]);
 
     let isNewUser = false;
 
     if (!user) {
       // Tạo người dùng mới (không gán tokens ở bước này)
-      const result = await db.run(
+      const result = await db.query(
         `INSERT INTO users (
           email,
           fullname,
@@ -39,10 +39,10 @@ export default defineEventHandler(async (event) => {
       );
 
       // Lấy thông tin người dùng vừa tạo
-      user = await db.get(
-        'SELECT id, email, fullname, birthdate, tokens, avatar, is_google_account, email_verified FROM users WHERE id = ?',
+      user = await db.query(
+        'SELECT id, email, fullname, birthdate, tokens, avatar, is_google_account, email_verified FROM users WHERE id = $1',
         [result.lastID]
-      );
+      ).then(res => res.rows[0]);
       isNewUser = true;
     }
 
@@ -54,7 +54,7 @@ export default defineEventHandler(async (event) => {
     );
 
     // Hoàn tất giao dịch
-    await db.run('COMMIT');
+    await db.query('COMMIT');
 
     return {
       success: true,
@@ -73,7 +73,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     // Hoàn tác nếu có lỗi
-    await db.run('ROLLBACK');
+    await db.query('ROLLBACK');
     throw createError({
       statusCode: error.statusCode || 500,
       statusMessage: error.message || 'Lỗi khi xử lý đăng nhập Google',

@@ -53,13 +53,13 @@ export default defineEventHandler(async (event) => {
 
   try {
     // 3. Bắt đầu giao dịch
-    await db.run('PRAGMA journal_mode=WAL;');
-    await db.run('BEGIN TRANSACTION');
+    await db.query('PRAGMA journal_mode=WAL;');
+    await db.query('BEGIN');
 
     // 4. Kiểm tra người dùng tồn tại và lấy tokens hiện tại
     const currentUser = await db.query('SELECT tokens FROM users WHERE id = $1', [userId]).then(res => res.rows[0]);
     if (!currentUser) {
-      await db.run('ROLLBACK').catch((rollbackError) => {
+      await db.query('ROLLBACK').catch((rollbackError) => {
         console.error('Rollback failed:', rollbackError);
       });
       throw createError({
@@ -83,7 +83,7 @@ export default defineEventHandler(async (event) => {
     );
 
     if (updateResult.changes === 0) {
-      await db.run('ROLLBACK').catch((rollbackError) => {
+      await db.query('ROLLBACK').catch((rollbackError) => {
         console.error('Rollback failed:', rollbackError);
       });
       throw createError({
@@ -95,12 +95,12 @@ export default defineEventHandler(async (event) => {
     // 7. Ghi giao dịch token nếu tokens thay đổi
     if (newTokens !== currentUser.tokens && currentUser.tokens !== null) {
       const tokenDifference = newTokens - currentUser.tokens;
-      await db.run(
+      await db.query(
         'INSERT INTO token_transactions (user_id, amount, description) VALUES (?, ?, ?)',
         [userId, tokenDifference, 'Cập nhật tokens qua API']
       );
     } else if (currentUser.tokens === null && newTokens !== 100) {
-      await db.run(
+      await db.query(
         'INSERT INTO token_transactions (user_id, amount, description) VALUES (?, ?, ?)',
         [userId, newTokens, 'Khởi tạo tokens']
       );
@@ -113,7 +113,7 @@ export default defineEventHandler(async (event) => {
     ).then(res => res.rows[0]);
 
     if (!user) {
-      await db.run('ROLLBACK').catch((rollbackError) => {
+      await db.query('ROLLBACK').catch((rollbackError) => {
         console.error('Rollback failed:', rollbackError);
       });
       throw createError({
@@ -123,7 +123,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // 9. Hoàn tất giao dịch
-    await db.run('COMMIT');
+    await db.query('COMMIT');
 
     return {
       success: true,
@@ -131,7 +131,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     // 10. Hoàn tác nếu có lỗi
-    await db.run('ROLLBACK').catch((rollbackError) => {
+    await db.query('ROLLBACK').catch((rollbackError) => {
       console.error('Rollback failed:', rollbackError);
     });
     console.error('API Error:', {

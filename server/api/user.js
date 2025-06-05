@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     // Tạo bảng users nếu chưa có
-    await db.run(`
+    await db.query(`
       CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE,
@@ -80,8 +80,8 @@ export default defineEventHandler(async (event) => {
       }
 
       // Insert new user
-      const result = await db.run(
-        'INSERT INTO users (username, birthdate, gender, profession, displayName) VALUES (?, ?, ?, ?, ?)',
+      const result = await db.query(
+        'INSERT INTO users (username, birthdate, gender, profession, displayName) VALUES ($1, $2, $3, $4, $5)',
         [username, birthdate, gender, profession || null, displayName || username]
       )
 
