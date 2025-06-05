@@ -34,14 +34,14 @@ export default defineEventHandler(async (event) => {
           avatar,
           is_google_account,
           email_verified
-        ) VALUES (?, ?, ?, ?, ?)`,
+        ) VALUES ($1, $2, $3, $4, $5) RETURNING id`,
         [body.email, body.name, body.picture || null, 1, 1]
-      );
+      ).then(res => res.rows[0]);
 
       // Lấy thông tin người dùng vừa tạo
       user = await db.query(
         'SELECT id, email, fullname, birthdate, tokens, avatar, is_google_account, email_verified FROM users WHERE id = $1',
-        [result.lastID]
+        [result.id]
       ).then(res => res.rows[0]);
       isNewUser = true;
     }
