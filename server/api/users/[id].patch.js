@@ -53,7 +53,6 @@ export default defineEventHandler(async (event) => {
 
   try {
     // 3. Bắt đầu giao dịch
-    await db.query('PRAGMA journal_mode=WAL;');
     await db.query('BEGIN');
 
     // 4. Kiểm tra người dùng tồn tại và lấy tokens hiện tại
@@ -131,7 +130,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     // 10. Hoàn tác nếu có lỗi
-    await db.query('ROLLBACK').catch((rollbackError) => {
+    await db.queryXR('ROLLBACK').catch((rollbackError) => {
       console.error('Rollback failed:', rollbackError);
     });
     console.error('API Error:', {
