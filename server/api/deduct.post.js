@@ -19,8 +19,8 @@ export default defineEventHandler(async (event) => {
     db.exec('BEGIN')
 
     // Tìm user
-    const userStmt = db.prepare('SELECT tokens FROM users WHERE id = ?')
-    const user = userStmt.get(userId)
+    const userStmt = db.prepare('SELECT tokens FROM users WHERE id = $1')
+    const user = userStmt.query(userId).then(res => res[0])
 
     if (!user) {
       db.exec('ROLLBACK')
@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Cập nhật tokens
-    const updateStmt = db.prepare('UPDATE users SET tokens = tokens - ? WHERE id = ?')
+    const updateStmt = db.prepare('UPDATE users SET tokens = tokens - $1 WHERE id = $2')
     updateStmt.run(amount, userId)
 
     // Lấy số dư tokens mới

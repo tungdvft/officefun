@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     // Fetch user from database
-    const user = await db.get('SELECT * FROM users WHERE email = ?', [body.email])
+    const user = await db.query('SELECT * FROM users WHERE email = $1', [body.email]).then(res => res.rows[0])
     
     if (!user) {
       throw createError({

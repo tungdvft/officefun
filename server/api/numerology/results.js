@@ -27,10 +27,10 @@ export default defineEventHandler(async (event) => {
   }
 
   if (method === 'GET') {
-    const results = await db.all(
-      'SELECT type, result FROM numerology_results WHERE username = ? ORDER BY created_at DESC',
+    const results = await db.query(
+      'SELECT type, result FROM numerology_results WHERE username = ?$1ORDER BY created_at DESC',
       [username]
-    );
+    ).then(res => res.rows);
     const formattedResults = {};
     results.forEach(row => {
       formattedResults[row.type] = JSON.parse(row.result);

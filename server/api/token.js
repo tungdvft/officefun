@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     const db = await setupDatabase()
     
     // Kiểm tra xem user có tồn tại không
-    const userExists = await db.get('SELECT id FROM users WHERE id = ?', [userId])
+    const userExists = await db.query('SELECT id FROM users WHERE id = $1', [userId]).then(res => res.rows.length > 0)
     if (!userExists) {
       throw createError({
         statusCode: 404,
@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Lấy thông tin token, nếu không có sẽ tạo mới
-    let tokenInfo = await db.get('SELECT * FROM tokens WHERE user_id = ?', [userId])
+    let tokenInfo = await db.query('SELECT * FROM tokens WHERE user_id = $1', [userId]).then(res => res.rows[0])
     
     if (!tokenInfo) {
       // Tạo mới token record với số dư mặc định 1000

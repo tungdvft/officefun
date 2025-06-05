@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const user = await db.get('SELECT id, email, fullname, birthdate, tokens FROM users WHERE id = ?', [userId]);
+    const user = await db.query('SELECT id, email, fullname, birthdate, tokens FROM users WHERE id = $1', [userId]).then(res => res.rows[0]);
     if (!user) {
       throw createError({
         statusCode: 404,

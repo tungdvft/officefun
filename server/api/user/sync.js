@@ -23,19 +23,19 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const existingUser = await db.get('SELECT * FROM users WHERE id = ?', [cleanData.id]);
+    const existingUser = await db.query('SELECT * FROM users WHERE id = $1', [cleanData.id]).then(res => res.rows[0]);
 
     let user;
 
     if (existingUser) {
       // Update existing user
-      await db.run(
+      await db.query(
         `UPDATE users SET
-          username = ?,
-          email = ?,
-          displayName = ?,
-          birthdate = ?
-        WHERE id = ?`,
+          username = $1,
+          email = $2,
+          displayName = $3,
+          birthdate = $4
+        WHERE id = $5`,
         [
           cleanData.username,
           cleanData.email,
@@ -46,13 +46,13 @@ export default defineEventHandler(async (event) => {
       );
 
       // Fetch updated user
-      user = await db.get('SELECT id, username, email, displayName, birthdate FROM users WHERE id = ?', [cleanData.id]);
+      user = await db.query('SELECT id, username, email, displayName, birthdate FROM users WHERE id = $1', [cleanData.id]).then(res => res.rows[0]);
     } else {
       // Create new user
-      await db.run(
+      await db.query(
         `INSERT INTO users 
         (id, username, email, displayName, birthdate) 
-        VALUES (?, ?, ?, ?, ?)`,
+        VALUES ($1, $2, $3, $4, $5)`,
         [
           cleanData.id,
           cleanData.username,
@@ -63,13 +63,13 @@ export default defineEventHandler(async (event) => {
       );
 
       // Grant 1000 tokens for new user
-      await db.run(
-        'INSERT INTO tokens (user_id, balance) VALUES (?, ?)',
+      await db.query(
+        'INSERT INTO tokens (user_id, balance) VALUES ($1, $2)',
         [cleanData.id, 1000]
       );
 
       // Fetch newly created user
-      user = await db.get('SELECT id, username, email, displayName, birthdate FROM users WHERE id = ?', [cleanData.id]);
+      user = await db.query('SELECT id, username, email, displayName, birthdate FROM users WHERE id = $1', [cleanData.id]).then(res => res.rows[0]);
     }
 
     // Return success and user data

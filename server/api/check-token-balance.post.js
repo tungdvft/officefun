@@ -20,9 +20,9 @@ export default defineEventHandler(async (event) => {
     console.log('Checking token balance for userId:', userId);
 
     // Kiểm tra bảng users
-    const tableExists = await db.get(
+    const tableExists = await db.query(
       "SELECT name FROM sqlite_master WHERE type='table' AND name='users'"
-    );
+    ).then(res => res.length > 0);
     if (!tableExists) {
       console.error('Table users does not exist');
       throw createError({
@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Kiểm tra người dùng
-    const user = await db.get('SELECT tokens FROM users WHERE id = ?', [userId]);
+    const user = await db.query('SELECT tokens FROM users WHERE id = $1', [userId]).then(res => res.rows[0]);
     if (!user) {
       console.error('User not found for userId:', userId);
       // Log tất cả user IDs hiện có để debug

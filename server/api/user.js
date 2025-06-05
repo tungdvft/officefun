@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
       
       // Lấy user theo ID
       if (id) {
-        const user = await db.get('SELECT * FROM users WHERE id = ?', [id])
+        const user = await db.query('SELECT * FROM users WHERE id = $1', [id]).then(res => res.rows[0])
         if (!user) {
           throw createError({ statusCode: 404, message: 'User not found' })
         }
@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
       
       // Lấy user theo username
       if (query.username) {
-        const user = await db.get('SELECT * FROM users WHERE username = ?', [query.username])
+        const user = await db.query('SELECT * FROM users WHERE username = $1', [query.username]).then(res => res.rows[0])
         if (!user) {
           throw createError({ statusCode: 404, message: 'User not found' })
         }
@@ -50,7 +50,7 @@ export default defineEventHandler(async (event) => {
       const offset = (page - 1) * limit
       
       const users = await db.all('SELECT * FROM users LIMIT ? OFFSET ?', [limit, offset])
-      const total = await db.get('SELECT COUNT(*) as count FROM users')
+      const total = await db.query('SELECT COUNT(*) as count FROM users').then(res => res.rows[0])
       
       return {
         data: users,
@@ -74,7 +74,7 @@ export default defineEventHandler(async (event) => {
       }
 
       // Check if username exists
-      const existingUser = await db.get('SELECT id FROM users WHERE username = ?', [username])
+      const existingUser = await db.query('SELECT id FROM users WHERE username = $1', [username]).then(res => res.rows[0])
       if (existingUser) {
         throw createError({ statusCode: 409, message: 'Username already exists' })
       }
@@ -99,29 +99,29 @@ export default defineEventHandler(async (event) => {
       const { username, birthdate, gender, profession, displayName } = body
 
       // Check if user exists
-      const existingUser = await db.get('SELECT id FROM users WHERE id = ?', [id])
+      const existingUser = await db.query('SELECT id FROM users WHERE id = $1', [id]).then(res => res.rows[0])
       if (!existingUser) {
         throw createError({ statusCode: 404, message: 'User not found' })
       }
 
       // Check if new username exists (if changed)
       if (username && username !== existingUser.username) {
-        const usernameExists = await db.get('SELECT id FROM users WHERE username = ? AND id != ?', [username, id])
+        const usernameExists = await db.query('SELECT id FROM users WHERE username = $1 AND id != $2', [username, id]).then(res => res.rows[0])
         if (usernameExists) {
           throw createError({ statusCode: 409, message: 'Username already taken' })
         }
       }
 
       // Update user
-      await db.run(
+      await db.query(
         `UPDATE users SET 
           username = COALESCE(?, username),
           birthdate = COALESCE(?, birthdate),
           gender = COALESCE(?, gender),
-          profession = ?,
-          displayName = COALESCE(?, displayName),
+          profession = $1,
+          displayName = COALESCE($2, displayName),
           updatedAt = CURRENT_TIMESTAMP
-         WHERE id = ?`,
+         WHERE id = $3`,
         [username, birthdate, gender, profession || null, displayName, id]
       )
 
@@ -136,14 +136,14 @@ export default defineEventHandler(async (event) => {
       const { id } = getRouterParams(event)
 
       // Check if user exists
-      const existingUser = await db.get('SELECT id FROM users WHERE id = ?', [id])
+      const existingUser = await db.query('SELECT id FROM users WHERE id = $1', [id]).then(res => res.rows[0])
       if (!existingUser) {
         throw createError({ statusCode: 404, message: 'User not found' })
       }
 
       // Delete user and related tokens
-      await db.run('DELETE FROM users WHERE id = ?', [id])
-      await db.run('DELETE FROM tokens WHERE user_id = ?', [id])
+      await db.query('DELETE FROM users WHERE id = $1', [id])
+      await db.query('DELETE FROM tokens WHERE user_id = $1', [id])
 
       return {
         success: true,
@@ -157,14 +157,14 @@ export default defineEventHandler(async (event) => {
       const body = await readBody(event)
 
       // Check if user exists
-      const existingUser = await db.get('SELECT * FROM users WHERE id = ?', [id])
+      const existingUser = await db.query('SELECT * FROM users WHERE id = $1', [id]).then(res => res.rows[0])
       if (!existingUser) {
         throw createError({ statusCode: 404, message: 'User not found' })
       }
 
       // Validate username if being updated
       if (body.username && body.username !== existingUser.username) {
-        const usernameExists = await db.get('SELECT id FROM users WHERE username = ? AND id != ?', [body.username, id])
+        const usernameExists = await db.query('SELECT id FROM users WHERE username = $1 AND id != $2, [body.username, id]).then(res => res.rows[0])');
         if (usernameExists) {
           throw createError({ statusCode: 409, message: 'Username already taken' })
         }
@@ -180,8 +180,8 @@ export default defineEventHandler(async (event) => {
       const values = fieldsToUpdate.map(field => body[field])
       values.push(id)
 
-      await db.run(
-        `UPDATE users SET ${setClause}, updatedAt = CURRENT_TIMESTAMP WHERE id = ?`,
+      await db.query(
+        `UPDATE users SET ${setClause}, updatedAt = CURRENT_TIMESTAMP WHERE id = $1`,
         values
       )
 

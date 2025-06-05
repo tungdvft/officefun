@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
     await db.run('BEGIN TRANSACTION');
 
     // Kiểm tra số dư token
-    const user = await db.get('SELECT tokens FROM users WHERE id = ?', [userId]);
+    const user = await db.query('SELECT tokens FROM users WHERE id = $1', [userId]).then(res => res.rows[0]);
     if (!user) {
       console.error('User not found for userId:', userId);
       throw createError({
@@ -63,11 +63,11 @@ export default defineEventHandler(async (event) => {
     }
 
     // Trừ token
-    await db.run('UPDATE users SET tokens = tokens - ? WHERE id = ?', [amount, userId]);
+    await db.run('UPDATE users SET tokens = tokens - $1 WHERE id = $2', [amount, userId]);
 
     // Ghi giao dịch
     await db.run(
-      'INSERT INTO token_transactions (user_id, amount, description) VALUES (?, ?, ?)',
+      'INSERT INTO token_transactions (user_id, amount, description) VALUES ($1, $2, $3)',
       [userId, -amount, description || 'API request']
     );
 

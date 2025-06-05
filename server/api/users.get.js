@@ -10,10 +10,10 @@ export default defineEventHandler(async (event) => {
   try {
     if (userId) {
       // Lấy thông tin một người dùng
-      const user = await db.get(
-        'SELECT id, email, fullname, birthdate, tokens, created_at, updated_at FROM users WHERE id = ?',
+      const user = await db.query(
+        'SELECT id, email, fullname, birthdate, tokens, created_at, updated_at FROM users WHERE id = $1',
         [userId]
-      );
+      ).then(res => res.rows[0]);
 
       if (!user) {
         throw createError({
@@ -22,10 +22,10 @@ export default defineEventHandler(async (event) => {
         });
       }
 
-      const transactions = await db.all(
-        'SELECT id, user_id, amount, description, created_at FROM token_transactions WHERE user_id = ? ORDER BY created_at DESC LIMIT 50',
+      const transactions = await db.query(
+        'SELECT id, user_id, amount, description, created_at FROM token_transactions WHERE user_id = $1 ORDER BY created_at DESC LIMIT 50',
         [userId]
-      );
+      ).then(res => res.rows);
 
       return {
         success: true,
@@ -37,14 +37,14 @@ export default defineEventHandler(async (event) => {
     }
 
     // Lấy danh sách người dùng với phân trang (bỏ yêu cầu isAdmin)
-    const totalResult = await db.get('SELECT COUNT(*) as total FROM users');
+    const totalResult = await db.query('SELECT COUNT(*) as total FROM users').then(res => res.rows[0]);
     const total = totalResult.total;
     const offset = (page - 1) * limit;
 
-    const users = await db.all(
-      'SELECT id, email, fullname, birthdate, tokens, created_at, updated_at FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?',
+    const users = await db.query(
+      'SELECT id, email, fullname, birthdate, tokens, created_at, updated_at FROM users ORDER BY created_at DESC LIMIT $1 OFFSET $2',
       [limit, offset]
-    );
+    ).then(res => res.rows);
 
     return {
       success: true,

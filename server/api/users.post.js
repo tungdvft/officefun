@@ -22,13 +22,14 @@ export default defineEventHandler(async (event) => {
 
   try {
     console.log('Bắt đầu giao dịch');
-    await db.run('BEGIN TRANSACTION');
+    await db.query('BEGIN');
 
     console.log('Kiểm tra email:', body.email);
-    const existingUser = await db.get('SELECT id FROM users WHERE email = ?', [body.email]);
-    if (existingUser) {
+    const existingUser = await db.query('SELECT id FROM users WHERE email = $1', [body.email]);
+    if (existingUser.rows.length > 0) {
       console.log('Email đã tồn tại');
-      await db.run('ROLLBACK');
+       console.log(existingUser);
+      await db.query('ROLLBACK');
       throw createError({
         statusCode: 409,
         statusMessage: 'Email đã được sử dụng',
@@ -39,19 +40,20 @@ export default defineEventHandler(async (event) => {
     const hashedPassword = await hash(body.password, 10);
 
     console.log('Tạo người dùng mới');
-    const result = await db.run(
-      'INSERT INTO users (email, fullname, birthdate, password, tokens) VALUES (?, ?, ?, ?, ?)',
+    const result = await db.query(
+      'INSERT INTO users (email, fullname, birthdate, password, tokens) VALUES ($1, $2, $3, $4, $5) RETURNING id',
       [body.email, body.fullName, body.birthdate, hashedPassword, 100]
     );
 
     console.log('Ghi giao dịch tokens');
-    await db.run(
-      'INSERT INTO token_transactions (user_id, amount, description) VALUES (?, ?, ?)',
-      [result.lastID, 100, 'Khởi tạo tokens cho tài khoản mới']
+    console.log(result);
+    await db.query(
+      'INSERT INTO token_transactions (user_id, amount, description) VALUES ($1, $2, $3)',
+      [result.rows[0].id, 100, 'Khởi tạo tokens cho tài khoản mới']
     );
 
     console.log('Hoàn tất giao dịch');
-    await db.run('COMMIT');
+    await db.query('COMMIT');
 
     return {
       success: true,
@@ -61,7 +63,7 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     console.error('Lỗi trong quá trình xử lý:', error);
     try {
-      await db.run('ROLLBACK');
+      await db.query('ROLLBACK');
     } catch (rollbackError) {
       console.error('Rollback thất bại:', rollbackError.message);
     }

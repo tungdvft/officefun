@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     // Kiểm tra người dùng tồn tại
-    const user = await db.get('SELECT id FROM users WHERE id = ?', [userId]);
+    const user = await db.query('SELECT id FROM users WHERE id = $1', [userId]).then(res => res.rows[0]);
     if (!user) {
       throw createError({
         statusCode: 404,
@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Xóa người dùng (token_transactions sẽ tự động xóa do ON DELETE CASCADE)
-    await db.run('DELETE FROM users WHERE id = ?', [userId]);
+    await db.run('DELETE FROM users WHERE id = $1', [userId]);
 
     return {
       success: true,

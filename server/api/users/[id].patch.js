@@ -57,7 +57,7 @@ export default defineEventHandler(async (event) => {
     await db.run('BEGIN TRANSACTION');
 
     // 4. Kiểm tra người dùng tồn tại và lấy tokens hiện tại
-    const currentUser = await db.get('SELECT tokens FROM users WHERE id = ?', [userId]);
+    const currentUser = await db.query('SELECT tokens FROM users WHERE id = $1', [userId]).then(res => res.rows[0]);
     if (!currentUser) {
       await db.run('ROLLBACK').catch((rollbackError) => {
         console.error('Rollback failed:', rollbackError);
@@ -72,13 +72,13 @@ export default defineEventHandler(async (event) => {
     const newTokens = body.tokens !== undefined && body.tokens !== null ? body.tokens : (currentUser.tokens !== null ? currentUser.tokens : 100);
 
     // 6. Cập nhật thông tin người dùng
-    const updateResult = await db.run(
+    const updateResult = await db.query(
       `UPDATE users SET 
-        fullname = ?, 
-        birthdate = ?,
-        tokens = ?,
+        fullname = $1, 
+        birthdate = $2,
+        tokens = $3,
         updated_at = CURRENT_TIMESTAMP
-       WHERE id = ?`,
+       WHERE id = $4`,
       [body.fullname, body.birthdate, newTokens, userId]
     );
 
@@ -107,10 +107,10 @@ export default defineEventHandler(async (event) => {
     }
 
     // 8. Lấy thông tin người dùng đã cập nhật
-    const user = await db.get(
-      'SELECT id, email, fullname, birthdate, tokens, created_at, updated_at FROM users WHERE id = ?',
+    const user = await db.query(
+      'SELECT id, email, fullname, birthdate, tokens, created_at, updated_at FROM users WHERE id = $1',
       [userId]
-    );
+    ).then(res => res.rows[0]);
 
     if (!user) {
       await db.run('ROLLBACK').catch((rollbackError) => {

@@ -65,10 +65,10 @@ async function getCachedDaily(username, profession, lifePathNumber) {
   `);
 
   const today = new Date().toISOString().split('T')[0];
-  const cached = await db.get(
-    'SELECT data FROM daily_cache WHERE username = ? AND date = ?',
+  const cached = await db.query(
+    'SELECT data FROM daily_cache WHERE username = $1 AND date = $2',
     [username, today]
-  );
+  ).then(res => res[0]);
 
   if (cached) {
     return JSON.parse(cached.data);
@@ -193,7 +193,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const db = await getDb();
-    const user = await db.get('SELECT birthdate, profession FROM users WHERE username = ?', [username]);
+    const user = await db.query('SELECT birthdate, profession FROM users WHERE username = $1', [username]).then(res => res[0]);
 
     if (!birthdate && user && user.birthdate) {
       birthdate = user.birthdate;
