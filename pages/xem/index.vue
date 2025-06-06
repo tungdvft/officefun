@@ -328,8 +328,6 @@ onMounted(async () => {
     return;
   }
 
-  // Nếu không có dữ liệu từ cả 'auth' và generalStore, chuyển hướng về trang chủ
-  router.push('/');
 });
 
 const formatDateInput = (event) => {

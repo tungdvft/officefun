@@ -20,42 +20,33 @@
               :key="index"
               :to="item.path" 
               class="relative px-4 py-2 rounded-lg font-medium text-sm lg:text-base hover:text-purple-600 transition-colors duration-200 h-full flex items-center group"
-              :class="{ 'text-purple-600': route.path === item.path }"
+              :class="{ 'text-purple-600': route.path === item.path || (item.submenu && activeTestMenu) }"
+              @mouseenter="item.submenu ? openMenu(item.name) : null"
+              @mouseleave="item.submenu ? closeMenu(item.name) : null"
             >
               {{ item.name }}
+              <font-awesome-icon 
+                v-if="item.submenu"
+                :icon="['fas', 'chevron-down']" 
+                class="ml-1 w-3 h-3 text-purple-600 group-hover:text-purple-600 transition-all duration-200"
+                :class="{ 'rotate-180': activeMenu === item.name }"
+              />
               <span 
-                v-if="route.path === item.path"
+                v-if="route.path === item.path || (item.submenu && activeTestMenu)"
                 class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-10 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-300"
               ></span>
               <span 
                 v-else
                 class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-300 group-hover:w-10"
               ></span>
-            </NuxtLink>
-
-            <!-- Dropdown Trắc nghiệm Desktop -->
-            <div 
-              class="relative"
-              @mouseenter="openMenu('trac-nghiem')"
-              @mouseleave="closeMenu('trac-nghiem')"
-            >
-              <button 
-                class="relative px-4 py-2 rounded-lg font-medium text-sm lg:text-base hover:text-purple-600 transition-colors duration-200 h-full flex items-center group"
-                :class="{ 'text-purple-600': activeTestMenu }"
-              >
-                Trắc nghiệm
-                <font-awesome-icon 
-                  :icon="['fas', 'chevron-down']" 
-                  class="ml-1 w-3 h-3 text-purple-600 group-hover:text-purple-600 transition-all duration-200"
-                  :class="{ 'rotate-180': activeMenu === 'trac-nghiem' }"
-                />
-              </button>
+              <!-- Dropdown for Trắc nghiệm -->
               <div 
+                v-if="item.submenu"
                 class="dropdown-menu absolute top-full left-0 bg-white shadow-xl rounded-xl py-2 w-48 z-30 border border-gray-100"
-                :class="{ 'block': activeMenu === 'trac-nghiem', 'hidden': activeMenu !== 'trac-nghiem' }"
+                :class="{ 'block': activeMenu === item.name, 'hidden': activeMenu !== item.name }"
               >
                 <NuxtLink 
-                  v-for="(test, idx) in testItems"
+                  v-for="(test, idx) in item.submenu"
                   :key="idx"
                   :to="test.path"
                   class="block px-4 py-2 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200 text-sm"
@@ -64,7 +55,7 @@
                   {{ test.name }}
                 </NuxtLink>
               </div>
-            </div>
+            </NuxtLink>
           </div>
         </nav>
 
@@ -111,7 +102,6 @@
                   @click="logout"
                   class="block w-full text-left px-4 py-2 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200 text-sm"
                 >
-                  <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="mr-2" />
                   Đăng xuất
                 </button>
               </div>
@@ -148,36 +138,39 @@
         >
           <div class="px-2 pt-2 pb-4 space-y-1">
             <!-- Main menu items -->
-            <NuxtLink 
+            <div 
               v-for="(item, index) in navItems"
               :key="index"
-              :to="item.path"
-              @click="mobileMenuOpen = false"
-              class="block px-4 py-3 rounded-lg font-medium text-sm hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200 flex items-center"
-              :class="{ 'text-purple-600 bg-purple-50': route.path === item.path }"
+              class="relative"
             >
-              <span class="w-2 h-5 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full mr-3" :class="{ 'opacity-0': route.path !== item.path }"></span>
-              {{ item.name }}
-            </NuxtLink>
-
-            <!-- Mobile Test Dropdown -->
-            <div class="px-4 py-2">
               <button 
-                @click="toggleMobileTestMenu"
+                v-if="item.submenu"
+                @click="toggleMobileSubmenu(item.name)"
                 class="w-full flex justify-between items-center px-4 py-3 rounded-lg font-medium text-sm hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200"
-                :class="{ 'text-purple-600 bg-purple-50': activeTestMenu }"
+                :class="{ 'text-purple-600 bg-purple-50': route.path === item.path || (item.submenu && mobileSubmenuOpen[item.name]) }"
               >
                 <div class="flex items-center">
-                  <span class="w-2 h-5 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full mr-3" :class="{ 'opacity-0': !activeTestMenu }"></span>
-                  <span>Trắc nghiệm</span>
+                  <span class="w-2 h-5 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full mr-3" :class="{ 'opacity-0': !(route.path === item.path || mobileSubmenuOpen[item.name]) }"></span>
+                  <span>{{ item.name }}</span>
                 </div>
                 <font-awesome-icon 
-                  :icon="['fas', mobileTestMenuOpen ? 'chevron-up' : 'chevron-down']" 
-                  class="ml-2 w-3 h-3 text-purple-600 transition-all duration-200"
+                  :icon="['fas', mobileSubmenuOpen[item.name] ? 'chevron-up' : 'chevron-down']" 
+                  class="w-3 h-3 text-purple-600 transition-all duration-200"
                 />
               </button>
-              
+              <NuxtLink 
+                v-else
+                :to="item.path"
+                @click="mobileMenuOpen = false"
+                class="block px-4 py-3 rounded-lg font-medium text-sm hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200 flex items-center"
+                :class="{ 'text-purple-600 bg-purple-50': route.path === item.path }"
+              >
+                <span class="w-2 h-5 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full mr-3" :class="{ 'opacity-0': route.path !== item.path }"></span>
+                {{ item.name }}
+              </NuxtLink>
+              <!-- Submenu for Trắc nghiệm -->
               <transition
+                v-if="item.submenu"
                 enter-active-class="transition-all duration-200 ease-out"
                 leave-active-class="transition-all duration-150 ease-in"
                 enter-from-class="opacity-0 max-h-0"
@@ -185,9 +178,9 @@
                 leave-from-class="opacity-100 max-h-40"
                 leave-to-class="opacity-0 max-h-0"
               >
-                <div v-show="mobileTestMenuOpen" class="pl-6 mt-1 space-y-1">
+                <div v-show="mobileSubmenuOpen[item.name]" class="pl-6 mt-1 space-y-1">
                   <NuxtLink 
-                    v-for="(test, idx) in testItems"
+                    v-for="(test, idx) in item.submenu"
                     :key="idx"
                     :to="test.path"
                     @click="mobileMenuOpen = false"
@@ -247,22 +240,25 @@ import { useUserStore } from '~/stores/user';
 import { useRoute, navigateTo } from '#app';
 import { ref, computed, onBeforeMount, onUnmounted } from 'vue';
 
-// Data
+// Data-learn
 const navItems = [
   { name: 'Trang Chủ', path: '/' },
+  {
+    name: 'Trắc nghiệm',
+    path: '/trac-nghiem',
+    submenu: [
+      { name: 'Trắc nghiệm DISC', path: '/disc' },
+      { name: 'Trắc nghiệm MBTI', path: '/mbti' }
+    ]
+  },
   { name: 'Về chúng tôi', path: '/gioi-thieu' },
   { name: 'Kiến thức', path: '/kien-thuc' },
   { name: 'Blog', path: '/blog' }
 ];
 
-const testItems = [
-  { name: 'Trắc nghiệm DISC', path: '/disc' },
-  { name: 'Trắc nghiệm MBTI', path: '/mbti' }
-];
-
 // State
 const mobileMenuOpen = ref(false);
-const mobileTestMenuOpen = ref(false);
+const mobileSubmenuOpen = ref({});
 const userMenuOpen = ref(false);
 const activeMenu = ref(null);
 const isSticky = ref(false);
@@ -273,19 +269,24 @@ const route = useRoute();
 
 // Computed
 const activeTestMenu = computed(() => {
-  return testItems.some(item => route.path === item.path);
+  return navItems
+    .find(item => item.name === 'Trắc nghiệm')
+    ?.submenu.some(subItem => route.path === subItem.path) || route.path === '/trac-nghiem';
 });
 
 // Methods
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value;
   if (!mobileMenuOpen.value) {
-    mobileTestMenuOpen.value = false;
+    mobileSubmenuOpen.value = {};
   }
 };
 
-const toggleMobileTestMenu = () => {
-  mobileTestMenuOpen.value = !mobileTestMenuOpen.value;
+const toggleMobileSubmenu = (menuName) => {
+  mobileSubmenuOpen.value = {
+    ...mobileSubmenuOpen.value,
+    [menuName]: !mobileSubmenuOpen.value[menuName]
+  };
 };
 
 const toggleUserMenu = () => {
@@ -362,5 +363,12 @@ onUnmounted(() => {
 
 .font-awesome-icon {
   transition: transform 0.2s ease;
+}
+
+/* Đảm bảo icon dropdown sát với text */
+nav .flex.items-center button > div {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* Giảm khoảng cách giữa text và icon */
 }
 </style>

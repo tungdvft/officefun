@@ -63,7 +63,7 @@
         </div>
 
         <!-- Form section -->
-        <div class="lg:w-1/2 bg-white/10 rounded-xl p-8 shadow-2xl border border-whiteзорз20 backdrop-blur-sm transform transition-all hover:shadow-purple-900/30">
+        <div class="lg:w-1/2 bg-white/10 rounded-xl p-8 shadow-2xl border border-white/20 backdrop-blur-sm transform transition-all hover:shadow-purple-900/30">
           <div class="text-center mb-6">
             <h3 class="text-2xl font-bold text-white">
               Luận Giải Thần Số Học
@@ -180,19 +180,40 @@ const router = useRouter();
 
 // Hàm submit form
 const submitForm = async () => {
-  try {
-    await generalStore.fetchNumerology({
-      fullname: form.value.fullname,
-      birthdate: form.value.birthdate,
-    });
+  // Kiểm tra trạng thái đăng nhập
+  const auth = localStorage.getItem('auth');
+  if (auth) {
+    try {
+      const authData = JSON.parse(auth);
+      // Kiểm tra xem authData có token và các trường cần thiết
+      if (authData && authData.token && authData.id && authData.email) {
+        // Nếu đã đăng nhập, gọi API và điều hướng sang /xem
+        try {
+          await generalStore.fetchNumerology({
+            fullname: form.value.fullname,
+            birthdate: form.value.birthdate,
+          });
 
-    if (generalStore.hasData) {
-      router.push('/xem/tong-quan');
-    } else {
-      generalStore.error = 'Không thể lưu dữ liệu. Vui lòng thử lại!';
+          if (generalStore.hasData) {
+            router.push('/xem');
+          } else {
+            generalStore.error = 'Không thể lưu dữ liệu. Vui lòng thử lại!';
+          }
+        } catch (err) {
+          console.error('Lỗi khi gửi form:', err.message);
+          generalStore.error = 'Có lỗi xảy ra. Vui lòng thử lại!';
+        }
+      } else {
+        // Nếu auth không hợp lệ, điều hướng sang trang đăng nhập
+        router.push('/dang-nhap');
+      }
+    } catch (error) {
+      console.error('Lỗi khi parse auth từ localStorage:', error);
+      router.push('/dang-nhap');
     }
-  } catch (err) {
-    console.error('Lỗi khi gửi form:', err.message);
+  } else {
+    // Nếu không có auth trong localStorage, điều hướng sang trang đăng nhập
+    router.push('/dang-nhap');
   }
 };
 </script>
