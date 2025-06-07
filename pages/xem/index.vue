@@ -211,6 +211,8 @@ import SoulUrgeDisplay from '~/components/SoulUrgeDisplay.vue';
 import LifePathAndSoulUrge from '~/components/LifePathAndSoulUrge.vue';
 import SoulChallengeDisplay from '~/components/SoulChallengeDisplay.vue';
 import PersonalityDisplay from '~/components/PersonalityDisplay.vue';
+import NumerologyPowerChart from '~/components/NumerologyPowerChart.vue';
+import ExpressionNumber from '~/components/ExpressionNumber.vue';
 import PersonalityChallengeDisplay from '~/components/PersonalityChallengeDisplay.vue';
 import WeaknessDisplay from '~/components/WeaknessDisplay.vue';
 import NaturalAbilityDisplay from '~/components/NaturalAbilityDisplay.vue';
@@ -219,8 +221,6 @@ import MentalCapacityDisplay from '~/components/MentalCapacityDisplay.vue';
 import ApproachMotivationDisplay from '~/components/ApproachMotivationDisplay.vue';
 import ApproachCapacityDisplay from '~/components/ApproachCapacityDisplay.vue';
 import ApproachAttitudeDisplay from '~/components/ApproachAttitudeDisplay.vue';
-import NumerologyPowerChart from '~/components/NumerologyPowerChart.vue';
-import ExpressionNumber from '~/components/ExpressionNumber.vue';
 import DailyNumerology from '~/components/DailyNumerology.vue';
 
 definePageMeta({
@@ -267,13 +267,47 @@ const showDetails = () => {
   }, 100);
 };
 
-// Khởi tạo giá trị từ localStorage hoặc generalStore
+// Khởi tạo giá trị từ generalStore, localStorage userData, hoặc localStorage auth
 onMounted(async () => {
-  // Ưu tiên khôi phục từ localStorage với key 'auth'
-  const savedAuthData = localStorage.getItem('auth');
-  if (savedAuthData) {
+  // 1. Ưu tiên khôi phục từ generalStore
+  if (generalStore.hasData) {
+    fullName.value = generalStore.fullname;
+    birthDate.value = generalStore.birthdate;
+    calculatedFullName.value = generalStore.fullname;
+    calculatedBirthDate.value = generalStore.birthdate;
+
     try {
-      const parsedData = JSON.parse(savedAuthData);
+      const lifePath = calculateLifePathNumber(generalStore.birthdate);
+      const lifePathStr = [11, 22].includes(lifePath) ? lifePath.toString() : lifePath.toString();
+      const { data: lifePathData, error: lifePathError } = await useFetch(`/api/life-path/${lifePathStr}`, {
+        baseURL: useRuntimeConfig().public.apiBase,
+      });
+
+      if (lifePathError.value) {
+        console.error('Lỗi API Số Đường Đời từ generalStore:', lifePathError.value);
+        error.value = 'Lỗi khi lấy dữ liệu Số Đường Đời.';
+        return;
+      }
+
+      if (!lifePathData.value) {
+        error.value = 'Không tìm thấy dữ liệu cho Số Đường Đời này.';
+        return;
+      }
+
+      result.value = lifePathData.value;
+      startCalulation.value = true;
+      return; // Thoát sớm nếu dữ liệu từ generalStore hợp lệ
+    } catch (err) {
+      console.error('Lỗi khi tính toán result từ generalStore:', err);
+      error.value = err.message;
+    }
+  }
+
+  // 2. Nếu generalStore không có dữ liệu, kiểm tra localStorage với key 'userData'
+  const savedUserData = localStorage.getItem('userData');
+  if (savedUserData) {
+    try {
+      const parsedData = JSON.parse(savedUserData);
       const { fullName: savedFullName, birthDate: savedBirthDate, startCalulation: savedStartCalulation, result: savedResult } = parsedData;
       if (
         savedFullName &&
@@ -287,47 +321,65 @@ onMounted(async () => {
         calculatedBirthDate.value = savedBirthDate;
         result.value = savedResult;
         startCalulation.value = savedStartCalulation;
-        return; // Thoát sớm nếu dữ liệu từ 'auth' hợp lệ
+        return; // Thoát sớm nếu dữ liệu từ 'userData' hợp lệ
+      }
+    } catch (err) {
+      console.error('Lỗi khi khôi phục dữ liệu từ localStorage (userData):', err);
+    }
+  }
+
+  // 3. Nếu không có dữ liệu hợp lệ từ 'userData', kiểm tra localStorage với key 'auth'
+  const savedAuthData = localStorage.getItem('auth');
+  if (savedAuthData) {
+    try {
+      const parsedData = JSON.parse(savedAuthData);
+      const { fullname: savedFullName, birthdate: savedBirthDate } = parsedData;
+      if (
+        savedFullName &&
+        savedBirthDate &&
+        (savedBirthDate.match(/^\d{2}\/\d{2}\/\d{4}$/) || savedBirthDate.match(/^\d{4}-\d{2}-\d{2}T/))
+      ) {
+        // Chuyển đổi birthdate từ định dạng ISO nếu cần
+        let formattedBirthDate = savedBirthDate;
+        if (savedBirthDate.includes('T')) {
+          const dateObj = new Date(savedBirthDate);
+          formattedBirthDate = `${String(dateObj.getDate()).padStart(2, '0')}/${String(dateObj.getMonth() + 1).padStart(2, '0')}/${dateObj.getFullYear()}`;
+        }
+        fullName.value = savedFullName;
+        birthDate.value = formattedBirthDate;
+        calculatedFullName.value = savedFullName;
+        calculatedBirthDate.value = formattedBirthDate;
+
+        // Tính toán result cho auth data
+        try {
+          const lifePath = calculateLifePathNumber(formattedBirthDate);
+          const lifePathStr = [11, 22].includes(lifePath) ? lifePath.toString() : lifePath.toString();
+          const { data: lifePathData, error: lifePathError } = await useFetch(`/api/life-path/${lifePathStr}`, {
+            baseURL: useRuntimeConfig().public.apiBase,
+          });
+
+          if (lifePathError.value) {
+            console.error('Lỗi API Số Đường Đời từ auth:', lifePathError.value);
+            error.value = 'Lỗi khi lấy dữ liệu Số Đường Đời.';
+            return;
+          }
+
+          if (!lifePathData.value) {
+            error.value = 'Không tìm thấy dữ liệu cho Số Đường Đời này.';
+            return;
+          }
+
+          result.value = lifePathData.value;
+          startCalulation.value = true;
+        } catch (err) {
+          console.error('Lỗi khi tính toán result từ auth:', err);
+          error.value = err.message;
+        }
       }
     } catch (err) {
       console.error('Lỗi khi khôi phục dữ liệu từ localStorage (auth):', err);
     }
   }
-
-  // Nếu không có dữ liệu hợp lệ từ 'auth', kiểm tra generalStore
-  if (generalStore.hasData) {
-    fullName.value = generalStore.fullname;
-    birthDate.value = generalStore.birthdate;
-    calculatedFullName.value = generalStore.fullname;
-    calculatedBirthDate.value = generalStore.birthdate;
-    
-    try {
-      const lifePath = calculateLifePathNumber(generalStore.birthdate);
-      const lifePathStr = [11, 22].includes(lifePath) ? lifePath.toString() : lifePath.toString();
-      const { data: lifePathData, error: lifePathError } = await useFetch(`/api/life-path/${lifePathStr}`, {
-        baseURL: useRuntimeConfig().public.apiBase,
-      });
-
-      if (lifePathError.value) {
-        console.error('Lỗi API Số Đường Đời:', lifePathError.value);
-        error.value = 'Lỗi khi lấy dữ liệu Số Đường Đời.';
-        return;
-      }
-
-      if (!lifePathData.value) {
-        error.value = 'Không tìm thấy dữ liệu cho Số Đường Đời này.';
-        return;
-      }
-
-      result.value = lifePathData.value;
-      startCalulation.value = true;
-    } catch (err) {
-      console.error('Lỗi khi tính toán result từ generalStore:', err);
-      error.value = err.message;
-    }
-    return;
-  }
-
 });
 
 const formatDateInput = (event) => {
@@ -397,8 +449,8 @@ const calculateNumbers = async () => {
     calculatedBirthDate.value = birthDate.value;
     startCalulation.value = true;
 
-    // Lưu dữ liệu vào localStorage với key 'auth'
-    localStorage.setItem('auth', JSON.stringify({
+    // Lưu dữ liệu vào localStorage với key 'userData'
+    localStorage.setItem('userData', JSON.stringify({
       fullName: calculatedFullName.value,
       birthDate: calculatedBirthDate.value,
       startCalulation: startCalulation.value,

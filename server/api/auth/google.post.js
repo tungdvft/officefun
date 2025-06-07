@@ -73,7 +73,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     // Hoàn tác nếu có lỗi
-    await db.query('ROLLBACK');
+   
     throw createError({
       statusCode: error.statusCode || 500,
       statusMessage: error.message || 'Lỗi khi xử lý đăng nhập Google',

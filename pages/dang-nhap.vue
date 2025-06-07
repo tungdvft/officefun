@@ -4,7 +4,7 @@
       <!-- Header -->
       <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-center">
         <h1 class="text-2xl font-bold text-white">Đăng Nhập Tài Khoản</h1>
-        <p class="text-purple-100 mt-1">Chào mừng bạn quay trở lại</p>
+        <p class="text-purple-100 mt-1">Vui lòng đăng nhập để sử dụng xem thần số học của bạn</p>
       </div>
 
       <!-- Form -->
