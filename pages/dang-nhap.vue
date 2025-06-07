@@ -1,3 +1,4 @@
+```vue
 <template>
   <div class="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50 flex items-center justify-center p-4">
     <div class="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden">
@@ -93,12 +94,14 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useUserStore } from '~/stores/user';
+import { useRoute, navigateTo } from '#app';
 import { toast } from 'vue3-toastify';
 
 const userStore = useUserStore();
+const route = useRoute();
 const form = ref({
   email: '',
-  password: ''
+  password: '',
 });
 const rememberMe = ref(false);
 const isLoading = ref(false);
@@ -114,7 +117,7 @@ const handleLogin = async () => {
   if (!form.value.email || !form.value.password) {
     toast.error('Vui lòng nhập đầy đủ email và mật khẩu', {
       position: 'top-center',
-      theme: 'colored'
+      theme: 'colored',
     });
     return;
   }
@@ -127,8 +130,8 @@ const handleLogin = async () => {
       body: JSON.stringify({
         email: form.value.email,
         password: form.value.password,
-        remember: rememberMe.value
-      })
+        remember: rememberMe.value,
+      }),
     });
 
     // Kiểm tra dữ liệu phản hồi
@@ -139,31 +142,38 @@ const handleLogin = async () => {
     // Lưu thông tin user vào store
     userStore.setUser(response.user, response.token);
 
+    // Lưu auth vào localStorage để tương thích với middleware
+    localStorage.setItem('auth', JSON.stringify({
+      id: response.user.id,
+      email: response.user.email,
+      fullname: response.user.fullname,
+      birthdate: response.user.birthdate,
+      token: response.token,
+    }));
+
     toast.success('Đăng nhập thành công!', {
       position: 'top-center',
-      theme: 'colored'
+      theme: 'colored',
     });
 
-    // Chuyển hướng nhanh hơn
-    setTimeout(() => {
-      navigateTo('/xem');
-    }, 300);
+    // Chuyển hướng về trang đích hoặc mặc định '/xem'
+    const redirect = route.query.redirect || '/xem';
+    await navigateTo(redirect);
   } catch (error) {
-    let errorMessage = 'Đăng nhập thất bại. Vui lòng nhập đúng email hoặc mật khẩu.';
+    let errorMessage = 'Đăng nhập thất bại. Vui lòng kiểm tra email hoặc mật khẩu.';
 
     // Kiểm tra lỗi từ API và gán thông báo thân thiện
-    if (error.response && error.response._data && error.response._data.message) {
-      // Nếu API trả về message cụ thể, sử dụng nó (nhưng đảm bảo không chứa thông tin nhạy cảm)
+    if (error.response?._data?.message) {
       errorMessage = error.response._data.message.includes('email') || error.response._data.message.includes('password')
         ? 'Email hoặc mật khẩu không đúng'
-        : 'Đăng nhập thất bại. Vui lòng nhập đúng email hoặc mật khẩu.';
+        : 'Đăng nhập thất bại. Vui lòng thử lại.';
     } else if (error.status === 401) {
       errorMessage = 'Email hoặc mật khẩu không đúng';
     }
 
     toast.error(errorMessage, {
       position: 'top-center',
-      theme: 'colored'
+      theme: 'colored',
     });
   } finally {
     isLoading.value = false;

@@ -26,26 +26,21 @@
               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               required
               :disabled="loading"
-            >
+            />
           </div>
 
           <!-- Birthdate field -->
           <div>
             <label for="birthdate" class="block text-sm font-medium text-gray-700 mb-1">Ngày sinh</label>
-            <VueDatePicker
-              v-model="form.birthdate"
+            <input
+              type="text"
               id="birthdate"
-              :format="'dd/MM/yyyy'"
-              :max-date="maxBirthdate"
-              placeholder="dd/mm/yyyy"
-              :enable-time="false"
-              :disabled="loading"
-              class="w-full"
+              v-model="form.birthdate"
+              pattern="\d{2}/\d{2}/\d{4}"
+              placeholder="DD/MM/YYYY"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               required
-              :clearable="false"
-              :auto-apply="true"
-              :text-input="{ format: 'dd/MM/yyyy' }"
-              input-class-name="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              :disabled="loading"
             />
           </div>
 
@@ -80,44 +75,57 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useUserStore } from '~/stores/user';
+import { useRoute, navigateTo } from '#app';
 import { toast } from 'vue3-toastify';
-import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css';
 
 const userStore = useUserStore();
+const route = useRoute();
 const loading = ref(false);
 const errorMessage = ref('');
 
 // Form data
 const form = ref({
   fullname: '',
-  birthdate: null // Lưu dưới dạng Date object
+  birthdate: '' // Lưu dưới dạng string DD/MM/YYYY
 });
 
-// Tính toán ngày sinh tối đa (12 tuổi trở lên)
-const maxBirthdate = computed(() => {
-  const today = new Date();
-  return new Date(today.getFullYear() - 12, today.getMonth(), today.getDate());
-});
+// Validate birthdate format DD/MM/YYYY và kiểm tra khoảng 1900 đến hiện tại
+const isValidBirthdate = (dateStr) => {
+  const regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+  if (!regex.test(dateStr)) return false;
+
+  const [, day, month, year] = dateStr.match(regex);
+  const date = new Date(`${year}-${month}-${day}`);
+  if (isNaN(date.getTime())) return false;
+
+  // Kiểm tra năm từ 1900 đến hiện tại
+  const currentYear = new Date().getFullYear();
+  const yearNum = parseInt(year);
+  if (yearNum < 1900 || yearNum > currentYear) return false;
+
+  // Kiểm tra ngày tháng hợp lệ
+  return date.getDate() === parseInt(day) && date.getMonth() + 1 === parseInt(month);
+};
 
 // Kiểm tra form hợp lệ
 const formValid = computed(() => {
-  return form.value.fullname.trim() && form.value.birthdate instanceof Date;
+  return form.value.fullname.trim() && isValidBirthdate(form.value.birthdate);
 });
 
-// Format ngày thành yyyy-mm-dd cho API
-const formatDateForApi = (date) => {
-  if (!(date instanceof Date)) return '';
-  return date.toISOString().split('T')[0]; // yyyy-mm-dd
+// Chuyển DD/MM/YYYY thành yyyy-MM-dd cho API
+const formatDateForApi = (dateStr) => {
+  if (!isValidBirthdate(dateStr)) return '';
+  const [day, month, year] = dateStr.split('/');
+  return `${year}-${month}-${day}`; // yyyy-MM-dd
 };
 
 // Khởi tạo form với dữ liệu từ store hoặc localStorage
 const initializeForm = () => {
-  // Ưưu tiên lấy từ store
+  // Ưu tiên lấy từ store
   if (userStore.user?.fullname || userStore.user?.birthdate) {
     form.value = {
       fullname: userStore.user.fullname || '',
-      birthdate: userStore.user.birthdate ? new Date(userStore.user.birthdate) : null
+      birthdate: userStore.user.birthdate || '' // DD/MM/YYYY
     };
     return;
   }
@@ -129,7 +137,7 @@ const initializeForm = () => {
       const userData = JSON.parse(savedUser);
       form.value = {
         fullname: userData.fullname || '',
-        birthdate: userData.birthdate ? new Date(userData.birthdate) : null
+        birthdate: userData.birthdate || ''
       };
     }
   }
@@ -139,72 +147,94 @@ const initializeForm = () => {
 const updateUserProfile = async () => {
   try {
     loading.value = true;
+    errorMessage.value = '';
 
-    // Lấy user ID từ store hoặc localStorage
+    // Lấy user ID và token từ store hoặc localStorage
     let userId = userStore.user?.id;
+    let token = userStore.token;
     if (!userId && process.client) {
       const savedUser = localStorage.getItem('auth');
       if (savedUser) {
-        userId = JSON.parse(savedUser).id;
+        const userData = JSON.parse(savedUser);
+        userId = userData.id;
+        token = userData.token;
       }
     }
 
-    if (!userId) {
-      throw new Error('Không tìm thấy thông tin người dùng');
+    if (!userId || !token) {
+      throw new Error('Không tìm thấy thông tin người dùng hoặc token');
     }
 
     // Gọi API cập nhật thông tin user
     const response = await $fetch(`/api/users/${userId}`, {
       method: 'PATCH',
       headers: {
-        Authorization: `Bearer ${userStore.token || ''}`,
+        Authorization: `Bearer ${token}`
       },
       body: {
-        fullname: form.value.fullname,
-        birthdate: formatDateForApi(form.value.birthdate) // Gửi yyyy-mm-dd
+        fullname: form.value.fullname.trim(),
+        birthdate: formatDateForApi(form.value.birthdate) // yyyy-MM-dd
       }
     });
 
-    if (response.success) {
-      // Cập nhật store
-      userStore.setUser({
-        id: userId,
-        email: userStore.user?.email || '',
-        fullname: form.value.fullname,
-        birthdate: formatDateForApi(form.value.birthdate)
-      });
-
-      // Cập nhật localStorage
-      if (process.client) {
-        const savedUser = localStorage.getItem('auth');
-        if (savedUser) {
-          const userData = JSON.parse(savedUser);
-          localStorage.setItem('auth', JSON.stringify({
-            ...userData,
-            fullname: form.value.fullname,
-            birthdate: formatDateForApi(form.value.birthdate)
-          }));
-        }
-      }
-
-      toast.success('Hồ sơ đã được cập nhật!');
-      await navigateTo('/xem');
+    // Kiểm tra response
+    if (!response.success) {
+      throw new Error(response.message || 'Cập nhật hồ sơ thất bại');
     }
+
+    // Cập nhật store
+    userStore.setUser({
+      ...userStore.user,
+      id: userId,
+      fullname: form.value.fullname.trim(),
+      birthdate: form.value.birthdate // Lưu DD/MM/YYYY
+    });
+
+    // Cập nhật localStorage
+    if (process.client) {
+      const savedUser = localStorage.getItem('auth');
+      if (savedUser) {
+        const userData = JSON.parse(savedUser);
+        localStorage.setItem('auth', JSON.stringify({
+          ...userData,
+          fullname: form.value.fullname.trim(),
+          birthdate: form.value.birthdate // Lưu DD/MM/YYYY
+        }));
+      }
+    }
+
+    toast.success('Hồ sơ đã được cập nhật!', {
+      position: 'top-center',
+      theme: 'colored'
+    });
+
+    // Chuyển hướng về trang đích hoặc mặc định '/xem'
+    const redirect = route.query.redirect && typeof route.query.redirect === 'string' && route.query.redirect.startsWith('/')
+      ? route.query.redirect
+      : '/xem';
+    await navigateTo(redirect);
   } catch (error) {
     console.error('Update profile error:', {
       message: error.message,
       status: error.status,
-      data: error.data,
+      data: error.data
     });
-    errorMessage.value = error.data?.message || 'Lỗi khi cập nhật hồ sơ. Vui lòng thử lại sau!';
-    toast.error(errorMessage.value);
+    errorMessage.value = error.data?.message || error.message || 'Lỗi khi cập nhật hồ sơ. Vui lòng thử lại!';
+    toast.error(errorMessage.value, {
+      position: 'top-center',
+      theme: 'colored'
+    });
   } finally {
     loading.value = false;
   }
 };
 
+// Submit form
 const submitProfile = () => {
-  if (!formValid.value) return;
+  if (!formValid.value) {
+    errorMessage.value = 'Vui lòng nhập đầy đủ họ tên và ngày sinh hợp lệ (DD/MM/YYYY, từ 1900 đến hiện tại)';
+    return;
+  }
   updateUserProfile();
 };
 
@@ -215,8 +245,5 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Tùy chỉnh thêm nếu cần */
-.dp__input {
-  padding: 0 !important;
-}
+/* Không cần tùy chỉnh thêm vì input đã có style phù hợp */
 </style>

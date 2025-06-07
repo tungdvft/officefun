@@ -230,6 +230,10 @@ import { toast } from 'vue3-toastify';
 
 const userStore = useUserStore();
 
+definePageMeta({
+  middleware: ['auth']
+});
+
 // Hàm lấy chữ cái đầu hợp lệ
 const getInitialLetter = (fullname) => {
   if (!fullname || typeof fullname !== 'string' || !fullname.trim()) {

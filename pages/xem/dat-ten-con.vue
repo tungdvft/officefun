@@ -9,7 +9,8 @@ import BabyNameGenerator from '~/components/BabyNameGenerator.vue';
 import { useHead } from '@unhead/vue';
 
 definePageMeta({
-  layout: 'view'
+  layout: 'view',
+  middleware: ['auth']
 });
 
 // Thiết lập SEO với useHead

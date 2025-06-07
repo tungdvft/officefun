@@ -259,7 +259,8 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { toast } from 'vue3-toastify';
 
 definePageMeta({
-  layout: 'view'
+  layout: 'view',
+  middleware: ['auth']
 });
 
 // Tabs

@@ -9,7 +9,8 @@ import { useHead } from '@unhead/vue';
 import NumerologyBrandName from '~/components/NumerologyBrandName.vue';
 
 definePageMeta({
-  layout: 'view'
+  layout: 'view',
+  middleware: ['auth']
 });
 
 // Thiết lập SEO với useHead

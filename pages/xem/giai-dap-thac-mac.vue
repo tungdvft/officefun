@@ -10,7 +10,8 @@ import { useHead } from '@unhead/vue';
 import ConsultNumerology from '~/components/ConsultNumerology.vue';
 
 definePageMeta({
-  layout: 'view'
+  layout: 'view',
+  middleware: ['auth']
 });
 
 // Thiết lập SEO với useHead

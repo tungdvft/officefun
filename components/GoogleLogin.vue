@@ -18,35 +18,37 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useUserStore } from '~/stores/user'
-import { toast } from 'vue3-toastify'
+import { ref } from 'vue';
+import { useUserStore } from '~/stores/user';
+import { useRoute, navigateTo } from '#app';
+import { toast } from 'vue3-toastify';
 
-const userStore = useUserStore()
-const loading = ref(false)
+const userStore = useUserStore();
+const route = useRoute();
+const loading = ref(false);
 
 // Dynamic configuration based on environment
-const runtimeConfig = useRuntimeConfig()
-const googleClientId = runtimeConfig.public.googleClientId || '14260610616-tifcr2fa8031gmkiujk1l096rl8j67n4.apps.googleusercontent.com'
-const currentOrigin = typeof window !== 'undefined' ? window.location.origin : ''
+const runtimeConfig = useRuntimeConfig();
+const googleClientId = runtimeConfig.public.googleClientId || '14260610616-tifcr2fa8031gmkiujk1l096rl8j67n4.apps.googleusercontent.com';
+const currentOrigin = process.client ? window.location.origin : '';
 
 const handleGoogleLogin = async () => {
-  if (loading.value) return
-  
+  if (loading.value) return;
+
   try {
-    loading.value = true
+    loading.value = true;
 
     // Load Google API library if not already loaded
     if (!window.google?.accounts?.oauth2) {
       await new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = 'https://accounts.google.com/gsi/client'
-        script.async = true
-        script.defer = true
-        script.onload = resolve
-        script.onerror = () => reject(new Error('Failed to load Google API'))
-        document.head.appendChild(script)
-      })
+        const script = document.createElement('script');
+        script.src = 'https://accounts.google.com/gsi/client';
+        script.async = true;
+        script.defer = true;
+        script.onload = resolve;
+        script.onerror = () => reject(new Error('Failed to load Google API'));
+        document.head.appendChild(script);
+      });
     }
 
     // Initialize Google OAuth client with dynamic redirect URI
@@ -57,68 +59,80 @@ const handleGoogleLogin = async () => {
       callback: async (response) => {
         try {
           if (response.error) {
-            throw new Error(`Google OAuth error: ${response.error}`)
+            throw new Error(`Google OAuth error: ${response.error}`);
           }
-          
+
           // Fetch user info from Google
-          const userInfo = await fetchUserInfo(response.access_token)
-          
-          // Send to your backend
+          const userInfo = await fetchUserInfo(response.access_token);
+
+          // Send to backend
           const { user, isNewUser, token } = await $fetch('/api/auth/google', {
             method: 'POST',
-            body: { 
-              email: userInfo.email, 
-              name: userInfo.name, 
+            body: {
+              email: userInfo.email,
+              name: userInfo.name,
               picture: userInfo.picture,
               access_token: response.access_token
-            },
-          })
+            }
+          });
 
           // Save user data
-          saveUserData({ ...user, token, isAuthenticated: true })
-          
+          saveUserData({ ...user, token, isAuthenticated: true });
+
           // Show appropriate message
           toast.success(isNewUser
             ? 'Tài khoản mới đã được tạo! Vui lòng hoàn thiện thông tin'
-            : `Chào mừng ${user.fullname || userInfo.name} quay trở lại!`)
-            
+            : `Chào mừng ${user.fullname || userInfo.name} quay trở lại!`, {
+            position: 'top-center',
+            theme: 'colored'
+          });
+
           // Redirect based on profile completion
           if (user.fullname && user.birthdate) {
-            await navigateTo('/xem')
+            const redirect = route.query.redirect && typeof route.query.redirect === 'string' && route.query.redirect.startsWith('/')
+              ? route.query.redirect
+              : '/xem';
+            await navigateTo(redirect);
           } else {
-            await navigateTo('/hoan-thanh')
+            await navigateTo('/hoan-thanh');
           }
         } catch (error) {
-          console.error('Google login error:', error)
-          toast.error(error.message || 'Đăng nhập Google thất bại')
+          console.error('Google login error:', error);
+          toast.error(error.message || 'Đăng nhập Google thất bại', {
+            position: 'top-center',
+            theme: 'colored'
+          });
         } finally {
-          loading.value = false
+          loading.value = false;
         }
-      },
-    })
+      }
+    });
 
     // Request access token
-    client.requestAccessToken()
+    client.requestAccessToken();
   } catch (error) {
-    console.error('Error initializing Google Sign-In:', error)
-    toast.error('Không thể khởi tạo Google Sign-In')
-    loading.value = false
+    console.error('Error initializing Google Sign-In:', error);
+    toast.error('Không thể khởi tạo Google Sign-In', {
+      position: 'top-center',
+      theme: 'colored'
+    });
+    loading.value = false;
   }
-}
+};
 
 const fetchUserInfo = async (accessToken) => {
   try {
     const response = await $fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    })
-    return response
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    return response;
   } catch (error) {
-    throw new Error('Không thể lấy thông tin người dùng từ Google: ' + error.message)
+    throw new Error(`Không thể lấy thông tin người dùng từ Google: ${error.message}`);
   }
-}
+};
 
 const saveUserData = (userData) => {
-  userStore.setUser(userData)
+  userStore.setUser(userData);
   localStorage.setItem('auth', JSON.stringify({
     id: userData.id,
     email: userData.email,
@@ -127,9 +141,9 @@ const saveUserData = (userData) => {
     avatar: userData.avatar,
     token: userData.token,
     isAuthenticated: true,
-    lastLogin: new Date().toISOString(),
-  }))
-}
+    lastLogin: new Date().toISOString()
+  }));
+};
 </script>
 
 <style scoped>
@@ -156,7 +170,7 @@ const saveUserData = (userData) => {
 
 .google-login-button:hover {
   background: #f7f8f8;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .google-login-button:disabled {

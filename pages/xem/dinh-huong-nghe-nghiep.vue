@@ -10,7 +10,8 @@ import CareerGuidance from '~/components/CareerGuidance.vue';
 import { useHead } from '@unhead/vue';
 
 definePageMeta({
-  layout: 'view'
+  layout: 'view',
+  middleware: ['auth']
 });
 
 // Thiết lập SEO với useHead
