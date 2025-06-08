@@ -136,6 +136,378 @@
       }
     },
     {
+      "life_path": 3,
+      "profile": {
+        "archetype": "Người sáng tạo",
+        "element": "Lửa",
+        "compatible_numbers": [1, 5, 9],
+        "chakra": "Năng lượng vùng cổ họng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 9 khuyến khích bạn hoàn thiện các dự án sáng tạo và thể hiện bản thân. Hãy buông bỏ những ý tưởng không còn phù hợp để tập trung vào tác phẩm giá trị.",
+        "time_slots": {
+          "morning": {
+            "focus": "Phản ánh",
+            "action": "Viết 3 thành tựu sáng tạo gần đây, như 'Hoàn thành bài viết' hoặc 'Thiết kế logo'. Ghi chú một ý tưởng bạn muốn buông bỏ.",
+            "warning": "Tránh phân tâm với các ý tưởng mới. Tập trung hoàn thiện."
+          },
+          "afternoon": {
+            "focus": "Hành động",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Hoàn thiện một tác phẩm sáng tạo, như bài viết hoặc tranh vẽ. Ghi chú cảm giác hài lòng."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về các dự án sáng tạo tương lai. Thư giãn với âm nhạc hoặc vẽ tự do."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hoàn thiện một dự án sáng tạo, như bài thuyết trình. Đọc về nghệ thuật để truyền cảm hứng.",
+          "love": "Thể hiện tình cảm qua lời nói hoặc quà tặng sáng tạo. Nếu độc thân, viết về người lý tưởng.",
+          "finance": "Đánh giá chi tiêu cho các hoạt động sáng tạo. Lập kế hoạch tiết kiệm cho đam mê."
+        },
+        "challenge": {
+          "description": "Bạn có thể khó buông bỏ các ý tưởng chưa hoàn thiện.",
+          "solution": "Viết lý do tại sao cần buông bỏ và chọn một ý tưởng để hoàn thành."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sáng tạo là tiếng nói của tâm hồn bạn. Hãy hoàn thiện với niềm vui và sự tự do.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ánh sáng xanh từ cổ họng lan tỏa. Hít thở sâu, cảm nhận sự tự do biểu đạt.",
+        "affirmation": "Tôi sáng tạo và hoàn thiện với niềm vui."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFD700",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng để tăng năng lượng sáng tạo."
+        },
+        "number": 3,
+        "direction": "Hướng Đông",
+        "object": "Bút màu"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã hoàn thiện tác phẩm sáng tạo nào? Hãy viết về quá trình và cảm giác của bạn.",
+        "feedback_question": "Bạn đã thể hiện sự sáng tạo như thế nào hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt bút màu hoặc sổ phác thảo trên bàn để khơi dậy sáng tạo.",
+        "energy": "Nghe nhạc vui tươi để tăng cảm hứng.",
+        "routine": "Dành 5 phút buổi sáng để viết về một ý tưởng sáng tạo cần hoàn thiện."
+      }
+    },
+    {
+      "life_path": 4,
+      "profile": {
+        "archetype": "Người xây dựng",
+        "element": "Đất",
+        "compatible_numbers": [2, 6, 8],
+        "chakra": "Năng lượng vùng gốc"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 9 thúc đẩy bạn hoàn thiện các kế hoạch dài hạn và củng cố nền tảng. Hãy buông bỏ những chi tiết không cần thiết để tập trung vào sự ổn định.",
+        "time_slots": {
+          "morning": {
+            "focus": "Phản ánh",
+            "action": "Viết 3 thành tựu trong việc xây dựng gần đây, như 'Lập kế hoạch chi tiết' hoặc 'Tổ chức nhóm'. Ghi chú một yếu tố cần đơn giản hóa.",
+            "warning": "Tránh sa lầy vào chi tiết nhỏ. Nhìn vào bức tranh lớn."
+          },
+          "afternoon": {
+            "focus": "Hành động",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Hoàn thiện một phần kế hoạch, như cập nhật tài liệu hoặc tổ chức dữ liệu. Ghi chú tiến độ."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về các mục tiêu ổn định tương lai. Thư giãn với sách về tổ chức hoặc đi bộ."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hoàn thiện một quy trình hoặc kế hoạch. Đọc về quản lý thời gian để cải thiện hiệu quả.",
+          "love": "Thảo luận về kế hoạch chung với người yêu. Nếu độc thân, viết về mối quan hệ ổn định lý tưởng.",
+          "finance": "Kiểm tra ngân sách và loại bỏ chi tiêu không cần thiết. Lập kế hoạch tiết kiệm dài hạn."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy áp lực từ các kế hoạch chi tiết.",
+          "solution": "Chia nhỏ công việc và ưu tiên từng bước."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Sự ổn định là sức mạnh của bạn. Hãy hoàn thiện với sự kiên nhẫn và lòng tin.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng rễ cây kết nối bạn với đất. Hít thở sâu, cảm nhận sự vững chắc.",
+        "affirmation": "Tôi xây dựng và hoàn thiện với sự ổn định."
+      },
+      "luck": {
+        "color": {
+          "hex": "#8B4513",
+          "usage": "Mặc áo hoặc mang phụ kiện màu nâu để tăng năng lượng ổn định."
+        },
+        "number": 4,
+        "direction": "Hướng Tây Bắc",
+        "object": "Hộp lưu trữ"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã hoàn thiện gì trong kế hoạch của mình? Hãy viết về bước tiến và cảm giác của bạn.",
+        "feedback_question": "Bạn đã xây dựng gì ổn định hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Sắp xếp tài liệu gọn gàng, đặt một hộp lưu trữ trên bàn.",
+        "energy": "Nghe podcast về tổ chức để tăng động lực.",
+        "routine": "Dành 5 phút buổi sáng để viết 3 bước cần hoàn thiện trong kế hoạch."
+      }
+    },
+    {
+      "life_path": 5,
+      "profile": {
+        "archetype": "Người khám phá",
+        "element": "Không khí",
+        "compatible_numbers": [1, 3, 7],
+        "chakra": "Năng lượng vùng tim"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 9 khuyến khích bạn hoàn thiện các trải nghiệm và buông bỏ những thói quen không còn phù hợp. Hãy chuẩn bị cho những cuộc phiêu lưu mới.",
+        "time_slots": {
+          "morning": {
+            "focus": "Phản ánh",
+            "action": "Viết 3 trải nghiệm đáng nhớ gần đây, như 'Du lịch mới' hoặc 'Học kỹ năng'. Ghi chú một thói quen cần buông bỏ.",
+            "warning": "Tránh bắt đầu hành trình mới. Tập trung vào hoàn thiện."
+          },
+          "afternoon": {
+            "focus": "Hành động",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Hoàn thiện một kế hoạch phiêu lưu, như đặt vé hoặc viết nhật ký hành trình. Ghi chú cảm giác hào hứng."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về các cuộc phiêu lưu tương lai. Thư giãn với sách du ký hoặc phim khám phá."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hoàn thiện một dự án linh hoạt. Đọc về kỹ năng thích nghi để chuẩn bị cho thay đổi.",
+          "love": "Chia sẻ kế hoạch phiêu lưu với người yêu. Nếu độc thân, viết về người bạn đồng hành lý tưởng.",
+          "finance": "Đánh giá chi tiêu cho trải nghiệm. Lập kế hoạch tiết kiệm cho chuyến đi mới."
+        },
+        "challenge": {
+          "description": "Bạn có thể khó buông bỏ những thói quen tự do quá mức.",
+          "solution": "Viết lý do cần thay đổi và chọn một mục tiêu để hoàn thiện."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Tự do là sức mạnh của bạn. Hãy hoàn thiện với sự linh hoạt và lòng tin vào hành trình.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng làn gió mang đi những gì cũ. Hít thở sâu, cảm nhận sự tự do.",
+        "affirmation": "Tôi khám phá và hoàn thiện với sự tự do."
+      },
+      "luck": {
+        "color": {
+          "hex": "#1E90FF",
+          "usage": "Mặc áo hoặc mang phụ kiện màu xanh dương để tăng năng lượng khám phá."
+        },
+        "number": 5,
+        "direction": "Hướng Đông Nam",
+        "object": "Bản đồ"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã hoàn thiện trải nghiệm nào? Hãy viết về hành trình và cảm giác của bạn.",
+        "feedback_question": "Bạn đã khám phá gì mới hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một bản đồ hoặc ảnh du lịch trên bàn để khơi dậy cảm hứng.",
+        "energy": "Nghe nhạc phiêu lưu để tăng động lực.",
+        "routine": "Dành 5 phút buổi sáng để viết về một trải nghiệm cần hoàn thiện."
+      }
+    },
+    {
+      "life_path": 6,
+      "profile": {
+        "archetype": "Người chăm sóc",
+        "element": "Nước",
+        "compatible_numbers": [2, 3, 9],
+        "chakra": "Năng lượng vùng tim"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 9 thúc đẩy bạn hoàn thiện trách nhiệm chăm sóc và buông bỏ những gánh nặng không cần thiết. Hãy tập trung vào sự cân bằng cá nhân và cộng đồng.",
+        "time_slots": {
+          "morning": {
+            "focus": "Phản ánh",
+            "action": "Viết 3 cách bạn đã chăm sóc người khác gần đây. Ghi chú một trách nhiệm bạn muốn buông bỏ.",
+            "warning": "Tránh ôm đồm quá nhiều. Ưu tiên sức khỏe của bạn."
+          },
+          "afternoon": {
+            "focus": "Hành động",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Hoàn thiện một việc chăm sóc, như nấu ăn cho gia đình hoặc giúp đồng nghiệp. Ghi chú cảm giác."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về sự cân bằng giữa chăm sóc người khác và bản thân. Thư giãn với trà hoặc yoga."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hoàn thiện một nhiệm vụ hỗ trợ đội nhóm. Đọc về cân bằng công việc và cuộc sống.",
+          "love": "Chia sẻ tình yêu qua hành động chăm sóc. Nếu độc thân, viết về người bạn muốn chăm sóc.",
+          "finance": "Đánh giá chi tiêu cho gia đình hoặc cộng đồng. Lập kế hoạch tiết kiệm."
+        },
+        "challenge": {
+          "description": "Bạn có thể cảm thấy mệt mỏi vì chăm sóc quá nhiều.",
+          "solution": "Đặt ranh giới và dành thời gian cho bản thân."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Tình yêu là sức mạnh của bạn. Hãy hoàn thiện với sự chăm sóc và lòng biết ơn.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ánh sáng xanh từ tim bạn lan tỏa. Hít thở sâu, cảm nhận tình yêu.",
+        "affirmation": "Tôi chăm sóc và hoàn thiện với tình yêu."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FF69B4",
+          "usage": "Mặc áo hoặc mang phụ kiện màu hồng để tăng năng lượng yêu thương."
+        },
+        "number": 6,
+        "direction": "Hướng Tây",
+        "object": "Hoa tươi"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã chăm sóc ai như thế nào? Hãy viết về hành động và cảm giác của bạn.",
+        "feedback_question": "Bạn đã thể hiện tình yêu thương như thế nào hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một bình hoa tươi trên bàn để nhắc nhở về tình yêu.",
+        "energy": "Nghe nhạc nhẹ để tăng cảm giác yên bình.",
+        "routine": "Dành 5 phút buổi sáng để viết về một hành động chăm sóc bạn sẽ làm."
+      }
+    },
+    {
+      "life_path": 7,
+      "profile": {
+        "archetype": "Người tìm kiếm",
+        "element": "Không khí",
+        "compatible_numbers": [1, 5, 9],
+        "chakra": "Năng lượng vùng mắt thứ ba"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 9 khuyến khích bạn hoàn thiện hành trình khám phá tri thức và buông bỏ những câu hỏi không còn ý nghĩa. Hãy chuẩn bị cho sự khai sáng mới.",
+        "time_slots": {
+          "morning": {
+            "focus": "Phản ánh",
+            "action": "Viết 3 điều bạn đã học được gần đây. Ghi chú một câu hỏi bạn muốn buông bỏ.",
+            "warning": "Tránh chìm vào suy nghĩ quá sâu. Tập trung vào hiện tại."
+          },
+          "afternoon": {
+            "focus": "Hành động",
+            "golden_hour": "2h-4h chiều",
+            "recommendation": "Hoàn thiện một nghiên cứu hoặc bài viết tri thức. Ghi chú cảm giác hài lòng."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về các câu hỏi mới bạn muốn khám phá. Thư giãn với sách triết học hoặc thiền."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hoàn thiện một dự án nghiên cứu. Đọc về tư duy phân tích để tăng kỹ năng.",
+          "love": "Chia sẻ một bài học tri thức với người yêu. Nếu độc thân, viết về người bạn muốn học hỏi cùng.",
+          "finance": "Đánh giá chi tiêu cho học tập. Lập kế hoạch đầu tư vào kiến thức."
+        },
+        "challenge": {
+          "description": "Bạn có thể khó buông bỏ những câu hỏi chưa có lời giải.",
+          "solution": "Viết lý do tại sao cần buông bỏ và tập trung vào câu hỏi mới."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Tri thức là ánh sáng của bạn. Hãy hoàn thiện với sự tò mò và lòng tin vào trực giác.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ánh sáng tím từ trán bạn lan tỏa. Hít thở sâu, cảm nhận sự khai sáng.",
+        "affirmation": "Tôi tìm kiếm và hoàn thiện với sự khai sáng."
+      },
+      "luck": {
+        "color": {
+          "hex": "#6A5ACD",
+          "usage": "Mặc áo hoặc mang phụ kiện màu tím nhạt để tăng trực giác."
+        },
+        "number": 7,
+        "direction": "Hướng Đông Bắc",
+        "object": "Sách triết học"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã học được gì mới? Hãy viết về bài học và cảm giác của bạn.",
+        "feedback_question": "Bạn đã khám phá tri thức gì hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một cuốn sách triết học trên bàn để khơi dậy tò mò.",
+        "energy": "Nghe podcast về khoa học hoặc tâm linh để tăng cảm hứng.",
+        "routine": "Dành 5 phút buổi sáng để viết về một câu hỏi bạn muốn khám phá."
+      }
+    },
+    {
+      "life_path": 8,
+      "profile": {
+        "archetype": "Người lãnh đạo quyền lực",
+        "element": "Đất",
+        "compatible_numbers": [2, 4, 6],
+        "chakra": "Năng lượng vùng bụng"
+      },
+      "daily_forecast": {
+        "overview": "Hôm nay, năng lượng ngày 9 thúc đẩy bạn hoàn thiện các mục tiêu tài chính và quyền lực. Hãy buông bỏ những tham vọng không còn phù hợp để tập trung vào giá trị bền vững.",
+        "time_slots": {
+          "morning": {
+            "focus": "Phản ánh",
+            "action": "Viết 3 thành tựu tài chính hoặc lãnh đạo gần đây. Ghi chú một tham vọng cần buông bỏ.",
+            "warning": "Tránh theo đuổi mục tiêu không thực tế. Tập trung vào giá trị lâu dài."
+          },
+          "afternoon": {
+            "focus": "Hành động",
+            "golden_hour": "1h-3h chiều",
+            "recommendation": "Hoàn thiện một kế hoạch tài chính hoặc chiến lược lãnh đạo. Ghi chú tiến độ."
+          },
+          "evening": {
+            "focus": "Thư giãn",
+            "activity": "Viết nhật ký về các mục tiêu quyền lực bền vững. Thư giãn với sách về tài chính hoặc thiền."
+          }
+        }
+      },
+      "success_tools": {
+        "advice": {
+          "career": "Hoàn thiện một dự án tài chính hoặc lãnh đạo. Đọc về chiến lược kinh doanh.",
+          "love": "Chia sẻ kế hoạch tài chính với người yêu. Nếu độc thân, viết về người hỗ trợ mục tiêu của bạn.",
+          "finance": "Đánh giá đầu tư và loại bỏ rủi ro không cần thiết. Lập kế hoạch tăng trưởng."
+        },
+        "challenge": {
+          "description": "Bạn có thể khó buông bỏ tham vọng lớn.",
+          "solution": "Viết lý do tại sao cần tập trung vào giá trị bền vững."
+        }
+      },
+      "spiritual_guidance": {
+        "message": "Quyền lực của bạn nằm ở sự cân bằng. Hãy hoàn thiện với sự hào phóng và lòng tin.",
+        "meditation": "Ngồi yên, nhắm mắt, tưởng tượng ánh sáng vàng từ bụng bạn lan tỏa. Hít thở sâu, cảm nhận sự tự tin.",
+        "affirmation": "Tôi lãnh đạo và hoàn thiện với sự cân bằng."
+      },
+      "luck": {
+        "color": {
+          "hex": "#FFD700",
+          "usage": "Mặc áo hoặc mang phụ kiện màu vàng ánh kim để tăng năng lượng quyền lực."
+        },
+        "number": 8,
+        "direction": "Hướng Nam",
+        "object": "Ví tiền"
+      },
+      "interactive": {
+        "journal_prompt": "Hôm nay bạn đã hoàn thiện mục tiêu tài chính nào? Hãy viết về bước tiến và cảm giác của bạn.",
+        "feedback_question": "Bạn đã đạt được gì trong lĩnh vực tài chính hoặc lãnh đạo hôm nay? Hãy chia sẻ!"
+      },
+      "daily_tips": {
+        "workspace": "Đặt một vật phẩm tài chính, như ví hoặc đồng tiền, trên bàn để nhắc nhở mục tiêu.",
+        "energy": "Nghe podcast về tài chính để tăng động lực.",
+        "routine": "Dành 5 phút buổi sáng để viết 3 bước cần hoàn thiện trong kế hoạch tài chính."
+      }
+    },
+    {
       "life_path": 9,
       "profile": {
         "archetype": "Người nhân đạo",
