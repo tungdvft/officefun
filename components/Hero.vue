@@ -186,7 +186,7 @@ const submitForm = async () => {
     try {
       const authData = JSON.parse(auth);
       // Kiểm tra xem authData có token và các trường cần thiết
-      if (authData && authData.token && authData.id && authData.email) {
+   
         // Nếu đã đăng nhập, gọi API và điều hướng sang /xem
         try {
           await generalStore.fetchNumerology({
@@ -203,10 +203,7 @@ const submitForm = async () => {
           console.error('Lỗi khi gửi form:', err.message);
           generalStore.error = 'Có lỗi xảy ra. Vui lòng thử lại!';
         }
-      } else {
-        // Nếu auth không hợp lệ, điều hướng sang trang đăng nhập
-        router.push('/dang-nhap');
-      }
+    
     } catch (error) {
       console.error('Lỗi khi parse auth từ localStorage:', error);
       router.push('/dang-nhap');
