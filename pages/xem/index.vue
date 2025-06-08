@@ -225,7 +225,7 @@ import DailyNumerology from '~/components/DailyNumerology.vue';
 
 definePageMeta({
   layout: 'view',
-  middleware: ['auth']
+  // middleware: ['auth']
 });
 
 useHead({

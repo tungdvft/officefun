@@ -182,7 +182,7 @@ const router = useRouter();
 const submitForm = async () => {
   // Kiểm tra trạng thái đăng nhập
   const auth = localStorage.getItem('auth');
-  if (auth) {
+  // if (auth) {
     try {
       const authData = JSON.parse(auth);
       // Kiểm tra xem authData có token và các trường cần thiết
@@ -211,10 +211,10 @@ const submitForm = async () => {
       console.error('Lỗi khi parse auth từ localStorage:', error);
       router.push('/dang-nhap');
     }
-  } else {
-    // Nếu không có auth trong localStorage, điều hướng sang trang đăng nhập
-    router.push('/dang-nhap');
-  }
+  // } else {
+  //   // Nếu không có auth trong localStorage, điều hướng sang trang đăng nhập
+  //   router.push('/dang-nhap');
+  // }
 };
 </script>
 
