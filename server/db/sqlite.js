@@ -18,14 +18,8 @@ export async function setupDatabase() {
   try {
     // Mở kết nối đến cơ sở dữ liệu SQLite
     console.log('Connecting to PostgreSQL database...');
-    const db = new Client({
-                        host: 'db-postgresql-sgp1-31453-do-user-14381096-0.g.db.ondigitalocean.com',
-                        port: 25060,
-                        user: 'doadmin',
-                        password: 'AVNS_t5TZUG7fWdbYwPCgs2U',
-                        database: 'defaultdb',
-                        ssl: {
-                             ca: `-----BEGIN CERTIFICATE-----
+    const caCert = `
+-----BEGIN CERTIFICATE-----
 MIIEUDCCArigAwIBAgIUXdgjbRRT6Fm0TIGzMFBLbnmD9JwwDQYJKoZIhvcNAQEM
 BQAwQDE+MDwGA1UEAww1ZWIxNDhiZTAtN2NlYy00ZmM2LTliOTItMTAyMmViOGM4
 NzQyIEdFTiAxIFByb2plY3QgQ0EwHhcNMjUwNjA1MDc1NDE1WhcNMzUwNjAzMDc1
@@ -51,7 +45,17 @@ B5jlYtoXEuprhN+1gjb61OySiwhN2+L909h+2Q94Xm4aVhzG4r6Gkf/2nrmDW74G
 01pNQ/IDqcFdxbxx2rxydlQgnyBVGrCGTSD0wx2bvWPKkF2UruZSuP+HtZNF8FVe
 U9jkzg==
 -----END CERTIFICATE-----
-`
+
+`;
+    const db = new Client({
+                        host: 'db-postgresql-sgp1-31453-do-user-14381096-0.g.db.ondigitalocean.com',
+                        port: 25060,
+                        user: 'doadmin',
+                        password: 'AVNS_t5TZUG7fWdbYwPCgs2U',
+                        database: 'defaultdb',
+                        ssl: {
+                          rejectUnauthorized: false,
+                             ca: caCert
                                }     
                           });
     await db.connect()
