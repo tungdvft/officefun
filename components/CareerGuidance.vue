@@ -182,6 +182,32 @@
                   <p class="text-gray-600"><strong>Xu hướng tương lai:</strong> {{ suggestion.trends }}</p>
                 </div>
               </div>
+              <!-- Button to load more career suggestions -->
+              <div v-if="result.careerSuggestions.length < 12" class="flex justify-center mt-6">
+                <button
+                  @click="loadMoreCareers"
+                  :disabled="loadingMore"
+                  class="w-auto bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-700 hover:to-cyan-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
+                >
+                  <span v-if="loadingMore" class="flex items-center justify-center">
+                    <svg
+                      class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path
+                        class="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    Đang tải...
+                  </span>
+                  <span v-else>Xem thêm nghề nghiệp phù hợp</span>
+                </button>
+              </div>
             </div>
 
             <!-- Lời khuyên -->
@@ -205,43 +231,6 @@
               </h3>
               <p class="text-gray-600 mt-2 whitespace-pre-wrap">{{ result.practicalAdvice }}</p>
             </div>
-
-            <!-- Nút tải và chia sẻ -->
-            <!-- <div class="flex flex-wrap gap-3 justify-center">
-              <ClientOnly>
-                <button
-                  @click="downloadResult"
-                  class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg flex items-center justify-center transition duration-200 shadow-sm"
-                >
-                  <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-                  </svg>
-                  Lưu PDF
-                </button>
-              </ClientOnly>
-              <button
-                @click="shareResult('zalo')"
-                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center justify-center transition duration-200 shadow-sm"
-              >
-                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.441 16.892c-2.102.144-6.784.144-8.883 0-2.276-.156-2.541-1.27-2.558-4.892.017-3.629.285-4.736 2.558-4.892 2.099-.144 6.782-.144 8.883 0 2.277.156 2.541 1.27 2.559 4.892-.018 3.629-.285 4.736-2.559 4.892zm-6.441-7.234l4.917 2.338-4.917 2.346v-4.684z"
-                  />
-                </svg>
-                Chia sẻ Zalo
-              </button>
-              <button
-                @click="shareResult('facebook')"
-                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center justify-center transition duration-200 shadow-sm"
-              >
-                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-                  />
-                </svg>
-                Chia sẻ Facebook
-              </button>
-            </div> -->
           </div>
         </transition>
       </div>
@@ -262,6 +251,7 @@ const formData = ref({
 });
 const result = ref(null);
 const loading = ref(false);
+const loadingMore = ref(false);
 const errors = ref({
   name: '',
   birthdate: '',
@@ -343,106 +333,48 @@ const getCareerGuidance = async () => {
         'x-username': encodeURIComponent(username),
         'Content-Type': 'application/json; charset=utf-8'
       },
-      body: formData.value
+      body: { ...formData.value, numSuggestions: 3, previousJobs: [] }
     });
     result.value = response;
     toast.success('Định hướng nghề nghiệp đã hoàn tất!', { position: 'top-center' });
   } catch (error) {
     console.error('Error:', error);
-    errors.value.general = error.data?.message || 'Có lỗi xảy ra!';
+    errors.value.general = error.data?.message || 'Có lỗi xảy ra khi lấy định hướng nghề nghiệp!';
+    toast.error(errors.value.general, { position: 'top-center' });
   } finally {
     loading.value = false;
   }
 };
 
-const shareResult = (platform) => {
+const loadMoreCareers = async () => {
   if (!result.value) return;
-  const text = [
-    `Định hướng nghề nghiệp cho ${formData.value.name}`,
-    `Ngày sinh: ${formData.value.birthdate}`,
-    formData.value.currentJob ? `Công việc hiện tại: ${formData.value.currentJob}` : '',
-    `Mục tiêu nghề nghiệp: ${result.value.careerGoals}`,
-    `Đam mê và động lực: ${result.value.passionAndMotivation}`,
-    `Phong cách làm việc: ${result.value.workStyle}`,
-    `Con đường dài hạn: ${result.value.longTermPath}`,
-    formData.value.currentJob ? `Phân tích công việc hiện tại: ${result.value.currentJobAnalysis}` : '',
-    `Đề xuất nghề nghiệp:`,
-    ...result.value.careerSuggestions.map(s => `- ${s.job}\n  Lý do phù hợp: ${s.reason}\n  Cơ hội hiện tại: ${s.opportunities}\n  Xu hướng tương lai: ${s.trends}`),
-    `Lời khuyên thực tế: ${result.value.practicalAdvice}`
-  ].filter(Boolean).join('\n\n');
 
-  if (platform === 'facebook' && process.client) {
-    if (typeof FB !== 'undefined') {
-      FB.ui({
-        method: 'share',
-        href: window.location.href,
-        quote: text
-      }, (response) => {
-        if (response && !response.error) toast.success('Đã chia sẻ lên Facebook!');
-        else toast.error('Có lỗi khi chia sẻ lên Facebook!');
-      });
-    } else {
-      toast.error('Facebook SDK chưa tải, thử lại sau!');
+  loadingMore.value = true;
+  try {
+    const username = localStorage.getItem('username') || 'guest';
+    const numSuggestions = result.value.careerSuggestions.length + 3;
+    if (numSuggestions > 12) {
+      toast.info('Đã đạt số lượng tối đa 12 nghề nghiệp!', { position: 'top-center' });
+      return;
     }
-  } else if (platform === 'zalo' && process.client) {
-    navigator.clipboard.writeText(text).then(() => {
-      toast.success('Đã sao chép kết quả! Dán vào Zalo để chia sẻ.');
-    }).catch(() => toast.error('Không thể sao chép!'));
+    const previousJobs = result.value.careerSuggestions.map(s => s.job);
+    const response = await $fetch('/api/numerology/career', {
+      method: 'POST',
+      headers: {
+        'x-username': encodeURIComponent(username),
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: { ...formData.value, numSuggestions, previousJobs }
+    });
+    result.value = response;
+    toast.success(`Đã tải thêm ${response.careerSuggestions.length % 3 === 0 ? 3 : response.careerSuggestions.length - result.value.careerSuggestions.length} nghề nghiệp phù hợp!`, { position: 'top-center' });
+  } catch (error) {
+    console.error('Error loading more careers:', error);
+    errors.value.general = error.data?.message || 'Có lỗi khi tải thêm nghề nghiệp!';
+    toast.error(errors.value.general, { position: 'top-center' });
+  } finally {
+    loadingMore.value = false;
   }
-};
-
-const downloadResult = async () => {
-  if (!process.client) return toast.error('Không thể tải PDF trên server!');
-  const { jsPDF } = await import('jspdf');
-  const doc = new jsPDF();
-  doc.setFont('helvetica');
-  doc.setFontSize(12);
-  let y = 10;
-
-  doc.setFontSize(16);
-  doc.text(`Định hướng nghề nghiệp cho ${formData.value.name}`, 10, y);
-  y += 10;
-
-  doc.setFontSize(12);
-  doc.text(`Ngày sinh: ${formData.value.birthdate}`, 10, y); y += 7;
-  if (formData.value.currentJob) {
-    doc.text(`Công việc hiện tại: ${formData.value.currentJob}`, 10, y); y += 7;
-  }
-  y += 5;
-
-  const addSection = (title, content) => {
-    if (y > 260) { doc.addPage(); y = 10; }
-    doc.setFontSize(14);
-    doc.text(title, 10, y);
-    y += 7;
-    doc.setFontSize(12);
-    const lines = doc.splitTextToSize(content, 180);
-    doc.text(lines, 10, y);
-    y += lines.length * 7 + 10;
-  };
-
-  addSection('Mục tiêu nghề nghiệp', result.value.careerGoals);
-  addSection('Đam mê và động lực', result.value.passionAndMotivation);
-  addSection('Phong cách làm việc', result.value.workStyle);
-  addSection('Con đường dài hạn', result.value.longTermPath);
-  if (formData.value.currentJob) {
-    addSection('Phân tích công việc hiện tại', result.value.currentJobAnalysis);
-  }
-
-  doc.setFontSize(14);
-  doc.text('Đề xuất nghề nghiệp:', 10, y); y += 7;
-  doc.setFontSize(12);
-  result.value.careerSuggestions.forEach(s => {
-    if (y > 260) { doc.addPage(); y = 10; }
-    const text = `${s.job}\nLý do phù hợp: ${s.reason}\nCơ hội hiện tại: ${s.opportunities}\nXu hướng tương lai: ${s.trends}`;
-    const lines = doc.splitTextToSize(text, 180);
-    doc.text(lines, 10, y);
-    y += lines.length * 7 + 5;
-  });
-
-  addSection('Lời khuyên thực tế', result.value.practicalAdvice);
-
-  doc.save(`career-guidance-${formData.value.name}.pdf`);
 };
 </script>
 

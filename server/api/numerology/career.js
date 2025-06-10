@@ -1,7 +1,8 @@
 import { defineEventHandler, createError } from 'h3';
 import NUMEROLOGY_MEANINGS, { NumerologyUtils } from '../utils/numerology-meanings.js';
 import dotenv from 'dotenv';
-dotenv.config(); // Tải biến môi trường từ .env
+dotenv.config();
+
 // Hàm tính số chủ đạo (Life Path Number)
 function getLifePathNumber(birthdate) {
   if (!/^\d{2}[\/-]\d{2}[\/-]\d{4}$/.test(birthdate)) {
@@ -43,16 +44,14 @@ function getDestinyNumber(name) {
   const sum = name.toLowerCase().split('').reduce((acc, char) => acc + (letterValues[char] || 0), 0);
   return NumerologyUtils.reduceToSingleDigit(sum) || 1;
 }
-console.log('Loaded GEMINI_API_KEY:', process.env.GEMINI_API_KEY ? '[HIDDEN]' : 'Not found');
-// Lấy API Key từ biến môi trường
-const apiKey = process.env.GEMINI_API_KEY||'AIzaSyBUmUduPG0zvD4URlJEmNnxDRsxMsTpaR8';
+
+const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyBUmUduPG0zvD4URlJEmNnxDRsxMsTpaR8';
 
 // Hàm gọi Gemini API
-async function getGeminiCareerGuidance(birthdate, name, currentJob) {
+async function getGeminiCareerGuidance(birthdate, name, currentJob, numSuggestions = 3, previousJobs = []) {
   const startTime = Date.now();
   console.log('Starting getGeminiCareerGuidance at:', new Date().toISOString());
-  console.log('API Key status:', apiKey ? '[HIDDEN]' : 'No API Key provided');
-  console.log('Input data:', { birthdate, name, currentJob });
+  console.log('Input data:', { birthdate, name, currentJob, numSuggestions, previousJobs });
 
   if (!apiKey) {
     throw new Error('Thiếu GEMINI_API_KEY trong cấu hình server');
@@ -76,58 +75,79 @@ async function getGeminiCareerGuidance(birthdate, name, currentJob) {
     soulNumber,
     personalityNumber,
     destinyNumber,
-    personalCycle,
-    lifePathTheme: lifePathData.theme,
-    soulDesire: soulData.desire,
-    personalityTheme: personalityData.theme,
-    destinyTheme: destinyData.theme
+    personalCycle
   });
 
+  // Tạo danh sách nghề nghiệp đã đề xuất trước đó
+  const previousJobsList = previousJobs.length > 0 ? previousJobs.join(', ') : 'không có';
+
   // Tạo prompt cho Gemini
-  const prompt = `Dựa trên thần số học với số chủ đạo ${dominantNumber} (${lifePathData.theme}), số linh hồn ${soulNumber} (${soulData.desire}), số nhân cách ${personalityNumber} (${personalityData.theme}), số định mệnh ${destinyNumber} (${destinyData.theme}), sinh ngày ${birthdate}, tên ${name}, công việc hiện tại "${currentJob || 'chưa có'}", chu kỳ cá nhân ${personalCycle}. Trả về JSON hợp lệ với các trường sau:
-    1. "careerGoals": Phân tích cách số chủ đạo ${dominantNumber} (${lifePathData.theme}) định hình mục tiêu nghề nghiệp, dựa trên ${lifePathData.strengths.join(', ')} (2-3 câu).
-    2. "passionAndMotivation": Phân tích số linh hồn ${soulNumber} (${soulData.desire}) thể hiện đam mê và động lực bên trong, dựa trên ${soulData.motivation} và ${soulData.fulfillment} (2-3 câu).
-    3. "workStyle": Phân tích số nhân cách ${personalityNumber} (${personalityData.theme}) ảnh hưởng đến phong cách làm việc, dựa trên ${personalityData.strengths.join(', ')} và ${personalityData.workStyle} (2-3 câu).
-    4. "longTermPath": Phân tích số định mệnh ${destinyNumber} (${destinyData.theme}) chỉ ra hướng đi sự nghiệp lâu dài, dựa trên ${destinyData.talents.join(', ')} (2-3 câu).
-    5. "currentJobAnalysis": Nếu có công việc hiện tại "${currentJob || 'chưa có'}", đánh giá mức độ phù hợp với ${lifePathData.theme}, ${soulData.desire}, ${personalityData.theme}, ${destinyData.theme}, cơ hội phát triển, gợi ý cải thiện hoặc chuyển hướng (3-4 câu); nếu không có, ghi "Hiện tại bạn chưa nhập công việc, định hướng sẽ dựa trên các số Thần số học" (1 câu).
-    6. "careerSuggestions": Mảng 3 nghề nghiệp cụ thể từ ${lifePathData.careers.join(', ')} và ${destinyData.careers.join(', ')} (ví dụ: {"job": "lập trình viên", "reason": "...", "opportunities": "...", "trends": "..."}), mỗi nghề phân tích chi tiết: lý do phù hợp với ${lifePathData.theme}, ${soulData.desire}, ${personalityData.theme}, ${destinyData.theme}, cơ hội hiện tại, xu hướng phát triển trong tương lai (bối cảnh 2025).
-    7. "practicalAdvice": Lời khuyên thực tế (2-3 câu) dựa trên chu kỳ cá nhân ${personalCycle} (${NUMEROLOGY_MEANINGS.personalYear[personalCycle].theme}) và ${NUMEROLOGY_MEANINGS.personalYear[personalCycle].advice}, kết hợp công việc hiện tại (nếu có), dùng "bạn" thay vì nhắc tên/ngày sinh.
-    Đảm bảo câu trả lời tập trung vào định hướng nghề nghiệp, sử dụng ngôn ngữ tự nhiên, dễ hiểu, không dùng Markdown trong JSON, chỉ trả về chuỗi JSON thuần túy!`;
+  const prompt = `Dựa trên thần số học với số chủ đạo ${dominantNumber}, số linh hồn ${soulNumber}, số nhân cách ${personalityNumber}, số định mệnh ${destinyNumber}, sinh ngày ${birthdate}, tên ${name}, công việc hiện tại "${currentJob || 'chưa có'}", chu kỳ cá nhân ${personalCycle}. Trả về JSON hợp lệ với các trường:
+    1. "careerGoals": Phân tích mục tiêu nghề nghiệp (2-3 câu).
+    2. "passionAndMotivation": Phân tích đam mê và động lực (2-3 câu).
+    3. "workStyle": Phân tích phong cách làm việc (2-3 câu).
+    4. "longTermPath": Phân tích hướng đi sự nghiệp dài hạn (2-3 câu).
+    5. "currentJobAnalysis": Đánh giá công việc hiện tại (3-4 câu nếu có, 1 câu nếu không).
+    6. "careerSuggestions": Mảng CHÍNH XÁC ${numSuggestions} nghề nghiệp KHÁC với [${previousJobsList}] (mỗi nghề có: {"job": "...", "reason": "...", "opportunities": "...", "trends": "..."}).
+    7. "practicalAdvice": Lời khuyên thực tế (2-3 câu).
+    Trả về JSON thuần túy, không dùng Markdown, đảm bảo đúng ${numSuggestions} nghề không trùng lặp.`;
 
   console.log('Sending request to Gemini API...');
 
   // Gọi Gemini API
-  const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
-      timeout: 10000 // Timeout 10 giây
-    }
-  );
+  let response;
+  try {
+    response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
+        timeout: 15000
+      }
+    );
+  } catch (error) {
+    console.error('Fetch error:', error);
+    throw new Error(`Lỗi khi gọi Gemini API: ${error.message}`);
+  }
 
-  console.log('Gemini API response status:', response.status, response.statusText);
-  console.log('Gemini call took:', `${Date.now() - startTime}ms`);
+  console.log('Gemini API response status:', response.status);
 
   if (!response.ok) {
     const errorText = await response.text();
-    console.error('Gemini API error details:', errorText);
-    throw new Error(`Gemini API failed: ${response.status} - ${response.statusText} - ${errorText}`);
+    console.error('Gemini API error:', errorText);
+    throw new Error(`Gemini API failed: ${response.status} - ${errorText}`);
   }
 
-  const data = await response.json();
-  const rawText = data.candidates[0].content.parts[0].text;
-  console.log('Raw response from Gemini:', rawText);
-
-  const parsedData = JSON.parse(rawText.replace(/```json|```/g, '').trim());
-  if (!parsedData || !parsedData.careerGoals || !parsedData.careerSuggestions) {
-    console.error('Invalid Gemini response structure:', parsedData);
-    throw new Error('Dữ liệu từ Gemini không đầy đủ hoặc không đúng định dạng');
+  let data;
+  try {
+    data = await response.json();
+  } catch (error) {
+    console.error('JSON parse error:', error);
+    throw new Error('Không thể phân tích phản hồi từ Gemini');
   }
 
-  console.log('Parsed data from Gemini:', parsedData);
-  console.log('Total processing time:', `${Date.now() - startTime}ms`);
+  const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!rawText) {
+    console.error('Invalid Gemini response:', data);
+    throw new Error('Phản hồi từ Gemini không hợp lệ');
+  }
+
+  let parsedData;
+  try {
+    parsedData = JSON.parse(rawText.replace(/```json|```/g, '').trim());
+  } catch (error) {
+    console.error('JSON parse error:', rawText);
+    throw new Error('Dữ liệu JSON từ Gemini không hợp lệ');
+  }
+
+  if (!parsedData.careerSuggestions || parsedData.careerSuggestions.length !== numSuggestions) {
+    console.error('Incorrect number of suggestions:', parsedData.careerSuggestions?.length || 0);
+    throw new Error(`Yêu cầu ${numSuggestions} nghề, nhận được ${parsedData.careerSuggestions?.length || 0}`);
+  }
+
+  console.log('Parsed data:', parsedData);
+  console.log('Processing time:', `${Date.now() - startTime}ms`);
   return parsedData;
 }
 
@@ -135,31 +155,35 @@ async function getGeminiCareerGuidance(birthdate, name, currentJob) {
 export default defineEventHandler(async (event) => {
   const startTime = Date.now();
   const username = event.node.req.headers['x-username'] || 'guest';
-  console.log('Request received from user:', username);
+  console.log('Request from user:', username);
 
   const body = await readBody(event);
-  const { name, birthdate, currentJob } = body || {};
-  console.log('Request body:', { name, birthdate, currentJob });
+  const { name, birthdate, currentJob, numSuggestions = 3, previousJobs = [] } = body || {};
+  console.log('Request body:', { name, birthdate, currentJob, numSuggestions, previousJobs });
 
   if (!name || !birthdate) {
-    console.error('Validation failed: Missing name or birthdate', { name, birthdate });
+    console.error('Missing name or birthdate');
     throw createError({
       statusCode: 400,
       statusMessage: 'Thiếu thông tin: name và birthdate là bắt buộc'
     });
   }
 
+  if (numSuggestions > 12 || numSuggestions % 3 !== 0) {
+    console.error('Invalid numSuggestions:', numSuggestions);
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Số lượng nghề nghiệp phải là bội số của 3 và không vượt quá 12'
+    });
+  }
+
   try {
-    const careerGuidance = await getGeminiCareerGuidance(birthdate, name, currentJob);
-    console.log('Final response being sent:', careerGuidance);
-    console.log('Total handler time:', `${Date.now() - startTime}ms`);
+    const careerGuidance = await getGeminiCareerGuidance(birthdate, name, currentJob, numSuggestions, previousJobs);
+    console.log('Response sent:', careerGuidance);
+    console.log('Handler time:', `${Date.now() - startTime}ms`);
     return careerGuidance;
   } catch (error) {
-    console.error('Handler error:', {
-      message: error.message,
-      stack: error.stack,
-      timeElapsed: `${Date.now() - startTime}ms`
-    });
+    console.error('Handler error:', error.message);
     throw createError({
       statusCode: error.message.includes('Gemini API failed') ? 502 : 500,
       statusMessage: `Lỗi xử lý yêu cầu: ${error.message}`
