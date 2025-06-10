@@ -11,7 +11,7 @@ import CompatibilityForm from '~/components/CompatibilityForm.vue';
 
 definePageMeta({
   layout: 'view',
-  middleware: ['auth']
+  // middleware: ['auth']
 });
 
 // Thiết lập SEO với useHead

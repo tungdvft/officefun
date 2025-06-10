@@ -257,7 +257,7 @@ import RadarChart from '~/components/RadarChart.vue';
 
 definePageMeta({
   layout: 'view',
-  middleware: ['auth']
+  // middleware: ['auth']
 });
 
 const store = useAssessmentStore();

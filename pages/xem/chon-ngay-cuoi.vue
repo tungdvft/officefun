@@ -10,8 +10,7 @@ import WeddingDate from '~/components/WeddingDate.vue';
 import { useHead } from '@unhead/vue';
 
 definePageMeta({
-  layout: 'view',
-  middleware: ['auth']
+  layout: 'view'
 });
 
 // Thiết lập SEO với useHead

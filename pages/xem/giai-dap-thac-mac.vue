@@ -11,7 +11,7 @@ import ConsultNumerology from '~/components/ConsultNumerology.vue';
 
 definePageMeta({
   layout: 'view',
-  middleware: ['auth']
+  // middleware: ['auth']
 });
 
 // Thiết lập SEO với useHead

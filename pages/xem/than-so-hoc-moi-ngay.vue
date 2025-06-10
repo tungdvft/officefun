@@ -10,7 +10,7 @@ import NumerologyRecommendation from '~/components/NumerologyRecommendation.vue'
 
 definePageMeta({
   layout: 'view',
-  middleware: ['auth']
+  // middleware: ['auth']
 });
 
 // Thiết lập SEO với useHead

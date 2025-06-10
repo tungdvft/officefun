@@ -10,7 +10,7 @@ import NumerologyBrandName from '~/components/NumerologyBrandName.vue';
 
 definePageMeta({
   layout: 'view',
-  middleware: ['auth']
+  // middleware: ['auth']
 });
 
 // Thiết lập SEO với useHead
