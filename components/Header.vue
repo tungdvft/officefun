@@ -245,7 +245,7 @@ const navItems = [
   { name: 'Trang Chủ', path: '/' },
   {
     name: 'Trắc nghiệm',
-    path: '/',
+    path: '/#',
     submenu: [
       { name: 'Trắc nghiệm DISC', path: '/disc' },
       { name: 'Trắc nghiệm MBTI', path: '/mbti' }
