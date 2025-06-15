@@ -52,8 +52,8 @@
                 <div class="mt-4">
                   <h6 class="font-semibold text-blue-700">Lời khuyên</h6>
                   <ul class="list-disc pl-5 text-gray-700">
-                    <li v-for="(advice, index) in numerologyData.cycles[selectedYear].advice" :key="index">{{ advice }}</li>
-                  </ul>
+                      <li v-for="(advice, index) in numerologyData.cycles[selectedYear].advice" :key="index">{{ advice }}</li>
+                    </ul>
                 </div>
               </div>
             </div>
@@ -191,30 +191,14 @@
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
 import Chart from 'chart.js/auto';
 import { nextTick } from 'vue';
-
-// Đảm bảo plugin annotation được tải
 import 'chartjs-plugin-annotation';
 
-// Bảng ánh xạ số năm cá nhân sang mức năng lượng
 const energyLevelMap = {
-  1: 7,  // Khởi đầu
-  2: 4,  // Hợp tác
-  3: 6,  // Sáng tạo
-  4: 5,  // Ổn định
-  5: 8,  // Thay đổi
-  6: 5,  // Gia đình
-  7: 7,  // Nội tâm
-  8: 9,  // Thành công
-  9: 4,  // Hoàn thiện
-  11: 8, // Trực giác (Master)
-  22: 10 // Vượt trội (Master)
+  1: 7, 2: 4, 3: 6, 4: 5, 5: 8, 6: 5, 7: 7, 8: 9, 9: 4, 11: 8, 22: 10
 };
 
 const props = defineProps({
-  birthDate: {
-    type: String,
-    default: ''
-  }
+  birthDate: { type: String, default: '' }
 });
 
 const numerologyData = ref(null);
@@ -226,21 +210,18 @@ const expandedYears = ref([]);
 const isMobile = ref(window.innerWidth < 640);
 let chartInstance = null;
 
-// Xử lý resize để cập nhật isMobile
 const handleResize = () => {
   isMobile.value = window.innerWidth < 640;
 };
 
-// Toggle trạng thái accordion
 const toggleYear = (year) => {
   if (expandedYears.value.includes(year)) {
     expandedYears.value = expandedYears.value.filter(y => y !== year);
   } else {
-    expandedYears.value = [year]; // Chỉ mở một năm tại một thời điểm
+    expandedYears.value = [year];
   }
 };
 
-// Giảm số về một chữ số, giữ Master Numbers
 const reduceToSingleDigit = (num) => {
   if (num === 11 || num === 22) return num;
   while (num > 9) {
@@ -249,17 +230,17 @@ const reduceToSingleDigit = (num) => {
   return num || 9;
 };
 
-// Tính năm cá nhân
 const calculatePersonalYear = (day, month, targetYear) => {
   const dayMonthSum = reduceToSingleDigit(day + month);
   const yearSum = reduceToSingleDigit(targetYear);
   return reduceToSingleDigit(dayMonthSum + yearSum);
 };
 
-// Sắp xếp chu kỳ theo năm
 const sortedCycles = computed(() => {
   if (!numerologyData.value?.cycles) return {};
+  const currentYear = new Date().getFullYear();
   return Object.entries(numerologyData.value.cycles)
+    .filter(([year]) => Number(year) >= currentYear) // Chỉ lấy từ năm hiện tại trở đi
     .sort(([yearA], [yearB]) => Number(yearA) - Number(yearB))
     .reduce((acc, [year, data]) => {
       acc[year] = data;
@@ -267,43 +248,27 @@ const sortedCycles = computed(() => {
     }, {});
 });
 
-// Class màu sắc cho số
 const getNumberClass = (number) => {
   const classes = {
-    1: 'bg-purple-100 text-purple-800',
-    2: 'bg-blue-100 text-blue-800',
-    3: 'bg-green-100 text-green-800',
-    4: 'bg-yellow-100 text-yellow-800',
-    5: 'bg-red-100 text-red-800',
-    6: 'bg-pink-100 text-pink-800',
-    7: 'bg-indigo-100 text-indigo-800',
-    8: 'bg-teal-100 text-teal-800',
-    9: 'bg-orange-100 text-orange-800',
-    11: 'bg-cyan-100 text-cyan-800',
+    1: 'bg-purple-100 text-purple-800', 2: 'bg-blue-100 text-blue-800',
+    3: 'bg-green-100 text-green-800', 4: 'bg-yellow-100 text-yellow-800',
+    5: 'bg-red-100 text-red-800', 6: 'bg-pink-100 text-pink-800',
+    7: 'bg-indigo-100 text-indigo-800', 8: 'bg-teal-100 text-teal-800',
+    9: 'bg-orange-100 text-orange-800', 11: 'bg-cyan-100 text-cyan-800',
     22: 'bg-amber-100 text-amber-800'
   };
   return classes[number] || 'bg-gray-100 text-gray-800';
 };
 
-// Màu sắc cho điểm trên biểu đồ
 const getPointColor = (number) => {
   const colors = {
-    1: '#8b5cf6', // purple-500
-    2: '#3b82f6', // blue-500
-    3: '#10b981', // green-500
-    4: '#f59e0b', // yellow-500
-    5: '#ef4444', // red-500
-    6: '#ec4899', // pink-500
-    7: '#6366f1', // indigo-500
-    8: '#0d9488', // teal-500
-    9: '#f97316', // orange-500
-    11: '#06b6d4', // cyan-500
-    22: '#f59e0b' // amber-500
+    1: '#8b5cf6', 2: '#3b82f6', 3: '#10b981', 4: '#f59e0b', 5: '#ef4444',
+    6: '#ec4899', 7: '#6366f1', 8: '#0d9488', 9: '#f97316', 11: '#06b6d4',
+    22: '#f59e0b'
   };
-  return colors[number] || '#6b7280'; // gray-500
+  return colors[number] || '#6b7280';
 };
 
-// Tạo biểu đồ
 const createCycleChart = () => {
   if (!cycleChart.value || !numerologyData.value?.cycles) return;
   if (chartInstance) chartInstance.destroy();
@@ -461,20 +426,18 @@ const createCycleChart = () => {
   });
 };
 
-// Gọi API lấy dữ liệu
 const fetchNumerologyData = async () => {
   if (!props.birthDate || !/^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) return;
   loading.value = true;
   numerologyData.value = null;
 
   try {
-    // Giả lập API
     await new Promise(resolve => setTimeout(resolve, 800));
     const [day, month] = props.birthDate.split('/').map(Number);
     const currentYear = new Date().getFullYear();
     const cycles = {};
 
-    for (let i = -3; i <= 12; i++) {
+    for (let i = 0; i <= 12; i++) { // Chỉ lấy từ năm hiện tại (i=0) trở đi
       const year = currentYear + i;
       const number = calculatePersonalYear(day, month, year);
       const energyLevel = energyLevelMap[number] || 5;
@@ -489,7 +452,6 @@ const fetchNumerologyData = async () => {
   }
 };
 
-// Tạo dữ liệu mẫu cho năm
 const generateYearData = (year, number, energyLevel) => {
   const descriptions = {
     1: `Năm ${year} mang năng lượng khởi đầu mạnh mẽ, lý tưởng để bắt đầu dự án mới.`,
@@ -557,7 +519,6 @@ const generateYearData = (year, number, energyLevel) => {
   };
 };
 
-// Lifecycle hooks
 onMounted(() => {
   window.addEventListener('resize', handleResize);
   fetchNumerologyData();
@@ -568,10 +529,8 @@ onUnmounted(() => {
   if (chartInstance) chartInstance.destroy();
 });
 
-// Theo dõi birthDate
 watch(() => props.birthDate, fetchNumerologyData);
 
-// Theo dõi numerologyData để vẽ biểu đồ
 watch(numerologyData, () => {
   if (numerologyData.value?.cycles) {
     nextTick(createCycleChart);
