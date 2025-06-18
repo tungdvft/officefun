@@ -68,7 +68,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // 5. Xác định giá trị tokens mới
-    const newTokens = body.tokens !== undefined && body.tokens !== null ? body.tokens : (currentUser.tokens !== null ? currentUser.tokens : 100);
+    const newTokens = body.tokens !== undefined && body.tokens !== null ? body.tokens : (currentUser.tokens !== null ? currentUser.tokens : 200);
 
     // 6. Cập nhật thông tin người dùng
     const updateResult = await db.query(
@@ -98,7 +98,7 @@ export default defineEventHandler(async (event) => {
         'INSERT INTO token_transactions (user_id, amount, description) VALUES (?, ?, ?)',
         [userId, tokenDifference, 'Cập nhật tokens qua API']
       );
-    } else if (currentUser.tokens === null && newTokens !== 100) {
+    } else if (currentUser.tokens === null && newTokens !== 200) {
       await db.query(
         'INSERT INTO token_transactions (user_id, amount, description) VALUES (?, ?, ?)',
         [userId, newTokens, 'Khởi tạo tokens']

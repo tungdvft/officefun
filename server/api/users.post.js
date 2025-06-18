@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
     console.log(result);
     await db.query(
       'INSERT INTO token_transactions (user_id, amount, description) VALUES ($1, $2, $3)',
-      [result.rows[0].id, 100, 'Khởi tạo tokens cho tài khoản mới']
+      [result.rows[0].id, 200, 'Khởi tạo tokens cho tài khoản mới']
     );
 
     console.log('Hoàn tất giao dịch');

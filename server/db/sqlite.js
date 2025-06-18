@@ -81,7 +81,7 @@ U9jkzg==
   gender TEXT CHECK(gender IN ('male', 'female', 'other')),
   password TEXT,
   avatar TEXT,
-  tokens INTEGER DEFAULT 100,
+  tokens INTEGER DEFAULT 200,
   is_google_account BOOLEAN DEFAULT FALSE,
   google_id TEXT,
   email_verified BOOLEAN DEFAULT FALSE,

@@ -41,7 +41,7 @@
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Ngày Sinh</label>
               <div class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50">
-                {{ userData.birthdate || 'Chưa cập nhật' }}
+                {{ formatDate(userData.birthdate) || 'Chưa cập nhật' }}
               </div>
             </div>
             <div>
@@ -85,6 +85,17 @@ const router = useRouter()
 const userData = ref(null)
 const isLoggingOut = ref(false)
 const error = ref(null)
+
+// Hàm định dạng ngày sinh
+const formatDate = (dateString) => {
+  if (!dateString) return null;
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return null; // Kiểm tra ngày không hợp lệ
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
 
 // Kiểm tra trạng thái đăng nhập và lấy thông tin người dùng
 const fetchUserData = async () => {
