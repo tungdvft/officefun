@@ -17,6 +17,9 @@ export default defineEventHandler(async (event) => {
   const userId = event.context.params?.id;
   const body = await readBody(event);
 
+  // Log body để debug
+  console.log('Request body:', body);
+
   // 1. Kiểm tra userId
   if (!userId || isNaN(parseInt(userId))) {
     throw createError({
@@ -26,10 +29,10 @@ export default defineEventHandler(async (event) => {
   }
 
   // 2. Kiểm tra dữ liệu đầu vào
-  if (!isValidFullname(body.fullname)) {
+  if (!body.fullname || !isValidFullname(body.fullname)) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Họ tên không hợp lệ. Phải là chuỗi, không quá 100 ký tự, và chỉ chứa chữ cái và khoảng trắng.',
+      statusMessage: `Họ tên không hợp lệ. Nhận được: "${body.fullname}". Phải là chuỗi, không quá 100 ký tự, và chỉ chứa chữ cái và khoảng trắng.`,
     });
   }
 
@@ -40,23 +43,21 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  if (body.tokens !== undefined && body.tokens !== null) {
-    const tokens = parseInt(body.tokens, 10);
-    if (isNaN(tokens) || tokens < 0) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: 'Tokens phải là số nguyên không âm.',
-      });
-    }
-    body.tokens = tokens;
+  if (body.tokens === undefined || body.tokens === null || isNaN(parseInt(body.tokens)) || parseInt(body.tokens) < 0) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Tokens phải là số nguyên không âm.',
+    });
   }
+  const newTokens = parseInt(body.tokens);
 
   try {
     // 3. Bắt đầu giao dịch
     await db.query('BEGIN');
 
     // 4. Kiểm tra người dùng tồn tại và lấy tokens hiện tại
-    const currentUser = await db.query('SELECT tokens FROM users WHERE id = $1', [userId]).then(res => res.rows[0]);
+    const currentUserResult = await db.query('SELECT tokens FROM users WHERE id = $1', [userId]);
+    const currentUser = currentUserResult.rows[0];
     if (!currentUser) {
       await db.query('ROLLBACK').catch((rollbackError) => {
         console.error('Rollback failed:', rollbackError);
@@ -67,10 +68,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // 5. Xác định giá trị tokens mới
-    const newTokens = body.tokens !== undefined && body.tokens !== null ? body.tokens : (currentUser.tokens !== null ? currentUser.tokens : 200);
-
-    // 6. Cập nhật thông tin người dùng
+    // 5. Cập nhật thông tin người dùng
     const updateResult = await db.query(
       `UPDATE users SET 
         fullname = $1, 
@@ -81,7 +79,7 @@ export default defineEventHandler(async (event) => {
       [body.fullname, body.birthdate, newTokens, userId]
     );
 
-    if (updateResult.changes === 0) {
+    if (updateResult.rowCount === 0) {
       await db.query('ROLLBACK').catch((rollbackError) => {
         console.error('Rollback failed:', rollbackError);
       });
@@ -91,25 +89,23 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // 7. Ghi giao dịch token nếu tokens thay đổi
-    if (newTokens !== currentUser.tokens && currentUser.tokens !== null) {
-      const tokenDifference = newTokens - currentUser.tokens;
+    // 6. Ghi giao dịch token nếu tokens thay đổi
+    const currentTokens = currentUser.tokens !== null ? currentUser.tokens : 200;
+    if (newTokens !== currentTokens) {
+      const tokenDifference = newTokens - currentTokens;
+      console.log('Recording token transaction:', { userId, tokenDifference, description: 'Cập nhật tokens qua API' });
       await db.query(
-        'INSERT INTO token_transactions (user_id, amount, description) VALUES (?, ?, ?)',
-        [userId, tokenDifference, 'Cập nhật tokens qua API']
-      );
-    } else if (currentUser.tokens === null && newTokens !== 200) {
-      await db.query(
-        'INSERT INTO token_transactions (user_id, amount, description) VALUES (?, ?, ?)',
-        [userId, newTokens, 'Khởi tạo tokens']
+        'INSERT INTO token_transactions (user_id, amount, description) VALUES ($1, $2, $3)',
+        [parseInt(userId), tokenDifference, 'Cập nhật tokens qua API']
       );
     }
 
-    // 8. Lấy thông tin người dùng đã cập nhật
-    const user = await db.query(
+    // 7. Lấy thông tin người dùng đã cập nhật
+    const userResult = await db.query(
       'SELECT id, email, fullname, birthdate, tokens, created_at, updated_at FROM users WHERE id = $1',
       [userId]
-    ).then(res => res.rows[0]);
+    );
+    const user = userResult.rows[0];
 
     if (!user) {
       await db.query('ROLLBACK').catch((rollbackError) => {
@@ -121,7 +117,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // 9. Hoàn tất giao dịch
+    // 8. Hoàn tất giao dịch
     await db.query('COMMIT');
 
     return {
@@ -129,8 +125,8 @@ export default defineEventHandler(async (event) => {
       user,
     };
   } catch (error) {
-    // 10. Hoàn tác nếu có lỗi
-    await db.queryXR('ROLLBACK').catch((rollbackError) => {
+    // 9. Hoàn tác nếu có lỗi
+    await db.query('ROLLBACK').catch((rollbackError) => {
       console.error('Rollback failed:', rollbackError);
     });
     console.error('API Error:', {

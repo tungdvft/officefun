@@ -346,7 +346,6 @@ const showMoreSuggestions = async () => {
   loadingMore.value = true;
   try {
     const excludeNames = numerologyData.value.suggestions.map(s => s.name);
-    console.log('Fetching more suggestions, excluding:', excludeNames);
     const response = await $fetch('/api/numerology/nickname', {
       method: 'POST',
       body: {

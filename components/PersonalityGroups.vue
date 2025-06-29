@@ -1,14 +1,16 @@
+
 <template>
   <div class="mb-10 p-6 bg-white rounded-xl shadow-md">
-    
-      <div class="text-center mb-8">
-          <h2 class="text-4xl font-bold text-teal-700 mb-3">Nhóm tính cách theo bản ngã </h2>
-          <div class="w-24 h-1 bg-teal-500 mx-auto mb-4 rounded-full"></div>
-          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-            Nhận diện nhóm tính cách đặc trưng qua Thần số học
-          </p>
-        </div>
-  
+    <div class="text-center mb-8">
+      <h2 class="text-4xl font-bold text-teal-700 mb-3">Nhóm tính cách theo bản ngã</h2>
+      <div class="w-24 h-1 bg-teal-500 mx-auto mb-4 rounded-full"></div>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Nhận diện nhóm tính cách đặc trưng qua Thần số học
+      </p>
+      <p class="text-base text-gray-600 max-w-2xl mx-auto mt-2">
+        Dựa trên số đường đời, Thần số học phân tích bản ngã để xác định các nhóm tính cách nổi bật, giúp bạn hiểu rõ điểm mạnh và điểm yếu của mình.
+      </p>
+    </div>
 
     <div v-if="error" class="mt-4 p-4 bg-red-50 rounded-lg border border-red-200">
       <div class="flex items-center text-red-600">
@@ -29,42 +31,55 @@
     </div>
 
     <div v-else class="mt-6 space-y-5">
-      <div 
-        v-for="(group, index) in sortedGroups" 
-        :key="group.group"
-        class="group transition-all duration-200 hover:shadow-sm"
-      >
-        <div class="flex items-center justify-between mb-1">
-          <h4 class="font-medium text-gray-800">
-            <span class="inline-block w-6 h-6 rounded-full mr-2 text-white text-sm flex items-center justify-center"
-                  :class="personalityBadgeColors[index]">
-              {{ index + 1 }}
-            </span>
-            {{ group.group }}
-            <span class="text-xs font-normal text-gray-500 ml-2">({{ group.traits }})</span>
-          </h4>
-          <span class="font-medium" :class="percentageColor(group.percentage)">
-            {{ group.percentage }}%
-          </span>
-        </div>
-        
-        <div class="w-full bg-gray-200 rounded-full h-2.5">
+      <transition name="fade-slide">
+        <div v-if="isContentAccessible">
           <div 
-            class="h-2.5 rounded-full transition-all duration-500 ease-out" 
-            :class="personalityBarColors[index]"
-            :style="{ width: `${group.percentage}%` }"
-          ></div>
+            v-for="(group, index) in sortedGroups" 
+            :key="group.group"
+            class="group transition-all duration-200 hover:shadow-sm"
+          >
+            <div class="flex items-center justify-between mb-1">
+              <h4 class="font-medium text-gray-800">
+                <span class="inline-block w-6 h-6 rounded-full mr-2 text-white text-sm flex items-center justify-center"
+                      :class="personalityBadgeColors[index]">
+                  {{ index + 1 }}
+                </span>
+                {{ group.group }}
+                <span class="text-xs font-normal text-gray-500 ml-2">({{ group.traits }})</span>
+              </h4>
+              <span class="font-medium" :class="percentageColor(group.percentage)">
+                {{ group.percentage }}%
+              </span>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+              <div 
+                class="h-2.5 rounded-full transition-all duration-500 ease-out" 
+                :class="personalityBarColors[index]"
+                :style="{ width: `${group.percentage}%` }"
+              ></div>
+            </div>
+          </div>
         </div>
-
-      </div>
+        <div v-else-if="!isContentAccessible" class="text-center p-6">
+          <button
+            @click="handleAction"
+            class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
+            :disabled="isLoading"
+          >
+            {{ isLoggedIn ? `Xem tiếp (Cần ${tokenCost} tokens)` : 'Đăng nhập để xem tiếp' }}
+          </button>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { calculateLifePathNumber } from '~/utils/numerology-calculations';
 import lifePathData from '~/data/lifePathData.json';
+import { useProtectedContent } from '~/composables/useProtectedContent';
 
 const props = defineProps({
   birthDate: {
@@ -75,6 +90,11 @@ const props = defineProps({
 
 const personalityGroups = ref(null);
 const error = ref('');
+const tokenCost = ref(5);
+const description = 'Access to personality groups analysis';
+const { isLoading, isContentAccessible, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
+const isLoggedIn = ref(false);
+let handleAction = () => {};
 
 // Màu sắc cho thanh tiến trình
 const personalityBarColors = [
@@ -117,6 +137,12 @@ const percentageColor = (percent) => {
   return 'text-purple-600';
 };
 
+const initializeAuth = async () => {
+  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
+  isLoggedIn.value = authStatus;
+  handleAction = action;
+};
+
 watch(() => props.birthDate, (newDate) => {
   error.value = '';
   personalityGroups.value = null;
@@ -151,11 +177,25 @@ watch(() => props.birthDate, (newDate) => {
     console.error('Lỗi PersonalityGroups:', e);
   }
 }, { immediate: true });
+
+onMounted(() => {
+  initializeAuth();
+});
 </script>
 
 <style scoped>
 /* Thêm hiệu ứng mượt mà cho thanh progress */
 .bg-gradient-to-r {
   transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all 0.3s ease;
+}
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
 }
 </style>

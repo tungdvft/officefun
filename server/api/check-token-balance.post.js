@@ -4,39 +4,27 @@ import { createError } from 'h3';
 export default defineEventHandler(async (event) => {
   const db = await setupDatabase();
   const body = await readBody(event);
-  let { userId } = body;
+  let { userId, tokenCost = 10 } = body; // Mặc định tokenCost là 10
 
   // Ép kiểu userId sang số
   userId = Number(userId);
-  if (isNaN(userId) || userId <= 0) {
-    console.error('Invalid userId:', body.userId);
+  tokenCost = Number(tokenCost);
+  if (isNaN(userId) || userId <= 0 || isNaN(tokenCost) || tokenCost <= 0) {
+    console.error('Invalid input:', { userId: body.userId, tokenCost: body.tokenCost });
     throw createError({
       statusCode: 400,
-      statusMessage: 'Thiếu hoặc sai userId (phải là số nguyên dương)',
+      statusMessage: 'Thiếu hoặc sai userId/tokenCost (phải là số nguyên dương)',
     });
   }
 
   try {
-    console.log('Checking token balance for userId:', userId);
-
-    // Kiểm tra bảng users
-    const tableExists = await db.query(
-      "SELECT name FROM sqlite_master WHERE type='table' AND name='users'"
-    ).then(res => res.length > 0);
-    if (!tableExists) {
-      console.error('Table users does not exist');
-      throw createError({
-        statusCode: 500,
-        statusMessage: 'Bảng users không tồn tại trong cơ sở dữ liệu',
-      });
-    }
+    console.log('Checking token balance for userId:', userId, 'with tokenCost:', tokenCost);
 
     // Kiểm tra người dùng
     const user = await db.query('SELECT tokens FROM users WHERE id = $1', [userId]).then(res => res.rows[0]);
     if (!user) {
       console.error('User not found for userId:', userId);
-      // Log tất cả user IDs hiện có để debug
-      const users = await db.all('SELECT id FROM users');
+      const users = await db.query('SELECT id FROM users').then(res => res.rows);
       console.log('Available user IDs:', users.map(u => u.id));
       throw createError({
         statusCode: 404,
@@ -44,12 +32,13 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const sufficient = user.tokens >= 10;
+    const sufficient = user.tokens >= tokenCost;
 
     return {
-      status: 'success',
+      success: true,
       sufficient,
-      tokens: user.tokens,
+      remainingTokens: user.tokens,
+      message: sufficient ? `Người dùng có đủ ${tokenCost} token` : `Không đủ token, hiện có ${user.tokens} token`
     };
   } catch (error) {
     console.error('Lỗi kiểm tra số dư token:', {

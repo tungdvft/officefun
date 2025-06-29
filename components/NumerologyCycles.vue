@@ -18,80 +18,93 @@
       </div>
     </div>
 
-    <div v-if="lifePathCycles" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div 
-        v-for="(cycle, index) in lifePathCycles" 
-        :key="cycle.cycle"
-        class="border rounded-xl overflow-hidden transition-all duration-300 hover:shadow-md hover:border-indigo-200"
-        :class="cycleCardClasses[index]"
-      >
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-3">
-            <h3 class="text-lg font-bold" :class="cycleTextColors[index]">
-              {{ cycle.cycle }}
-            </h3>
-            <span class="text-xs font-semibold px-2 py-1 rounded-full" :class="cycleBadgeClasses[index]">
-              Số {{ cycle.number }}
-            </span>
-          </div>
-          
-          <div class="flex items-center text-sm text-gray-500 mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            <span>{{ cycle.ageRange }} ({{ cycle.yearRange }})</span>
-          </div>
-
-          <div class="space-y-4">
-            <div>
-              <h4 class="text-sm font-semibold text-gray-700 mb-1 flex items-center">
+    <div v-else-if="lifePathCycles" class="mt-6">
+      <transition name="fade-slide">
+        <div v-if="isContentAccessible" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div 
+            v-for="(cycle, index) in lifePathCycles" 
+            :key="cycle.cycle"
+            class="border rounded-xl overflow-hidden transition-all duration-300 hover:shadow-md hover:border-indigo-200"
+            :class="cycleCardClasses[index]"
+          >
+            <div class="p-5">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-lg font-bold" :class="cycleTextColors[index]">
+                  {{ cycle.cycle }}
+                </h3>
+                <span class="text-xs font-semibold px-2 py-1 rounded-full" :class="cycleBadgeClasses[index]">
+                  Số {{ cycle.number }}
+                </span>
+              </div>
+              
+              <div class="flex items-center text-sm text-gray-500 mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                Ý nghĩa
-              </h4>
-              <p class="text-gray-600 text-sm">{{ cycle.description.meaning || 'Không có dữ liệu ý nghĩa.' }}</p>
+                <span>{{ cycle.ageRange }} ({{ cycle.yearRange }})</span>
+              </div>
+
+              <div class="space-y-4">
+                <div>
+                  <h4 class="text-sm font-semibold text-gray-700 mb-1 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Ý nghĩa
+                  </h4>
+                  <p class="text-gray-600 text-sm">{{ cycle.description.meaning || 'Không có dữ liệu.' }}</p>
+                </div>
+
+                <div>
+                  <h4 class="text-sm font-semibold text-gray-700 mb-1 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    Hướng dẫn
+                  </h4>
+                  <p class="text-gray-600 text-sm">{{ cycle.description.advice || 'Không có dữ liệu.' }}</p>
+                </div>
+
+                <div>
+                  <h4 class="text-sm font-semibold text-gray-700 mb-1 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                    Tác động chính
+                  </h4>
+                  <ul class="text-gray-600 text-sm space-y-1 pl-5">
+                    <li v-for="(impact, i) in (cycle.description.impact?.split('\n') || ['Không có dữ liệu.'])" 
+                        :key="i" class="relative pl-3">
+                      <span class="absolute left-0 top-2 w-1.5 h-1.5 rounded-full" :class="cycleDotColors[index]"></span>
+                      {{ impact }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
 
-            <div>
-              <h4 class="text-sm font-semibold text-gray-700 mb-1 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                </svg>
-                Hướng dẫn
-              </h4>
-              <p class="text-gray-600 text-sm">{{ cycle.description.advice || 'Không có dữ liệu hướng dẫn.' }}</p>
-            </div>
-
-            <div>
-              <h4 class="text-sm font-semibold text-gray-700 mb-1 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                </svg>
-                Tác động chính
-              </h4>
-              <ul class="text-gray-600 text-sm space-y-1 pl-5">
-                <li v-for="(impact, i) in (cycle.description.impact?.split('\n') || ['Không có dữ liệu tác động.'])" 
-                    :key="i" class="relative pl-3">
-                  <span class="absolute left-0 top-2 w-1.5 h-1.5 rounded-full" :class="cycleDotColors[index]"></span>
-                  {{ impact }}
-                </li>
-              </ul>
+            <div class="px-5 py-3 border-t" :class="cycleFooterClasses[index]">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-medium" :class="cycleTextColors[index]">Giai đoạn quan trọng</span>
+                <span class="font-semibold">{{ cycle.percentage }}% ảnh hưởng</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-1.5 mt-2">
+                <div class="h-1.5 rounded-full" :class="cycleBarColors[index]" 
+                     :style="{ width: `${cycle.percentage}%` }"></div>
+              </div>
             </div>
           </div>
         </div>
-
-        <div class="px-5 py-3 border-t" :class="cycleFooterClasses[index]">
-          <div class="flex items-center justify-between text-xs">
-            <span class="font-medium" :class="cycleTextColors[index]">Giai đoạn quan trọng</span>
-            <span class="font-semibold">{{ cycle.percentage }}% ảnh hưởng</span>
-          </div>
-          <div class="w-full bg-gray-200 rounded-full h-1.5 mt-2">
-            <div class="h-1.5 rounded-full" :class="cycleBarColors[index]" 
-                 :style="{ width: `${cycle.percentage}%` }"></div>
-          </div>
+        <div v-else-if="!isContentAccessible" class="text-center p-6">
+          <button
+            @click="handleAction"
+            class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
+            :disabled="isLoading"
+          >
+            {{ isLoggedIn ? `Xem tiếp (Cần ${tokenCost} tokens)` : 'Đăng nhập để xem tiếp' }}
+          </button>
         </div>
-      </div>
+      </transition>
     </div>
 
     <div v-else-if="!error" class="text-center py-8">
@@ -106,9 +119,10 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { NumerologyUtils } from '~/utils/numerology-calculations';
 import cycleDescriptions from '~/data/cycleDescriptions.json';
+import { useProtectedContent } from '~/composables/useProtectedContent';
 
 const props = defineProps({
   birthDate: String
@@ -116,6 +130,11 @@ const props = defineProps({
 
 const lifePathCycles = ref(null);
 const error = ref('');
+const tokenCost = ref(5);
+const description = 'Access to life path cycles analysis';
+const { isLoading, isContentAccessible, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
+const isLoggedIn = ref(false);
+let handleAction = () => {};
 
 // Màu sắc và style cho từng chu kỳ
 const cycleCardClasses = [
@@ -153,6 +172,12 @@ const cycleFooterClasses = [
   'border-lime-200 bg-lime-100',
   'border-amber-200 bg-amber-100'
 ];
+
+const initializeAuth = async () => {
+  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
+  isLoggedIn.value = authStatus;
+  handleAction = action;
+};
 
 watch(() => props.birthDate, (newDate) => {
   error.value = '';
@@ -203,6 +228,10 @@ watch(() => props.birthDate, (newDate) => {
     console.error('Lỗi LifePathCycles:', e);
   }
 }, { immediate: true });
+
+onMounted(() => {
+  initializeAuth();
+});
 </script>
 
 <style scoped>
@@ -212,5 +241,15 @@ watch(() => props.birthDate, (newDate) => {
 }
 .hover\:shadow-md:hover {
   transform: translateY(-2px);
+}
+
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all 0.3s ease;
+}
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
 }
 </style>
