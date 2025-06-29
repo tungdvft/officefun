@@ -17,7 +17,6 @@ export async function setupDatabase() {
 
   try {
     // Mở kết nối đến cơ sở dữ liệu SQLite
-    console.log('Connecting to PostgreSQL database...');
     const caCert = `
 -----BEGIN CERTIFICATE-----
 MIIEUDCCArigAwIBAgIUXdgjbRRT6Fm0TIGzMFBLbnmD9JwwDQYJKoZIhvcNAQEM
@@ -59,7 +58,7 @@ U9jkzg==
                                }     
                           });
     await db.connect()
-    .then(() => console.log('Connected to PostgreSQL!'))
+    .then(() => {})
     .catch(err => console.error('Connection error', err.stack));
     // const db = await open({
     //   filename: './database.db',
@@ -146,7 +145,7 @@ async function safeMigration(db) {
     await db.query(`
       ALTER TABLE users ADD COLUMN google_id TEXT
     `).catch(() => {
-      console.log('Cột google_id đã tồn tại, bỏ qua ALTER TABLE');
+      // console.log('Cột google_id đã tồn tại, bỏ qua ALTER TABLE');
     });
 
     // Bước 2: Cập nhật google_id cho các tài khoản Google hiện có

@@ -18,7 +18,6 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    console.log('Checking token balance for userId:', userId, 'with tokenCost:', tokenCost);
 
     // Kiểm tra người dùng
     const user = await db.query('SELECT tokens FROM users WHERE id = $1', [userId]).then(res => res.rows[0]);
