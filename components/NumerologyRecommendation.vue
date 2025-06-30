@@ -56,7 +56,7 @@
         </div>
 
         <!-- Input Form for Preferences/Plans -->
-        <form @submit.prevent="getRecommendations" class="space-y-6">
+        <form @submit.prevent="handleSubmit" class="space-y-6">
           <div v-if="activeTab === 'Đồ ăn'">
             <label for="foodPreferences" class="block text-sm font-medium text-gray-700 mb-3">Món ăn yêu thích (phân cách bằng , nếu không có bỏ trống)</label>
             <input
@@ -94,18 +94,20 @@
           <div class="flex flex-col items-center">
             <button
               type="submit"
-              :disabled="loading"
+              :disabled="isLoading || !hasSufficientTokens"
               class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
             >
-              <span v-if="loading">Đang xử lý...</span>
-              <span v-else>Xem gợi ý</span>
+              <span v-if="isLoading">Đang xử lý...</span>
+              <span v-else>{{ isLoggedIn ? `Xem gợi ý (Cần ${tokenCost} tokens)` : 'Đăng nhập để xem gợi ý' }}</span>
             </button>
           </div>
         </form>
 
-        <!-- Error Message -->
-        <div v-if="error" class="mt-6 p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
-          {{ error }}
+        <!-- Error Messages -->
+        <div v-if="error || errorMessage" class="mt-6 p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
+          <p v-if="error">{{ error }}</p>
+          <p v-if="errorMessage">{{ errorMessage }}</p>
+          <p v-if="hasSufficientTokens === false" class="text-sm mt-1">Bạn không có đủ token. Vui lòng nạp thêm.</p>
         </div>
 
         <!-- Results Section -->
@@ -242,6 +244,7 @@
 <script setup>
 import { ref, onBeforeMount, watch } from 'vue';
 import { useUserStore } from '@/stores/user';
+import { useProtectedContent } from '~/composables/useProtectedContent';
 
 // Lấy thông tin người dùng từ userStore
 const userStore = useUserStore();
@@ -380,6 +383,36 @@ const error = ref(null);
 const activeTab = ref(savedData.activeTab);
 const tabs = ['Insight hôm nay', 'Đồ ăn', 'Đồ uống'];
 const currentDate = ref(getCurrentDate());
+
+// Khởi tạo useProtectedContent
+const tokenCost = ref(10);
+const description = 'Access to daily numerology recommendations';
+const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
+const isLoggedIn = ref(false);
+let handleAction = () => {};
+const isInitialLoad = ref(true);
+
+// Khởi tạo trạng thái đăng nhập và hành động
+const initializeAuth = async () => {
+  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
+  isLoggedIn.value = authStatus;
+  handleAction = action;
+};
+
+// Hàm xử lý submit form
+const handleSubmit = async () => {
+  error.value = null;
+  errorMessage.value = null;
+
+  if (isContentAccessible.value) {
+    await getRecommendations();
+  } else {
+    await handleAction();
+    if (isContentAccessible.value) {
+      await getRecommendations();
+    }
+  }
+};
 
 // Hàm xóa dữ liệu localStorage cũ
 const clearNumerologyData = () => {
@@ -546,6 +579,7 @@ onBeforeMount(() => {
   if (birthDateInput.value && /^\d{2}\/\d{2}\/\d{4}$/.test(birthDateInput.value)) {
     personalDayNumber.value = personalDayNumber.value || calculatePersonalDayNumber(birthDateInput.value, currentDate.value);
   }
+  initializeAuth();
 });
 </script>
 
