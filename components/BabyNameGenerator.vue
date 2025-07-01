@@ -18,6 +18,12 @@
           <h2 class="text-xl font-semibold text-purple-700">Thông tin bố mẹ và bé</h2>
         </div>
 
+        <!-- Error Message -->
+        <div v-if="errors.general || errorMessage" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200 mb-6">
+          {{ errors.general || errorMessage }}
+          <p v-if="hasSufficientTokens === false" class="mt-1 text-sm">Bạn không có đủ token. Vui lòng nạp thêm.</p>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Thông tin bố -->
           <div class="space-y-4">
@@ -155,13 +161,16 @@
         <div class="mt-6 flex justify-center">
           <button
             @click="suggestNames"
-            class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 shadow-md"
+            :disabled="loading || !hasSufficientTokens || !isLoggedIn"
+            class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 shadow-md disabled:opacity-50"
           >
-            <span class="flex items-center justify-center gap-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
-              </svg>
-              Gợi ý tên
+            <span v-if="loading || isLoading" class="flex items-center justify-center gap-2">
+             
+              {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang gợi ý tên...' }}
+            </span>
+            <span v-else class="flex items-center justify-center gap-2">
+            
+              {{ isLoggedIn ? `Gợi ý tên (Cần ${tokenCostInitial} tokens)` : 'Đăng nhập để gợi ý tên' }}
             </span>
           </button>
         </div>
@@ -169,7 +178,7 @@
 
       <!-- Kết quả gợi ý tên -->
       <transition name="slide-fade">
-        <div v-if="suggestedNames.length" class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+        <div v-if="suggestedNames.length && isContentAccessible" class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
           <div class="flex items-center mb-4">
             <span class="bg-purple-100 p-2 rounded-full mr-2">
               <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -194,7 +203,7 @@
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="(name, index) in suggestedNames" :key="name.name" :class="{'bg-purple-50': index % 2 === 0}">
+                <tr v-for="(name, index) in suggestedNames" :key="name.name" :class="{ 'bg-purple-50': index % 2 === 0 }">
                   <td class="px-6 py-4 whitespace-nowrap font-medium text-purple-600">{{ name.name }}</td>
                   <td class="px-6 py-4 whitespace-nowrap text-center">
                     <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-purple-100 text-purple-800 font-bold">
@@ -226,16 +235,24 @@
           </div>
 
           <!-- Nút gợi ý thêm -->
-          <div v-if="canSuggestMore" class="mt-6 flex justify-center">
+          <div v-if="canSuggestMore && isContentAccessible" class="mt-6 flex justify-center">
             <button
               @click="suggestMoreNames"
-              class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 shadow-md"
+              :disabled="loadingMore || !hasSufficientTokensMore || !isLoggedIn"
+              class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 shadow-md disabled:opacity-50"
             >
-              <span class="flex items-center justify-center gap-2">
+              <span v-if="loadingMore || isLoadingMore" class="flex items-center justify-center gap-2">
+                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                {{ isLoadingMore ? 'Đang kiểm tra quyền truy cập...' : 'Đang gợi ý thêm...' }}
+              </span>
+              <span v-else class="flex items-center justify-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                Gợi ý thêm
+                {{ isLoggedIn ? `Gợi ý thêm (Cần ${tokenCostMore} tokens)` : 'Đăng nhập để gợi ý thêm' }}
               </span>
             </button>
           </div>
@@ -247,11 +264,16 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
+import { toast } from 'vue3-toastify';
 import { calculateLifePathNumber } from '~/utils/numerology-calculations';
 import { ExpressionNumbers, SoulUrgeNumbers } from '~/utils/numerology-meanings';
 import babyMaleNames from '~/data/baby_male_name.json';
 import babyFemaleNames from '~/data/baby_female_name.json';
 import nameCompatibility from '~/data/name_compatibility.json';
+import { useProtectedContent } from '~/composables/useProtectedContent';
+import { useUserStore } from '@/stores/user';
+
+definePageMeta({ layout: 'view' });
 
 // Form dữ liệu
 const form = ref({
@@ -270,49 +292,60 @@ const errors = ref({
   fatherBirthDate: '',
   motherName: '',
   motherBirthDate: '',
-  babyBirthDate: ''
+  babyBirthDate: '',
+  general: ''
 });
 
 // Danh sách tên gợi ý và tên đã sử dụng
 const suggestedNames = ref([]);
 const usedNames = ref([]);
 
-// Hàm lưu vào localStorage
-const saveToLocalStorage = () => {
-  localStorage.setItem('babyNameSuggestorForm', JSON.stringify(form.value));
-  localStorage.setItem('babyNameSuggestorSuggestedNames', JSON.stringify(suggestedNames.value));
-  localStorage.setItem('babyNameSuggestorUsedNames', JSON.stringify(usedNames.value));
+// Token và trạng thái xác thực
+const tokenCostInitial = ref(15);
+const tokenCostMore = ref(5);
+const descriptionInitial = 'Access to baby name suggestion';
+const descriptionMore = 'Access to additional baby name suggestions';
+const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCostInitial.value, descriptionInitial);
+const { isLoading: isLoadingMore, errorMessage: errorMessageMore, isContentAccessible: isContentAccessibleMore, hasSufficientTokens: hasSufficientTokensMore, checkAuthAndAccess: checkAuthAndAccessMore } = useProtectedContent(tokenCostMore.value, descriptionMore);
+const isLoggedIn = ref(false);
+const userStore = useUserStore();
+let handleActionInitial = () => {};
+let handleActionMore = () => {};
+const loading = ref(false);
+const loadingMore = ref(false);
+
+// Khởi tạo trạng thái đăng nhập
+const initializeAuth = async () => {
+  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
+  const { action: actionMore } = await checkAuthAndAccessMore();
+  isLoggedIn.value = authStatus;
+  handleActionInitial = action;
+  handleActionMore = actionMore;
 };
 
-// Hàm tải từ localStorage
-const loadFromLocalStorage = () => {
-  const savedForm = localStorage.getItem('babyNameSuggestorForm');
-  const savedSuggestedNames = localStorage.getItem('babyNameSuggestorSuggestedNames');
-  const savedUsedNames = localStorage.getItem('babyNameSuggestorUsedNames');
-
-  if (savedForm) {
-    form.value = JSON.parse(savedForm);
-  }
-  if (savedSuggestedNames) {
-    suggestedNames.value = JSON.parse(savedSuggestedNames);
-  }
-  if (savedUsedNames) {
-    usedNames.value = JSON.parse(savedUsedNames);
-  }
-};
-
-// Tải dữ liệu khi component được mounted
+// Khởi tạo auth khi component được mount
 onMounted(() => {
-  loadFromLocalStorage();
+  if (userStore.isStoreInitialized) {
+    initializeAuth();
+  }
+});
+
+// Theo dõi isStoreInitialized để khởi tạo auth khi store sẵn sàng
+watch(() => userStore.isStoreInitialized, (initialized) => {
+  if (initialized && process.client) {
+    console.log('User store initialized, running initializeAuth');
+    initializeAuth();
+  }
 });
 
 // Theo dõi thay đổi để lưu vào localStorage
 watch(form, () => {
-  saveToLocalStorage();
+  localStorage.setItem('babyNameSuggestorForm', JSON.stringify(form.value));
 }, { deep: true });
 
 watch(suggestedNames, () => {
-  saveToLocalStorage();
+  localStorage.setItem('babyNameSuggestorSuggestedNames', JSON.stringify(suggestedNames.value));
+  localStorage.setItem('babyNameSuggestorUsedNames', JSON.stringify(usedNames.value));
 }, { deep: true });
 
 // Kiểm tra xem còn tên để gợi ý không
@@ -320,7 +353,7 @@ const canSuggestMore = computed(() => {
   const names = form.value.gender === 'male' ? babyMaleNames : babyFemaleNames;
   let availableNames = names;
   if (form.value.futureGoal) {
-    const goalDestinyNumbers = nameCompatibility.future_goals[form.value.futureGoal].recommended_destiny_numbers;
+    const goalDestinyNumbers = nameCompatibility.future_goals[form.value.futureGoal]?.recommended_destiny_numbers || [];
     availableNames = names.filter(name => goalDestinyNumbers.includes(name.destiny_number));
   }
   // Loại bỏ tên trùng với bố hoặc mẹ
@@ -342,7 +375,8 @@ const validateForm = () => {
     fatherBirthDate: '',
     motherName: '',
     motherBirthDate: '',
-    babyBirthDate: ''
+    babyBirthDate: '',
+    general: ''
   };
   let isValid = true;
 
@@ -404,9 +438,22 @@ const validateForm = () => {
 };
 
 // Hàm gợi ý tên (khởi tạo danh sách mới)
-const suggestNames = () => {
+const suggestNames = async () => {
   if (!validateForm()) return;
 
+  if (isContentAccessible.value) {
+    await fetchSuggestedNames();
+  } else {
+    await handleActionInitial();
+    if (isContentAccessible.value) {
+      await fetchSuggestedNames();
+    }
+  }
+};
+
+async function fetchSuggestedNames() {
+  loading.value = true;
+  errors.value.general = '';
   try {
     const fatherLifePath = calculateLifePathNumber(form.value.fatherBirthDate);
     const motherLifePath = calculateLifePathNumber(form.value.motherBirthDate);
@@ -417,7 +464,7 @@ const suggestNames = () => {
 
     // Lọc theo mục tiêu tương lai nếu có
     if (form.value.futureGoal) {
-      const goalDestinyNumbers = nameCompatibility.future_goals[form.value.futureGoal].recommended_destiny_numbers;
+      const goalDestinyNumbers = nameCompatibility.future_goals[form.value.futureGoal]?.recommended_destiny_numbers || [];
       filteredNames = names.filter(name => goalDestinyNumbers.includes(name.destiny_number));
     }
 
@@ -448,32 +495,60 @@ const suggestNames = () => {
       destiny_number: name.destiny_number,
       soul_urge: name.soul_urge,
       meaning: name.meaning,
-      destiny_meaning: ExpressionNumbers[name.destiny_number].theme,
-      soul_urge_meaning: SoulUrgeNumbers[name.soul_urge].desire,
-      father_compatibility: nameCompatibility.compatibility[fatherLifePath].recommended_destiny_numbers.includes(name.destiny_number) ? 'Hợp' : 'Không hợp',
-      mother_compatibility: nameCompatibility.compatibility[motherLifePath].recommended_destiny_numbers.includes(name.destiny_number) ? 'Hợp' : 'Không hợp',
-      baby_compatibility: babyLifePath && nameCompatibility.compatibility[babyLifePath].recommended_destiny_numbers.includes(name.destiny_number) ? 'Hợp' : babyLifePath ? 'Không hợp' : null,
-      father_compatibility_reason: nameCompatibility.compatibility[fatherLifePath].reason,
-      mother_compatibility_reason: nameCompatibility.compatibility[motherLifePath].reason,
-      baby_compatibility_reason: babyLifePath ? nameCompatibility.compatibility[babyLifePath].reason : null
+      destiny_meaning: ExpressionNumbers[name.destiny_number]?.theme || 'Không xác định',
+      soul_urge_meaning: SoulUrgeNumbers[name.soul_urge]?.desire || 'Không xác định',
+      father_compatibility: nameCompatibility.compatibility[fatherLifePath]?.recommended_destiny_numbers.includes(name.destiny_number) ? 'Hợp' : 'Không hợp',
+      mother_compatibility: nameCompatibility.compatibility[motherLifePath]?.recommended_destiny_numbers.includes(name.destiny_number) ? 'Hợp' : 'Không hợp',
+      baby_compatibility: babyLifePath && nameCompatibility.compatibility[babyLifePath]?.recommended_destiny_numbers.includes(name.destiny_number) ? 'Hợp' : babyLifePath ? 'Không hợp' : null,
+      father_compatibility_reason: nameCompatibility.compatibility[fatherLifePath]?.reason || 'Không xác định',
+      mother_compatibility_reason: nameCompatibility.compatibility[motherLifePath]?.reason || 'Không xác định',
+      baby_compatibility_reason: babyLifePath ? nameCompatibility.compatibility[babyLifePath]?.reason || 'Không xác định' : null
     }));
 
     // Cập nhật danh sách tên gợi ý và tên đã sử dụng
     suggestedNames.value = newNames;
     usedNames.value = newNames.map(name => name.name);
+
+    // Nếu không còn tên để gợi ý
+    if (newNames.length === 0) {
+      errors.value.general = 'Đã hết tên để gợi ý. Vui lòng thay đổi mục tiêu hoặc giới tính.';
+      toast.error(errors.value.general, { position: 'top-center' });
+    } else {
+      toast.success('Gợi ý tên hoàn tất!', { position: 'top-center' });
+      // Scroll to result
+      setTimeout(() => {
+        const resultElement = document.querySelector('[v-if="suggestedNames.length && isContentAccessible"]');
+        if (resultElement) {
+          resultElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
   } catch (error) {
-    errors.value.fatherBirthDate = 'Không thể xử lý ngày sinh bố';
-    errors.value.motherBirthDate = 'Không thể xử lý ngày sinh mẹ';
-    if (form.value.babyBirthDate) {
-      errors.value.babyBirthDate = 'Không thể xử lý ngày sinh bé';
+    console.error('Error suggesting names:', error);
+    errors.value.general = error.message || 'Có lỗi xảy ra khi gợi ý tên!';
+    toast.error(errors.value.general, { position: 'top-center' });
+  } finally {
+    loading.value = false;
+  }
+}
+
+// Hàm gợi ý thêm 5 tên
+const suggestMoreNames = async () => {
+  if (!validateForm()) return;
+
+  if (isContentAccessibleMore.value) {
+    await fetchMoreSuggestedNames();
+  } else {
+    await handleActionMore();
+    if (isContentAccessibleMore.value) {
+      await fetchMoreSuggestedNames();
     }
   }
 };
 
-// Hàm gợi ý thêm 5 tên
-const suggestMoreNames = () => {
-  if (!validateForm()) return;
-
+async function fetchMoreSuggestedNames() {
+  loadingMore.value = true;
+  errors.value.general = '';
   try {
     const fatherLifePath = calculateLifePathNumber(form.value.fatherBirthDate);
     const motherLifePath = calculateLifePathNumber(form.value.motherBirthDate);
@@ -484,7 +559,7 @@ const suggestMoreNames = () => {
 
     // Lọc theo mục tiêu tương lai nếu có
     if (form.value.futureGoal) {
-      const goalDestinyNumbers = nameCompatibility.future_goals[form.value.futureGoal].recommended_destiny_numbers;
+      const goalDestinyNumbers = nameCompatibility.future_goals[form.value.futureGoal]?.recommended_destiny_numbers || [];
       filteredNames = names.filter(name => goalDestinyNumbers.includes(name.destiny_number));
     }
 
@@ -515,32 +590,42 @@ const suggestMoreNames = () => {
       destiny_number: name.destiny_number,
       soul_urge: name.soul_urge,
       meaning: name.meaning,
-      destiny_meaning: ExpressionNumbers[name.destiny_number].theme,
-      soul_urge_meaning: SoulUrgeNumbers[name.soul_urge].desire,
-      father_compatibility: nameCompatibility.compatibility[fatherLifePath].recommended_destiny_numbers.includes(name.destiny_number) ? 'Hợp' : 'Không hợp',
-      mother_compatibility: nameCompatibility.compatibility[motherLifePath].recommended_destiny_numbers.includes(name.destiny_number) ? 'Hợp' : 'Không hợp',
-      baby_compatibility: babyLifePath && nameCompatibility.compatibility[babyLifePath].recommended_destiny_numbers.includes(name.destiny_number) ? 'Hợp' : babyLifePath ? 'Không hợp' : null,
-      father_compatibility_reason: nameCompatibility.compatibility[fatherLifePath].reason,
-      mother_compatibility_reason: nameCompatibility.compatibility[motherLifePath].reason,
-      baby_compatibility_reason: babyLifePath ? nameCompatibility.compatibility[babyLifePath].reason : null
+      destiny_meaning: ExpressionNumbers[name.destiny_number]?.theme || 'Không xác định',
+      soul_urge_meaning: SoulUrgeNumbers[name.soul_urge]?.desire || 'Không xác định',
+      father_compatibility: nameCompatibility.compatibility[fatherLifePath]?.recommended_destiny_numbers.includes(name.destiny_number) ? 'Hợp' : 'Không hợp',
+      mother_compatibility: nameCompatibility.compatibility[motherLifePath]?.recommended_destiny_numbers.includes(name.destiny_number) ? 'Hợp' : 'Không hợp',
+      baby_compatibility: babyLifePath && nameCompatibility.compatibility[babyLifePath]?.recommended_destiny_numbers.includes(name.destiny_number) ? 'Hợp' : babyLifePath ? 'Không hợp' : null,
+      father_compatibility_reason: nameCompatibility.compatibility[fatherLifePath]?.reason || 'Không xác định',
+      mother_compatibility_reason: nameCompatibility.compatibility[motherLifePath]?.reason || 'Không xác định',
+      baby_compatibility_reason: babyLifePath ? nameCompatibility.compatibility[babyLifePath]?.reason || 'Không xác định' : null
     }));
 
     // Thêm tên mới vào danh sách gợi ý và cập nhật tên đã sử dụng
     suggestedNames.value = [...suggestedNames.value, ...newNames];
     usedNames.value = [...usedNames.value, ...newNames.map(name => name.name)];
 
-    // Nếu không còn tên để gợi ý, hiển thị lỗi
+    // Nếu không còn tên để gợi ý
     if (newNames.length === 0) {
-      errors.value.fatherName = 'Đã hết tên để gợi ý. Vui lòng thay đổi mục tiêu hoặc giới tính.';
+      errors.value.general = 'Đã hết tên để gợi ý. Vui lòng thay đổi mục tiêu hoặc giới tính.';
+      toast.error(errors.value.general, { position: 'top-center' });
+    } else {
+      toast.success('Gợi ý thêm tên hoàn tất!', { position: 'top-center' });
+      // Scroll to result
+      setTimeout(() => {
+        const resultElement = document.querySelector('[v-if="suggestedNames.length && isContentAccessible"]');
+        if (resultElement) {
+          resultElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
     }
   } catch (error) {
-    errors.value.fatherBirthDate = 'Không thể xử lý ngày sinh bố';
-    errors.value.motherBirthDate = 'Không thể xử lý ngày sinh mẹ';
-    if (form.value.babyBirthDate) {
-      errors.value.babyBirthDate = 'Không thể xử lý ngày sinh bé';
-    }
+    console.error('Error suggesting more names:', error);
+    errors.value.general = error.message || 'Có lỗi xảy ra khi gợi ý thêm tên!';
+    toast.error(errors.value.general, { position: 'top-center' });
+  } finally {
+    loadingMore.value = false;
   }
-};
+}
 </script>
 
 <style scoped>

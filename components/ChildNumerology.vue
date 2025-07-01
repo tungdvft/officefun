@@ -38,17 +38,18 @@
             </div>
           </div>
           <!-- Error Message -->
-          <div v-if="errors.general" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
-            {{ errors.general }}
+          <div v-if="errors.general || errorMessage" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
+            {{ errors.general || errorMessage }}
+            <p v-if="hasSufficientTokens === false" class="mt-1 text-sm">Bạn không có đủ token. Vui lòng nạp thêm.</p>
           </div>
           <!-- Button -->
           <div class="flex justify-center">
             <button
               @click="analyzeChild"
-              :disabled="loading"
+              :disabled="loading || !hasSufficientTokens"
               class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
             >
-              <span v-if="loading" class="flex items-center justify-center">
+              <span v-if="loading || isLoading" class="flex items-center justify-center">
                 <svg
                   class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                   xmlns="http://www.w3.org/2000/svg"
@@ -62,16 +63,16 @@
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   ></path>
                 </svg>
-                Đang phân tích...
+                {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang phân tích...' }}
               </span>
-              <span v-else>Phân tích ngay</span>
+              <span v-else>{{ isLoggedIn ? `Phân tích ngay (Cần ${tokenCost} tokens)` : 'Đăng nhập để phân tích' }}</span>
             </button>
           </div>
         </div>
 
         <!-- Results Section -->
         <transition name="slide-fade">
-          <div v-if="result" class="mt-8 space-y-6">
+          <div v-if="result && isContentAccessible" class="mt-8 space-y-6">
             <!-- Các con số chủ đạo -->
             <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
               <h3 class="text-lg font-semibold text-purple-700 flex items-center">
@@ -277,43 +278,6 @@
                 </div>
               </ClientOnly>
             </div>
-
-            <!-- Nút tải và chia sẻ -->
-            <!-- <div class="flex flex-wrap gap-3 justify-center">
-              <ClientOnly>
-                <button
-                  @click="downloadPDF"
-                  class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg flex items-center justify-center transition duration-200 shadow-sm"
-                >
-                  <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-                  </svg>
-                  Tải báo cáo PDF
-                </button>
-              </ClientOnly>
-              <button
-                @click="shareResult('zalo')"
-                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center justify-center transition duration-200 shadow-sm"
-              >
-                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.441 16.892c-2.102.144-6.784.144-8.883 0-2.276-.156-2.541-1.27-2.558-4.892.017-3.629.285-4.736 2.558-4.892 2.099-.144 6.782-.144 8.883 0 2.277.156 2.541 1.27 2.559 4.892-.018 3.629-.285 4.736-2.559 4.892zm-6.441-7.234l4.917 2.338-4.917 2.346v-4.684z"
-                  />
-                </svg>
-                Chia sẻ Zalo
-              </button>
-              <button
-                @click="shareResult('facebook')"
-                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center justify-center transition duration-200 shadow-sm"
-              >
-                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-                  />
-                </svg>
-                Chia sẻ Facebook
-              </button>
-            </div> -->
           </div>
         </transition>
       </div>
@@ -325,6 +289,8 @@
 import { ref, computed, onMounted, watch } from 'vue';
 import { toast } from 'vue3-toastify';
 import Chart from 'chart.js/auto';
+import { useProtectedContent } from '~/composables/useProtectedContent';
+import { useUserStore } from '@/stores/user';
 
 definePageMeta({ layout: 'view' });
 
@@ -340,6 +306,13 @@ const errors = ref({
   birthDate: '',
   general: ''
 });
+const tokenCost = ref(15);
+const description = 'Access to child numerology analysis';
+const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
+const isLoggedIn = ref(false);
+const userStore = useUserStore();
+let handleAction = () => {};
+
 const currentYear = new Date().getFullYear();
 const currentMonth = new Date().getMonth();
 const currentMonthVietnamese = computed(() => {
@@ -347,19 +320,25 @@ const currentMonthVietnamese = computed(() => {
   return months[currentMonth];
 });
 
-// Load saved data from localStorage on mount
+// Khởi tạo trạng thái đăng nhập
+const initializeAuth = async () => {
+  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
+  isLoggedIn.value = authStatus;
+  handleAction = action;
+};
+
+// Khởi tạo auth khi component được mount
 onMounted(() => {
-  const savedData = localStorage.getItem('childNumerologyData');
-  if (savedData) {
-    const parsed = JSON.parse(savedData);
-    formData.value = parsed.formData || {
-      childName: '',
-      birthDate: ''
-    };
-    result.value = parsed.result || null;
-    if (result.value && result.value.tenYearMap) {
-      setTimeout(() => renderChart(), 100);
-    }
+  if (userStore.isStoreInitialized) {
+    initializeAuth();
+  }
+});
+
+// Theo dõi isStoreInitialized để khởi tạo auth khi store sẵn sàng
+watch(() => userStore.isStoreInitialized, (initialized) => {
+  if (initialized && process.client) {
+    console.log('User store initialized, running initializeAuth');
+    initializeAuth();
   }
 });
 
@@ -414,10 +393,22 @@ const validateForm = () => {
 const analyzeChild = async () => {
   if (!validateForm()) return;
 
+  if (isContentAccessible.value) {
+    await fetchChildAnalysis();
+  } else {
+    await handleAction();
+    if (isContentAccessible.value) {
+      await fetchChildAnalysis();
+    }
+  }
+};
+
+async function fetchChildAnalysis() {
   loading.value = true;
   errors.value.general = '';
   try {
-    const username = localStorage.getItem('username') || 'guest';
+    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    console.log('Sending request to /api/numerology/child with data:', formData.value);
     const response = await $fetch('/api/numerology/child', {
       method: 'POST',
       headers: {
@@ -426,16 +417,25 @@ const analyzeChild = async () => {
       },
       body: formData.value
     });
+    console.log('Response from /api/numerology/child:', response);
     result.value = response.childAnalysis;
     toast.success('Phân tích hoàn tất!', { position: 'top-center' });
     setTimeout(() => renderChart(), 100); // Vẽ chart sau khi có dữ liệu
+    // Scroll to result
+    setTimeout(() => {
+      const resultElement = document.querySelector('[v-if="result && isContentAccessible"]');
+      if (resultElement) {
+        resultElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   } catch (error) {
     console.error('Error analyzing child:', error);
-    errors.value.general = error.data?.message || 'Có lỗi xảy ra!';
+    errorMessage.value = error.data?.message || 'Có lỗi xảy ra khi phân tích!';
+    toast.error(errorMessage.value, { position: 'top-center' });
   } finally {
     loading.value = false;
   }
-};
+}
 
 // Vẽ biểu đồ
 const renderChart = () => {
@@ -499,113 +499,6 @@ const renderChart = () => {
       }
     }
   });
-};
-
-const shareResult = (platform) => {
-  if (!result.value) return;
-  const text = [
-    `Thần số học cho bé ${formData.value.childName}`,
-    `Ngày sinh: ${formData.value.birthDate}`,
-    `Các con số chủ đạo:`,
-    `- Số Đường đời: ${result.value.numbers.lifePath.number} (${result.value.numbers.lifePath.theme})`,
-    `- Số Linh hồn: ${result.value.numbers.soulUrge.number} (${result.value.numbers.soulUrge.desire})`,
-    `- Số Nhân cách: ${result.value.numbers.personality.number} (${result.value.numbers.personality.theme})`,
-    `- Số Sứ mệnh: ${result.value.numbers.destiny.number} (${result.value.numbers.destiny.theme})`,
-    `Năm cá nhân ${currentYear}: ${result.value.personalYear.number} (${result.value.personalYear.theme})`,
-    `Tính cách: ${result.value.personalityTraits}`,
-    `Tiềm năng: ${result.value.potential}`,
-    `Thách thức: ${result.value.challenges}`,
-    `Ngắn hạn (Tháng ${currentMonthVietnamese.value}): ${result.value.shortTerm}`,
-    `Trung hạn (Năm ${currentYear}): ${result.value.mediumTerm}`,
-    `Dài hạn: ${result.value.longTerm}`,
-    `Bản đồ 10 năm tới:`,
-    ...result.value.tenYearMap.map(y => `- ${y.year}: Số ${y.personalYear} (${y.theme})`)
-  ].join('\n\n');
-
-  if (platform === 'facebook' && process.client) {
-    if (typeof FB !== 'undefined') {
-      FB.ui({
-        method: 'share',
-        href: window.location.href,
-        quote: text
-      }, (response) => {
-        if (response && !response.error) toast.success('Đã chia sẻ lên Facebook!');
-        else toast.error('Có lỗi khi chia sẻ lên Facebook!');
-      });
-    } else {
-      toast.error('Facebook SDK chưa tải, thử lại sau!');
-    }
-  } else if (platform === 'zalo' && process.client) {
-    navigator.clipboard.writeText(text).then(() => {
-      toast.success('Đã sao chép kết quả! Dán vào Zalo để chia sẻ.');
-    }).catch(() => toast.error('Không thể sao chép!'));
-  }
-};
-
-const downloadPDF = async () => {
-  if (!process.client) return toast.error('Không thể tải PDF trên server!');
-  const { jsPDF } = await import('jspdf');
-  const doc = new jsPDF();
-  doc.setFont('helvetica');
-  doc.setFontSize(12);
-  let y = 10;
-
-  doc.setFontSize(16);
-  doc.text(`Thần số học cho bé ${formData.value.childName}`, 10, y);
-  y += 10;
-
-  doc.setFontSize(12);
-  doc.text(`Ngày sinh: ${formData.value.birthDate}`, 10, y); y += 7;
-  y += 5;
-
-  const addSection = (title, content) => {
-    if (y > 260) { doc.addPage(); y = 10; }
-    doc.setFontSize(14);
-    doc.text(title, 10, y);
-    y += 7;
-    doc.setFontSize(12);
-    const lines = doc.splitTextToSize(content, 180);
-    doc.text(lines, 10, y);
-    y += lines.length * 7 + 10;
-  };
-
-  addSection('Các con số chủ đạo', [
-    `Số Đường đời: ${result.value.numbers.lifePath.number} (${result.value.numbers.lifePath.theme})`,
-    `Điểm mạnh: ${(Array.isArray(result.value.numbers.lifePath.strengths) ? result.value.numbers.lifePath.strengths : result.value.numbers.lifePath.strengths.split(', ')).join(', ')}`,
-    `Thách thức: ${(Array.isArray(result.value.numbers.lifePath.challenges) ? result.value.numbers.lifePath.challenges : result.value.numbers.lifePath.challenges.split(', ')).join(', ')}`,
-    `Số Linh hồn: ${result.value.numbers.soulUrge.number} (${result.value.numbers.soulUrge.desire})`,
-    `Động lực: ${result.value.numbers.soulUrge.motivation}`,
-    `Số Nhân cách: ${result.value.numbers.personality.number} (${result.value.numbers.personality.theme})`,
-    `Điểm mạnh: ${(Array.isArray(result.value.numbers.personality.strengths) ? result.value.numbers.personality.strengths : result.value.numbers.personality.strengths.split(', ')).join(', ')}`,
-    `Số Sứ mệnh: ${result.value.numbers.destiny.number} (${result.value.numbers.destiny.theme})`,
-    `Tài năng: ${(Array.isArray(result.value.numbers.destiny.talents) ? result.value.numbers.destiny.talents : result.value.numbers.destiny.talents.split(', ')).join(', ')}`
-  ].join('\n'));
-
-  addSection(`Năm cá nhân ${currentYear}`, [
-    `Số: ${result.value.personalYear.number} (${result.value.personalYear.theme})`,
-    `Trọng tâm: ${(Array.isArray(result.value.personalYear.focus) ? result.value.personalYear.focus : result.value.personalYear.focus.split(', ')).join(', ')}`,
-    `Từ khóa: ${(Array.isArray(result.value.personalYear.keywords) ? result.value.personalYear.keywords : result.value.personalYear.keywords.split(', ')).join(', ')}`
-  ].join('\n'));
-
-  addSection('Tính cách của bé', result.value.personalityTraits);
-  addSection('Tiềm năng của bé', result.value.potential);
-  addSection('Thách thức của bé', result.value.challenges);
-  addSection(`Ngắn hạn (Tháng ${currentMonthVietnamese.value})`, result.value.shortTerm);
-  addSection(`Trung hạn (Năm ${currentYear})`, result.value.mediumTerm);
-  addSection('Dài hạn (Tương lai xa)', result.value.longTerm);
-
-  doc.setFontSize(14);
-  doc.text('Bản đồ 10 năm tới:', 10, y); y += 7;
-  doc.setFontSize(12);
-  result.value.tenYearMap.forEach(y => {
-    if (y > 260) { doc.addPage(); y = 10; }
-    const text = `${y.year}: Số ${y.personalYear} (${y.theme})`;
-    const lines = doc.splitTextToSize(text, 180);
-    doc.text(lines, 10, y);
-    y += lines.length * 7 + 5;
-  });
-
-  doc.save(`child-numerology-${formData.value.childName}.pdf`);
 };
 </script>
 
