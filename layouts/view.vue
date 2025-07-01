@@ -1,4 +1,3 @@
-
 <template>
   <div class="min-h-screen flex flex-col">
     <!-- Top Navigation -->
@@ -76,9 +75,11 @@
               >
                 <button class="flex flex-col items-center space-y-1 focus:outline-none group">
                   <div class="flex items-center space-x-2">
-                    <span class="font-medium text-purple-700 group-hover:text-purple-900 transition-colors duration-200">
-                      {{ getFirstName(userStore.user.fullname) }}
-                    </span>
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-sm">
+                      <span class="text-white text-sm font-bold">
+                        {{ getInitialLetter(userStore.user.fullname) }}
+                      </span>
+                    </div>
                     <svg 
                       class="w-4 h-4 transition-transform duration-200" 
                       :class="{ 'rotate-180': activeMenu === 'auth' }"
@@ -156,7 +157,16 @@
               @click="toggleMobileDropdown(index)"
               class="flex items-center w-full px-3 py-2 rounded-md text-base font-medium text-purple-800 hover:bg-purple-50 transition-colors duration-200"
             >
-              <span>{{ item.title }}</span>
+              <template v-if="item.isUserMenu && userStore.isStoreInitialized && userStore.user && Object.keys(userStore.user).length > 0">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-sm">
+                  <span class="text-white text-sm font-bold">
+                    {{ getInitialLetter(userStore.user.fullname) }}
+                  </span>
+                </div>
+              </template>
+              <template v-else>
+                <span>{{ item.title }}</span>
+              </template>
               <svg 
                 class="w-4 h-4 ml-auto transition-transform duration-200" 
                 :class="{ 'rotate-180': activeMobileDropdown === index }"
@@ -245,10 +255,12 @@ definePageMeta({
 });
 
 // Hàm lấy chữ cái đầu hợp lệ
-const getFirstName = (fullname) => {
-  if (!fullname || typeof fullname !== 'string' || !fullname.trim()) return 'User';
-  const parts = fullname.trim().split(' ');
-  return parts[parts.length - 1];
+const getInitialLetter = (fullname) => {
+  if (!fullname || typeof fullname !== 'string' || !fullname.trim()) {
+    return 'U';
+  }
+  const firstChar = fullname.trim().charAt(0);
+  return /[a-zA-Z\u00C0-\u1EF9]/.test(firstChar) ? firstChar.toUpperCase() : 'U';
 };
 
 // Làm mới token từ API nếu chưa có
@@ -316,9 +328,7 @@ const computedMenu = computed(() => {
   const menu = [...mainMenu];
   if (userStore.isStoreInitialized) {
     menu.push({
-      title: userStore.user && Object.keys(userStore.user).length > 0 
-        ? getFirstName(userStore.user.fullname) 
-        : 'Tài khoản người dùng',
+      title: 'Tài khoản người dùng',
       isUserMenu: true,
       children: userStore.user && Object.keys(userStore.user).length > 0 
         ? [
