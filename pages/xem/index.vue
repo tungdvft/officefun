@@ -126,7 +126,7 @@
           <div v-if="!showDetailedComponents" class="flex justify-center">
             <button
               @click="showDetails"
-              class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 shadow-md"
+              class="w-auto bg-gradient-to-r mb-5 from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 shadow-md"
             >
               <span class="flex items-center justify-center gap-2">
                 <svg
