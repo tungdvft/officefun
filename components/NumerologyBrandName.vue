@@ -91,17 +91,18 @@
             </div>
           </div>
           <!-- Error Message -->
-          <div v-if="errors.general" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
-            {{ errors.general }}
+          <div v-if="errors.general || errorMessage" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
+            {{ errors.general || errorMessage }}
+            <p v-if="hasSufficientTokens === false" class="mt-1 text-sm">Bạn không có đủ token. Vui lòng nạp thêm.</p>
           </div>
           <!-- Button -->
           <div class="flex justify-center">
             <button
               @click="generateReport"
-              :disabled="loading"
+              :disabled="loading || !hasSufficientTokens"
               class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
             >
-              <span v-if="loading" class="flex items-center justify-center">
+              <span v-if="loading || isLoading" class="flex items-center justify-center">
                 <svg
                   class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                   xmlns="http://www.w3.org/2000/svg"
@@ -115,16 +116,16 @@
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   ></path>
                 </svg>
-                Đang phân tích...
+                {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang phân tích...' }}
               </span>
-              <span v-else>Tạo gợi ý tên thương hiệu</span>
+              <span v-else>{{ isLoggedIn ? `Tạo gợi ý tên thương hiệu (Cần ${tokenCost} tokens)` : 'Đăng nhập để tạo gợi ý' }}</span>
             </button>
           </div>
         </div>
 
         <!-- Results Section -->
         <transition name="slide-fade">
-          <div v-if="numerologyData" class="mt-8 space-y-6">
+          <div v-if="numerologyData && isContentAccessible" class="mt-8 space-y-6">
             <!-- Thông tin đầu vào -->
             <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
               <h3 class="text-lg font-semibold text-purple-700 flex items-center">
@@ -308,13 +309,13 @@
                 </div>
               </div>
               <!-- Show More Suggestions Button -->
-              <div v-if="numerologyData.suggestions.length < 30" class="flex justify-center mt-6">
+              <div v-if="numerologyData.suggestions.length < maxSuggestions && isContentAccessible" class="flex justify-center mt-6">
                 <button
                   @click="showMoreSuggestions"
-                  :disabled="loading"
+                  :disabled="loading || isLoading"
                   class="w-auto bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-2 px-6 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
                 >
-                  <span v-if="loading" class="flex items-center justify-center">
+                  <span v-if="loading || isLoading" class="flex items-center justify-center">
                     <svg
                       class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                       xmlns="http://www.w3.org/2000/svg"
@@ -328,9 +329,9 @@
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       ></path>
                     </svg>
-                    Đang tải...
+                    {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang tải...' }}
                   </span>
-                  <span v-else>Xem thêm gợi ý </span>
+                  <span v-else>{{ isLoggedIn ? `Xem thêm gợi ý (Cần ${tokenCostMore} tokens)` : 'Đăng nhập để xem thêm' }}</span>
                 </button>
               </div>
             </div>
@@ -366,6 +367,8 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { toast } from 'vue3-toastify';
+import { useProtectedContent } from '~/composables/useProtectedContent';
+import { useUserStore } from '@/stores/user';
 
 definePageMeta({ layout: 'view' });
 
@@ -387,9 +390,81 @@ const errors = ref({
 });
 const totalSuggestions = ref(0);
 const existingNames = ref([]);
+const tokenCost = ref(15);
+const tokenCostMore = ref(5);
+const maxSuggestions = ref(30);
+const description = 'Access to brand name generation based on numerology';
+const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
+const isLoggedIn = ref(false);
+const hasSufficientTokensForMore = ref(true);
+let handleAction = () => {};
+const userStore = useUserStore();
+
+// Hàm lấy thông tin người dùng từ API
+const fetchUserData = async () => {
+  if (!userStore.isAuthenticated || !userStore.user?.id) {
+    console.log('User not authenticated, skipping fetchUserData');
+    return;
+  }
+
+  try {
+    const userIdValue = String(userStore.user.id);
+    console.log('Fetching user data for userId:', userIdValue);
+    const response = await $fetch(`/api/users/${userIdValue}`, {
+      method: 'GET',
+    });
+    console.log('API /api/users response:', response);
+    const { fullname } = response.user;
+    formData.value.ownerName = fullname?.trim() || '';
+  } catch (err) {
+    console.error('Error fetching user data:', err);
+    errorMessage.value = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
+    toast.error(errorMessage.value, { position: 'top-center' });
+  }
+};
+
+// Hàm kiểm tra số dư token
+const checkTokenBalance = async (requiredTokens) => {
+  if (!userStore.isAuthenticated || !userStore.user?.id) {
+    console.log('User not authenticated, setting hasSufficientTokensForMore to false');
+    hasSufficientTokensForMore.value = false;
+    return false;
+  }
+
+  try {
+    const response = await $fetch('/api/check-token-balance', {
+      method: 'POST',
+      headers: {
+        'x-username': encodeURIComponent(userStore.user.email),
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: { userId: String(userStore.user.id), requiredTokens }
+    });
+    console.log(`Check token balance response:`, response);
+    hasSufficientTokensForMore.value = response.hasSufficientTokens;
+    return response.hasSufficientTokens;
+  } catch (error) {
+    console.error('Error checking token balance:', error);
+    errorMessage.value = error.data?.message || 'Không thể kiểm tra số dư token!';
+    toast.error(errorMessage.value, { position: 'top-center' });
+    hasSufficientTokensForMore.value = false;
+    return false;
+  }
+};
+
+// Khởi tạo trạng thái đăng nhập và kiểm tra token
+const initializeAuth = async () => {
+  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
+  isLoggedIn.value = authStatus;
+  handleAction = action;
+  if (authStatus) {
+    await checkTokenBalance(tokenCostMore.value);
+  }
+};
 
 // Load saved data from localStorage on mount
 onMounted(() => {
+  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
   const savedData = localStorage.getItem('brandNumerologyData');
   if (savedData) {
     const parsed = JSON.parse(savedData);
@@ -407,6 +482,10 @@ onMounted(() => {
       existingNames.value = numerologyData.value.suggestions.map(s => s.name);
     }
   }
+  if (userStore.isStoreInitialized) {
+    initializeAuth();
+    fetchUserData();
+  }
 });
 
 // Save data to localStorage on change
@@ -416,6 +495,15 @@ watch([formData, numerologyData], () => {
     numerologyData: numerologyData.value
   }));
 }, { deep: true });
+
+// Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
+watch(() => userStore.isStoreInitialized, (initialized) => {
+  if (initialized && process.client) {
+    console.log('User store initialized, running initializeAuth and fetchUserData');
+    initializeAuth();
+    fetchUserData();
+  }
+});
 
 // Validate form
 const validateForm = () => {
@@ -450,7 +538,7 @@ const validateForm = () => {
       year < 1900 ||
       year > new Date().getFullYear()
     ) {
-      errors.value.date = 'Invalid date';
+      errors.value.date = 'Ngày không hợp lệ';
       isValid = false;
     }
   }
@@ -465,10 +553,22 @@ const validateForm = () => {
 const generateReport = async () => {
   if (!validateForm()) return;
 
+  if (isContentAccessible.value) {
+    await fetchBrandNames();
+  } else {
+    await handleAction();
+    if (isContentAccessible.value) {
+      await fetchBrandNames();
+    }
+  }
+};
+
+async function fetchBrandNames() {
   loading.value = true;
   errors.value.general = '';
   try {
-    const username = localStorage.getItem('username') || 'guest';
+    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    console.log('Sending request to /api/numerology/brand with data:', formData.value);
     const response = await $fetch('/api/numerology/brand', {
       method: 'POST',
       headers: {
@@ -482,25 +582,46 @@ const generateReport = async () => {
         excludeNames: []
       }
     });
+    console.log('Response from /api/numerology/brand:', response);
     numerologyData.value = response.numerology;
     totalSuggestions.value = response.numerology.suggestions.length;
     existingNames.value = response.numerology.suggestions.map(s => s.name);
+    await checkTokenBalance(tokenCostMore.value);
     toast.success('Tạo gợi ý tên thương hiệu hoàn tất!', { position: 'top-center' });
+    // Scroll to result
+    setTimeout(() => {
+      const resultElement = document.querySelector('[v-if="numerologyData && isContentAccessible"]');
+      if (resultElement) {
+        resultElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   } catch (error) {
-    console.error('Error:', error);
-    errors.value.general = error.data?.message || 'Có lỗi xảy ra!';
+    console.error('Error in fetchBrandNames:', error);
+    errorMessage.value = error.data?.message || 'Có lỗi xảy ra khi tạo gợi ý tên thương hiệu!';
+    toast.error(errorMessage.value, { position: 'top-center' });
   } finally {
     loading.value = false;
   }
-};
+}
 
 const showMoreSuggestions = async () => {
-  if (totalSuggestions.value >= 30) return;
+  if (totalSuggestions.value >= maxSuggestions.value) {
+    toast.info('Đã đạt số lượng tối đa 30 gợi ý tên thương hiệu!', { position: 'top-center' });
+    return;
+  }
+
+  const sufficientTokens = await checkTokenBalance(tokenCostMore.value);
+  if (!sufficientTokens) {
+    errorMessage.value = 'Bạn không có đủ token để xem thêm gợi ý!';
+    toast.error(errorMessage.value, { position: 'top-center' });
+    return;
+  }
 
   loading.value = true;
   errors.value.general = '';
   try {
-    const username = localStorage.getItem('username') || 'guest';
+    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    console.log('Sending request to /api/numerology/brand for more suggestions');
     const response = await $fetch('/api/numerology/brand', {
       method: 'POST',
       headers: {
@@ -514,7 +635,7 @@ const showMoreSuggestions = async () => {
         excludeNames: existingNames.value
       }
     });
-
+    console.log('Response from /api/numerology/brand (more suggestions):', response);
     if (response.numerology && response.numerology.suggestions) {
       numerologyData.value.suggestions = [
         ...numerologyData.value.suggestions,
@@ -522,11 +643,13 @@ const showMoreSuggestions = async () => {
       ];
       totalSuggestions.value = numerologyData.value.suggestions.length;
       existingNames.value = numerologyData.value.suggestions.map(s => s.name);
-      toast.success('Đã thêm gợi ý mới!', { position: 'top-center' });
+      await checkTokenBalance(tokenCostMore.value);
+      toast.success(`Đã thêm ${response.numerology.suggestions.length} gợi ý tên mới!`, { position: 'top-center' });
     }
   } catch (error) {
-    console.error('Error:', error);
-    errors.value.general = error.data?.message || 'Không thể tải thêm gợi ý!';
+    console.error('Error loading more suggestions:', error);
+    errorMessage.value = error.data?.message || 'Không thể tải thêm gợi ý tên!';
+    toast.error(errorMessage.value, { position: 'top-center' });
   } finally {
     loading.value = false;
   }
@@ -541,7 +664,7 @@ const showMoreSuggestions = async () => {
 }
 .fade-enter-from,
 .fade-leave-to {
-  opacity: opacity 0;
+  opacity: 0;
 }
 
 .slide-fade-enter-active {

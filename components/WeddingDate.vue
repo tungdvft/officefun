@@ -48,7 +48,7 @@
                   type="text"
                   id="brideBirthdate"
                   placeholder="VD: 15/03/1995"
-                  :class="['w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-   focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.brideBirthdate ? 'border-red-500' : 'border-gray-300']"
+                  :class="['w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.brideBirthdate ? 'border-red-500' : 'border-gray-300']"
                 />
                 <p v-if="errors.brideBirthdate" class="text-red-600 text-sm mt-1">{{ errors.brideBirthdate }}</p>
               </div>
@@ -78,7 +78,7 @@
                 <p v-if="errors.groomName" class="text-red-600 text-sm mt-1">{{ errors.groomName }}</p>
               </div>
               <div>
-                <label for="groomBirthdate" class="block text-sm font-medium text-gray-700  mt-3 mb-3">Ngày sinh chú rể (DD/MM/YYYY)</label>
+                <label for="groomBirthdate" class="block text-sm font-medium text-gray-700 mt-3 mb-3">Ngày sinh chú rể (DD/MM/YYYY)</label>
                 <input
                   v-model="formData.groomBirthdate"
                   type="text"
@@ -132,23 +132,39 @@
         <div class="mt-6 flex justify-center">
           <button
             @click="fetchWeddingDates"
-            :disabled="loading"
+            :disabled="loading || !hasSufficientTokens"
             class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 shadow-md disabled:opacity-70"
           >
             <span class="flex items-center justify-center gap-2">
-              <svg v-if="loading" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg v-if="loading || isLoading" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
-              {{ loading ? 'Đang tìm ngày tốt...' : 'Tìm ngày cưới tốt nhất' }}
+              <span v-if="isLoading">{{ 'Đang kiểm tra quyền truy cập...' }}</span>
+              <span v-else-if="loading">{{ 'Đang tìm ngày tốt...' }}</span>
+              <span v-else>{{ isLoggedIn ? `Tìm ngày cưới tốt nhất (Cần ${tokenCost} tokens)` : 'Đăng nhập để tìm ngày cưới' }}</span>
             </span>
           </button>
         </div>
+
+        <!-- Error Message -->
+        <transition name="slide-fade">
+          <div v-if="errorMessage" class="mt-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-md">
+            <div class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+              </svg>
+              <strong class="font-medium">Lỗi:</strong>
+            </div>
+            <p class="mt-1 ml-7">{{ errorMessage }}</p>
+            <p v-if="hasSufficientTokens === false" class="mt-1 ml-7 text-sm">Bạn không có đủ token. Vui lòng nạp thêm.</p>
+          </div>
+        </transition>
       </div>
 
       <!-- Kết quả -->
       <transition name="slide-fade">
-        <div v-if="result?.numerology" class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+        <div v-if="result?.numerology && isContentAccessible" class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
           <div class="flex items-center mb-4">
             <span class="bg-purple-100 p-2 rounded-full mr-2">
               <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -195,7 +211,7 @@
           <div>
             <h3 class="text-xl font-bold text-purple-800 mb-4">Ngày cưới đề xuất</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div v-for="(suggestion, index) in result.numerology.suggestions" :key="index" 
+              <div v-for="(suggestion, index) in result.numerology.suggestions" :key="index"
                    class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
                 <div class="text-center mb-3">
                   <div class="text-3xl font-bold text-purple-600">{{ suggestion.dayNumber }}</div>
@@ -229,6 +245,24 @@
             </h4>
             <p class="text-gray-700 whitespace-pre-wrap">{{ result.numerology.advice }}</p>
           </div>
+
+          <!-- Nút xem thêm gợi ý -->
+          <div v-if="result?.numerology && totalSuggestions < maxSuggestions" class="flex justify-center mt-6">
+            <button
+              @click="showMoreSuggestions"
+              :disabled="loadingMore || isLoading || !hasSufficientTokensForMore"
+              class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
+            >
+              <span class="flex items-center justify-center gap-2">
+                <svg v-if="loadingMore" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span v-if="loadingMore">Đang tải...</span>
+                <span v-else>{{ isLoggedIn ? `Xem thêm gợi ý (Cần ${tokenCostMore} tokens)` : 'Đăng nhập để xem thêm' }}</span>
+              </span>
+            </button>
+          </div>
         </div>
       </transition>
     </div>
@@ -238,6 +272,8 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue';
 import { toast } from 'vue3-toastify';
+import { useProtectedContent } from '~/composables/useProtectedContent';
+import { useUserStore } from '@/stores/user';
 
 const formData = ref({
   brideName: '',
@@ -259,6 +295,17 @@ const errors = ref({
 
 const result = ref(null);
 const loading = ref(false);
+const loadingMore = ref(false);
+const totalSuggestions = ref(0);
+const maxSuggestions = ref(5);
+const tokenCost = ref(15);
+const tokenCostMore = ref(5);
+const description = 'Access to wedding date selection based on numerology';
+const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
+const isLoggedIn = ref(false);
+const hasSufficientTokensForMore = ref(true);
+let handleAction = () => {};
+const userStore = useUserStore();
 
 // Hàm lưu vào localStorage
 const saveToLocalStorage = () => {
@@ -270,28 +317,89 @@ const saveToLocalStorage = () => {
 const loadFromLocalStorage = () => {
   const savedForm = localStorage.getItem('weddingDateSelectorForm');
   const savedResult = localStorage.getItem('weddingDateSelectorResult');
-
   if (savedForm) {
     formData.value = JSON.parse(savedForm);
   }
   if (savedResult) {
     result.value = JSON.parse(savedResult);
+    totalSuggestions.value = result.value?.numerology?.suggestions?.length || 0;
   }
 };
 
-// Tải dữ liệu khi component được mounted
-onMounted(() => {
-  loadFromLocalStorage();
-});
+// Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
+const formatDateToDDMMYYYY = (dateStr) => {
+  if (!dateStr) return '';
+  const [year, month, day] = dateStr.split('-').map(Number);
+  return `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
+};
 
-// Theo dõi thay đổi để lưu vào localStorage
-watch(formData, () => {
-  saveToLocalStorage();
-}, { deep: true });
+// Hàm lấy thông tin người dùng từ API
+const fetchUserData = async () => {
+  if (!userStore.isAuthenticated || !userStore.user?.id) {
+    console.log('User not authenticated, skipping fetchUserData');
+    return;
+  }
 
-watch(result, () => {
-  saveToLocalStorage();
-}, { deep: true });
+  try {
+    const userIdValue = String(userStore.user.id);
+    console.log('Fetching user data for userId:', userIdValue);
+    const response = await $fetch(`/api/users/${userIdValue}`, {
+      method: 'GET',
+    });
+    console.log('API /api/users response:', response);
+    const { fullname, birthdate, gender } = response.user;
+    if (gender === 'female') {
+      formData.value.brideName = fullname?.trim() || '';
+      formData.value.brideBirthdate = birthdate ? formatDateToDDMMYYYY(birthdate.split('T')[0]) : '';
+    } else if (gender === 'male') {
+      formData.value.groomName = fullname?.trim() || '';
+      formData.value.groomBirthdate = birthdate ? formatDateToDDMMYYYY(birthdate.split('T')[0]) : '';
+    }
+  } catch (err) {
+    console.error('Error fetching user data:', err);
+    errorMessage.value = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
+    toast.error(errorMessage.value, { position: 'top-center' });
+  }
+};
+
+// Hàm kiểm tra số dư token
+const checkTokenBalance = async (requiredTokens) => {
+  if (!userStore.isAuthenticated || !userStore.user?.id) {
+    console.log('User not authenticated, setting hasSufficientTokensForMore to false');
+    hasSufficientTokensForMore.value = false;
+    return false;
+  }
+
+  try {
+    const response = await $fetch('/api/check-token-balance', {
+      method: 'POST',
+      headers: {
+        'x-username': encodeURIComponent(userStore.user.email),
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: { userId: String(userStore.user.id), requiredTokens }
+    });
+    console.log(`Check token balance response:`, response);
+    hasSufficientTokensForMore.value = response.hasSufficientTokens;
+    return response.hasSufficientTokens;
+  } catch (error) {
+    console.error('Error checking token balance:', error);
+    errorMessage.value = error.data?.message || 'Không thể kiểm tra số dư token!';
+    toast.error(errorMessage.value, { position: 'top-center' });
+    hasSufficientTokensForMore.value = false;
+    return false;
+  }
+};
+
+// Khởi tạo trạng thái đăng nhập và kiểm tra token
+const initializeAuth = async () => {
+  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
+  isLoggedIn.value = authStatus;
+  handleAction = action;
+  if (authStatus) {
+    await checkTokenBalance(tokenCostMore.value);
+  }
+};
 
 // Hàm validate form
 const validateForm = () => {
@@ -387,24 +495,130 @@ const validateForm = () => {
   return isValid;
 };
 
+// Hàm tìm ngày cưới
 const fetchWeddingDates = async () => {
   if (!validateForm()) return;
 
+  if (isContentAccessible.value) {
+    await getWeddingDates();
+  } else {
+    await handleAction();
+    if (isContentAccessible.value) {
+      await getWeddingDates();
+    }
+  }
+};
+
+async function getWeddingDates() {
   loading.value = true;
   try {
+    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    console.log('Sending request to /api/numerology/wedding-date with data:', formData.value);
     const response = await $fetch('/api/numerology/wedding-date', {
       method: 'POST',
-      body: formData.value
+      headers: {
+        'x-username': encodeURIComponent(username),
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: { ...formData.value, suggestionCount: 3 }
     });
+    console.log('Response from /api/numerology/wedding-date:', response);
     result.value = response;
+    totalSuggestions.value = response.numerology.suggestions.length;
+    await checkTokenBalance(tokenCostMore.value);
     toast.success('Đã tìm thấy ngày cưới tốt nhất!', { position: 'top-center' });
+    // Scroll to result
+    setTimeout(() => {
+      const resultElement = document.querySelector('[v-if="result?.numerology && isContentAccessible"]');
+      if (resultElement) {
+        resultElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   } catch (error) {
-    console.error('Error:', error);
-    errors.value.brideName = error.data?.message || 'Có lỗi xảy ra khi tìm ngày cưới';
+    console.error('Error in getWeddingDates:', error);
+    errorMessage.value = error.data?.message || 'Không thể tìm ngày cưới!';
+    toast.error(errorMessage.value, { position: 'top-center' });
   } finally {
     loading.value = false;
   }
-};
+}
+
+// Hàm xem thêm gợi ý
+async function showMoreSuggestions() {
+  if (totalSuggestions.value >= maxSuggestions.value) {
+    console.log('Reached maximum suggestions:', maxSuggestions.value);
+    return;
+  }
+
+  errorMessage.value = '';
+  console.log('Starting showMoreSuggestions, checking token balance...');
+
+  const sufficientTokens = await checkTokenBalance(tokenCostMore.value);
+  console.log('Token balance sufficient:', sufficientTokens);
+  if (!sufficientTokens) {
+    errorMessage.value = 'Bạn không có đủ token để xem thêm gợi ý!';
+    toast.error(errorMessage.value, { position: 'top-center' });
+    return;
+  }
+
+  loadingMore.value = true;
+  try {
+    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    console.log('Sending request to /api/numerology/wedding-date for more suggestions');
+    const response = await $fetch('/api/numerology/wedding-date', {
+      method: 'POST',
+      headers: {
+        'x-username': encodeURIComponent(username),
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: {
+        ...formData.value,
+        suggestionCount: 1,
+        excludeSuggestions: result.value.numerology.suggestions.map(s => s.date)
+      },
+    });
+    console.log('Response from /api/numerology/wedding-date (more suggestions):', response);
+    result.value.numerology.suggestions.push(...response.numerology.suggestions);
+    totalSuggestions.value += response.numerology.suggestions.length;
+    await checkTokenBalance(tokenCostMore.value);
+    toast.success('Đã tải thêm gợi ý ngày cưới!', { position: 'top-center' });
+  } catch (error) {
+    console.error('Error in showMoreSuggestions:', error);
+    errorMessage.value = error.data?.message || 'Không thể tải thêm gợi ý!';
+    toast.error(errorMessage.value, { position: 'top-center' });
+  } finally {
+    loadingMore.value = false;
+    console.log('showMoreSuggestions completed, loadingMore:', loadingMore.value);
+  }
+}
+
+// Tải dữ liệu khi component được mounted
+onMounted(() => {
+  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
+  loadFromLocalStorage();
+  if (userStore.isStoreInitialized) {
+    initializeAuth();
+    fetchUserData();
+  }
+});
+
+// Theo dõi thay đổi để lưu vào localStorage
+watch(formData, () => {
+  saveToLocalStorage();
+}, { deep: true });
+
+watch(result, () => {
+  saveToLocalStorage();
+}, { deep: true });
+
+// Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
+watch(() => userStore.isStoreInitialized, (initialized) => {
+  if (initialized && process.client) {
+    console.log('User store initialized, running initializeAuth and fetchUserData');
+    initializeAuth();
+    fetchUserData();
+  }
+});
 </script>
 
 <style scoped>

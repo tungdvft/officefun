@@ -8,7 +8,7 @@
       </div>
 
       <!-- Form -->
-      <form @submit.prevent="handleSubmit" class="bg-white rounded-xl shadow-lg p-6 mb-10 border border-gray-100">
+      <div class="bg-white rounded-xl shadow-lg p-6 mb-10 border border-gray-100">
         <div class="space-y-6">
           <!-- Person Cards -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -36,17 +36,15 @@
               </div>
               <div>
                 <label for="dob1" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh</label>
-                <div class="relative">
-                  <input
-                    v-model="dob1"
-                    id="dob1"
-                    type="date"
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base"
-                    required
-                    @focus="clearError"
-                    :max="maxDate"
-                  />
-                </div>
+                <input
+                  v-model="dob1"
+                  id="dob1"
+                  type="date"
+                  class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base"
+                  required
+                  @focus="clearError"
+                  :max="maxDate"
+                />
                 <p v-if="dob1 && lifePath1" class="text-sm mt-2 text-purple-600">
                   Số đường đời: {{ lifePath1 }} {{ isMasterNumber(lifePath1) ? '(Số đặc biệt)' : '' }}
                 </p>
@@ -77,18 +75,15 @@
               </div>
               <div>
                 <label for="dob2" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh</label>
-                <div class="relative">
-                  <input
-                    v-model="dob2"
-                    id="dob2"
-                    type="date"
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base"
-                    required
-                    @focus="clearError"
-                    :max="maxDate"
-                  />
-                 
-                </div>
+                <input
+                  v-model="dob2"
+                  id="dob2"
+                  type="date"
+                  class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base"
+                  required
+                  @focus="clearError"
+                  :max="maxDate"
+                />
                 <p v-if="dob2 && lifePath2" class="text-sm mt-2 text-purple-600">
                   Số đường đời: {{ lifePath2 }} {{ isMasterNumber(lifePath2) ? '(Số đặc biệt)' : '' }}
                 </p>
@@ -154,43 +149,53 @@
           <!-- Submit Button -->
           <div class="flex justify-center pt-4">
             <button
-              type="submit"
+              type="button"
+              @click="handleSubmit"
+              :disabled="isLoading || !hasSufficientTokens"
               class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
-              :disabled="isLoading"
             >
-              <span v-if="!isLoading">Xem kết quả</span>
-              <span v-else class="flex items-center justify-center">
-                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <span v-if="isLoading || loading" class="flex items-center justify-center">
+                <svg
+                  class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
                 </svg>
-                Đang tính toán...
+                {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang tính toán...' }}
               </span>
+              <span v-else>{{ isLoggedIn ? `Xem kết quả (Cần ${tokenCost} tokens)` : 'Đăng nhập để xem kết quả' }}</span>
             </button>
           </div>
+          <!-- Error Message -->
+          <transition name="slide-fade">
+            <div v-if="error" class="mt-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-md">
+              <div class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                </svg>
+                <strong class="font-medium">Lỗi:</strong>
+              </div>
+              <p class="mt-1 ml-7">{{ error }}</p>
+              <p v-if="hasSufficientTokens === false" class="mt-1 ml-7 text-sm">Bạn không có đủ token. Vui lòng nạp thêm.</p>
+            </div>
+          </transition>
         </div>
-      </form>
-
-      <!-- Error Message -->
-      <transition name="slide-fade">
-        <div v-if="error" class="mx-6 mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-md">
-          <div class="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-            </svg>
-            <strong class="font-medium">Lỗi:</strong>
-          </div>
-          <p class="mt-1 ml-7">{{ error }}</p>
-        </div>
-      </transition>
+      </div>
 
       <!-- Result -->
       <transition name="slide-fade">
-        <div v-if="result" class="p-6 bg-white rounded-xl shadow-lg border border-gray-100">
+        <div v-if="result && isContentAccessible" class="p-6 bg-white rounded-xl shadow-lg border border-gray-100">
           <div class="text-center mb-6">
             <h2 class="text-xl md:text-2xl font-bold text-purple-800">
-              Kết quả hòa hợp giữa 
-              <span class="text-purple-600">{{ name1 }}</span> và 
+              Kết quả hòa hợp giữa
+              <span class="text-purple-600">{{ name1 }}</span> và
               <span class="text-purple-600">{{ name2 }}</span>
             </h2>
             <p class="text-gray-600 mt-1">Loại mối quan hệ: {{ relationshipType }}</p>
@@ -213,7 +218,7 @@
               </span>
             </div>
             <div class="w-full bg-gray-200 rounded-full h-2.5">
-              <div class="h-2.5 rounded-full" 
+              <div class="h-2.5 rounded-full"
                    :class="getScoreBarColorClass(result.percentage)"
                    :style="`width: ${result.percentage}%`"></div>
             </div>
@@ -295,6 +300,33 @@
               </h3>
               <p class="text-gray-600">{{ result.details.suggestions }}</p>
             </div>
+
+            <!-- More Suggestions Button -->
+            <div v-if="result && totalSuggestions < maxSuggestions" class="flex justify-center mt-6">
+              <button
+                @click="showMoreSuggestions"
+                :disabled="loadingMore || isLoading || !hasSufficientTokensForMore"
+                class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
+              >
+                <span v-if="loadingMore" class="flex items-center justify-center">
+                  <svg
+                    class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path
+                      class="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Đang tải...
+                </span>
+                <span v-else>{{ isLoggedIn ? `Xem thêm gợi ý (Cần ${tokenCostMore} tokens)` : 'Đăng nhập để xem thêm' }}</span>
+              </button>
+            </div>
           </div>
         </div>
       </transition>
@@ -303,8 +335,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { correlationData } from '~/data/Compatibility';
+import { ref, computed, watch, onMounted } from 'vue';
+import { toast } from 'vue3-toastify';
+import { useProtectedContent } from '~/composables/useProtectedContent';
+import { useUserStore } from '@/stores/user';
 
 // Form state
 const name1 = ref('');
@@ -314,7 +348,18 @@ const dob2 = ref('');
 const relationshipType = ref('');
 const result = ref(null);
 const error = ref('');
-const isLoading = ref(false);
+const loading = ref(false);
+const loadingMore = ref(false);
+const totalSuggestions = ref(1);
+const maxSuggestions = ref(5);
+const tokenCost = ref(15);
+const tokenCostMore = ref(5);
+const description = 'Access to detailed compatibility analysis results';
+const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
+const isLoggedIn = ref(false);
+const hasSufficientTokensForMore = ref(true);
+let handleAction = () => {};
+const userStore = useUserStore();
 
 // Get current date for max date input
 const maxDate = computed(() => {
@@ -330,27 +375,14 @@ const isMasterNumber = (num) => {
 // Calculate life path number from date of birth (YYYY-MM-DD)
 const calculateLifePath = (dob) => {
   if (!dob) return null;
-
-  // Extract day, month, year from YYYY-MM-DD format
   const [year, month, day] = dob.split('-').map(Number);
-
-  // Calculate sum of day digits
   const daySum = Math.floor(day / 10) + (day % 10);
-
-  // Calculate sum of month digits
   const monthSum = Math.floor(month / 10) + (month % 10);
-
-  // Calculate sum of year digits
   const yearSum = year.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
-
-  // Total sum
   let sum = daySum + monthSum + yearSum;
-
-  // Reduce to single digit or master number (11, 22)
   while (sum > 9 && !isMasterNumber(sum)) {
     sum = sum.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
   }
-
   return sum;
 };
 
@@ -377,94 +409,210 @@ const getScoreBarColorClass = (score) => {
 // Clear error message when user focuses on input
 const clearError = () => {
   error.value = '';
+  errorMessage.value = '';
 };
 
-// Share result function
-const shareResult = () => {
-  if (navigator.share) {
-    navigator.share({
-      title: `Kết quả hòa hợp giữa ${name1.value} và ${name2.value}`,
-      text: `Mức độ hòa hợp: ${result.value.compatibilityLevel} (${result.value.percentage}%) - ${result.value.details.overview}`,
-      url: window.location.href
-    }).catch(err => {
-      console.error('Lỗi khi chia sẻ:', err);
+// Hàm lấy thông tin người dùng từ API
+const fetchUserData = async () => {
+  if (!userStore.isAuthenticated || !userStore.user?.id) {
+    console.log('User not authenticated, skipping fetchUserData');
+    return;
+  }
+
+  try {
+    const userIdValue = String(userStore.user.id);
+    console.log('Fetching user data for userId:', userIdValue);
+    const response = await $fetch(`/api/users/${userIdValue}`, {
+      method: 'GET',
     });
-  } else {
-    // Fallback for browsers that don't support Web Share API
-    alert('Chức năng chia sẻ không khả dụng trên trình duyệt này. Bạn có thể sao chép URL để chia sẻ.');
+    console.log('API /api/users response:', response);
+    name1.value = response.user.fullname?.trim() || '';
+    dob1.value = response.user.birthdate?.split('T')[0] || '';
+  } catch (err) {
+    console.error('Error fetching user data:', err);
+    errorMessage.value = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
+    toast.error(errorMessage.value, { position: 'top-center' });
+  }
+};
+
+// Hàm kiểm tra số dư token
+const checkTokenBalance = async (requiredTokens) => {
+  if (!userStore.isAuthenticated || !userStore.user?.id) {
+    console.log('User not authenticated, setting hasSufficientTokensForMore to false');
+    hasSufficientTokensForMore.value = false;
+    return false;
+  }
+
+  try {
+    const response = await $fetch('/api/check-token-balance', {
+      method: 'POST',
+      headers: {
+        'x-username': encodeURIComponent(userStore.user.email),
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: { userId: String(userStore.user.id), requiredTokens }
+    });
+    console.log(`Check token balance response:`, response);
+    hasSufficientTokensForMore.value = response.hasSufficientTokens;
+    return response.hasSufficientTokens;
+  } catch (error) {
+    console.error('Error checking token balance:', error);
+    errorMessage.value = error.data?.message || 'Không thể kiểm tra số dư token!';
+    toast.error(errorMessage.value, { position: 'top-center' });
+    hasSufficientTokensForMore.value = false;
+    return false;
+  }
+};
+
+// Khởi tạo trạng thái đăng nhập và kiểm tra token
+const initializeAuth = async () => {
+  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
+  isLoggedIn.value = authStatus;
+  handleAction = action;
+  if (authStatus) {
+    await checkTokenBalance(tokenCostMore.value);
   }
 };
 
 // Form submission handler
-const handleSubmit = () => {
+const handleSubmit = async () => {
   error.value = '';
+  errorMessage.value = '';
   result.value = null;
-  isLoading.value = true;
 
-  // Validate inputs
   if (!name1.value || !name2.value) {
     error.value = 'Vui lòng nhập đầy đủ họ tên.';
-    isLoading.value = false;
     return;
   }
   if (!dob1.value || !dob2.value) {
     error.value = 'Vui lòng nhập đầy đủ ngày sinh.';
-    isLoading.value = false;
     return;
   }
   if (!relationshipType.value) {
     error.value = 'Vui lòng chọn loại mối quan hệ.';
-    isLoading.value = false;
     return;
   }
 
-  // Validate life path numbers
-  if (!lifePath1.value || !lifePath2.value) {
-    error.value = 'Không thể tính số đường đời từ ngày sinh cung cấp.';
-    isLoading.value = false;
-    return;
-  }
-
-  // Simulate API call delay
-  setTimeout(() => {
-    try {
-      // Fetch compatibility data
-      const person1Data = correlationData[lifePath1.value];
-      if (!person1Data) {
-        error.value = `Không tìm thấy dữ liệu hòa hợp cho số ${lifePath1.value}.`;
-        isLoading.value = false;
-        return;
-      }
-
-      const compatibility = person1Data.compatibility.find(
-        (item) => item.partnerNumber === lifePath2.value && item.relationshipType === relationshipType.value
-      );
-
-      if (!compatibility) {
-        error.value = `Không tìm thấy dữ liệu hòa hợp cho số ${lifePath1.value} và ${lifePath2.value} với mối quan hệ ${relationshipType.value}.`;
-        isLoading.value = false;
-        return;
-      }
-
-      result.value = compatibility;
-    } catch (err) {
-      error.value = 'Đã xảy ra lỗi khi tính toán. Vui lòng thử lại.';
-      console.error(err);
-    } finally {
-      isLoading.value = false;
-
-      // Scroll to result
-      if (result.value) {
-        setTimeout(() => {
-          const resultElement = document.querySelector('[v-if="result"]');
-          if (resultElement) {
-            resultElement.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 100);
-      }
+  if (isContentAccessible.value) {
+    await getCompatibility();
+  } else {
+    await handleAction();
+    if (isContentAccessible.value) {
+      await getCompatibility();
     }
-  }, 1000);
+  }
 };
+
+async function getCompatibility() {
+  loading.value = true;
+  try {
+    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    console.log('Sending request to /api/compatibility with data:', { name1: name1.value, dob1: dob1.value, name2: name2.value, dob2: dob2.value, relationshipType: relationshipType.value });
+    const response = await $fetch('/api/compatibility', {
+      method: 'POST',
+      headers: {
+        'x-username': encodeURIComponent(username),
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: {
+        name1: name1.value,
+        dob1: dob1.value,
+        name2: name2.value,
+        dob2: dob2.value,
+        relationshipType: relationshipType.value,
+        suggestionCount: 1
+      },
+    });
+    console.log('Response from /api/compatibility:', response);
+    result.value = response.compatibility;
+    totalSuggestions.value = 1;
+    await checkTokenBalance(tokenCostMore.value);
+    toast.success('Tính toán hòa hợp hoàn tất!', { position: 'top-center' });
+    // Scroll to result
+    setTimeout(() => {
+      const resultElement = document.querySelector('[v-if="result"]');
+      if (resultElement) {
+        resultElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  } catch (error) {
+    console.error('Error in getCompatibility:', error);
+    errorMessage.value = error.data?.message || 'Không thể tính toán mức độ hòa hợp!';
+    toast.error(errorMessage.value, { position: 'top-center' });
+  } finally {
+    loading.value = false;
+  }
+}
+
+// Show more suggestions
+async function showMoreSuggestions() {
+  if (totalSuggestions.value >= maxSuggestions.value) {
+    console.log('Reached maximum suggestions:', maxSuggestions.value);
+    return;
+  }
+
+  errorMessage.value = '';
+  console.log('Starting showMoreSuggestions, checking token balance...');
+
+  const sufficientTokens = await checkTokenBalance(tokenCostMore.value);
+  console.log('Token balance sufficient:', sufficientTokens);
+  if (!sufficientTokens) {
+    errorMessage.value = 'Bạn không có đủ token để xem thêm gợi ý!';
+    toast.error(errorMessage.value, { position: 'top-center' });
+    return;
+  }
+
+  loadingMore.value = true;
+  try {
+    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    console.log('Sending request to /api/compatibility for more suggestions');
+    const response = await $fetch('/api/compatibility', {
+      method: 'POST',
+      headers: {
+        'x-username': encodeURIComponent(username),
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: {
+        name1: name1.value,
+        dob1: dob1.value,
+        name2: name2.value,
+        dob2: dob2.value,
+        relationshipType: relationshipType.value,
+        suggestionCount: 1,
+        excludeSuggestions: result.value.details.suggestions
+      },
+    });
+    console.log('Response from /api/compatibility (more suggestions):', response);
+    result.value.details.suggestions += '\n' + response.compatibility.details.suggestions;
+    totalSuggestions.value += 1;
+    await checkTokenBalance(tokenCostMore.value);
+    toast.success('Đã tải thêm gợi ý!', { position: 'top-center' });
+  } catch (error) {
+    console.error('Error in showMoreSuggestions:', error);
+    errorMessage.value = error.data?.message || 'Không thể tải thêm gợi ý!';
+    toast.error(errorMessage.value, { position: 'top-center' });
+  } finally {
+    loadingMore.value = false;
+    console.log('showMoreSuggestions completed, loadingMore:', loadingMore.value);
+  }
+}
+
+// Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
+watch(() => userStore.isStoreInitialized, (initialized) => {
+  if (initialized && process.client) {
+    console.log('User store initialized, running initializeAuth and fetchUserData');
+    initializeAuth();
+    fetchUserData();
+  }
+});
+
+onMounted(() => {
+  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
+  if (userStore.isStoreInitialized) {
+    initializeAuth();
+    fetchUserData();
+  }
+});
 </script>
 
 <style scoped>

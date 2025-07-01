@@ -48,17 +48,18 @@
             />
           </div>
           <!-- Error Message -->
-          <div v-if="errors.general" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
-            {{ errors.general }}
+          <div v-if="errors.general || errorMessage" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
+            {{ errors.general || errorMessage }}
+            <p v-if="hasSufficientTokens === false" class="mt-1 text-sm">Bạn không có đủ token. Vui lòng nạp thêm.</p>
           </div>
           <!-- Button -->
           <div class="flex justify-center">
             <button
               @click="getCareerGuidance"
-              :disabled="loading"
+              :disabled="loading || !hasSufficientTokens"
               class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
             >
-              <span v-if="loading" class="flex items-center justify-center">
+              <span v-if="loading || isLoading" class="flex items-center justify-center">
                 <svg
                   class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                   xmlns="http://www.w3.org/2000/svg"
@@ -72,16 +73,16 @@
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   ></path>
                 </svg>
-                Đang phân tích...
+                {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang phân tích...' }}
               </span>
-              <span v-else>Xem định hướng nghề nghiệp</span>
+              <span v-else>{{ isLoggedIn ? `Xem định hướng nghề nghiệp (Cần ${tokenCost} tokens)` : 'Đăng nhập để xem định hướng' }}</span>
             </button>
           </div>
         </div>
 
         <!-- Results Section -->
         <transition name="slide-fade">
-          <div v-if="result" class="mt-8 space-y-6">
+          <div v-if="result && isContentAccessible" class="mt-8 space-y-6">
             <!-- Tổng quan -->
             <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
               <h3 class="text-lg font-semibold text-purple-700 flex items-center">
@@ -183,13 +184,13 @@
                 </div>
               </div>
               <!-- Button to load more career suggestions -->
-              <div v-if="result.careerSuggestions.length < 12" class="flex justify-center mt-6">
+              <div v-if="result.careerSuggestions.length < maxSuggestions && isContentAccessible" class="flex justify-center mt-6">
                 <button
                   @click="loadMoreCareers"
-                  :disabled="loadingMore"
+                  :disabled="loadingMore || isLoading || !hasSufficientTokensForMore"
                   class="w-auto bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-700 hover:to-cyan-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
                 >
-                  <span v-if="loadingMore" class="flex items-center justify-center">
+                  <span v-if="loadingMore || isLoading" class="flex items-center justify-center">
                     <svg
                       class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                       xmlns="http://www.w3.org/2000/svg"
@@ -203,9 +204,9 @@
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       ></path>
                     </svg>
-                    Đang tải...
+                    {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang tải...' }}
                   </span>
-                  <span v-else>Xem thêm nghề nghiệp phù hợp</span>
+                  <span v-else>{{ isLoggedIn ? `Xem thêm nghề nghiệp phù hợp (Cần ${tokenCostMore} tokens)` : 'Đăng nhập để xem thêm' }}</span>
                 </button>
               </div>
             </div>
@@ -241,6 +242,8 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { toast } from 'vue3-toastify';
+import { useProtectedContent } from '~/composables/useProtectedContent';
+import { useUserStore } from '@/stores/user';
 
 definePageMeta({ layout: 'view' });
 
@@ -257,9 +260,89 @@ const errors = ref({
   birthdate: '',
   general: ''
 });
+const tokenCost = ref(15);
+const tokenCostMore = ref(5);
+const maxSuggestions = ref(12);
+const description = 'Access to career guidance based on numerology';
+const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
+const isLoggedIn = ref(false);
+const hasSufficientTokensForMore = ref(true);
+let handleAction = () => {};
+const userStore = useUserStore();
+
+// Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
+const formatDateToDDMMYYYY = (dateStr) => {
+  if (!dateStr) return '';
+  const [year, month, day] = dateStr.split('-').map(Number);
+  return `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
+};
+
+// Hàm lấy thông tin người dùng từ API
+const fetchUserData = async () => {
+  if (!userStore.isAuthenticated || !userStore.user?.id) {
+    console.log('User not authenticated, skipping fetchUserData');
+    return;
+  }
+
+  try {
+    const userIdValue = String(userStore.user.id);
+    console.log('Fetching user data for userId:', userIdValue);
+    const response = await $fetch(`/api/users/${userIdValue}`, {
+      method: 'GET',
+    });
+    console.log('API /api/users response:', response);
+    const { fullname, birthdate } = response.user;
+    formData.value.name = fullname?.trim() || '';
+    formData.value.birthdate = birthdate ? formatDateToDDMMYYYY(birthdate.split('T')[0]) : '';
+  } catch (err) {
+    console.error('Error fetching user data:', err);
+    errorMessage.value = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
+    toast.error(errorMessage.value, { position: 'top-center' });
+  }
+};
+
+// Hàm kiểm tra số dư token
+const checkTokenBalance = async (requiredTokens) => {
+  if (!userStore.isAuthenticated || !userStore.user?.id) {
+    console.log('User not authenticated, setting hasSufficientTokensForMore to false');
+    hasSufficientTokensForMore.value = false;
+    return false;
+  }
+
+  try {
+    const response = await $fetch('/api/check-token-balance', {
+      method: 'POST',
+      headers: {
+        'x-username': encodeURIComponent(userStore.user.email),
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: { userId: String(userStore.user.id), requiredTokens }
+    });
+    console.log(`Check token balance response:`, response);
+    hasSufficientTokensForMore.value = response.hasSufficientTokens;
+    return response.hasSufficientTokens;
+  } catch (error) {
+    console.error('Error checking token balance:', error);
+    errorMessage.value = error.data?.message || 'Không thể kiểm tra số dư token!';
+    toast.error(errorMessage.value, { position: 'top-center' });
+    hasSufficientTokensForMore.value = false;
+    return false;
+  }
+};
+
+// Khởi tạo trạng thái đăng nhập và kiểm tra token
+const initializeAuth = async () => {
+  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
+  isLoggedIn.value = authStatus;
+  handleAction = action;
+  if (authStatus) {
+    await checkTokenBalance(tokenCostMore.value);
+  }
+};
 
 // Load saved data from localStorage on mount
 onMounted(() => {
+  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
   const savedData = localStorage.getItem('careerGuidanceData');
   if (savedData) {
     const parsed = JSON.parse(savedData);
@@ -270,6 +353,10 @@ onMounted(() => {
     };
     result.value = parsed.result || null;
   }
+  if (userStore.isStoreInitialized) {
+    initializeAuth();
+    fetchUserData();
+  }
 });
 
 // Save data to localStorage on change
@@ -279,6 +366,15 @@ watch([formData, result], () => {
     result: result.value
   }));
 }, { deep: true });
+
+// Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
+watch(() => userStore.isStoreInitialized, (initialized) => {
+  if (initialized && process.client) {
+    console.log('User store initialized, running initializeAuth and fetchUserData');
+    initializeAuth();
+    fetchUserData();
+  }
+});
 
 // Validate form
 const validateForm = () => {
@@ -323,10 +419,22 @@ const validateForm = () => {
 const getCareerGuidance = async () => {
   if (!validateForm()) return;
 
+  if (isContentAccessible.value) {
+    await fetchCareerGuidance();
+  } else {
+    await handleAction();
+    if (isContentAccessible.value) {
+      await fetchCareerGuidance();
+    }
+  }
+};
+
+async function fetchCareerGuidance() {
   loading.value = true;
   errors.value.general = '';
   try {
-    const username = localStorage.getItem('username') || 'guest';
+    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    console.log('Sending request to /api/numerology/career with data:', formData.value);
     const response = await $fetch('/api/numerology/career', {
       method: 'POST',
       headers: {
@@ -335,29 +443,42 @@ const getCareerGuidance = async () => {
       },
       body: { ...formData.value, numSuggestions: 3, previousJobs: [] }
     });
+    console.log('Response from /api/numerology/career:', response);
     result.value = response;
+    await checkTokenBalance(tokenCostMore.value);
     toast.success('Định hướng nghề nghiệp đã hoàn tất!', { position: 'top-center' });
+    // Scroll to result
+    setTimeout(() => {
+      const resultElement = document.querySelector('[v-if="result && isContentAccessible"]');
+      if (resultElement) {
+        resultElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   } catch (error) {
-    console.error('Error:', error);
-    errors.value.general = error.data?.message || 'Có lỗi xảy ra khi lấy định hướng nghề nghiệp!';
-    toast.error(errors.value.general, { position: 'top-center' });
+    console.error('Error in fetchCareerGuidance:', error);
+    errorMessage.value = error.data?.message || 'Có lỗi xảy ra khi lấy định hướng nghề nghiệp!';
+    toast.error(errorMessage.value, { position: 'top-center' });
   } finally {
     loading.value = false;
   }
-};
+}
 
 const loadMoreCareers = async () => {
   if (!result.value) return;
 
+  const sufficientTokens = await checkTokenBalance(tokenCostMore.value);
+  if (!sufficientTokens) {
+    errorMessage.value = 'Bạn không có đủ token để xem thêm nghề nghiệp!';
+    toast.error(errorMessage.value, { position: 'top-center' });
+    return;
+  }
+
   loadingMore.value = true;
   try {
-    const username = localStorage.getItem('username') || 'guest';
-    const numSuggestions = result.value.careerSuggestions.length + 3;
-    if (numSuggestions > 12) {
-      toast.info('Đã đạt số lượng tối đa 12 nghề nghiệp!', { position: 'top-center' });
-      return;
-    }
+    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    const numSuggestions = Math.min(result.value.careerSuggestions.length + 3, maxSuggestions.value);
     const previousJobs = result.value.careerSuggestions.map(s => s.job);
+    console.log('Sending request to /api/numerology/career for more suggestions');
     const response = await $fetch('/api/numerology/career', {
       method: 'POST',
       headers: {
@@ -366,12 +487,14 @@ const loadMoreCareers = async () => {
       },
       body: { ...formData.value, numSuggestions, previousJobs }
     });
+    console.log('Response from /api/numerology/career (more suggestions):', response);
     result.value = response;
-    toast.success(`Đã tải thêm ${response.careerSuggestions.length % 3 === 0 ? 3 : response.careerSuggestions.length - result.value.careerSuggestions.length} nghề nghiệp phù hợp!`, { position: 'top-center' });
+    await checkTokenBalance(tokenCostMore.value);
+    toast.success(`Đã tải thêm ${response.careerSuggestions.length - (result.value.careerSuggestions.length - 3)} nghề nghiệp phù hợp!`, { position: 'top-center' });
   } catch (error) {
     console.error('Error loading more careers:', error);
-    errors.value.general = error.data?.message || 'Có lỗi khi tải thêm nghề nghiệp!';
-    toast.error(errors.value.general, { position: 'top-center' });
+    errorMessage.value = error.data?.message || 'Có lỗi khi tải thêm nghề nghiệp!';
+    toast.error(errorMessage.value, { position: 'top-center' });
   } finally {
     loadingMore.value = false;
   }
