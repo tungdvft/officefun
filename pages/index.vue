@@ -75,6 +75,9 @@ import Calculator from '~/components/Calculator.vue'
 import Testimonials from '~/components/Testimonials.vue'
 import FAQ from '~/components/FAQ.vue'
 import Blog from '~/components/Blog.vue'
+definePageMeta({
+  middleware: ['auth-redirect']
+});
 export default {
   components: {
     Hero,
