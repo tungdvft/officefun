@@ -1,4 +1,3 @@
-
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
     <div class="container mx-auto p-4">
@@ -233,9 +232,10 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, computed } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { toast } from 'vue3-toastify';
 import { useProtectedContent } from '~/composables/useProtectedContent';
+import { useUserStore } from '@/stores/user';
 
 definePageMeta({ layout: 'view' });
 
@@ -253,7 +253,16 @@ const description = 'Access to detailed numerology consultation results';
 const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
 const isLoggedIn = ref(false);
 let handleAction = () => {};
-const isInitialLoad = ref(true);
+const userStore = useUserStore();
+
+// Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
+const formatDateToDDMMYYYY = (dateStr) => {
+  if (!dateStr || !/^\d{4}-\d{2}-\d{2}(T.*)?$/.test(dateStr)) {
+    return '';
+  }
+  const [year, month, day] = dateStr.split('T')[0].split('-');
+  return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+};
 
 // Hàm làm sạch dữ liệu, loại bỏ ký tự không hợp lệ
 const cleanString = (str) => {
@@ -292,6 +301,32 @@ const cleanResult = (data) => {
   };
 };
 
+// Hàm lấy thông tin người dùng từ API
+const fetchUserData = async () => {
+  if (!userStore.isAuthenticated || !userStore.user?.id) {
+    // Không chuyển hướng, để input trống để người dùng nhập thủ công
+    return;
+  }
+
+  try {
+    const userIdValue = String(userStore.user.id);
+    console.log('Fetching user data for userId:', userIdValue);
+    const response = await $fetch(`/api/users/${userIdValue}`, {
+      method: 'GET',
+    });
+    console.log('API response:', response);
+    formData.value.name = response.user.fullname?.trim() || '';
+    formData.value.birthDate = response.user.birthdate ? formatDateToDDMMYYYY(response.user.birthdate) : '';
+  } catch (err) {
+    console.error('API error:', err);
+    errorMessage.value = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng thử lại.';
+    toast.error(errorMessage.value, {
+      position: 'top-center',
+      theme: 'colored',
+    });
+  }
+};
+
 // Khởi tạo trạng thái đăng nhập và hành động
 const initializeAuth = async () => {
   const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
@@ -299,87 +334,7 @@ const initializeAuth = async () => {
   handleAction = action;
 };
 
-// Khôi phục dữ liệu từ Local Storage (chỉ ở client)
-onMounted(() => {
-  if (process.client) {
-    console.log('Running on client, restoring localStorage');
-    try {
-      const savedFormData = localStorage.getItem('numerologyFormData');
-      const savedResult = localStorage.getItem('numerologyResult');
-
-      if (savedFormData) {
-        const parsedFormData = JSON.parse(savedFormData);
-        if (parsedFormData && typeof parsedFormData === 'object') {
-          formData.value = {
-            name: cleanString(parsedFormData.name),
-            birthDate: cleanString(parsedFormData.birthDate),
-            question: cleanString(parsedFormData.question)
-          };
-          console.log('Khôi phục formData:', formData.value);
-        }
-      }
-
-      if (savedResult) {
-        const parsedResult = JSON.parse(savedResult);
-        if (parsedResult && typeof parsedResult === 'object') {
-          result.value = cleanResult(parsedResult);
-          console.log('Khôi phục result:', result.value);
-        }
-      }
-
-      // Khởi tạo trạng thái đăng nhập nếu có dữ liệu form hoặc result
-      if (savedFormData || savedResult) {
-        initializeAuth();
-        isInitialLoad.value = false;
-      }
-    } catch (error) {
-      console.error('Lỗi khi khôi phục dữ liệu từ Local Storage:', error);
-      toast.error('Không thể khôi phục dữ liệu cũ!', { position: 'top-center' });
-    }
-  } else {
-    console.log('Running on server, skipping localStorage');
-  }
-});
-
-// Lưu formData khi thay đổi (chỉ ở client)
-watch(
-  () => cleanedFormData.value,
-  (newFormData) => {
-    if (process.client) {
-      try {
-        localStorage.setItem('numerologyFormData', JSON.stringify(newFormData));
-        console.log('Lưu formData:', newFormData);
-      } catch (error) {
-        console.error('Lỗi khi lưu formData vào Local Storage:', error);
-        toast.error('Không thể lưu dữ liệu form!', { position: 'top-center' });
-      }
-    }
-  },
-  { deep: true, immediate: true }
-);
-
-// Lưu result khi thay đổi (chỉ ở client)
-watch(
-  () => result.value,
-  (newResult) => {
-    if (process.client) {
-      try {
-        if (newResult) {
-          localStorage.setItem('numerologyResult', JSON.stringify(newResult));
-          console.log('Lưu result:', newResult);
-        } else {
-          localStorage.removeItem('numerologyResult');
-          console.log('Xóa result khỏi Local Storage');
-        }
-      } catch (error) {
-        console.error('Lỗi khi lưu result vào Local Storage:', error);
-        toast.error('Không thể lưu kết quả!', { position: 'top-center' });
-      }
-    }
-  },
-  { immediate: true }
-);
-
+// Xử lý gửi câu hỏi
 const consult = async () => {
   errorMessage.value = null;
 
@@ -400,7 +355,7 @@ const consult = async () => {
 async function getConsultation() {
   loading.value = true;
   try {
-    const username = process.client ? localStorage.getItem('username') || 'guest' : 'guest';
+    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
     const response = await $fetch('/api/numerology/consult', {
       method: 'POST',
       headers: {
@@ -419,6 +374,21 @@ async function getConsultation() {
     loading.value = false;
   }
 }
+
+// Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
+watch(() => userStore.isStoreInitialized, (initialized) => {
+  if (initialized && process.client) {
+    initializeAuth();
+    fetchUserData();
+  }
+});
+
+onMounted(() => {
+  if (userStore.isStoreInitialized) {
+    initializeAuth();
+    fetchUserData();
+  }
+});
 </script>
 
 <style scoped>

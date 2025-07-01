@@ -1,4 +1,3 @@
-
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
     <div class="container mx-auto p-4">
@@ -101,6 +100,7 @@
           <div v-if="errorMessage" class="mt-6 p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
             <p>{{ errorMessage }}</p>
             <p v-if="hasSufficientTokens === false" class="text-sm mt-1">Bạn không có đủ token. Vui lòng nạp thêm.</p>
+            <p v-if="hasSufficientTokensForMore === false" class="text-sm mt-1">Bạn không có đủ token để xem thêm gợi ý. Vui lòng nạp thêm.</p>
           </div>
         </div>
 
@@ -246,7 +246,7 @@
               <div v-if="numerologyData && totalSuggestions < 30" class="flex justify-center mt-6">
                 <button
                   @click="showMoreSuggestions"
-                  :disabled="loadingMore"
+                  :disabled="loadingMore || isLoading || hasSufficientTokensForMore"
                   class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
                 >
                   <span v-if="loadingMore" class="flex items-center justify-center">
@@ -265,7 +265,7 @@
                     </svg>
                     Đang tải...
                   </span>
-                  <span v-else>Xem thêm gợi ý</span>
+                  <span v-else>{{ isLoggedIn ? `Xem thêm gợi ý (Cần 5 tokens)` : 'Đăng nhập để xem thêm' }}</span>
                 </button>
               </div>
             </div>
@@ -302,6 +302,7 @@
 import { ref, watch, onMounted } from 'vue';
 import { toast } from 'vue3-toastify';
 import { useProtectedContent } from '~/composables/useProtectedContent';
+import { useUserStore } from '@/stores/user';
 
 const formData = ref({
   name: '',
@@ -314,11 +315,22 @@ const loading = ref(false);
 const loadingMore = ref(false);
 const totalSuggestions = ref(3);
 const tokenCost = ref(15);
+const tokenCostMore = ref(5);
 const description = 'Access to detailed numerology nickname generation results';
 const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
 const isLoggedIn = ref(false);
+const hasSufficientTokensForMore = ref(true);
 let handleAction = () => {};
-const isInitialLoad = ref(true);
+const userStore = useUserStore();
+
+// Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
+const formatDateToDDMMYYYY = (dateStr) => {
+  if (!dateStr || !/^\d{4}-\d{2}-\d{2}(T.*)?$/.test(dateStr)) {
+    return '';
+  }
+  const [year, month, day] = dateStr.split('T')[0].split('-');
+  return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+};
 
 // Hàm làm sạch dữ liệu, loại bỏ ký tự không hợp lệ
 const cleanString = (str) => {
@@ -349,100 +361,70 @@ const cleanNumerologyData = (data) => {
   };
 };
 
-// Khởi tạo trạng thái đăng nhập và hành động
+// Hàm kiểm tra số dư token
+const checkTokenBalance = async (requiredTokens) => {
+  if (!userStore.isAuthenticated || !userStore.user?.id) {
+    console.log('User not authenticated, setting hasSufficientTokensForMore to false');
+    hasSufficientTokensForMore.value = false;
+    return false;
+  }
+
+  try {
+    const response = await $fetch('/api/check-token-balance', {
+      method: 'POST',
+      headers: {
+        'x-username': encodeURIComponent(userStore.user.email),
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: { userId: String(userStore.user.id), requiredTokens }
+    });
+    console.log(`Check token balance response:`, response);
+    hasSufficientTokensForMore.value = response.hasSufficientTokens;
+    return response.hasSufficientTokens;
+  } catch (error) {
+    console.error('Error checking token balance:', error);
+    errorMessage.value = error.data?.message || 'Không thể kiểm tra số dư token!';
+    toast.error(errorMessage.value, { position: 'top-center' });
+    hasSufficientTokensForMore.value = false;
+    return false;
+  }
+};
+
+// Hàm lấy thông tin người dùng từ API
+const fetchUserData = async () => {
+  if (!userStore.isAuthenticated || !userStore.user?.id) {
+    console.log('User not authenticated, skipping fetchUserData');
+    return;
+  }
+
+  try {
+    const userIdValue = String(userStore.user.id);
+    console.log('Fetching user data for userId:', userIdValue);
+    const response = await $fetch(`/api/users/${userIdValue}`, {
+      method: 'GET',
+    });
+    console.log('API /api/users response:', response);
+    formData.value.name = response.user.fullname?.trim() || '';
+    formData.value.birthdate = response.user.birthdate ? formatDateToDDMMYYYY(response.user.birthdate) : '';
+  } catch (err) {
+    console.error('Error fetching user data:', err);
+    errorMessage.value = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng thử lại.';
+    toast.error(errorMessage.value, { position: 'top-center' });
+  }
+};
+
+// Khởi tạo trạng thái đăng nhập và kiểm tra token
 const initializeAuth = async () => {
   const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
   isLoggedIn.value = authStatus;
   handleAction = action;
+  // Kiểm tra số dư token khi khởi tạo
+  if (authStatus) {
+    await checkTokenBalance(tokenCostMore.value);
+  }
 };
 
-// Khôi phục dữ liệu từ Local Storage (chỉ ở client)
-onMounted(() => {
-  if (process.client) {
-    console.log('Running on client, restoring localStorage');
-    try {
-      const savedFormData = localStorage.getItem('nicknameFormData');
-      const savedNumerologyData = localStorage.getItem('nicknameNumerologyData');
-
-      if (savedFormData) {
-        const parsedFormData = JSON.parse(savedFormData);
-        if (parsedFormData && typeof parsedFormData === 'object') {
-          formData.value = {
-            name: cleanString(parsedFormData.name),
-            birthdate: cleanString(parsedFormData.birthdate),
-            gender: cleanString(parsedFormData.gender),
-            startLetter: cleanString(parsedFormData.startLetter)
-          };
-          console.log('Khôi phục formData:', formData.value);
-        }
-      }
-
-      if (savedNumerologyData) {
-        const parsedNumerologyData = JSON.parse(savedNumerologyData);
-        if (parsedNumerologyData && typeof parsedNumerologyData === 'object') {
-          numerologyData.value = cleanNumerologyData(parsedNumerologyData);
-          console.log('Khôi phục numerologyData:', numerologyData.value);
-        }
-      }
-
-      // Khởi tạo trạng thái đăng nhập nếu có dữ liệu form hoặc numerologyData
-      if (savedFormData || savedNumerologyData) {
-        initializeAuth();
-        isInitialLoad.value = false;
-      }
-    } catch (error) {
-      console.error('Lỗi khi khôi phục dữ liệu từ Local Storage:', error);
-      toast.error('Không thể khôi phục dữ liệu cũ!', { position: 'top-center' });
-    }
-  } else {
-    console.log('Running on server, skipping localStorage');
-  }
-});
-
-// Lưu formData khi thay đổi (chỉ ở client)
-watch(
-  () => formData.value,
-  (newFormData) => {
-    if (process.client) {
-      try {
-        localStorage.setItem('nicknameFormData', JSON.stringify({
-          name: cleanString(newFormData.name),
-          birthdate: cleanString(newFormData.birthdate),
-          gender: cleanString(newFormData.gender),
-          startLetter: cleanString(newFormData.startLetter)
-        }));
-        console.log('Lưu formData:', newFormData);
-      } catch (error) {
-        console.error('Lỗi khi lưu formData vào Local Storage:', error);
-        toast.error('Không thể lưu dữ liệu form!', { position: 'top-center' });
-      }
-    }
-  },
-  { deep: true, immediate: true }
-);
-
-// Lưu numerologyData khi thay đổi (chỉ ở client)
-watch(
-  () => numerologyData.value,
-  (newNumerologyData) => {
-    if (process.client) {
-      try {
-        if (newNumerologyData) {
-          localStorage.setItem('nicknameNumerologyData', JSON.stringify(newNumerologyData));
-          console.log('Lưu numerologyData:', newNumerologyData);
-        } else {
-          localStorage.removeItem('nicknameNumerologyData');
-          console.log('Xóa numerologyData khỏi Local Storage');
-        }
-      } catch (error) {
-        console.error('Lỗi khi lưu numerologyData vào Local Storage:', error);
-        toast.error('Không thể lưu kết quả!', { position: 'top-center' });
-      }
-    }
-  },
-  { immediate: true }
-);
-
+// Xử lý tạo danh xưng
 const generateNickname = async () => {
   errorMessage.value = null;
 
@@ -466,8 +448,8 @@ const generateNickname = async () => {
 async function getNickname() {
   loading.value = true;
   try {
-    const username = process.client ? localStorage.getItem('username') || 'guest' : 'guest';
-    console.log('Sending request with data:', formData.value);
+    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    console.log('Sending request to /api/numerology/nickname with data:', formData.value);
     const response = await $fetch('/api/numerology/nickname', {
       method: 'POST',
       headers: {
@@ -478,16 +460,18 @@ async function getNickname() {
         name: formData.value.name,
         birthdate: formData.value.birthdate,
         gender: formData.value.gender,
-        startLetter: formData.value.startLetter || undefined,
+        startLetter: formData.startLetter || undefined,
         count: 3
       },
     });
-    console.log('Response from API:', response);
+    console.log('Response from /api/numerology/nickname:', response);
     numerologyData.value = cleanNumerologyData(response.numerology);
     totalSuggestions.value = 3;
+    // Kiểm tra số dư token cho "Xem thêm gợi ý"
+    await checkTokenBalance(tokenCostMore.value);
     toast.success('Tạo danh xưng hoàn tất!', { position: 'top-center' });
   } catch (error) {
-    console.error('Error details:', error);
+    console.error('Error in getNickname:', error);
     errorMessage.value = error.data?.message || 'Không thể tạo danh xưng!';
     toast.error(errorMessage.value, { position: 'top-center' });
   } finally {
@@ -495,13 +479,29 @@ async function getNickname() {
   }
 }
 
-const showMoreSuggestions = async () => {
-  if (totalSuggestions.value >= 30) return;
+async function showMoreSuggestions() {
+  if (totalSuggestions.value >= 30) {
+    console.log('Reached maximum suggestions (30)');
+    return;
+  }
+
+  errorMessage.value = null;
+  console.log('Starting showMoreSuggestions, checking token balance...');
+
+  // Kiểm tra số dư token
+  const sufficientTokens = await checkTokenBalance(tokenCostMore.value);
+  console.log('Token balance sufficient:', sufficientTokens);
+  if (!sufficientTokens) {
+    errorMessage.value = 'Bạn không có đủ token để xem thêm gợi ý!';
+    toast.error(errorMessage.value, { position: 'top-center' });
+    return;
+  }
 
   loadingMore.value = true;
   try {
     const excludeNames = numerologyData.value.suggestions.map(s => s.name);
-    const username = process.client ? localStorage.getItem('username') || 'guest' : 'guest';
+    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    console.log('Sending request to /api/numerology/nickname with excludeNames:', excludeNames);
     const response = await $fetch('/api/numerology/nickname', {
       method: 'POST',
       headers: {
@@ -512,22 +512,43 @@ const showMoreSuggestions = async () => {
         name: formData.value.name,
         birthdate: formData.value.birthdate,
         gender: formData.value.gender,
-        startLetter: formData.value.startLetter || undefined,
+        startLetter: formData.startLetter || undefined,
         count: 3,
         excludeNames
       },
     });
+    console.log('Response from /api/numerology/nickname (more suggestions):', response);
     numerologyData.value.suggestions.push(...cleanNumerologyData(response.numerology).suggestions);
     totalSuggestions.value += 3;
+    // Kiểm tra lại số dư token sau khi trừ
+    await checkTokenBalance(tokenCostMore.value);
     toast.success('Đã tải thêm gợi ý!', { position: 'top-center' });
   } catch (error) {
-    console.error('Error fetching more suggestions:', error);
+    console.error('Error in showMoreSuggestions:', error);
     errorMessage.value = error.data?.message || 'Không thể tải thêm gợi ý!';
     toast.error(errorMessage.value, { position: 'top-center' });
   } finally {
     loadingMore.value = false;
+    console.log('showMoreSuggestions completed, loadingMore:', loadingMore.value);
   }
-};
+}
+
+// Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
+watch(() => userStore.isStoreInitialized, (initialized) => {
+  if (initialized && process.client) {
+    console.log('User store initialized, running initializeAuth and fetchUserData');
+    initializeAuth();
+    fetchUserData();
+  }
+});
+
+onMounted(() => {
+  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
+  if (userStore.isStoreInitialized) {
+    initializeAuth();
+    fetchUserData();
+  }
+});
 </script>
 
 <style scoped>
