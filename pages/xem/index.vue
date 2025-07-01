@@ -1,3 +1,4 @@
+
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center py-8">
     <div class="container mx-auto px-4">
@@ -191,10 +192,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useGeneralStore } from '~/stores/general';
+import { ref, onMounted, watch } from 'vue';
+import { useUserStore } from '~/stores/user';
 import { useRouter } from 'vue-router';
 import { useHead } from '@unhead/vue';
+import { toast } from 'vue3-toastify';
 import LifePathCalculator from '~/components/LifePathCalculator.vue';
 import PersonalYearChart from '~/components/PersonalYearChart.vue';
 import PersonalityGroups from '~/components/PersonalityGroups.vue';
@@ -207,12 +209,12 @@ import LifePathDestinyDisplay from '~/components/LifePathDestinyDisplay.vue';
 import ChallengeDisplay from '~/components/ChallengeDisplay.vue';
 import MaturityDisplay from '~/components/MaturityDisplay.vue';
 import MaturePowerDisplay from '~/components/MaturePowerDisplay.vue';
+import ExpressionNumber from '~/components/ExpressionNumber.vue';
 import SoulUrgeDisplay from '~/components/SoulUrgeDisplay.vue';
 import LifePathAndSoulUrge from '~/components/LifePathAndSoulUrge.vue';
 import SoulChallengeDisplay from '~/components/SoulChallengeDisplay.vue';
 import PersonalityDisplay from '~/components/PersonalityDisplay.vue';
 import NumerologyPowerChart from '~/components/NumerologyPowerChart.vue';
-import ExpressionNumber from '~/components/ExpressionNumber.vue';
 import PersonalityChallengeDisplay from '~/components/PersonalityChallengeDisplay.vue';
 import WeaknessDisplay from '~/components/WeaknessDisplay.vue';
 import NaturalAbilityDisplay from '~/components/NaturalAbilityDisplay.vue';
@@ -244,7 +246,7 @@ useHead({
   ],
 });
 
-const generalStore = useGeneralStore();
+const userStore = useUserStore();
 const router = useRouter();
 
 const fullName = ref('');
@@ -256,6 +258,44 @@ const error = ref('');
 const isLoading = ref(false);
 const startCalulation = ref(false);
 const showDetailedComponents = ref(false);
+const userData = ref(null);
+
+// Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
+const formatDateToDDMMYYYY = (dateStr) => {
+  if (!dateStr || !/^\d{4}-\d{2}-\d{2}(T.*)?$/.test(dateStr)) {
+    return '';
+  }
+  const [year, month, day] = dateStr.split('T')[0].split('-');
+  return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+};
+
+// Hàm lấy thông tin người dùng từ API
+const fetchUserData = async () => {
+  if (!userStore.isAuthenticated || !userStore.user?.id) {
+    // Không chuyển hướng, chỉ để input trống để người dùng nhập thủ công
+    return;
+  }
+
+  try {
+    const userId = String(userStore.user.id); // Ép kiểu userId thành chuỗi
+    console.log('Fetching user data for userId:', userId);
+    const response = await $fetch(`/api/users/${userId}`, {
+      method: 'GET',
+    });
+    console.log('API response:', response);
+    userData.value = response.user;
+    // Điền dữ liệu vào input
+    fullName.value = userData.value.fullname?.trim() || '';
+    birthDate.value = userData.value.birthdate ? formatDateToDDMMYYYY(userData.value.birthdate) : '';
+  } catch (err) {
+    console.error('API error:', err);
+    error.value = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng thử lại.';
+    toast.error(error.value, {
+      position: 'top-center',
+      theme: 'colored',
+    });
+  }
+};
 
 // Hàm để hiển thị các component chi tiết và cuộn xuống
 const showDetails = () => {
@@ -268,131 +308,6 @@ const showDetails = () => {
   }, 100);
 };
 
-// Khởi tạo giá trị từ generalStore, localStorage userData, hoặc localStorage auth
-onMounted(async () => {
-  // 1. Ưu tiên khôi phục từ generalStore
-  if (generalStore.hasData) {
-    fullName.value = generalStore.fullname;
-    birthDate.value = generalStore.birthdate;
-    calculatedFullName.value = generalStore.fullname;
-    calculatedBirthDate.value = generalStore.birthdate;
-
-    try {
-      const lifePath = calculateLifePathNumber(generalStore.birthdate);
-      const lifePathStr = [11, 22].includes(lifePath) ? lifePath.toString() : lifePath.toString();
-      const { data: lifePathData, error: lifePathError } = await useFetch(`/api/life-path/${lifePathStr}`, {
-        baseURL: useRuntimeConfig().public.apiBase,
-      });
-
-      if (lifePathError.value) {
-        console.error('Lỗi API Số Đường Đời từ generalStore:', lifePathError.value);
-        error.value = 'Lỗi khi lấy dữ liệu Số Đường Đời.';
-        return;
-      }
-
-      if (!lifePathData.value) {
-        error.value = 'Không tìm thấy dữ liệu cho Số Đường Đời này.';
-        return;
-      }
-
-      result.value = lifePathData.value;
-      startCalulation.value = true;
-      return; // Thoát sớm nếu dữ liệu từ generalStore hợp lệ
-    } catch (err) {
-      console.error('Lỗi khi tính toán result từ generalStore:', err);
-      error.value = err.message;
-    }
-  }
-
-  // 2. Nếu generalStore không có dữ liệu, kiểm tra localStorage với key 'userData'
-  const savedUserData = localStorage.getItem('userData');
-  if (savedUserData) {
-    try {
-      const parsedData = JSON.parse(savedUserData);
-      const { fullName: savedFullName, birthDate: savedBirthDate, startCalulation: savedStartCalulation, result: savedResult } = parsedData;
-      if (
-        savedFullName &&
-        savedBirthDate &&
-        /^\d{2}\/\d{2}\/\d{4}$/.test(savedBirthDate) &&
-        savedResult
-      ) {
-        fullName.value = savedFullName;
-        birthDate.value = savedBirthDate;
-        calculatedFullName.value = savedFullName;
-        calculatedBirthDate.value = savedBirthDate;
-        result.value = savedResult;
-        startCalulation.value = savedStartCalulation;
-        return; // Thoát sớm nếu dữ liệu từ 'userData' hợp lệ
-      }
-    } catch (err) {
-      console.error('Lỗi khi khôi phục dữ liệu từ localStorage (userData):', err);
-    }
-  }
-
-  // 3. Nếu không có dữ liệu hợp lệ từ 'userData', kiểm tra localStorage với key 'auth'
-  const savedAuthData = localStorage.getItem('auth');
-  if (savedAuthData) {
-    try {
-      const parsedData = JSON.parse(savedAuthData);
-      const { fullname: savedFullName, birthdate: savedBirthDate } = parsedData;
-      if (
-        savedFullName &&
-        savedBirthDate &&
-        (savedBirthDate.match(/^\d{2}\/\d{2}\/\d{4}$/) || savedBirthDate.match(/^\d{4}-\d{2}-\d{2}T/))
-      ) {
-        // Chuyển đổi birthdate từ định dạng ISO nếu cần
-        let formattedBirthDate = savedBirthDate;
-        if (savedBirthDate.includes('T')) {
-          const dateObj = new Date(savedBirthDate);
-          formattedBirthDate = `${String(dateObj.getDate()).padStart(2, '0')}/${String(dateObj.getMonth() + 1).padStart(2, '0')}/${dateObj.getFullYear()}`;
-        }
-        fullName.value = savedFullName;
-        birthDate.value = formattedBirthDate;
-        calculatedFullName.value = savedFullName;
-        calculatedBirthDate.value = formattedBirthDate;
-
-        // Tính toán result cho auth data
-        try {
-          const lifePath = calculateLifePathNumber(formattedBirthDate);
-          const lifePathStr = [11, 22].includes(lifePath) ? lifePath.toString() : lifePath.toString();
-          const { data: lifePathData, error: lifePathError } = await useFetch(`/api/life-path/${lifePathStr}`, {
-            baseURL: useRuntimeConfig().public.apiBase,
-          });
-
-          if (lifePathError.value) {
-            console.error('Lỗi API Số Đường Đời từ auth:', lifePathError.value);
-            error.value = 'Lỗi khi lấy dữ liệu Số Đường Đời.';
-            return;
-          }
-
-          if (!lifePathData.value) {
-            error.value = 'Không tìm thấy dữ liệu cho Số Đường Đời này.';
-            return;
-          }
-
-          result.value = lifePathData.value;
-          startCalulation.value = true;
-        } catch (err) {
-          console.error('Lỗi khi tính toán result từ auth:', err);
-          error.value = err.message;
-        }
-      }
-    } catch (err) {
-      console.error('Lỗi khi khôi phục dữ liệu từ localStorage (auth):', err);
-    }
-  }
-});
-
-const formatDateInput = (event) => {
-  let value = event.target.value.replace(/[^0-9]/g, '');
-  if (value.length > 2 && value.length <= 4) {
-    value = `${value.slice(0, 2)}/${value.slice(2)}`;
-  } else if (value.length > 4) {
-    value = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4, 8)}`;
-  }
-  birthDate.value = value;
-};
-
 // Hàm tính số đường đời
 const calculateLifePathNumber = (birthDate) => {
   const digits = birthDate.replace(/[^0-9]/g, '').split('').map(Number);
@@ -403,6 +318,18 @@ const calculateLifePathNumber = (birthDate) => {
   return sum;
 };
 
+// Hàm định dạng input ngày sinh
+const formatDateInput = (event) => {
+  let value = event.target.value.replace(/[^0-9]/g, '');
+  if (value.length > 2 && value.length <= 4) {
+    value = `${value.slice(0, 2)}/${value.slice(2)}`;
+  } else if (value.length > 4) {
+    value = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4, 8)}`;
+  }
+  birthDate.value = value;
+};
+
+// Hàm tính toán các chỉ số thần số học
 const calculateNumbers = async () => {
   error.value = '';
   result.value = null;
@@ -418,16 +345,10 @@ const calculateNumbers = async () => {
       dateObj.getDate() !== day ||
       dateObj.getMonth() + 1 !== month ||
       year < 1900 ||
-      year > 2025
+      year > new Date().getFullYear()
     ) {
       throw new Error('Ngày sinh không hợp lệ.');
     }
-
-    // Lưu dữ liệu vào generalStore
-    await generalStore.fetchNumerology({
-      fullname: fullName.value,
-      birthdate: birthDate.value,
-    });
 
     const lifePath = calculateLifePathNumber(birthDate.value);
     const lifePathStr = [11, 22].includes(lifePath) ? lifePath.toString() : lifePath.toString();
@@ -450,14 +371,6 @@ const calculateNumbers = async () => {
     calculatedBirthDate.value = birthDate.value;
     startCalulation.value = true;
 
-    // Lưu dữ liệu vào localStorage với key 'userData'
-    localStorage.setItem('userData', JSON.stringify({
-      fullName: calculatedFullName.value,
-      birthDate: calculatedBirthDate.value,
-      startCalulation: startCalulation.value,
-      result: result.value,
-    }));
-
     // Cuộn xuống phần kết quả
     setTimeout(() => {
       const resultsSection = document.querySelector('.bg-gradient-to-r.from-purple-50.to-blue-50.p-5.rounded-xl');
@@ -468,10 +381,37 @@ const calculateNumbers = async () => {
   } catch (err) {
     console.error('Lỗi trong calculateNumbers:', err);
     error.value = err.message;
+    toast.error(err.message, {
+      position: 'top-center',
+      theme: 'colored',
+    });
   } finally {
     isLoading.value = false;
   }
 };
+
+// Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
+watch(() => userStore.isStoreInitialized, (initialized) => {
+  if (initialized && process.client) {
+    fetchUserData().then(() => {
+      // Tự động tính toán nếu dữ liệu từ API hợp lệ
+      if (birthDate.value && /^\d{2}\/\d{2}\/\d{4}$/.test(birthDate.value)) {
+        calculateNumbers();
+      }
+    });
+  }
+});
+
+onMounted(() => {
+  if (userStore.isStoreInitialized) {
+    fetchUserData().then(() => {
+      // Tự động tính toán nếu dữ liệu từ API hợp lệ
+      if (birthDate.value && /^\d{2}\/\d{2}\/\d{4}$/.test(birthDate.value)) {
+        calculateNumbers();
+      }
+    });
+  }
+});
 </script>
 
 <style scoped>

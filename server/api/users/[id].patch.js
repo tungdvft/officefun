@@ -43,13 +43,17 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  if (body.tokens === undefined || body.tokens === null || isNaN(parseInt(body.tokens)) || parseInt(body.tokens) < 0) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: 'Tokens phải là số nguyên không âm.',
-    });
+  // Kiểm tra tokens nếu được gửi
+  let newTokens;
+  if (body.tokens !== undefined) {
+    if (body.tokens === null || isNaN(parseInt(body.tokens)) || parseInt(body.tokens) < 0) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Tokens phải là số nguyên không âm.',
+      });
+    }
+    newTokens = parseInt(body.tokens);
   }
-  const newTokens = parseInt(body.tokens);
 
   try {
     // 3. Bắt đầu giao dịch
@@ -68,7 +72,10 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // 5. Cập nhật thông tin người dùng
+    // 5. Sử dụng tokens hiện tại nếu không được gửi
+    newTokens = body.tokens !== undefined ? newTokens : currentUser.tokens !== null ? currentUser.tokens : 200;
+
+    // 6. Cập nhật thông tin người dùng
     const updateResult = await db.query(
       `UPDATE users SET 
         fullname = $1, 
@@ -89,9 +96,9 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // 6. Ghi giao dịch token nếu tokens thay đổi
+    // 7. Ghi giao dịch token nếu tokens thay đổi
     const currentTokens = currentUser.tokens !== null ? currentUser.tokens : 200;
-    if (newTokens !== currentTokens) {
+    if (body.tokens !== undefined && newTokens !== currentTokens) {
       const tokenDifference = newTokens - currentTokens;
       console.log('Recording token transaction:', { userId, tokenDifference, description: 'Cập nhật tokens qua API' });
       await db.query(
@@ -100,7 +107,7 @@ export default defineEventHandler(async (event) => {
       );
     }
 
-    // 7. Lấy thông tin người dùng đã cập nhật
+    // 8. Lấy thông tin người dùng đã cập nhật
     const userResult = await db.query(
       'SELECT id, email, fullname, birthdate, tokens, created_at, updated_at FROM users WHERE id = $1',
       [userId]
@@ -117,7 +124,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // 8. Hoàn tất giao dịch
+    // 9. Hoàn tất giao dịch
     await db.query('COMMIT');
 
     return {
@@ -125,7 +132,7 @@ export default defineEventHandler(async (event) => {
       user,
     };
   } catch (error) {
-    // 9. Hoàn tác nếu có lỗi
+    // 10. Hoàn tác nếu có lỗi
     await db.query('ROLLBACK').catch((rollbackError) => {
       console.error('Rollback failed:', rollbackError);
     });

@@ -382,16 +382,10 @@ const refreshUserData = async () => {
     try {
       const response = await $fetch(`/api/users/${String(userStore.user.id)}`, { method: 'GET' });
       await userStore.updateTokens(response.user.tokens);
-      toast.success('Đã làm mới dữ liệu người dùng', {
-        position: 'top-center',
-        theme: 'colored'
-      });
+      
     } catch (error) {
       console.error('Failed to refresh user data:', error);
-      toast.error('Không thể tải dữ liệu người dùng. Vui lòng thử lại.', {
-        position: 'top-center',
-        theme: 'colored'
-      });
+     
       await userStore.logout();
       await navigateTo('/dang-nhap');
     }

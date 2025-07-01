@@ -1,3 +1,4 @@
+
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
     <div class="container mx-auto p-4">
@@ -101,141 +102,141 @@
               <span v-else>{{ isLoggedIn ? `Xem gợi ý (Cần ${tokenCost} tokens)` : 'Đăng nhập để xem gợi ý' }}</span>
             </button>
           </div>
+
+          <!-- Error Messages -->
+          <div v-if="error || errorMessage" class="mt-6 p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
+            <p v-if="error">{{ error }}</p>
+            <p v-if="errorMessage">{{ errorMessage }}</p>
+            <p v-if="hasSufficientTokens === false" class="text-sm mt-1">Bạn không có đủ token. Vui lòng nạp thêm.</p>
+          </div>
+
+          <!-- Results Section -->
+          <div v-if="recommendations" class="mt-8 space-y-6">
+            <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
+              <div class="flex items-center">
+                <div class="bg-purple-100 p-2 rounded-lg mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="text-lg font-semibold text-purple-800">Số ngày cá nhân: <span class="text-2xl font-bold">{{ personalDayNumber }}</span></h2>
+                  <p class="text-gray-600 mt-1">Dựa trên ngày sinh của bạn, hôm nay là ngày mang năng lượng số {{ personalDayNumber }}.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Food Recommendations -->
+            <div v-if="activeTab === 'Đồ ăn' && recommendations.food" class="space-y-4">
+              <h3 class="font-medium text-purple-700 flex items-center">
+                <span class="bg-purple-100 rounded-full p-2 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+                Gợi ý món ăn
+              </h3>
+              <div v-if="Array.isArray(recommendations.food)" class="grid gap-4 md:grid-cols-2">
+                <div v-for="(item, index) in recommendations.food" :key="index" class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                  <p class="font-medium text-gray-800 flex items-center">
+                    <span class="w-6 h-6 rounded-full bg-purple-100 text-purple-800 flex items-center justify-center mr-2 text-sm">{{ index + 1 }}</span>
+                    {{ item.item }}
+                  </p>
+                  <p class="text-gray-600 text-sm mt-2">{{ item.explanation }}</p>
+                </div>
+              </div>
+              <div v-else class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                <p class="font-medium text-gray-800">{{ recommendations.food.item }}</p>
+                <p class="text-gray-600 text-sm mt-2">{{ recommendations.food.explanation }}</p>
+              </div>
+            </div>
+
+            <!-- Drink Recommendations -->
+            <div v-if="activeTab === 'Đồ uống' && recommendations.drink" class="space-y-4">
+              <h3 class="font-medium text-purple-700 flex items-center">
+                <span class="bg-purple-100 rounded-full p-2 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M7 2a1 1 0 00-.707 1.707L7 4.414v3.758a1 1 0 01-.293.707l-4 4C.817 14.769 2.156 18 4.828 18h10.343c2.673 0 4.012-3.231 2.122-5.121l-4-4A1 1 0 0113 8.172V4.414l.707-.707A1 1 0 0013 2H7zm2 6.172V4h2v4.172a3 3 0 00.879 2.12l1.027 1.028a4 4 0 00-2.171.102l-.47.156a4 4 0 01-2.53 0l-.563-.187a1.993 1.993 0 00-.114-.035l1.063-1.063A3 3 0 009 8.172z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+                Gợi ý đồ uống
+              </h3>
+              <div v-if="Array.isArray(recommendations.drink)" class="grid gap-4 md:grid-cols-2">
+                <div v-for="(item, index) in recommendations.drink" :key="index" class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                  <p class="font-medium text-gray-800 flex items-center">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center mr-2 text-sm">{{ index + 1 }}</span>
+                    {{ item.item }}
+                  </p>
+                  <p class="text-gray-600 text-sm mt-2">{{ item.explanation }}</p>
+                </div>
+              </div>
+              <div v-else class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                <p class="font-medium text-gray-800">{{ recommendations.drink.item }}</p>
+                <p class="text-gray-600 text-sm mt-2">{{ recommendations.drink.explanation }}</p>
+              </div>
+            </div>
+
+            <!-- Insight Recommendations -->
+            <div v-if="activeTab === 'Insight hôm nay' && recommendations.insight" class="space-y-6">
+              <h3 class="font-medium text-purple-700 flex items-center">
+                <span class="bg-purple-100 rounded-full p-2 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+                Insight hôm nay
+              </h3>
+              <div v-if="recommendations.insight.selectedPlan" class="space-y-6">
+                <div class="bg-white p-5 rounded-xl border border-green-100 shadow-sm">
+                  <h4 class="text-sm font-semibold text-green-600 uppercase tracking-wider mb-3">DỰ ĐỊNH TỐT NHẤT</h4>
+                  <p class="text-gray-800 font-semibold text-lg">{{ recommendations.insight.selectedPlan }}</p>
+                  <p class="text-gray-600 mt-2">{{ recommendations.insight.planExplanation }}</p>
+                </div>
+                <div class="grid gap-5 md:grid-cols-2">
+                  <div class="bg-white p-5 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow">
+                    <h4 class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3 flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                      </svg>
+                      NÊN LÀM
+                    </h4>
+                    <p class="text-gray-800 font-medium">{{ recommendations.insight.doToday.activity }}</p>
+                    <p class="text-gray-600 mt-2 text-sm">{{ recommendations.insight.doToday.explanation }}</p>
+                  </div>
+                  <div class="bg-white p-5 rounded-xl border border-red-100 shadow-sm hover:shadow-md transition-shadow">
+                    <h4 class="text-sm font-semibold text-red-600 uppercase tracking-wider mb-3 flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                      </svg>
+                      NÊN TRÁNH
+                    </h4>
+                    <p class="text-gray-800 font-medium">{{ recommendations.insight.avoidToday.activity }}</p>
+                    <p class="text-gray-600 mt-2 text-sm">{{ recommendations.insight.avoidToday.explanation }}</p>
+                  </div>
+                </div>
+              </div>
+              <div v-else class="space-y-6">
+                <div class="grid gap-5 md:grid-cols-2">
+                  <div class="bg-white p-5 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow">
+                    <h4 class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3">NÊN LÀM</h4>
+                    <div v-for="(item, index) in recommendations.insight.doToday" :key="'do-' + index" class="mt-4 first:mt-0">
+                      <p class="text-gray-800 font-medium">{{ item.activity }}</p>
+                      <p class="text-gray-600 mt-1 text-sm">{{ item.explanation }}</p>
+                    </div>
+                  </div>
+                  <div class="bg-white p-5 rounded-xl border border-red-100 shadow-sm hover:shadow-md transition-shadow">
+                    <h4 class="text-sm font-semibold text-red-600 uppercase tracking-wider mb-3">NÊN TRÁNH</h4>
+                    <div v-for="(item, index) in recommendations.insight.avoidToday" :key="'avoid-' + index" class="mt-4 first:mt-0">
+                      <p class="text-gray-800 font-medium">{{ item.activity }}</p>
+                      <p class="text-gray-600 mt-1 text-sm">{{ item.explanation }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </form>
-
-        <!-- Error Messages -->
-        <div v-if="error || errorMessage" class="mt-6 p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
-          <p v-if="error">{{ error }}</p>
-          <p v-if="errorMessage">{{ errorMessage }}</p>
-          <p v-if="hasSufficientTokens === false" class="text-sm mt-1">Bạn không có đủ token. Vui lòng nạp thêm.</p>
-        </div>
-
-        <!-- Results Section -->
-        <div v-if="recommendations" class="mt-8 space-y-6">
-          <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
-            <div class="flex items-center">
-              <div class="bg-purple-100 p-2 rounded-lg mr-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div>
-                <h2 class="text-lg font-semibold text-purple-800">Số ngày cá nhân: <span class="text-2xl font-bold">{{ personalDayNumber }}</span></h2>
-                <p class="text-gray-600 mt-1">Dựa trên ngày sinh của bạn, hôm nay là ngày mang năng lượng số {{ personalDayNumber }}.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Food Recommendations -->
-          <div v-if="activeTab === 'Đồ ăn' && recommendations.food" class="space-y-4">
-            <h3 class="font-medium text-purple-700 flex items-center">
-              <span class="bg-purple-100 rounded-full p-2 mr-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-                  <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
-                </svg>
-              </span>
-              Gợi ý món ăn
-            </h3>
-            <div v-if="Array.isArray(recommendations.food)" class="grid gap-4 md:grid-cols-2">
-              <div v-for="(item, index) in recommendations.food" :key="index" class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                <p class="font-medium text-gray-800 flex items-center">
-                  <span class="w-6 h-6 rounded-full bg-purple-100 text-purple-800 flex items-center justify-center mr-2 text-sm">{{ index + 1 }}</span>
-                  {{ item.item }}
-                </p>
-                <p class="text-gray-600 text-sm mt-2">{{ item.explanation }}</p>
-              </div>
-            </div>
-            <div v-else class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-              <p class="font-medium text-gray-800">{{ recommendations.food.item }}</p>
-              <p class="text-gray-600 text-sm mt-2">{{ recommendations.food.explanation }}</p>
-            </div>
-          </div>
-
-          <!-- Drink Recommendations -->
-          <div v-if="activeTab === 'Đồ uống' && recommendations.drink" class="space-y-4">
-            <h3 class="font-medium text-purple-700 flex items-center">
-              <span class="bg-purple-100 rounded-full p-2 mr-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M7 2a1 1 0 00-.707 1.707L7 4.414v3.758a1 1 0 01-.293.707l-4 4C.817 14.769 2.156 18 4.828 18h10.343c2.673 0 4.012-3.231 2.122-5.121l-4-4A1 1 0 0113 8.172V4.414l.707-.707A1 1 0 0013 2H7zm2 6.172V4h2v4.172a3 3 0 00.879 2.12l1.027 1.028a4 4 0 00-2.171.102l-.47.156a4 4 0 01-2.53 0l-.563-.187a1.993 1.993 0 00-.114-.035l1.063-1.063A3 3 0 009 8.172z" clip-rule="evenodd" />
-                </svg>
-              </span>
-              Gợi ý đồ uống
-            </h3>
-            <div v-if="Array.isArray(recommendations.drink)" class="grid gap-4 md:grid-cols-2">
-              <div v-for="(item, index) in recommendations.drink" :key="index" class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                <p class="font-medium text-gray-800 flex items-center">
-                  <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center mr-2 text-sm">{{ index + 1 }}</span>
-                  {{ item.item }}
-                </p>
-                <p class="text-gray-600 text-sm mt-2">{{ item.explanation }}</p>
-              </div>
-            </div>
-            <div v-else class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-              <p class="font-medium text-gray-800">{{ recommendations.drink.item }}</p>
-              <p class="text-gray-600 text-sm mt-2">{{ recommendations.drink.explanation }}</p>
-            </div>
-          </div>
-
-          <!-- Insight Recommendations -->
-          <div v-if="activeTab === 'Insight hôm nay' && recommendations.insight" class="space-y-6">
-            <h3 class="font-medium text-purple-700 flex items-center">
-              <span class="bg-purple-100 rounded-full p-2 mr-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                </svg>
-              </span>
-              Insight hôm nay
-            </h3>
-            <div v-if="recommendations.insight.selectedPlan" class="space-y-6">
-              <div class="bg-white p-5 rounded-xl border border-green-100 shadow-sm">
-                <h4 class="text-sm font-semibold text-green-600 uppercase tracking-wider mb-3">DỰ ĐỊNH TỐT NHẤT</h4>
-                <p class="text-gray-800 font-semibold text-lg">{{ recommendations.insight.selectedPlan }}</p>
-                <p class="text-gray-600 mt-2">{{ recommendations.insight.planExplanation }}</p>
-              </div>
-              <div class="grid gap-5 md:grid-cols-2">
-                <div class="bg-white p-5 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow">
-                  <h4 class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                    </svg>
-                    NÊN LÀM
-                  </h4>
-                  <p class="text-gray-800 font-medium">{{ recommendations.insight.doToday.activity }}</p>
-                  <p class="text-gray-600 mt-2 text-sm">{{ recommendations.insight.doToday.explanation }}</p>
-                </div>
-                <div class="bg-white p-5 rounded-xl border border-red-100 shadow-sm hover:shadow-md transition-shadow">
-                  <h4 class="text-sm font-semibold text-red-600 uppercase tracking-wider mb-3 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                    </svg>
-                    NÊN TRÁNH
-                  </h4>
-                  <p class="text-gray-800 font-medium">{{ recommendations.insight.avoidToday.activity }}</p>
-                  <p class="text-gray-600 mt-2 text-sm">{{ recommendations.insight.avoidToday.explanation }}</p>
-                </div>
-              </div>
-            </div>
-            <div v-else class="space-y-6">
-              <div class="grid gap-5 md:grid-cols-2">
-                <div class="bg-white p-5 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow">
-                  <h4 class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3">NÊN LÀM</h4>
-                  <div v-for="(item, index) in recommendations.insight.doToday" :key="'do-' + index" class="mt-4 first:mt-0">
-                    <p class="text-gray-800 font-medium">{{ item.activity }}</p>
-                    <p class="text-gray-600 mt-1 text-sm">{{ item.explanation }}</p>
-                  </div>
-                </div>
-                <div class="bg-white p-5 rounded-xl border border-red-100 shadow-sm hover:shadow-md transition-shadow">
-                  <h4 class="text-sm font-semibold text-red-600 uppercase tracking-wider mb-3">NÊN TRÁNH</h4>
-                  <div v-for="(item, index) in recommendations.insight.avoidToday" :key="'avoid-' + index" class="mt-4 first:mt-0">
-                    <p class="text-gray-800 font-medium">{{ item.activity }}</p>
-                    <p class="text-gray-600 mt-1 text-sm">{{ item.explanation }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -246,15 +247,12 @@ import { ref, onBeforeMount, watch } from 'vue';
 import { useUserStore } from '@/stores/user';
 import { useProtectedContent } from '~/composables/useProtectedContent';
 
-// Lấy thông tin người dùng từ userStore
-const userStore = useUserStore();
-
 // Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
 const formatDateToDDMMYYYY = (dateStr) => {
-  if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+  if (!dateStr || !/^\d{4}-\d{2}-\d{2}(T.*)?$/.test(dateStr)) {
     return '';
   }
-  const [year, month, day] = dateStr.split('-');
+  const [year, month, day] = dateStr.split('T')[0].split('-');
   return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
 };
 
@@ -299,8 +297,10 @@ const calculatePersonalDayNumber = (birthDate, currentDate) => {
   return personalDay;
 };
 
-// Khởi tạo dữ liệu người dùng
+// Khởi tạo dữ liệu người dùng từ userStore hoặc localStorage (auth)
+const userStore = useUserStore();
 const initializeUserData = () => {
+  // Ưu tiên lấy từ userStore
   if (userStore.user?.fullname || userStore.user?.birthdate) {
     return {
       name: userStore.user.fullname?.trim() || '',
@@ -309,14 +309,19 @@ const initializeUserData = () => {
     };
   }
 
+  // Nếu không có userStore, kiểm tra localStorage với key 'auth'
   if (process.client) {
     const authData = localStorage.getItem('auth');
     if (authData) {
       try {
         const parsedData = JSON.parse(authData);
+        let formattedBirthDate = parsedData.birthdate || '';
+        if (formattedBirthDate && formattedBirthDate.includes('T')) {
+          formattedBirthDate = formatDateToDDMMYYYY(parsedData.birthdate);
+        }
         return {
           name: parsedData.fullname?.trim() || '',
-          birthDate: parsedData.birthdate ? formatDateToDDMMYYYY(parsedData.birthdate) : '',
+          birthDate: formattedBirthDate,
           userId: parsedData.id || null,
         };
       } catch (error) {
@@ -332,14 +337,13 @@ const initializeUserData = () => {
   };
 };
 
-// Tải dữ liệu từ localStorage (numerologyData) nếu có
+// Tải dữ liệu đã lưu từ localStorage (numerologyData)
 const loadSavedData = () => {
   if (process.client) {
     const savedData = localStorage.getItem('numerologyData');
     if (savedData) {
       try {
         const parsedData = JSON.parse(savedData);
-        // Kiểm tra xem userId trong localStorage có khớp với userId hiện tại không
         const authData = localStorage.getItem('auth');
         const currentUserId = authData ? JSON.parse(authData).id : null;
         if (parsedData.userId === currentUserId) {
@@ -390,28 +394,12 @@ const description = 'Access to daily numerology recommendations';
 const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
 const isLoggedIn = ref(false);
 let handleAction = () => {};
-const isInitialLoad = ref(true);
 
 // Khởi tạo trạng thái đăng nhập và hành động
 const initializeAuth = async () => {
   const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
   isLoggedIn.value = authStatus;
   handleAction = action;
-};
-
-// Hàm xử lý submit form
-const handleSubmit = async () => {
-  error.value = null;
-  errorMessage.value = null;
-
-  if (isContentAccessible.value) {
-    await getRecommendations();
-  } else {
-    await handleAction();
-    if (isContentAccessible.value) {
-      await getRecommendations();
-    }
-  }
 };
 
 // Hàm xóa dữ liệu localStorage cũ
@@ -432,7 +420,6 @@ watch(
   () => userStore.user?.id,
   (newUserId, oldUserId) => {
     if (newUserId && newUserId !== oldUserId && oldUserId !== undefined) {
-      // Tài khoản mới được đăng nhập
       clearNumerologyData();
       const { name, birthDate, userId } = initializeUserData();
       nameRef.value = name;
@@ -450,13 +437,16 @@ watch(
 watch([nameRef, birthDateInput], async ([newName, newBirthDate]) => {
   if (!userStore.isStoreInitialized || !userIdRef.value) return;
 
-  if (newName !== userStore.user?.fullname || formatDateToYYYYMMDD(newBirthDate) !== userStore.user?.birthdate) {
+  const currentBirthDate = userStore.user?.birthdate || '';
+  const formattedNewBirthDate = formatDateToYYYYMMDD(newBirthDate);
+
+  if (newName !== userStore.user?.fullname || formattedNewBirthDate !== currentBirthDate) {
     try {
       const response = await $fetch(`/api/users/${userIdRef.value}`, {
         method: 'PATCH',
         body: {
           fullname: newName.trim(),
-          birthdate: formatDateToYYYYMMDD(newBirthDate),
+          birthdate: formattedNewBirthDate,
         },
       });
 
@@ -465,7 +455,7 @@ watch([nameRef, birthDateInput], async ([newName, newBirthDate]) => {
           id: userIdRef.value,
           email: userStore.user?.email || '',
           fullname: newName.trim(),
-          birthdate: formatDateToYYYYMMDD(newBirthDate),
+          birthdate: formattedNewBirthDate,
           tokens: userStore.user?.tokens || 0,
         });
 
@@ -478,7 +468,7 @@ watch([nameRef, birthDateInput], async ([newName, newBirthDate]) => {
               JSON.stringify({
                 ...parsedData,
                 fullname: newName.trim(),
-                birthdate: formatDateToYYYYMMDD(newBirthDate),
+                birthdate: formattedNewBirthDate,
               })
             );
           }
@@ -494,6 +484,21 @@ watch([nameRef, birthDateInput], async ([newName, newBirthDate]) => {
     }
   }
 });
+
+// Hàm xử lý submit form
+const handleSubmit = async () => {
+  error.value = null;
+  errorMessage.value = null;
+
+  if (isContentAccessible.value) {
+    await getRecommendations();
+  } else {
+    await handleAction();
+    if (isContentAccessible.value) {
+      await getRecommendations();
+    }
+  }
+};
 
 async function getRecommendations() {
   error.value = null;
