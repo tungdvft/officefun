@@ -1,7 +1,8 @@
+
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
     <div class="container mx-auto p-4">
-      <!-- Header -->
+      <!-- Header (không bảo vệ) -->
       <div class="text-center mb-8">
         <h2 class="text-3xl md:text-4xl font-bold text-blue-800 mb-2">Giải Đáp Thắc Mắc - Thần Số Học</h2>
         <p class="text-gray-600">Hỏi đáp dựa trên năng lượng số của bạn</p>
@@ -9,7 +10,7 @@
 
       <!-- Main Content -->
       <div class="bg-white p-6 rounded-xl shadow-lg mb-8 border border-gray-100">
-        <!-- Form -->
+        <!-- Form (không bảo vệ) -->
         <div class="space-y-6">
           <h3 class="text-lg font-semibold text-purple-700 mb-4">Nhập thông tin và câu hỏi</h3>
           <!-- Input Form for Name and Birth Date in Two Columns -->
@@ -48,10 +49,10 @@
           <div class="flex justify-center">
             <button
               @click="consult"
-              :disabled="loading"
+              :disabled="loading || isLoading || !hasSufficientTokens"
               class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
             >
-              <span v-if="loading" class="flex items-center justify-center">
+              <span v-if="loading || isLoading" class="flex items-center justify-center">
                 <svg
                   class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                   xmlns="http://www.w3.org/2000/svg"
@@ -65,16 +66,21 @@
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   ></path>
                 </svg>
-                Đang xử lý...
+                {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang xử lý...' }}
               </span>
-              <span v-else>Gửi câu hỏi</span>
+              <span v-else>{{ isLoggedIn ? `Gửi câu hỏi (Cần ${tokenCost} tokens)` : 'Đăng nhập để gửi câu hỏi' }}</span>
             </button>
+          </div>
+          <!-- Error Messages -->
+          <div v-if="errorMessage" class="mt-6 p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
+            <p>{{ errorMessage }}</p>
+            <p v-if="hasSufficientTokens === false" class="text-sm mt-1">Bạn không có đủ token. Vui lòng nạp thêm.</p>
           </div>
         </div>
 
-        <!-- Results Section -->
+        <!-- Results Section (bảo vệ) -->
         <transition name="slide-fade">
-          <div v-if="result" class="mt-8 space-y-6">
+          <div v-if="result && isContentAccessible" class="mt-8 space-y-6">
             <!-- Số chủ đạo -->
             <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
               <div class="flex items-center">
@@ -229,6 +235,7 @@
 <script setup>
 import { ref, watch, onMounted, computed } from 'vue';
 import { toast } from 'vue3-toastify';
+import { useProtectedContent } from '~/composables/useProtectedContent';
 
 definePageMeta({ layout: 'view' });
 
@@ -241,6 +248,12 @@ const formData = ref({
 const result = ref(null);
 const loading = ref(false);
 const currentYear = new Date().getFullYear();
+const tokenCost = ref(15);
+const description = 'Access to detailed numerology consultation results';
+const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
+const isLoggedIn = ref(false);
+let handleAction = () => {};
+const isInitialLoad = ref(true);
 
 // Hàm làm sạch dữ liệu, loại bỏ ký tự không hợp lệ
 const cleanString = (str) => {
@@ -279,6 +292,13 @@ const cleanResult = (data) => {
   };
 };
 
+// Khởi tạo trạng thái đăng nhập và hành động
+const initializeAuth = async () => {
+  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
+  isLoggedIn.value = authStatus;
+  handleAction = action;
+};
+
 // Khôi phục dữ liệu từ Local Storage (chỉ ở client)
 onMounted(() => {
   if (process.client) {
@@ -305,6 +325,12 @@ onMounted(() => {
           result.value = cleanResult(parsedResult);
           console.log('Khôi phục result:', result.value);
         }
+      }
+
+      // Khởi tạo trạng thái đăng nhập nếu có dữ liệu form hoặc result
+      if (savedFormData || savedResult) {
+        initializeAuth();
+        isInitialLoad.value = false;
       }
     } catch (error) {
       console.error('Lỗi khi khôi phục dữ liệu từ Local Storage:', error);
@@ -355,10 +381,23 @@ watch(
 );
 
 const consult = async () => {
+  errorMessage.value = null;
+
   if (!cleanedFormData.value.name) return toast.error('Vui lòng nhập họ và tên!', { position: 'top-center' });
   if (!cleanedFormData.value.birthDate) return toast.error('Vui lòng nhập ngày sinh!', { position: 'top-center' });
   if (!cleanedFormData.value.question) return toast.error('Vui lòng nhập câu hỏi!', { position: 'top-center' });
 
+  if (isContentAccessible.value) {
+    await getConsultation();
+  } else {
+    await handleAction();
+    if (isContentAccessible.value) {
+      await getConsultation();
+    }
+  }
+};
+
+async function getConsultation() {
   loading.value = true;
   try {
     const username = process.client ? localStorage.getItem('username') || 'guest' : 'guest';
@@ -374,11 +413,12 @@ const consult = async () => {
     toast.success('Giải đáp hoàn tất!', { position: 'top-center' });
   } catch (error) {
     console.error('Error consulting:', error);
-    toast.error(error.data?.message || 'Có lỗi xảy ra!', { position: 'top-center' });
+    errorMessage.value = error.data?.message || 'Có lỗi xảy ra!';
+    toast.error(errorMessage.value, { position: 'top-center' });
   } finally {
     loading.value = false;
   }
-};
+}
 </script>
 
 <style scoped>

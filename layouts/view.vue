@@ -1,3 +1,4 @@
+
 <template>
   <div class="min-h-screen flex flex-col">
     <!-- Top Navigation -->
@@ -73,11 +74,23 @@
                 @mouseenter="openMenu('auth')"
                 @mouseleave="closeMenu('auth')"
               >
-                <button class="flex items-center space-x-2 focus:outline-none group">
-                  <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-sm">
-                    <span class="text-white text-sm font-bold">
-                      {{ getInitialLetter(userStore.user.fullname) }}
+                <button class="flex flex-col items-center space-y-1 focus:outline-none group">
+                  <div class="flex items-center space-x-2">
+                    <span class="font-medium text-purple-700 group-hover:text-purple-900 transition-colors duration-200">
+                      {{ getFirstName(userStore.user.fullname) }}
                     </span>
+                    <svg 
+                      class="w-4 h-4 transition-transform duration-200" 
+                      :class="{ 'rotate-180': activeMenu === 'auth' }"
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                  <div class="px-2 py-1 border border-gray-300 rounded-lg bg-purple-50 text-purple-600 font-medium text-xs whitespace-nowrap">
+                    {{ userStore.user.tokens ?? '0' }} Tokens
                   </div>
                 </button>
                 <div 
@@ -86,7 +99,7 @@
                 >
                   <NuxtLink 
                     to="/tai-khoan"
-                    class="block px-4 py-2 hover:bg-purple-50 text-purple-700 hover:text-purple-900 transition-colors duration-200 text-sm"
+                    class="block px-4 py-2 hover:bg-purple-50 text-purple-700 hover:text-purple-900 transition-colors duration-200 text-sm border border-gray-200"
                   >
                     Tài khoản
                   </NuxtLink>
@@ -138,7 +151,7 @@
       <!-- Mobile menu -->
       <div v-show="isMobileMenuOpen" class="md:hidden bg-white pb-4 transition-all duration-300 ease-in-out border-b">
         <div class="px-4 pt-2 pb-3 space-y-2">
-          <div v-for="(item, index) in mainMenu" :key="index">
+          <div v-for="(item, index) in computedMenu" :key="index">
             <button 
               @click="toggleMobileDropdown(index)"
               class="flex items-center w-full px-3 py-2 rounded-md text-base font-medium text-purple-800 hover:bg-purple-50 transition-colors duration-200"
@@ -159,56 +172,53 @@
               v-show="activeMobileDropdown === index"
               class="pl-8 pr-2 py-2 space-y-1 transition-all duration-300 ease-in-out"
             >
-              <NuxtLink 
-                v-for="(subItem, subIndex) in item.children" 
-                :key="subIndex"
-                :to="subItem.path"
-                class="block px-3 py-2 rounded-md text-sm font-medium text-purple-700 hover:bg-purple-50 hover:text-purple-900 transition-colors duration-200"
-                active-class="bg-purple-50 text-purple-900 font-semibold"
-                @click="isMobileMenuOpen = false"
-              >
-                {{ subItem.title }}
-              </NuxtLink>
+              <template v-if="item.isUserMenu && userStore.isStoreInitialized && userStore.user && Object.keys(userStore.user).length > 0">
+                <NuxtLink 
+                  to="/tai-khoan"
+                  class="block px-3 py-2 rounded-md text-sm font-medium text-purple-700 hover:bg-purple-50 hover:text-purple-900 transition-colors duration-200 border border-gray-200"
+                  @click="isMobileMenuOpen = false"
+                >
+                  Tài khoản
+                </NuxtLink>
+                <div class="px-2 py-1 border border-gray-300 rounded-lg bg-purple-50 text-purple-600 font-medium text-xs whitespace-nowrap">
+                  {{ userStore.user.tokens ?? '0' }} Tokens
+                </div>
+                <button
+                  @click="logout"
+                  class="block w-full text-left px-3 py-2 rounded-md text-sm font-medium text-purple-700 hover:bg-purple-50 hover:text-purple-900 transition-colors duration-200"
+                >
+                  Đăng xuất
+                </button>
+              </template>
+              <template v-else-if="item.isUserMenu">
+                <NuxtLink 
+                  to="/dang-nhap"
+                  class="block px-3 py-2 rounded-md text-sm font-medium text-purple-700 hover:bg-purple-50 hover:text-purple-900 transition-colors duration-200"
+                  @click="isMobileMenuOpen = false"
+                >
+                  Đăng nhập
+                </NuxtLink>
+                <NuxtLink 
+                  to="/dang-ky"
+                  class="block px-3 py-2 rounded-md text-sm font-medium text-purple-700 hover:bg-purple-50 hover:text-purple-900 transition-colors duration-200"
+                  @click="isMobileMenuOpen = false"
+                >
+                  Đăng ký
+                </NuxtLink>
+              </template>
+              <template v-else>
+                <NuxtLink 
+                  v-for="(subItem, subIndex) in item.children" 
+                  :key="subIndex"
+                  :to="subItem.path"
+                  class="block px-3 py-2 rounded-md text-sm font-medium text-purple-700 hover:bg-purple-50 hover:text-purple-900 transition-colors duration-200"
+                  active-class="bg-purple-50 text-purple-900 font-semibold"
+                  @click="isMobileMenuOpen = false"
+                >
+                  {{ subItem.title }}
+                </NuxtLink>
+              </template>
             </div>
-          </div>
-          <!-- Mobile Auth Menu -->
-          <div v-if="userStore.isStoreInitialized" class="pt-2 border-t border-purple-200">
-            <template v-if="!userStore.user || Object.keys(userStore.user).length === 0">
-              <NuxtLink 
-                to="/dang-nhap"
-                class="block w-full px-3 py-2 text-center rounded-lg font-medium bg-purple-50 text-purple-700 hover:bg-purple-100 transition-colors duration-200 mb-2"
-                @click="isMobileMenuOpen = false"
-              >
-                Đăng nhập
-              </NuxtLink>
-              <NuxtLink 
-                to="/dang-ky"
-                class="block w-full px-3 py-2 text-center rounded-lg font-medium bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 transition-all duration-300 shadow"
-                @click="isMobileMenuOpen = false"
-              >
-                Đăng ký
-              </NuxtLink>
-            </template>
-            <template v-else>
-              <NuxtLink 
-                to="/tai-khoan"
-                class="block w-full px-3 py-2 text-center rounded-lg font-medium bg-purple-50 text-purple-700 hover:bg-purple-100 transition-colors duration-200 mb-2"
-                @click="isMobileMenuOpen = false"
-              >
-                Tài khoản
-              </NuxtLink>
-              <button
-                @click="logout"
-                class="block w-full px-3 py-2 text-center rounded-lg font-medium bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 transition-all duration-300 shadow"
-              >
-                Đăng xuất
-              </button>
-            </template>
-          </div>
-          <!-- Placeholder khi store chưa khởi tạo -->
-          <div v-else class="pt-2 border-t border-purple-200">
-            <div class="w-full h-10 bg-gray-200 rounded-lg animate-pulse mb-2"></div>
-            <div class="w-full h-10 bg-gray-200 rounded-lg animate-pulse"></div>
           </div>
         </div>
       </div>
@@ -223,7 +233,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { navigateTo } from '#app';
 import { useUserStore } from '~/stores/user';
 import { toast } from 'vue3-toastify';
@@ -235,18 +245,38 @@ definePageMeta({
 });
 
 // Hàm lấy chữ cái đầu hợp lệ
-const getInitialLetter = (fullname) => {
-  if (!fullname || typeof fullname !== 'string' || !fullname.trim()) {
-    return 'U';
+const getFirstName = (fullname) => {
+  if (!fullname || typeof fullname !== 'string' || !fullname.trim()) return 'User';
+  const parts = fullname.trim().split(' ');
+  return parts[parts.length - 1];
+};
+
+// Làm mới token từ API nếu chưa có
+const refreshUserData = async () => {
+  if (userStore.isAuthenticated && userStore.user?.id) {
+    try {
+      const response = await $fetch(`/api/users/${String(userStore.user.id)}`, { method: 'GET' });
+      await userStore.updateTokens(response.user.tokens);
+      toast.success('Đã làm mới dữ liệu người dùng', {
+        position: 'top-center',
+        theme: 'colored'
+      });
+    } catch (error) {
+      console.error('Failed to refresh user data:', error);
+      toast.error('Không thể tải dữ liệu người dùng. Vui lòng thử lại.', {
+        position: 'top-center',
+        theme: 'colored'
+      });
+      await userStore.logout();
+      await navigateTo('/dang-nhap');
+    }
   }
-  const firstChar = fullname.trim().charAt(0);
-  // Chỉ lấy chữ cái (a-z, A-Z) hoặc ký tự Unicode chữ cái (như tiếng Việt)
-  return /[a-zA-Z\u00C0-\u1EF9]/.test(firstChar) ? firstChar.toUpperCase() : 'U';
 };
 
 onMounted(() => {
   if (process.client) {
     userStore.initialize();
+    refreshUserData();
   }
 });
 
@@ -282,6 +312,29 @@ const mainMenu = [
   },
 ];
 
+const computedMenu = computed(() => {
+  const menu = [...mainMenu];
+  if (userStore.isStoreInitialized) {
+    menu.push({
+      title: userStore.user && Object.keys(userStore.user).length > 0 
+        ? getFirstName(userStore.user.fullname) 
+        : 'Tài khoản người dùng',
+      isUserMenu: true,
+      children: userStore.user && Object.keys(userStore.user).length > 0 
+        ? [
+            { title: 'Tài khoản', path: '/tai-khoan' },
+            { title: 'Số token', isToken: true },
+            { title: 'Đăng xuất', isLogout: true }
+          ] 
+        : [
+            { title: 'Đăng nhập', path: '/dang-nhap' },
+            { title: 'Đăng ký', path: '/dang-ky' }
+          ]
+    });
+  }
+  return menu;
+});
+
 const isMobileMenuOpen = ref(false);
 const activeDropdown = ref(null);
 const activeMobileDropdown = ref(null);
@@ -314,6 +367,7 @@ const logout = async () => {
     await userStore.logout();
     isMobileMenuOpen.value = false;
     activeMenu.value = null;
+    activeMobileDropdown.value = null;
     toast.success('Đăng xuất thành công!', {
       position: 'top-center',
       theme: 'colored',
@@ -327,6 +381,16 @@ const logout = async () => {
     });
   }
 };
+
+// Theo dõi thay đổi token
+watch(
+  () => userStore.user?.tokens,
+  (newTokens) => {
+    if (newTokens !== undefined && newTokens !== null) {
+      console.log('Tokens updated:', newTokens);
+    }
+  }
+);
 </script>
 
 <style scoped>
