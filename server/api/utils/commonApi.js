@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyBUmUduPG0zvD4URlJEmNnxDRsxMsTpaR8';
+const apiKey = process.env.GEMINI_API_KEY;
 
 export async function callGeminiApi(prompt, expectJson = true) {
   try {

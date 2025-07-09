@@ -74,7 +74,7 @@ function generateDateRange(startDate, endDate) {
   return dates;
 }
 
-const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyBUmUduPG0zvD4URlJEmNnxDRsxMsTpaR8';
+const apiKey = process.env.GEMINI_API_KEY;
 
 export default defineEventHandler(async (event) => {
   const { brideBirthdate, groomBirthdate, brideName, groomName, startDate, endDate } = await readBody(event);

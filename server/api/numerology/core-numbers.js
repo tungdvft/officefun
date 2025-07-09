@@ -53,7 +53,7 @@ export default defineEventHandler(async (event) => {
   const personalityNumber = getPersonalityNumber(name);
   const destinyNumber = getDestinyNumber(name);
 
-  const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyBUmUduPG0zvD4URlJEmNnxDRsxMsTpaR8';
+  const apiKey = process.env.GEMINI_API_KEY;
 
   const prompt = `
     Dựa trên thần số học với các số sau:

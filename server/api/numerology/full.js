@@ -87,7 +87,7 @@ function getFallbackResponse(personalYearCycles) {
   return { numerology };
 }
 
-const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyBUmUduPG0zvD4URlJEmNnxDRsxMsTpaR8';
+const apiKey = process.env.GEMINI_API_KEY;
 
 export default defineEventHandler(async (event) => {
   const { name, birthdate, gender } = await readBody(event);

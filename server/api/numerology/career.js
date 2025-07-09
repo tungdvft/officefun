@@ -45,7 +45,7 @@ function getDestinyNumber(name) {
   return NumerologyUtils.reduceToSingleDigit(sum) || 1;
 }
 
-const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyBUmUduPG0zvD4URlJEmNnxDRsxMsTpaR8';
+const apiKey = process.env.GEMINI_API_KEY ;
 
 // Hàm gọi Gemini API
 async function getGeminiCareerGuidance(birthdate, name, currentJob, numSuggestions = 3, previousJobs = []) {
