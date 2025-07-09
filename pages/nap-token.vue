@@ -131,7 +131,7 @@
             </div>
 
             <!-- Transfer syntax -->
-            <div class="bg-white p-4 rounded-lg shadow-sm relative">
+            <div class="bg-white p-4 rounded-lg shadow-sm relative mb-4">
               <h4 class="font-medium text-gray-800 mb-3 flex items-center">
                 <svg class="w-5 h-5 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
@@ -156,6 +156,18 @@
                 </button>
               </div>
               <p class="text-sm text-gray-500 mt-2">Sao chép cú pháp này khi chuyển khoản để được xử lý nhanh nhất</p>
+            </div>
+
+            <!-- QR Code -->
+            <div class="bg-white p-4 rounded-lg shadow-sm text-center">
+              <h4 class="font-medium text-gray-800 mb-3 flex items-center justify-center">
+                <svg class="w-5 h-5 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m-3 0h-2m-2 4h-2m2 4h2m-6 0h2m6-4h2m-2-4h2m-6 0h2m-2 4h2"></path>
+                </svg>
+                Quét mã QR để thanh toán
+              </h4>
+              <canvas ref="qrCanvas" class="mx-auto"></canvas>
+              <p class="text-sm text-gray-500 mt-2">Quét mã QR này bằng ứng dụng ngân hàng để tự động điền thông tin chuyển khoản</p>
             </div>
 
             <!-- Toast Notification -->
@@ -190,36 +202,55 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
+import QRCode from 'qrcode'
 
 const selectedPackage = ref('mega') // Mặc định chọn Mega Pack
 const showToast = ref(false) // Biến kiểm soát hiển thị toast
+const qrCanvas = ref(null) // Ref cho canvas hiển thị mã QR
 
 const packages = {
   starter: {
     name: 'Starter Pack',
     price: '25.000₫',
-    tokens: '100 token'
+    tokens: '100 token',
+    amount: 25000 // Số tiền bằng VND (không có dấu chấm)
   },
   value: {
     name: 'Value Pack',
     price: '60.000₫',
-    tokens: '300 token'
+    tokens: '300 token',
+    amount: 60000
   },
   mega: {
     name: 'Mega Pack',
     price: '180.000₫',
-    tokens: '1.000 token'
+    tokens: '1.000 token',
+    amount: 180000
   },
   zen: {
     name: 'Zen+ Membership',
     price: '129.000₫/tháng',
-    tokens: 'Unlimited Daily + 200 token'
+    tokens: 'Unlimited Daily + 200 token',
+    amount: 129000
   }
+}
+
+const bankDetails = {
+  accountNumber: '0123456789',
+  accountName: 'NGUYEN VAN A',
+  bankName: 'Vietcombank',
+  branch: 'Hà Nội'
 }
 
 const transferSyntax = computed(() => {
   return packages[selectedPackage.value].name.toUpperCase()
+})
+
+const qrData = computed(() => {
+  const pkg = packages[selectedPackage.value]
+  // Định dạng dữ liệu QR (có thể tùy chỉnh theo chuẩn QRPh hoặc yêu cầu ngân hàng)
+  return `Bank: ${bankDetails.bankName}\nAccount: ${bankDetails.accountNumber}\nName: ${bankDetails.accountName}\nAmount: ${pkg.amount}\nNote: ${transferSyntax.value}`
 })
 
 const syntaxInput = ref(null)
@@ -236,6 +267,18 @@ const copySyntax = () => {
     showToast.value = false
   }, 3000) // Ẩn toast sau 3 giây
 }
+
+const generateQRCode = () => {
+  if (qrCanvas.value) {
+    QRCode.toCanvas(qrCanvas.value, qrData.value, { width: 200 }, (error) => {
+      if (error) console.error('Lỗi khi tạo mã QR:', error)
+    })
+  }
+}
+
+// Tạo mã QR khi component được mount và khi selectedPackage thay đổi
+onMounted(generateQRCode)
+watch(selectedPackage, generateQRCode)
 </script>
 
 <style scoped>
