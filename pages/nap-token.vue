@@ -52,7 +52,7 @@
             >
               <div class="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 1155 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                 </svg>
               </div>
               <h3 class="text-lg font-semibold text-gray-800">Value Pack</h3>
@@ -131,7 +131,7 @@
             </div>
 
             <!-- Transfer syntax -->
-            <div class="bg-white p-4 rounded-lg shadow-sm">
+            <div class="bg-white p-4 rounded-lg shadow-sm relative">
               <h4 class="font-medium text-gray-800 mb-3 flex items-center">
                 <svg class="w-5 h-5 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
@@ -158,6 +158,17 @@
               <p class="text-sm text-gray-500 mt-2">Sao chép cú pháp này khi chuyển khoản để được xử lý nhanh nhất</p>
             </div>
 
+            <!-- Toast Notification -->
+            <div 
+              v-if="showToast"
+              class="fixed bottom-4 right-4 bg-purple-600 text-white px-4 py-2 rounded-lg shadow-lg flex items-center transition-all duration-300"
+            >
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Đã sao chép cú pháp chuyển khoản!
+            </div>
+
             <div class="mt-4 text-center text-sm text-gray-600">
               Sau khi chuyển khoản, vui lòng liên hệ hỗ trợ qua email <span class="text-purple-600">support@luangiaithanso.com</span> hoặc Zalo <span class="text-purple-600">0123456789</span> để được xác nhận nạp token.
             </div>
@@ -182,6 +193,7 @@
 import { ref, computed } from 'vue'
 
 const selectedPackage = ref('mega') // Mặc định chọn Mega Pack
+const showToast = ref(false) // Biến kiểm soát hiển thị toast
 
 const packages = {
   starter: {
@@ -219,8 +231,10 @@ const selectPackage = (pkg) => {
 const copySyntax = () => {
   syntaxInput.value.select()
   document.execCommand('copy')
-  // Có thể thêm thông báo đã copy thành công ở đây
-  alert('Đã sao chép cú pháp chuyển khoản vào clipboard!')
+  showToast.value = true
+  setTimeout(() => {
+    showToast.value = false
+  }, 3000) // Ẩn toast sau 3 giây
 }
 </script>
 
@@ -247,6 +261,22 @@ const copySyntax = () => {
   transition-duration: 300ms;
 }
 
+/* Toast animation */
+.fixed {
+  animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 /* Responsive adjustments */
 @media (max-width: 640px) {
   .text-2xl {
@@ -259,6 +289,13 @@ const copySyntax = () => {
   
   .p-6, .p-8 {
     padding: 1.25rem;
+  }
+
+  .fixed {
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
+    width: auto;
   }
 }
 </style>
