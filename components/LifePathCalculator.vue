@@ -11,17 +11,14 @@
       <div class="bg-gradient-to-r from-teal-50 to-blue-50 p-8 rounded-2xl border border-teal-100 shadow-sm text-center">
         <div class="flex flex-col items-center">
           <div class="relative">
-            <!-- Animated circle background -->
-            <svg class="w-32 h-32" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="45" fill="none" stroke="#e2e8f0" stroke-width="8"/>
-              <circle cx="50" cy="50" r="45" fill="none" stroke="#0d9488" stroke-width="8" stroke-dasharray="283" 
-                      stroke-dashoffset="283" stroke-linecap="round">
-                <animate attributeName="stroke-dashoffset" dur="1.5s" from="283" to="0" fill="freeze" calcMode="spline" keySplines="0.3 0 0.7 1"/>
-              </circle>
-            </svg>
+            <!-- Background hình tròn với hiệu ứng glow -->
+            <div
+              :class="['w-40 h-40 rounded-full bg-cover bg-center animate-glow']"
+              :style="{ backgroundImage: 'url(/numerology-background.jpg)' }"
+            ></div>
             <!-- Number and Symbol display -->
             <div class="absolute inset-0 flex flex-col items-center justify-center">
-              <span class="text-5xl font-bold text-teal-700">{{ result.number }}</span>
+              <span :class="['text-6xl font-bold', numberTextColorClass]" style="text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);">{{ result.number }}</span>
             </div>
           </div>
           <h3 class="text-2xl font-bold text-teal-800 mt-6">Số đường đời: {{ result.number }}</h3>
@@ -185,6 +182,7 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { useProtectedContent } from '~/composables/useProtectedContent';
+import { useGeneralStore } from '~/stores/general';
 
 // Define props
 const { birthDate, result } = defineProps({
@@ -218,7 +216,7 @@ const initializeAuth = async () => {
 // Run initialization on mount
 initializeAuth();
 
-// Dữ liệu lifePath với symbol
+// Dữ liệu lifePath với symbol, đã sửa lỗi cú pháp cho số 33
 const lifePath = {
   1: { theme: "Người lãnh đạo", symbol: "♈", strengths: ["Độc lập", "Sáng tạo", "Quyết đoán"], weaknesses: ["Cứng đầu", "Thiếu kiên nhẫn", "Độc đoán"], careers: ["Doanh nhân", "Quản lý", "Nhà sáng chế"], romance: ["Năng động trong tình yêu", "Thích dẫn dắt"], compatibility: { best: [{ number: 3, description: "Sáng tạo và năng lượng cao" }, { number: 5, description: "Thích phiêu lưu" }], least: [{ number: 4, description: "Quá cứng nhắc" }] }, famousPeople: ["Steve Jobs", "Oprah Winfrey"] },
   2: { theme: "Người hòa giải", symbol: "♉", strengths: ["Nhạy cảm", "Hợp tác", "Kiên nhẫn"], weaknesses: ["Thiếu quyết đoán", "Dễ bị tổn thương", "Phụ thuộc"], careers: ["Nhà ngoại giao", "Tư vấn", "Giáo viên"], romance: ["Lãng mạn và chu đáo", "Tìm kiếm sự ổn định"], compatibility: { best: [{ number: 6, description: "Chăm sóc và yêu thương" }], least: [{ number: 8, description: "Quá tham vọng" }] }, famousPeople: ["Madonna", "Bill Clinton"] },
@@ -231,16 +229,61 @@ const lifePath = {
   9: { theme: "Nhà nhân đạo", symbol: "♐", strengths: ["Rộng lượng", "Sáng suốt", "Lý tưởng"], weaknesses: ["Mơ mộng", "Bi quan", "Hy sinh quá mức"], careers: ["Từ thiện", "Nghệ thuật", "Hoạt động xã hội"], romance: ["Lý tưởng và tận tâm", "Tìm kiếm ý nghĩa sâu sắc"], compatibility: { best: [{ number: 7, description: "Chia sẻ chiều sâu" }], least: [{ number: 6, description: "Quá kiểm soát" }] }, famousPeople: ["Mahatma Gandhi", "Mother Teresa"] },
   11: { theme: "Bậc thầy tâm linh", symbol: "⚡", strengths: ["Truyền cảm hứng", "Nhạy cảm", "Tầm nhìn"], weaknesses: ["Căng thẳng", "Nhạy cảm quá mức", "Khó thực tế"], careers: ["Nhà tâm linh", "Cố vấn", "Nghệ sĩ"], romance: ["Sâu sắc và tâm linh", "Cần sự kết nối tinh thần"], compatibility: { best: [{ number: 22, description: "Chia sẻ tầm nhìn lớn" }], least: [{ number: 8, description: "Quá vật chất" }] }, famousPeople: ["Albert Einstein", "Deepak Chopra"] },
   22: { theme: "Kiến trúc sư vĩ đại", symbol: "🏛️", strengths: ["Thực tế hóa", "Xây dựng", "Tầm nhìn lớn"], weaknesses: ["Áp lực", "Cầu toàn", "Quá tải"], careers: ["Kiến trúc sư", "Nhà quy hoạch", "Lãnh đạo"], romance: ["Ổn định và tận tâm", "Tìm kiếm mục tiêu chung"], compatibility: { best: [{ number: 11, description: "Chia sẻ tầm nhìn" }], least: [{ number: 5, description: "Quá tự do" }] }, famousPeople: ["Bill Gates", "Nikola Tesla"] },
-  33: { theme: "Bậc thầy giáo dục", symbol: "🎓", strengths: ["Yêu thương", "Sáng tạo", "Truyền cảm hứng"], weaknesses: ["Quá lý tưởng", "Kiệt sức", "Khó thực tế"], careers: ["Giáo viên", "Nhà trị liệu", "Nhà hoạt động xã hội"], romance: ["Yêu thương và lý tưởng", "Tìm kiếm sự kết nối sâu sắc"], compatibility: { best: [{ number: 6, description: "Chia sẻ sự chăm sóc" }], least: [{ number: 8, description: "Quá vật chất" }] }, famousPeople: ["Dalai Lama", "Nelson Mandela"] }
+  33: { 
+    theme: "Bậc thầy giáo dục", 
+    symbol: "🎓", 
+    strengths: ["Yêu thương", "Sáng tạo", "Truyền cảm hứng"], 
+    weaknesses: ["Quá lý tưởng", "Kiệt sức", "Khó thực tế"], 
+    careers: ["Giáo viên", "Nhà trị liệu", "Nhà hoạt động xã hội"], 
+    romance: ["Yêu thương và lý tưởng", "Tìm kiếm sự kết nối sâu sắc"], 
+    compatibility: { 
+      best: [{ number: 6, description: "Chia sẻ sự chăm sóc" }], 
+      least: [{ number: 8, description: "Quá vật chất" }] 
+    }, 
+    famousPeople: ["Dalai Lama", "Nelson Mandela"] 
+  }
 };
 
 // Computed property để lấy symbol dựa trên result.number
 const numberSymbol = computed(() => {
   return lifePath[result?.number]?.symbol || '?';
 });
+
+// Computed property để gán màu chữ cho số đường đời
+const numberTextColorClass = computed(() => {
+  const colors = {
+    1: 'text-red-500',
+    2: 'text-orange-500',
+    3: 'text-yellow-500',
+    4: 'text-green-500',
+    5: 'text-blue-500',
+    6: 'text-pink-500',
+    7: 'text-purple-500',
+    8: 'text-indigo-900',
+    9: 'text-cyan-500',
+    11: 'text-purple-300',
+    22: 'text-gray-400',
+    33: 'text-pink-300'
+  };
+  return colors[result?.number] || 'text-teal-500';
+});
 </script>
 
 <style scoped>
+/* Animation glow nhẹ cho background hình tròn */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
 /* Đảm bảo symbol hiển thị đẹp */
 .symbol {
   display: inline-block;
