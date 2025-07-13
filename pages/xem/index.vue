@@ -1,4 +1,3 @@
-
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center py-8">
     <div class="container mx-auto px-4">
@@ -43,10 +42,10 @@
           <div class="flex justify-center">
             <button
               @click="calculateNumbers"
-              :disabled="isLoading || !birthDate || !fullName"
+              :disabled="generalStore.isLoading || !birthDate || !fullName"
               class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
             >
-              <span v-if="!isLoading" class="flex items-center justify-center gap-2">
+              <span v-if="!generalStore.isLoading" class="flex items-center justify-center gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-5 w-5"
@@ -81,7 +80,7 @@
               </span>
             </button>
             <!-- Error message -->
-            <p v-if="error" class="mt-2 text-red-600 text-center font-medium">{{ error }}</p>
+            <p v-if="generalStore.error" class="mt-2 text-red-600 text-center font-medium">{{ generalStore.error }}</p>
           </div>
         </div>
       </div>
@@ -192,8 +191,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
-import { useUserStore } from '~/stores/user';
+import { ref, onMounted } from 'vue';
+import { useGeneralStore } from '~/stores/general';
 import { useRouter } from 'vue-router';
 import { useHead } from '@unhead/vue';
 import { toast } from 'vue3-toastify';
@@ -246,7 +245,7 @@ useHead({
   ],
 });
 
-const userStore = useUserStore();
+const generalStore = useGeneralStore();
 const router = useRouter();
 
 const fullName = ref('');
@@ -254,46 +253,73 @@ const birthDate = ref('');
 const calculatedFullName = ref('');
 const calculatedBirthDate = ref('');
 const result = ref(null);
-const error = ref('');
-const isLoading = ref(false);
 const startCalulation = ref(false);
 const showDetailedComponents = ref(false);
-const userData = ref(null);
 
 // Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
 const formatDateToDDMMYYYY = (dateStr) => {
   if (!dateStr || !/^\d{4}-\d{2}-\d{2}(T.*)?$/.test(dateStr)) {
-    return '';
+    return dateStr; // Trả về nguyên gốc nếu không phải định dạng YYYY-MM-DD
   }
   const [year, month, day] = dateStr.split('T')[0].split('-');
   return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
 };
 
-// Hàm lấy thông tin người dùng từ API
+// Hàm lấy thông tin người dùng, ưu tiên từ generalStore trước
 const fetchUserData = async () => {
-  if (!userStore.isAuthenticated || !userStore.user?.id) {
-    // Không chuyển hướng, chỉ để input trống để người dùng nhập thủ công
+  // Kiểm tra dữ liệu từ generalStore trước
+  if (generalStore.hasData && generalStore.fullname && generalStore.birthdate) {
+    console.log('Using data from generalStore:', { fullname: generalStore.fullname, birthdate: generalStore.birthdate });
+    fullName.value = generalStore.fullname.trim();
+    birthDate.value = generalStore.birthdate.includes('-')
+      ? formatDateToDDMMYYYY(generalStore.birthdate)
+      : generalStore.birthdate;
+    // Tự động tính toán nếu dữ liệu hợp lệ
+    if (birthDate.value && /^\d{2}\/\d{2}\/\d{4}$/.test(birthDate.value)) {
+      await calculateNumbers();
+    }
     return;
   }
 
-  try {
-    const userId = String(userStore.user.id); // Ép kiểu userId thành chuỗi
-    console.log('Fetching user data for userId:', userId);
-    const response = await $fetch(`/api/users/${userId}`, {
-      method: 'GET',
-    });
-    console.log('API response:', response);
-    userData.value = response.user;
-    // Điền dữ liệu vào input
-    fullName.value = userData.value.fullname?.trim() || '';
-    birthDate.value = userData.value.birthdate ? formatDateToDDMMYYYY(userData.value.birthdate) : '';
-  } catch (err) {
-    console.error('API error:', err);
-    error.value = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng thử lại.';
-    toast.error(error.value, {
-      position: 'top-center',
-      theme: 'colored',
-    });
+  // Nếu không có dữ liệu trong generalStore, gọi API (nếu có thông tin đăng nhập)
+  const auth = process.client ? localStorage.getItem('auth') : null;
+  if (auth) {
+    try {
+      const authData = JSON.parse(auth);
+      if (authData.id) {
+        console.log('Fetching user data from API for userId:', authData.id);
+        const response = await $fetch(`/api/users/${authData.id}`, {
+          method: 'GET',
+        });
+        console.log('API response:', response);
+
+        // Lưu dữ liệu vào generalStore
+        await generalStore.fetchNumerology({
+          fullname: response.user.fullname?.trim() || '',
+          birthdate: response.user.birthdate ? formatDateToDDMMYYYY(response.user.birthdate) : '',
+        });
+
+        // Điền dữ liệu vào form
+        fullName.value = generalStore.fullname;
+        birthDate.value = generalStore.birthdate;
+
+        // Tự động tính toán nếu dữ liệu hợp lệ
+        if (birthDate.value && /^\d{2}\/\d{2}\/\d{4}$/.test(birthDate.value)) {
+          await calculateNumbers();
+        }
+      } else {
+        console.log('No valid user ID in auth data, allowing manual input');
+      }
+    } catch (err) {
+      console.error('API error:', err);
+      generalStore.error = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thông tin thủ công.';
+      toast.error(generalStore.error, {
+        position: 'top-center',
+        theme: 'colored',
+      });
+    }
+  } else {
+    console.log('No auth data, allowing manual input');
   }
 };
 
@@ -331,9 +357,9 @@ const formatDateInput = (event) => {
 
 // Hàm tính toán các chỉ số thần số học
 const calculateNumbers = async () => {
-  error.value = '';
+  generalStore.error = '';
   result.value = null;
-  isLoading.value = true;
+  generalStore.isLoading = true;
   try {
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate.value)) {
       throw new Error('Vui lòng nhập ngày sinh theo định dạng DD/MM/YYYY');
@@ -349,6 +375,12 @@ const calculateNumbers = async () => {
     ) {
       throw new Error('Ngày sinh không hợp lệ.');
     }
+
+    // Lưu dữ liệu vào generalStore
+    await generalStore.fetchNumerology({
+      fullname: fullName.value,
+      birthdate: birthDate.value,
+    });
 
     const lifePath = calculateLifePathNumber(birthDate.value);
     const lifePathStr = [11, 22].includes(lifePath) ? lifePath.toString() : lifePath.toString();
@@ -380,37 +412,18 @@ const calculateNumbers = async () => {
     }, 300);
   } catch (err) {
     console.error('Lỗi trong calculateNumbers:', err);
-    error.value = err.message;
+    generalStore.error = err.message;
     toast.error(err.message, {
       position: 'top-center',
       theme: 'colored',
     });
   } finally {
-    isLoading.value = false;
+    generalStore.isLoading = false;
   }
 };
 
-// Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
-watch(() => userStore.isStoreInitialized, (initialized) => {
-  if (initialized && process.client) {
-    fetchUserData().then(() => {
-      // Tự động tính toán nếu dữ liệu từ API hợp lệ
-      if (birthDate.value && /^\d{2}\/\d{2}\/\d{4}$/.test(birthDate.value)) {
-        calculateNumbers();
-      }
-    });
-  }
-});
-
 onMounted(() => {
-  if (userStore.isStoreInitialized) {
-    fetchUserData().then(() => {
-      // Tự động tính toán nếu dữ liệu từ API hợp lệ
-      if (birthDate.value && /^\d{2}\/\d{2}\/\d{4}$/.test(birthDate.value)) {
-        calculateNumbers();
-      }
-    });
-  }
+  fetchUserData();
 });
 </script>
 

@@ -125,9 +125,9 @@
                 </svg>
                 Ngân hàng Vietcombank
               </h4>
-              <p class="text-gray-700 mt-2">Số tài khoản: <span class="font-medium">0123456789</span></p>
-              <p class="text-gray-700">Chủ tài khoản: <span class="font-medium">NGUYEN VAN A</span></p>
-              <p class="text-gray-700">Chi nhánh: <span class="font-medium">Hà Nội</span></p>
+              <p class="text-gray-700 mt-2">Số tài khoản: <span class="font-medium">{{ bankDetails.accountNumber }}</span></p>
+              <p class="text-gray-700">Chủ tài khoản: <span class="font-medium">{{ bankDetails.accountName }}</span></p>
+              <p class="text-gray-700">Chi nhánh: <span class="font-medium">{{ bankDetails.branch }}</span></p>
             </div>
 
             <!-- Transfer syntax -->
@@ -167,7 +167,8 @@
                 Quét mã QR để thanh toán
               </h4>
               <canvas ref="qrCanvas" class="mx-auto"></canvas>
-              <p class="text-sm text-gray-500 mt-2">Quét mã QR này bằng ứng dụng ngân hàng để tự động điền thông tin chuyển khoản</p>
+              <p v-if="qrError" class="text-sm text-red-500 mt-2">{{ qrError }}</p>
+              <p class="text-sm text-gray-500 mt-2">Quét mã QR này bằng ứng dụng Vietcombank Digibank để tự động điền thông tin chuyển khoản</p>
             </div>
 
             <!-- Toast Notification -->
@@ -208,28 +209,29 @@ import QRCode from 'qrcode'
 const selectedPackage = ref('mega') // Mặc định chọn Mega Pack
 const showToast = ref(false) // Biến kiểm soát hiển thị toast
 const qrCanvas = ref(null) // Ref cho canvas hiển thị mã QR
+const qrError = ref('') // Biến lưu thông báo lỗi mã QR
 
 const packages = {
   starter: {
-    name: 'Starter Pack',
+    name: 'STARTER PACK',
     price: '25.000₫',
     tokens: '100 token',
     amount: 25000 // Số tiền bằng VND (không có dấu chấm)
   },
   value: {
-    name: 'Value Pack',
+    name: 'VALUE PACK',
     price: '60.000₫',
     tokens: '300 token',
     amount: 60000
   },
   mega: {
-    name: 'Mega Pack',
+    name: 'MEGA PACK',
     price: '180.000₫',
     tokens: '1.000 token',
     amount: 180000
   },
   zen: {
-    name: 'Zen+ Membership',
+    name: 'ZEN MEMBERSHIP',
     price: '129.000₫/tháng',
     tokens: 'Unlimited Daily + 200 token',
     amount: 129000
@@ -237,41 +239,111 @@ const packages = {
 }
 
 const bankDetails = {
-  accountNumber: '0123456789',
-  accountName: 'NGUYEN VAN A',
-  bankName: 'Vietcombank',
-  branch: 'Hà Nội'
+  accountNumber: '0021000317551', // Số tài khoản Vietcombank thực
+  accountName: 'DO VIET TUNG', // Tên chủ tài khoản thực, viết hoa, không dấu
+  bankCode: 'VCB', // Mã ngân hàng Vietcombank cho VietQR
+  template: 'compact', // Template VietQR
+  branch: 'Hà Nội' // Chi nhánh
 }
 
+// Định nghĩa transferSyntax để tạo nội dung chuyển khoản
 const transferSyntax = computed(() => {
-  return packages[selectedPackage.value].name.toUpperCase()
+  return packages[selectedPackage.value].name
 })
 
+// Hàm tạo CRC16 (theo chuẩn VietQR)
+const crc16 = (data) => {
+  let crc = 0xFFFF
+  const polynomial = 0x1021
+  for (let i = 0; i < data.length; i++) {
+    crc ^= data.charCodeAt(i) << 8
+    for (let j = 0; j < 8; j++) {
+      if (crc & 0x8000) {
+        crc = (crc << 1) ^ polynomial
+      } else {
+        crc <<= 1
+      }
+    }
+  }
+  return (crc & 0xFFFF).toString(16).padStart(4, '0').toUpperCase()
+}
+
+// Định dạng VietQR theo chuẩn Napas
 const qrData = computed(() => {
   const pkg = packages[selectedPackage.value]
-  // Định dạng dữ liệu QR (có thể tùy chỉnh theo chuẩn QRPh hoặc yêu cầu ngân hàng)
-  return `Bank: ${bankDetails.bankName}\nAccount: ${bankDetails.accountNumber}\nName: ${bankDetails.accountName}\nAmount: ${pkg.amount}\nNote: ${transferSyntax.value}`
+  const accountNo = bankDetails.accountNumber
+  const accountName = bankDetails.accountName.replace(/\s/g, '').toUpperCase()
+  const amount = pkg.amount.toString()
+  const note = transferSyntax.value.replace(/\s/g, '')
+
+  // Định dạng VietQR
+  const payload = [
+    '000201', // Version
+    '010212', // Method (dynamic QR)
+    `38${(38 + accountNo.length + accountName.length).toString().padStart(2, '0')}`, // Merchant Account Info
+    `0010A000000727`, // Merchant Account Info Template
+    `01${(28 + accountNo.length + accountName.length).toString().padStart(2, '0')}`, // Merchant Account Info Sub-template
+    `00${bankDetails.bankCode.length.toString().padStart(2, '0')}${bankDetails.bankCode}`, // Bank Code
+    `01${accountNo.length.toString().padStart(2, '0')}${accountNo}`, // Account Number
+    `02${accountName.length.toString().padStart(2, '0')}${accountName}`, // Account Name
+    '5303704', // Currency (VND)
+    `54${amount.length.toString().padStart(2, '0')}${amount}`, // Amount
+    '5802VN', // Country Code
+    `62${(8 + note.length).toString().padStart(2, '0')}`, // Additional Data
+    `08${note.length.toString().padStart(2, '0')}${note}`, // Transaction Note
+    `6304` // CRC (sẽ được thêm sau)
+  ].join('')
+
+  const crc = crc16(payload)
+  console.log('VietQR Payload:', `${payload}${crc}`) // Debug payload
+  return `${payload}${crc}`
 })
 
 const syntaxInput = ref(null)
 
 const selectPackage = (pkg) => {
   selectedPackage.value = pkg
+  qrError.value = '' // Xóa lỗi khi chọn gói mới
 }
 
 const copySyntax = () => {
-  syntaxInput.value.select()
-  document.execCommand('copy')
-  showToast.value = true
-  setTimeout(() => {
-    showToast.value = false
-  }, 3000) // Ẩn toast sau 3 giây
+  if (syntaxInput.value) {
+    syntaxInput.value.select()
+    document.execCommand('copy')
+    showToast.value = true
+    setTimeout(() => {
+      showToast.value = false
+    }, 3000) // Ẩn toast sau 3 giây
+  }
 }
 
 const generateQRCode = () => {
+  qrError.value = ''
+  // Kiểm tra số tài khoản
+  if (!bankDetails.accountNumber || bankDetails.accountNumber === 'YOUR_ACTUAL_VIETCOMBANK_ACCOUNT_NUMBER') {
+    qrError.value = 'Vui lòng cung cấp số tài khoản Vietcombank hợp lệ'
+    return
+  }
+  if (!/^\d+$/.test(bankDetails.accountNumber) || bankDetails.accountNumber.length < 10) {
+    qrError.value = 'Số tài khoản không hợp lệ, vui lòng kiểm tra lại'
+    return
+  }
+  // Kiểm tra tên chủ tài khoản
+  if (!bankDetails.accountName || bankDetails.accountName === 'YOUR_ACTUAL_ACCOUNT_NAME' || bankDetails.accountName.trim() === '') {
+    qrError.value = 'Vui lòng cung cấp tên chủ tài khoản hợp lệ'
+    return
+  }
+  // Kiểm tra số tiền
+  if (!packages[selectedPackage.value].amount || packages[selectedPackage.value].amount <= 0) {
+    qrError.value = 'Số tiền không hợp lệ, vui lòng chọn gói khác'
+    return
+  }
   if (qrCanvas.value) {
-    QRCode.toCanvas(qrCanvas.value, qrData.value, { width: 200 }, (error) => {
-      if (error) console.error('Lỗi khi tạo mã QR:', error)
+    QRCode.toCanvas(qrCanvas.value, qrData.value, { width: 200, errorCorrectionLevel: 'H' }, (error) => {
+      if (error) {
+        qrError.value = 'Lỗi khi tạo mã QR, vui lòng thử lại'
+        console.error('Lỗi khi tạo mã QR:', error)
+      }
     })
   }
 }
