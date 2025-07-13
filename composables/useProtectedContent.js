@@ -9,29 +9,34 @@ export function useProtectedContent(tokenCost = 1, description = 'Deducted for c
   const errorMessage = ref(null);
   const isContentAccessible = ref(false);
   const hasSufficientTokens = ref(null);
+  const errorAction = ref(() => {});
 
-  const checkAuthAndAccess = async () => {
-    console.log('Starting checkAuthAndAccess, userStore:', userStore.user, 'isStoreInitialized:', userStore.isStoreInitialized);
+  const checkAuthAndAccess = async (customTokenCost = tokenCost, customDescription = description) => {
+    console.log('checkAuthAndAccess: Starting with customTokenCost:', customTokenCost, 'customDescription:', customDescription, 'userStore:', userStore.user, 'isStoreInitialized:', userStore.isStoreInitialized);
 
     if (!userStore.isStoreInitialized) {
-      console.log('Initializing userStore...');
+      console.log('checkAuthAndAccess: Initializing userStore...');
       await userStore.initialize();
     }
 
     if (!userStore.user) {
-      console.log('No user found, redirecting to login');
+      console.log('checkAuthAndAccess: No user found, redirecting to login');
+      errorMessage.value = 'Vui lòng đăng nhập để sử dụng tính năng này.';
+      errorAction.value = () => router.push('/dang-nhap');
       return {
         isLoggedIn: false,
         action: () => router.push('/dang-nhap')
       };
     }
 
-    const balanceResponse = await checkTokenBalance();
-    console.log('Check token balance response:', balanceResponse);
+    console.log('checkAuthAndAccess: Checking token balance with customTokenCost:', customTokenCost);
+    const balanceResponse = await checkTokenBalance(customTokenCost);
+    console.log('checkAuthAndAccess: Check token balance response:', balanceResponse);
 
     if (!balanceResponse.success) {
-      console.log('Check token balance failed:', balanceResponse.message);
-      errorMessage.value = balanceResponse.message;
+      console.log('checkAuthAndAccess: Check token balance failed:', balanceResponse.message);
+      errorMessage.value = 'Lỗi khi kiểm tra số dư token. Vui lòng thử lại!';
+      errorAction.value = () => {};
       return {
         isLoggedIn: true,
         action: () => {}
@@ -40,35 +45,44 @@ export function useProtectedContent(tokenCost = 1, description = 'Deducted for c
 
     hasSufficientTokens.value = balanceResponse.sufficient;
     if (!balanceResponse.sufficient) {
-      console.log('Insufficient tokens:', balanceResponse.message);
-      errorMessage.value = balanceResponse.message;
+      console.log('checkAuthAndAccess: Insufficient tokens');
+      errorMessage.value = 'Không đủ token cho tính năng này. Hãy nạp thêm token để trải nghiệm full tính năng nhé!';
+      errorAction.value = () => router.push('/nap-token');
+      return {
+        isLoggedIn: true,
+        action: () => router.push('/nap-token')
+      };
     }
 
+    console.log('checkAuthAndAccess: Sufficient tokens, returning action for deduction with customTokenCost:', customTokenCost);
     return {
       isLoggedIn: true,
-      action: balanceResponse.sufficient ? () => handleTokenDeduction() : () => {}
+      action: () => handleTokenDeduction(customTokenCost, customDescription)
     };
   };
 
-  const checkTokenBalance = async () => {
+  const checkTokenBalance = async (requiredTokens) => {
     try {
-      console.log('Calling /api/check-token-balance with userId:', userStore.user.id, 'tokenCost:', tokenCost);
+      console.log('checkTokenBalance: Calling /api/check-token-balance with userId:', userStore.user.id, 'requiredTokens:', requiredTokens);
       const response = await fetch('/api/check-token-balance', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-username': encodeURIComponent(userStore.user.email)
+        },
         body: JSON.stringify({
           userId: userStore.user.id,
-          tokenCost
+          tokenCost: requiredTokens
         })
       });
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`);
       }
       const result = await response.json();
-      console.log('Check token balance result:', result);
+      console.log('checkTokenBalance: Result:', result);
       return result;
     } catch (error) {
-      console.error('Error in checkTokenBalance:', error);
+      console.error('checkTokenBalance: Error:', error);
       return {
         success: false,
         message: 'Lỗi khi kiểm tra số dư token: ' + error.message
@@ -76,37 +90,46 @@ export function useProtectedContent(tokenCost = 1, description = 'Deducted for c
     }
   };
 
-  const handleTokenDeduction = async () => {
+  const handleTokenDeduction = async (deductionTokenCost, deductionDescription) => {
     isLoading.value = true;
-    errorMessage.value = null; // Reset errorMessage
-    console.log('Starting handleTokenDeduction with userId:', userStore.user.id, 'tokenCost:', tokenCost, 'description:', description);
+    errorMessage.value = null;
+    errorAction.value = () => {};
+    console.log('handleTokenDeduction: Starting with userId:', userStore.user.id, 'deductionTokenCost:', deductionTokenCost, 'deductionDescription:', deductionDescription);
 
     try {
+      console.log('handleTokenDeduction: Sending request to /api/deduct-tokens with body:', JSON.stringify({
+        userId: userStore.user.id,
+        tokenCost: deductionTokenCost,
+        description: deductionDescription
+      }));
       const response = await fetch('/api/deduct-tokens', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-username': encodeURIComponent(userStore.user.email)
+        },
         body: JSON.stringify({
           userId: userStore.user.id,
-          tokenCost,
-          description
+          tokenCost: deductionTokenCost,
+          description: deductionDescription
         })
       });
 
-      console.log('Deduct tokens HTTP status:', response.status);
+      console.log('handleTokenDeduction: Deduct tokens HTTP status:', response.status);
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`);
       }
 
       const result = await response.json();
-      console.log('Deduct tokens result:', result);
+      console.log('handleTokenDeduction: Deduct tokens result:', result);
 
       if (result.success) {
-        console.log('Token deduction successful, updating userStore with remainingTokens:', result.remainingTokens);
+        console.log('handleTokenDeduction: Token deduction successful, updating userStore with remainingTokens:', result.remainingTokens);
         try {
           await userStore.updateTokens(result.remainingTokens);
-          console.log('userStore updated successfully');
+          console.log('handleTokenDeduction: userStore updated successfully');
         } catch (error) {
-          console.error('Error in userStore.updateTokens:', error);
+          console.error('handleTokenDeduction: Error in userStore.updateTokens:', error);
           throw new Error('Lỗi khi cập nhật số dư token: ' + error.message);
         }
         isContentAccessible.value = true;
@@ -115,23 +138,25 @@ export function useProtectedContent(tokenCost = 1, description = 'Deducted for c
           message: result.message
         };
       } else {
-        console.log('Token deduction failed:', result.message);
-        errorMessage.value = result.message;
+        console.log('handleTokenDeduction: Token deduction failed:', result.message);
+        errorMessage.value = 'Không đủ token cho tính năng này. Hãy nạp thêm token để trải nghiệm full tính năng nhé!';
+        errorAction.value = () => router.push('/nap-token');
         return {
           success: false,
-          message: result.message
+          message: errorMessage.value
         };
       }
     } catch (error) {
-      console.error('Error in handleTokenDeduction:', error);
+      console.error('handleTokenDeduction: Error:', error);
       errorMessage.value = 'Lỗi xử lý giao dịch token: ' + error.message;
+      errorAction.value = () => router.push('/nap-token');
       return {
         success: false,
-        message: 'Lỗi xử lý giao dịch token: ' + error.message
+        message: errorMessage.value
       };
     } finally {
       isLoading.value = false;
-      console.log('handleTokenDeduction completed, isLoading:', isLoading.value, 'errorMessage:', errorMessage.value);
+      console.log('handleTokenDeduction: Completed, isLoading:', isLoading.value, 'errorMessage:', errorMessage.value);
     }
   };
 
@@ -140,6 +165,7 @@ export function useProtectedContent(tokenCost = 1, description = 'Deducted for c
     errorMessage,
     isContentAccessible,
     hasSufficientTokens,
-    checkAuthAndAccess
+    checkAuthAndAccess,
+    errorAction
   };
 }

@@ -49,15 +49,24 @@
           </div>
           <!-- Error Message -->
           <div v-if="errors.general || errorMessage" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
-            {{ errors.general || errorMessage }}
-            <p v-if="hasSufficientTokens === false" class="mt-1 text-sm">Bạn không có đủ token. Vui lòng nạp thêm.</p>
+            <span v-if="errors.general">{{ errors.general }}</span>
+            <span v-else-if="errorMessage" class="inline">
+              {{ errorMessage.split('Hãy nạp thêm token')[0] }}
+              <button
+                v-if="errorMessage.includes('Hãy nạp thêm token')"
+                @click="errorAction"
+                class="underline text-blue-600 hover:text-blue-800"
+              >
+                nạp thêm token
+              </button>
+              {{ errorMessage.includes('Hãy nạp thêm token') ? 'để trải nghiệm full tính năng nhé!' : '' }}
+            </span>
           </div>
           <!-- Button -->
-          <div class="flex justify-center">
+          <div v-if="hasSufficientTokens || !isLoggedIn" class="flex justify-center">
             <button
               @click="getCareerGuidance"
-              :disabled="loading || !hasSufficientTokens"
-              class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
+              class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 shadow-md"
             >
               <span v-if="loading || isLoading" class="flex items-center justify-center">
                 <svg
@@ -184,11 +193,10 @@
                 </div>
               </div>
               <!-- Button to load more career suggestions -->
-              <div v-if="result.careerSuggestions.length < maxSuggestions && isContentAccessible" class="flex justify-center mt-6">
+              <div v-if="result.careerSuggestions.length < maxSuggestions && isContentAccessible && (hasSufficientTokensMore || !isLoggedIn)" class="flex justify-center mt-6">
                 <button
                   @click="loadMoreCareers"
-                  :disabled="loadingMore || isLoading || !hasSufficientTokensForMore"
-                  class="w-auto bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-700 hover:to-cyan-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
+                  class="w-auto bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-700 hover:to-cyan-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 shadow-md"
                 >
                   <span v-if="loadingMore || isLoading" class="flex items-center justify-center">
                     <svg
@@ -264,9 +272,9 @@ const tokenCost = ref(15);
 const tokenCostMore = ref(5);
 const maxSuggestions = ref(12);
 const description = 'Access to career guidance based on numerology';
-const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
+const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, errorAction } = useProtectedContent(tokenCost.value, description);
+const hasSufficientTokensMore = ref(null);
 const isLoggedIn = ref(false);
-const hasSufficientTokensForMore = ref(true);
 let handleAction = () => {};
 const userStore = useUserStore();
 
@@ -301,32 +309,47 @@ const fetchUserData = async () => {
   }
 };
 
-// Hàm kiểm tra số dư token
-const checkTokenBalance = async (requiredTokens) => {
-  if (!userStore.isAuthenticated || !userStore.user?.id) {
-    console.log('User not authenticated, setting hasSufficientTokensForMore to false');
-    hasSufficientTokensForMore.value = false;
-    return false;
+// Kiểm tra số dư token cho nút "Xem thêm" (5 token)
+const checkMoreTokens = async () => {
+  console.log('checkMoreTokens: Checking token balance for Load More, tokenCostMore:', tokenCostMore.value);
+  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess(tokenCostMore.value, 'Load more career suggestions');
+  if (!authStatus) {
+    console.log('checkMoreTokens: User not logged in');
+    hasSufficientTokensMore.value = false;
+    return;
   }
+  const balanceResponse = await checkTokenBalance(tokenCostMore.value);
+  hasSufficientTokensMore.value = balanceResponse.sufficient;
+  console.log('checkMoreTokens: hasSufficientTokensMore:', hasSufficientTokensMore.value);
+};
 
+// Hàm kiểm tra số dư token (tái sử dụng từ useProtectedContent để tránh lặp code)
+const checkTokenBalance = async (requiredTokens) => {
   try {
-    const response = await $fetch('/api/check-token-balance', {
+    console.log('checkTokenBalance: Calling /api/check-token-balance with userId:', userStore.user.id, 'requiredTokens:', requiredTokens);
+    const response = await fetch('/api/check-token-balance', {
       method: 'POST',
       headers: {
-        'x-username': encodeURIComponent(userStore.user.email),
-        'Content-Type': 'application/json; charset=utf-8'
+        'Content-Type': 'application/json',
+        'x-username': encodeURIComponent(userStore.user.email)
       },
-      body: { userId: String(userStore.user.id), requiredTokens }
+      body: JSON.stringify({
+        userId: userStore.user.id,
+        tokenCost: requiredTokens
+      })
     });
-    console.log(`Check token balance response:`, response);
-    hasSufficientTokensForMore.value = response.hasSufficientTokens;
-    return response.hasSufficientTokens;
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    const result = await response.json();
+    console.log('checkTokenBalance: Result:', result);
+    return result;
   } catch (error) {
-    console.error('Error checking token balance:', error);
-    errorMessage.value = error.data?.message || 'Không thể kiểm tra số dư token!';
-    toast.error(errorMessage.value, { position: 'top-center' });
-    hasSufficientTokensForMore.value = false;
-    return false;
+    console.error('checkTokenBalance: Error:', error);
+    return {
+      success: false,
+      message: 'Lỗi khi kiểm tra số dư token: ' + error.message
+    };
   }
 };
 
@@ -336,36 +359,18 @@ const initializeAuth = async () => {
   isLoggedIn.value = authStatus;
   handleAction = action;
   if (authStatus) {
-    await checkTokenBalance(tokenCostMore.value);
+    await checkMoreTokens(); // Kiểm tra số dư cho nút "Xem thêm"
   }
 };
 
-// Load saved data from localStorage on mount
+// Load dữ liệu khi component được mount
 onMounted(() => {
   console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
-  const savedData = localStorage.getItem('careerGuidanceData');
-  if (savedData) {
-    const parsed = JSON.parse(savedData);
-    formData.value = parsed.formData || {
-      name: '',
-      birthdate: '',
-      currentJob: ''
-    };
-    result.value = parsed.result || null;
-  }
   if (userStore.isStoreInitialized) {
     initializeAuth();
     fetchUserData();
   }
 });
-
-// Save data to localStorage on change
-watch([formData, result], () => {
-  localStorage.setItem('careerGuidanceData', JSON.stringify({
-    formData: formData.value,
-    result: result.value
-  }));
-}, { deep: true });
 
 // Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
 watch(() => userStore.isStoreInitialized, (initialized) => {
@@ -422,9 +427,11 @@ const getCareerGuidance = async () => {
   if (isContentAccessible.value) {
     await fetchCareerGuidance();
   } else {
-    await handleAction();
-    if (isContentAccessible.value) {
+    const { success } = await handleAction();
+    if (success || isContentAccessible.value) {
       await fetchCareerGuidance();
+    } else {
+      toast.error(errorMessage.value, { position: 'top-center' });
     }
   }
 };
@@ -445,7 +452,6 @@ async function fetchCareerGuidance() {
     });
     console.log('Response from /api/numerology/career:', response);
     result.value = response;
-    await checkTokenBalance(tokenCostMore.value);
     toast.success('Định hướng nghề nghiệp đã hoàn tất!', { position: 'top-center' });
     // Scroll to result
     setTimeout(() => {
@@ -463,12 +469,20 @@ async function fetchCareerGuidance() {
   }
 }
 
-const loadMoreCareers = async () => {
+async function loadMoreCareers() {
   if (!result.value) return;
 
-  const sufficientTokens = await checkTokenBalance(tokenCostMore.value);
-  if (!sufficientTokens) {
-    errorMessage.value = 'Bạn không có đủ token để xem thêm nghề nghiệp!';
+  console.log('loadMoreCareers: Checking token cost for Load More, tokenCostMore:', tokenCostMore.value);
+  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess(tokenCostMore.value, 'Load more career suggestions');
+  if (!authStatus) {
+    console.log('loadMoreCareers: User not logged in, triggering login action');
+    action();
+    return;
+  }
+
+  const { success } = await action();
+  if (!success) {
+    console.log('loadMoreCareers: Token deduction failed, error:', errorMessage.value);
     toast.error(errorMessage.value, { position: 'top-center' });
     return;
   }
@@ -478,7 +492,7 @@ const loadMoreCareers = async () => {
     const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
     const numSuggestions = Math.min(result.value.careerSuggestions.length + 3, maxSuggestions.value);
     const previousJobs = result.value.careerSuggestions.map(s => s.job);
-    console.log('Sending request to /api/numerology/career for more suggestions');
+    console.log('Sending request to /api/numerology/career for more suggestions, numSuggestions:', numSuggestions);
     const response = await $fetch('/api/numerology/career', {
       method: 'POST',
       headers: {
@@ -489,8 +503,9 @@ const loadMoreCareers = async () => {
     });
     console.log('Response from /api/numerology/career (more suggestions):', response);
     result.value = response;
-    await checkTokenBalance(tokenCostMore.value);
     toast.success(`Đã tải thêm ${response.careerSuggestions.length - (result.value.careerSuggestions.length - 3)} nghề nghiệp phù hợp!`, { position: 'top-center' });
+    // Cập nhật lại hasSufficientTokensMore sau khi trừ token
+    await checkMoreTokens();
   } catch (error) {
     console.error('Error loading more careers:', error);
     errorMessage.value = error.data?.message || 'Có lỗi khi tải thêm nghề nghiệp!';
@@ -498,7 +513,7 @@ const loadMoreCareers = async () => {
   } finally {
     loadingMore.value = false;
   }
-};
+}
 </script>
 
 <style scoped>
