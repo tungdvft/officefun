@@ -39,14 +39,24 @@
           </div>
           <!-- Error Message -->
           <div v-if="errors.general || errorMessage" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
-            {{ errors.general || errorMessage }}
-            <p v-if="hasSufficientTokens === false" class="mt-1 text-sm">Bạn không có đủ token. Vui lòng nạp thêm.</p>
+            <span v-if="errors.general">{{ errors.general }}</span>
+            <span v-else-if="errorMessage" class="inline">
+              {{ errorMessage.split('Hãy nạp thêm token')[0] }}
+              <button
+                v-if="errorMessage.includes('Hãy nạp thêm token')"
+                @click="errorAction"
+                class="underline text-blue-600 hover:text-blue-800"
+              >
+                nạp thêm token
+              </button>
+              {{ errorMessage.includes('Hãy nạp thêm token') ? 'để trải nghiệm full tính năng nhé!' : '' }}
+            </span>
           </div>
           <!-- Button -->
-          <div class="flex justify-center">
+          <div v-if="hasSufficientTokens || !isLoggedIn" class="flex justify-center">
             <button
               @click="analyzeChild"
-              :disabled="loading || !hasSufficientTokens"
+              :disabled="loading || isLoading"
               class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
             >
               <span v-if="loading || isLoading" class="flex items-center justify-center">
@@ -308,7 +318,7 @@ const errors = ref({
 });
 const tokenCost = ref(15);
 const description = 'Access to child numerology analysis';
-const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
+const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, errorAction } = useProtectedContent(tokenCost.value, description);
 const isLoggedIn = ref(false);
 const userStore = useUserStore();
 let handleAction = () => {};
@@ -322,13 +332,16 @@ const currentMonthVietnamese = computed(() => {
 
 // Khởi tạo trạng thái đăng nhập
 const initializeAuth = async () => {
-  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
+  console.log('initializeAuth: Checking token balance for Child Numerology, tokenCost:', tokenCost.value);
+  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess(tokenCost.value, description);
   isLoggedIn.value = authStatus;
   handleAction = action;
+  console.log('initializeAuth: hasSufficientTokens:', hasSufficientTokens.value);
 };
 
 // Khởi tạo auth khi component được mount
 onMounted(() => {
+  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
   if (userStore.isStoreInitialized) {
     initializeAuth();
   }
@@ -341,14 +354,6 @@ watch(() => userStore.isStoreInitialized, (initialized) => {
     initializeAuth();
   }
 });
-
-// Save data to localStorage on change
-watch([formData, result], () => {
-  localStorage.setItem('childNumerologyData', JSON.stringify({
-    formData: formData.value,
-    result: result.value
-  }));
-}, { deep: true });
 
 // Validate form
 const validateForm = () => {
@@ -396,9 +401,11 @@ const analyzeChild = async () => {
   if (isContentAccessible.value) {
     await fetchChildAnalysis();
   } else {
-    await handleAction();
-    if (isContentAccessible.value) {
+    const { success } = await handleAction();
+    if (success || isContentAccessible.value) {
       await fetchChildAnalysis();
+    } else {
+      toast.error(errorMessage.value, { position: 'top-center' });
     }
   }
 };
