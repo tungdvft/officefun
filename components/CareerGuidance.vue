@@ -309,18 +309,31 @@ const fetchUserData = async () => {
   }
 };
 
-// Kiểm tra số dư token cho nút "Xem thêm" (5 token)
-const checkMoreTokens = async () => {
-  console.log('checkMoreTokens: Checking token balance for Load More, tokenCostMore:', tokenCostMore.value);
-  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess(tokenCostMore.value, 'Load more career suggestions');
-  if (!authStatus) {
-    console.log('checkMoreTokens: User not logged in');
+// Kiểm tra số dư token cho nút "Xem thêm" (5 token) và nút "Xem định hướng" (15 token)
+const checkTokens = async () => {
+  console.log('checkTokens: Checking token balance for both actions');
+  
+  // Kiểm tra số dư cho nút "Xem thêm" (5 token)
+  console.log('checkTokens: Checking token balance for Load More, tokenCostMore:', tokenCostMore.value);
+  const moreTokensResponse = await checkAuthAndAccess(tokenCostMore.value, 'Load more career suggestions');
+  if (!moreTokensResponse.isLoggedIn) {
+    console.log('checkTokens: User not logged in');
     hasSufficientTokensMore.value = false;
+    isLoggedIn.value = false;
     return;
   }
-  const balanceResponse = await checkTokenBalance(tokenCostMore.value);
-  hasSufficientTokensMore.value = balanceResponse.sufficient;
-  console.log('checkMoreTokens: hasSufficientTokensMore:', hasSufficientTokensMore.value);
+  const balanceMoreResponse = await checkTokenBalance(tokenCostMore.value);
+  hasSufficientTokensMore.value = balanceMoreResponse.sufficient;
+  console.log('checkTokens: hasSufficientTokensMore:', hasSufficientTokensMore.value);
+
+  // Kiểm tra số dư cho nút "Xem định hướng" (15 token)
+  console.log('checkTokens: Checking token balance for Career Guidance, tokenCost:', tokenCost.value);
+  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess(tokenCost.value, description);
+  isLoggedIn.value = authStatus;
+  handleAction = action;
+  const balanceResponse = await checkTokenBalance(tokenCost.value);
+  hasSufficientTokens.value = balanceResponse.sufficient;
+  console.log('checkTokens: hasSufficientTokens:', hasSufficientTokens.value);
 };
 
 // Hàm kiểm tra số dư token (tái sử dụng từ useProtectedContent để tránh lặp code)
@@ -355,12 +368,7 @@ const checkTokenBalance = async (requiredTokens) => {
 
 // Khởi tạo trạng thái đăng nhập và kiểm tra token
 const initializeAuth = async () => {
-  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
-  isLoggedIn.value = authStatus;
-  handleAction = action;
-  if (authStatus) {
-    await checkMoreTokens(); // Kiểm tra số dư cho nút "Xem thêm"
-  }
+  await checkTokens();
 };
 
 // Load dữ liệu khi component được mount
@@ -504,8 +512,8 @@ async function loadMoreCareers() {
     console.log('Response from /api/numerology/career (more suggestions):', response);
     result.value = response;
     toast.success(`Đã tải thêm ${response.careerSuggestions.length - (result.value.careerSuggestions.length - 3)} nghề nghiệp phù hợp!`, { position: 'top-center' });
-    // Cập nhật lại hasSufficientTokensMore sau khi trừ token
-    await checkMoreTokens();
+    // Cập nhật lại cả hasSufficientTokens và hasSufficientTokensMore sau khi trừ token
+    await checkTokens();
   } catch (error) {
     console.error('Error loading more careers:', error);
     errorMessage.value = error.data?.message || 'Có lỗi khi tải thêm nghề nghiệp!';
