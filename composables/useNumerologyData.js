@@ -34,15 +34,15 @@ export function useNumerologyData(type, birthDate, fullName) {
 
   // Hàm xác thực đầu vào
   const validateInputs = () => {
-    if (type === 'soulUrge') {
-      if (!fullName.value || fullName.value.trim() === '' || !/[aeiou]/i.test(fullName.value)) {
-        error.value = 'Vui lòng nhập tên đầy đủ chứa nguyên âm!';
-        toast.error(error.value);
-        console.warn('Validation failed: invalid fullName');
-        return false;
-      }
-      return true;
-    }
+    // if (type === 'soulUrge') {
+    //   if (!fullName.value || fullName.value.trim() === '' || !/[aeiou]/i.test(fullName.value)) {
+    //     error.value = 'Vui lòng nhập tên đầy đủ chứa nguyên âm!';
+    //     toast.error(error.value);
+    //     console.warn('Validation failed: invalid fullName');
+    //     return false;
+    //   }
+    //   return true;
+    // }
 
     if (!fullName.value || fullName.value.trim() === '') {
       error.value = 'Vui lòng nhập tên đầy đủ!';
