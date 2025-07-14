@@ -21,7 +21,7 @@ export function useProtectedContent(tokenCost = 1, description = 'Deducted for c
 
     if (!userStore.user) {
       console.log('checkAuthAndAccess: No user found, redirecting to login');
-      errorMessage.value = 'Vui lòng đăng nhập để sử dụng tính năng này.';
+      errorMessage.value = 'Vui lòng <span class="login-link">đăng nhập</span> để sử dụng tính năng này.';
       errorAction.value = () => router.push('/dang-nhap');
       return {
         isLoggedIn: false,
@@ -46,7 +46,7 @@ export function useProtectedContent(tokenCost = 1, description = 'Deducted for c
     hasSufficientTokens.value = balanceResponse.sufficient;
     if (!balanceResponse.sufficient) {
       console.log('checkAuthAndAccess: Insufficient tokens');
-      errorMessage.value = 'Không đủ token cho tính năng này. Hãy nạp thêm token để trải nghiệm full tính năng nhé!';
+      errorMessage.value = 'Không đủ token cho tính năng này. Hãy <span class="topup-link">nạp thêm token</span> để trải nghiệm full tính năng nhé!';
       errorAction.value = () => router.push('/nap-token');
       return {
         isLoggedIn: true,
@@ -139,7 +139,7 @@ export function useProtectedContent(tokenCost = 1, description = 'Deducted for c
         };
       } else {
         console.log('handleTokenDeduction: Token deduction failed:', result.message);
-        errorMessage.value = 'Không đủ token cho tính năng này. Hãy nạp thêm token để trải nghiệm full tính năng nhé!';
+        errorMessage.value = 'Không đủ token cho tính năng này. Hãy <span class="topup-link">nạp thêm token</span> để trải nghiệm full tính năng nhé!';
         errorAction.value = () => router.push('/nap-token');
         return {
           success: false,

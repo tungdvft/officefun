@@ -120,7 +120,7 @@
           <div class="grid grid-cols-1 gap-8">
             <DailyNumerology :birth-date="calculatedBirthDate" />
           </div>
-
+          <LifePathCalculator :birth-date="calculatedBirthDate" :result="result" />
           <!-- Button to show detailed components -->
           <div v-if="!showDetailedComponents" class="flex justify-center">
             <button
@@ -156,7 +156,7 @@
           <!-- Detailed components (shown when showDetails is true) -->
           <transition name="slide-fade">
             <div v-if="showDetailedComponents" class="grid grid-cols-1 gap-8" id="detailed-components">
-              <LifePathCalculator :birth-date="calculatedBirthDate" :result="result" />
+            
               <PersonalYearChart :birth-date="calculatedBirthDate" />
               <PersonalityGroups :birth-date="calculatedBirthDate" />
               <NumerologyCycles :birth-date="calculatedBirthDate" />
