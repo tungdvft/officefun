@@ -27,7 +27,42 @@
         </div>
       </div>
 
-      <!-- Phần nội dung được bảo vệ -->
+      <!-- Điểm mạnh và Điểm yếu (luôn hiển thị) -->
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Điểm mạnh -->
+        <section class="p-5 bg-green-50 rounded-lg">
+          <div class="flex items-center mb-3">
+            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <h3 class="text-xl font-semibold text-green-700">Điểm mạnh</h3>
+          </div>
+          <ul class="space-y-3 text-gray-700">
+            <li v-for="(strength, index) in result.strengths" :key="index" class="flex items-start">
+              <span class="text-green-500 mr-2">•</span>
+              <span>{{ strength }}</span>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Điểm yếu -->
+        <section class="p-5 bg-amber-50 rounded-lg">
+          <div class="flex items-center mb-3">
+            <svg class="h-5 w-5 text-amber-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <h3 class="text-xl font-semibold text-amber-700">Điểm yếu</h3>
+          </div>
+          <ul class="space-y-3 text-gray-700">
+            <li v-for="(weakness, index) in result.weaknesses" :key="index" class="flex items-start">
+              <span class="text-amber-500 mr-2">•</span>
+              <span>{{ weakness }}</span>
+            </li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Phần nội dung được bảo vệ (từ Tình duyên trở đi) -->
       <div v-if="isLoading" class="flex justify-center">
         <svg
           class="animate-spin h-8 w-8 text-teal-600"
@@ -43,80 +78,55 @@
           ></path>
         </svg>
       </div>
-      <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">{{ errorMessage }}</div>
+      <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
+        <template v-if="errorType === 'login'">
+          Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để sử dụng tính năng này.
+        </template>
+        <template v-else-if="errorType === 'topup'">
+          Không đủ token cho tính năng này. Hãy <button @click="errorAction" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+        </template>
+        <template v-else>
+          {{ errorMessage }}
+        </template>
+      </div>
       <div v-else-if="isContentAccessible" class="space-y-10">
-        <!-- Grid layout cho các phần thông tin -->
-        <div class="grid md:grid-cols-2 gap-6">
-          <!-- Điểm mạnh -->
-          <section class="p-5 bg-green-50 rounded-lg">
-            <div class="flex items-center mb-3">
-              <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-              </svg>
-              <h3 class="text-xl font-semibold text-green-700">Điểm mạnh</h3>
-            </div>
-            <ul class="space-y-3 text-gray-700">
-              <li v-for="(strength, index) in result.strengths" :key="index" class="flex items-start">
-                <span class="text-green-500 mr-2">•</span>
-                <span>{{ strength }}</span>
-              </li>
-            </ul>
-          </section>
+        <!-- Tình duyên -->
+        <section class="p-5 bg-pink-50 rounded-lg">
+          <div class="flex items-center mb-3">
+            <svg class="h-5 w-5 text-pink-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+            <h3 class="text-xl font-semibold text-pink-700">Tình duyên</h3>
+          </div>
+          <ul class="space-y-3 text-gray-700">
+            <li v-for="(romance, index) in result.romance" :key="index" class="flex items-start">
+              <span class="text-pink-500 mr-2">•</span>
+              <span>{{ romance }}</span>
+            </li>
+          </ul>
+        </section>
 
-          <!-- Điểm yếu -->
-          <section class="p-5 bg-amber-50 rounded-lg">
-            <div class="flex items-center mb-3">
-              <svg class="h-5 w-5 text-amber-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-              <h3 class="text-xl font-semibold text-amber-700">Điểm yếu</h3>
-            </div>
-            <ul class="space-y-3 text-gray-700">
-              <li v-for="(weakness, index) in result.weaknesses" :key="index" class="flex items-start">
-                <span class="text-amber-500 mr-2">•</span>
-                <span>{{ weakness }}</span>
-              </li>
-            </ul>
-          </section>
-
-          <!-- Tình duyên -->
-          <section class="p-5 bg-pink-50 rounded-lg">
-            <div class="flex items-center mb-3">
-              <svg class="h-5 w-5 text-pink-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-              <h3 class="text-xl font-semibold text-pink-700">Tình duyên</h3>
-            </div>
-            <ul class="space-y-3 text-gray-700">
-              <li v-for="(romance, index) in result.romance" :key="index" class="flex items-start">
-                <span class="text-pink-500 mr-2">•</span>
-                <span>{{ romance }}</span>
-              </li>
-            </ul>
-          </section>
-
-          <!-- Nghề nghiệp phù hợp -->
-          <section class="p-5 bg-blue-50 rounded-lg">
-            <div class="flex items-center mb-3">
-              <svg class="h-5 w-5 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              <h3 class="text-xl font-semibold text-blue-700">Nghề nghiệp phù hợp</h3>
-            </div>
-            <ul class="space-y-3 text-gray-700">
-              <li v-for="(career, index) in result.careers" :key="index" class="flex items-start">
-                <span class="text-blue-500 mr-2">•</span>
-                <span>{{ career }}</span>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <!-- Nghề nghiệp phù hợp -->
+        <section class="p-5 bg-blue-50 rounded-lg">
+          <div class="flex items-center mb-3">
+            <svg class="h-5 w-5 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <h3 class="text-xl font-semibold text-blue-700">Nghề nghiệp phù hợp</h3>
+          </div>
+          <ul class="space-y-3 text-gray-700">
+            <li v-for="(career, index) in result.careers" :key="index" class="flex items-start">
+              <span class="text-blue-500 mr-2">•</span>
+              <span>{{ career }}</span>
+            </li>
+          </ul>
+        </section>
 
         <!-- Mối quan hệ tương thích -->
         <section class="p-6 bg-purple-50 rounded-xl">
           <h3 class="text-xl font-semibold text-purple-700 mb-4 flex items-center">
             <svg class="h-6 w-6 text-purple-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
             Mối quan hệ tương thích
           </h3>
@@ -167,13 +177,17 @@
       </div>
       <div v-else class="text-center p-6">
         <button
-          v-if="hasSufficientTokens !== false"
+          v-if="hasSufficientTokens"
           @click="handleAction"
-          class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
+          class="action-button"
         >
-          {{ isLoggedIn ? `Xem tiếp (Cần ${tokenCost} tokens)` : 'Đăng nhập để xem tiếp' }}
+          {{ isLoggedIn ? `Xem tiếp (Cần ${tokenCost} tokens)` : 'Đăng Nhập để xem tiếp' }}
         </button>
-        <p v-else class="text-gray-600 mt-2">Bạn không đủ token để xem nội dung này. Vui lòng nạp thêm token.</p>
+        <p v-else class="text-gray-600 mt-2">
+          Không đủ token cho tính năng này. Hãy
+          <button @click="errorAction" class="action-button">nạp thêm token</button>
+          để trải nghiệm đầy đủ tính năng nhé!
+        </p>
       </div>
     </div>
   </div>
@@ -182,7 +196,7 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { useProtectedContent } from '~/composables/useProtectedContent';
-import { useGeneralStore } from '~/stores/general';
+import { useTokenStore } from '~/stores/token';
 
 // Define props
 const { birthDate, result } = defineProps({
@@ -199,18 +213,23 @@ const { birthDate, result } = defineProps({
 // Token configuration
 const tokenCost = ref(10);
 const description = 'Access to life path details';
-const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
+const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, errorAction } = useProtectedContent(tokenCost.value, description);
 
-let isLoggedIn = ref(false);
-let handleAction = () => {};
+const tokenStore = useTokenStore();
+const isLoggedIn = computed(() => tokenStore.isLoggedIn);
+const handleAction = ref(async () => {
+  if (!tokenStore.isLoggedIn) {
+    await tokenStore.login();
+  }
+  await checkAuthAndAccess();
+});
 
 // Initialize authentication and token check
 const initializeAuth = async () => {
   console.log('Initializing auth...');
-  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
-  console.log('Auth initialized, isLoggedIn:', authStatus);
-  isLoggedIn.value = authStatus;
-  handleAction = action;
+  await tokenStore.initialize();
+  await checkAuthAndAccess();
+  console.log('Auth initialized, isLoggedIn:', tokenStore.isLoggedIn, 'tokenBalance:', tokenStore.tokenBalance);
 };
 
 // Run initialization on mount
@@ -291,6 +310,11 @@ const numberTextColorClass = computed(() => {
 }
 .symbol:hover {
   transform: scale(1.1);
+}
+
+/* Style cho nút hành động */
+.action-button {
+  @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap mx-2;
 }
 
 /* Responsive adjustments */

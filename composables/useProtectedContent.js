@@ -1,171 +1,78 @@
 import { ref } from 'vue';
-import { useUserStore } from '~/stores/user';
 import { useRouter } from 'vue-router';
+import { useTokenStore } from '~/stores/token';
 
-export function useProtectedContent(tokenCost = 1, description = 'Deducted for content access') {
-  const userStore = useUserStore();
-  const router = useRouter();
+export function useProtectedContent(tokenCost, description) {
   const isLoading = ref(false);
-  const errorMessage = ref(null);
+  const errorMessage = ref('');
+  const errorType = ref('');
   const isContentAccessible = ref(false);
-  const hasSufficientTokens = ref(null);
-  const errorAction = ref(() => {});
+  const hasSufficientTokens = ref(true);
 
-  const checkAuthAndAccess = async (customTokenCost = tokenCost, customDescription = description) => {
-    console.log('checkAuthAndAccess: Starting with customTokenCost:', customTokenCost, 'customDescription:', customDescription, 'userStore:', userStore.user, 'isStoreInitialized:', userStore.isStoreInitialized);
+  const router = useRouter();
+  const tokenStore = useTokenStore();
 
-    if (!userStore.isStoreInitialized) {
-      console.log('checkAuthAndAccess: Initializing userStore...');
-      await userStore.initialize();
-    }
-
-    if (!userStore.user) {
-      console.log('checkAuthAndAccess: No user found, redirecting to login');
-      errorMessage.value = 'Vui lòng <span class="login-link">đăng nhập</span> để sử dụng tính năng này.';
-      errorAction.value = () => router.push('/dang-nhap');
-      return {
-        isLoggedIn: false,
-        action: () => router.push('/dang-nhap')
-      };
-    }
-
-    console.log('checkAuthAndAccess: Checking token balance with customTokenCost:', customTokenCost);
-    const balanceResponse = await checkTokenBalance(customTokenCost);
-    console.log('checkAuthAndAccess: Check token balance response:', balanceResponse);
-
-    if (!balanceResponse.success) {
-      console.log('checkAuthAndAccess: Check token balance failed:', balanceResponse.message);
-      errorMessage.value = 'Lỗi khi kiểm tra số dư token. Vui lòng thử lại!';
-      errorAction.value = () => {};
-      return {
-        isLoggedIn: true,
-        action: () => {}
-      };
-    }
-
-    hasSufficientTokens.value = balanceResponse.sufficient;
-    if (!balanceResponse.sufficient) {
-      console.log('checkAuthAndAccess: Insufficient tokens');
-      errorMessage.value = 'Không đủ token cho tính năng này. Hãy <span class="topup-link">nạp thêm token</span> để trải nghiệm full tính năng nhé!';
-      errorAction.value = () => router.push('/nap-token');
-      return {
-        isLoggedIn: true,
-        action: () => router.push('/nap-token')
-      };
-    }
-
-    console.log('checkAuthAndAccess: Sufficient tokens, returning action for deduction with customTokenCost:', customTokenCost);
-    return {
-      isLoggedIn: true,
-      action: () => handleTokenDeduction(customTokenCost, customDescription)
-    };
-  };
-
-  const checkTokenBalance = async (requiredTokens) => {
-    try {
-      console.log('checkTokenBalance: Calling /api/check-token-balance with userId:', userStore.user.id, 'requiredTokens:', requiredTokens);
-      const response = await fetch('/api/check-token-balance', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-username': encodeURIComponent(userStore.user.email)
-        },
-        body: JSON.stringify({
-          userId: userStore.user.id,
-          tokenCost: requiredTokens
-        })
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error: ${response.status}`);
-      }
-      const result = await response.json();
-      console.log('checkTokenBalance: Result:', result);
-      return result;
-    } catch (error) {
-      console.error('checkTokenBalance: Error:', error);
-      return {
-        success: false,
-        message: 'Lỗi khi kiểm tra số dư token: ' + error.message
-      };
-    }
-  };
-
-  const handleTokenDeduction = async (deductionTokenCost, deductionDescription) => {
+  const checkAuthAndAccess = async () => {
     isLoading.value = true;
-    errorMessage.value = null;
-    errorAction.value = () => {};
-    console.log('handleTokenDeduction: Starting with userId:', userStore.user.id, 'deductionTokenCost:', deductionTokenCost, 'deductionDescription:', deductionDescription);
+    errorMessage.value = '';
+    errorType.value = '';
+    isContentAccessible.value = false;
 
     try {
-      console.log('handleTokenDeduction: Sending request to /api/deduct-tokens with body:', JSON.stringify({
-        userId: userStore.user.id,
-        tokenCost: deductionTokenCost,
-        description: deductionDescription
-      }));
-      const response = await fetch('/api/deduct-tokens', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-username': encodeURIComponent(userStore.user.email)
-        },
-        body: JSON.stringify({
-          userId: userStore.user.id,
-          tokenCost: deductionTokenCost,
-          description: deductionDescription
-        })
-      });
+      await tokenStore.initialize();
 
-      console.log('handleTokenDeduction: Deduct tokens HTTP status:', response.status);
-      if (!response.ok) {
-        throw new Error(`HTTP error: ${response.status}`);
+      if (!tokenStore.isLoggedIn) {
+        errorMessage.value = 'Vui lòng Đăng Nhập để sử dụng tính năng này.';
+        errorType.value = 'login';
+        hasSufficientTokens.value = false;
+        return { isLoggedIn: false, action: () => router.push('/dang-nhap') };
       }
 
-      const result = await response.json();
-      console.log('handleTokenDeduction: Deduct tokens result:', result);
+      if (tokenStore.tokenBalance < tokenCost) {
+        errorMessage.value = 'Không đủ token cho tính năng này. Hãy Nạp thêm token để trải nghiệm đầy đủ tính năng nhé!';
+        errorType.value = 'topup';
+        hasSufficientTokens.value = false;
+        return { isLoggedIn: true, action: () => router.push('/nap-token') };
+      }
 
-      if (result.success) {
-        console.log('handleTokenDeduction: Token deduction successful, updating userStore with remainingTokens:', result.remainingTokens);
-        try {
-          await userStore.updateTokens(result.remainingTokens);
-          console.log('handleTokenDeduction: userStore updated successfully');
-        } catch (error) {
-          console.error('handleTokenDeduction: Error in userStore.updateTokens:', error);
-          throw new Error('Lỗi khi cập nhật số dư token: ' + error.message);
-        }
+      const success = tokenStore.deductTokens(tokenCost);
+      if (success) {
         isContentAccessible.value = true;
-        return {
-          success: true,
-          message: result.message
-        };
+        console.log(`Access granted for ${description}. Tokens deducted: ${tokenCost}`);
       } else {
-        console.log('handleTokenDeduction: Token deduction failed:', result.message);
-        errorMessage.value = 'Không đủ token cho tính năng này. Hãy <span class="topup-link">nạp thêm token</span> để trải nghiệm full tính năng nhé!';
-        errorAction.value = () => router.push('/nap-token');
-        return {
-          success: false,
-          message: errorMessage.value
-        };
+        errorMessage.value = 'Không đủ token cho tính năng này. Hãy Nạp thêm token để trải nghiệm đầy đủ tính năng nhé!';
+        errorType.value = 'topup';
+        hasSufficientTokens.value = false;
+        return { isLoggedIn: true, action: () => router.push('/nap-token') };
       }
+
+      return { isLoggedIn: true, action: () => {} };
     } catch (error) {
-      console.error('handleTokenDeduction: Error:', error);
-      errorMessage.value = 'Lỗi xử lý giao dịch token: ' + error.message;
-      errorAction.value = () => router.push('/nap-token');
-      return {
-        success: false,
-        message: errorMessage.value
-      };
+      console.error('Error in checkAuthAndAccess:', error);
+      errorMessage.value = 'Lỗi khi kiểm tra số dư token. Vui lòng thử lại!';
+      errorType.value = 'generic';
+      hasSufficientTokens.value = false;
+      return { isLoggedIn: tokenStore.isLoggedIn, action: () => {} };
     } finally {
       isLoading.value = false;
-      console.log('handleTokenDeduction: Completed, isLoading:', isLoading.value, 'errorMessage:', errorMessage.value);
+    }
+  };
+
+  const errorAction = () => {
+    if (errorType.value === 'login') {
+      router.push('/dang-nhap');
+    } else if (errorType.value === 'topup') {
+      router.push('/nap-token');
     }
   };
 
   return {
     isLoading,
     errorMessage,
+    errorType,
     isContentAccessible,
     hasSufficientTokens,
     checkAuthAndAccess,
-    errorAction
+    errorAction,
   };
 }

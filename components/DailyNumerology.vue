@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto container p-6 bg-white rounded-xl shadow-lg sm:p-4">
+  <div class="mx-auto container p-6 bg-white rounded-xl shadow-lg sm:p-ier4">
     <!-- Header với thông tin metadata -->
     <div class="mb-8 p-4 bg-gradient-to-r from-teal-50 to-blue-50 rounded-lg border border-teal-100">
       <h1 class="text-2xl font-bold text-teal-700">Thần số học hôm nay</h1>
@@ -40,13 +40,13 @@
           </div>
         </div>
         <h3 class="text-2xl font-bold text-teal-800 mt-6">Số ngày cá nhân: {{ personalDay || 'N/A' }}</h3>
-        <p v-if="dailyPrediction" class="text-lg text-gray-600 mt-2 max-w-lg">{{ dailyPrediction.daily_forecast.overview }}</p>
+        <p v-if="dailyPrediction?.daily_forecast?.overview" class="text-lg text-gray-600 mt-2 max-w-lg">{{ dailyPrediction.daily_forecast.overview }}</p>
         <p v-else class="text-lg text-gray-600 mt-2 max-w-lg">Không có dự đoán cho số ngày cá nhân này.</p>
       </div>
     </div>
 
     <!-- Thông tin năng lượng vũ trụ -->
-    <section v-if="currentPersonalDayData" class="mb-10 p-6 bg-teal-50 rounded-xl">
+    <section v-if="currentPersonalDayData?.universal_energy" class="mb-10 p-6 bg-teal-50 rounded-xl">
       <h3 class="text-xl font-semibold text-teal-700 mb-4 flex items-center">
         <svg class="h-6 w-6 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
@@ -60,15 +60,15 @@
       </h3>
       <div class="grid md:grid-cols-2 gap-4">
         <div class="bg-white p-4 rounded-lg shadow-sm">
-          <p class="text-gray-700"><strong>Pha mặt trăng:</strong> {{ currentPersonalDayData.universal_energy?.moon_phase || 'Không có' }}</p>
+          <p class="text-gray-700"><strong>Pha mặt trăng:</strong> {{ currentPersonalDayData.universal_energy.moon_phase || 'Không có' }}</p>
         </div>
         <div class="bg-white p-4 rounded-lg shadow-sm">
-          <p class="text-gray-700"><strong>Ảnh hưởng chiêm tinh:</strong> {{ currentPersonalDayData.universal_energy?.astrological_impact || 'Không có' }}</p>
+          <p class="text-gray-700"><strong>Ảnh hưởng chiêm tinh:</strong> {{ currentPersonalDayData.universal_energy.astrological_impact || 'Không có' }}</p>
         </div>
       </div>
     </section>
 
-    <!-- Phần nội dung được bảo vệ (từ Kết quả dự đoán trở xuống) -->
+    <!-- Phần thông báo lỗi -->
     <div v-if="isLoading" class="flex justify-center">
       <svg
         class="animate-spin h-8 w-8 text-teal-600"
@@ -84,7 +84,21 @@
         ></path>
       </svg>
     </div>
-    <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">{{ errorMessage }}</div>
+    <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
+      <template v-if="errorType === 'login'">
+        Vui lòng
+        <button @click="errorAction" class="action-button">Đăng Nhập</button>
+        để sử dụng tính năng này.
+      </template>
+      <template v-else-if="errorType === 'topup'">
+        Không đủ token cho tính năng này. Hãy
+        <button @click="errorAction" class="action-button">Nạp thêm token</button>
+        để trải nghiệm đầy đủ tính năng nhé!
+      </template>
+      <template v-else>
+        {{ errorMessage }}
+      </template>
+    </div>
     <div v-else-if="isContentAccessible && dailyPrediction" class="space-y-10">
       <!-- Hồ sơ cá nhân -->
       <section class="p-6 bg-blue-50 rounded-xl">
@@ -257,7 +271,7 @@
             <div
               v-if="dailyPrediction.luck?.color?.hex"
               class="w-6 h-6 rounded-full mt-2 border border-gray-300"
-              :style="{ backgroundColor: dailyPrediction.luck.color.hex }"
+              :style="{ backgroundColor: dailyPrediction.luck?.color?.hex || '#000000' }"
             ></div>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm">
@@ -361,11 +375,17 @@
     </div>
     <div v-else class="text-center p-6">
       <button
+        v-if="hasSufficientTokens"
         @click="handleAction"
-        class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
+        class="action-button"
       >
         {{ isLoggedIn ? `Xem tiếp (Cần ${tokenCost} tokens)` : 'Đăng nhập để xem tiếp' }}
       </button>
+      <p v-else class="text-gray-600 mt-2">
+        Không đủ token cho tính năng này. Hãy
+        <button @click="errorAction" class="action-button">Nạp thêm token</button>
+        để trải nghiệm đầy đủ tính năng nhé!
+      </p>
     </div>
   </div>
 </template>
@@ -374,19 +394,26 @@
 import { ref, computed, watch } from 'vue';
 import personalDayData from '~/data/personal-day-data.js';
 import { useProtectedContent } from '~/composables/useProtectedContent';
+import { useTokenStore } from '~/stores/token';
 
 const props = defineProps({
   birthDate: { type: String, required: true },
 });
 
-const tokenCost = ref(10); // Số token cần trừ
-const description = 'Access to daily numerology prediction'; // Mô tả giao dịch
-const { isLoading, errorMessage, isContentAccessible, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
+const tokenCost = ref(10);
+const description = 'Access to daily numerology prediction';
+const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, errorAction } = useProtectedContent(tokenCost.value, description);
 
-let isLoggedIn = ref(false);
-let handleAction = () => {};
+const tokenStore = useTokenStore();
+const isLoggedIn = computed(() => tokenStore.isLoggedIn);
+const handleAction = ref(async () => {
+  if (!tokenStore.isLoggedIn) {
+    await tokenStore.login();
+  }
+  await checkAuthAndAccess();
+});
 
-const isInitialLoad = ref(true); // Biến để kiểm soát lần tải đầu tiên
+const isInitialLoad = ref(true);
 const error = ref('');
 const dailyPrediction = ref(null);
 const personalDay = ref(null);
@@ -422,11 +449,12 @@ const calculatePersonalDay = (birthDate, currentDate) => {
   return reduced;
 };
 
-// Khởi tạo trạng thái đăng nhập và hành động
+// Khởi tạo trạng thái đăng nhập và kiểm tra token
 const initializeAuth = async () => {
-  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
-  isLoggedIn.value = authStatus;
-  handleAction = action;
+  console.log('Initializing auth for DailyNumerology...');
+  await tokenStore.initialize();
+  await checkAuthAndAccess();
+  console.log('Auth initialized, isLoggedIn:', tokenStore.isLoggedIn, 'tokenBalance:', tokenStore.tokenBalance);
 };
 
 // Tải dự đoán khi birthDate thay đổi
@@ -491,3 +519,9 @@ watch(
   { immediate: true }
 );
 </script>
+
+<style scoped>
+.action-button {
+  @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap mx-2;
+}
+</style>
