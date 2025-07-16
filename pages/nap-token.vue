@@ -1,204 +1,220 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50 py-8">
-    <div class="container mx-auto px-4">
-      <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-        <!-- Header with gradient -->
-        <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 sm:p-8 text-center">
-          <h1 class="text-2xl sm:text-3xl font-bold text-white">Nạp Token</h1>
-          <p class="text-purple-100 mt-2 text-sm sm:text-base">
+    <div class="container mx-auto px-4 max-w-6xl">
+
+      <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
+        <!-- Header cải tiến với animation -->
+        <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 sm:p-8 text-center relative overflow-hidden">
+          <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-1/4 w-32 h-32 bg-purple-300 rounded-full filter blur-3xl"></div>
+            <div class="absolute bottom-0 right-1/4 w-40 h-40 bg-indigo-300 rounded-full filter blur-3xl"></div>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-bold text-white relative z-10">Nạp Token</h1>
+          <p class="text-purple-100 mt-2 text-sm sm:text-base relative z-10">
             Nạp token để trải nghiệm các tính năng độc quyền của Thần Số Học Toàn Diện
           </p>
+          
+      
         </div>
 
         <!-- Main content -->
         <div class="p-6 sm:p-8">
-          <!-- Package selection -->
-          <div class="text-center mb-8">
-            <h2 class="text-xl sm:text-2xl font-bold text-purple-800 mb-2">Chọn gói phù hợp với bạn</h2>
-            <p class="text-gray-600 max-w-lg mx-auto">
+          <!-- Package selection header cải tiến -->
+          <div class="text-center mb-8 relative">
+            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-purple-300 to-transparent opacity-50"></div>
+            <h2 class="text-xl sm:text-2xl font-bold text-purple-800 mb-2 relative">
+              <span class="bg-white px-4 relative">Chọn gói phù hợp với bạn</span>
+            </h2>
+            <p class="text-gray-600 max-w-lg mx-auto mt-4">
               Các gói token được thiết kế để đáp ứng mọi nhu cầu khám phá thần số học của bạn
             </p>
           </div>
 
-          <!-- Package grid -->
+          <!-- Package grid cải tiến -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-            <!-- Starter Pack -->
+            <!-- Cấu trúc package giữ nguyên nhưng thêm hiệu ứng và style mới -->
             <div 
-              @click="selectPackage('starter')"
-              :class="{'border-2 border-purple-500 ring-2 ring-purple-200': selectedPackage === 'starter', 'border border-gray-200': selectedPackage !== 'starter'}"
-              class="bg-white rounded-xl p-6 text-center transition-all duration-300 hover:shadow-lg hover:border-purple-300 hover:transform hover:-translate-y-1 cursor-pointer flex flex-col min-h-[350px]"
+              v-for="(pkg, key) in packages" 
+              :key="key"
+              @click="selectPackage(key)"
+              :class="{
+                'border-2 border-purple-500 ring-4 ring-purple-100 shadow-lg': selectedPackage === key,
+                'border border-gray-200 hover:border-purple-300': selectedPackage !== key
+              }"
+              class="bg-white rounded-xl p-6 text-center transition-all duration-300 hover:shadow-md hover:transform hover:-translate-y-1 cursor-pointer flex flex-col min-h-[380px] relative"
             >
-              <div class="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                </svg>
+              <!-- Badge khuyến mãi -->
+              <div v-if="pkg.badge" class="absolute top-0 right-0 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg transform rotate-6 shadow-sm">
+                {{ pkg.badge }}
               </div>
-              <h3 class="text-lg font-semibold text-gray-800">Starter Pack</h3>
-              <p class="text-2xl font-bold text-purple-600 mt-2">25.000₫</p>
-              <p class="text-gray-600 mt-1 text-sm">100 token</p>
-              <ul class="text-gray-600 text-sm mt-4 text-left flex-1">
-                <li class="mb-2">• Đủ để dùng thêm 2–3 tính năng sau khi hết token miễn phí</li>
-                <li class="mb-2">• Khám phá chuyên sâu hơn về bản thân hoặc mối quan hệ đầu tiên</li>
-                <li class="mb-2">• Phù hợp cho người mới bắt đầu & muốn thử thêm tính năng</li>
-              </ul>
-              <button 
-                :class="{'bg-gradient-to-r from-purple-600 to-indigo-600': selectedPackage === 'starter', 'bg-gradient-to-r from-purple-500 to-indigo-500': selectedPackage !== 'starter'}"
-                class="mt-auto w-full text-white py-2 px-4 rounded-lg font-medium hover:shadow-md transition-all duration-200"
-              >
-                {{ selectedPackage === 'starter' ? 'Đang chọn' : 'Chọn gói' }}
-              </button>
-            </div>
+              
 
-            <!-- Value Pack -->
-            <div 
-              @click="selectPackage('value')"
-              :class="{'border-2 border-purple-500 ring-2 ring-purple-200': selectedPackage === 'value', 'border border-gray-200': selectedPackage !== 'value'}"
-              class="bg-white rounded-xl p-6 text-center transition-all duration-300 hover:shadow-lg hover:border-purple-300 hover:transform hover:-translate-y-1 cursor-pointer flex flex-col min-h-[350px]"
-            >
-              <div class="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                </svg>
+              
+              <h3 class="text-lg font-semibold text-gray-800">{{ pkg.name }}</h3>
+              <p class="text-2xl font-bold text-purple-600 mt-2">{{ pkg.price }}</p>
+              <p class="text-gray-600 mt-1 text-sm">{{ pkg.tokens }}</p>
+              
+              <!-- Giá trị khuyến mãi -->
+              <div v-if="pkg.saving" class="mt-2 text-xs bg-green-50 text-green-600 rounded-full px-2 py-1 inline-block">
+                Tiết kiệm {{ pkg.saving }}
               </div>
-              <h3 class="text-lg font-semibold text-gray-800">Value Pack</h3>
-              <p class="text-2xl font-bold text-purple-600 mt-2">60.000₫</p>
-              <p class="text-gray-600 mt-1 text-sm">300 token (Lời 20%)</p>
-              <ul class="text-gray-600 text-sm mt-4 text-left flex-1">
-                <li class="mb-2">• Gấp 3 lần Starter nhưng tiết kiệm hơn 20%</li>
-                <li class="mb-2">• Dùng được nhiều tính năng nâng cao: Dự báo tương lai 10 năm, Gợi ý ngành nghề phù hợp, Định vị tính cách – năng lực, Lập kế hoạch cá nhân theo năm/tháng</li>
-                <li class="mb-2">• Phù hợp cho người tìm hiểu chuyên sâu nhưng chưa muốn chi nhiều tiền</li>
+              
+              <ul class="text-gray-600 text-sm mt-4 text-left flex-1 space-y-2">
+                <li v-for="(feature, index) in pkg.features" :key="index" class="flex items-start">
+                  <svg class="flex-shrink-0 w-4 h-4 text-purple-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  {{ feature }}
+                </li>
               </ul>
+              
               <button 
-                :class="{'bg-gradient-to-r from-purple-600 to-indigo-600': selectedPackage === 'value', 'bg-gradient-to-r from-purple-500 to-indigo-500': selectedPackage !== 'value'}"
-                class="mt-auto w-full text-white py-2 px-4 rounded-lg font-medium hover:shadow-md transition-all duration-200"
+                :class="{
+                  'bg-gradient-to-r from-purple-600 to-indigo-600 shadow-md': selectedPackage === key,
+                  'bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600': selectedPackage !== key
+                }"
+                class="mt-auto w-full text-white py-3 px-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center"
               >
-                {{ selectedPackage === 'value' ? 'Đang chọn' : 'Chọn gói' }}
-              </button>
-            </div>
-
-            <!-- Mega Pack -->
-            <div 
-              @click="selectPackage('mega')"
-              :class="{'border-2 border-purple-500 ring-2 ring-purple-200': selectedPackage === 'mega', 'border border-gray-200': selectedPackage !== 'mega'}"
-              class="bg-white rounded-xl p-6 text-center transition-all duration-300 hover:shadow-lg hover:border-purple-300 hover:transform hover:-translate-y-1 cursor-pointer relative flex flex-col min-h-[350px]"
-            >
-              <div class="absolute top-0 right-0 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded-bl-lg rounded-tr-lg">
-                PHỔ BIẾN
-              </div>
-              <div class="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                {{ selectedPackage === key ? 'Đã chọn' : 'Chọn gói' }}
+                <svg v-if="selectedPackage === key" class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                 </svg>
-              </div>
-              <h3 class="text-lg font-semibold text-gray-800">Mega Pack</h3>
-              <p class="text-2xl font-bold text-purple-600 mt-2">180.000₫</p>
-              <p class="text-gray-600 mt-1 text-sm">1.000 token (Lời 28%)</p>
-              <ul class="text-gray-600 text-sm mt-4 text-left flex-1">
-                <li class="mb-2">• Đủ để dùng gần như toàn bộ hệ thống trong vài tháng</li>
-                <li class="mb-2">• Trải nghiệm mọi tính năng nâng cao: Dự báo vận mệnh, So sánh hợp mệnh, Đặt tên con, Tư vấn nghề nghiệp, Tình cảm, Cá nhân hóa theo ngày</li>
-                <li class="mb-2">• Hỗ trợ phân tích nhiều người (bản thân, người thân, bạn bè)</li>
-                <li class="mb-2">• Thích hợp cho việc chia sẻ, tư vấn hoặc sử dụng thường xuyên không lo giới hạn</li>
-                <li class="mb-2">• Tỷ lệ token/token cost rẻ nhất (~180 VNĐ/token)</li>
-              </ul>
-              <button 
-                :class="{'bg-gradient-to-r from-purple-600 to-indigo-600': selectedPackage === 'mega', 'bg-gradient-to-r from-purple-500 to-indigo-500': selectedPackage !== 'mega'}"
-                class="mt-auto w-full text-white py-2 px-4 rounded-lg font-medium hover:shadow-md transition-all duration-200"
-              >
-                {{ selectedPackage === 'mega' ? 'Đang chọn' : 'Chọn gói' }}
-              </button>
-            </div>
-
-            <!-- Combo Exam -->
-            <div 
-              @click="selectPackage('combo')"
-              :class="{'border-2 border-purple-500 ring-2 ring-purple-200': selectedPackage === 'combo', 'border border-gray-200': selectedPackage !== 'combo'}"
-              class="bg-white rounded-xl p-6 text-center transition-all duration-300 hover:shadow-lg hover:border-purple-300 hover:transform hover:-translate-y-1 cursor-pointer flex flex-col min-h-[350px]"
-            >
-              <div class="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-              </div>
-              <h3 class="text-lg font-semibold text-gray-800">Combo Exam</h3>
-              <p class="text-2xl font-bold text-purple-600 mt-2">99.000₫</p>
-              <p class="text-gray-600 mt-1 text-sm">500 token + PDF Hướng Nghiệp</p>
-              <ul class="text-gray-600 text-sm mt-4 text-left flex-1">
-                <li class="mb-2">• 500 token + tặng báo cáo chọn ngành học bản PDF</li>
-                <li class="mb-2">• Hỗ trợ định hướng nghề nghiệp, chọn trường, lập kế hoạch học tập</li>
-                <li class="mb-2">• Đủ để mở khóa 3–5 tính năng nâng cao</li>
-                <li class="mb-2">• PDF Hướng Nghiệp có đủ 6 nghề nghiệp phù hợp</li>
-                <li class="mb-2">• Phù hợp cho các bạn trẻ chuẩn bị chọn ngành học</li>
-              </ul>
-              <button 
-                :class="{'bg-gradient-to-r from-purple-600 to-indigo-600': selectedPackage === 'combo', 'bg-gradient-to-r from-purple-500 to-indigo-500': selectedPackage !== 'combo'}"
-                class="mt-auto w-full text-white py-2 px-4 rounded-lg font-medium hover:shadow-md transition-all duration-200"
-              >
-                {{ selectedPackage === 'combo' ? 'Đang chọn' : 'Chọn gói' }}
               </button>
             </div>
           </div>
 
-          <!-- Payment information -->
-          <div class="bg-purple-50 rounded-xl p-6 mb-8">
-            <h3 class="text-lg font-semibold text-purple-800 mb-4 text-center">Thông tin chuyển khoản</h3>
+          <!-- Payment section cải tiến -->
+          <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-6 mb-8 border border-purple-100">
+            <h3 class="text-lg font-semibold text-purple-800 mb-4 text-center relative">
+              <span class="bg-gradient-to-r from-purple-50 to-indigo-50 px-4 relative z-10">Thông tin thanh toán</span>
+              <div class="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-200 to-transparent z-0"></div>
+            </h3>
             
-            <div class="bg-white p-4 rounded-lg shadow-sm mb-4">
-              <h4 class="font-medium text-gray-800 mb-2 flex items-center">
-                <svg class="w-5 h-5 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
-                </svg>
-                Ngân hàng Vietcombank
-              </h4>
-              <p class="text-gray-700 mt-2">Số tài khoản: <span class="font-medium">{{ bankDetails.accountNumber }}</span></p>
-              <p class="text-gray-700">Chủ tài khoản: <span class="font-medium">{{ bankDetails.accountName }}</span></p>
-            </div>
-
-            <!-- Transfer syntax -->
-            <div class="bg-white p-4 rounded-lg shadow-sm relative mb-4">
-              <h4 class="font-medium text-gray-800 mb-3 flex items-center">
-                <svg class="w-5 h-5 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
-                </svg>
-                Cú pháp chuyển khoản
-              </h4>
-              <div class="relative">
-                <input 
-                  :value="transferSyntax" 
-                  ref="syntaxInput"
-                  type="text" 
-                  readonly 
-                  class="w-full bg-gray-50 border border-gray-300 text-gray-700 p-3 pr-10 rounded-lg focus:ring-2 focus:ring-purple-300 focus:border-purple-500"
-                >
-                <button 
-                  @click="copySyntax"
-                  class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-purple-100 hover:bg-purple-200 text-purple-700 p-2 rounded-md transition-colors duration-200"
-                >
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+            <!-- Thêm QR code payment -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                <h4 class="font-medium text-gray-800 mb-3 flex items-center">
+                  <svg class="w-5 h-5 text-purple-600 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
                   </svg>
-                </button>
+                  Thanh toán bằng QR Code
+                </h4>
+                
+                <div class="mt-4 flex flex-col items-center">
+                  <img src="/qrcode.png" alt="Qrcode"  />
+                  <p class="text-sm text-gray-500 mt-3 text-center">
+                    Quét mã QR để thanh toán nhanh qua ứng dụng ngân hàng
+                  </p>
+                </div>
               </div>
-              <p class="text-sm text-gray-500 mt-2">Sao chép cú pháp này khi chuyển khoản để được xử lý nhanh nhất</p>
+              
+              <div class="space-y-4">
+                <!-- Bank transfer info -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                  <h4 class="font-medium text-gray-800 mb-3 flex items-center">
+                    <svg class="w-5 h-5 text-purple-600 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/>
+                    </svg>
+                    Chuyển khoản ngân hàng
+                  </h4>
+                  
+                  <div class="space-y-3">
+                    <div>
+                      <p class="text-sm text-gray-500">Ngân hàng:</p>
+                      <p class="font-medium text-gray-800">Vietcombank</p>
+                    </div>
+                    
+                    <div>
+                      <p class="text-sm text-gray-500">Số tài khoản:</p>
+                      <div class="flex items-center">
+                        <p class="font-medium text-gray-800 mr-2">{{ bankDetails.accountNumber }}</p>
+                        <button @click="copyToClipboard(bankDetails.accountNumber)" class="text-purple-600 hover:text-purple-800">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <p class="text-sm text-gray-500">Chủ tài khoản:</p>
+                      <p class="font-medium text-gray-800">{{ bankDetails.accountName }}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Transfer syntax -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                  <h4 class="font-medium text-gray-800 mb-3 flex items-center">
+                    <svg class="w-5 h-5 text-purple-600 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm4 12h-4v3l-5-5 5-5v3h4v4z"/>
+                    </svg>
+                    Nội dung chuyển khoản
+                  </h4>
+                  
+                  <div class="relative">
+                    <input 
+                      :value="transferSyntax" 
+                      ref="syntaxInput"
+                      type="text" 
+                      readonly 
+                      class="w-full bg-gray-50 border border-gray-300 text-gray-700 p-3 pr-10 rounded-lg focus:ring-2 focus:ring-purple-300 focus:border-purple-500 font-medium"
+                    >
+                    <button 
+                      @click="copySyntax"
+                      class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-purple-100 hover:bg-purple-200 text-purple-700 p-2 rounded-md transition-colors duration-200"
+                    >
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+                      </svg>
+                    </button>
+                  </div>
+                  <p class="text-sm text-gray-500 mt-2">Sao chép nội dung này khi chuyển khoản để được xử lý nhanh nhất</p>
+                </div>
+              </div>
             </div>
 
-            <!-- Toast Notification -->
-            <div 
-              v-if="showToast"
-              class="fixed bottom-4 right-4 bg-purple-600 text-white px-4 py-2 rounded-lg shadow-lg flex items-center transition-all duration-300"
-            >
-              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Đã sao chép cú pháp chuyển khoản!
-            </div>
+            <!-- Thông báo sau khi chuyển khoản -->
+            <div class="mt-6 bg-blue-50 border border-blue-100 rounded-lg p-4">
+              <div class="flex items-start">
+                <svg class="w-5 h-5 text-blue-500 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <h4 class="font-medium text-blue-800">Lưu ý quan trọng</h4>
+                  <p class="text-sm text-blue-600 mt-1">
+                    Sau khi chuyển khoản,  HÃY nhắn qua Zalo admin: <span class="font-semibold">0968 263 866</span> để được xác nhận nạp token. Token của của bạn sẽ được thêm vào ngay sau khi admin xác nhận thành công
+                    Nếu cần hỗ trợ hoặc đặt câu hỏi, vui lòng liên hệ qua email <span class="font-semibold">info.auratrust@gmail.com</span>
+                  
+                  </p>
 
-            <div class="mt-4 text-center text-sm text-gray-600">
-              Sau khi chuyển khoản, HÃY nhắn qua Zalo admin: <span class="text-purple-600">0968 263 866</span> để được xác nhận nạp token. Token của bạn sẽ được thêm vào ngay sau khi admin xác nhận thành công. Nếu cần hỗ trợ hoặc đặt câu hỏi, vui lòng liên hệ qua email info.auratrust@gmail.com
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Toast Notification cải tiến -->
+    <transition
+      enter-active-class="transform ease-out duration-300 transition"
+      enter-from-class="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
+      enter-to-class="translate-y-0 opacity-100 sm:translate-x-0"
+      leave-active-class="transition ease-in duration-100"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+    >
+      <div 
+        v-if="showToast"
+        class="fixed bottom-4 right-4 bg-purple-600 text-white px-4 py-3 rounded-lg shadow-lg flex items-center max-w-xs"
+      >
+        <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+        <span class="text-sm">{{ toastMessage }}</span>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -206,215 +222,217 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import QRCode from 'qrcode'
 
-const selectedPackage = ref('mega') // Mặc định chọn Mega Pack
-const showToast = ref(false) // Biến kiểm soát hiển thị toast
-const qrCanvas = ref(null) // Ref cho canvas hiển thị mã QR
-const qrError = ref('') // Biến lưu thông báo lỗi mã QR
+// Icons for packages
+const PackageIcon = {
+  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>`
+}
+
+const ShieldCheckIcon = {
+  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>`
+}
+
+const SparklesIcon = {
+  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>`
+}
+
+const AcademicCapIcon = {
+  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>`
+}
+
+const selectedPackage = ref('value')
+const showToast = ref(false)
+const toastMessage = ref('')
+const qrCanvas = ref(null)
+const qrError = ref('')
+const syntaxInput = ref(null)
 
 const packages = {
   starter: {
-    name: 'STARTER PACK',
+    name: 'Starter Pack',
     price: '25.000₫',
     tokens: '100 token',
-    amount: 25000 // Số tiền bằng VND (không có dấu chấm)
+    amount: 25000,
+    icon: PackageIcon,
+    features: [
+      'Đủ để dùng thêm 2–3 tính năng sau khi hết token miễn phí',
+      'Khám phá chuyên sâu hơn về bản thân hoặc mối quan hệ đầu tiên',
+      'Phù hợp cho người mới bắt đầu & muốn thử thêm tính năng'
+    ]
   },
   value: {
-    name: 'VALUE PACK',
+    name: 'Value Pack',
     price: '60.000₫',
     tokens: '300 token',
-    amount: 60000
+    amount: 60000,
+    badge: 'PHỔ BIẾN',
+    saving: '20%',
+    icon: ShieldCheckIcon,
+    features: [
+      'Gấp 3 lần Starter nhưng tiết kiệm hơn 20%',
+      'Dùng được nhiều tính năng nâng cao',
+      'Phù hợp cho người tìm hiểu chuyên sâu'
+    ]
   },
   mega: {
-    name: 'MEGA PACK',
+    name: 'Mega Pack',
     price: '180.000₫',
     tokens: '1.000 token',
-    amount: 180000
+    amount: 180000,
+    saving: '28%',
+   
+    icon: SparklesIcon,
+    features: [
+      'Đủ để dùng gần như toàn bộ hệ thống trong vài tháng',
+      'Trải nghiệm mọi tính năng nâng cao',
+      'Hỗ trợ phân tích nhiều người',
+      'Thích hợp cho việc chia sẻ, tư vấn'
+    ]
   },
   combo: {
-    name: 'COMBO EXAM',
+    name: 'Combo Exam',
     price: '99.000₫',
     tokens: '500 token + PDF Hướng Nghiệp',
-    amount: 99000
+    amount: 99000,
+    icon: AcademicCapIcon,
+    features: [
+      '500 token + tặng báo cáo chọn ngành học bản PDF',
+      'Hỗ trợ định hướng nghề nghiệp, chọn trường',
+      'PDF Hướng Nghiệp có đủ 6 nghề nghiệp phù hợp',
+      'Phù hợp cho các bạn trẻ chuẩn bị chọn ngành học'
+    ]
   }
 }
 
 const bankDetails = {
-  accountNumber: '1023969324', // Số tài khoản Vietcombank thực
-  accountName: 'Phan Minh Hương', // Tên chủ tài khoản thực, viết hoa, không dấu
-  bankCode: 'VCB', // Mã ngân hàng Vietcombank cho VietQR
-  template: 'compact', // Template VietQR
-  branch: 'Hà Nội' // Chi nhánh
+  accountNumber: '1023969324',
+  accountName: 'PHAN MINH HUONG',
+  bankCode: 'VCB',
+  branch: 'Chi nhánh Hà Nội'
 }
 
-// Định nghĩa transferSyntax để tạo nội dung chuyển khoản
 const transferSyntax = computed(() => {
-  return packages[selectedPackage.value].name
+  return `${packages[selectedPackage.value].name} ${bankDetails.accountName}`
 })
-
-// Hàm tạo CRC16 (theo chuẩn VietQR)
-const crc16 = (data) => {
-  let crc = 0xFFFF
-  const polynomial = 0x1021
-  for (let i = 0; i < data.length; i++) {
-    crc ^= data.charCodeAt(i) << 8
-    for (let j = 0; j < 8; j++) {
-      if (crc & 0x8000) {
-        crc = (crc << 1) ^ polynomial
-      } else {
-        crc <<= 1
-      }
-    }
-  }
-  return (crc & 0xFFFF).toString(16).padStart(4, '0').toUpperCase()
-}
-
-// Định dạng VietQR theo chuẩn Napas
-const qrData = computed(() => {
-  const pkg = packages[selectedPackage.value]
-  const accountNo = bankDetails.accountNumber
-  const accountName = bankDetails.accountName.replace(/\s/g, '').toUpperCase()
-  const amount = pkg.amount.toString()
-  const note = transferSyntax.value.replace(/\s/g, '')
-
-  // Định dạng VietQR
-  const payload = [
-    '000201', // Version
-    '010212', // Method (dynamic QR)
-    `38${(38 + accountNo.length + accountName.length).toString().padStart(2, '0')}`, // Merchant Account Info
-    `0010A000000727`, // Merchant Account Info Template
-    `01${(28 + accountNo.length + accountName.length).toString().padStart(2, '0')}`, // Merchant Account Info Sub-template
-    `00${bankDetails.bankCode.length.toString().padStart(2, '0')}${bankDetails.bankCode}`, // Bank Code
-    `01${accountNo.length.toString().padStart(2, '0')}${accountNo}`, // Account Number
-    `02${accountName.length.toString().padStart(2, '0')}${accountName}`, // Account Name
-    '5303704', // Currency (VND)
-    `54${amount.length.toString().padStart(2, '0')}${amount}`, // Amount
-    '5802VN', // Country Code
-    `62${(8 + note.length).toString().padStart(2, '0')}`, // Additional Data
-    `08${note.length.toString().padStart(2, '0')}${note}`, // Transaction Note
-    `6304` // CRC (sẽ được thêm sau)
-  ].join('')
-
-  const crc = crc16(payload)
-  console.log('VietQR Payload:', `${payload}${crc}`) // Debug payload
-  return `${payload}${crc}`
-})
-
-const syntaxInput = ref(null)
 
 const selectPackage = (pkg) => {
   selectedPackage.value = pkg
-  qrError.value = '' // Xóa lỗi khi chọn gói mới
+  qrError.value = ''
 }
 
 const copySyntax = () => {
   if (syntaxInput.value) {
     syntaxInput.value.select()
     document.execCommand('copy')
-    showToast.value = true
-    setTimeout(() => {
-      showToast.value = false
-    }, 3000) // Ẩn toast sau 3 giây
+    showToastMessage('Đã sao chép nội dung chuyển khoản!')
   }
+}
+
+const copyToClipboard = (text) => {
+  navigator.clipboard.writeText(text)
+  showToastMessage('Đã sao chép số tài khoản!')
+}
+
+const showToastMessage = (message) => {
+  toastMessage.value = message
+  showToast.value = true
+  setTimeout(() => {
+    showToast.value = false
+  }, 3000)
 }
 
 const generateQRCode = () => {
-  qrError.value = ''
-  // Kiểm tra số tài khoản
-  if (!bankDetails.accountNumber || bankDetails.accountNumber === 'YOUR_ACTUAL_VIETCOMBANK_ACCOUNT_NUMBER') {
-    qrError.value = 'Vui lòng cung cấp số tài khoản Vietcombank hợp lệ'
-    return
-  }
-  if (!/^\d+$/.test(bankDetails.accountNumber) || bankDetails.accountNumber.length < 10) {
-    qrError.value = 'Số tài khoản không hợp lệ, vui lòng kiểm tra lại'
-    return
-  }
-  // Kiểm tra tên chủ tài khoản
-  if (!bankDetails.accountName || bankDetails.accountName === 'YOUR_ACTUAL_ACCOUNT_NAME' || bankDetails.accountName.trim() === '') {
-    qrError.value = 'Vui lòng cung cấp tên chủ tài khoản hợp lệ'
-    return
-  }
-  // Kiểm tra số tiền
-  if (!packages[selectedPackage.value].amount || packages[selectedPackage.value].amount <= 0) {
-    qrError.value = 'Số tiền không hợp lệ, vui lòng chọn gói khác'
-    return
-  }
-  if (qrCanvas.value) {
-    QRCode.toCanvas(qrCanvas.value, qrData.value, { width: 200, errorCorrectionLevel: 'H' }, (error) => {
-      if (error) {
-        qrError.value = 'Lỗi khi tạo mã QR, vui lòng thử lại'
-        console.error('Lỗi khi tạo mã QR:', error)
+  if (!qrCanvas.value) return
+  
+  const pkg = packages[selectedPackage.value]
+  const accountInfo = `${bankDetails.accountName}|${bankDetails.accountNumber}|${bankDetails.bankCode}`
+  const amount = pkg.amount
+  const note = `${pkg.name} - ${bankDetails.accountName}`
+  
+  // Simple QR content (can be enhanced with proper bank QR standard)
+  const qrContent = `bank://transfer?account=${bankDetails.accountNumber}&name=${encodeURIComponent(bankDetails.accountName)}&amount=${amount}&message=${encodeURIComponent(note)}`
+  
+  QRCode.toCanvas(qrCanvas.value, qrContent, 
+    { 
+      width: 200,
+      errorCorrectionLevel: 'H',
+      margin: 1,
+      color: {
+        dark: '#4F46E5',  // purple-600
+        light: '#FFFFFF'
       }
-    })
-  }
+    }, 
+    (error) => {
+      if (error) {
+        console.error('QR generation error:', error)
+        qrError.value = 'Không thể tạo mã QR. Vui lòng thử lại.'
+      }
+    }
+  )
 }
 
-// Tạo mã QR khi component được mount và khi selectedPackage thay đổi
-onMounted(generateQRCode)
-watch(selectedPackage, generateQRCode)
+onMounted(() => {
+  generateQRCode()
+})
+
+watch(selectedPackage, () => {
+  generateQRCode()
+})
 </script>
 
 <style scoped>
-.container {
-  min-height: calc(100vh - 64px);
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-/* Animation for package cards */
-.hover\:transform:hover {
-  transform: translateY(-4px);
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
 }
 
-/* Smooth transitions */
-.transition-all {
-  transition-property: all;
+::-webkit-scrollbar-thumb {
+  background: #c7d2fe;
+  border-radius: 10px;
 }
 
-.duration-200 {
-  transition-duration: 200ms;
+::-webkit-scrollbar-thumb:hover {
+  background: #a5b4fc;
 }
 
-.duration-300 {
-  transition-duration: 300ms;
+/* Animation for package selection */
+.ring-purple-100 {
+  animation: pulse 2s infinite;
 }
 
-/* Toast animation */
-.fixed {
-  animation: slideIn 0.3s ease-in-out;
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateY(100px);
-    opacity: 0;
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(216, 180, 254, 0.7);
   }
-  to {
-    transform: translateY(0);
-    opacity: 1;
+  70% {
+    box-shadow: 0 0 0 10px rgba(216, 180, 254, 0);
   }
+  100% {
+    box-shadow: 0 0 0 0 rgba(216, 180, 254, 0);
+  }
+}
+
+/* Gradient text */
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, #7c3aed, #4f46e5);
 }
 
 /* Responsive adjustments */
 @media (max-width: 640px) {
-  .text-2xl {
-    font-size: 1.5rem;
+  .min-h-\[380px\] {
+    min-height: 420px;
   }
   
-  .text-xl {
-    font-size: 1.25rem;
-  }
-  
-  .p-6, .p-8 {
-    padding: 1.25rem;
-  }
-
-  .fixed {
-    bottom: 1rem;
-    right: 1rem;
-    left: 1rem;
-    width: auto;
-  }
-
-  .min-h-\[350px\] {
-    min-height: 400px; /* Tăng chiều cao tối thiểu cho mobile để chứa nội dung */
+  .grid-cols-1 {
+    grid-template-columns: 1fr;
   }
 }
 </style>
