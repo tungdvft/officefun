@@ -1,9 +1,8 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50 py-8">
     <div class="container mx-auto px-4 max-w-6xl">
-
       <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
-        <!-- Header cải tiến với animation -->
+        <!-- Header -->
         <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 sm:p-8 text-center relative overflow-hidden">
           <div class="absolute inset-0 opacity-10">
             <div class="absolute top-0 left-1/4 w-32 h-32 bg-purple-300 rounded-full filter blur-3xl"></div>
@@ -13,13 +12,11 @@
           <p class="text-purple-100 mt-2 text-sm sm:text-base relative z-10">
             Nạp token để trải nghiệm các tính năng độc quyền của Thần Số Học Toàn Diện
           </p>
-          
-      
         </div>
 
         <!-- Main content -->
         <div class="p-6 sm:p-8">
-          <!-- Package selection header cải tiến -->
+          <!-- Package selection header -->
           <div class="text-center mb-8 relative">
             <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-purple-300 to-transparent opacity-50"></div>
             <h2 class="text-xl sm:text-2xl font-bold text-purple-800 mb-2 relative">
@@ -30,9 +27,8 @@
             </p>
           </div>
 
-          <!-- Package grid cải tiến -->
+          <!-- Package grid -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-            <!-- Cấu trúc package giữ nguyên nhưng thêm hiệu ứng và style mới -->
             <div 
               v-for="(pkg, key) in packages" 
               :key="key"
@@ -43,18 +39,14 @@
               }"
               class="bg-white rounded-xl p-6 text-center transition-all duration-300 hover:shadow-md hover:transform hover:-translate-y-1 cursor-pointer flex flex-col min-h-[380px] relative"
             >
-              <!-- Badge khuyến mãi -->
               <div v-if="pkg.badge" class="absolute top-0 right-0 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg transform rotate-6 shadow-sm">
                 {{ pkg.badge }}
               </div>
-              
-
               
               <h3 class="text-lg font-semibold text-gray-800">{{ pkg.name }}</h3>
               <p class="text-2xl font-bold text-purple-600 mt-2">{{ pkg.price }}</p>
               <p class="text-gray-600 mt-1 text-sm">{{ pkg.tokens }}</p>
               
-              <!-- Giá trị khuyến mãi -->
               <div v-if="pkg.saving" class="mt-2 text-xs bg-green-50 text-green-600 rounded-full px-2 py-1 inline-block">
                 Tiết kiệm {{ pkg.saving }}
               </div>
@@ -83,14 +75,13 @@
             </div>
           </div>
 
-          <!-- Payment section cải tiến -->
-          <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-6 mb-8 border border-purple-100">
+          <!-- Payment section (ref added here) -->
+          <div ref="paymentSection" class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-6 mb-8 border border-purple-100">
             <h3 class="text-lg font-semibold text-purple-800 mb-4 text-center relative">
               <span class="bg-gradient-to-r from-purple-50 to-indigo-50 px-4 relative z-10">Thông tin thanh toán</span>
               <div class="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-200 to-transparent z-0"></div>
             </h3>
             
-            <!-- Thêm QR code payment -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
                 <h4 class="font-medium text-gray-800 mb-3 flex items-center">
@@ -101,7 +92,7 @@
                 </h4>
                 
                 <div class="mt-4 flex flex-col items-center">
-                  <img src="/qrcode.png" alt="Qrcode"  />
+                  <img src="/qrcode.png" alt="Qr code" />
                   <p class="text-sm text-gray-500 mt-3 text-center">
                     Quét mã QR để thanh toán nhanh qua ứng dụng ngân hàng
                   </p>
@@ -109,7 +100,6 @@
               </div>
               
               <div class="space-y-4">
-                <!-- Bank transfer info -->
                 <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
                   <h4 class="font-medium text-gray-800 mb-3 flex items-center">
                     <svg class="w-5 h-5 text-purple-600 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -143,7 +133,6 @@
                   </div>
                 </div>
                 
-                <!-- Transfer syntax -->
                 <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
                   <h4 class="font-medium text-gray-800 mb-3 flex items-center">
                     <svg class="w-5 h-5 text-purple-600 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -174,7 +163,6 @@
               </div>
             </div>
 
-            <!-- Thông báo sau khi chuyển khoản -->
             <div class="mt-6 bg-blue-50 border border-blue-100 rounded-lg p-4">
               <div class="flex items-start">
                 <svg class="w-5 h-5 text-blue-500 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -183,11 +171,10 @@
                 <div>
                   <h4 class="font-medium text-blue-800">Lưu ý quan trọng</h4>
                   <p class="text-sm text-blue-600 mt-1">
-                    Sau khi chuyển khoản,  HÃY nhắn qua Zalo admin: <span class="font-semibold">0968 263 866</span> để được xác nhận nạp token. Token của của bạn sẽ được thêm vào ngay sau khi admin xác nhận thành công
+                    Sau khi chuyển khoản, HÃY nhắn qua Zalo admin: <span class="font-semibold">0968 263 866</span> để được xác nhận nạp token.
+                    Token của bạn sẽ được thêm vào ngay sau khi admin xác nhận thành công.
                     Nếu cần hỗ trợ hoặc đặt câu hỏi, vui lòng liên hệ qua email <span class="font-semibold">info.auratrust@gmail.com</span>
-                  
                   </p>
-
                 </div>
               </div>
             </div>
@@ -196,7 +183,7 @@
       </div>
     </div>
 
-    <!-- Toast Notification cải tiến -->
+    <!-- Toast Notification -->
     <transition
       enter-active-class="transform ease-out duration-300 transition"
       enter-from-class="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
@@ -219,40 +206,25 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import QRCode from 'qrcode'
 
-// Icons for packages
-const PackageIcon = {
-  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>`
-}
-
-const ShieldCheckIcon = {
-  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>`
-}
-
-const SparklesIcon = {
-  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>`
-}
-
-const AcademicCapIcon = {
-  template: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>`
-}
-
+// Refs
 const selectedPackage = ref('value')
 const showToast = ref(false)
 const toastMessage = ref('')
 const qrCanvas = ref(null)
 const qrError = ref('')
 const syntaxInput = ref(null)
+const paymentSection = ref(null)
 
+// Data
 const packages = {
   starter: {
     name: 'Starter Pack',
     price: '25.000₫',
     tokens: '100 token',
     amount: 25000,
-    icon: PackageIcon,
     features: [
       'Đủ để dùng thêm 2–3 tính năng sau khi hết token miễn phí',
       'Khám phá chuyên sâu hơn về bản thân hoặc mối quan hệ đầu tiên',
@@ -266,7 +238,6 @@ const packages = {
     amount: 60000,
     badge: 'PHỔ BIẾN',
     saving: '20%',
-    icon: ShieldCheckIcon,
     features: [
       'Gấp 3 lần Starter nhưng tiết kiệm hơn 20%',
       'Dùng được nhiều tính năng nâng cao',
@@ -279,8 +250,6 @@ const packages = {
     tokens: '1.000 token',
     amount: 180000,
     saving: '28%',
-   
-    icon: SparklesIcon,
     features: [
       'Đủ để dùng gần như toàn bộ hệ thống trong vài tháng',
       'Trải nghiệm mọi tính năng nâng cao',
@@ -293,7 +262,6 @@ const packages = {
     price: '99.000₫',
     tokens: '500 token + PDF Hướng Nghiệp',
     amount: 99000,
-    icon: AcademicCapIcon,
     features: [
       '500 token + tặng báo cáo chọn ngành học bản PDF',
       'Hỗ trợ định hướng nghề nghiệp, chọn trường',
@@ -310,13 +278,29 @@ const bankDetails = {
   branch: 'Chi nhánh Hà Nội'
 }
 
+// Computed
 const transferSyntax = computed(() => {
-  return `${packages[selectedPackage.value].name} ${bankDetails.accountName}`
+  return packages[selectedPackage.value].name
 })
 
-const selectPackage = (pkg) => {
+// Methods
+const selectPackage = async (pkg) => {
   selectedPackage.value = pkg
   qrError.value = ''
+  
+  // Wait for next tick to ensure DOM is updated
+  await nextTick()
+  
+  // Scroll to payment section with smooth behavior
+  if (paymentSection.value) {
+    paymentSection.value.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    })
+    
+    // Optional: Add a small offset
+    // window.scrollBy(0, -20)
+  }
 }
 
 const copySyntax = () => {
@@ -348,7 +332,6 @@ const generateQRCode = () => {
   const amount = pkg.amount
   const note = `${pkg.name} - ${bankDetails.accountName}`
   
-  // Simple QR content (can be enhanced with proper bank QR standard)
   const qrContent = `bank://transfer?account=${bankDetails.accountNumber}&name=${encodeURIComponent(bankDetails.accountName)}&amount=${amount}&message=${encodeURIComponent(note)}`
   
   QRCode.toCanvas(qrCanvas.value, qrContent, 
@@ -357,7 +340,7 @@ const generateQRCode = () => {
       errorCorrectionLevel: 'H',
       margin: 1,
       color: {
-        dark: '#4F46E5',  // purple-600
+        dark: '#4F46E5',
         light: '#FFFFFF'
       }
     }, 
@@ -370,6 +353,7 @@ const generateQRCode = () => {
   )
 }
 
+// Lifecycle hooks
 onMounted(() => {
   generateQRCode()
 })
@@ -415,14 +399,6 @@ watch(selectedPackage, () => {
   100% {
     box-shadow: 0 0 0 0 rgba(216, 180, 254, 0);
   }
-}
-
-/* Gradient text */
-.text-gradient {
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  background-image: linear-gradient(to right, #7c3aed, #4f46e5);
 }
 
 /* Responsive adjustments */
