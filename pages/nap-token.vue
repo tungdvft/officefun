@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50 py-8">
     <div class="container mx-auto px-4">
-      <div class="bg-white rounded-2xl shadow-xl overflow-hidden max-w-4xl mx-auto">
+      <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
         <!-- Header with gradient -->
         <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 sm:p-8 text-center">
           <h1 class="text-2xl sm:text-3xl font-bold text-white">Nạp Token</h1>
@@ -26,7 +26,7 @@
             <div 
               @click="selectPackage('starter')"
               :class="{'border-2 border-purple-500 ring-2 ring-purple-200': selectedPackage === 'starter', 'border border-gray-200': selectedPackage !== 'starter'}"
-              class="bg-white rounded-xl p-6 text-center transition-all duration-300 hover:shadow-lg hover:border-purple-300 hover:transform hover:-translate-y-1 cursor-pointer flex flex-col min-h-[250px]"
+              class="bg-white rounded-xl p-6 text-center transition-all duration-300 hover:shadow-lg hover:border-purple-300 hover:transform hover:-translate-y-1 cursor-pointer flex flex-col min-h-[350px]"
             >
               <div class="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -36,6 +36,11 @@
               <h3 class="text-lg font-semibold text-gray-800">Starter Pack</h3>
               <p class="text-2xl font-bold text-purple-600 mt-2">25.000₫</p>
               <p class="text-gray-600 mt-1 text-sm">100 token</p>
+              <ul class="text-gray-600 text-sm mt-4 text-left flex-1">
+                <li class="mb-2">• Đủ để dùng thêm 2–3 tính năng sau khi hết token miễn phí</li>
+                <li class="mb-2">• Khám phá chuyên sâu hơn về bản thân hoặc mối quan hệ đầu tiên</li>
+                <li class="mb-2">• Phù hợp cho người mới bắt đầu & muốn thử thêm tính năng</li>
+              </ul>
               <button 
                 :class="{'bg-gradient-to-r from-purple-600 to-indigo-600': selectedPackage === 'starter', 'bg-gradient-to-r from-purple-500 to-indigo-500': selectedPackage !== 'starter'}"
                 class="mt-auto w-full text-white py-2 px-4 rounded-lg font-medium hover:shadow-md transition-all duration-200"
@@ -48,7 +53,7 @@
             <div 
               @click="selectPackage('value')"
               :class="{'border-2 border-purple-500 ring-2 ring-purple-200': selectedPackage === 'value', 'border border-gray-200': selectedPackage !== 'value'}"
-              class="bg-white rounded-xl p-6 text-center transition-all duration-300 hover:shadow-lg hover:border-purple-300 hover:transform hover:-translate-y-1 cursor-pointer flex flex-col min-h-[250px]"
+              class="bg-white rounded-xl p-6 text-center transition-all duration-300 hover:shadow-lg hover:border-purple-300 hover:transform hover:-translate-y-1 cursor-pointer flex flex-col min-h-[350px]"
             >
               <div class="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,7 +62,12 @@
               </div>
               <h3 class="text-lg font-semibold text-gray-800">Value Pack</h3>
               <p class="text-2xl font-bold text-purple-600 mt-2">60.000₫</p>
-              <p class="text-gray-600 mt-1 text-sm">300 token</p>
+              <p class="text-gray-600 mt-1 text-sm">300 token (Lời 20%)</p>
+              <ul class="text-gray-600 text-sm mt-4 text-left flex-1">
+                <li class="mb-2">• Gấp 3 lần Starter nhưng tiết kiệm hơn 20%</li>
+                <li class="mb-2">• Dùng được nhiều tính năng nâng cao: Dự báo tương lai 10 năm, Gợi ý ngành nghề phù hợp, Định vị tính cách – năng lực, Lập kế hoạch cá nhân theo năm/tháng</li>
+                <li class="mb-2">• Phù hợp cho người tìm hiểu chuyên sâu nhưng chưa muốn chi nhiều tiền</li>
+              </ul>
               <button 
                 :class="{'bg-gradient-to-r from-purple-600 to-indigo-600': selectedPackage === 'value', 'bg-gradient-to-r from-purple-500 to-indigo-500': selectedPackage !== 'value'}"
                 class="mt-auto w-full text-white py-2 px-4 rounded-lg font-medium hover:shadow-md transition-all duration-200"
@@ -70,7 +80,7 @@
             <div 
               @click="selectPackage('mega')"
               :class="{'border-2 border-purple-500 ring-2 ring-purple-200': selectedPackage === 'mega', 'border border-gray-200': selectedPackage !== 'mega'}"
-              class="bg-white rounded-xl p-6 text-center transition-all duration-300 hover:shadow-lg hover:border-purple-300 hover:transform hover:-translate-y-1 cursor-pointer relative flex flex-col min-h-[250px]"
+              class="bg-white rounded-xl p-6 text-center transition-all duration-300 hover:shadow-lg hover:border-purple-300 hover:transform hover:-translate-y-1 cursor-pointer relative flex flex-col min-h-[350px]"
             >
               <div class="absolute top-0 right-0 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded-bl-lg rounded-tr-lg">
                 PHỔ BIẾN
@@ -82,7 +92,14 @@
               </div>
               <h3 class="text-lg font-semibold text-gray-800">Mega Pack</h3>
               <p class="text-2xl font-bold text-purple-600 mt-2">180.000₫</p>
-              <p class="text-gray-600 mt-1 text-sm">1.000 token</p>
+              <p class="text-gray-600 mt-1 text-sm">1.000 token (Lời 28%)</p>
+              <ul class="text-gray-600 text-sm mt-4 text-left flex-1">
+                <li class="mb-2">• Đủ để dùng gần như toàn bộ hệ thống trong vài tháng</li>
+                <li class="mb-2">• Trải nghiệm mọi tính năng nâng cao: Dự báo vận mệnh, So sánh hợp mệnh, Đặt tên con, Tư vấn nghề nghiệp, Tình cảm, Cá nhân hóa theo ngày</li>
+                <li class="mb-2">• Hỗ trợ phân tích nhiều người (bản thân, người thân, bạn bè)</li>
+                <li class="mb-2">• Thích hợp cho việc chia sẻ, tư vấn hoặc sử dụng thường xuyên không lo giới hạn</li>
+                <li class="mb-2">• Tỷ lệ token/token cost rẻ nhất (~180 VNĐ/token)</li>
+              </ul>
               <button 
                 :class="{'bg-gradient-to-r from-purple-600 to-indigo-600': selectedPackage === 'mega', 'bg-gradient-to-r from-purple-500 to-indigo-500': selectedPackage !== 'mega'}"
                 class="mt-auto w-full text-white py-2 px-4 rounded-lg font-medium hover:shadow-md transition-all duration-200"
@@ -91,25 +108,32 @@
               </button>
             </div>
 
-            <!-- Zen+ Membership -->
+            <!-- Combo Exam -->
             <div 
-              @click="selectPackage('zen')"
-              :class="{'border-2 border-purple-500 ring-2 ring-purple-200': selectedPackage === 'zen', 'border border-gray-200': selectedPackage !== 'zen'}"
-              class="bg-white rounded-xl p-6 text-center transition-all duration-300 hover:shadow-lg hover:border-purple-300 hover:transform hover:-translate-y-1 cursor-pointer flex flex-col min-h-[250px]"
+              @click="selectPackage('combo')"
+              :class="{'border-2 border-purple-500 ring-2 ring-purple-200': selectedPackage === 'combo', 'border border-gray-200': selectedPackage !== 'combo'}"
+              class="bg-white rounded-xl p-6 text-center transition-all duration-300 hover:shadow-lg hover:border-purple-300 hover:transform hover:-translate-y-1 cursor-pointer flex flex-col min-h-[350px]"
             >
               <div class="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
               </div>
-              <h3 class="text-lg font-semibold text-gray-800">Zen+ Membership</h3>
-              <p class="text-2xl font-bold text-purple-600 mt-2">129.000₫<span class="text-sm font-normal text-gray-500">/tháng</span></p>
-              <p class="text-gray-600 mt-1 text-sm">Unlimited Daily + 200 token</p>
+              <h3 class="text-lg font-semibold text-gray-800">Combo Exam</h3>
+              <p class="text-2xl font-bold text-purple-600 mt-2">99.000₫</p>
+              <p class="text-gray-600 mt-1 text-sm">500 token + PDF Hướng Nghiệp</p>
+              <ul class="text-gray-600 text-sm mt-4 text-left flex-1">
+                <li class="mb-2">• 500 token + tặng báo cáo chọn ngành học bản PDF</li>
+                <li class="mb-2">• Hỗ trợ định hướng nghề nghiệp, chọn trường, lập kế hoạch học tập</li>
+                <li class="mb-2">• Đủ để mở khóa 3–5 tính năng nâng cao</li>
+                <li class="mb-2">• PDF Hướng Nghiệp có đủ 6 nghề nghiệp phù hợp</li>
+                <li class="mb-2">• Phù hợp cho các bạn trẻ chuẩn bị chọn ngành học</li>
+              </ul>
               <button 
-                :class="{'bg-gradient-to-r from-purple-600 to-indigo-600': selectedPackage === 'zen', 'bg-gradient-to-r from-purple-500 to-indigo-500': selectedPackage !== 'zen'}"
+                :class="{'bg-gradient-to-r from-purple-600 to-indigo-600': selectedPackage === 'combo', 'bg-gradient-to-r from-purple-500 to-indigo-500': selectedPackage !== 'combo'}"
                 class="mt-auto w-full text-white py-2 px-4 rounded-lg font-medium hover:shadow-md transition-all duration-200"
               >
-                {{ selectedPackage === 'zen' ? 'Đang chọn' : 'Chọn gói' }}
+                {{ selectedPackage === 'combo' ? 'Đang chọn' : 'Chọn gói' }}
               </button>
             </div>
           </div>
@@ -127,7 +151,6 @@
               </h4>
               <p class="text-gray-700 mt-2">Số tài khoản: <span class="font-medium">{{ bankDetails.accountNumber }}</span></p>
               <p class="text-gray-700">Chủ tài khoản: <span class="font-medium">{{ bankDetails.accountName }}</span></p>
-              <p class="text-gray-700">Chi nhánh: <span class="font-medium">{{ bankDetails.branch }}</span></p>
             </div>
 
             <!-- Transfer syntax -->
@@ -158,19 +181,6 @@
               <p class="text-sm text-gray-500 mt-2">Sao chép cú pháp này khi chuyển khoản để được xử lý nhanh nhất</p>
             </div>
 
-            <!-- QR Code -->
-            <div class="bg-white p-4 rounded-lg shadow-sm text-center">
-              <h4 class="font-medium text-gray-800 mb-3 flex items-center justify-center">
-                <svg class="w-5 h-5 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m-3 0h-2m-2 4h-2m2 4h2m-6 0h2m6-4h2m-2-4h2m-6 0h2m-2 4h2"></path>
-                </svg>
-                Quét mã QR để thanh toán
-              </h4>
-              <canvas ref="qrCanvas" class="mx-auto"></canvas>
-              <p v-if="qrError" class="text-sm text-red-500 mt-2">{{ qrError }}</p>
-              <p class="text-sm text-gray-500 mt-2">Quét mã QR này bằng ứng dụng Vietcombank Digibank để tự động điền thông tin chuyển khoản</p>
-            </div>
-
             <!-- Toast Notification -->
             <div 
               v-if="showToast"
@@ -183,18 +193,8 @@
             </div>
 
             <div class="mt-4 text-center text-sm text-gray-600">
-              Sau khi chuyển khoản, vui lòng liên hệ hỗ trợ qua email <span class="text-purple-600">support@luangiaithanso.com</span> hoặc Zalo <span class="text-purple-600">0123456789</span> để được xác nhận nạp token.
+              Sau khi chuyển khoản, HÃY nhắn qua Zalo admin: <span class="text-purple-600">0968 263 866</span> để được xác nhận nạp token. Token của bạn sẽ được thêm vào ngay sau khi admin xác nhận thành công. Nếu cần hỗ trợ hoặc đặt câu hỏi, vui lòng liên hệ qua email info.auratrust@gmail.com
             </div>
-          </div>
-
-          <!-- Back button -->
-          <div class="text-center">
-            <a href="/xem" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 hover:shadow-lg">
-              <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-              </svg>
-              Quay lại Trang Chính
-            </a>
           </div>
         </div>
       </div>
@@ -230,17 +230,17 @@ const packages = {
     tokens: '1.000 token',
     amount: 180000
   },
-  zen: {
-    name: 'ZEN MEMBERSHIP',
-    price: '129.000₫/tháng',
-    tokens: 'Unlimited Daily + 200 token',
-    amount: 129000
+  combo: {
+    name: 'COMBO EXAM',
+    price: '99.000₫',
+    tokens: '500 token + PDF Hướng Nghiệp',
+    amount: 99000
   }
 }
 
 const bankDetails = {
-  accountNumber: '0021000317551', // Số tài khoản Vietcombank thực
-  accountName: 'DO VIET TUNG', // Tên chủ tài khoản thực, viết hoa, không dấu
+  accountNumber: '1023969324', // Số tài khoản Vietcombank thực
+  accountName: 'Phan Minh Hương', // Tên chủ tài khoản thực, viết hoa, không dấu
   bankCode: 'VCB', // Mã ngân hàng Vietcombank cho VietQR
   template: 'compact', // Template VietQR
   branch: 'Hà Nội' // Chi nhánh
@@ -411,6 +411,10 @@ watch(selectedPackage, generateQRCode)
     right: 1rem;
     left: 1rem;
     width: auto;
+  }
+
+  .min-h-\[350px\] {
+    min-height: 400px; /* Tăng chiều cao tối thiểu cho mobile để chứa nội dung */
   }
 }
 </style>
