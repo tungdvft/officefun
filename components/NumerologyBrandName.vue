@@ -90,36 +90,52 @@
               </div>
             </div>
           </div>
-          <!-- Error Message -->
-          <div v-if="errors.general || errorMessage" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
-            {{ errors.general || errorMessage }}
-            <p v-if="hasSufficientTokens === false" class="mt-1 text-sm">Bạn không có đủ token. Vui lòng nạp thêm.</p>
-          </div>
-          <!-- Button -->
-          <div class="flex justify-center">
-            <button
-              @click="generateReport"
-              :disabled="loading || !hasSufficientTokens"
-              class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
+          <!-- Error, Loading, or Action Button -->
+          <div v-if="isLoading || loading" class="flex justify-center">
+            <svg
+              class="animate-spin h-8 w-8 text-purple-600"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
             >
-              <span v-if="loading || isLoading" class="flex items-center justify-center">
-                <svg
-                  class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path
-                    class="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang phân tích...' }}
-              </span>
-              <span v-else>{{ isLoggedIn ? `Tạo gợi ý tên thương hiệu (Cần ${tokenCost} tokens)` : 'Đăng nhập để tạo gợi ý' }}</span>
-            </button>
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+          </div>
+          <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
+            <template v-if="errorType === 'login'">
+              Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để tạo gợi ý tên thương hiệu.
+            </template>
+            <template v-else-if="errorType === 'topup'">
+              Không đủ token để tạo gợi ý tên thương hiệu. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+            </template>
+            <template v-else>
+              {{ errorMessage }}
+            </template>
+          </div>
+          <div v-else-if="errors.general" class="text-red-600 text-center font-medium p-6">
+            {{ errors.general }}
+          </div>
+          <div v-else-if="!isContentAccessible" class="text-center p-6">
+            <template v-if="!userStore.isAuthenticated">
+              <p class="text-red-600 font-medium mb-4">
+                Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để tạo gợi ý tên thương hiệu.
+              </p>
+            </template>
+            <template v-else-if="userStore.isAuthenticated && !hasSufficientTokens">
+              <p class="text-red-600 font-medium mb-4">
+                Không đủ token để tạo gợi ý tên thương hiệu. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+              </p>
+            </template>
+            <template v-else>
+              <button @click="generateReport" class="action-button">
+                Tạo gợi ý tên thương hiệu (Cần {{ tokenCost }} tokens)
+              </button>
+            </template>
           </div>
         </div>
 
@@ -309,30 +325,50 @@
                 </div>
               </div>
               <!-- Show More Suggestions Button -->
-              <div v-if="numerologyData.suggestions.length < maxSuggestions && isContentAccessible" class="flex justify-center mt-6">
-                <button
-                  @click="showMoreSuggestions"
-                  :disabled="loading || isLoading"
-                  class="w-auto bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-2 px-6 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
-                >
-                  <span v-if="loading || isLoading" class="flex items-center justify-center">
-                    <svg
-                      class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                      <path
-                        class="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang tải...' }}
-                  </span>
-                  <span v-else>{{ isLoggedIn ? `Xem thêm gợi ý (Cần ${tokenCostMore} tokens)` : 'Đăng nhập để xem thêm' }}</span>
-                </button>
+              <div v-if="numerologyData.suggestions.length < maxSuggestions && isContentAccessible" class="text-center p-6">
+                <div v-if="isLoadingMore || loadingMore" class="flex justify-center">
+                  <svg
+                    class="animate-spin h-8 w-8 text-teal-600"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path
+                      class="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                </div>
+                <div v-else-if="errorMessageMore" class="text-red-600 text-center font-medium p-6">
+                  <template v-if="errorTypeMore === 'login'">
+                    Vui lòng <button @click="errorActionMore" class="action-button">Đăng Nhập</button> để xem thêm gợi ý.
+                  </template>
+                  <template v-else-if="errorTypeMore === 'topup'">
+                    Không đủ token để xem thêm gợi ý. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                  </template>
+                  <template v-else>
+                    {{ errorMessageMore }}
+                  </template>
+                </div>
+                <div v-else-if="!isContentAccessibleMore" class="text-center p-6">
+                  <template v-if="!userStore.isAuthenticated">
+                    <p class="text-red-600 font-medium mb-4">
+                      Vui lòng <button @click="errorActionMore" class="action-button">Đăng Nhập</button> để xem thêm gợi ý.
+                    </p>
+                  </template>
+                  <template v-else-if="userStore.isAuthenticated && !hasSufficientTokensForMore">
+                    <p class="text-red-600 font-medium mb-4">
+                      Không đủ token để xem thêm gợi ý. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                    </p>
+                  </template>
+                  <template v-else>
+                    <button @click="showMoreSuggestions" class="action-button">
+                      Xem thêm gợi ý (Cần {{ tokenCostMore }} tokens)
+                    </button>
+                  </template>
+                </div>
               </div>
             </div>
 
@@ -368,37 +404,76 @@
 import { ref, onMounted, watch } from 'vue';
 import { toast } from 'vue3-toastify';
 import { useProtectedContent } from '~/composables/useProtectedContent';
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '~/stores/user';
+import { useRouter } from 'vue-router';
 
 definePageMeta({ layout: 'view' });
 
+const router = useRouter();
+const userStore = useUserStore();
 const formData = ref({
   industry: '',
   date: '',
   ownerName: '',
   extraRequest: '',
   gender: 'none',
-  language: 'english'
+  language: 'english',
 });
 const numerologyData = ref(null);
 const loading = ref(false);
+const loadingMore = ref(false);
 const errors = ref({
   industry: '',
   date: '',
   ownerName: '',
-  general: ''
+  general: '',
 });
 const totalSuggestions = ref(0);
 const existingNames = ref([]);
-const tokenCost = ref(15);
-const tokenCostMore = ref(5);
+const tokenCost = ref(50); // Lần đầu: 50 tokens
+const tokenCostMore = ref(10); // Tải thêm: 10 tokens
 const maxSuggestions = ref(30);
 const description = 'Access to brand name generation based on numerology';
-const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
-const isLoggedIn = ref(false);
-const hasSufficientTokensForMore = ref(true);
-let handleAction = () => {};
-const userStore = useUserStore();
+const {
+  isLoading,
+  errorMessage,
+  errorType,
+  isContentAccessible,
+  hasSufficientTokens,
+  checkAuthAndAccess,
+  performAction,
+  errorAction,
+  navigateToTopup: navigateToTopupMain,
+} = useProtectedContent(tokenCost.value, description);
+const {
+  isLoading: isLoadingMore,
+  errorMessage: errorMessageMore,
+  errorType: errorTypeMore,
+  isContentAccessible: isContentAccessibleMore,
+  hasSufficientTokens: hasSufficientTokensForMore,
+  checkAuthAndAccess: checkAuthAndAccessMore,
+  performAction: performActionMore,
+  errorAction: errorActionMore,
+  navigateToTopup: navigateToTopupMore,
+} = useProtectedContent(tokenCostMore.value, 'Load more brand name suggestions');
+
+// Hàm điều hướng đến trang nạp token
+const navigateToTopup = () => {
+  if (process.client) {
+    console.log('Navigating to /nap-token');
+    try {
+      router.push('/nap-token').catch((err) => {
+        console.error('Navigation error:', err);
+        toast.error('Không thể điều hướng đến trang nạp token. Vui lòng thử lại.', { position: 'top-center' });
+      });
+    } catch (err) {
+      console.error('Error in navigateToTopup:', err);
+      toast.error('Có lỗi khi điều hướng. Vui lòng kiểm tra lại.', { position: 'top-center' });
+    }
+  } else {
+    console.warn('navigateToTopup called on server-side, ignoring.');
+  }
+};
 
 // Hàm lấy thông tin người dùng từ API
 const fetchUserData = async () => {
@@ -418,47 +493,25 @@ const fetchUserData = async () => {
     formData.value.ownerName = fullname?.trim() || '';
   } catch (err) {
     console.error('Error fetching user data:', err);
-    errorMessage.value = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
-    toast.error(errorMessage.value, { position: 'top-center' });
-  }
-};
-
-// Hàm kiểm tra số dư token
-const checkTokenBalance = async (requiredTokens) => {
-  if (!userStore.isAuthenticated || !userStore.user?.id) {
-    console.log('User not authenticated, setting hasSufficientTokensForMore to false');
-    hasSufficientTokensForMore.value = false;
-    return false;
-  }
-
-  try {
-    const response = await $fetch('/api/check-token-balance', {
-      method: 'POST',
-      headers: {
-        'x-username': encodeURIComponent(userStore.user.email),
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-      body: { userId: String(userStore.user.id), requiredTokens }
-    });
-    console.log(`Check token balance response:`, response);
-    hasSufficientTokensForMore.value = response.hasSufficientTokens;
-    return response.hasSufficientTokens;
-  } catch (error) {
-    console.error('Error checking token balance:', error);
-    errorMessage.value = error.data?.message || 'Không thể kiểm tra số dư token!';
-    toast.error(errorMessage.value, { position: 'top-center' });
-    hasSufficientTokensForMore.value = false;
-    return false;
+    errors.value.general = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
+    toast.error(errors.value.general, { position: 'top-center' });
   }
 };
 
 // Khởi tạo trạng thái đăng nhập và kiểm tra token
 const initializeAuth = async () => {
-  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
-  isLoggedIn.value = authStatus;
-  handleAction = action;
-  if (authStatus) {
-    await checkTokenBalance(tokenCostMore.value);
+  console.log('Initializing auth for BrandNumerology...');
+  try {
+    await userStore.initialize();
+    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
+    await checkAuthAndAccess();
+    await checkAuthAndAccessMore();
+    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
+    console.log('Auth checked for more, isContentAccessibleMore:', isContentAccessibleMore.value, 'hasSufficientTokensForMore:', hasSufficientTokensForMore.value);
+  } catch (err) {
+    console.error('Lỗi khi khởi tạo auth:', err);
+    errors.value.general = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
+    toast.error(errors.value.general, { position: 'top-center' });
   }
 };
 
@@ -474,12 +527,12 @@ onMounted(() => {
       ownerName: '',
       extraRequest: '',
       gender: 'none',
-      language: 'english'
+      language: 'english',
     };
     numerologyData.value = parsed.numerologyData || null;
     if (numerologyData.value?.suggestions) {
       totalSuggestions.value = numerologyData.value.suggestions.length;
-      existingNames.value = numerologyData.value.suggestions.map(s => s.name);
+      existingNames.value = numerologyData.value.suggestions.map((s) => s.name);
     }
   }
   if (userStore.isStoreInitialized) {
@@ -492,7 +545,7 @@ onMounted(() => {
 watch([formData, numerologyData], () => {
   localStorage.setItem('brandNumerologyData', JSON.stringify({
     formData: formData.value,
-    numerologyData: numerologyData.value
+    numerologyData: numerologyData.value,
   }));
 }, { deep: true });
 
@@ -511,7 +564,7 @@ const validateForm = () => {
     industry: '',
     date: '',
     ownerName: '',
-    general: ''
+    general: '',
   };
   let isValid = true;
 
@@ -550,19 +603,35 @@ const validateForm = () => {
   return isValid;
 };
 
+// Hàm tạo gợi ý tên thương hiệu
 const generateReport = async () => {
-  if (!validateForm()) return;
+  if (!process.client) {
+    console.warn('generateReport called on server-side, ignoring.');
+    return;
+  }
+  if (!validateForm()) {
+    toast.error('Vui lòng kiểm tra lại thông tin nhập', { position: 'top-center' });
+    return;
+  }
 
   if (isContentAccessible.value) {
     await fetchBrandNames();
   } else {
-    await handleAction();
-    if (isContentAccessible.value) {
-      await fetchBrandNames();
+    try {
+      await performAction();
+      if (isContentAccessible.value) {
+        await fetchBrandNames();
+      } else {
+        toast.error(errorMessage.value, { position: 'top-center' });
+      }
+    } catch (err) {
+      console.error('Error in performAction:', err);
+      toast.error(errorMessage.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
     }
   }
 };
 
+// Hàm gọi API để tạo gợi ý tên thương hiệu
 async function fetchBrandNames() {
   loading.value = true;
   errors.value.general = '';
@@ -573,20 +642,21 @@ async function fetchBrandNames() {
       method: 'POST',
       headers: {
         'x-username': encodeURIComponent(username),
-        'Content-Type': 'application/json; charset=UTF-8'
+        'Content-Type': 'application/json; charset=UTF-8',
       },
       body: {
         ...formData.value,
         extraRequest: `${formData.value.extraRequest || ''} Tên bằng ${formData.value.language === 'english' ? 'tiếng Anh' : 'tiếng Việt'}`.trim(),
         count: 3,
-        excludeNames: []
-      }
+        excludeNames: [],
+      },
     });
     console.log('Response from /api/numerology/brand:', response);
     numerologyData.value = response.numerology;
     totalSuggestions.value = response.numerology.suggestions.length;
-    existingNames.value = response.numerology.suggestions.map(s => s.name);
-    await checkTokenBalance(tokenCostMore.value);
+    existingNames.value = response.numerology.suggestions.map((s) => s.name);
+    await checkAuthAndAccess();
+    await checkAuthAndAccessMore();
     toast.success('Tạo gợi ý tên thương hiệu hoàn tất!', { position: 'top-center' });
     // Scroll to result
     setTimeout(() => {
@@ -597,27 +667,44 @@ async function fetchBrandNames() {
     }, 100);
   } catch (error) {
     console.error('Error in fetchBrandNames:', error);
-    errorMessage.value = error.data?.message || 'Có lỗi xảy ra khi tạo gợi ý tên thương hiệu!';
-    toast.error(errorMessage.value, { position: 'top-center' });
+    errors.value.general = error.data?.message || 'Có lỗi xảy ra khi tạo gợi ý tên thương hiệu!';
+    toast.error(errors.value.general, { position: 'top-center' });
   } finally {
     loading.value = false;
   }
 }
 
+// Hàm tải thêm gợi ý
 const showMoreSuggestions = async () => {
+  if (!process.client) {
+    console.warn('showMoreSuggestions called on server-side, ignoring.');
+    return;
+  }
   if (totalSuggestions.value >= maxSuggestions.value) {
     toast.info('Đã đạt số lượng tối đa 30 gợi ý tên thương hiệu!', { position: 'top-center' });
     return;
   }
 
-  const sufficientTokens = await checkTokenBalance(tokenCostMore.value);
-  if (!sufficientTokens) {
-    errorMessage.value = 'Bạn không có đủ token để xem thêm gợi ý!';
-    toast.error(errorMessage.value, { position: 'top-center' });
-    return;
+  if (isContentAccessibleMore.value) {
+    await fetchMoreSuggestions();
+  } else {
+    try {
+      await performActionMore();
+      if (isContentAccessibleMore.value) {
+        await fetchMoreSuggestions();
+      } else {
+        toast.error(errorMessageMore.value, { position: 'top-center' });
+      }
+    } catch (err) {
+      console.error('Error in performActionMore:', err);
+      toast.error(errorMessageMore.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
+    }
   }
+};
 
-  loading.value = true;
+// Hàm gọi API để tải thêm gợi ý
+async function fetchMoreSuggestions() {
+  loadingMore.value = true;
   errors.value.general = '';
   try {
     const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
@@ -626,34 +713,35 @@ const showMoreSuggestions = async () => {
       method: 'POST',
       headers: {
         'x-username': encodeURIComponent(username),
-        'Content-Type': 'application/json; charset=UTF-8'
+        'Content-Type': 'application/json; charset=UTF-8',
       },
       body: {
         ...formData.value,
         extraRequest: `${formData.value.extraRequest || ''} Tên bằng ${formData.value.language === 'english' ? 'tiếng Anh' : 'tiếng Việt'}`.trim(),
         count: 3,
-        excludeNames: existingNames.value
-      }
+        excludeNames: existingNames.value,
+      },
     });
     console.log('Response from /api/numerology/brand (more suggestions):', response);
     if (response.numerology && response.numerology.suggestions) {
       numerologyData.value.suggestions = [
         ...numerologyData.value.suggestions,
-        ...response.numerology.suggestions
+        ...response.numerology.suggestions,
       ];
       totalSuggestions.value = numerologyData.value.suggestions.length;
-      existingNames.value = numerologyData.value.suggestions.map(s => s.name);
-      await checkTokenBalance(tokenCostMore.value);
+      existingNames.value = numerologyData.value.suggestions.map((s) => s.name);
+      await checkAuthAndAccess();
+      await checkAuthAndAccessMore();
       toast.success(`Đã thêm ${response.numerology.suggestions.length} gợi ý tên mới!`, { position: 'top-center' });
     }
   } catch (error) {
     console.error('Error loading more suggestions:', error);
-    errorMessage.value = error.data?.message || 'Không thể tải thêm gợi ý tên!';
-    toast.error(errorMessage.value, { position: 'top-center' });
+    errors.value.general = error.data?.message || 'Không thể tải thêm gợi ý tên!';
+    toast.error(errors.value.general, { position: 'top-center' });
   } finally {
-    loading.value = false;
+    loadingMore.value = false;
   }
-};
+}
 </script>
 
 <style scoped>
@@ -677,5 +765,9 @@ const showMoreSuggestions = async () => {
 .slide-fade-leave-to {
   transform: translateY(20px);
   opacity: 0;
+}
+
+.action-button {
+  @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap mx-2;
 }
 </style>

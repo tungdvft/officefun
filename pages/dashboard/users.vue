@@ -39,7 +39,7 @@
                 {{ user.email || '-' }}
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {{ user.birthdate || '-' }}
+                {{ formatBirthdate(user.birthdate) }}
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {{ user.tokens || 0 }} tokens
@@ -102,7 +102,7 @@
     <div v-if="showEditModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
         <div class="flex justify-between items-center mb-4">
-          <h3 class="text-lg font-medium text-gray-900">Chỉnh sửa người dùng</h3>
+          <h3 class="text-lg font-medium text-gray-900">Chỉnh sửa số token</h3>
           <button @click="showEditModal = false" class="text-gray-400 hover:text-gray-500">
             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -111,18 +111,6 @@
         </div>
         <form @submit.prevent="saveUser">
           <div class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Họ tên</label>
-              <input v-model="editingUser.fullname" type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-purple-500 focus:border-purple-500">
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Email</label>
-              <input v-model="editingUser.email" type="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-purple-500 focus:border-purple-500">
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Ngày sinh</label>
-              <input v-model="editingUser.birthdate" type="date" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-purple-500 focus:border-purple-500">
-            </div>
             <div>
               <label class="block text-sm font-medium text-gray-700">Tokens</label>
               <input v-model.number="editingUser.tokens" type="number" min="0" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-purple-500 focus:border-purple-500">
@@ -144,6 +132,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { toast } from 'vue3-toastify';
 
 definePageMeta({
   layout: 'dashboard'
@@ -156,9 +145,6 @@ const error = ref(null);
 
 const editingUser = ref({
   id: '',
-  fullname: '',
-  email: '',
-  birthdate: '',
   tokens: 0
 });
 
@@ -169,13 +155,28 @@ const pagination = ref({
   totalPages: 1
 });
 
+// Hàm định dạng ngày sinh sang DD/MM/YYYY
+const formatBirthdate = (birthdate) => {
+  if (!birthdate) return '-';
+  try {
+    const date = new Date(birthdate);
+    if (isNaN(date.getTime())) return '-';
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  } catch (err) {
+    console.error('Error formatting birthdate:', err);
+    return '-';
+  }
+};
+
 // Fetch users
 const fetchUsers = async () => {
   try {
     loading.value = true;
     error.value = null;
 
-    // Gọi API users.get.js để lấy danh sách người dùng
     const response = await $fetch(`/api/users?page=${pagination.value.page}&limit=${pagination.value.limit}`, {
       method: 'GET',
       headers: {
@@ -185,8 +186,7 @@ const fetchUsers = async () => {
 
     if (response.success && response.data.users) {
       users.value = response.data.users;
-      // Cập nhật thông tin phân trang
-      pagination.value.total = users.value.length; // Giả sử API trả về tổng số
+      pagination.value.total = response.data.total || users.value.length;
       pagination.value.totalPages = Math.ceil(pagination.value.total / pagination.value.limit);
     } else {
       users.value = [];
@@ -196,6 +196,7 @@ const fetchUsers = async () => {
     console.error('Lỗi khi lấy danh sách người dùng:', err);
     error.value = err.message || 'Không thể tải danh sách người dùng';
     users.value = [];
+    toast.error(error.value, { position: 'top-center' });
   } finally {
     loading.value = false;
   }
@@ -227,9 +228,6 @@ const goToPage = (page) => {
 const editUser = (user) => {
   editingUser.value = {
     id: user.id,
-    fullname: user.fullname,
-    email: user.email,
-    birthdate: user.birthdate,
     tokens: user.tokens || 0
   };
   showEditModal.value = true;
@@ -239,23 +237,20 @@ const editUser = (user) => {
 const saveUser = async () => {
   try {
     loading.value = true;
+    const body = { tokens: parseInt(editingUser.value.tokens) || 0 };
+    console.log('Saving user with body:', body);
 
-    // Gọi API users/[id].patch.js để cập nhật thông tin người dùng
     await $fetch(`/api/users/${editingUser.value.id}`, {
       method: 'PATCH',
-      body: {
-        fullname: editingUser.value.fullname,
-        birthdate: editingUser.value.birthdate,
-        tokens: parseInt(editingUser.value.tokens) || 0
-      }
+      body
     });
 
-    // Làm mới danh sách người dùng
     await fetchUsers();
     showEditModal.value = false;
+    toast.success('Cập nhật số token thành công!', { position: 'top-center' });
   } catch (err) {
     console.error('Lỗi khi lưu thay đổi:', err);
-    alert('Lỗi khi lưu thay đổi: ' + (err.message || 'Lỗi không xác định'));
+    toast.error(err.message || 'Lỗi khi lưu thay đổi. Vui lòng thử lại.', { position: 'top-center' });
   } finally {
     loading.value = false;
   }
@@ -267,14 +262,14 @@ const deleteUser = async (userId) => {
 
   try {
     loading.value = true;
-    // Giả sử có API DELETE, bạn có thể cần tạo API này
     await $fetch(`/api/users/${userId}`, {
       method: 'DELETE'
     });
-    await fetchUsers(); // Làm mới danh sách
+    await fetchUsers();
+    toast.success('Xóa người dùng thành công!', { position: 'top-center' });
   } catch (err) {
     console.error('Lỗi khi xóa người dùng:', err);
-    alert('Lỗi khi xóa người dùng: ' + (err.message || 'Lỗi không xác định'));
+    toast.error(err.message || 'Lỗi khi xóa người dùng. Vui lòng thử lại.', { position: 'top-center' });
   } finally {
     loading.value = false;
   }

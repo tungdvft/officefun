@@ -28,15 +28,15 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  // 2. Kiểm tra dữ liệu đầu vào
-  if (!body.fullname || !isValidFullname(body.fullname)) {
+  // 2. Kiểm tra dữ liệu đầu vào (fullname và birthdate là tùy chọn)
+  if (body.fullname !== undefined && !isValidFullname(body.fullname)) {
     throw createError({
       statusCode: 400,
       statusMessage: `Họ tên không hợp lệ. Nhận được: "${body.fullname}". Phải là chuỗi, không quá 100 ký tự, và chỉ chứa chữ cái và khoảng trắng.`,
     });
   }
 
-  if (!body.birthdate || !isValidDate(body.birthdate)) {
+  if (body.birthdate !== undefined && !isValidDate(body.birthdate)) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Ngày sinh không hợp lệ. Phải là định dạng yyyy-mm-dd và trong khoảng từ 1900 đến hiện tại.',
@@ -59,8 +59,8 @@ export default defineEventHandler(async (event) => {
     // 3. Bắt đầu giao dịch
     await db.query('BEGIN');
 
-    // 4. Kiểm tra người dùng tồn tại và lấy tokens hiện tại
-    const currentUserResult = await db.query('SELECT tokens FROM users WHERE id = $1', [userId]);
+    // 4. Kiểm tra người dùng tồn tại và lấy thông tin hiện tại
+    const currentUserResult = await db.query('SELECT fullname, birthdate, tokens FROM users WHERE id = $1', [userId]);
     const currentUser = currentUserResult.rows[0];
     if (!currentUser) {
       await db.query('ROLLBACK').catch((rollbackError) => {
@@ -72,7 +72,9 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // 5. Sử dụng tokens hiện tại nếu không được gửi
+    // 5. Sử dụng giá trị hiện tại nếu không được gửi
+    const finalFullname = body.fullname !== undefined ? body.fullname : currentUser.fullname;
+    const finalBirthdate = body.birthdate !== undefined ? body.birthdate : currentUser.birthdate;
     newTokens = body.tokens !== undefined ? newTokens : currentUser.tokens !== null ? currentUser.tokens : 200;
 
     // 6. Cập nhật thông tin người dùng
@@ -83,7 +85,7 @@ export default defineEventHandler(async (event) => {
         tokens = $3,
         updated_at = CURRENT_TIMESTAMP
        WHERE id = $4`,
-      [body.fullname, body.birthdate, newTokens, userId]
+      [finalFullname, finalBirthdate, newTokens, userId]
     );
 
     if (updateResult.rowCount === 0) {
