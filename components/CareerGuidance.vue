@@ -1,100 +1,107 @@
+
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
     <div class="container mx-auto p-4">
-      <!-- Header -->
-      <div class="text-center mb-8">
-        <h2 class="text-3xl md:text-4xl font-bold text-blue-800 mb-2">Định Hướng Nghề Nghiệp</h2>
-        <p class="text-gray-600">Khám phá nghề nghiệp phù hợp với tính cách và năng lực của bạn</p>
-      </div>
-
-      <!-- Main Content -->
-      <div class="bg-white p-6 rounded-xl shadow-lg mb-8 border border-gray-100">
-        <!-- Form -->
-        <div class="space-y-6">
-          <h3 class="text-lg font-semibold text-purple-700 mb-4">Nhập thông tin cá nhân</h3>
-          <!-- Input Form -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Họ và tên</label>
-              <input
-                v-model="formData.name"
-                type="text"
-                id="name"
-                placeholder="Nguyễn Văn A"
-                :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.name ? 'border-red-500' : 'border-gray-300']"
-              />
-              <p v-if="errors.name" class="text-red-600 text-sm mt-1">{{ errors.name }}</p>
+      <!-- Phần không bảo vệ (Tiêu đề, mô tả, form nhập thông tin) -->
+      <div v-for="section in introSection" :key="section.title" class="space-y-6">
+        <div v-if="section.type === 'header'" class="mb-8 p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg border border-purple-100">
+          <h2 class="text-3xl md:text-4xl font-bold text-blue-800 mb-2">{{ section.title }}</h2>
+          <p class="text-gray-600">{{ section.description }}</p>
+        </div>
+        <div v-if="section.type === 'form'" class="bg-white p-6 rounded-xl shadow-lg mb-8 border border-gray-100">
+          <h3 class="text-xl font-semibold text-purple-700 mb-4">Nhập thông tin cá nhân</h3>
+          <div class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Họ và tên</label>
+                <input
+                  v-model="formData.name"
+                  type="text"
+                  id="name"
+                  placeholder="Nguyễn Văn A"
+                  :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.name ? 'border-red-500' : 'border-gray-300']"
+                />
+                <p v-if="errors.name" class="text-red-600 text-sm mt-1">{{ errors.name }}</p>
+              </div>
+              <div>
+                <label for="birthdate" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh (DD/MM/YYYY hoặc DD-MM-YYYY)</label>
+                <input
+                  v-model="formData.birthdate"
+                  type="text"
+                  id="birthdate"
+                  placeholder="15/03/1995"
+                  :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.birthdate ? 'border-red-500' : 'border-gray-300']"
+                />
+                <p v-if="errors.birthdate" class="text-red-600 text-sm mt-1">{{ errors.birthdate }}</p>
+              </div>
             </div>
             <div>
-              <label for="birthdate" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh (DD/MM/YYYY hoặc DD-MM-YYYY)</label>
+              <label for="currentJob" class="block text-sm font-medium text-gray-700 mb-2">Công việc hiện tại (nếu có)</label>
               <input
-                v-model="formData.birthdate"
+                v-model="formData.currentJob"
                 type="text"
-                id="birthdate"
-                placeholder="15/03/1995"
-                :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.birthdate ? 'border-red-500' : 'border-gray-300']"
+                id="currentJob"
+                placeholder="Ví dụ: Lập trình viên, Giáo viên..."
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
               />
-              <p v-if="errors.birthdate" class="text-red-600 text-sm mt-1">{{ errors.birthdate }}</p>
             </div>
-          </div>
-          <div>
-            <label for="currentJob" class="block text-sm font-medium text-gray-700 mb-2">Công việc hiện tại (nếu có)</label>
-            <input
-              v-model="formData.currentJob"
-              type="text"
-              id="currentJob"
-              placeholder="Ví dụ: Lập trình viên, Giáo viên..."
-              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
-            />
-          </div>
-          <!-- Error Message -->
-          <div v-if="errors.general || errorMessage" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
-            <span v-if="errors.general">{{ errors.general }}</span>
-            <span v-else-if="errorMessage" class="inline">
-              {{ errorMessage.split('Hãy nạp thêm token')[0] }}
-              <button
-                v-if="errorMessage.includes('Hãy nạp thêm token')"
-                @click="errorAction"
-                class="underline text-blue-600 hover:text-blue-800"
+            <!-- Phần thông báo lỗi, trạng thái tải, hoặc nút hành động -->
+            <div v-if="isLoading || loading" class="flex justify-center">
+              <svg
+                class="animate-spin h-8 w-8 text-purple-600"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
               >
-                nạp thêm token
-              </button>
-              {{ errorMessage.includes('Hãy nạp thêm token') ? 'để trải nghiệm full tính năng nhé!' : '' }}
-            </span>
-          </div>
-          <!-- Button -->
-          <div v-if="hasSufficientTokens || !isLoggedIn" class="flex justify-center">
-            <button
-              @click="getCareerGuidance"
-              class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 shadow-md"
-            >
-              <span v-if="loading || isLoading" class="flex items-center justify-center">
-                <svg
-                  class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path
-                    class="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang phân tích...' }}
-              </span>
-              <span v-else>{{ isLoggedIn ? `Xem định hướng nghề nghiệp (Cần ${tokenCost} tokens)` : 'Đăng nhập để xem định hướng' }}</span>
-            </button>
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            </div>
+            <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
+              <template v-if="errorType === 'login'">
+                Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để xem định hướng nghề nghiệp.
+              </template>
+              <template v-else-if="errorType === 'topup'">
+                Không đủ token để xem định hướng nghề nghiệp. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+              </template>
+              <template v-else>
+                {{ errorMessage }}
+              </template>
+            </div>
+            <div v-else-if="errors.general" class="text-red-600 text-center font-medium p-6">
+              {{ errors.general }}
+            </div>
+            <div v-else-if="!isContentAccessible" class="text-center p-6">
+              <template v-if="!userStore.isAuthenticated">
+                <p class="text-red-600 font-medium mb-4">
+                  Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để xem định hướng nghề nghiệp.
+                </p>
+              </template>
+              <template v-else-if="userStore.isAuthenticated && !hasSufficientTokens">
+                <p class="text-red-600 font-medium mb-4">
+                  Không đủ token để xem định hướng nghề nghiệp. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                </p>
+              </template>
+              <template v-else>
+                <button @click="getCareerGuidance" class="action-button">
+                  Xem định hướng nghề nghiệp (Cần {{ tokenCost }} token)
+                </button>
+              </template>
+            </div>
           </div>
         </div>
+      </div>
 
-        <!-- Results Section -->
-        <transition name="slide-fade">
-          <div v-if="result && isContentAccessible" class="mt-8 space-y-6">
-            <!-- Tổng quan -->
-            <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
-              <h3 class="text-lg font-semibold text-purple-700 flex items-center">
+      <!-- Phần được bảo vệ (Kết quả định hướng nghề nghiệp) -->
+      <transition name="slide-fade">
+        <div v-if="isContentAccessible && result" class="space-y-8">
+          <div v-for="section in protectedSections" :key="section.title" class="space-y-6">
+            <div v-if="section.type === 'overview' || section.type === 'advice'" class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
+              <h3 class="text-xl font-semibold text-purple-700 mb-4 flex items-center">
                 <span class="bg-purple-100 rounded-full p-2 mr-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -109,60 +116,22 @@
                     />
                   </svg>
                 </span>
-                Định hướng nghề nghiệp
+                {{ section.title }}
               </h3>
-              <div class="space-y-4 mt-4">
-                <div>
+              <div class="space-y-4">
+                <div v-for="item in section.items" :key="item.title">
                   <h4 class="text-base font-semibold text-purple-700 flex items-center">
-                    <svg class="w-5 h-5 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg :class="item.iconClass" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path :d="item.iconPath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
                     </svg>
-                    Mục tiêu nghề nghiệp
+                    {{ item.title }}
                   </h4>
-                  <p class="text-gray-600 whitespace-pre-wrap">{{ result.careerGoals }}</p>
-                </div>
-                <div>
-                  <h4 class="text-base font-semibold text-purple-700 flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                    Đam mê và động lực
-                  </h4>
-                  <p class="text-gray-600 whitespace-pre-wrap">{{ result.passionAndMotivation }}</p>
-                </div>
-                <div>
-                  <h4 class="text-base font-semibold text-purple-700 flex items-center">
-                    <svg class="w-5 h-5 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 1.857h10M12 4v8m-8 8h16" />
-                    </svg>
-                    Phong cách làm việc
-                  </h4>
-                  <p class="text-gray-600 whitespace-pre-wrap">{{ result.workStyle }}</p>
-                </div>
-                <div>
-                  <h4 class="text-base font-semibold text-purple-700 flex items-center">
-                    <svg class="w-5 h-5 text-yellow-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                    Con đường dài hạn
-                  </h4>
-                  <p class="text-gray-600 whitespace-pre-wrap">{{ result.longTermPath }}</p>
-                </div>
-                <div v-if="formData.currentJob">
-                  <h4 class="text-base font-semibold text-purple-700 flex items-center">
-                    <svg class="w-5 h-5 text-indigo-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m0-2v-2m0-2V7m6 10v-2m0-2v-2m0-2V7m-9 10h12a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
-                    Phân tích công việc hiện tại
-                  </h4>
-                  <p class="text-gray-600 whitespace-pre-wrap">{{ result.currentJobAnalysis }}</p>
+                  <p class="text-gray-600 whitespace-pre-wrap">{{ item.content }}</p>
                 </div>
               </div>
             </div>
-
-            <!-- Đề xuất nghề nghiệp -->
-            <div>
-              <h3 class="text-lg font-semibold text-purple-700 mb-4 flex items-center">
+            <div v-if="section.type === 'suggestions'" class="space-y-4">
+              <h3 class="text-xl font-semibold text-purple-700 mb-4 flex items-center">
                 <span class="bg-purple-100 rounded-full p-2 mr-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -182,7 +151,7 @@
               </h3>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div
-                  v-for="(suggestion, index) in result.careerSuggestions"
+                  v-for="(suggestion, index) in section.suggestions"
                   :key="index"
                   class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
                 >
@@ -192,73 +161,74 @@
                   <p class="text-gray-600"><strong>Xu hướng tương lai:</strong> {{ suggestion.trends }}</p>
                 </div>
               </div>
-              <!-- Button to load more career suggestions -->
-              <div v-if="result.careerSuggestions.length < maxSuggestions && isContentAccessible && (hasSufficientTokensMore || !isLoggedIn)" class="flex justify-center mt-6">
-                <button
-                  @click="loadMoreCareers"
-                  class="w-auto bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-700 hover:to-cyan-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 shadow-md"
-                >
-                  <span v-if="loadingMore || isLoading" class="flex items-center justify-center">
-                    <svg
-                      class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                      <path
-                        class="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang tải...' }}
-                  </span>
-                  <span v-else>{{ isLoggedIn ? `Xem thêm nghề nghiệp phù hợp (Cần ${tokenCostMore} tokens)` : 'Đăng nhập để xem thêm' }}</span>
-                </button>
+              <div v-if="section.suggestions.length < maxSuggestions && isContentAccessible" class="text-center p-6">
+                <div v-if="isLoadingMore || loadingMore" class="flex justify-center">
+                  <svg
+                    class="animate-spin h-8 w-8 text-teal-600"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path
+                      class="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                </div>
+                <div v-else-if="errorMessageMore" class="text-red-600 text-center font-medium p-6">
+                  <template v-if="errorTypeMore === 'login'">
+                    Vui lòng <button @click="errorActionMore" class="action-button">Đăng Nhập</button> để xem thêm nghề nghiệp.
+                  </template>
+                  <template v-else-if="errorTypeMore === 'topup'">
+                    Không đủ token để xem thêm nghề nghiệp. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                  </template>
+                  <template v-else>
+                    {{ errorMessageMore }}
+                  </template>
+                </div>
+                <div v-else-if="!isContentAccessibleMore" class="text-center p-6">
+                  <template v-if="!userStore.isAuthenticated">
+                    <p class="text-red-600 font-medium mb-4">
+                      Vui lòng <button @click="errorActionMore" class="action-button">Đăng Nhập</button> để xem thêm nghề nghiệp.
+                    </p>
+                  </template>
+                  <template v-else-if="userStore.isAuthenticated && !hasSufficientTokensMore">
+                    <p class="text-red-600 font-medium mb-4">
+                      Không đủ token để xem thêm nghề nghiệp. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                    </p>
+                  </template>
+                  <template v-else>
+                    <button @click="loadMoreCareers" class="action-button">
+                      Xem thêm nghề nghiệp phù hợp (Cần {{ tokenCostMore }} token)
+                    </button>
+                  </template>
+                </div>
               </div>
             </div>
-
-            <!-- Lời khuyên -->
-            <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
-              <h3 class="text-lg font-semibold text-purple-700 flex items-center">
-                <span class="bg-purple-100 rounded-full p-2 mr-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 text-purple-600"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </span>
-                Lời khuyên thực tế
-              </h3>
-              <p class="text-gray-600 mt-2 whitespace-pre-wrap">{{ result.practicalAdvice }}</p>
-            </div>
           </div>
-        </transition>
-      </div>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { toast } from 'vue3-toastify';
 import { useProtectedContent } from '~/composables/useProtectedContent';
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '~/stores/user';
+import { useRouter } from 'vue-router';
 
 definePageMeta({ layout: 'view' });
 
+const router = useRouter();
+const userStore = useUserStore();
 const formData = ref({
   name: '',
   birthdate: '',
-  currentJob: ''
+  currentJob: '',
 });
 const result = ref(null);
 const loading = ref(false);
@@ -266,17 +236,129 @@ const loadingMore = ref(false);
 const errors = ref({
   name: '',
   birthdate: '',
-  general: ''
+  general: '',
 });
-const tokenCost = ref(15);
-const tokenCostMore = ref(5);
+const tokenCost = ref(30);
+const tokenCostMore = ref(10);
 const maxSuggestions = ref(12);
 const description = 'Access to career guidance based on numerology';
-const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, errorAction } = useProtectedContent(tokenCost.value, description);
-const hasSufficientTokensMore = ref(null);
-const isLoggedIn = ref(false);
-let handleAction = () => {};
-const userStore = useUserStore();
+const {
+  isLoading,
+  errorMessage,
+  errorType,
+  isContentAccessible,
+  hasSufficientTokens,
+  checkAuthAndAccess,
+  performAction,
+  errorAction,
+  navigateToTopup: navigateToTopupMain,
+} = useProtectedContent(tokenCost.value, description);
+const {
+  isLoading: isLoadingMore,
+  errorMessage: errorMessageMore,
+  errorType: errorTypeMore,
+  isContentAccessible: isContentAccessibleMore,
+  hasSufficientTokens: hasSufficientTokensMore,
+  checkAuthAndAccess: checkAuthAndAccessMore,
+  performAction: performActionMore,
+  errorAction: errorActionMore,
+  navigateToTopup: navigateToTopupMore,
+} = useProtectedContent(tokenCostMore.value, 'Load more career suggestions');
+
+// Hàm điều hướng đến trang nạp token
+const navigateToTopup = () => {
+  if (process.client) {
+    console.log('Navigating to /nap-token');
+    try {
+      router.push('/nap-token').catch((err) => {
+        console.error('Navigation error:', err);
+        toast.error('Không thể điều hướng đến trang nạp token. Vui lòng thử lại.', { position: 'top-center' });
+      });
+    } catch (err) {
+      console.error('Error in navigateToTopup:', err);
+      toast.error('Có lỗi khi điều hướng. Vui lòng kiểm tra lại.', { position: 'top-center' });
+    }
+  } else {
+    console.warn('navigateToTopup called on server-side, ignoring.');
+  }
+};
+
+// Phần không bảo vệ (Tiêu đề, mô tả, form nhập thông tin)
+const introSection = computed(() => [
+  {
+    title: 'Định Hướng Nghề Nghiệp',
+    description: 'Khám phá nghề nghiệp phù hợp với tính cách và năng lực của bạn',
+    type: 'header',
+  },
+  {
+    title: 'Nhập thông tin cá nhân',
+    type: 'form',
+  },
+]);
+
+// Phần được bảo vệ (Kết quả định hướng nghề nghiệp)
+const protectedSections = computed(() => {
+  if (!result.value) return [];
+  return [
+    {
+      title: 'Định hướng nghề nghiệp',
+      type: 'overview',
+      items: [
+        {
+          title: 'Mục tiêu nghề nghiệp',
+          content: result.value.careerGoals,
+          iconClass: 'w-5 h-5 text-purple-500 mr-2',
+          iconPath: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+        },
+        {
+          title: 'Đam mê và động lực',
+          content: result.value.passionAndMotivation,
+          iconClass: 'w-5 h-5 text-green-500 mr-2',
+          iconPath: 'M5 13l4 4L19 7',
+        },
+        {
+          title: 'Phong cách làm việc',
+          content: result.value.workStyle,
+          iconClass: 'w-5 h-5 text-blue-500 mr-2',
+          iconPath: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 1.857h10M12 4v8m-8 8h16',
+        },
+        {
+          title: 'Con đường dài hạn',
+          content: result.value.longTermPath,
+          iconClass: 'w-5 h-5 text-yellow-500 mr-2',
+          iconPath: 'M13 10V3L4 14h7v7l9-11h-7z',
+        },
+        ...(formData.value.currentJob
+          ? [
+              {
+                title: 'Phân tích công việc hiện tại',
+                content: result.value.currentJobAnalysis,
+                iconClass: 'w-5 h-5 text-indigo-500 mr-2',
+                iconPath: 'M9 17v-2m0-2v-2m0-2V7m6 10v-2m0-2v-2m0-2V7m-9 10h12a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z',
+              },
+            ]
+          : []),
+      ],
+    },
+    {
+      title: 'Đề xuất nghề nghiệp',
+      type: 'suggestions',
+      suggestions: result.value.careerSuggestions || [],
+    },
+    {
+      title: 'Lời khuyên thực tế',
+      type: 'advice',
+      items: [
+        {
+          title: 'Lời khuyên thực tế',
+          content: result.value.practicalAdvice,
+          iconClass: 'w-5 h-5 text-purple-600 mr-2',
+          iconPath: 'M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z',
+        },
+      ],
+    },
+  ];
+});
 
 // Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
 const formatDateToDDMMYYYY = (dateStr) => {
@@ -304,71 +386,26 @@ const fetchUserData = async () => {
     formData.value.birthdate = birthdate ? formatDateToDDMMYYYY(birthdate.split('T')[0]) : '';
   } catch (err) {
     console.error('Error fetching user data:', err);
-    errorMessage.value = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
-    toast.error(errorMessage.value, { position: 'top-center' });
-  }
-};
-
-// Kiểm tra số dư token cho nút "Xem thêm" (5 token) và nút "Xem định hướng" (15 token)
-const checkTokens = async () => {
-  console.log('checkTokens: Checking token balance for both actions');
-  
-  // Kiểm tra số dư cho nút "Xem thêm" (5 token)
-  console.log('checkTokens: Checking token balance for Load More, tokenCostMore:', tokenCostMore.value);
-  const moreTokensResponse = await checkAuthAndAccess(tokenCostMore.value, 'Load more career suggestions');
-  if (!moreTokensResponse.isLoggedIn) {
-    console.log('checkTokens: User not logged in');
-    hasSufficientTokensMore.value = false;
-    isLoggedIn.value = false;
-    return;
-  }
-  const balanceMoreResponse = await checkTokenBalance(tokenCostMore.value);
-  hasSufficientTokensMore.value = balanceMoreResponse.sufficient;
-  console.log('checkTokens: hasSufficientTokensMore:', hasSufficientTokensMore.value);
-
-  // Kiểm tra số dư cho nút "Xem định hướng" (15 token)
-  console.log('checkTokens: Checking token balance for Career Guidance, tokenCost:', tokenCost.value);
-  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess(tokenCost.value, description);
-  isLoggedIn.value = authStatus;
-  handleAction = action;
-  const balanceResponse = await checkTokenBalance(tokenCost.value);
-  hasSufficientTokens.value = balanceResponse.sufficient;
-  console.log('checkTokens: hasSufficientTokens:', hasSufficientTokens.value);
-};
-
-// Hàm kiểm tra số dư token (tái sử dụng từ useProtectedContent để tránh lặp code)
-const checkTokenBalance = async (requiredTokens) => {
-  try {
-    console.log('checkTokenBalance: Calling /api/check-token-balance with userId:', userStore.user.id, 'requiredTokens:', requiredTokens);
-    const response = await fetch('/api/check-token-balance', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-username': encodeURIComponent(userStore.user.email)
-      },
-      body: JSON.stringify({
-        userId: userStore.user.id,
-        tokenCost: requiredTokens
-      })
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error: ${response.status}`);
-    }
-    const result = await response.json();
-    console.log('checkTokenBalance: Result:', result);
-    return result;
-  } catch (error) {
-    console.error('checkTokenBalance: Error:', error);
-    return {
-      success: false,
-      message: 'Lỗi khi kiểm tra số dư token: ' + error.message
-    };
+    errors.value.general = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
+    toast.error(errors.value.general, { position: 'top-center' });
   }
 };
 
 // Khởi tạo trạng thái đăng nhập và kiểm tra token
 const initializeAuth = async () => {
-  await checkTokens();
+  console.log('Initializing auth for CareerGuidance...');
+  try {
+    await userStore.initialize();
+    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
+    await checkAuthAndAccess();
+    await checkAuthAndAccessMore();
+    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
+    console.log('Auth checked for more, isContentAccessibleMore:', isContentAccessibleMore.value, 'hasSufficientTokensMore:', hasSufficientTokensMore.value);
+  } catch (err) {
+    console.error('Lỗi khi khởi tạo auth:', err);
+    errors.value.general = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
+    toast.error(errors.value.general, { position: 'top-center' });
+  }
 };
 
 // Load dữ liệu khi component được mount
@@ -394,7 +431,7 @@ const validateForm = () => {
   errors.value = {
     name: '',
     birthdate: '',
-    general: ''
+    general: '',
   };
   let isValid = true;
 
@@ -429,22 +466,36 @@ const validateForm = () => {
   return isValid;
 };
 
+// Hàm lấy định hướng nghề nghiệp
 const getCareerGuidance = async () => {
-  if (!validateForm()) return;
+  if (!process.client) {
+    console.warn('getCareerGuidance called on server-side, ignoring.');
+    return;
+  }
+  if (!validateForm()) {
+    toast.error('Vui lòng kiểm tra lại thông tin nhập', { position: 'top-center' });
+    return;
+  }
 
   if (isContentAccessible.value) {
     await fetchCareerGuidance();
   } else {
-    const { success } = await handleAction();
-    if (success || isContentAccessible.value) {
-      await fetchCareerGuidance();
-    } else {
-      toast.error(errorMessage.value, { position: 'top-center' });
+    try {
+      await performAction();
+      if (isContentAccessible.value) {
+        await fetchCareerGuidance();
+      } else {
+        toast.error(errorMessage.value, { position: 'top-center' });
+      }
+    } catch (err) {
+      console.error('Error in performAction:', err);
+      toast.error(errorMessage.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
     }
   }
 };
 
-async function fetchCareerGuidance() {
+// Hàm gọi API lấy định hướng nghề nghiệp
+const fetchCareerGuidance = async () => {
   loading.value = true;
   errors.value.general = '';
   try {
@@ -454,78 +505,90 @@ async function fetchCareerGuidance() {
       method: 'POST',
       headers: {
         'x-username': encodeURIComponent(username),
-        'Content-Type': 'application/json; charset=utf-8'
+        'Content-Type': 'application/json; charset=utf-8',
       },
-      body: { ...formData.value, numSuggestions: 3, previousJobs: [] }
+      body: { ...formData.value, numSuggestions: 3, previousJobs: [] },
     });
     console.log('Response from /api/numerology/career:', response);
     result.value = response;
     toast.success('Định hướng nghề nghiệp đã hoàn tất!', { position: 'top-center' });
-    // Scroll to result
     setTimeout(() => {
-      const resultElement = document.querySelector('[v-if="result && isContentAccessible"]');
+      const resultElement = document.querySelector('[v-if="isContentAccessible && result"]');
       if (resultElement) {
         resultElement.scrollIntoView({ behavior: 'smooth' });
       }
     }, 100);
+    await checkAuthAndAccess();
+    await checkAuthAndAccessMore();
   } catch (error) {
     console.error('Error in fetchCareerGuidance:', error);
-    errorMessage.value = error.data?.message || 'Có lỗi xảy ra khi lấy định hướng nghề nghiệp!';
-    toast.error(errorMessage.value, { position: 'top-center' });
+    errors.value.general = error.data?.message || 'Có lỗi xảy ra khi lấy định hướng nghề nghiệp!';
+    toast.error(errors.value.general, { position: 'top-center' });
   } finally {
     loading.value = false;
   }
-}
+};
 
-async function loadMoreCareers() {
+// Hàm tải thêm nghề nghiệp
+const loadMoreCareers = async () => {
+  if (!process.client) {
+    console.warn('loadMoreCareers called on server-side, ignoring.');
+    return;
+  }
   if (!result.value) return;
 
-  console.log('loadMoreCareers: Checking token cost for Load More, tokenCostMore:', tokenCostMore.value);
-  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess(tokenCostMore.value, 'Load more career suggestions');
-  if (!authStatus) {
-    console.log('loadMoreCareers: User not logged in, triggering login action');
-    action();
-    return;
+  if (isContentAccessibleMore.value) {
+    await fetchMoreCareers();
+  } else {
+    try {
+      await performActionMore();
+      if (isContentAccessibleMore.value) {
+        await fetchMoreCareers();
+      } else {
+        toast.error(errorMessageMore.value, { position: 'top-center' });
+      }
+    } catch (err) {
+      console.error('Error in performActionMore:', err);
+      toast.error(errorMessageMore.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
+    }
   }
+};
 
-  const { success } = await action();
-  if (!success) {
-    console.log('loadMoreCareers: Token deduction failed, error:', errorMessage.value);
-    toast.error(errorMessage.value, { position: 'top-center' });
-    return;
-  }
-
+// Hàm gọi API tải thêm nghề nghiệp
+const fetchMoreCareers = async () => {
   loadingMore.value = true;
   try {
     const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
     const numSuggestions = Math.min(result.value.careerSuggestions.length + 3, maxSuggestions.value);
-    const previousJobs = result.value.careerSuggestions.map(s => s.job);
+    const previousJobs = result.value.careerSuggestions.map((s) => s.job);
     console.log('Sending request to /api/numerology/career for more suggestions, numSuggestions:', numSuggestions);
     const response = await $fetch('/api/numerology/career', {
       method: 'POST',
       headers: {
         'x-username': encodeURIComponent(username),
-        'Content-Type': 'application/json; charset=utf-8'
+        'Content-Type': 'application/json; charset=utf-8',
       },
-      body: { ...formData.value, numSuggestions, previousJobs }
+      body: { ...formData.value, numSuggestions, previousJobs },
     });
     console.log('Response from /api/numerology/career (more suggestions):', response);
     result.value = response;
-    toast.success(`Đã tải thêm ${response.careerSuggestions.length - (result.value.careerSuggestions.length - 3)} nghề nghiệp phù hợp!`, { position: 'top-center' });
-    // Cập nhật lại cả hasSufficientTokens và hasSufficientTokensMore sau khi trừ token
-    await checkTokens();
+    toast.success(
+      `Đã tải thêm ${response.careerSuggestions.length - (result.value.careerSuggestions.length - 3)} nghề nghiệp phù hợp!`,
+      { position: 'top-center' }
+    );
+    await checkAuthAndAccess();
+    await checkAuthAndAccessMore();
   } catch (error) {
     console.error('Error loading more careers:', error);
-    errorMessage.value = error.data?.message || 'Có lỗi khi tải thêm nghề nghiệp!';
-    toast.error(errorMessage.value, { position: 'top-center' });
+    errors.value.general = error.data?.message || 'Có lỗi khi tải thêm nghề nghiệp!';
+    toast.error(errors.value.general, { position: 'top-center' });
   } finally {
     loadingMore.value = false;
   }
-}
+};
 </script>
 
 <style scoped>
-/* Custom transitions */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
@@ -545,5 +608,9 @@ async function loadMoreCareers() {
 .slide-fade-leave-to {
   transform: translateY(10px);
   opacity: 0;
+}
+
+.action-button {
+  @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap mx-2;
 }
 </style>
