@@ -1,11 +1,13 @@
 <template>
-  <div class="mx-auto container p-6 bg-white rounded-xl shadow-lg sm:p-ier4">
+  <div class="mx-auto container p-6 bg-white rounded-xl shadow-lg sm:p-4">
     <!-- Header với thông tin metadata -->
     <div class="mb-8 p-4 bg-gradient-to-r from-teal-50 to-blue-50 rounded-lg border border-teal-100">
       <h1 class="text-2xl font-bold text-teal-700">Thần số học hôm nay</h1>
       <p class="text-teal-600 mt-1">Ngày: {{ currentDate }}</p>
       <p v-if="dailyPrediction" class="text-teal-600 mt-1">Chủ đề: {{ universalTheme }}</p>
     </div>
+
+    <!-- Số ngày cá nhân -->
     <div class="mb-10 bg-gradient-to-r from-teal-50 to-blue-50 p-8 rounded-2xl border border-teal-100 shadow-sm text-center">
       <div class="flex flex-col items-center">
         <div class="relative">
@@ -68,7 +70,7 @@
       </div>
     </section>
 
-    <!-- Phần thông báo lỗi -->
+    <!-- Phần thông báo lỗi, trạng thái tải, hoặc nút hành động -->
     <div v-if="isLoading" class="flex justify-center">
       <svg
         class="animate-spin h-8 w-8 text-teal-600"
@@ -86,17 +88,27 @@
     </div>
     <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
       <template v-if="errorType === 'login'">
-        Vui lòng
-        <button @click="errorAction" class="action-button">Đăng Nhập</button>
-        để sử dụng tính năng này.
+        Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để sử dụng tính năng này.
       </template>
       <template v-else-if="errorType === 'topup'">
-        Không đủ token cho tính năng này. Hãy
-        <button @click="errorAction" class="action-button">Nạp thêm token</button>
-        để trải nghiệm đầy đủ tính năng nhé!
+        Không đủ token cho tính năng này. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
       </template>
       <template v-else>
         {{ errorMessage }}
+      </template>
+    </div>
+    <div v-else-if="error" class="text-red-600 text-center font-medium p-6">
+      {{ error }}
+    </div>
+    <div v-else-if="!isContentAccessible" class="text-center p-6">
+      <template v-if="!userStore.isAuthenticated">
+        <p class="text-red-600 font-medium mb-4">Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để sử dụng tính năng này.</p>
+      </template>
+      <template v-else-if="userStore.isAuthenticated && !hasSufficientTokens">
+        <p class="text-red-600 font-medium mb-4">Không đủ token cho tính năng này. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!</p>
+      </template>
+      <template v-else>
+        <button @click="performAction" class="action-button">Xem dự đoán chi tiết (Cần {{ tokenCost }} token)</button>
       </template>
     </div>
     <div v-else-if="isContentAccessible && dailyPrediction" class="space-y-10">
@@ -373,46 +385,26 @@
         </div>
       </section>
     </div>
-    <div v-else class="text-center p-6">
-      <button
-        v-if="hasSufficientTokens"
-        @click="handleAction"
-        class="action-button"
-      >
-        {{ isLoggedIn ? `Xem tiếp (Cần ${tokenCost} tokens)` : 'Đăng nhập để xem tiếp' }}
-      </button>
-      <p v-else class="text-gray-600 mt-2">
-        Không đủ token cho tính năng này. Hãy
-        <button @click="errorAction" class="action-button">Nạp thêm token</button>
-        để trải nghiệm đầy đủ tính năng nhé!
-      </p>
-    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, watch } from 'vue';
+import { useRouter } from 'vue-router';
 import personalDayData from '~/data/personal-day-data.js';
 import { useProtectedContent } from '~/composables/useProtectedContent';
-import { useTokenStore } from '~/stores/token';
+import { useUserStore } from '~/stores/user';
 
 const props = defineProps({
   birthDate: { type: String, required: true },
 });
 
+const router = useRouter();
 const tokenCost = ref(10);
 const description = 'Access to daily numerology prediction';
-const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, errorAction } = useProtectedContent(tokenCost.value, description);
+const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, performAction, errorAction } = useProtectedContent(tokenCost.value, description);
 
-const tokenStore = useTokenStore();
-const isLoggedIn = computed(() => tokenStore.isLoggedIn);
-const handleAction = ref(async () => {
-  if (!tokenStore.isLoggedIn) {
-    await tokenStore.login();
-  }
-  await checkAuthAndAccess();
-});
-
+const userStore = useUserStore();
 const isInitialLoad = ref(true);
 const error = ref('');
 const dailyPrediction = ref(null);
@@ -425,6 +417,12 @@ const currentDate = computed(() => {
   const today = new Date();
   return `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
 });
+
+// Hàm điều hướng đến trang nạp token
+const navigateToTopup = () => {
+  console.log('Navigating to /nap-token');
+  router.push('/nap-token');
+};
 
 // Hàm tính Số đường đời
 const calculateLifePath = (birthDate) => {
@@ -452,9 +450,9 @@ const calculatePersonalDay = (birthDate, currentDate) => {
 // Khởi tạo trạng thái đăng nhập và kiểm tra token
 const initializeAuth = async () => {
   console.log('Initializing auth for DailyNumerology...');
-  await tokenStore.initialize();
+  await userStore.initialize();
   await checkAuthAndAccess();
-  console.log('Auth initialized, isLoggedIn:', tokenStore.isLoggedIn, 'tokenBalance:', tokenStore.tokenBalance);
+  console.log('Auth initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
 };
 
 // Tải dự đoán khi birthDate thay đổi

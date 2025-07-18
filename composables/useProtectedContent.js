@@ -1,63 +1,87 @@
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { useTokenStore } from '~/stores/token';
+import { useUserStore } from '~/stores/user';
 
 export function useProtectedContent(tokenCost, description) {
+  const userStore = useUserStore();
+  const router = useRouter();
   const isLoading = ref(false);
   const errorMessage = ref('');
   const errorType = ref('');
   const isContentAccessible = ref(false);
-  const hasSufficientTokens = ref(true);
 
-  const router = useRouter();
-  const tokenStore = useTokenStore();
+  // Kiểm tra số dư token đủ để truy cập nội dung
+  const hasSufficientTokens = computed(() => userStore.user?.tokens >= tokenCost);
 
+  // Kiểm tra quyền truy cập (chỉ kiểm tra, không trừ token, không đặt isContentAccessible)
   const checkAuthAndAccess = async () => {
     isLoading.value = true;
     errorMessage.value = '';
     errorType.value = '';
-    isContentAccessible.value = false;
 
     try {
-      await tokenStore.initialize();
+      await userStore.initialize();
 
-      if (!tokenStore.isLoggedIn) {
+      if (!userStore.isAuthenticated) {
         errorMessage.value = 'Vui lòng Đăng Nhập để sử dụng tính năng này.';
         errorType.value = 'login';
-        hasSufficientTokens.value = false;
         return { isLoggedIn: false, action: () => router.push('/dang-nhap') };
       }
 
-      if (tokenStore.tokenBalance < tokenCost) {
-        errorMessage.value = 'Không đủ token cho tính năng này. Hãy Nạp thêm token để trải nghiệm đầy đủ tính năng nhé!';
+      const tokenCheck = await userStore.checkTokenBalance(tokenCost);
+      if (!tokenCheck.success) {
+        errorMessage.value = tokenCheck.message || 'Không đủ token cho tính năng này. Hãy Nạp thêm token!';
         errorType.value = 'topup';
-        hasSufficientTokens.value = false;
         return { isLoggedIn: true, action: () => router.push('/nap-token') };
       }
 
-      const success = tokenStore.deductTokens(tokenCost);
-      if (success) {
-        isContentAccessible.value = true;
-        console.log(`Access granted for ${description}. Tokens deducted: ${tokenCost}`);
-      } else {
-        errorMessage.value = 'Không đủ token cho tính năng này. Hãy Nạp thêm token để trải nghiệm đầy đủ tính năng nhé!';
-        errorType.value = 'topup';
-        hasSufficientTokens.value = false;
-        return { isLoggedIn: true, action: () => router.push('/nap-token') };
-      }
-
+      // Không đặt isContentAccessible ở đây, chờ performAction
       return { isLoggedIn: true, action: () => {} };
     } catch (error) {
       console.error('Error in checkAuthAndAccess:', error);
-      errorMessage.value = 'Lỗi khi kiểm tra số dư token. Vui lòng thử lại!';
+      errorMessage.value = 'Lỗi khi kiểm tra quyền truy cập. Vui lòng thử lại!';
       errorType.value = 'generic';
-      hasSufficientTokens.value = false;
-      return { isLoggedIn: tokenStore.isLoggedIn, action: () => {} };
+      return { isLoggedIn: userStore.isAuthenticated, action: () => {} };
     } finally {
       isLoading.value = false;
     }
   };
 
+  // Thực hiện hành động trừ token và đặt isContentAccessible
+  const performAction = async () => {
+    isLoading.value = true;
+    errorMessage.value = '';
+    errorType.value = '';
+
+    try {
+      if (!userStore.isAuthenticated) {
+        errorMessage.value = 'Vui lòng Đăng Nhập để sử dụng tính năng này.';
+        errorType.value = 'login';
+        return { isLoggedIn: false, action: () => router.push('/dang-nhap') };
+      }
+
+      const deductResult = await userStore.deductTokens(tokenCost, description);
+      if (!deductResult.success) {
+        errorMessage.value = deductResult.message || 'Không đủ token để thực hiện hành động. Hãy Nạp thêm token!';
+        errorType.value = 'topup';
+        return { isLoggedIn: true, action: () => router.push('/nap-token') };
+      }
+
+      // Chỉ đặt isContentAccessible thành true sau khi trừ token thành công
+      isContentAccessible.value = true;
+      console.log(`Action performed for ${description}. Tokens deducted: ${tokenCost}, New balance: ${userStore.user.tokens}`);
+      return { isLoggedIn: true, action: () => {} };
+    } catch (error) {
+      console.error('Error in performAction:', error);
+      errorMessage.value = 'Lỗi khi thực hiện hành động. Vui lòng thử lại!';
+      errorType.value = 'generic';
+      return { isLoggedIn: userStore.isAuthenticated, action: () => {} };
+    } finally {
+      isLoading.value = false;
+    }
+  };
+
+  // Xử lý hành động khi có lỗi
   const errorAction = () => {
     if (errorType.value === 'login') {
       router.push('/dang-nhap');
@@ -73,6 +97,7 @@ export function useProtectedContent(tokenCost, description) {
     isContentAccessible,
     hasSufficientTokens,
     checkAuthAndAccess,
+    performAction,
     errorAction,
   };
 }
