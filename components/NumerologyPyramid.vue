@@ -1,79 +1,126 @@
+
 <template>
   <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
     <div class="p-6 space-y-6">
-      <!-- Tiêu đề (không bảo vệ) -->
-      <div class="text-center mb-8">
-        <h2 class="text-4xl font-bold text-teal-700 mb-3">Kim Tự Tháp Thần Số Học</h2>
+      <!-- Phần không bảo vệ (Tiêu đề và mô tả) -->
+      <div v-for="section in introSection" :key="section.title" class="text-center mb-8">
+        <h2 class="text-4xl font-bold text-teal-700 mb-3">{{ section.title }}</h2>
         <div class="w-24 h-1 bg-teal-500 mx-auto mb-4 rounded-full"></div>
         <div class="text-lg text-gray-600 max-w-3xl mx-auto space-y-3 text-left px-4">
-          <p>Kim tự tháp thần số học là công cụ mạnh mẽ giúp bạn khám phá 4 giai đoạn đỉnh cao quan trọng trong cuộc đời, mỗi giai đoạn kéo dài khoảng 9 năm, cùng những thử thách tương ứng bạn cần vượt qua.</p>
-          
-          <p>Mỗi đỉnh kim tự tháp đại diện cho:</p>
-          <ul class="list-disc pl-5 space-y-1">
-            <li><span class="font-medium">Đỉnh cao 1 (27-36 tuổi):</span> Nền tảng sự nghiệp và cá nhân</li>
-            <li><span class="font-medium">Đỉnh cao 2 (36-45 tuổi):</span> Phát triển bản thân và mối quan hệ</li>
-            <li><span class="font-medium">Đỉnh cao 3 (45-54 tuổi):</span> Đóng góp cho xã hội và cộng đồng</li>
-            <li><span class="font-medium">Đỉnh cao 4 (54 tuổi trở lên):</span> Tổng kết và để lại di sản</li>
-          </ul>
-          
-          <p class="font-medium">Cấu trúc kim tự tháp gồm 3 lớp chính:</p>
-          <ul class="list-disc pl-5 space-y-1">
-            <li><span class="font-medium">Nền móng:</span> Ngày, tháng, năm sinh (dữ liệu đầu vào)</li>
-            <li><span class="font-medium">Đỉnh tháp:</span> 4 đỉnh cao tương ứng 4 giai đoạn</li>
-            <li><span class="font-medium">Đáy tháp:</span> Thử thách cần vượt qua ở mỗi giai đoạn</li>
-          </ul>
-          
-          <p>Bằng cách phân tích các con số từ ngày sinh của bạn, kim tự tháp này sẽ tiết lộ:</p>
-          <ul class="list-disc pl-5 space-y-1">
-            <li>Thời điểm vàng để phát triển sự nghiệp</li>
-            <li>Giai đoạn thuận lợi cho các mối quan hệ</li>
-            <li>Thời điểm cần tập trung vào đời sống tinh thần</li>
-            <li>Những bài học cuộc sống quan trọng</li>
-          </ul>
+          <div v-for="(paragraph, index) in section.content" :key="index">
+            <p v-if="typeof paragraph === 'string'" v-html="paragraph"></p>
+            <ul v-else-if="Array.isArray(paragraph)" class="list-disc pl-5 space-y-1">
+              <li v-for="(item, i) in paragraph" :key="i" v-html="item"></li>
+            </ul>
+          </div>
         </div>
       </div>
 
-      <!-- Nội dung bảo vệ -->
+      <!-- Phần thông báo lỗi, trạng thái tải, hoặc nội dung được bảo vệ -->
       <transition name="fade-slide">
-        <div v-if="isLoading" class="text-center py-12">
-          <div class="inline-flex items-center">
-            <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            <span class="text-gray-600">Đang kiểm tra quyền truy cập...</span>
+        <div>
+          <!-- Trạng thái đang tải -->
+          <div v-if="isLoading" class="text-center py-12">
+            <div class="inline-flex items-center">
+              <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span class="text-gray-600">Đang kiểm tra quyền truy cập...</span>
+            </div>
           </div>
-        </div>
-        <div v-else-if="errorMessage" class="text-center py-12 bg-red-50 rounded-lg">
-          <svg class="h-12 w-12 mx-auto text-red-500 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-          </svg>
-          <h4 class="text-red-600 font-medium text-lg">{{ errorMessage }}</h4>
-          <p v-if="hasSufficientTokens === false" class="text-gray-600 mt-1">Bạn không có đủ token. Vui lòng nạp thêm.</p>
-        </div>
-        <div v-else-if="loading" class="text-center py-12">
-          <div class="inline-flex items-center">
-            <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+
+          <!-- Lỗi đăng nhập -->
+          <div v-else-if="errorMessage && errorType === 'login'" class="text-center py-12 bg-red-50 rounded-lg">
+            <svg class="h-12 w-12 mx-auto text-red-500 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
             </svg>
-            <span class="text-gray-600">Đang tải dữ liệu kim tự tháp...</span>
+            <h4 class="text-red-600 font-medium text-lg">Vui lòng đăng nhập để xem tiếp</h4>
+            <button @click="errorAction" class="mt-4 px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap">
+              Đăng nhập
+            </button>
           </div>
-        </div>
-        <div v-else-if="!peaksData || !peaksData.length" class="text-center py-12 bg-red-50 rounded-lg">
-          <svg class="h-12 w-12 mx-auto text-red-500 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-          </svg>
-          <h4 class="text-red-600 font-medium text-lg">Lỗi dữ liệu</h4>
-          <p class="text-gray-600 mt-1">Vui lòng nhập ngày sinh hợp lệ để xem kim tự tháp.</p>
-        </div>
-        <div v-else>
-          <transition name="fade-slide">
-            <div v-if="isContentAccessible">
+
+          <!-- Lỗi thiếu token -->
+          <div v-else-if="errorMessage && errorType === 'topup'" class="text-center py-12 bg-red-50 rounded-lg">
+            <svg class="h-12 w-12 mx-auto text-red-500 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+            <h4 class="text-red-600 font-medium text-lg">Không đủ token để xem tiếp</h4>
+            <p class="text-gray-600 mt-1">Cần {{ tokenCost }} token. Vui lòng nạp thêm.</p>
+            <button @click="navigateToTopup" class="mt-4 px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap">
+              Nạp thêm token
+            </button>
+          </div>
+
+          <!-- Lỗi chung -->
+          <div v-else-if="errorMessage" class="text-center py-12 bg-red-50 rounded-lg">
+            <svg class="h-12 w-12 mx-auto text-red-500 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+            <h4 class="text-red-600 font-medium text-lg">{{ errorMessage }}</h4>
+          </div>
+
+          <!-- Đang tải dữ liệu kim tự tháp -->
+          <div v-else-if="loading" class="text-center py-12">
+            <div class="inline-flex items-center">
+              <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span class="text-gray-600">Đang tải dữ liệu kim tự tháp...</span>
+            </div>
+          </div>
+
+          <!-- Lỗi dữ liệu -->
+          <div v-else-if="!peaksData || !peaksData.length" class="text-center py-12 bg-red-50 rounded-lg">
+            <svg class="h-12 w-12 mx-auto text-red-500 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+            <h4 class="text-red-600 font-medium text-lg">Lỗi dữ liệu</h4>
+            <p class="text-gray-600 mt-1">Vui lòng nhập ngày sinh hợp lệ để xem kim tự tháp.</p>
+          </div>
+
+          <!-- Yêu cầu đăng nhập hoặc mở khóa nội dung -->
+          <div v-else-if="!isContentAccessible" class="text-center py-12">
+            <div v-if="!userStore.isAuthenticated">
+              <p class="text-gray-600 mb-4">Vui lòng đăng nhập để xem biểu đồ và giải thích chi tiết.</p>
+              <button
+                @click="errorAction"
+                class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
+                :disabled="isLoading"
+              >
+                Đăng nhập để xem tiếp
+              </button>
+            </div>
+            <div v-else-if="!hasSufficientTokens">
+              <p class="text-red-600 font-medium mb-4">Không đủ token để xem tiếp. Cần {{ tokenCost }} token.</p>
+              <button
+                @click="navigateToTopup"
+                class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
+                :disabled="isLoading"
+              >
+                Nạp thêm token
+              </button>
+            </div>
+            <div v-else>
+              <button
+                @click="performAction"
+                class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
+                :disabled="isLoading"
+              >
+                Xem tiếp (Cần {{ tokenCost }} token)
+              </button>
+            </div>
+          </div>
+
+          <!-- Nội dung được bảo vệ (Biểu đồ SVG và Giải thích chi tiết) -->
+          <div v-else class="space-y-8">
+            <div v-for="section in protectedSections" :key="section.title">
               <!-- Biểu đồ SVG -->
-              <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+              <div v-if="section.type === 'svg'" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
                 <div class="text-center mb-8">
-                  <h3 class="text-2xl font-bold text-teal-700 mb-2">Biểu Đồ Thể Hiện 4 Giai Đoạn Đỉnh Cao Kèm Thử Thách Tương Ứng</h3>
+                  <h3 class="text-2xl font-bold text-teal-700 mb-2">{{ section.title }}</h3>
                   <div class="w-24 h-1 bg-teal-300 mx-auto rounded-full"></div>
                 </div>
                 <div class="flex justify-center items-center w-full h-auto">
@@ -112,23 +159,23 @@
                       <circle r="20" fill="#b96cc4" />
                       <text y="5" text-anchor="middle" x="0">{{ peaksData[3].peak }}</text>
                       <text y="35" text-anchor="middle" x="0">{{ peaksData[3].age_range.split(' ')[0] }}</text>
-                      <text y="50" text-anchor="middle" x="0">({{ peaksData[3].age_range.match(/\d{4}–\d{4}/)[0] }})</text>
+                      <text y="50" text-anchor="middle" x="0">({{ peaksData[3].age_range.match(/\d{4}–\d{4}/)?.[0] || '' }})</text>
                     </g>
 
-                    <!-- Peak Stage 4 -->
+                    <!-- Peak Stage 3 -->
                     <g class="node" transform="translate(350,80)">
                       <circle r="20" fill="#b96cc4" />
                       <text y="5" text-anchor="middle" x="0">{{ peaksData[2].peak }}</text>
                       <text y="35" text-anchor="middle" x="0">{{ peaksData[2].age_range.split(' ')[0] }}</text>
-                      <text y="50" text-anchor="middle" x="0">({{ peaksData[2].age_range.match(/\d{4}–\d{4}/)[0] }})</text>
+                      <text y="50" text-anchor="middle" x="0">({{ peaksData[2].age_range.match(/\d{4}–\d{4}/)?.[0] || '' }})</text>
                     </g>
 
-                    <!-- Peak Stage 3 -->
+                    <!-- Peak Stage 1 -->
                     <g class="node" transform="translate(250,140)">
                       <circle r="20" fill="#b96cc4" />
                       <text y="5" text-anchor="middle" x="0">{{ peaksData[0].peak }}</text>
                       <text y="35" text-anchor="middle" x="0">{{ peaksData[0].age_range.split(' ')[0] }}</text>
-                      <text y="50" text-anchor="middle" x="0">({{ peaksData[0].age_range.match(/\d{4}–\d{4}/)[0] }})</text>
+                      <text y="50" text-anchor="middle" x="0">({{ peaksData[0].age_range.match(/\d{4}–\d{4}/)?.[0] || '' }})</text>
                     </g>
 
                     <!-- Peak Stage 2 -->
@@ -136,7 +183,7 @@
                       <circle r="20" fill="#b96cc4" />
                       <text y="5" text-anchor="middle" x="0">{{ peaksData[1].peak }}</text>
                       <text y="35" text-anchor="middle" x="0">{{ peaksData[1].age_range.split(' ')[0] }}</text>
-                      <text y="50" text-anchor="middle" x="0">({{ peaksData[1].age_range.match(/\d{4}–\d{4}/)[0] }})</text>
+                      <text y="50" text-anchor="middle" x="0">({{ peaksData[1].age_range.match(/\d{4}–\d{4}/)?.[0] || '' }})</text>
                     </g>
 
                     <!-- Birth Month -->
@@ -188,15 +235,15 @@
               </div>
 
               <!-- Giải thích chi tiết -->
-              <div class="space-y-8">
+              <div v-if="section.type === 'stages'" class="space-y-8">
                 <div class="text-center mb-8">
-                  <h3 class="text-2xl font-bold text-teal-700 mb-2">Giải Thích 4 Giai Đoạn Đỉnh Cao</h3>
+                  <h3 class="text-2xl font-bold text-teal-700 mb-2">{{ section.title }}</h3>
                   <div class="w-24 h-1 bg-teal-300 mx-auto rounded-full"></div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div
-                    v-for="(stage, index) in peaksData"
+                    v-for="(stage, index) in section.stages"
                     :key="index"
                     class="relative bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all hover:shadow-lg"
                     :style="`--i: ${index}`"
@@ -208,7 +255,7 @@
                       </div>
                       <div>
                         <h4 class="text-lg font-semibold text-gray-800">Giai đoạn {{ stage.age_range.split(' ')[0] }}</h4>
-                        <p class="text-sm text-gray-500 mt-1">{{ stage.age_range.match(/\(\d{4}–\d{4}\)/)[0] }}</p>
+                        <p class="text-sm text-gray-500 mt-1">{{ stage.age_range.match(/\(\d{4}–\d{4}\)/)?.[0] || '' }}</p>
                       </div>
                     </div>
 
@@ -254,16 +301,7 @@
                 </div>
               </div>
             </div>
-            <div v-else-if="!isContentAccessible" class="text-center p-6">
-              <button
-                @click="handleAction"
-                class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
-                :disabled="isLoading"
-              >
-                {{ isLoggedIn ? `Xem tiếp (Cần ${tokenCost} tokens)` : 'Đăng nhập để xem tiếp' }}
-              </button>
-            </div>
-          </transition>
+          </div>
         </div>
       </transition>
     </div>
@@ -271,10 +309,12 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { calculateLifePathNumber } from '~/utils/numerology-calculations';
 import peaksAndChallengesData from '~/data/PeaksandChallenges.json';
 import { useProtectedContent } from '~/composables/useProtectedContent';
+import { useUserStore } from '~/stores/user';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   birthDate: {
@@ -291,18 +331,60 @@ const props = defineProps({
   },
 });
 
+const router = useRouter();
+const userStore = useUserStore();
 const peaksData = ref(null);
 const loading = ref(false);
 const lifePath = ref(null);
 const birthDigits = ref({ day: null, month: null, year: null });
 
 // Protected content setup
-const tokenCost = ref(10);
+const tokenCost = ref(20); // Cập nhật chi phí thành 20 token
 const description = 'Access to numerology pyramid data';
-const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
-const isLoggedIn = ref(false);
-let handleAction = () => {};
-const isInitialLoad = ref(true);
+const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, performAction, errorAction, navigateToTopup } = useProtectedContent(tokenCost.value, description);
+
+// Phần không bảo vệ (Tiêu đề và mô tả)
+const introSection = computed(() => [
+  {
+    title: 'Kim Tự Tháp Thần Số Học',
+    content: [
+      'Kim tự tháp thần số học là công cụ mạnh mẽ giúp bạn khám phá 4 giai đoạn đỉnh cao quan trọng trong cuộc đời, mỗi giai đoạn kéo dài khoảng 9 năm, cùng những thử thách tương ứng bạn cần vượt qua.',
+      'Mỗi đỉnh kim tự tháp đại diện cho:',
+      [
+        '<span class="font-medium">Đỉnh cao 1 (27-36 tuổi):</span> Nền tảng sự nghiệp và cá nhân',
+        '<span class="font-medium">Đỉnh cao 2 (36-45 tuổi):</span> Phát triển bản thân và mối quan hệ',
+        '<span class="font-medium">Đỉnh cao 3 (45-54 tuổi):</span> Đóng góp cho xã hội và cộng đồng',
+        '<span class="font-medium">Đỉnh cao 4 (54 tuổi trở lên):</span> Tổng kết và để lại di sản',
+      ],
+      'Cấu trúc kim tự tháp gồm 3 lớp chính:',
+      [
+        '<span class="font-medium">Nền móng:</span> Ngày, tháng, năm sinh (dữ liệu đầu vào)',
+        '<span class="font-medium">Đỉnh tháp:</span> 4 đỉnh cao tương ứng 4 giai đoạn',
+        '<span class="font-medium">Đáy tháp:</span> Thử thách cần vượt qua ở mỗi giai đoạn',
+      ],
+      'Bằng cách phân tích các con số từ ngày sinh của bạn, kim tự tháp này sẽ tiết lộ:',
+      [
+        'Thời điểm vàng để phát triển sự nghiệp',
+        'Giai đoạn thuận lợi cho các mối quan hệ',
+        'Thời điểm cần tập trung vào đời sống tinh thần',
+        'Những bài học cuộc sống quan trọng',
+      ],
+    ],
+  },
+]);
+
+// Phần được bảo vệ (Biểu đồ SVG và Giải thích chi tiết)
+const protectedSections = computed(() => [
+  {
+    title: 'Biểu Đồ Thể Hiện 4 Giai Đoạn Đỉnh Cao Kèm Thử Thách Tương Ứng',
+    type: 'svg',
+  },
+  {
+    title: 'Giải Thích 4 Giai Đoạn Đỉnh Cao',
+    type: 'stages',
+    stages: peaksData.value || [],
+  },
+]);
 
 // Bảng ánh xạ mô tả
 const getPeakDescription = (peak) => {
@@ -356,11 +438,13 @@ const fetchPeaksAndChallenges = async () => {
 
   if (!props.birthDate) {
     loading.value = false;
+    peaksData.value = null;
     return;
   }
 
   if (!/^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
     loading.value = false;
+    peaksData.value = null;
     return;
   }
 
@@ -373,6 +457,7 @@ const fetchPeaksAndChallenges = async () => {
     year > 2025
   ) {
     loading.value = false;
+    peaksData.value = null;
     return;
   }
 
@@ -453,9 +538,17 @@ const fetchPeaksAndChallenges = async () => {
 
 // Khởi tạo trạng thái đăng nhập và hành động
 const initializeAuth = async () => {
-  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
-  isLoggedIn.value = authStatus;
-  handleAction = action;
+  console.log('Initializing auth for NumerologyPyramid...');
+  try {
+    await userStore.initialize();
+    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
+    await checkAuthAndAccess();
+    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
+  } catch (err) {
+    console.error('Lỗi khi khởi tạo auth:', err);
+    errorMessage.value = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
+    errorType.value = '';
+  }
 };
 
 // Theo dõi birthDate
@@ -463,10 +556,6 @@ watch(() => props.birthDate, (newValue) => {
   console.log('watch birthDate triggered:', newValue);
   if (newValue && /^\d{2}\/\d{2}\/\d{4}$/.test(newValue)) {
     fetchPeaksAndChallenges();
-    if (isInitialLoad.value) {
-      initializeAuth();
-      isInitialLoad.value = false;
-    }
   } else {
     console.log('birthDate không hợp lệ khi watch:', newValue);
     peaksData.value = null;
@@ -479,7 +568,6 @@ onMounted(() => {
   if (props.birthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
     fetchPeaksAndChallenges();
     initializeAuth();
-    isInitialLoad.value = false;
   }
 });
 </script>
