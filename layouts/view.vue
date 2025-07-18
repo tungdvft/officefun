@@ -100,9 +100,15 @@
                 >
                   <NuxtLink 
                     to="/tai-khoan"
-                    class="block px-4 py-2 hover:bg-purple-50 text-purple-700 hover:text-purple-900 transition-colors duration-200 text-sm border border-gray-200"
+                    class="block px-4 py-2 hover:bg-purple-50 text-purple-700 hover:text-purple-900 transition-colors duration-200 text-sm border-b border-gray-200"
                   >
                     Tài khoản
+                  </NuxtLink>
+                  <NuxtLink 
+                    to="/nap-token"
+                    class="block px-4 py-2 hover:bg-purple-50 text-purple-700 hover:text-purple-900 transition-colors duration-200 text-sm border-b border-gray-200"
+                  >
+                    Nạp token
                   </NuxtLink>
                   <button
                     @click="logout"
@@ -326,7 +332,8 @@ const computedMenu = computed(() => {
       isUserMenu: true,
       children: userStore.user && Object.keys(userStore.user).length > 0 
         ? [
-            { title: 'Tài khoản', path: '/tai-khoan' },
+          { title: 'Tài khoản', path: '/tai-khoan' },
+          { title: 'Nạp token', path: '/nap-token' },
             { title: 'Số token', isToken: true },
             { title: 'Đăng xuất', isLogout: true }
           ] 

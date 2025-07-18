@@ -1,457 +1,174 @@
+
 <template>
-  <div class="mx-auto container p-6 bg-white rounded-xl shadow-lg sm:p-4">
-    <!-- Header với thông tin metadata -->
-    <div class="mb-8 p-4 bg-gradient-to-r from-teal-50 to-blue-50 rounded-lg border border-teal-100">
-      <h1 class="text-2xl font-bold text-teal-700">Thần số học hôm nay</h1>
-      <p class="text-teal-600 mt-1">Ngày: {{ currentDate }}</p>
-      <p v-if="dailyPrediction" class="text-teal-600 mt-1">Chủ đề: {{ universalTheme }}</p>
+  <div class="p-6 bg-white rounded-xl shadow-lg sm:p-4">
+    <!-- Header với ngày sinh -->
+    <div v-if="birthDate" class="mb-8 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100">
+      <h1 class="text-2xl font-bold text-indigo-700">Tổng quan về bạn</h1>
+      <p class="text-indigo-600 mt-1">Ngày sinh: {{ birthDate }}</p>
     </div>
 
-    <!-- Số ngày cá nhân -->
-    <div class="mb-10 bg-gradient-to-r from-teal-50 to-blue-50 p-8 rounded-2xl border border-teal-100 shadow-sm text-center">
-      <div class="flex flex-col items-center">
-        <div class="relative">
-          <!-- Animated circle background -->
-          <svg class="w-32 h-32" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="45" fill="none" stroke="#e2e8f0" stroke-width="8" />
-            <circle
-              cx="50"
-              cy="50"
-              r="45"
-              fill="none"
-              stroke="#0d9488"
-              stroke-width="8"
-              stroke-dasharray="283"
-              stroke-dashoffset="283"
-              stroke-linecap="round"
-            >
-              <animate
-                attributeName="stroke-dashoffset"
-                dur="1.5s"
-                from="283"
-                to="0"
-                fill="freeze"
-                calcMode="spline"
-                keySplines="0.3 0 0.7 1"
-              />
-            </circle>
-          </svg>
-          <!-- Number display -->
-          <div class="absolute inset-0 flex flex-col items-center justify-center">
-            <span class="text-5xl font-bold text-teal-700">{{ personalDay || 'N/A' }}</span>
-          </div>
-        </div>
-        <h3 class="text-2xl font-bold text-teal-800 mt-6">Số ngày cá nhân: {{ personalDay || 'N/A' }}</h3>
-        <p v-if="dailyPrediction?.daily_forecast?.overview" class="text-lg text-gray-600 mt-2 max-w-lg">{{ dailyPrediction.daily_forecast.overview }}</p>
-        <p v-else class="text-lg text-gray-600 mt-2 max-w-lg">Không có dự đoán cho số ngày cá nhân này.</p>
-      </div>
-    </div>
-
-    <!-- Thông tin năng lượng vũ trụ -->
-    <section v-if="currentPersonalDayData?.universal_energy" class="mb-10 p-6 bg-teal-50 rounded-xl">
-      <h3 class="text-xl font-semibold text-teal-700 mb-4 flex items-center">
-        <svg class="h-6 w-6 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-          />
-        </svg>
-        Năng lượng vũ trụ
-      </h3>
-      <div class="grid md:grid-cols-2 gap-4">
-        <div class="bg-white p-4 rounded-lg shadow-sm">
-          <p class="text-gray-700"><strong>Pha mặt trăng:</strong> {{ currentPersonalDayData.universal_energy.moon_phase || 'Không có' }}</p>
-        </div>
-        <div class="bg-white p-4 rounded-lg shadow-sm">
-          <p class="text-gray-700"><strong>Ảnh hưởng chiêm tinh:</strong> {{ currentPersonalDayData.universal_energy.astrological_impact || 'Không có' }}</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Phần thông báo lỗi, trạng thái tải, hoặc nút hành động -->
-    <div v-if="isLoading" class="flex justify-center">
-      <svg
-        class="animate-spin h-8 w-8 text-teal-600"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path
-          class="opacity-75"
-          fill="currentColor"
-          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-        ></path>
-      </svg>
-    </div>
-    <div v-else-if="error" class="text-red-600 text-center font-medium p-6">
-      {{ error }}
-    </div>
-    <div v-else-if="errorMessage && errorType === 'login'" class="text-red-600 text-center font-medium p-6">
-      Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để sử dụng tính năng này.
-    </div>
-    <div v-else-if="errorMessage && errorType === 'topup'" class="text-red-600 text-center font-medium p-6">
-      Không đủ token cho tính năng này. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-    </div>
-    <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
-      {{ errorMessage }}
-    </div>
-    <div v-else-if="!isContentAccessible && userStore.isAuthenticated && !hasSufficientTokens" class="text-center p-6">
-      <p class="text-red-600 font-medium mb-4">Không đủ token cho tính năng này. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!</p>
-
-    </div>
-    <div v-else-if="!isContentAccessible && userStore.isAuthenticated && hasSufficientTokens" class="text-center p-6">
-      <button @click="performAction" class="action-button">Xem dự đoán chi tiết (Cần {{ tokenCost }} token)</button>
-    </div>
-    <div v-else-if="isContentAccessible && dailyPrediction" class="space-y-10">
-      <!-- Hồ sơ cá nhân -->
-      <section class="p-6 bg-blue-50 rounded-xl">
-        <h3 class="text-xl font-semibold text-blue-700 mb-4 flex items-center">
-          <svg class="h-6 w-6 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-            />
-          </svg>
-          Hồ sơ cá nhân
-        </h3>
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <p class="text-gray-700"><strong>Nguyên mẫu:</strong> {{ dailyPrediction.profile?.archetype || 'Không có' }}</p>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <p class="text-gray-700"><strong>Nguyên tố:</strong> {{ dailyPrediction.profile?.element || 'Không có' }}</p>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <p class="text-gray-700"><strong>Số tương thích:</strong> {{ dailyPrediction.profile?.compatible_numbers?.join(', ') || 'Không có' }}</p>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <p class="text-gray-700"><strong>Luân xa:</strong> {{ dailyPrediction.profile?.chakra || 'Không có' }}</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Lịch trình hàng ngày -->
-      <section class="p-6 bg-teal-50 rounded-xl">
-        <h3 class="text-xl font-semibold text-teal-700 mb-4 flex items-center">
-          <svg class="h-6 w-6 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-            />
-          </svg>
-          Lịch trình hôm nay
-        </h3>
-        <div class="grid md:grid-cols-3 gap-4">
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-teal-600 mb-2">Buổi sáng</h4>
-            <ul class="space-y-2 text-gray-700">
-              <li><strong>Trọng tâm:</strong> {{ dailyPrediction.daily_forecast?.time_slots?.morning?.focus || 'Không có' }}</li>
-              <li><strong>Hành động:</strong> {{ dailyPrediction.daily_forecast?.time_slots?.morning?.action || 'Không có' }}</li>
-              <li v-if="dailyPrediction.daily_forecast?.time_slots?.morning?.warning"><strong>Cảnh báo:</strong> {{ dailyPrediction.daily_forecast.time_slots.morning.warning }}</li>
-            </ul>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-teal-600 mb-2">Buổi chiều</h4>
-            <ul class="space-y-2 text-gray-700">
-              <li><strong>Trọng tâm:</strong> {{ dailyPrediction.daily_forecast?.time_slots?.afternoon?.focus || 'Không có' }}</li>
-              <li><strong>Thời gian vàng:</strong> {{ dailyPrediction.daily_forecast?.time_slots?.afternoon?.golden_hour || 'Không có' }}</li>
-              <li><strong>Đề xuất:</strong> {{ dailyPrediction.daily_forecast?.time_slots?.afternoon?.recommendation || 'Không có' }}</li>
-              <li v-if="dailyPrediction.daily_forecast?.time_slots?.afternoon?.warning"><strong>Cảnh báo:</strong> {{ dailyPrediction.daily_forecast.time_slots.afternoon.warning }}</li>
-            </ul>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-teal-600 mb-2">Buổi tối</h4>
-            <ul class="space-y-2 text-gray-700">
-              <li><strong>Trọng tâm:</strong> {{ dailyPrediction.daily_forecast?.time_slots?.evening?.focus || 'Không có' }}</li>
-              <li><strong>Hoạt động:</strong> {{ dailyPrediction.daily_forecast?.time_slots?.evening?.activity || 'Không có' }}</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- Grid layout cho lời khuyên và thách thức -->
-      <div class="grid md:grid-cols-2 gap-6">
-        <!-- Lời khuyên -->
-        <section class="p-5 bg-green-50 rounded-lg">
-          <div class="flex items-center mb-3">
-            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <h3 class="text-xl font-semibold text-green-700">Lời khuyên</h3>
-          </div>
-          <ul class="space-y-3 text-gray-700">
-            <li class="flex items-start">
-              <span class="text-green-500 mr-2">•</span>
-              <span><strong>Công việc:</strong> {{ dailyPrediction.success_tools?.advice?.career || 'Không có' }}</span>
-            </li>
-            <li class="flex items-start">
-              <span class="text-green-500 mr-2">•</span>
-              <span><strong>Tình yêu:</strong> {{ dailyPrediction.success_tools?.advice?.love || 'Không có' }}</span>
-            </li>
-            <li class="flex items-start">
-              <span class="text-green-500 mr-2">•</span>
-              <span><strong>Tài chính:</strong> {{ dailyPrediction.success_tools?.advice?.finance || 'Không có' }}</span>
-            </li>
-          </ul>
-        </section>
-
-        <!-- Thách thức -->
-        <section class="p-5 bg-amber-50 rounded-lg">
-          <div class="flex items-center mb-3">
-            <svg class="h-5 w-5 text-amber-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
-            </svg>
-            <h3 class="text-xl font-semibold text-amber-700">Thách thức</h3>
-          </div>
-          <ul class="space-y-3 text-gray-700">
-            <li class="flex items-start">
-              <span class="text-amber-500 mr-2">•</span>
-              <span>{{ dailyPrediction.success_tools?.challenge?.description || 'Không có' }}</span>
-            </li>
-            <li class="flex items-start">
-              <span class="text-amber-500 mr-2">•</span>
-              <span><strong>Giải pháp:</strong> {{ dailyPrediction.success_tools?.challenge?.solution || 'Không có' }}</span>
-            </li>
-          </ul>
-        </section>
-      </div>
-
-      <!-- Hướng dẫn tâm linh -->
-      <section class="p-6 bg-teal-50 rounded-xl">
-        <h3 class="text-xl font-semibold text-teal-700 mb-4 flex items-center">
-          <svg class="h-6 w-6 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-            />
-          </svg>
-          Hướng dẫn tâm linh
-        </h3>
-        <div class="grid md:grid-cols-3 gap-4">
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-teal-600 mb-2">Thông điệp</h4>
-            <p class="text-gray-700">{{ dailyPrediction.spiritual_guidance?.message || 'Không có' }}</p>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-teal-600 mb-2">Thiền</h4>
-            <p class="text-gray-700">{{ dailyPrediction.spiritual_guidance?.meditation || 'Không có' }}</p>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-teal-600 mb-2">Khẳng định</h4>
-            <p class="text-gray-700">{{ dailyPrediction.spiritual_guidance?.affirmation || 'Không có' }}</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- May mắn -->
-      <section class="p-6 bg-blue-50 rounded-xl">
-        <h3 class="text-xl font-semibold text-blue-700 mb-4 flex items-center">
-          <svg class="h-6 w-6 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          May mắn
-        </h3>
-        <div class="grid md:grid-cols-4 gap-4">
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-blue-600 mb-2">Màu sắc</h4>
-            <p class="text-gray-700">{{ dailyPrediction.luck?.color?.usage || 'Không có' }}</p>
+    <!-- Kết quả -->
+    <div v-if="result" class="space-y-10">
+      <div class="bg-gradient-to-r from-teal-50 to-blue-50 p-8 rounded-2xl border border-teal-100 shadow-sm text-center">
+        <div class="flex flex-col items-center">
+          <div class="relative">
+            <!-- Background hình tròn với hiệu ứng glow -->
             <div
-              v-if="dailyPrediction.luck?.color?.hex"
-              class="w-6 h-6 rounded-full mt-2 border border-gray-300"
-              :style="{ backgroundColor: dailyPrediction.luck?.color?.hex || '#000000' }"
+              :class="['w-40 h-40 rounded-full bg-cover bg-center animate-glow']"
+              :style="{ backgroundImage: 'url(/numerology-background.jpg)' }"
             ></div>
+            <!-- Number and Symbol display -->
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <span :class="['text-6xl font-bold', numberTextColorClass]" style="text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);">{{ result.number }}</span>
+            </div>
           </div>
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-blue-600 mb-2">Con số</h4>
-            <p class="text-gray-700">{{ dailyPrediction.luck?.number || 'Không có' }}</p>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-blue-600 mb-2">Hướng</h4>
-            <p class="text-gray-700">{{ dailyPrediction.luck?.direction || 'Không có' }}</p>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-blue-600 mb-2">Vật may mắn</h4>
-            <p class="text-gray-700">{{ dailyPrediction.luck?.object || 'Không có' }}</p>
-          </div>
+          <h3 class="text-2xl font-bold text-teal-800 mt-6">Số đường đời: {{ result.number }}</h3>
+          <h3 class="text-2xl font-bold text-teal-800 mt-2">Biểu tượng: {{ numberSymbol }}</h3>
+          <p class="text-gray-600 mt-2 max-w-lg">{{ result.meaning }}</p>
         </div>
-      </section>
+      </div>
 
-      <!-- Tương tác -->
-      <section class="p-6 bg-pink-50 rounded-xl">
-        <h3 class="text-xl font-semibold text-pink-700 mb-4 flex items-center">
-          <svg class="h-6 w-6 text-pink-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15.828a2 2 0 01-2.828 0l-4.243-4.243a2 2 0 010-2.828 2 2 0 012.828 0l2.829 2.829a2 2 0 002.828 0l4.243-4.243z"
-            />
-          </svg>
-          Tương tác
-        </h3>
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-pink-600 mb-2">Câu hỏi nhật ký</h4>
-            <p class="text-gray-700">{{ dailyPrediction.interactive?.journal_prompt || 'Không có' }}</p>
+      <!-- Các phần luôn hiển thị (Điểm mạnh, Điểm yếu) -->
+      <div class="grid md:grid-cols-2 gap-6">
+        <section v-for="section in freeSections" :key="section.title" :class="section.class">
+          <div class="flex items-center mb-3">
+            <svg class="h-5 w-5 mr-2" :class="section.iconClass" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="section.iconPath" />
+            </svg>
+            <h3 class="text-xl font-semibold" :class="section.titleClass">{{ section.title }}</h3>
           </div>
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-pink-600 mb-2">Câu hỏi phản hồi</h4>
-            <p class="text-gray-700">{{ dailyPrediction.interactive?.feedback_question || 'Không có' }}</p>
-          </div>
-        </div>
-      </section>
+          <ul class="space-y-3 text-gray-700">
+            <li v-for="(item, index) in section.items" :key="index" class="flex items-start">
+              <span :class="section.bulletClass">•</span>
+              <span>{{ item }}</span>
+            </li>
+          </ul>
+        </section>
+      </div>
 
-      <!-- Gợi ý hàng ngày -->
-      <section class="p-6 bg-teal-50 rounded-xl">
-        <h3 class="text-xl font-semibold text-teal-700 mb-4 flex items-center">
-          <svg class="h-6 w-6 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          Gợi ý hôm nay
-        </h3>
-        <div class="grid md:grid-cols-3 gap-4">
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-teal-600 mb-2">Không gian làm việc</h4>
-            <p class="text-gray-700">{{ dailyPrediction.daily_tips?.workspace || 'Không có' }}</p>
+      <!-- Các phần được bảo vệ (Tình duyên, Nghề nghiệp, Mối quan hệ tương thích, Người nổi tiếng) -->
+      <div v-if="isContentAccessible" class="space-y-10">
+        <section v-for="section in protectedSections" :key="section.title" :class="section.class">
+          <div class="flex items-center mb-3">
+            <svg class="h-6 w-6 mr-2" :class="section.iconClass" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="section.iconPath" />
+            </svg>
+            <h3 class="text-xl font-semibold" :class="section.titleClass">{{ section.title }}</h3>
           </div>
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-teal-600 mb-2">Tăng năng lượng</h4>
-            <p class="text-gray-700">{{ dailyPrediction.daily_tips?.energy || 'Không có' }}</p>
+          <!-- Tình duyên và Nghề nghiệp -->
+          <ul v-if="section.type === 'list'" class="space-y-3 text-gray-700">
+            <li v-for="(item, index) in section.items" :key="index" class="flex items-start">
+              <span :class="section.bulletClass">•</span>
+              <span>{{ item }}</span>
+            </li>
+          </ul>
+          <!-- Mối quan hệ tương thích -->
+          <div v-if="section.type === 'compatibility'" class="grid md:grid-cols-2 gap-6">
+            <div v-for="compat in section.items" :key="compat.title" class="bg-white p-4 rounded-lg shadow-sm">
+              <h4 class="text-lg font-medium mb-2 flex items-center" :class="compat.titleClass">
+                <svg class="h-5 w-5 mr-1" :class="compat.iconClass" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="compat.iconPath" />
+                </svg>
+                {{ compat.title }}
+              </h4>
+              <ul class="space-y-3">
+                <li v-for="(item, index) in compat.items" :key="index" class="text-gray-700">
+                  <span class="font-medium text-purple-600">Số {{ item.number }}:</span> {{ item.description }}
+                </li>
+              </ul>
+            </div>
           </div>
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-teal-600 mb-2">Thói quen</h4>
-            <p class="text-gray-700">{{ dailyPrediction.daily_tips?.routine || 'Không có' }}</p>
+          <!-- Người nổi tiếng -->
+          <div v-if="section.type === 'famousPeople'" class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div v-for="(person, index) in section.items" :key="index" class="bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <p class="text-gray-700">{{ person }}</p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
-      <!-- Cá nhân và cộng đồng -->
-      <section class="p-6 bg-purple-50 rounded-xl">
-        <h3 class="text-xl font-semibold text-purple-700 mb-4 flex items-center">
-          <svg class="h-6 w-6 text-purple-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-            />
+      <!-- Phần thông báo lỗi, trạng thái tải, hoặc nút hành động -->
+      <div v-if="protectedSections.length > 0 && !isContentAccessible" class="text-center p-6">
+        <div v-if="isLoading" class="inline-flex items-center px-4 py-2 text-sm font-medium text-teal-700 bg-teal-100 rounded-md">
+          <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
-          Cá nhân và cộng đồng
-        </h3>
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-purple-600 mb-2">Cá nhân hóa</h4>
-            <ul class="space-y-2 text-gray-700">
-              <li><strong>Tương thích biểu đồ sinh:</strong> {{ currentPersonalDayData.premium_features?.personalized?.birth_chart_compatibility || 'Không có' }}</li>
-            </ul>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-sm">
-            <h4 class="text-lg font-medium text-purple-600 mb-2">Cộng đồng</h4>
-            <ul class="space-y-2 text-gray-700">
-              <li><strong>Hashtag thịnh hành:</strong> {{ currentPersonalDayData.premium_features?.community?.trending_hashtag || 'Không có' }}</li>
-              <li><strong>Hoạt động nhóm:</strong> {{ currentPersonalDayData.premium_features?.community?.group_activity || 'Không có' }}</li>
-            </ul>
-          </div>
+          Đang kiểm tra quyền truy cập...
         </div>
-      </section>
+        <div v-else-if="errorMessage && errorType === 'login'" class="text-red-600 font-medium">
+          Vui lòng <button @click="errorAction" class="action-button">Đăng nhập</button> để xem tiếp.
+        </div>
+        <div v-else-if="errorMessage && errorType === 'topup'" class="text-red-600 font-medium">
+          Không đủ token để xem tiếp. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button>.
+        </div>
+        <div v-else-if="errorMessage" class="text-red-600 font-medium">
+          {{ errorMessage }}
+        </div>
+        <div v-else-if="!userStore.isAuthenticated" class="text-center">
+          <button
+            @click="errorAction"
+            class="action-button"
+            :disabled="isLoading"
+          >
+            Đăng nhập để xem tiếp
+          </button>
+        </div>
+        <div v-else-if="!hasSufficientTokens" class="text-center">
+          <p class="text-red-600 font-medium mb-4">Không đủ token để xem tiếp. Cần {{ tokenCost }} token.</p>
+          <button
+            @click="navigateToTopup"
+            class="action-button"
+            :disabled="isLoading"
+          >
+            Nạp thêm token
+          </button>
+          <!-- <p class="text-gray-600 mt-2">Số dư token: {{ userStore.user?.tokens || 0 }}</p> -->
+        </div>
+        <div v-else class="text-center">
+          <button
+            @click="performAction"
+            class="action-button"
+            :disabled="isLoading"
+          >
+            Xem tiếp (Cần {{ tokenCost }} token)
+          </button>
+          <!-- <p class="text-gray-600 mt-2">Số dư token: {{ userStore.user?.tokens || 0 }}</p> -->
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
-import { useRouter } from 'vue-router';
-import personalDayData from '~/data/personal-day-data.js';
+import { computed, ref } from 'vue';
 import { useProtectedContent } from '~/composables/useProtectedContent';
 import { useUserStore } from '~/stores/user';
+import { useRouter } from 'vue-router';
 
+// Define props
 const props = defineProps({
-  birthDate: { type: String, required: true },
+  birthDate: {
+    type: String,
+    required: true
+  },
+  result: {
+    type: Object,
+    default: null
+  }
 });
+
+// Token configuration
+const tokenCost = ref(30); // Cập nhật chi phí thành 30 token
+const description = 'Access to life path details';
+const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, performAction, errorAction, navigateToTopup } = useProtectedContent(tokenCost.value, description);
 
 const router = useRouter();
-const tokenCost = ref(30); // Cập nhật chi phí token thành 30
-const description = 'Access to daily numerology prediction';
-const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, performAction, errorAction } = useProtectedContent(tokenCost.value, description);
-
 const userStore = useUserStore();
-const isInitialLoad = ref(true);
-const error = ref('');
-const dailyPrediction = ref(null);
-const personalDay = ref(null);
-const lifePath = ref(null);
-const universalTheme = ref('');
-const currentPersonalDayData = ref(null);
 
-const currentDate = computed(() => {
-  const today = new Date();
-  return `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
-});
-
-// Hàm điều hướng đến trang nạp token
-const navigateToTopup = () => {
-  console.log('Navigating to /nap-token');
-  router.push('/nap-token');
-};
-
-// Hàm tính Số đường đời
-const calculateLifePath = (birthDate) => {
-  try {
-    const digits = birthDate.replace(/[^0-9]/g, '').split('').map(Number);
-    let sum = digits.reduce((acc, curr) => acc + curr, 0);
-    while (sum > 9 && ![11, 22, 33].includes(sum)) {
-      sum = sum.toString().split('').map(Number).reduce((acc, curr) => acc + curr, 0);
-    }
-    return sum;
-  } catch (err) {
-    throw new Error('Lỗi khi tính Số đường đời: ' + err.message);
-  }
-};
-
-// Hàm tính Số ngày cá nhân
-const calculatePersonalDay = (birthDate, currentDate) => {
-  try {
-    const [day, month] = birthDate.split('/').map(Number);
-    const [currentDay, currentMonth, currentYear] = currentDate.split('/').map(Number);
-    const sum = day + month + currentDay + currentMonth + currentYear;
-    if ([11, 22, 33].includes(sum)) return sum;
-    let reduced = sum;
-    while (reduced > 9) {
-      reduced = String(reduced).split('').reduce((acc, digit) => acc + Number(digit), 0);
-    }
-    return reduced;
-  } catch (err) {
-    throw new Error('Lỗi khi tính Số ngày cá nhân: ' + err.message);
-  }
-};
-
-// Khởi tạo trạng thái đăng nhập và kiểm tra token
+// Initialize authentication and token check
 const initializeAuth = async () => {
-  console.log('Initializing auth for DailyNumerology...');
+  console.log('Initializing auth for LifePathOverview...');
   try {
     await userStore.initialize();
     console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
@@ -459,78 +176,165 @@ const initializeAuth = async () => {
     console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
   } catch (err) {
     console.error('Lỗi khi khởi tạo auth:', err);
-    error.value = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
-    errorMessage.value = error.value;
+    errorMessage.value = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
+    errorType.value = '';
   }
 };
 
-// Tải dự đoán khi birthDate thay đổi
-watch(
-  () => props.birthDate,
-  async (newBirthDate) => {
-    error.value = '';
-    errorMessage.value = '';
-    dailyPrediction.value = null;
-    universalTheme.value = '';
-    currentPersonalDayData.value = null;
-    personalDay.value = null;
-    lifePath.value = null;
+// Run initialization on mount
+initializeAuth();
 
-    try {
-      // Kiểm tra định dạng birthDate
-      if (!/^\d{2}\/\d{2}\/\d{4}$/.test(newBirthDate)) {
-        throw new Error('Ngày sinh phải có định dạng DD/MM/YYYY.');
-      }
+// Dữ liệu lifePath với symbol
+const lifePath = {
+  1: { theme: "Người lãnh đạo", symbol: "♈", strengths: ["Độc lập", "Sáng tạo", "Quyết đoán"], weaknesses: ["Cứng đầu", "Thiếu kiên nhẫn", "Độc đoán"], careers: ["Doanh nhân", "Quản lý", "Nhà sáng chế"], romance: ["Năng động trong tình yêu", "Thích dẫn dắt"], compatibility: { best: [{ number: 3, description: "Sáng tạo và năng lượng cao" }, { number: 5, description: "Thích phiêu lưu" }], least: [{ number: 4, description: "Quá cứng nhắc" }] }, famousPeople: ["Steve Jobs", "Oprah Winfrey"] },
+  2: { theme: "Người hòa giải", symbol: "♉", strengths: ["Nhạy cảm", "Hợp tác", "Kiên nhẫn"], weaknesses: ["Thiếu quyết đoán", "Dễ bị tổn thương", "Phụ thuộc"], careers: ["Nhà ngoại giao", "Tư vấn", "Giáo viên"], romance: ["Lãng mạn và chu đáo", "Tìm kiếm sự ổn định"], compatibility: { best: [{ number: 6, description: "Chăm sóc và yêu thương" }], least: [{ number: 8, description: "Quá tham vọng" }] }, famousPeople: ["Madonna", "Bill Clinton"] },
+  3: { theme: "Người sáng tạo", symbol: "♊", strengths: ["Truyền cảm hứng", "Giao tiếp", "Lạc quan"], weaknesses: ["Thiếu tập trung", "Lãng phí tài năng", "Nông nổi"], careers: ["Nghệ sĩ", "Nhà văn", "Diễn giả"], romance: ["Yêu tự do", "Thích sự mới mẻ"], compatibility: { best: [{ number: 1, description: "Năng lượng tương đồng" }], least: [{ number: 7, description: "Quá nội tâm" }] }, famousPeople: ["J.K. Rowling", "Chris Hemsworth"] },
+  4: { theme: "Người xây dựng", symbol: "♋", strengths: ["Thực tế", "Đáng tin cậy", "Kỷ luật"], weaknesses: ["Cứng nhắc", "Bảo thủ", "Thiếu linh hoạt"], careers: ["Kỹ sư", "Kiến trúc sư", "Kế toán"], romance: ["Trung thành và ổn định", "Tìm kiếm sự an toàn"], compatibility: { best: [{ number: 2, description: "Hòa hợp và hỗ trợ" }], least: [{ number: 5, description: "Quá tự do" }] }, famousPeople: ["Arnold Schwarzenegger", "Elon Musk"] },
+  5: { theme: "Nhà thám hiểm", symbol: "♌", strengths: ["Linh hoạt", "Thích phiêu lưu", "Tiến bộ"], weaknesses: ["Bồn chồn", "Thiếu cam kết", "Nghiện ngập"], careers: ["Du lịch", "Phóng viên", "Kinh doanh"], romance: ["Đam mê và tự do", "Thích trải nghiệm mới"], compatibility: { best: [{ number: 3, description: "Sáng tạo và năng động" }], least: [{ number: 4, description: "Quá cứng nhắc" }] }, famousPeople: ["Angelina Jolie", "Mick Jagger"] },
+  6: { theme: "Người nuôi dưỡng", symbol: "♍", strengths: ["Trách nhiệm", "Chăm sóc", "Cân bằng"], weaknesses: ["Can thiệp quá mức", "Hy sinh bản thân", "Kiểm soát"], careers: ["Y tế", "Giáo dục", "Tư vấn"], romance: ["Yêu thương và tận tâm", "Tìm kiếm sự bền vững"], compatibility: { best: [{ number: 2, description: "Hòa hợp và hỗ trợ" }], least: [{ number: 9, description: "Quá lý tưởng" }] }, famousPeople: ["John Lennon", "Meryl Streep"] },
+  7: { theme: "Nhà hiền triết", symbol: "♎", strengths: ["Trí tuệ", "Trực giác", "Chiều sâu"], weaknesses: ["Xa cách", "Hoài nghi", "Lập dị"], careers: ["Nhà khoa học", "Nhà nghiên cứu", "Triết gia"], romance: ["Sâu sắc và tinh tế", "Cần không gian riêng"], compatibility: { best: [{ number: 9, description: "Chia sẻ lý tưởng" }], least: [{ number: 3, description: "Quá hướng ngoại" }] }, famousPeople: ["Leonardo da Vinci", "Stephen Hawking"] },
+  8: { theme: "Nhà quản lý", symbol: "♏", strengths: ["Tổ chức", "Tham vọng", "Hiệu quả"], weaknesses: ["Thao túng", "Vật chất", "Lạm dụng quyền lực"], careers: ["Giám đốc", "Ngân hàng", "Luật sư"], romance: ["Mạnh mẽ và kiểm soát", "Tìm kiếm sự tôn trọng"], compatibility: { best: [{ number: 4, description: "Ổn định và thực tế" }], least: [{ number: 2, description: "Quá nhạy cảm" }] }, famousPeople: ["Barack Obama", "Hillary Clinton"] },
+  9: { theme: "Nhà nhân đạo", symbol: "♐", strengths: ["Rộng lượng", "Sáng suốt", "Lý tưởng"], weaknesses: ["Mơ mộng", "Bi quan", "Hy sinh quá mức"], careers: ["Từ thiện", "Nghệ thuật", "Hoạt động xã hội"], romance: ["Lý tưởng và tận tâm", "Tìm kiếm ý nghĩa sâu sắc"], compatibility: { best: [{ number: 7, description: "Chia sẻ chiều sâu" }], least: [{ number: 6, description: "Quá kiểm soát" }] }, famousPeople: ["Mahatma Gandhi", "Mother Teresa"] },
+  11: { theme: "Bậc thầy tâm linh", symbol: "⚡", strengths: ["Truyền cảm hứng", "Nhạy cảm", "Tầm nhìn"], weaknesses: ["Căng thẳng", "Nhạy cảm quá mức", "Khó thực tế"], careers: ["Nhà tâm linh", "Cố vấn", "Nghệ sĩ"], romance: ["Sâu sắc và tâm linh", "Cần sự kết nối tinh thần"], compatibility: { best: [{ number: 22, description: "Chia sẻ tầm nhìn lớn" }], least: [{ number: 8, description: "Quá vật chất" }] }, famousPeople: ["Albert Einstein", "Deepak Chopra"] },
+  22: { theme: "Kiến trúc sư vĩ đại", symbol: "🏛️", strengths: ["Thực tế hóa", "Xây dựng", "Tầm nhìn lớn"], weaknesses: ["Áp lực", "Cầu toàn", "Quá tải"], careers: ["Kiến trúc sư", "Nhà quy hoạch", "Lãnh đạo"], romance: ["Ổn định và tận tâm", "Tìm kiếm mục tiêu chung"], compatibility: { best: [{ number: 11, description: "Chia sẻ tầm nhìn" }], least: [{ number: 5, description: "Quá tự do" }] }, famousPeople: ["Bill Gates", "Nikola Tesla"] },
+  33: { 
+    theme: "Bậc thầy giáo dục", 
+    symbol: "🎓", 
+    strengths: ["Yêu thương", "Sáng tạo", "Truyền cảm hứng"], 
+    weaknesses: ["Quá lý tưởng", "Kiệt sức", "Khó thực tế"], 
+    careers: ["Giáo viên", "Nhà trị liệu", "Nhà hoạt động xã hội"], 
+    romance: ["Yêu thương và lý tưởng", "Tìm kiếm sự kết nối sâu sắc"], 
+    compatibility: { 
+      best: [{ number: 6, description: "Chia sẻ sự chăm sóc" }], 
+      least: [{ number: 8, description: "Quá vật chất" }] 
+    }, 
+    famousPeople: ["Dalai Lama", "Nelson Mandela"] 
+  }
+};
 
-      // Tính Số đường đời
-      lifePath.value = calculateLifePath(newBirthDate);
-      console.log('Life Path:', lifePath.value);
+// Computed property để lấy symbol dựa trên result.number
+const numberSymbol = computed(() => {
+  return lifePath[props.result?.number]?.symbol || '?';
+});
 
-      // Tính Số ngày cá nhân
-      personalDay.value = calculatePersonalDay(newBirthDate, currentDate.value);
-      console.log('Personal Day:', personalDay.value);
+// Computed property để gán màu chữ cho số đường đời
+const numberTextColorClass = computed(() => {
+  const colors = {
+    1: 'text-red-500',
+    2: 'text-orange-500',
+    3: 'text-yellow-500',
+    4: 'text-green-500',
+    5: 'text-blue-500',
+    6: 'text-pink-500',
+    7: 'text-purple-500',
+    8: 'text-indigo-900',
+    9: 'text-cyan-500',
+    11: 'text-purple-300',
+    22: 'text-gray-400',
+    33: 'text-pink-300'
+  };
+  return colors[props.result?.number] || 'text-teal-500';
+});
 
-      // Kiểm tra personalDay hợp lệ
-      if (!personalDayData[personalDay.value]) {
-        throw new Error(`Không có dữ liệu cho Số ngày cá nhân ${personalDay.value}. Vui lòng thêm file JSON tương ứng.`);
-      }
-
-      // Lấy dữ liệu JSON
-      currentPersonalDayData.value = personalDayData[personalDay.value];
-      console.log('Personal Day Data:', currentPersonalDayData.value);
-
-      // Lấy universal theme
-      universalTheme.value = currentPersonalDayData.value.universal_energy?.theme || 'Không có chủ đề';
-
-      // Tìm dự đoán phù hợp với lifePath
-      const predictions = currentPersonalDayData.value.predictions;
-      if (!predictions || !Array.isArray(predictions)) {
-        throw new Error(`Dữ liệu dự đoán không hợp lệ cho Số ngày cá nhân ${personalDay.value}.`);
-      }
-
-      dailyPrediction.value = predictions.find(p => p.life_path === lifePath.value);
-      if (!dailyPrediction.value) {
-        throw new Error(`Không tìm thấy dự đoán cho Số đường đời ${lifePath.value} với Số ngày cá nhân ${personalDay.value}.`);
-      }
-      console.log('Daily Prediction:', dailyPrediction.value);
-
-      // Chỉ khởi tạo auth sau khi dữ liệu dự đoán được tải lần đầu
-      if (isInitialLoad.value) {
-        await initializeAuth();
-        isInitialLoad.value = false;
-      }
-    } catch (err) {
-      console.error('Lỗi khi xử lý dự đoán hàng ngày:', err);
-      error.value = err.message || 'Đã xảy ra lỗi khi tải dự đoán. Vui lòng thử lại.';
-      errorMessage.value = error.value;
-    }
+// Tạo mảng cho các phần luôn hiển thị (Điểm mạnh, Điểm yếu)
+const freeSections = computed(() => [
+  {
+    title: 'Điểm mạnh',
+    class: 'p-5 bg-green-50 rounded-lg',
+    iconClass: 'text-green-500',
+    iconPath: 'M5 13l4 4L19 7',
+    bulletClass: 'text-green-500 mr-2',
+    items: props.result?.strengths || []
   },
-  { immediate: true }
-);
+  {
+    title: 'Điểm yếu',
+    class: 'p-5 bg-amber-50 rounded-lg',
+    iconClass: 'text-amber-500',
+    iconPath: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z',
+    bulletClass: 'text-amber-500 mr-2',
+    items: props.result?.weaknesses || []
+  }
+]);
+
+// Tạo mảng cho các phần được bảo vệ (Tình duyên, Nghề nghiệp, Mối quan hệ tương thích, Người nổi tiếng)
+const protectedSections = computed(() => [
+  {
+    title: 'Tình duyên',
+    type: 'list',
+    class: 'p-5 bg-pink-50 rounded-lg',
+    iconClass: 'text-pink-500',
+    iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z',
+    bulletClass: 'text-pink-500 mr-2',
+    items: props.result?.romance || []
+  },
+  {
+    title: 'Nghề nghiệp phù hợp',
+    type: 'list',
+    class: 'p-5 bg-blue-50 rounded-lg',
+    iconClass: 'text-blue-500',
+    iconPath: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+    bulletClass: 'text-blue-500 mr-2',
+    items: props.result?.careers || []
+  },
+  {
+    title: 'Mối quan hệ tương thích',
+    type: 'compatibility',
+    class: 'p-6 bg-purple-50 rounded-xl',
+    iconClass: 'text-purple-500',
+    iconPath: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z',
+    items: [
+      {
+        title: 'Tương thích nhất',
+        titleClass: 'text-green-600',
+        iconClass: 'text-green-500',
+        iconPath: 'M5 10l7-7m0 0l7 7m-7-7v18',
+        items: props.result?.compatibility?.best || []
+      },
+      {
+        title: 'Ít tương thích',
+        titleClass: 'text-amber-600',
+        iconClass: 'text-amber-500',
+        iconPath: 'M19 14l-7 7m0 0l-7-7m7 7V3',
+        items: props.result?.compatibility?.least || []
+      }
+    ]
+  },
+  {
+    title: 'Người nổi tiếng',
+    type: 'famousPeople',
+    class: 'p-6 bg-amber-50 rounded-xl',
+    iconClass: 'text-amber-500',
+    iconPath: 'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z',
+    items: props.result?.famousPeople || []
+  }
+]);
 </script>
 
 <style scoped>
+/* Animation glow nhẹ cho background hình tròn */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Style cho nút hành động */
 .action-button {
   @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap mx-2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .mx-auto {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 </style>
