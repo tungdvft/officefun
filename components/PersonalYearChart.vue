@@ -300,17 +300,10 @@
                     Đăng nhập để xem tiếp
                   </button>
                 </div>
-                <div v-else-if="!hasSufficientTokens" class="text-center">
-                  <p class="text-red-600 font-medium mb-4">Không đủ token để xem tiếp. Cần {{ tokenCost }} token.</p>
-                  <button
-                    @click="navigateToTopup"
-                    class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md"
-                    :disabled="isLoading"
-                  >
-                    Nạp thêm token
-                  </button>
-                 
-                </div>
+                <div v-else-if="!hasSufficientTokens" class="text-red-600 text-center font-medium ">
+                Không đủ token cho tính năng này. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                <!-- <p class="text-gray-600 mt-2">Số dư token: {{ userStore.user?.tokens || 0 }}</p> -->
+              </div>
                 <div v-else class="text-center">
                   <button
                     @click="performAction"

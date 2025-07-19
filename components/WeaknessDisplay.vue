@@ -184,7 +184,7 @@
               <h4 class="text-red-600 font-medium text-lg">Không đủ token để xem tiếp</h4>
               <p class="text-gray-600 mt-1">Cần {{ tokenCost }} token. Vui lòng nạp thêm.</p>
               <button
-                @click="accessStates[weakness.number]?.navigateToTopup"
+                @click="navigateToTopup"
                 class="mt-4 px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
               >
                 Nạp thêm token
@@ -228,7 +228,7 @@
                   Không đủ token để xem tiếp. Cần {{ tokenCost }} token.
                 </p>
                 <button
-                  @click="accessStates[weakness.number]?.navigateToTopup"
+                  @click="navigateToTopup"
                   class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
                   :disabled="accessStates[weakness.number]?.isLoading"
                 >
@@ -407,7 +407,7 @@ const initializeAuth = async (weaknessNumber) => {
       hasSufficientTokens,
       performAction,
       errorAction,
-      navigateToTopup,
+     
     };
   } catch (err) {
     console.error(`[Weakness] Auth initialization error for number ${weaknessNumber}:`, err);
@@ -419,7 +419,7 @@ const initializeAuth = async (weaknessNumber) => {
       hasSufficientTokens: ref(false),
       performAction: () => {},
       errorAction: () => router.push('/login'),
-      navigateToTopup: () => router.push('/topup'),
+     
     };
   }
 };

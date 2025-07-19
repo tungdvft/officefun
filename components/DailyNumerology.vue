@@ -402,7 +402,7 @@ const props = defineProps({
 const router = useRouter();
 const tokenCost = ref(10);
 const description = 'Access to daily numerology prediction';
-const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, performAction, errorAction } = useProtectedContent(tokenCost.value, description);
+const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, performAction, errorAction, navigateToTopup } = useProtectedContent(tokenCost.value, description);
 
 const userStore = useUserStore();
 const isInitialLoad = ref(true);
@@ -419,10 +419,10 @@ const currentDate = computed(() => {
 });
 
 // Hàm điều hướng đến trang nạp token
-const navigateToTopup = () => {
-  console.log('Navigating to /nap-token');
-  router.push('/nap-token');
-};
+// const navigateToTopup = () => {
+//   console.log('Navigating to /nap-token');
+//   router.push('/nap-token');
+// };
 
 // Hàm tính Số đường đời
 const calculateLifePath = (birthDate) => {
@@ -518,7 +518,7 @@ watch(
 );
 </script>
 
-<style scoped>
+<style>
 .action-button {
   @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap mx-2;
 }

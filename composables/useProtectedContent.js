@@ -89,7 +89,11 @@ export function useProtectedContent(tokenCost, description) {
       router.push('/nap-token');
     }
   };
-
+  const navigateToTopup = () => {
+    console.log('Navigating to /nap-token');
+    router.push('/nap-token');
+  };
+  
   return {
     isLoading,
     errorMessage,
@@ -99,5 +103,6 @@ export function useProtectedContent(tokenCost, description) {
     checkAuthAndAccess,
     performAction,
     errorAction,
+    navigateToTopup
   };
 }
