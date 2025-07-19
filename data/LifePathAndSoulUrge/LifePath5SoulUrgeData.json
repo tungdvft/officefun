@@ -1,544 +1,82 @@
 {
   "lifePath": 5,
-  "combinations": [
+  "correlations": [
     {
       "soulUrge": 1,
-      "description": "Sự kết hợp giữa Số Đường Đời 5 và Số Linh Hồn 1 tạo ra một cá nhân tràn đầy năng lượng, với tinh thần tiên phong và khát khao tự do mãnh liệt, luôn sẵn sàng chinh phục những chân trời mới. Số 5 mang lại khả năng thích nghi, tinh thần phiêu lưu, và niềm đam mê trải nghiệm, trong khi số 1 thúc đẩy sự độc lập, sáng tạo, và mong muốn dẫn đầu. Bạn có thể là một doanh nhân công nghệ, nhà thám hiểm, hoặc nghệ sĩ tự do với khả năng kết hợp sự sáng tạo và năng lượng để tạo ra những ý tưởng đột phá. Sự kết hợp này mang lại sức sống mãnh liệt, khiến bạn trở thành nguồn cảm hứng cho người khác. Tuy nhiên, cả số 5 và số 1 đều có xu hướng tránh cam kết, dẫn đến khó khăn trong việc duy trì tập trung hoặc hoàn thành dự án. Ví dụ, bạn có thể xuất sắc trong việc khởi xướng một dự án mới, nhưng cần học cách kỷ luật để hoàn thành. Để phát triển, bạn cần đặt mục tiêu cụ thể, cân bằng giữa tự do và trách nhiệm, và sử dụng năng lượng sáng tạo một cách có tổ chức.",
-      "strengths": [
-        "Khả năng lãnh đạo linh hoạt, đầy cảm hứng",
-        "Sáng tạo và tư duy đổi mới vượt trội",
-        "Tinh thần phiêu lưu, không ngại rủi ro",
-        "Tự tin trong việc thử nghiệm ý tưởng mới",
-        "Khả năng thích nghi với mọi môi trường",
-        "Năng lượng tích cực, thu hút người khác",
-        "Tư duy nhanh nhạy, luôn tìm cơ hội"
-      ],
-      "weaknesses": [
-        "Dễ mất tập trung vào mục tiêu dài hạn",
-        "Xu hướng tránh cam kết và trách nhiệm",
-        "Khó duy trì kỷ luật trong công việc",
-        "Dễ bị cuốn vào những trải nghiệm mới",
-        "Thiếu kiên nhẫn với các chi tiết",
-        "Dễ bị căng thẳng khi bị ràng buộc",
-        "Khó cân bằng giữa tự do và hợp tác"
-      ],
-      "advice": [
-        "Đặt mục tiêu rõ ràng và chia nhỏ để theo đuổi",
-        "Sử dụng trải nghiệm để làm giàu sáng tạo",
-        "Tìm sự cân bằng giữa tự do và trách nhiệm",
-        "Học cách hoàn thành những gì đã bắt đầu",
-        "Thực hành kỷ luật để duy trì tiến độ",
-        "Tìm người hỗ trợ để giữ bạn đi đúng hướng",
-        "Thư giãn để quản lý năng lượng phiêu lưu"
-      ],
-      "challenges": [
-        "Duy trì sự tập trung vào mục tiêu dài hạn",
-        "Quản lý năng lượng phiêu lưu để tránh phân tán",
-        "Tránh né trách nhiệm và cam kết",
-        "Tìm ý nghĩa sâu sắc trong các trải nghiệm",
-        "Học cách chấp nhận cấu trúc khi cần",
-        "Vượt qua sự thiếu kiên nhẫn",
-        "Giữ động lực khi gặp trở ngại"
-      ],
-      "traits": [
-        "Tò mò, phiêu lưu",
-        "Độc lập, sáng tạo",
-        "Linh hoạt, tự tin",
-        "Đam mê khám phá",
-        "Năng động, đổi mới",
-        "Tư duy nhanh nhạy",
-        "Tinh thần tiên phong"
-      ]
+      "compatibility": "Cộng hưởng tốt, khuyến khích tự do và lãnh đạo. Số Đường Đời 5 và Số Linh Hồn 1 kết hợp sự linh hoạt, tinh thần khám phá của số 5 với tinh thần lãnh đạo, tham vọng của số 1. Số 5 mang góc nhìn mới, số 1 định hướng mục tiêu lớn. Sự tương hợp này tạo cá nhân vừa linh hoạt vừa quyết đoán. Tuy nhiên, số 5 thấy số 1 quá nghiêm túc, số 1 thấy số 5 thiếu cam kết. Để hài hòa, số 5 trân trọng quyết đoán số 1, số 1 học cách linh hoạt. Khi cân bằng, cặp đôi này dẫn đầu du lịch hoặc truyền thông, tạo dự án đổi mới.",
+      "strengths": "Sự linh hoạt, tinh thần khám phá của Số Đường Đời 5 kết hợp với tinh thần lãnh đạo, tham vọng của Số Linh Hồn 1 tạo ra một cá nhân có khả năng dẫn dắt dự án đổi mới với góc nhìn đa dạng. Bạn có thể trở thành doanh nhân, nhà du lịch, hoặc nhà truyền thông, sử dụng năng lượng số 5 để tìm cách tiếp cận mới và quyết đoán số 1 để đạt mục tiêu. Số 5 mang đến khả năng thích nghi, giúp bạn vượt qua thử thách, trong khi số 1 cung cấp tầm nhìn để truyền cảm hứng. Sự kết hợp này hiệu quả trong du lịch hoặc truyền thông, nơi bạn kết hợp đổi mới và lãnh đạo để tạo giá trị.",
+      "challenges": "Sự bốc đồng của Số Đường Đời 5 xung đột với tính tập trung, tham vọng của Số Linh Hồn 1, gây căng thẳng khi cân bằng tự do và chiến lược. Bạn có thể gặp khó khăn trong việc giữ số 5 cam kết, dẫn đến chậm tiến độ dự án. Số 1 có xu hướng bỏ qua nhu cầu thay đổi, gây xung đột với tính linh hoạt của số 5. Sự thiếu cam kết của số 5 có thể làm suy yếu mục tiêu của số 1, gây bất đồng đội nhóm. Sự khác biệt này dẫn đến bất an, ảnh hưởng đến hiệu quả các dự án cần tổ chức chặt chẽ.",
+      "solutions": "Tìm dự án du lịch hoặc truyền thông để tận dụng linh hoạt số 5 và lãnh đạo số 1. Sử dụng khả năng thích nghi số 5 để điều hướng thử thách, kết hợp với quyết đoán số 1 để đảm bảo tiến độ. Lập kế hoạch linh hoạt để cân bằng tự do và chiến lược. Rèn luyện quản lý thời gian để duy trì cam kết, đảm bảo hiệu quả. Thực hành thiền hoặc yoga để quản lý căng thẳng, giữ cân bằng nội tâm. Xây dựng đội ngũ hỗ trợ để chia sẻ nhiệm vụ tổ chức, giúp bạn tập trung vào đổi mới. Tham gia dự án đổi mới, như truyền thông đa văn hóa, để tạo giá trị lâu dài."
     },
     {
       "soulUrge": 2,
-      "description": "Sự kết hợp giữa Số Đường Đời 5 và Số Linh Hồn 2 mang đến một cá nhân với sự pha trộn độc đáo giữa khát khao tự do và trái tim nhạy cảm, luôn tìm cách kết nối với người khác qua những trải nghiệm đa dạng. Số 5 mang lại tinh thần phiêu lưu, khả năng thích nghi, và niềm đam mê khám phá, trong khi số 2 thúc đẩy sự đồng cảm, khả năng hòa giải, và mong muốn xây dựng các mối quan hệ hài hòa. Bạn có thể là một nhà tổ chức du lịch, người làm truyền thông, hoặc cố vấn với khả năng sử dụng sự nhạy cảm để tạo ra sự kết nối trong các môi trường mới. Ví dụ, bạn có thể xuất sắc trong việc dẫn dắt một nhóm du lịch, nhưng cần học cách duy trì cam kết để giữ mối quan hệ ổn định. Tuy nhiên, mâu thuẫn giữa nhu cầu tự do (5) và khao khát hòa hợp (2) có thể khiến bạn cảm thấy giằng xé khi phải chọn giữa cá nhân và tập thể. Để phát triển, bạn cần học cách đặt ranh giới, duy trì cam kết, và cân bằng giữa phiêu lưu và trách nhiệm.",
-      "strengths": [
-        "Tư duy linh hoạt kết hợp với đồng cảm",
-        "Khả năng kết nối qua trải nghiệm đa dạng",
-        "Tinh thần phiêu lưu và nhạy cảm",
-        "Sự hài hòa trong giao tiếp và hỗ trợ",
-        "Tư duy sáng tạo, luôn tìm cơ hội mới",
-        "Khả năng truyền cảm hứng bằng sự cởi mở",
-        "Trực giác nhạy bén trong môi trường mới"
-      ],
-      "weaknesses": [
-        "Dễ mất tập trung vào mối quan hệ",
-        "Xu hướng tránh cam kết để giữ tự do",
-        "Khó cân bằng giữa tự do và hợp tác",
-        "Dễ bị cuốn vào những trải nghiệm mới",
-        "Dễ bị tổn thương bởi sự chỉ trích",
-        "Thiếu kỷ luật trong các dự án dài hạn",
-        "Dễ bị căng thẳng khi bị ràng buộc"
-      ],
-      "advice": [
-        "Đặt mục tiêu rõ ràng trong mối quan hệ",
-        "Sử dụng trải nghiệm để làm giàu cảm xúc",
-        "Tìm sự cân bằng giữa tự do và trách nhiệm",
-        "Học cách duy trì cam kết với người khác",
-        "Thực hành kỷ luật để hoàn thành dự án",
-        "Xây dựng ranh giới để bảo vệ năng lượng",
-        "Tìm hoạt động thư giãn để quản lý cảm xúc"
-      ],
-      "challenges": [
-        "Duy trì sự tập trung vào mối quan hệ",
-        "Quản lý năng lượng phiêu lưu để tránh phân tán",
-        "Tránh né trách nhiệm và cam kết",
-        "Tìm ý nghĩa trong các mối quan hệ",
-        "Học cách chấp nhận cấu trúc khi cần",
-        "Vượt qua nỗi sợ bị ràng buộc",
-        "Giữ động lực khi gặp trở ngại"
-      ],
-      "traits": [
-        "Tò mò, đồng cảm",
-        "Linh hoạt, hỗ trợ",
-        "Hài hòa, năng động",
-        "Đam mê khám phá",
-        "Nhạy cảm, sáng tạo",
-        "Chân thành, cởi mở",
-        "Trực giác nhạy bén"
-      ]
+      "compatibility": "Bổ sung tốt, cần cân bằng tự do và hòa hợp. Số Đường Đời 5 và Số Linh Hồn 2 kết hợp sự linh hoạt, tinh thần khám phá của số 5 với sự nhạy cảm, hợp tác của số 2. Số 5 mang góc nhìn mới, số 2 xây dựng mối quan hệ, hỗ trợ đội nhóm. Sự tương hợp này tạo cá nhân vừa linh hoạt vừa thấu hiểu. Tuy nhiên, số 5 thấy số 2 thiếu quyết đoán, số 2 thấy số 5 quá bốc đồng. Để hài hòa, số 5 trân trọng trực giác số 2, số 2 học cách hành động. Khi cân bằng, cặp đôi này dẫn đầu tư vấn hoặc truyền thông, xây dựng đội nhóm đoàn kết.",
+      "strengths": "Sự nhạy cảm, hợp tác của Số Linh Hồn 2 kết hợp với sự linh hoạt, khám phá của Số Đường Đời 5 tạo ra một cá nhân có khả năng xây dựng đội nhóm với góc nhìn mới. Bạn có thể trở thành cố vấn, nhà truyền thông, hoặc nhà du lịch, sử dụng trực giác số 2 để hiểu nhu cầu đội nhóm và năng lượng số 5 để tìm cách tiếp cận mới. Số 2 mang đến sự hòa hợp, giúp bạn đoàn kết đội nhóm, trong khi số 5 cung cấp khả năng thích nghi để vượt qua thử thách. Sự kết hợp này hiệu quả trong tư vấn hoặc truyền thông, nơi bạn kết hợp thấu hiểu và đổi mới để tạo giá trị.",
+      "challenges": "Sự bốc đồng của Số Đường Đời 5 xung đột với sự nhạy cảm, ưu tiên hòa hợp của Số Linh Hồn 2, gây căng thẳng khi cân bằng tự do và hợp tác. Bạn có thể gặp khó khăn trong việc kiên nhẫn với sự do dự của số 2, dẫn đến bất đồng trong đội nhóm. Số 5 có xu hướng bỏ qua cảm xúc, gây xung đột với nhu cầu thấu hiểu của số 2. Sự thiếu quyết đoán của số 2 có thể làm chậm tiến độ sáng kiến số 5, gây mất động lực. Sự khác biệt này dẫn đến bất an, ảnh hưởng đến hiệu quả các dự án cần sự thấu hiểu.",
+      "solutions": "Tập trung vào dự án tư vấn hoặc truyền thông để tận dụng linh hoạt số 5 và hợp tác số 2. Sử dụng trực giác số 2 để xây dựng đội nhóm, kết hợp với năng lượng số 5 để thúc đẩy đổi mới. Lập kế hoạch linh hoạt để cân bằng tự do và thấu hiểu. Rèn luyện giao tiếp để duy trì đoàn kết đội nhóm. Thực hành thiền hoặc yoga để quản lý căng thẳng, giữ cân bằng nội tâm. Xây dựng đội ngũ hỗ trợ để chia sẻ nhiệm vụ hòa giải, giúp bạn tập trung vào đổi mới. Tham gia dự án cộng đồng, như truyền thông xã hội, để tạo giá trị lâu dài."
     },
     {
       "soulUrge": 3,
-      "description": "Sự kết hợp giữa Số Đường Đời 5 và Số Linh Hồn 3 tạo ra một cá nhân tràn đầy năng lượng sáng tạo, với khát khao tự do và niềm đam mê biểu đạt bản thân qua nghệ thuật và giao tiếp. Số 5 mang lại tinh thần phiêu lưu, khả năng thích nghi, và niềm đam mê trải nghiệm mới, trong khi số 3 thúc đẩy sự biểu đạt, niềm vui, và khả năng truyền cảm hứng. Bạn có thể là một nghệ sĩ, nhà văn, hoặc người dẫn chương trình với khả năng thu hút mọi người bằng sự cởi mở và năng lượng tích cực. Sự kết hợp này mang lại sức sống mãnh liệt, khiến bạn trở thành người truyền cảm hứng trong các môi trường đa dạng. Tuy nhiên, cả số 5 và số 3 đều có xu hướng phân tán, dẫn đến khó khăn trong việc tập trung hoặc hoàn thành dự án. Ví dụ, bạn có thể xuất sắc trong việc tạo ra một tác phẩm nghệ thuật, nhưng cần học cách kỷ luật để hoàn thiện. Để phát triển, bạn cần học cách quản lý thời gian, tập trung vào mục tiêu, và cân bằng giữa sáng tạo và trách nhiệm.",
-      "strengths": [
-        "Sáng tạo kết hợp với tinh thần phiêu lưu",
-        "Khả năng truyền cảm hứng qua giao tiếp",
-        "Tinh thần lạc quan, thu hút mọi người",
-        "Tư duy biểu đạt xuất sắc, đầy cảm xúc",
-        "Khả năng thích nghi với môi trường mới",
-        "Năng lượng tích cực, dễ tạo kết nối",
-        "Tư duy sáng tạo, luôn tìm cơ hội"
-      ],
-      "weaknesses": [
-        "Dễ bị phân tâm bởi các ý tưởng mới",
-        "Xu hướng che giấu cảm xúc bằng sự vui vẻ",
-        "Khó tập trung vào mục tiêu dài hạn",
-        "Dễ bị căng thẳng khi không được công nhận",
-        "Thiếu kỷ luật trong các dự án sáng tạo",
-        "Dễ bị cuốn vào những trải nghiệm mới",
-        "Khó cân bằng giữa tự do và trách nhiệm"
-      ],
-      "advice": [
-        "Tập trung vào một dự án sáng tạo tại một thời điểm",
-        "Sử dụng nghệ thuật để bày tỏ cảm xúc thật",
-        "Kết hợp sáng tạo với kỷ luật để đạt kết quả",
-        "Học cách quản lý thời gian hiệu quả",
-        "Tìm người hỗ trợ để giữ bạn đi đúng hướng",
-        "Chấp nhận phê bình như cơ hội học hỏi",
-        "Thực hành thiền để quản lý cảm xúc"
-      ],
-      "challenges": [
-        "Quản lý năng lượng sáng tạo để tránh phân tán",
-        "Đối mặt với cảm xúc tiêu cực thay vì che giấu",
-        "Duy trì sự kiên trì trong các dự án",
-        "Tìm sự cân bằng giữa sáng tạo và thực tế",
-        "Vượt qua nỗi sợ bị chỉ trích",
-        "Học cách tập trung vào mục tiêu",
-        "Giữ động lực khi gặp trở ngại"
-      ],
-      "traits": [
-        "Sáng tạo, phiêu lưu",
-        "Biểu cảm, lạc quan",
-        "Truyền cảm hứng, năng động",
-        "Tư duy nghệ thuật",
-        "Linh hoạt, cởi mở",
-        "Tinh thần khám phá",
-        "Năng lượng tích cực"
-      ]
+      "compatibility": "Cộng hưởng mạnh mẽ, khơi dậy sáng tạo và tự do. Số Đường Đời 5 và Số Linh Hồn 3 kết hợp sự linh hoạt, tinh thần khám phá của số 5 với sự lạc quan, khả năng biểu đạt của số 3. Số 5 mang góc nhìn mới, số 3 lan tỏa ý tưởng qua truyền thông. Sự tương hợp này tạo cá nhân vừa linh hoạt vừa lôi cuốn. Tuy nhiên, số 5 thấy số 3 phân tán, số 3 thấy số 5 thiếu cam kết. Để hài hòa, số 5 trân trọng sự sáng tạo của số 3, số 3 học cách tập trung. Khi cân bằng, cặp đôi này dẫn đầu nghệ thuật hoặc truyền thông, tạo dự án đổi mới.",
+      "strengths": "Sự lạc quan, sáng tạo của Số Linh Hồn 3 kết hợp với sự linh hoạt, khám phá của Số Đường Đời 5 tạo ra một cá nhân có khả năng truyền cảm hứng qua các dự án đổi mới và sáng tạo. Bạn có thể trở thành nghệ sĩ, nhà truyền thông, hoặc nhà du lịch, sử dụng năng lượng số 3 để lan tỏa ý tưởng và khả năng thích nghi số 5 để vượt qua thử thách. Số 3 mang đến sự biểu đạt, giúp bạn lan tỏa tầm nhìn, trong khi số 5 cung cấp sự linh hoạt để điều hướng thay đổi. Sự kết hợp này hiệu quả trong nghệ thuật hoặc truyền thông, nơi bạn kết hợp sáng tạo và đổi mới để tạo giá trị.",
+      "challenges": "Sự phân tán của Số Linh Hồn 3 xung đột với sự bốc đồng của Số Đường Đời 5, gây căng thẳng khi cân bằng sáng tạo và cam kết. Bạn có thể gặp khó khăn trong việc ưu tiên mục tiêu, dẫn đến chậm tiến độ dự án. Số 5 có xu hướng tránh cam kết, gây xung đột với nhu cầu biểu đạt của số 3. Sự thiếu tập trung của số 3 có thể làm suy yếu sáng kiến số 5, gây mất động lực. Sự khác biệt này dẫn đến bất an, ảnh hưởng đến hiệu quả các dự án cần tổ chức chặt chẽ.",
+      "solutions": "Tìm dự án nghệ thuật hoặc truyền thông để tận dụng sáng tạo số 3 và linh hoạt số 5. Sử dụng năng lượng số 3 để truyền cảm hứng, kết hợp với khả năng thích nghi số 5 để điều hướng thử thách. Lập kế hoạch linh hoạt để cân bằng sáng tạo và cam kết. Rèn luyện quản lý thời gian để duy trì tiến độ, đảm bảo hiệu quả. Thực hành thiền hoặc viết nhật ký để quản lý căng thẳng, giữ cân bằng nội tâm. Xây dựng đội ngũ hỗ trợ để chia sẻ nhiệm vụ tổ chức, giúp bạn tập trung vào đổi mới. Tham gia dự án đổi mới, như truyền thông sáng tạo, để tạo giá trị lâu dài."
     },
     {
       "soulUrge": 4,
-      "description": "Sự kết hợp giữa Số Đường Đời 5 và Số Linh Hồn 4 mang đến một cá nhân với sự pha trộn độc đáo giữa khát khao tự do và sự thực tế, luôn tìm cách cân bằng giữa phiêu lưu và ổn định. Số 5 mang lại tinh thần phiêu lưu, khả năng thích nghi, và niềm đam mê trải nghiệm mới, trong khi số 4 thúc đẩy sự kỷ luật, tư duy có hệ thống, và mong muốn xây dựng nền tảng vững chắc. Bạn có thể là một nhà tổ chức sự kiện, nhà phát triển dự án, hoặc nhà đổi mới với khả năng kết hợp sự sáng tạo và sự thực tế để tạo ra những kết quả đáng tin cậy. Ví dụ, bạn có thể xuất sắc trong việc lập kế hoạch cho một dự án phiêu lưu, nhưng cần học cách duy trì kỷ luật để hoàn thành. Tuy nhiên, mâu thuẫn giữa nhu cầu tự do (5) và khao khát ổn định (4) có thể khiến bạn cảm thấy giằng xé khi phải chọn giữa khám phá và trách nhiệm. Để phát triển, bạn cần học cách đặt mục tiêu rõ ràng, cân bằng giữa phiêu lưu và tổ chức, và sử dụng năng lượng sáng tạo một cách có hệ thống.",
-      "strengths": [
-        "Tư duy linh hoạt kết hợp với kỷ luật",
-        "Khả năng tổ chức các trải nghiệm mới",
-        "Tinh thần phiêu lưu và thực tế",
-        "Sự kiên nhẫn trong việc đạt mục tiêu",
-        "Tư duy sáng tạo, luôn tìm cơ hội",
-        "Khả năng thích nghi với môi trường mới",
-        "Tinh thần hợp tác với tư duy dài hạn"
-      ],
-      "weaknesses": [
-        "Dễ mất tập trung vào mục tiêu dài hạn",
-        "Xu hướng tránh cam kết để giữ tự do",
-        "Khó cân bằng giữa tự do và ổn định",
-        "Dễ bị cuốn vào những trải nghiệm mới",
-        "Thiếu kỷ luật trong các dự án dài hạn",
-        "Dễ bị căng thẳng khi bị ràng buộc",
-        "Khó chấp nhận cấu trúc khi cần"
-      ],
-      "advice": [
-        "Đặt mục tiêu rõ ràng và chia nhỏ để theo đuổi",
-        "Sử dụng trải nghiệm để làm giàu kế hoạch",
-        "Tìm sự cân bằng giữa tự do và trách nhiệm",
-        "Học cách hoàn thành những gì đã bắt đầu",
-        "Thực hành kỷ luật để duy trì tiến độ",
-        "Tìm người hỗ trợ để giữ bạn đi đúng hướng",
-        "Thư giãn để quản lý năng lượng phiêu lưu"
-      ],
-      "challenges": [
-        "Duy trì sự tập trung vào mục tiêu",
-        "Quản lý năng lượng phiêu lưu",
-        "Tránh né trách nhiệm và cam kết",
-        "Tìm ý nghĩa trong các trải nghiệm",
-        "Học cách chấp nhận cấu trúc khi cần",
-        "Vượt qua nỗi sợ bị ràng buộc",
-        "Giữ động lực khi gặp trở ngại"
-      ],
-      "traits": [
-        "Tò mò, thực tế",
-        "Kỷ luật, linh hoạt",
-        "Phiêu lưu, kiên nhẫn",
-        "Đam mê khám phá",
-        "Tư duy sáng tạo",
-        "Tinh thần hợp tác",
-        "Tầm nhìn dài hạn"
-      ]
+      "compatibility": "Bổ sung tốt, cần cân bằng tự do và kỷ luật. Số Đường Đời 5 và Số Linh Hồn 4 kết hợp sự linh hoạt, tinh thần khám phá của số 5 với kỷ luật, tổ chức của số 4. Số 5 mang góc nhìn mới, số 4 cung cấp nền tảng vững chắc. Số 4 giúp số 5 hoàn thành mục tiêu, số 5 làm mới kế hoạch của số 4. Tuy nhiên, số 5 thấy số 4 cứng nhắc, số 4 thấy số 5 thiếu cam kết. Để hài hòa, số 5 trân trọng tổ chức số 4, số 4 học cách linh hoạt. Khi cân bằng, cặp đôi này dẫn đầu quản lý đổi mới hoặc kỹ thuật, tạo dự án bền vững.",
+      "strengths": "Kỷ luật, tổ chức của Số Linh Hồn 4 kết hợp với sự linh hoạt, khám phá của Số Đường Đời 5 tạo ra một cá nhân có khả năng xây dựng dự án linh hoạt với nền tảng vững chắc. Bạn có thể trở thành nhà quản lý, kỹ sư, hoặc nhà tư vấn, sử dụng kỷ luật số 4 để triển khai kế hoạch và khả năng thích nghi số 5 để vượt qua thử thách. Số 4 mang đến sự ổn định, giúp bạn hoàn thành mục tiêu, trong khi số 5 cung cấp góc nhìn mới để làm mới dự án. Sự kết hợp này hiệu quả trong quản lý đổi mới hoặc kỹ thuật, nơi bạn kết hợp thực tiễn và đổi mới để tạo giá trị.",
+      "challenges": "Sự bốc đồng của Số Đường Đời 5 xung đột với sự kỷ luật, cứng nhắc của Số Linh Hồn 4, gây căng thẳng khi cân bằng tự do và tổ chức. Bạn có thể gặp khó khăn trong việc kiên nhẫn với quy trình chi tiết của số 4, dẫn đến bất đồng trong dự án. Số 5 có xu hướng tránh cam kết, gây xung đột với nhu cầu ổn định của số 4. Sự thiếu cam kết của số 5 có thể làm chậm tiến độ kế hoạch số 4, gây mất động lực. Sự khác biệt này dẫn đến bất an, ảnh hưởng đến hiệu quả các dự án cần tổ chức chặt chẽ.",
+      "solutions": "Tìm dự án quản lý đổi mới hoặc kỹ thuật để tận dụng linh hoạt số 5 và kỷ luật số 4. Sử dụng kỷ luật số 4 để đảm bảo hiệu quả, kết hợp với khả năng thích nghi số 5 để điều hướng thử thách. Lập kế hoạch linh hoạt để cân bằng tự do và thực tiễn. Rèn luyện cam kết để duy trì tiến độ, đảm bảo hiệu quả. Thực hành thiền hoặc viết nhật ký để quản lý căng thẳng, giữ cân bằng nội tâm. Xây dựng đội ngũ hỗ trợ để chia sẻ nhiệm vụ tổ chức, giúp bạn tập trung vào đổi mới. Tham gia dự án đổi mới, như phát triển công nghệ, để tạo giá trị lâu dài."
     },
     {
       "soulUrge": 5,
-      "description": "Sự kết hợp giữa Số Đường Đời 5 và Số Linh Hồn 5 nhân đôi khát khao tự do, tinh thần phiêu lưu, và niềm đam mê khám phá những chân trời mới. Bạn là hiện thân của sự cởi mở, với khả năng thích nghi vượt trội, tư duy sáng tạo, và năng lượng tràn đầy để trải nghiệm cuộc sống một cách phong phú. Số 5 ở cả hai khía cạnh này mang lại sức sống mãnh liệt, khiến bạn trở thành người truyền cảm hứng, luôn sẵn sàng thử nghiệm và đổi mới. Bạn có thể là một nhà thám hiểm, nghệ sĩ tự do, hoặc nhà đổi mới công nghệ với khả năng tạo ra những ý tưởng đột phá. Tuy nhiên, sự tập trung quá mức vào tự do có thể khiến bạn khó duy trì cam kết hoặc hoàn thành các dự án dài hạn. Ví dụ, bạn có thể xuất sắc trong việc khởi xướng một ý tưởng mới, nhưng cần học cách kỷ luật để đưa nó đến thành công. Để phát triển, bạn cần học cách đặt mục tiêu cụ thể, quản lý năng lượng, và cân bằng giữa phiêu lưu và trách nhiệm.",
-      "strengths": [
-        "Khả năng thích nghi và sáng tạo vượt trội",
-        "Tinh thần phiêu lưu, không ngại rủi ro",
-        "Tư duy nhanh nhạy, luôn tìm cơ hội",
-        "Năng lượng tích cực, thu hút người khác",
-        "Tư duy đổi mới, thử nghiệm ý tưởng",
-        "Khả năng truyền cảm hứng bằng sự cởi mở",
-        "Tinh thần tự do, linh hoạt"
-      ],
-      "weaknesses": [
-        "Dễ mất tập trung vào mục tiêu dài hạn",
-        "Xu hướng tránh cam kết và trách nhiệm",
-        "Khó duy trì kỷ luật trong công việc",
-        "Dễ bị cuốn vào những trải nghiệm mới",
-        "Thiếu kiên nhẫn với các chi tiết",
-        "Dễ bị căng thẳng khi bị ràng buộc",
-        "Khó cân bằng giữa tự do và hợp tác"
-      ],
-      "advice": [
-        "Đặt mục tiêu rõ ràng và chia nhỏ để theo đuổi",
-        "Sử dụng trải nghiệm để làm giàu sáng tạo",
-        "Tìm sự cân bằng giữa tự do và trách nhiệm",
-        "Học cách hoàn thành những gì đã bắt đầu",
-        "Thực hành kỷ luật để duy trì tiến độ",
-        "Tìm người hỗ trợ để giữ bạn đi đúng hướng",
-        "Thư giãn để quản lý năng lượng phiêu lưu"
-      ],
-      "challenges": [
-        "Duy trì sự tập trung vào mục tiêu dài hạn",
-        "Quản lý năng lượng phiêu lưu để tránh phân tán",
-        "Tránh né trách nhiệm và cam kết",
-        "Tìm ý nghĩa sâu sắc trong các trải nghiệm",
-        "Học cách chấp nhận cấu trúc khi cần",
-        "Vượt qua sự thiếu kiên nhẫn",
-        "Giữ động lực khi gặp trở ngại"
-      ],
-      "traits": [
-        "Tò mò, phiêu lưu",
-        "Sáng tạo, linh hoạt",
-        "Năng động, tự do",
-        "Đam mê khám phá",
-        "Tư duy đổi mới",
-        "Truyền cảm hứng",
-        "Tinh thần cởi mở"
-      ]
+      "compatibility": "Cộng hưởng mạnh mẽ, tạo năng lượng tự do vượt trội. Số Đường Đời 5 và Số Linh Hồn 5 nhân đôi sự linh hoạt, tinh thần khám phá, tạo cá nhân xuất sắc trong việc điều hướng thay đổi. Cả hai đều khao khát tự do, đổi mới, tạo môi trường năng động. Tuy nhiên, số 5 kép có thể dẫn đến bốc đồng, thiếu cam kết, gây chậm trễ trong dự án. Để hài hòa, cần phát triển kỷ luật và ưu tiên mục tiêu. Khi cân bằng, cặp đôi này dẫn đầu du lịch hoặc truyền thông, tạo dự án đổi mới đầy cảm hứng.",
+      "strengths": "Sự linh hoạt, tinh thần khám phá của Số Đường Đời 5 và Số Linh Hồn 5 tạo ra một cá nhân có khả năng dẫn dắt dự án đổi mới với góc nhìn đa dạng. Bạn có thể trở thành nhà du lịch, nhà truyền thông, hoặc nhà tư vấn, sử dụng năng lượng số 5 để tìm cách tiếp cận mới và thích nghi nhanh với thử thách. Số 5 mang đến khả năng điều hướng thay đổi, giúp bạn vượt qua rào cản, tạo môi trường năng động. Sự kết hợp này hiệu quả trong du lịch hoặc truyền thông, nơi bạn kết hợp đổi mới và thích nghi để tạo giá trị lâu dài.",
+      "challenges": "Sự bốc đồng và thiếu cam kết của Số 5 kép có thể gây khó khăn trong việc ưu tiên mục tiêu, dẫn đến chậm tiến độ dự án. Bạn có thể gặp khó khăn trong việc duy trì tập trung, gây bất đồng trong đội nhóm. Số 5 có xu hướng tránh trách nhiệm, dẫn đến mất cơ hội trong môi trường cần tổ chức. Sự thiếu kỷ luật có thể khiến bạn bị kìm hãm trong các dự án dài hạn, ảnh hưởng đến hiệu quả. Ngoài ra, áp lực từ việc theo đuổi nhiều ý tưởng có thể dẫn đến kiệt sức, làm giảm động lực.",
+      "solutions": "Tập trung vào dự án du lịch hoặc truyền thông để tận dụng linh hoạt số 5 kép. Rèn luyện kỷ luật và quản lý thời gian để ưu tiên mục tiêu, đảm bảo tiến độ. Lập kế hoạch linh hoạt để cân bằng tự do và trách nhiệm. Thực hành thiền hoặc viết nhật ký để quản lý căng thẳng, duy trì cân bằng nội tâm. Xây dựng đội ngũ hỗ trợ để chia sẻ nhiệm vụ tổ chức, giúp bạn tập trung vào đổi mới. Tham gia dự án đổi mới, như truyền thông toàn cầu, để tạo giá trị lâu dài. Tìm cố vấn để hỗ trợ cân bằng tự do và cam kết."
     },
     {
       "soulUrge": 6,
-      "description": "Sự kết hợp giữa Số Đường Đời 5 và Số Linh Hồn 6 mang đến một cá nhân với sự pha trộn độc đáo giữa khát khao tự do và lòng nhân ái sâu sắc, luôn tìm cách hỗ trợ người khác qua những trải nghiệm đa dạng. Số 5 mang lại tinh thần phiêu lưu, khả năng thích nghi, và niềm đam mê khám phá, trong khi số 6 thúc đẩy trách nhiệm, sự chăm sóc, và mong muốn xây dựng một cộng đồng hài hòa. Bạn có thể là một nhà tổ chức cộng đồng, nhà giáo dục, hoặc người dẫn chương trình với khả năng sử dụng sự cởi mở và sự chân thành để tạo ra sự kết nối. Ví dụ, bạn có thể xuất sắc trong việc tổ chức một sự kiện cộng đồng, nhưng cần học cách chăm sóc bản thân để tránh kiệt sức. Tuy nhiên, mâu thuẫn giữa nhu cầu tự do (5) và trách nhiệm với người khác (6) có thể khiến bạn cảm thấy giằng xé khi phải chọn giữa cá nhân và tập thể. Để phát triển, bạn cần học cách đặt ranh giới, chăm sóc bản thân, và cân bằng giữa phiêu lưu và trách nhiệm.",
-      "strengths": [
-        "Tư duy linh hoạt kết hợp với nhân ái",
-        "Khả năng hỗ trợ qua trải nghiệm đa dạng",
-        "Tinh thần phiêu lưu và chăm sóc",
-        "Sự hài hòa trong giao tiếp và hỗ trợ",
-        "Tư duy sáng tạo, luôn tìm cơ hội mới",
-        "Khả năng truyền cảm hứng bằng sự chân thành",
-        "Trực giác nhạy bén trong chăm sóc"
-      ],
-      "weaknesses": [
-        "Dễ đặt nhu cầu người khác lên trên bản thân",
-        "Khó cân bằng giữa tự do và trách nhiệm",
-        "Xu hướng lo lắng quá mức cho người khác",
-        "Dễ bị căng thẳng khi trách nhiệm lớn",
-        "Thiếu thời gian để chăm sóc bản thân",
-        "Dễ bị cuốn vào những trải nghiệm mới",
-        "Khó duy trì cam kết dài hạn"
-      ],
-      "advice": [
-        "Học cách chăm sóc bản thân trước khi giúp người khác",
-        "Sử dụng trải nghiệm để làm giàu cảm xúc",
-        "Tìm sự cân bằng giữa tự do và trách nhiệm",
-        "Xây dựng ranh giới để bảo vệ năng lượng",
-        "Thực hành quản lý thời gian để cân bằng",
-        "Tìm niềm vui trong việc hỗ trợ người khác",
-        "Học cách duy trì cam kết với cộng đồng"
-      ],
-      "challenges": [
-        "Quản lý cảm xúc cá nhân để tránh kiệt sức",
-        "Tránh hy sinh quá mức cho người khác",
-        "Duy trì sự độc lập trong trách nhiệm",
-        "Tìm sự cân bằng giữa lý trí và tình cảm",
-        "Học cách từ chối khi cần thiết",
-        "Vượt qua nỗi sợ bị ràng buộc",
-        "Giữ động lực khi áp lực lớn"
-      ],
-      "traits": [
-        "Nhân ái, phiêu lưu",
-        "Linh hoạt, hỗ trợ",
-        "Hài hòa, năng động",
-        "Tư duy cảm xúc",
-        "Chân thành, chăm sóc",
-        "Trực giác nhạy bén",
-        "Tinh thần cởi mở"
-      ]
+      "compatibility": "Bổ sung tốt, cần cân bằng tự do và chăm sóc. Số Đường Đời 5 và Số Linh Hồn 6 kết hợp sự linh hoạt, tinh thần khám phá của số 5 với trách nhiệm, khả năng nuôi dưỡng của số 6. Số 5 mang góc nhìn mới, số 6 chăm sóc đội nhóm, tạo môi trường hỗ trợ. Số 6 giúp số 5 ổn định, số 5 làm mới kế hoạch của số 6. Tuy nhiên, số 5 thấy số 6 quá chăm sóc, số 6 thấy số 5 thiếu cam kết. Để hài hòa, số 5 trân trọng sự chu đáo số 6, số 6 học cách linh hoạt. Khi cân bằng, cặp đôi này dẫn đầu y tế hoặc tư vấn, tạo dự án ý nghĩa.",
+      "strengths": "Trách nhiệm, lòng trắc ẩn của Số Linh Hồn 6 kết hợp với sự linh hoạt, khám phá của Số Đường Đời 5 tạo ra một cá nhân có khả năng xây dựng đội nhóm với góc nhìn mới. Bạn có thể trở thành nhân viên y tế, cố vấn, hoặc nhà truyền thông, sử dụng lòng trắc ẩn số 6 để hỗ trợ cộng đồng và khả năng thích nghi số 5 để vượt qua thử thách. Số 6 mang đến khả năng nuôi dưỡng, giúp bạn tạo môi trường hỗ trợ, trong khi số 5 cung cấp sự linh hoạt để điều hướng thay đổi. Sự kết hợp này hiệu quả trong y tế hoặc tư vấn, nơi bạn kết hợp chăm sóc và đổi mới để tạo giá trị.",
+      "challenges": "Sự bốc đồng của Số Đường Đời 5 xung đột với sự chăm sóc, trách nhiệm của Số Linh Hồn 6, gây căng thẳng khi cân bằng tự do và chăm sóc. Bạn có thể gặp khó khăn trong việc kiên nhẫn với sự chi tiết của số 6, dẫn đến bất đồng trong đội nhóm. Số 5 có xu hướng tránh cam kết, gây xung đột với nhu cầu thấu hiểu của số 6. Sự thiếu cam kết của số 5 có thể làm chậm tiến độ kế hoạch số 6, gây mất động lực. Sự khác biệt này dẫn đến bất an, ảnh hưởng đến hiệu quả các dự án cần sự thấu hiểu.",
+      "solutions": "Tập trung vào dự án y tế hoặc tư vấn để tận dụng linh hoạt số 5 và chăm sóc số 6. Sử dụng lòng trắc ẩn số 6 để xây dựng đội nhóm, kết hợp với khả năng thích nghi số 5 để điều hướng thử thách. Đặt ranh giới rõ ràng trong trách nhiệm chăm sóc để tránh kiệt sức. Rèn luyện cam kết để duy trì tiến độ, đảm bảo hiệu quả. Thực hành thiền hoặc yoga để quản lý căng thẳng, giữ cân bằng nội tâm. Xây dựng đội ngũ hỗ trợ để chia sẻ nhiệm vụ chăm sóc, giúp bạn tập trung vào đổi mới. Tham gia dự án cộng đồng, như y tế công cộng, để tạo giá trị lâu dài."
     },
     {
       "soulUrge": 7,
-      "description": "Sự kết hợp giữa Số Đường Đời 5 và Số Linh Hồn 7 mang đến một cá nhân với sự pha trộn độc đáo giữa khát khao tự do và chiều sâu nội tâm, luôn khao khát khám phá ý nghĩa sâu xa của cuộc sống qua những trải nghiệm mới. Số 5 mang lại tinh thần phiêu lưu, khả năng thích nghi, và niềm đam mê khám phá, trong khi số 7 thúc đẩy sự suy ngẫm, trực giác mạnh mẽ, và mong muốn thấu hiểu bản thân và thế giới. Bạn có thể là một nhà nghiên cứu, nhà thám hiểm tâm linh, hoặc cố vấn với khả năng sử dụng trực giác và sự cởi mở để tìm ra những giải pháp sâu sắc. Ví dụ, bạn có thể xuất sắc trong việc khám phá một nền văn hóa mới, nhưng cần học cách chia sẻ tri thức để kết nối với người khác. Tuy nhiên, số 7 có xu hướng hướng nội, khiến bạn dễ cô lập bản thân, trong khi số 5 khao khát tự do, dẫn đến mâu thuẫn nội tại. Để phát triển, bạn cần học cách giao tiếp, cân bằng giữa suy ngẫm và hành động, và kết nối với cộng đồng.",
-      "strengths": [
-        "Tư duy linh hoạt kết hợp với trực giác",
-        "Khả năng khám phá tri thức qua trải nghiệm",
-        "Tinh thần phiêu lưu và sâu sắc",
-        "Sự nhạy bén với năng lượng và cảm xúc",
-        "Tư duy sáng tạo, luôn tìm ý nghĩa",
-        "Khả năng truyền cảm hứng bằng tri thức",
-        "Tinh thần cởi mở với tư duy tri thức"
-      ],
-      "weaknesses": [
-        "Xu hướng cô lập bản thân, khó kết nối",
-        "Khó diễn đạt ý tưởng hoặc cảm xúc phức tạp",
-        "Dễ phân tích quá mức, dẫn đến do dự",
-        "Dễ bị căng thẳng khi không tìm ra ý nghĩa",
-        "Thiếu kiên nhẫn với những người không hiểu",
-        "Dễ bị cuốn vào những trải nghiệm mới",
-        "Khó cân bằng giữa suy ngẫm và hành động"
-      ],
-      "advice": [
-        "Học cách chia sẻ ý tưởng với người khác",
-        "Tận dụng trực giác để khám phá hiệu quả",
-        "Cân bằng giữa suy ngẫm và hành động thực tế",
-        "Kết nối với cộng đồng có cùng chí hướng",
-        "Thực hành giao tiếp để diễn đạt rõ ràng",
-        "Tìm hoạt động thư giãn để giảm áp lực",
-        "Chấp nhận rằng không phải mọi thứ đều cần hiểu"
-      ],
-      "challenges": [
-        "Vượt qua sự cô lập để kết nối xã hội",
-        "Quản lý xu hướng phân tích quá mức",
-        "Học cách diễn đạt ý tưởng dễ hiểu",
-        "Tìm niềm vui trong hành động thay vì suy ngẫm",
-        "Duy trì động lực khi gặp trở ngại",
-        "Tránh căng thẳng từ việc tìm kiếm ý nghĩa",
-        "Cân bằng giữa tự do và trực giác"
-      ],
-      "traits": [
-        "Sâu sắc, phiêu lưu",
-        "Linh hoạt, phân tích",
-        "Tò mò, trực giác",
-        "Tư duy tri thức",
-        "Tinh thần khám phá",
-        "Truyền cảm hứng",
-        "Tinh thần cởi mở"
-      ]
+      "compatibility": "Bổ sung tốt, tạo chiều sâu tri thức và tự do. Số Đường Đời 5 và Số Linh Hồn 7 kết hợp sự linh hoạt, tinh thần khám phá của số 5 với trực giác, sự sâu sắc của số 7. Số 5 mang góc nhìn mới, số 7 phân tích ý nghĩa sâu xa, mang chiều sâu tư duy. Số 7 giúp số 5 đưa ra quyết định cân nhắc, số 5 làm mới tư duy của số 7. Tuy nhiên, số 7 hướng nội, cần không gian riêng, xung đột với năng lượng hướng ngoại số 5. Để hài hòa, số 5 trân trọng suy ngẫm số 7, số 7 chia sẻ tri thức. Khi cân bằng, cặp đôi này dẫn đầu nghiên cứu hoặc truyền thông, tạo dự án ý nghĩa.",
+      "strengths": "Sự sâu sắc, trực giác của Số Linh Hồn 7 kết hợp với sự linh hoạt, khám phá của Số Đường Đời 5 tạo ra một cá nhân có khả năng dẫn dắt dự án với sự thấu hiểu và đổi mới. Bạn có thể trở thành nhà nghiên cứu, nhà truyền thông, hoặc nhà tư vấn, sử dụng trực giác số 7 để phân tích và khả năng thích nghi số 5 để vượt qua thử thách. Số 7 mang đến chiều sâu tư duy, giúp bạn khám phá ý nghĩa, trong khi số 5 cung cấp sự linh hoạt để điều hướng thay đổi. Sự kết hợp này hiệu quả trong nghiên cứu hoặc truyền thông, nơi bạn kết hợp tri thức và đổi mới để tạo giá trị.",
+      "challenges": "Sự hướng nội của Số Linh Hồn 7 xung đột với sự bốc đồng, hướng ngoại của Số Đường Đời 5, gây căng thẳng khi cân bằng suy ngẫm và hành động. Bạn có thể gặp khó khăn trong việc kiên nhẫn với sự xa cách của số 7, dẫn đến bất đồng trong dự án. Số 5 có xu hướng tránh cam kết, gây xung đột với nhu cầu phân tích của số 7. Sự thiếu cam kết của số 5 có thể làm chậm tiến độ nghiên cứu số 7, gây mất động lực. Sự khác biệt này dẫn đến bất an, ảnh hưởng đến hiệu quả các dự án cần sự thấu hiểu.",
+      "solutions": "Tìm dự án nghiên cứu hoặc truyền thông để tận dụng linh hoạt số 5 và tri thức số 7. Sử dụng trực giác số 7 để dẫn dắt quyết định, kết hợp với khả năng thích nghi số 5 để điều hướng thử thách. Đặt thời gian suy ngẫm để đảm bảo chất lượng, cân bằng với hành động. Rèn luyện giao tiếp để chia sẻ tri thức, duy trì đoàn kết đội nhóm. Thực hành thiền hoặc viết nhật ký để quản lý căng thẳng, giữ cân bằng nội tâm. Xây dựng đội ngũ hỗ trợ để chia sẻ nhiệm vụ phân tích, giúp bạn tập trung vào đổi mới. Tham gia dự án tri thức, như truyền thông khoa học, để tạo giá trị lâu dài."
     },
     {
       "soulUrge": 8,
-      "description": "Sự kết hợp giữa Số Đường Đời 5 và Số Linh Hồn 8 mang đến một cá nhân với sự pha trộn độc đáo giữa khát khao tự do và tham vọng quyền lực, luôn tìm cách đạt được thành công lớn qua những trải nghiệm đa dạng. Số 5 mang lại tinh thần phiêu lưu, khả năng thích nghi, và niềm đam mê khám phá, trong khi số 8 thúc đẩy tư duy chiến lược, khả năng quản lý, và mong muốn kiểm soát các nguồn lực. Bạn có thể là một doanh nhân, nhà đầu tư, hoặc nhà đổi mới với khả năng kết hợp sự cởi mở và sự thực tế để tạo ra những dự án có giá trị. Ví dụ, bạn có thể xuất sắc trong việc khởi nghiệp trong một lĩnh vực mới, nhưng cần học cách duy trì kỷ luật để đạt được thành công lâu dài. Tuy nhiên, số 8 có thể khiến bạn bị ám ảnh bởi thành công, trong khi số 5 khao khát tự do, dẫn đến nguy cơ mất tập trung hoặc kiểm soát quá mức. Để phát triển, bạn cần học cách cân bằng giữa vật chất và tinh thần, đặt mục tiêu rõ ràng, và sử dụng tham vọng một cách có tổ chức.",
-      "strengths": [
-        "Tư duy linh hoạt kết hợp với chiến lược",
-        "Khả năng quản lý qua trải nghiệm đa dạng",
-        "Tinh thần phiêu lưu và tham vọng",
-        "Tự tin trong việc quản lý nguồn lực",
-        "Tư duy sáng tạo, luôn tìm cơ hội",
-        "Khả năng truyền cảm hứng bằng hành động",
-        "Tinh thần cởi mở với tư duy dài hạn"
-      ],
-      "weaknesses": [
-        "Dễ bị ám ảnh bởi thành công và quyền lực",
-        "Xu hướng kiểm soát quá mức người khác",
-        "Khó cân bằng giữa tự do và trách nhiệm",
-        "Dễ bị căng thẳng khi không đạt kỳ vọng",
-        "Dễ bị cuốn vào những trải nghiệm mới",
-        "Thiếu kỷ luật trong các dự án dài hạn",
-        "Khó duy trì cam kết"
-      ],
-      "advice": [
-        "Tìm sự cân bằng giữa vật chất và tinh thần",
-        "Sử dụng tham vọng để phục vụ mục đích cao cả",
-        "Học cách buông bỏ kiểm soát khi cần thiết",
-        "Đặt mục tiêu rõ ràng và chia nhỏ để theo đuổi",
-        "Thực hành kỷ luật để duy trì tiến độ",
-        "Tìm người hỗ trợ để giữ bạn đi đúng hướng",
-        "Thư giãn để quản lý năng lượng phiêu lưu"
-      ],
-      "challenges": [
-        "Quản lý tham vọng để tránh ám ảnh",
-        "Tránh kiểm soát quá mức trong mối quan hệ",
-        "Tìm ý nghĩa ngoài thành công vật chất",
-        "Giảm căng thẳng từ áp lực thành công",
-        "Học cách duy trì cam kết dài hạn",
-        "Vượt qua nỗi sợ thất bại",
-        "Giữ động lực khi gặp trở ngại"
-      ],
-      "traits": [
-        "Chiến lược, phiêu lưu",
-        "Tham vọng, linh hoạt",
-        "Tự tin, năng động",
-        "Tư duy dài hạn",
-        "Sáng tạo, quản lý",
-        "Tinh thần cởi mở",
-        "Tầm nhìn lớn"
-      ]
+      "compatibility": "Bổ sung tốt, cần cân bằng tự do và tham vọng. Số Đường Đời 5 và Số Linh Hồn 8 kết hợp sự linh hoạt, tinh thần khám phá của số 5 với khả năng quản lý, tham vọng của số 8. Số 5 mang góc nhìn mới, số 8 triển khai hiệu quả, biến tầm nhìn thành hiện thực. Số 8 mang kỷ luật tài chính, số 5 làm mới chiến lược của số 8. Tuy nhiên, số 8 ưu tiên vật chất, xung đột với tính tự do của số 5. Để hài hòa, số 5 trân trọng hiệu quả số 8, số 8 học cách linh hoạt. Khi cân bằng, cặp đôi này dẫn đầu kinh doanh hoặc quản lý đổi mới, tạo dự án thành công.",
+      "strengths": "Tham vọng, khả năng quản lý của Số Linh Hồn 8 kết hợp với sự linh hoạt, khám phá của Số Đường Đời 5 tạo ra một cá nhân có khả năng dẫn dắt dự án với chiến lược và đổi mới. Bạn có thể trở thành doanh nhân, nhà quản lý, hoặc nhà tư vấn, sử dụng kỷ luật số 8 để quản lý tài nguyên và khả năng thích nghi số 5 để vượt qua thử thách. Số 8 mang đến tầm nhìn chiến lược, giúp bạn đạt mục tiêu lớn, trong khi số 5 cung cấp sự linh hoạt để điều hướng thay đổi. Sự kết hợp này hiệu quả trong kinh doanh hoặc quản lý đổi mới, nơi bạn kết hợp thực tiễn và đổi mới để tạo giá trị.",
+      "challenges": "Sự tập trung vào vật chất của Số Linh Hồn 8 xung đột với sự bốc đồng, tự do của Số Đường Đời 5, gây căng thẳng khi cân bằng tham vọng và linh hoạt. Bạn có thể gặp khó khăn trong việc kiên nhẫn với tính thực dụng của số 8, dẫn đến bất đồng trong dự án. Số 5 có xu hướng tránh cam kết, gây xung đột với nhu cầu kỷ luật của số 8. Sự thiếu cam kết của số 5 có thể làm chậm tiến độ kế hoạch số 8, gây mất động lực. Sự khác biệt này dẫn đến bất an, ảnh hưởng đến hiệu quả các dự án cần chiến lược.",
+      "solutions": "Tìm dự án kinh doanh hoặc quản lý đổi mới để tận dụng linh hoạt số 5 và tham vọng số 8. Sử dụng khả năng quản lý số 8 để đảm bảo hiệu quả, kết hợp với khả năng thích nghi số 5 để điều hướng thử thách. Lập kế hoạch linh hoạt để cân bằng tham vọng và đổi mới. Rèn luyện cam kết để duy trì tiến độ, đảm bảo hiệu quả. Thực hành thiền hoặc viết nhật ký để quản lý căng thẳng, giữ cân bằng nội tâm. Xây dựng đội ngũ hỗ trợ để chia sẻ nhiệm vụ tài chính, giúp bạn tập trung vào đổi mới. Tham gia dự án đổi mới, như khởi nghiệp công nghệ, để tạo giá trị lâu dài."
     },
     {
       "soulUrge": 9,
-      "description": "Sự kết hợp giữa Số Đường Đời 5 và Số Linh Hồn 9 mang đến một cá nhân với khát khao tự do và lòng nhân ái sâu sắc, luôn khao khát tạo ra sự thay đổi tích cực qua những trải nghiệm đa dạng. Số 5 mang lại tinh thần phiêu lưu, khả năng thích nghi, và niềm đam mê khám phá, trong khi số 9 thúc đẩy lý tưởng cao cả, sự cống hiến, và tầm nhìn toàn cầu. Bạn có thể là một nhà hoạt động xã hội, nhà thám hiểm nhân đạo, hoặc nghệ sĩ với khả năng sử dụng sự cởi mở và trái tim để truyền cảm hứng. Ví dụ, bạn có thể xuất sắc trong việc tổ chức một dự án nhân đạo quốc tế, nhưng cần học cách tập trung để đạt được kết quả lâu dài. Tuy nhiên, số 9 có thể khiến bạn lý tưởng hóa quá mức, trong khi số 5 khao khát tự do, dẫn đến nguy cơ mất tập trung hoặc thất vọng khi thế giới không như kỳ vọng. Để phát triển, bạn cần học cách tập trung vào mục tiêu thực tế, chăm sóc bản thân, và cân bằng giữa lý tưởng và thực tế.",
-      "strengths": [
-        "Tư duy linh hoạt kết hợp với lý tưởng cao cả",
-        "Khả năng truyền cảm hứng qua trải nghiệm",
-        "Lòng trắc ẩn và sự cống hiến cho cộng đồng",
-        "Tầm nhìn toàn cầu, hướng đến lợi ích chung",
-        "Tư duy sáng tạo, luôn tìm cơ hội",
-        "Khả năng hỗ trợ bằng sự chân thành",
-        "Tinh thần cởi mở với tư duy nhân văn"
-      ],
-      "weaknesses": [
-        "Dễ bị choáng ngợp bởi cảm xúc mạnh mẽ",
-        "Xu hướng lý tưởng hóa, thiếu thực tế",
-        "Khó cân bằng giữa cá nhân và tập thể",
-        "Dễ thất vọng khi không đạt kỳ vọng",
-        "Dễ bị cuốn vào những trải nghiệm mới",
-        "Thiếu thời gian để chăm sóc bản thân",
-        "Khó duy trì cam kết dài hạn"
-      ],
-      "advice": [
-        "Tập trung vào mục tiêu thực tế, có thể đo lường",
-        "Sử dụng trải nghiệm để tạo thay đổi cụ thể",
-        "Chăm sóc bản thân trước khi giúp người khác",
-        "Chấp nhận sự không hoàn hảo của thế giới",
-        "Xây dựng ranh giới để bảo vệ năng lượng",
-        "Tìm cộng đồng hỗ trợ để chia sẻ tầm nhìn",
-        "Thực hành thiền để quản lý cảm xúc"
-      ],
-      "challenges": [
-        "Quản lý cảm xúc mạnh mẽ để tránh kiệt sức",
-        "Tránh lý tưởng hóa dẫn đến thất vọng",
-        "Tìm sự cân bằng giữa cá nhân và tập thể",
-        "Duy trì động lực khi gặp trở ngại",
-        "Học cách từ chối để bảo vệ năng lượng",
-        "Vượt qua nỗi sợ không đạt kỳ vọng",
-        "Giữ niềm tin vào mục tiêu dài hạn"
-      ],
-      "traits": [
-        "Nhân ái, phiêu lưu",
-        "Lý tưởng, linh hoạt",
-        "Cống hiến, năng động",
-        "Tư duy toàn cầu",
-        "Chân thành, sáng tạo",
-        "Trực giác nhạy bén",
-        "Tinh thần cởi mở"
-      ]
+      "compatibility": "Bổ sung tốt, cần cân bằng tự do và nhân ái. Số Đường Đời 5 và Số Linh Hồn 9 kết hợp sự linh hoạt, tinh thần khám phá của số 5 với lý tưởng nhân đạo, lòng trắc ẩn của số 9. Số 5 mang góc nhìn mới, số 9 mang tầm nhìn xã hội, phục vụ cộng đồng. Số 9 truyền cảm hứng cho số 5 hướng tới mục tiêu cao cả, số 5 làm mới ý tưởng của số 9. Tuy nhiên, số 5 thấy số 9 ôm đồm, số 9 thấy số 5 thiếu cam kết. Để hài hòa, số 5 trân trọng nhân ái số 9, số 9 học cách tập trung. Khi cân bằng, cặp đôi này dẫn đầu kinh doanh xã hội hoặc truyền thông, tạo dự án ý nghĩa.",
+      "strengths": "Lý tưởng nhân đạo, lòng trắc ẩn của Số Linh Hồn 9 kết hợp với sự linh hoạt, khám phá của Số Đường Đời 5 tạo ra một cá nhân có khả năng dẫn dắt dự án xã hội với góc nhìn mới. Bạn có thể trở thành nhà hoạt động, nhà truyền thông, hoặc nhà tư vấn, sử dụng lòng trắc ẩn số 9 để phục vụ cộng đồng và khả năng thích nghi số 5 để vượt qua thử thách. Số 9 mang đến tầm nhìn cao cả, giúp bạn đoàn kết đội nhóm, trong khi số 5 cung cấp sự linh hoạt để điều hướng thay đổi. Sự kết hợp này hiệu quả trong kinh doanh xã hội hoặc truyền thông, nơi bạn kết hợp nhân ái và đổi mới để tạo giá trị.",
+      "challenges": "Sự ôm đồm của Số Linh Hồn 9 xung đột với sự bốc đồng, tự do của Số Đường Đời 5, gây căng thẳng khi cân bằng nhân ái và linh hoạt. Bạn có thể gặp khó khăn trong việc kiên nhẫn với trách nhiệm xã hội của số 9, dẫn đến bất đồng trong dự án. Số 5 có xu hướng tránh cam kết, gây xung đột với sự đồng cảm của số 9. Sự thiếu cam kết của số 5 có thể làm chậm tiến độ kế hoạch số 9, gây mất động lực. Sự khác biệt này dẫn đến bất an, ảnh hưởng đến hiệu quả các dự án cần sự thấu hiểu.",
+      "solutions": "Tìm dự án kinh doanh xã hội hoặc truyền thông để tận dụng linh hoạt số 5 và nhân ái số 9. Sử dụng lòng trắc ẩn số 9 để xây dựng đội nhóm, kết hợp với khả năng thích nghi số 5 để điều hướng thử thách. Đặt ranh giới trong trách nhiệm xã hội để tránh kiệt sức. Rèn luyện cam kết để duy trì tiến độ, đảm bảo hiệu quả. Thực hành thiền hoặc viết nhật ký để quản lý căng thẳng, giữ cân bằng nội tâm. Xây dựng đội ngũ hỗ trợ để chia sẻ nhiệm vụ chăm sóc, giúp bạn tập trung vào đổi mới. Tham gia dự án nhân đạo, như truyền thông xã hội, để tạo giá trị lâu dài."
     },
     {
       "soulUrge": 11,
-      "description": "Sự kết hợp giữa Số Đường Đời 5 và Số Linh Hồn 11 mang đến một cá nhân với sự pha trộn độc đáo giữa khát khao tự do và trực giác tâm linh mạnh mẽ, luôn khao khát khám phá ý nghĩa sâu xa qua những trải nghiệm đa dạng. Số 5 mang lại tinh thần phiêu lưu, khả năng thích nghi, và niềm đam mê khám phá, trong khi số 11 thúc đẩy tầm nhìn tâm linh, khả năng truyền cảm hứng, và sự nhạy bén với năng lượng vũ trụ. Bạn có thể là một nhà thám hiểm tâm linh, diễn giả, hoặc cố vấn với khả năng chạm đến trái tim và tâm hồn của mọi người. Ví dụ, bạn có thể xuất sắc trong việc dẫn dắt một hành trình thiền định, nhưng cần học cách diễn đạt tầm nhìn để kết nối với mọi người. Tuy nhiên, số 11 có thể khiến bạn nhạy cảm quá mức, trong khi số 5 khao khát tự do, dẫn đến nguy cơ kiệt sức hoặc cô lập. Để phát triển, bạn cần học cách bảo vệ năng lượng, diễn đạt rõ ràng, và cân bằng giữa tâm linh và thực tế.",
-      "strengths": [
-        "Tư duy linh hoạt kết hợp với trực giác tâm linh",
-        "Khả năng truyền cảm hứng qua trải nghiệm",
-        "Tinh thần phiêu lưu và nhạy bén",
-        "Sự nhạy cảm với năng lượng và cảm xúc",
-        "Tư duy sáng tạo, luôn tìm ý nghĩa",
-        "Khả năng hỗ trợ bằng tầm nhìn tâm linh",
-        "Tinh thần cởi mở với tư duy vũ trụ"
-      ],
-      "weaknesses": [
-        "Dễ bị choáng ngợp bởi năng lượng tâm linh",
-        "Xu hướng cô lập để bảo vệ bản thân",
-        "Khó diễn đạt tầm nhìn phức tạp",
-        "Dễ bị căng thẳng khi trách nhiệm lớn",
-        "Dễ bị cuốn vào những trải nghiệm mới",
-        "Thiếu kiên nhẫn với những người không hiểu",
-        "Khó cân bằng giữa tâm linh và thực tế"
-      ],
-      "advice": [
-        "Học cách diễn đạt tầm nhìn một cách rõ ràng",
-        "Tìm cộng đồng hỗ trợ tâm linh để chia sẻ",
-        "Cân bằng giữa suy ngẫm và hành động thực tế",
-        "Chăm sóc sức khỏe tinh thần bằng thiền",
-        "Thực hành giao tiếp để kết nối hiệu quả",
-        "Tập trung vào mục tiêu cụ thể, tránh phân tán",
-        "Chấp nhận rằng không phải ai cũng hiểu tầm nhìn"
-      ],
-      "challenges": [
-        "Quản lý năng lượng tâm linh để tránh kiệt sức",
-        "Vượt qua sự cô lập để kết nối xã hội",
-        "Truyền tải thông điệp một cách dễ hiểu",
-        "Chấp nhận sứ mệnh mà không bị áp lực",
-        "Học cách duy trì cam kết dài hạn",
-        "Tìm sự cân bằng giữa tâm linh và thực tế",
-        "Giữ động lực khi gặp trở ngại"
-      ],
-      "traits": [
-        "Tâm linh, phiêu lưu",
-        "Linh hoạt, trực giác",
-        "Nhạy bén, năng động",
-        "Tư duy vũ trụ",
-        "Sáng tạo, truyền cảm hứng",
-        "Tinh thần cởi mở",
-        "Tầm nhìn vượt thời gian"
-      ]
+      "compatibility": "Bổ sung tốt, tạo kết nối tâm linh và tự do. Số Đường Đời 5 và Số Linh Hồn 11 kết hợp sự linh hoạt, tinh thần khám phá của số 5 với trực giác cao, tầm nhìn tâm linh của số 11. Số 5 mang góc nhìn mới, số 11 truyền cảm hứng qua thông điệp cao cả, kết nối ý thức tập thể. Số 11 khuếch đại tầm nhìn của số 5, số 5 làm mới thông điệp của số 11. Tuy nhiên, số 11 nhạy cảm, kỳ vọng cao, xung đột với tính tự do của số 5. Để hài hòa, số 5 trân trọng cảm hứng số 11, số 11 học cách linh hoạt. Khi cân bằng, cặp đôi này dẫn đầu truyền thông tâm linh hoặc tư vấn, tạo dự án ý nghĩa.",
+      "strengths": "Năng lượng cảm hứng, trực giác cao của Số Linh Hồn 11 kết hợp với sự linh hoạt, khám phá của Số Đường Đời 5 tạo ra một cá nhân có khả năng truyền cảm hứng qua các dự án tâm linh và đổi mới. Bạn có thể trở thành cố vấn tâm linh, nhà truyền thông, hoặc nhà tư vấn, sử dụng trực giác số 11 để chia sẻ thông điệp và khả năng thích nghi số 5 để vượt qua thử thách. Số 11 mang đến tầm nhìn cao cả, giúp bạn lan tỏa ý tưởng, trong khi số 5 cung cấp sự linh hoạt để điều hướng thay đổi. Sự kết hợp này hiệu quả trong truyền thông tâm linh hoặc tư vấn, nơi bạn kết hợp cảm hứng và đổi mới để tạo giá trị.",
+      "challenges": "Sự nhạy cảm và kỳ vọng cao của Số Linh Hồn 11 xung đột với sự bốc đồng, tự do của Số Đường Đời 5, gây căng thẳng khi cân bằng lý tưởng và linh hoạt. Bạn có thể gặp khó khăn trong việc kiên nhẫn với tính lý tưởng hóa của số 11, dẫn đến bất đồng trong dự án. Số 5 có xu hướng tránh cam kết, gây xung đột với sự nhạy cảm của số 11. Sự thiếu cam kết của số 5 có thể làm chậm tiến độ thông điệp số 11, gây mất động lực. Sự khác biệt này dẫn đến bất an, ảnh hưởng đến hiệu quả các dự án cần sự thấu hiểu.",
+      "solutions": "Tìm dự án truyền thông tâm linh hoặc tư vấn để tận dụng linh hoạt số 5 và cảm hứng số 11. Sử dụng trực giác số 11 để dẫn dắt quyết định, kết hợp với khả năng thích nghi số 5 để điều hướng thử thách. Lập kế hoạch linh hoạt để cân bằng lý tưởng và đổi mới. Rèn luyện giao tiếp để chia sẻ thông điệp, duy trì đoàn kết đội nhóm. Thực hành thiền hoặc viết nhật ký để quản lý căng thẳng, giữ cân bằng nội tâm. Xây dựng đội ngũ hỗ trợ để chia sẻ nhiệm vụ truyền cảm hứng, giúp bạn tập trung vào đổi mới. Tham gia dự án tâm linh, như nâng cao nhận thức, để tạo giá trị lâu dài."
     },
     {
       "soulUrge": 22,
-      "description": "Sự kết hợp giữa Số Đường Đời 5 và Số Linh Hồn 22 mang đến một cá nhân với sự pha trộn độc đáo giữa khát khao tự do và khả năng xây dựng những dự án lớn có tác động lâu dài. Số 5 mang lại tinh thần phiêu lưu, khả năng thích nghi, và niềm đam mê khám phá, trong khi số 22 thúc đẩy tư duy thực tế, tầm nhìn chiến lược, và khao khát biến những giấc mơ lớn thành hiện thực. Bạn có thể là một nhà đổi mới, nhà phát triển dự án, hoặc nhà lãnh đạo với khả năng kết hợp sự cởi mở và sự thực tế để tạo ra những cấu trúc bền vững. Ví dụ, bạn có thể xuất sắc trong việc khởi xướng một dự án công nghệ mới, nhưng cần học cách duy trì kỷ luật để hoàn thành. Tuy nhiên, số 22 đặt áp lực lớn về trách nhiệm, trong khi số 5 khao khát tự do, dẫn đến nguy cơ mất tập trung hoặc kiệt sức. Để phát triển, bạn cần học cách chia nhỏ mục tiêu, tìm đối tác hỗ trợ, và cân bằng giữa phiêu lưu và trách nhiệm.",
-      "strengths": [
-        "Tư duy linh hoạt kết hợp với tầm nhìn chiến lược",
-        "Khả năng xây dựng qua trải nghiệm đa dạng",
-        "Tinh thần phiêu lưu và thực tế",
-        "Tự tin trong việc quản lý dự án lớn",
-        "Tư duy sáng tạo, luôn tìm cơ hội",
-        "Khả năng truyền cảm hứng bằng hành động",
-        "Tinh thần cởi mở với tư duy dài hạn"
-      ],
-      "weaknesses": [
-        "Dễ bị áp lực bởi mục tiêu lớn và trách nhiệm",
-        "Xu hướng làm việc quá sức để đạt kết quả",
-        "Khó cân bằng giữa tự do và trách nhiệm",
-        "Dễ thất vọng khi không đạt kỳ vọng",
-        "Dễ bị cuốn vào những trải nghiệm mới",
-        "Thiếu kỷ luật trong các dự án dài hạn",
-        "Khó duy trì cam kết"
-      ],
-      "advice": [
-        "Chia nhỏ mục tiêu lớn thành các bước cụ thể",
-        "Sử dụng tầm nhìn để lập kế hoạch hiệu quả",
-        "Nghỉ ngơi đều đặn để tránh kiệt sức",
-        "Tìm đối tác hoặc đội ngũ hỗ trợ tầm nhìn",
-        "Thực hành kỷ luật để duy trì tiến độ",
-        "Tìm người hỗ trợ để giữ bạn đi đúng hướng",
-        "Chấp nhận rằng không phải mọi thứ đều hoàn hảo"
-      ],
-      "challenges": [
-        "Quản lý áp lực từ mục tiêu lớn",
-        "Tránh làm việc quá sức để giữ sức khỏe",
-        "Cân bằng giữa tự do và trách nhiệm",
-        "Duy trì niềm tin vào tầm nhìn dài hạn",
-        "Học cách hợp tác thay vì chỉ kiểm soát",
-        "Vượt qua nỗi sợ thất bại",
-        "Giữ động lực khi gặp trở ngại"
-      ],
-      "traits": [
-        "Thực tế, phiêu lưu",
-        "Chiến lược, linh hoạt",
-        "Kiên nhẫn, năng động",
-        "Tư duy dài hạn",
-        "Sáng tạo, xây dựng",
-        "Tinh thần cởi mở",
-        "Tầm nhìn bền vững"
-      ]
+      "compatibility": "Bổ sung tốt, cần cân bằng tự do và chiến lược. Số Đường Đời 5 và Số Linh Hồn 22 kết hợp sự linh hoạt, tinh thần khám phá của số 5 với tầm nhìn chiến lược, khả năng xây dựng của số 22. Số 5 mang góc nhìn mới, số 22 triển khai dự án với quy mô lớn, biến tầm nhìn thành hiện thực. Số 22 mang khả năng tổ chức cấp cao, số 5 làm mới chiến lược của số 22. Tuy nhiên, số 22 đòi hỏi hợp tác nhóm, xung đột với tính tự do của số 5. Để hài hòa, số 5 trân trọng tổ chức số 22, số 22 học cách linh hoạt. Khi cân bằng, cặp đôi này dẫn đầu kỹ thuật hoặc kinh doanh, tạo dự án bền vững.",
+      "strengths": "Tầm nhìn chiến lược, khả năng xây dựng của Số Linh Hồn 22 kết hợp với sự linh hoạt, khám phá của Số Đường Đời 5 tạo ra một cá nhân có khả năng dẫn dắt dự án lớn với góc nhìn mới. Bạn có thể trở thành kỹ sư, doanh nhân, hoặc nhà tư vấn, sử dụng khả năng tổ chức số 22 để triển khai dự án và khả năng thích nghi số 5 để vượt qua thử thách. Số 22 mang đến tầm nhìn chiến lược, giúp bạn đạt mục tiêu lớn, trong khi số 5 cung cấp sự linh hoạt để điều hướng thay đổi. Sự kết hợp này hiệu quả trong kỹ thuật hoặc kinh doanh, nơi bạn kết hợp chiến lược và đổi mới để tạo giá trị.",
+      "challenges": "Sự đòi hỏi hợp tác nhóm của Số Linh Hồn 22 xung đột với sự bốc đồng, tự do của Số Đường Đời 5, gây căng thẳng khi cân bằng chiến lược và linh hoạt. Bạn có thể gặp khó khăn trong việc kiên nhẫn với quy trình chi tiết của số 22, dẫn đến bất đồng trong dự án. Số 5 có xu hướng tránh cam kết, gây xung đột với sự ổn định của số 22. Sự thiếu cam kết của số 5 có thể làm chậm tiến độ kế hoạch số 22, gây mất động lực. Sự khác biệt này dẫn đến bất an, ảnh hưởng đến hiệu quả các dự án cần chiến lược.",
+      "solutions": "Tìm dự án kỹ thuật hoặc kinh doanh để tận dụng linh hoạt số 5 và chiến lược số 22. Sử dụng khả năng tổ chức số 22 để triển khai dự án, kết hợp với khả năng thích nghi số 5 để điều hướng thử thách. Lập kế hoạch linh hoạt để cân bằng chiến lược và đổi mới. Rèn luyện cam kết để duy trì tiến độ, đảm bảo hiệu quả. Thực hành thiền hoặc viết nhật ký để quản lý căng thẳng, giữ cân bằng nội tâm. Xây dựng đội ngũ hỗ trợ để chia sẻ nhiệm vụ tổ chức, giúp bạn tập trung vào đổi mới. Tham gia dự án bền vững, như phát triển công nghệ, để tạo giá trị lâu dài."
     }
   ]
 }

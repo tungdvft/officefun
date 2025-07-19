@@ -1,4 +1,3 @@
-```vue
 <template>
   <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
     <div class="p-6 space-y-8">
