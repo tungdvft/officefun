@@ -25,27 +25,26 @@
               <div>
                 <label for="name1" class="block text-sm font-medium text-gray-700 mb-2">Họ tên</label>
                 <input
-                  v-model="name1"
+                  v-model="formData.name1"
                   id="name1"
                   type="text"
-                  class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base"
+                  :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.name1 ? 'border-red-500' : 'border-gray-300']"
                   placeholder="Nhập họ tên"
-                  required
                   @focus="clearError"
                 />
+                <p v-if="errors.name1" class="text-red-600 text-sm mt-1">{{ errors.name1 }}</p>
               </div>
               <div>
                 <label for="dob1" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh</label>
                 <input
-                  v-model="dob1"
+                  v-model="formData.dob1"
                   id="dob1"
                   type="date"
-                  class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base"
-                  required
-                  @focus="clearError"
+                  :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.dob1 ? 'border-red-500' : 'border-gray-300']"
                   :max="maxDate"
+                  @focus="clearError"
                 />
-                <p v-if="dob1 && lifePath1" class="text-sm mt-2 text-purple-600">
+                <p v-if="formData.dob1 && lifePath1" class="text-sm mt-2 text-purple-600">
                   Số đường đời: {{ lifePath1 }} {{ isMasterNumber(lifePath1) ? '(Số đặc biệt)' : '' }}
                 </p>
               </div>
@@ -64,27 +63,26 @@
               <div>
                 <label for="name2" class="block text-sm font-medium text-gray-700 mb-2">Họ tên</label>
                 <input
-                  v-model="name2"
+                  v-model="formData.name2"
                   id="name2"
                   type="text"
-                  class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base"
+                  :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.name2 ? 'border-red-500' : 'border-gray-300']"
                   placeholder="Nhập họ tên"
-                  required
                   @focus="clearError"
                 />
+                <p v-if="errors.name2" class="text-red-600 text-sm mt-1">{{ errors.name2 }}</p>
               </div>
               <div>
                 <label for="dob2" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh</label>
                 <input
-                  v-model="dob2"
+                  v-model="formData.dob2"
                   id="dob2"
                   type="date"
-                  class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base"
-                  required
-                  @focus="clearError"
+                  :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.dob2 ? 'border-red-500' : 'border-gray-300']"
                   :max="maxDate"
+                  @focus="clearError"
                 />
-                <p v-if="dob2 && lifePath2" class="text-sm mt-2 text-purple-600">
+                <p v-if="formData.dob2 && lifePath2" class="text-sm mt-2 text-purple-600">
                   Số đường đời: {{ lifePath2 }} {{ isMasterNumber(lifePath2) ? '(Số đặc biệt)' : '' }}
                 </p>
               </div>
@@ -103,13 +101,12 @@
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-purple-50 transition"
-                     :class="{'border-purple-300 bg-purple-50': relationshipType === 'Người yêu'}">
+                     :class="{'border-purple-300 bg-purple-50': formData.relationshipType === 'Người yêu'}">
                 <input
-                  v-model="relationshipType"
+                  v-model="formData.relationshipType"
                   type="radio"
                   value="Người yêu"
                   class="mr-2 text-purple-600 focus:ring-purple-500"
-                  required
                   @focus="clearError"
                 />
                 <div>
@@ -118,12 +115,13 @@
                 </div>
               </label>
               <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-purple-50 transition"
-                     :class="{'border-purple-300 bg-purple-50': relationshipType === 'Vợ chồng'}">
+                     :class="{'border-purple-300 bg-purple-50': formData.relationshipType === 'Vợ chồng'}">
                 <input
-                  v-model="relationshipType"
+                  v-model="formData.relationshipType"
                   type="radio"
                   value="Vợ chồng"
                   class="mr-2 text-purple-600 focus:ring-purple-500"
+                  @focus="clearError"
                 />
                 <div>
                   <p class="font-medium text-gray-800">Vợ chồng</p>
@@ -131,12 +129,13 @@
                 </div>
               </label>
               <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-purple-50 transition"
-                     :class="{'border-purple-300 bg-purple-50': relationshipType === 'Đối tác'}">
+                     :class="{'border-purple-300 bg-purple-50': formData.relationshipType === 'Đối tác'}">
                 <input
-                  v-model="relationshipType"
+                  v-model="formData.relationshipType"
                   type="radio"
                   value="Đối tác"
                   class="mr-2 text-purple-600 focus:ring-purple-500"
+                  @focus="clearError"
                 />
                 <div>
                   <p class="font-medium text-gray-800">Đối tác</p>
@@ -144,48 +143,47 @@
                 </div>
               </label>
             </div>
+            <p v-if="errors.relationshipType" class="text-red-600 text-sm mt-2">{{ errors.relationshipType }}</p>
           </div>
 
-          <!-- Submit Button -->
-          <div class="flex justify-center pt-4">
-            <button
-              type="button"
-              @click="handleSubmit"
-              :disabled="isLoading || !hasSufficientTokens"
-              class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
+          <!-- Submit Button and Error Messages -->
+          <div v-if="isLoading || loading" class="flex justify-center pt-4">
+            <svg
+              class="animate-spin h-8 w-8 text-purple-600"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
             >
-              <span v-if="isLoading || loading" class="flex items-center justify-center">
-                <svg
-                  class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path
-                    class="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang tính toán...' }}
-              </span>
-              <span v-else>{{ isLoggedIn ? `Xem kết quả (Cần ${tokenCost} tokens)` : 'Đăng nhập để xem kết quả' }}</span>
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+          </div>
+          <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
+            <template v-if="errorType === 'login'">
+              Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để xem kết quả hòa hợp.
+            </template>
+            <template v-else-if="errorType === 'topup'">
+              Không đủ token để xem kết quả hòa hợp. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+            </template>
+            <template v-else>
+              {{ errorMessage }}
+            </template>
+          </div>
+          <div v-else-if="errors.general" class="text-red-600 text-center font-medium p-6">
+            {{ errors.general }}
+          </div>
+          <div v-else class="flex justify-center pt-4">
+            <button
+              @click="handleSubmit"
+              class="action-button"
+            >
+              {{ userStore.isAuthenticated ? `Xem kết quả (Cần ${tokenCost} tokens)` : 'Đăng nhập để xem kết quả' }}
             </button>
           </div>
-          <!-- Error Message -->
-          <transition name="slide-fade">
-            <div v-if="error" class="mt-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-md">
-              <div class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                </svg>
-                <strong class="font-medium">Lỗi:</strong>
-              </div>
-              <p class="mt-1 ml-7">{{ error }}</p>
-              <p v-if="hasSufficientTokens === false" class="mt-1 ml-7 text-sm">Bạn không có đủ token. Vui lòng nạp thêm.</p>
-            </div>
-          </transition>
         </div>
       </div>
 
@@ -195,10 +193,10 @@
           <div class="text-center mb-6">
             <h2 class="text-xl md:text-2xl font-bold text-purple-800">
               Kết quả hòa hợp giữa
-              <span class="text-purple-600">{{ name1 }}</span> và
-              <span class="text-purple-600">{{ name2 }}</span>
+              <span class="text-purple-600">{{ formData.name1 }}</span> và
+              <span class="text-purple-600">{{ formData.name2 }}</span>
             </h2>
-            <p class="text-gray-600 mt-1">Loại mối quan hệ: {{ relationshipType }}</p>
+            <p class="text-gray-600 mt-1">Loại mối quan hệ: {{ formData.relationshipType }}</p>
           </div>
 
           <!-- Compatibility Score -->
@@ -300,33 +298,6 @@
               </h3>
               <p class="text-gray-600">{{ result.details.suggestions }}</p>
             </div>
-
-            <!-- More Suggestions Button -->
-            <div v-if="result && totalSuggestions < maxSuggestions" class="flex justify-center mt-6">
-              <button
-                @click="showMoreSuggestions"
-                :disabled="loadingMore || isLoading || !hasSufficientTokensForMore"
-                class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
-              >
-                <span v-if="loadingMore" class="flex items-center justify-center">
-                  <svg
-                    class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path
-                      class="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  Đang tải...
-                </span>
-                <span v-else>{{ isLoggedIn ? `Xem thêm gợi ý (Cần ${tokenCostMore} tokens)` : 'Đăng nhập để xem thêm' }}</span>
-              </button>
-            </div>
           </div>
         </div>
       </transition>
@@ -338,28 +309,64 @@
 import { ref, computed, watch, onMounted } from 'vue';
 import { toast } from 'vue3-toastify';
 import { useProtectedContent } from '~/composables/useProtectedContent';
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '~/stores/user';
+import { useRouter } from 'vue-router';
+import { correlationData } from '~/data/Compatibility.js';
+
+definePageMeta({ layout: 'view' });
+
+const router = useRouter();
+const userStore = useUserStore();
 
 // Form state
-const name1 = ref('');
-const dob1 = ref('');
-const name2 = ref('');
-const dob2 = ref('');
-const relationshipType = ref('');
+const formData = ref({
+  name1: '',
+  dob1: '',
+  name2: '',
+  dob2: '',
+  relationshipType: ''
+});
 const result = ref(null);
-const error = ref('');
+const errors = ref({
+  name1: '',
+  dob1: '',
+  name2: '',
+  dob2: '',
+  relationshipType: '',
+  general: ''
+});
 const loading = ref(false);
-const loadingMore = ref(false);
-const totalSuggestions = ref(1);
-const maxSuggestions = ref(5);
 const tokenCost = ref(15);
-const tokenCostMore = ref(5);
 const description = 'Access to detailed compatibility analysis results';
-const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
-const isLoggedIn = ref(false);
-const hasSufficientTokensForMore = ref(true);
-let handleAction = () => {};
-const userStore = useUserStore();
+const {
+  isLoading,
+  errorMessage,
+  errorType,
+  isContentAccessible,
+  hasSufficientTokens,
+  checkAuthAndAccess,
+  performAction,
+  errorAction,
+  navigateToTopup
+} = useProtectedContent(tokenCost.value, description);
+
+// Navigate to top-up page
+// const navigateToTopup = () => {
+//   if (process.client) {
+//     console.log('Navigating to /nap-token');
+//     try {
+//       router.push('/nap-token').catch((err) => {
+//         console.error('Navigation error:', err);
+//         toast.error('Không thể điều hướng đến trang nạp token. Vui lòng thử lại.', { position: 'top-center' });
+//       });
+//     } catch (err) {
+//       console.error('Error in navigateToTopup:', err);
+//       toast.error('Có lỗi khi điều hướng. Vui lòng kiểm tra lại.', { position: 'top-center' });
+//     }
+//   } else {
+//     console.warn('navigateToTopup called on server-side, ignoring.');
+//   }
+// };
 
 // Get current date for max date input
 const maxDate = computed(() => {
@@ -387,8 +394,8 @@ const calculateLifePath = (dob) => {
 };
 
 // Computed properties for life path numbers
-const lifePath1 = computed(() => calculateLifePath(dob1.value));
-const lifePath2 = computed(() => calculateLifePath(dob2.value));
+const lifePath1 = computed(() => calculateLifePath(formData.value.dob1));
+const lifePath2 = computed(() => calculateLifePath(formData.value.dob2));
 
 // Get color class based on compatibility score
 const getScoreColorClass = (score) => {
@@ -406,13 +413,20 @@ const getScoreBarColorClass = (score) => {
   return 'bg-red-500';
 };
 
-// Clear error message when user focuses on input
+// Clear error messages
 const clearError = () => {
-  error.value = '';
+  errors.value = {
+    name1: '',
+    dob1: '',
+    name2: '',
+    dob2: '',
+    relationshipType: '',
+    general: ''
+  };
   errorMessage.value = '';
 };
 
-// Hàm lấy thông tin người dùng từ API
+// Fetch user data from API
 const fetchUserData = async () => {
   if (!userStore.isAuthenticated || !userStore.user?.id) {
     console.log('User not authenticated, skipping fetchUserData');
@@ -423,181 +437,43 @@ const fetchUserData = async () => {
     const userIdValue = String(userStore.user.id);
     console.log('Fetching user data for userId:', userIdValue);
     const response = await $fetch(`/api/users/${userIdValue}`, {
-      method: 'GET',
+      method: 'GET'
     });
     console.log('API /api/users response:', response);
-    name1.value = response.user.fullname?.trim() || '';
-    dob1.value = response.user.birthdate?.split('T')[0] || '';
+    formData.value.name1 = response.user.fullname?.trim() || '';
+    formData.value.dob1 = response.user.birthdate?.split('T')[0] || '';
   } catch (err) {
     console.error('Error fetching user data:', err);
-    errorMessage.value = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
-    toast.error(errorMessage.value, { position: 'top-center' });
+    errors.value.general = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
+    toast.error(errors.value.general, { position: 'top-center' });
   }
 };
 
-// Hàm kiểm tra số dư token
-const checkTokenBalance = async (requiredTokens) => {
-  if (!userStore.isAuthenticated || !userStore.user?.id) {
-    console.log('User not authenticated, setting hasSufficientTokensForMore to false');
-    hasSufficientTokensForMore.value = false;
-    return false;
-  }
-
-  try {
-    const response = await $fetch('/api/check-token-balance', {
-      method: 'POST',
-      headers: {
-        'x-username': encodeURIComponent(userStore.user.email),
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-      body: { userId: String(userStore.user.id), requiredTokens }
-    });
-    console.log(`Check token balance response:`, response);
-    hasSufficientTokensForMore.value = response.hasSufficientTokens;
-    return response.hasSufficientTokens;
-  } catch (error) {
-    console.error('Error checking token balance:', error);
-    errorMessage.value = error.data?.message || 'Không thể kiểm tra số dư token!';
-    toast.error(errorMessage.value, { position: 'top-center' });
-    hasSufficientTokensForMore.value = false;
-    return false;
-  }
-};
-
-// Khởi tạo trạng thái đăng nhập và kiểm tra token
+// Initialize authentication and check tokens
 const initializeAuth = async () => {
-  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
-  isLoggedIn.value = authStatus;
-  handleAction = action;
-  if (authStatus) {
-    await checkTokenBalance(tokenCostMore.value);
+  console.log('Initializing auth for CompatibilityAnalysis...');
+  try {
+    await userStore.initialize();
+    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
+    await checkAuthAndAccess();
+    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
+  } catch (err) {
+    console.error('Error initializing auth:', err);
+    errors.value.general = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
+    toast.error(errors.value.general, { position: 'top-center' });
   }
 };
 
-// Form submission handler
-const handleSubmit = async () => {
-  error.value = '';
-  errorMessage.value = '';
-  result.value = null;
-
-  if (!name1.value || !name2.value) {
-    error.value = 'Vui lòng nhập đầy đủ họ tên.';
-    return;
+// Load data on component mount
+onMounted(() => {
+  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
+  if (userStore.isStoreInitialized) {
+    initializeAuth();
+    fetchUserData();
   }
-  if (!dob1.value || !dob2.value) {
-    error.value = 'Vui lòng nhập đầy đủ ngày sinh.';
-    return;
-  }
-  if (!relationshipType.value) {
-    error.value = 'Vui lòng chọn loại mối quan hệ.';
-    return;
-  }
+});
 
-  if (isContentAccessible.value) {
-    await getCompatibility();
-  } else {
-    await handleAction();
-    if (isContentAccessible.value) {
-      await getCompatibility();
-    }
-  }
-};
-
-async function getCompatibility() {
-  loading.value = true;
-  try {
-    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
-    console.log('Sending request to /api/compatibility with data:', { name1: name1.value, dob1: dob1.value, name2: name2.value, dob2: dob2.value, relationshipType: relationshipType.value });
-    const response = await $fetch('/api/compatibility', {
-      method: 'POST',
-      headers: {
-        'x-username': encodeURIComponent(username),
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-      body: {
-        name1: name1.value,
-        dob1: dob1.value,
-        name2: name2.value,
-        dob2: dob2.value,
-        relationshipType: relationshipType.value,
-        suggestionCount: 1
-      },
-    });
-    console.log('Response from /api/compatibility:', response);
-    result.value = response.compatibility;
-    totalSuggestions.value = 1;
-    await checkTokenBalance(tokenCostMore.value);
-    toast.success('Tính toán hòa hợp hoàn tất!', { position: 'top-center' });
-    // Scroll to result
-    setTimeout(() => {
-      const resultElement = document.querySelector('[v-if="result"]');
-      if (resultElement) {
-        resultElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
-  } catch (error) {
-    console.error('Error in getCompatibility:', error);
-    errorMessage.value = error.data?.message || 'Không thể tính toán mức độ hòa hợp!';
-    toast.error(errorMessage.value, { position: 'top-center' });
-  } finally {
-    loading.value = false;
-  }
-}
-
-// Show more suggestions
-async function showMoreSuggestions() {
-  if (totalSuggestions.value >= maxSuggestions.value) {
-    console.log('Reached maximum suggestions:', maxSuggestions.value);
-    return;
-  }
-
-  errorMessage.value = '';
-  console.log('Starting showMoreSuggestions, checking token balance...');
-
-  const sufficientTokens = await checkTokenBalance(tokenCostMore.value);
-  console.log('Token balance sufficient:', sufficientTokens);
-  if (!sufficientTokens) {
-    errorMessage.value = 'Bạn không có đủ token để xem thêm gợi ý!';
-    toast.error(errorMessage.value, { position: 'top-center' });
-    return;
-  }
-
-  loadingMore.value = true;
-  try {
-    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
-    console.log('Sending request to /api/compatibility for more suggestions');
-    const response = await $fetch('/api/compatibility', {
-      method: 'POST',
-      headers: {
-        'x-username': encodeURIComponent(username),
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-      body: {
-        name1: name1.value,
-        dob1: dob1.value,
-        name2: name2.value,
-        dob2: dob2.value,
-        relationshipType: relationshipType.value,
-        suggestionCount: 1,
-        excludeSuggestions: result.value.details.suggestions
-      },
-    });
-    console.log('Response from /api/compatibility (more suggestions):', response);
-    result.value.details.suggestions += '\n' + response.compatibility.details.suggestions;
-    totalSuggestions.value += 1;
-    await checkTokenBalance(tokenCostMore.value);
-    toast.success('Đã tải thêm gợi ý!', { position: 'top-center' });
-  } catch (error) {
-    console.error('Error in showMoreSuggestions:', error);
-    errorMessage.value = error.data?.message || 'Không thể tải thêm gợi ý!';
-    toast.error(errorMessage.value, { position: 'top-center' });
-  } finally {
-    loadingMore.value = false;
-    console.log('showMoreSuggestions completed, loadingMore:', loadingMore.value);
-  }
-}
-
-// Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
+// Watch for store initialization
 watch(() => userStore.isStoreInitialized, (initialized) => {
   if (initialized && process.client) {
     console.log('User store initialized, running initializeAuth and fetchUserData');
@@ -606,17 +482,128 @@ watch(() => userStore.isStoreInitialized, (initialized) => {
   }
 });
 
-onMounted(() => {
-  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
-  if (userStore.isStoreInitialized) {
-    initializeAuth();
-    fetchUserData();
+// Validate form
+const validateForm = () => {
+  errors.value = {
+    name1: '',
+    dob1: '',
+    name2: '',
+    dob2: '',
+    relationshipType: '',
+    general: ''
+  };
+  let isValid = true;
+
+  if (!formData.value.name1.trim()) {
+    errors.value.name1 = 'Vui lòng nhập họ tên người thứ nhất';
+    isValid = false;
   }
-});
+  if (!formData.value.dob1) {
+    errors.value.dob1 = 'Vui lòng nhập ngày sinh người thứ nhất';
+    isValid = false;
+  } else {
+    const date = new Date(formData.value.dob1);
+    const today = new Date();
+    if (isNaN(date.getTime()) || date > today) {
+      errors.value.dob1 = 'Ngày sinh không hợp lệ';
+      isValid = false;
+    }
+  }
+  if (!formData.value.name2.trim()) {
+    errors.value.name2 = 'Vui lòng nhập họ tên người thứ hai';
+    isValid = false;
+  }
+  if (!formData.value.dob2) {
+    errors.value.dob2 = 'Vui lòng nhập ngày sinh người thứ hai';
+    isValid = false;
+  } else {
+    const date = new Date(formData.value.dob2);
+    const today = new Date();
+    if (isNaN(date.getTime()) || date > today) {
+      errors.value.dob2 = 'Ngày sinh không hợp lệ';
+      isValid = false;
+    }
+  }
+  if (!formData.value.relationshipType) {
+    errors.value.relationshipType = 'Vui lòng chọn loại mối quan hệ';
+    isValid = false;
+  }
+
+  return isValid;
+};
+
+// Form submission handler
+const handleSubmit = async () => {
+  if (!process.client) {
+    console.warn('handleSubmit called on server-side, ignoring.');
+    return;
+  }
+  if (!validateForm()) {
+    return;
+  }
+
+  if (isContentAccessible.value) {
+    await getCompatibility();
+  } else {
+    try {
+      await performAction();
+      if (isContentAccessible.value) {
+        await getCompatibility();
+      } else {
+        toast.error(errorMessage.value, { position: 'top-center' });
+      }
+    } catch (err) {
+      console.error('Error in performAction:', err);
+      toast.error(errorMessage.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
+    }
+  }
+};
+
+// Get compatibility data from static source
+async function getCompatibility() {
+  loading.value = true;
+  errors.value.general = '';
+  try {
+    const lp1 = lifePath1.value;
+    const lp2 = lifePath2.value;
+    const relationshipType = formData.value.relationshipType;
+
+    if (!lp1 || !lp2 || !relationshipType) {
+      throw new Error('Thông tin không đầy đủ để tính toán hòa hợp.');
+    }
+
+    if (!correlationData[lp1]) {
+      throw new Error(`Không tìm thấy dữ liệu cho số đường đời ${lp1}.`);
+    }
+
+    const compatibilityEntry = correlationData[lp1].compatibility.find(
+      (entry) => entry.partnerNumber === lp2 && entry.relationshipType === relationshipType
+    );
+
+    if (!compatibilityEntry) {
+      throw new Error(`Không tìm thấy dữ liệu hòa hợp cho số đường đời ${lp1} và ${lp2} với loại mối quan hệ ${relationshipType}.`);
+    }
+
+    result.value = compatibilityEntry;
+    toast.success('Tính toán hòa hợp hoàn tất!', { position: 'top-center' });
+    setTimeout(() => {
+      const resultElement = document.querySelector('[v-if="result && isContentAccessible"]');
+      if (resultElement) {
+        resultElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+    await checkAuthAndAccess();
+  } catch (error) {
+    console.error('Error in getCompatibility:', error);
+    errors.value.general = error.message || 'Không thể tính toán mức độ hòa hợp!';
+    toast.error(errors.value.general, { position: 'top-center' });
+  } finally {
+    loading.value = false;
+  }
+}
 </script>
 
 <style scoped>
-/* Custom transitions */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
@@ -636,6 +623,10 @@ onMounted(() => {
 .slide-fade-leave-to {
   transform: translateY(10px);
   opacity: 0;
+}
+
+.action-button {
+  @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap mx-2;
 }
 
 /* Custom scrollbar */

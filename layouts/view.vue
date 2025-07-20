@@ -296,6 +296,7 @@ const mainMenu = [
   {
     title: 'Cá nhân',
     children: [
+      { title: 'Tổng quan', path: '/xem' },
       { title: 'Thần số học mỗi ngày', path: '/xem/than-so-hoc-moi-ngay' },
       { title: 'Giải đáp thắc mắc', path: '/xem/giai-dap-thac-mac' },
       { title: 'Đặt danh xưng quốc tế', path: '/xem/danh-xung' },
