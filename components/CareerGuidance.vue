@@ -1,170 +1,203 @@
-
+```vue
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
     <div class="container mx-auto p-4">
-      <!-- Phần không bảo vệ (Tiêu đề, mô tả, form nhập thông tin) -->
+      <!-- Header Section -->
       <div v-for="section in introSection" :key="section.title" class="space-y-6">
-        <div v-if="section.type === 'header'" class="mb-8 p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg border border-purple-100">
-          <h2 class="text-3xl md:text-4xl font-bold text-blue-800 mb-2">{{ section.title }}</h2>
+        <div v-if="section.type === 'header'" class="text-center mb-8 relative">
+          <h1 class="text-3xl md:text-4xl font-bold text-blue-800 mb-2">{{ section.title }}</h1>
           <p class="text-gray-600">{{ section.description }}</p>
+          <p class="text-gray-600 mt-2">Hôm nay: <span class="font-medium">{{ currentDate }}</span></p>
+          <div v-if="personalDayNumber" class="mt-4 inline-flex items-center px-4 py-2 bg-purple-100 text-purple-600 rounded-full text-sm font-medium">
+            Số ngày cá nhân hôm nay của bạn: <span class="font-bold ml-1">{{ personalDayNumber }}</span>
+          </div>
         </div>
+
+        <!-- Input Form -->
         <div v-if="section.type === 'form'" class="bg-white p-6 rounded-xl shadow-lg mb-8 border border-gray-100">
           <h3 class="text-xl font-semibold text-purple-700 mb-4">Nhập thông tin cá nhân</h3>
-          <div class="space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Họ và tên</label>
-                <input
-                  v-model="formData.name"
-                  type="text"
-                  id="name"
-                  placeholder="Nguyễn Văn A"
-                  :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.name ? 'border-red-500' : 'border-gray-300']"
-                />
-                <p v-if="errors.name" class="text-red-600 text-sm mt-1">{{ errors.name }}</p>
-              </div>
-              <div>
-                <label for="birthdate" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh (DD/MM/YYYY hoặc DD-MM-YYYY)</label>
-                <input
-                  v-model="formData.birthdate"
-                  type="text"
-                  id="birthdate"
-                  placeholder="15/03/1995"
-                  :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.birthdate ? 'border-red-500' : 'border-gray-300']"
-                />
-                <p v-if="errors.birthdate" class="text-red-600 text-sm mt-1">{{ errors.birthdate }}</p>
-              </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Họ và tên</label>
+              <input
+                v-model="formData.name"
+                type="text"
+                id="name"
+                placeholder="VD: Nguyễn Văn A"
+                :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.name ? 'border-red-500' : 'border-gray-300']"
+              />
+              <p v-if="errors.name" class="text-red-600 text-sm mt-1">{{ errors.name }}</p>
             </div>
             <div>
-              <label for="currentJob" class="block text-sm font-medium text-gray-700 mb-2">Công việc hiện tại (nếu có)</label>
+              <label for="birthDate" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh (DD/MM/YYYY)</label>
               <input
-                v-model="formData.currentJob"
+                v-model="formData.birthDate"
                 type="text"
-                id="currentJob"
-                placeholder="Ví dụ: Lập trình viên, Giáo viên..."
+                id="birthDate"
+                placeholder="VD: 01/01/1990"
+                :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.birthDate ? 'border-red-500' : 'border-gray-300']"
+              />
+              <p v-if="errors.birthDate" class="text-red-600 text-sm mt-1">{{ errors.birthDate }}</p>
+            </div>
+          </div>
+
+          <!-- Tabs Navigation -->
+          <div class="mb-6">
+            <nav class="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+              <button
+                v-for="tab in tabs"
+                :key="tab"
+                @click="switchTab(tab)"
+                :class="[
+                  activeTab === tab
+                    ? 'bg-white text-purple-600 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-700',
+                  'px-4 py-2 text-sm font-medium rounded-md transition-all duration-200'
+                ]"
+              >
+                {{ tab }}
+              </button>
+            </nav>
+          </div>
+
+          <!-- Input Form for Preferences/Plans -->
+          <form @submit.prevent="getRecommendations" class="space-y-6">
+            <div v-if="activeTab === 'Đồ ăn'">
+              <label for="foodPreferences" class="block text-sm font-medium text-gray-700 mb-3">Món ăn yêu thích (phân cách bằng dấu phẩy, nếu không có bỏ trống)</label>
+              <input
+                v-model="formData.foodPreferences"
+                type="text"
+                id="foodPreferences"
+                placeholder="VD: phở, bún, cơm tấm"
                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
               />
             </div>
-            <!-- Phần thông báo lỗi, trạng thái tải, hoặc nút hành động -->
-            <div v-if="isLoading || loading" class="flex justify-center">
-              <svg
-                class="animate-spin h-8 w-8 text-purple-600"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
+            <div v-else-if="activeTab === 'Đồ uống'">
+              <label for="drinkPreferences" class="block text-sm font-medium text-gray-700 mb-3">Đồ uống yêu thích (phân cách bằng dấu phẩy, nếu không có bỏ trống)</label>
+              <input
+                v-model="formData.drinkPreferences"
+                type="text"
+                id="drinkPreferences"
+                placeholder="VD: trà sữa, cà phê, nước cam"
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+              />
+            </div>
+            <div v-else>
+              <label for="plans" class="block text-sm font-medium text-gray-700 mb-3">Dự định hôm nay (phân cách bằng dấu phẩy, nếu không có bỏ trống)</label>
+              <input
+                v-model="formData.plans"
+                type="text"
+                id="plans"
+                placeholder="VD: gặp khách hàng, hoàn thành báo cáo, đi tập gym"
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+              />
+            </div>
+
+            <!-- Action Button for Get Recommendations -->
+            <div class="text-center p-6">
+              <button
+                @click="getRecommendations"
+                :disabled="isLoading || loading"
+                :class="[
+                  'action-button flex items-center justify-center',
+                  (isLoading || loading) ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
+                ]"
               >
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path
-                  class="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
+                <svg
+                  v-if="isLoading || loading"
+                  class="animate-spin h-5 w-5 text-white mr-2"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                {{ isLoading || loading ? 'Đang tải...' : `Xem gợi ý hôm nay (Cần ${tokenCost} token)` }}
+              </button>
+              <div v-if="errorMessage" class="text-red-600 text-center font-medium mt-4">
+                <template v-if="errorType === 'login'">
+                  Vui lòng <button @click="errorAction" class="action-button inline">Đăng Nhập</button> để xem gợi ý hôm nay.
+                </template>
+                <template v-else-if="errorType === 'topup'">
+                  Không đủ token để xem gợi ý hôm nay. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                </template>
+                <template v-else>
+                  {{ errorMessage }}
+                </template>
+              </div>
+              <div v-else-if="errors.general" class="text-red-600 text-center font-medium mt-4">
+                {{ errors.general }}
+              </div>
+              <div v-else-if="!isContentAccessible && !isLoading && !loading" class="text-red-600 text-center font-medium mt-4">
+                <template v-if="!userStore.isAuthenticated">
+                  Vui lòng <button @click="errorAction" class="action-button inline">Đăng Nhập</button> để xem gợi ý hôm nay.
+                </template>
+                <template v-else-if="userStore.isAuthenticated && !hasSufficientTokens">
+                  Không đủ token để xem gợi ý hôm nay. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                </template>
+              </div>
             </div>
-            <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
-              <template v-if="errorType === 'login'">
-                Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để xem định hướng nghề nghiệp.
-              </template>
-              <template v-else-if="errorType === 'topup'">
-                Không đủ token để xem định hướng nghề nghiệp. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-              </template>
-              <template v-else>
-                {{ errorMessage }}
-              </template>
-            </div>
-            <div v-else-if="errors.general" class="text-red-600 text-center font-medium p-6">
-              {{ errors.general }}
-            </div>
-            <div v-else-if="!isContentAccessible" class="text-center p-6">
-              <template v-if="!userStore.isAuthenticated">
-                <p class="text-red-600 font-medium mb-4">
-                  Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để xem định hướng nghề nghiệp.
-                </p>
-              </template>
-              <template v-else-if="userStore.isAuthenticated && !hasSufficientTokens">
-                <p class="text-red-600 font-medium mb-4">
-                  Không đủ token để xem định hướng nghề nghiệp. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-                </p>
-              </template>
-              <template v-else>
-                <button @click="getCareerGuidance" class="action-button">
-                  Xem định hướng nghề nghiệp (Cần {{ tokenCost }} token)
-                </button>
-              </template>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
 
-      <!-- Phần được bảo vệ (Kết quả định hướng nghề nghiệp) -->
+      <!-- Results Section -->
       <transition name="slide-fade">
-        <div v-if="isContentAccessible && result" class="space-y-8">
-          <div v-for="section in protectedSections" :key="section.title" class="space-y-6">
-            <div v-if="section.type === 'overview' || section.type === 'advice'" class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
-              <h3 class="text-xl font-semibold text-purple-700 mb-4 flex items-center">
-                <span class="bg-purple-100 rounded-full p-2 mr-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 text-purple-600"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                      clip-rule="evenodd"
-                    />
+        <div v-if="isContentAccessible && recommendations" class="space-y-8">
+          <div v-for="section in resultSections" :key="section.title" class="space-y-6">
+            <div v-if="section.type === 'personalDay'" class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
+              <div class="flex items-center">
+                <div class="bg-purple-100 p-2 rounded-lg mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                </span>
-                {{ section.title }}
-              </h3>
-              <div class="space-y-4">
-                <div v-for="item in section.items" :key="item.title">
-                  <h4 class="text-base font-semibold text-purple-700 flex items-center">
-                    <svg :class="item.iconClass" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path :d="item.iconPath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
-                    </svg>
-                    {{ item.title }}
-                  </h4>
-                  <p class="text-gray-600 whitespace-pre-wrap">{{ item.content }}</p>
+                </div>
+                <div>
+                  <h2 class="text-lg font-semibold text-purple-800">Số ngày cá nhân: <span class="text-2xl font-bold">{{ personalDayNumber }}</span></h2>
+                  <p class="text-gray-600 mt-1">Dựa trên ngày sinh của bạn, hôm nay là ngày mang năng lượng số {{ personalDayNumber }}.</p>
                 </div>
               </div>
             </div>
-            <div v-if="section.type === 'suggestions'" class="space-y-4">
-              <h3 class="text-xl font-semibold text-purple-700 mb-4 flex items-center">
+            <div v-if="section.type === 'food' && activeTab === 'Đồ ăn' && recommendations.food" class="space-y-4">
+              <h3 class="font-medium text-purple-700 flex items-center">
                 <span class="bg-purple-100 rounded-full p-2 mr-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 text-purple-600"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-                    <path
-                      fill-rule="evenodd"
-                      d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                      clip-rule="evenodd"
-                    />
+                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
                   </svg>
                 </span>
-                Đề xuất nghề nghiệp
+                Gợi ý món ăn
               </h3>
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div
-                  v-for="(suggestion, index) in section.suggestions"
-                  :key="index"
-                  class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <h4 class="text-base font-semibold text-purple-700 mb-3">{{ suggestion.job }}</h4>
-                  <p class="text-gray-600 mb-2"><strong>Lý do phù hợp:</strong> {{ suggestion.reason }}</p>
-                  <p class="text-gray-600 mb-2"><strong>Cơ hội hiện tại:</strong> {{ suggestion.opportunities }}</p>
-                  <p class="text-gray-600"><strong>Xu hướng tương lai:</strong> {{ suggestion.trends }}</p>
+              <div v-if="Array.isArray(recommendations.food)" class="grid gap-4 md:grid-cols-2">
+                <div v-for="(item, index) in recommendations.food" :key="index" class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                  <p class="font-medium text-gray-800 flex items-center">
+                    <span class="w-6 h-6 rounded-full bg-purple-100 text-purple-800 flex items-center justify-center mr-2 text-sm">{{ index + 1 }}</span>
+                    {{ item.item }}
+                  </p>
+                  <p class="text-gray-600 text-sm mt-2">{{ item.explanation }}</p>
                 </div>
               </div>
-              <div v-if="section.suggestions.length < maxSuggestions && isContentAccessible" class="text-center p-6">
-                <div v-if="isLoadingMore || loadingMore" class="flex justify-center">
+              <div v-else class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                <p class="font-medium text-gray-800">{{ recommendations.food.item }}</p>
+                <p class="text-gray-600 text-sm mt-2">{{ recommendations.food.explanation }}</p>
+              </div>
+              <div v-if="section.type === 'food' && recommendations.food && recommendations.food.length < maxSuggestions" class="text-center p-6">
+                <button
+                  @click="loadMoreRecommendations('food')"
+                  :disabled="isLoadingMore || loadingMore"
+                  :class="[
+                    'action-button flex items-center justify-center',
+                    (isLoadingMore || loadingMore) ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
+                  ]"
+                >
                   <svg
-                    class="animate-spin h-8 w-8 text-teal-600"
+                    v-if="isLoadingMore || loadingMore"
+                    class="animate-spin h-5 w-5 text-white mr-2"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -176,34 +209,196 @@
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                </div>
-                <div v-else-if="errorMessageMore" class="text-red-600 text-center font-medium p-6">
+                  {{ isLoadingMore || loadingMore ? 'Đang tải...' : `Xem thêm gợi ý món ăn (Cần ${tokenCostMore} token)` }}
+                </button>
+                <div v-if="errorMessageMore" class="text-red-600 text-center font-medium mt-4">
                   <template v-if="errorTypeMore === 'login'">
-                    Vui lòng <button @click="errorActionMore" class="action-button">Đăng Nhập</button> để xem thêm nghề nghiệp.
+                    Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý món ăn.
                   </template>
                   <template v-else-if="errorTypeMore === 'topup'">
-                    Không đủ token để xem thêm nghề nghiệp. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                    Không đủ token để xem thêm gợi ý món ăn. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
                   </template>
                   <template v-else>
                     {{ errorMessageMore }}
                   </template>
                 </div>
-                <div v-else-if="!isContentAccessibleMore" class="text-center p-6">
+                <div v-else-if="!isContentAccessibleMore && !isLoadingMore && !loadingMore" class="text-red-600 text-center font-medium mt-4">
                   <template v-if="!userStore.isAuthenticated">
-                    <p class="text-red-600 font-medium mb-4">
-                      Vui lòng <button @click="errorActionMore" class="action-button">Đăng Nhập</button> để xem thêm nghề nghiệp.
-                    </p>
+                    Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý món ăn.
                   </template>
                   <template v-else-if="userStore.isAuthenticated && !hasSufficientTokensMore">
-                    <p class="text-red-600 font-medium mb-4">
-                      Không đủ token để xem thêm nghề nghiệp. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-                    </p>
+                    Không đủ token để xem thêm gợi ý món ăn. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                  </template>
+                </div>
+              </div>
+            </div>
+            <div v-if="section.type === 'drink' && activeTab === 'Đồ uống' && recommendations.drink" class="space-y-4">
+              <h3 class="font-medium text-purple-700 flex items-center">
+                <span class="bg-purple-100 rounded-full p-2 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M7 2a1 1 0 00-.707 1.707L7 4.414v3.758a1 1 0 01-.293.707l-4 4C.817 14.769 2.156 18 4.828 18h10.343c2.673 0 4.012-3.231 2.122-5.121l-4-4A1 1 0 0113 8.172V4.414l.707-.707A1 1 0 0013 2H7zm2 6.172V4h2v4.172a3 3 0 00.879 2.12l1.027 1.028a4 4 0 00-2.171.102l-.47.156a4 4 0 01-2.53 0l-.563-.187a1.993 1.993 0 00-.114-.035l1.063-1.063A3 3 0 009 8.172z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+                Gợi ý đồ uống
+              </h3>
+              <div v-if="Array.isArray(recommendations.drink)" class="grid gap-4 md:grid-cols-2">
+                <div v-for="(item, index) in recommendations.drink" :key="index" class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                  <p class="font-medium text-gray-800 flex items-center">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center mr-2 text-sm">{{ index + 1 }}</span>
+                    {{ item.item }}
+                  </p>
+                  <p class="text-gray-600 text-sm mt-2">{{ item.explanation }}</p>
+                </div>
+              </div>
+              <div v-else class="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                <p class="font-medium text-gray-800">{{ recommendations.drink.item }}</p>
+                <p class="text-gray-600 text-sm mt-2">{{ recommendations.drink.explanation }}</p>
+              </div>
+              <div v-if="section.type === 'drink' && recommendations.drink && recommendations.drink.length < maxSuggestions" class="text-center p-6">
+                <button
+                  @click="loadMoreRecommendations('drink')"
+                  :disabled="isLoadingMore || loadingMore"
+                  :class="[
+                    'action-button flex items-center justify-center',
+                    (isLoadingMore || loadingMore) ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
+                  ]"
+                >
+                  <svg
+                    v-if="isLoadingMore || loadingMore"
+                    class="animate-spin h-5 w-5 text-white mr-2"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path
+                      class="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  {{ isLoadingMore || loadingMore ? 'Đang tải...' : `Xem thêm gợi ý đồ uống (Cần ${tokenCostMore} token)` }}
+                </button>
+                <div v-if="errorMessageMore" class="text-red-600 text-center font-medium mt-4">
+                  <template v-if="errorTypeMore === 'login'">
+                    Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý đồ uống.
+                  </template>
+                  <template v-else-if="errorTypeMore === 'topup'">
+                    Không đủ token để xem thêm gợi ý đồ uống. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
                   </template>
                   <template v-else>
-                    <button @click="loadMoreCareers" class="action-button">
-                      Xem thêm nghề nghiệp phù hợp (Cần {{ tokenCostMore }} token)
-                    </button>
+                    {{ errorMessageMore }}
                   </template>
+                </div>
+                <div v-else-if="!isContentAccessibleMore && !isLoadingMore && !loadingMore" class="text-red-600 text-center font-medium mt-4">
+                  <template v-if="!userStore.isAuthenticated">
+                    Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý đồ uống.
+                  </template>
+                  <template v-else-if="userStore.isAuthenticated && !hasSufficientTokensMore">
+                    Không đủ token để xem thêm gợi ý đồ uống. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                  </template>
+                </div>
+              </div>
+            </div>
+            <div v-if="section.type === 'insight' && activeTab === 'Insight hôm nay' && recommendations.insight" class="space-y-6">
+              <h3 class="font-medium text-purple-700 flex items-center">
+                <span class="bg-purple-100 rounded-full p-2 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+                Insight hôm nay
+              </h3>
+              <div v-if="recommendations.insight.selectedPlan" class="space-y-6">
+                <div class="bg-white p-5 rounded-xl border border-green-100 shadow-sm">
+                  <h4 class="text-sm font-semibold text-green-600 uppercase tracking-wider mb-3">DỰ ĐỊNH TỐT NHẤT</h4>
+                  <p class="text-gray-800 font-semibold text-lg">{{ recommendations.insight.selectedPlan }}</p>
+                  <p class="text-gray-600 mt-2">{{ recommendations.insight.planExplanation }}</p>
+                </div>
+                <div class="grid gap-5 md:grid-cols-2">
+                  <div class="bg-white p-5 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow">
+                    <h4 class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3 flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                      </svg>
+                      NÊN LÀM
+                    </h4>
+                    <p class="text-gray-800 font-medium">{{ recommendations.insight.doToday.activity }}</p>
+                    <p class="text-gray-600 mt-2 text-sm">{{ recommendations.insight.doToday.explanation }}</p>
+                  </div>
+                  <div class="bg-white p-5 rounded-xl border border-red-100 shadow-sm hover:shadow-md transition-shadow">
+                    <h4 class="text-sm font-semibold text-red-600 uppercase tracking-wider mb-3 flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                      </svg>
+                      NÊN TRÁNH
+                    </h4>
+                    <p class="text-gray-800 font-medium">{{ recommendations.insight.avoidToday.activity }}</p>
+                    <p class="text-gray-600 mt-2 text-sm">{{ recommendations.insight.avoidToday.explanation }}</p>
+                  </div>
+                </div>
+              </div>
+              <div v-else class="space-y-6">
+                <div class="grid gap-5 md:grid-cols-2">
+                  <div class="bg-white p-5 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow">
+                    <h4 class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3">NÊN LÀM</h4>
+                    <div v-for="(item, index) in recommendations.insight.doToday" :key="'do-' + index" class="mt-4 first:mt-0">
+                      <p class="text-gray-800 font-medium">{{ item.activity }}</p>
+                      <p class="text-gray-600 mt-1 text-sm">{{ item.explanation }}</p>
+                    </div>
+                  </div>
+                  <div class="bg-white p-5 rounded-xl border border-red-100 shadow-sm hover:shadow-md transition-shadow">
+                    <h4 class="text-sm font-semibold text-red-600 uppercase tracking-wider mb-3">NÊN TRÁNH</h4>
+                    <div v-for="(item, index) in recommendations.insight.avoidToday" :key="'avoid-' + index" class="mt-4 first:mt-0">
+                      <p class="text-gray-800 font-medium">{{ item.activity }}</p>
+                      <p class="text-gray-600 mt-1 text-sm">{{ item.explanation }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div v-if="section.type === 'insight' && recommendations.insight && recommendations.insight.doToday.length < maxSuggestions" class="text-center p-6">
+                  <button
+                    @click="loadMoreRecommendations('insight')"
+                    :disabled="isLoadingMore || loadingMore"
+                    :class="[
+                      'action-button flex items-center justify-center',
+                      (isLoadingMore || loadingMore) ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
+                    ]"
+                  >
+                    <svg
+                      v-if="isLoadingMore || loadingMore"
+                      class="animate-spin h-5 w-5 text-white mr-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path
+                        class="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    {{ isLoadingMore || loadingMore ? 'Đang tải...' : `Xem thêm gợi ý insight (Cần ${tokenCostMore} token)` }}
+                  </button>
+                  <div v-if="errorMessageMore" class="text-red-600 text-center font-medium mt-4">
+                    <template v-if="errorTypeMore === 'login'">
+                      Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý insight.
+                    </template>
+                    <template v-else-if="errorTypeMore === 'topup'">
+                      Không đủ token để xem thêm gợi ý insight. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                    </template>
+                    <template v-else>
+                      {{ errorMessageMore }}
+                    </template>
+                  </div>
+                  <div v-else-if="!isContentAccessibleMore && !isLoadingMore && !loadingMore" class="text-red-600 text-center font-medium mt-4">
+                    <template v-if="!userStore.isAuthenticated">
+                      Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý insight.
+                    </template>
+                    <template v-else-if="userStore.isAuthenticated && !hasSufficientTokensMore">
+                      Không đủ token để xem thêm gợi ý insight. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                    </template>
+                  </div>
                 </div>
               </div>
             </div>
@@ -227,21 +422,26 @@ const router = useRouter();
 const userStore = useUserStore();
 const formData = ref({
   name: '',
-  birthdate: '',
-  currentJob: '',
+  birthDate: '',
+  foodPreferences: '',
+  drinkPreferences: '',
+  plans: '',
 });
-const result = ref(null);
+const personalDayNumber = ref(null);
+const recommendations = ref(null);
 const loading = ref(false);
 const loadingMore = ref(false);
 const errors = ref({
   name: '',
-  birthdate: '',
+  birthDate: '',
   general: '',
 });
-const tokenCost = ref(30);
-const tokenCostMore = ref(10);
+const activeTab = ref('Insight hôm nay');
+const tabs = ['Insight hôm nay', 'Đồ ăn', 'Đồ uống'];
+const tokenCost = ref(10);
+const tokenCostMore = ref(5);
 const maxSuggestions = ref(12);
-const description = 'Access to career guidance based on numerology';
+const description = 'Access to daily numerology recommendations';
 const {
   isLoading,
   errorMessage,
@@ -251,7 +451,7 @@ const {
   checkAuthAndAccess,
   performAction,
   errorAction,
-  navigateToTopup: navigateToTopupMain,
+  navigateToTopup,
 } = useProtectedContent(tokenCost.value, description);
 const {
   isLoading: isLoadingMore,
@@ -262,32 +462,59 @@ const {
   checkAuthAndAccess: checkAuthAndAccessMore,
   performAction: performActionMore,
   errorAction: errorActionMore,
-  navigateToTopup: navigateToTopupMore,
-} = useProtectedContent(tokenCostMore.value, 'Load more career suggestions');
+} = useProtectedContent(tokenCostMore.value, 'Load more numerology recommendations');
 
-// Hàm điều hướng đến trang nạp token
-const navigateToTopup = () => {
-  if (process.client) {
-    console.log('Navigating to /nap-token');
-    try {
-      router.push('/nap-token').catch((err) => {
-        console.error('Navigation error:', err);
-        toast.error('Không thể điều hướng đến trang nạp token. Vui lòng thử lại.', { position: 'top-center' });
-      });
-    } catch (err) {
-      console.error('Error in navigateToTopup:', err);
-      toast.error('Có lỗi khi điều hướng. Vui lòng kiểm tra lại.', { position: 'top-center' });
-    }
-  } else {
-    console.warn('navigateToTopup called on server-side, ignoring.');
-  }
+
+
+// Hàm lấy ngày hiện tại định dạng DD/MM/YYYY
+const getCurrentDate = () => {
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, '0');
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const year = today.getFullYear();
+  return `${day}/${month}/${year}`;
+};
+const currentDate = ref(getCurrentDate());
+
+// Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
+const formatDateToDDMMYYYY = (dateStr) => {
+  if (!dateStr || !/^\d{4}-\d{2}-\d{2}(T.*)?$/.test(dateStr)) return '';
+  const [year, month, day] = dateStr.split('T')[0].split('-');
+  return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
 };
 
-// Phần không bảo vệ (Tiêu đề, mô tả, form nhập thông tin)
+// Hàm chuyển đổi định dạng ngày từ DD/MM/YYYY sang YYYY-MM-DD
+const formatDateToYYYYMMDD = (dateStr) => {
+  if (!dateStr || !/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) return '';
+  const [day, month, year] = dateStr.split('/').map(Number);
+  return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+};
+
+// Hàm tính số ngày cá nhân
+const calculatePersonalDayNumber = (birthDate, currentDate) => {
+  if (!birthDate || !currentDate || !/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate) || !/^\d{2}\/\d{2}\/\d{4}$/.test(currentDate)) {
+    return null;
+  }
+  const [birthDay, birthMonth, birthYear] = birthDate.split('/').map(Number);
+  const [currentDay, currentMonth, currentYear] = currentDate.split('/').map(Number);
+  const sumBirth = (birthDay + birthMonth + birthYear)
+    .toString()
+    .split('')
+    .reduce((sum, digit) => sum + Number(digit), 0);
+  const sumCurrent = (currentDay + currentMonth + currentYear)
+    .toString()
+    .split('')
+    .reduce((sum, digit) => sum + Number(digit), 0);
+  let personalDay = (sumBirth + sumCurrent) % 9;
+  if (personalDay === 0) personalDay = 9;
+  return personalDay;
+};
+
+// Phần không bảo vệ (Tiêu đề và form nhập thông tin)
 const introSection = computed(() => [
   {
-    title: 'Định Hướng Nghề Nghiệp',
-    description: 'Khám phá nghề nghiệp phù hợp với tính cách và năng lực của bạn',
+    title: 'Thần Số Học Hôm Nay - Khám Phá Vận Mệnh Ngày Mới',
+    description: 'Mỗi ngày là một con số khác nhau - Hãy xem hôm nay vũ trụ dành điều gì cho bạn!',
     type: 'header',
   },
   {
@@ -296,76 +523,28 @@ const introSection = computed(() => [
   },
 ]);
 
-// Phần được bảo vệ (Kết quả định hướng nghề nghiệp)
-const protectedSections = computed(() => {
-  if (!result.value) return [];
+// Phần được bảo vệ (Kết quả gợi ý)
+const resultSections = computed(() => {
+  if (!recommendations.value) return [];
   return [
     {
-      title: 'Định hướng nghề nghiệp',
-      type: 'overview',
-      items: [
-        {
-          title: 'Mục tiêu nghề nghiệp',
-          content: result.value.careerGoals,
-          iconClass: 'w-5 h-5 text-purple-500 mr-2',
-          iconPath: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
-        },
-        {
-          title: 'Đam mê và động lực',
-          content: result.value.passionAndMotivation,
-          iconClass: 'w-5 h-5 text-green-500 mr-2',
-          iconPath: 'M5 13l4 4L19 7',
-        },
-        {
-          title: 'Phong cách làm việc',
-          content: result.value.workStyle,
-          iconClass: 'w-5 h-5 text-blue-500 mr-2',
-          iconPath: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 1.857h10M12 4v8m-8 8h16',
-        },
-        {
-          title: 'Con đường dài hạn',
-          content: result.value.longTermPath,
-          iconClass: 'w-5 h-5 text-yellow-500 mr-2',
-          iconPath: 'M13 10V3L4 14h7v7l9-11h-7z',
-        },
-        ...(formData.value.currentJob
-          ? [
-              {
-                title: 'Phân tích công việc hiện tại',
-                content: result.value.currentJobAnalysis,
-                iconClass: 'w-5 h-5 text-indigo-500 mr-2',
-                iconPath: 'M9 17v-2m0-2v-2m0-2V7m6 10v-2m0-2v-2m0-2V7m-9 10h12a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z',
-              },
-            ]
-          : []),
-      ],
+      title: 'Số ngày cá nhân',
+      type: 'personalDay',
     },
     {
-      title: 'Đề xuất nghề nghiệp',
-      type: 'suggestions',
-      suggestions: result.value.careerSuggestions || [],
+      title: 'Gợi ý món ăn',
+      type: 'food',
     },
     {
-      title: 'Lời khuyên thực tế',
-      type: 'advice',
-      items: [
-        {
-          title: 'Lời khuyên thực tế',
-          content: result.value.practicalAdvice,
-          iconClass: 'w-5 h-5 text-purple-600 mr-2',
-          iconPath: 'M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z',
-        },
-      ],
+      title: 'Gợi ý đồ uống',
+      type: 'drink',
+    },
+    {
+      title: 'Insight hôm nay',
+      type: 'insight',
     },
   ];
 });
-
-// Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
-const formatDateToDDMMYYYY = (dateStr) => {
-  if (!dateStr) return '';
-  const [year, month, day] = dateStr.split('-').map(Number);
-  return `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
-};
 
 // Hàm lấy thông tin người dùng từ API
 const fetchUserData = async () => {
@@ -373,7 +552,6 @@ const fetchUserData = async () => {
     console.log('User not authenticated, skipping fetchUserData');
     return;
   }
-
   try {
     const userIdValue = String(userStore.user.id);
     console.log('Fetching user data for userId:', userIdValue);
@@ -383,7 +561,10 @@ const fetchUserData = async () => {
     console.log('API /api/users response:', response);
     const { fullname, birthdate } = response.user;
     formData.value.name = fullname?.trim() || '';
-    formData.value.birthdate = birthdate ? formatDateToDDMMYYYY(birthdate.split('T')[0]) : '';
+    formData.value.birthDate = birthdate ? formatDateToDDMMYYYY(birthdate.split('T')[0]) : '';
+    if (formData.value.birthDate) {
+      personalDayNumber.value = calculatePersonalDayNumber(formData.value.birthDate, currentDate.value);
+    }
   } catch (err) {
     console.error('Error fetching user data:', err);
     errors.value.general = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
@@ -393,7 +574,7 @@ const fetchUserData = async () => {
 
 // Khởi tạo trạng thái đăng nhập và kiểm tra token
 const initializeAuth = async () => {
-  console.log('Initializing auth for CareerGuidance...');
+  console.log('Initializing auth for DailyNumerology...');
   try {
     await userStore.initialize();
     console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
@@ -408,12 +589,47 @@ const initializeAuth = async () => {
   }
 };
 
-// Load dữ liệu khi component được mount
-onMounted(() => {
-  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
-  if (userStore.isStoreInitialized) {
-    initializeAuth();
-    fetchUserData();
+// Hàm chuyển tab và kiểm tra quyền truy cập
+const switchTab = async (tab) => {
+  activeTab.value = tab;
+  loadingMore.value = false; // Reset trạng thái loading khi chuyển tab
+  errorMessageMore.value = ''; // Reset thông báo lỗi
+  errorTypeMore.value = ''; // Reset loại lỗi
+  await checkAuthAndAccessMore();
+  console.log(`Switched to tab: ${tab}, isContentAccessibleMore:`, isContentAccessibleMore.value, 'hasSufficientTokensMore:', hasSufficientTokensMore.value);
+};
+
+// Cập nhật thông tin người dùng khi thay đổi name hoặc birthDate
+watch([() => formData.value.name, () => formData.value.birthDate], async ([newName, newBirthDate]) => {
+  if (!userStore.isStoreInitialized || !userStore.user?.id) return;
+  const currentBirthDate = userStore.user?.birthdate || '';
+  const formattedNewBirthDate = formatDateToYYYYMMDD(newBirthDate);
+  if (newName !== userStore.user?.fullname || formattedNewBirthDate !== currentBirthDate) {
+    try {
+      const response = await $fetch(`/api/users/${userStore.user.id}`, {
+        method: 'PATCH',
+        body: {
+          fullname: newName.trim(),
+          birthdate: formattedNewBirthDate,
+        },
+      });
+      if (response.success) {
+        userStore.setUser({
+          id: userStore.user.id,
+          email: userStore.user?.email || '',
+          fullname: newName.trim(),
+          birthdate: formattedNewBirthDate,
+          tokens: userStore.user?.tokens || 0,
+        });
+        if (newBirthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(newBirthDate)) {
+          personalDayNumber.value = calculatePersonalDayNumber(newBirthDate, currentDate.value);
+        }
+      }
+    } catch (err) {
+      console.error('Lỗi cập nhật thông tin người dùng:', err);
+      errors.value.general = 'Không thể cập nhật thông tin. Vui lòng thử lại.';
+      toast.error(errors.value.general, { position: 'top-center' });
+    }
   }
 });
 
@@ -426,27 +642,35 @@ watch(() => userStore.isStoreInitialized, (initialized) => {
   }
 });
 
+// Theo dõi activeTab để kiểm tra quyền truy cập khi chuyển tab
+watch(activeTab, async () => {
+  loadingMore.value = false; // Reset trạng thái loading
+  errorMessageMore.value = ''; // Reset thông báo lỗi
+  errorTypeMore.value = ''; // Reset loại lỗi
+  await checkAuthAndAccessMore();
+  console.log('Active tab changed, rechecked auth for more:', isContentAccessibleMore.value, hasSufficientTokensMore.value);
+});
+
 // Validate form
 const validateForm = () => {
   errors.value = {
     name: '',
-    birthdate: '',
+    birthDate: '',
     general: '',
   };
   let isValid = true;
-
   if (!formData.value.name.trim()) {
     errors.value.name = 'Vui lòng nhập họ và tên';
     isValid = false;
   }
-  if (!formData.value.birthdate.trim()) {
-    errors.value.birthdate = 'Vui lòng nhập ngày sinh';
+  if (!formData.value.birthDate.trim()) {
+    errors.value.birthDate = 'Vui lòng nhập ngày sinh';
     isValid = false;
-  } else if (!/^\d{2}[\/-]\d{2}[\/-]\d{4}$/.test(formData.value.birthdate)) {
-    errors.value.birthdate = 'Vui lòng nhập ngày đúng định dạng DD/MM/YYYY hoặc DD-MM-YYYY';
+  } else if (!/^\d{2}\/\d{2}\/\d{4}$/.test(formData.value.birthDate)) {
+    errors.value.birthDate = 'Vui lòng nhập ngày sinh đúng định dạng DD/MM/YYYY';
     isValid = false;
   } else {
-    const match = formData.value.birthdate.match(/^(\d{2})[\/-](\d{2})[\/-](\d{4})$/);
+    const match = formData.value.birthDate.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
     const day = parseInt(match[1], 10);
     const month = parseInt(match[2], 10);
     const year = parseInt(match[3], 10);
@@ -458,32 +682,30 @@ const validateForm = () => {
       year < 1900 ||
       year > new Date().getFullYear()
     ) {
-      errors.value.birthdate = 'Ngày sinh không hợp lệ';
+      errors.value.birthDate = 'Ngày sinh không hợp lệ';
       isValid = false;
     }
   }
-
   return isValid;
 };
 
-// Hàm lấy định hướng nghề nghiệp
-const getCareerGuidance = async () => {
+// Hàm lấy gợi ý
+const getRecommendations = async () => {
   if (!process.client) {
-    console.warn('getCareerGuidance called on server-side, ignoring.');
+    console.warn('getRecommendations called on server-side, ignoring.');
     return;
   }
   if (!validateForm()) {
     toast.error('Vui lòng kiểm tra lại thông tin nhập', { position: 'top-center' });
     return;
   }
-
   if (isContentAccessible.value) {
-    await fetchCareerGuidance();
+    await fetchRecommendations();
   } else {
     try {
       await performAction();
       if (isContentAccessible.value) {
-        await fetchCareerGuidance();
+        await fetchRecommendations();
       } else {
         toast.error(errorMessage.value, { position: 'top-center' });
       }
@@ -494,26 +716,39 @@ const getCareerGuidance = async () => {
   }
 };
 
-// Hàm gọi API lấy định hướng nghề nghiệp
-const fetchCareerGuidance = async () => {
+// Hàm gọi API lấy gợi ý
+const fetchRecommendations = async () => {
   loading.value = true;
   errors.value.general = '';
   try {
     const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
-    console.log('Sending request to /api/numerology/career with data:', formData.value);
-    const response = await $fetch('/api/numerology/career', {
+    let endpoint;
+    let body = { birthDate: formData.value.birthDate, numSuggestions: 3, previousItems: [] };
+    if (activeTab.value === 'Đồ ăn') {
+      endpoint = '/api/numerology/food';
+      body.preferences = formData.value.foodPreferences;
+    } else if (activeTab.value === 'Đồ uống') {
+      endpoint = '/api/numerology/drinks';
+      body.preferences = formData.value.drinkPreferences;
+    } else {
+      endpoint = '/api/numerology/insights';
+      body.plans = formData.value.plans;
+    }
+    console.log(`Sending request to ${endpoint} with data:`, body);
+    const response = await $fetch(endpoint, {
       method: 'POST',
       headers: {
         'x-username': encodeURIComponent(username),
         'Content-Type': 'application/json; charset=utf-8',
       },
-      body: { ...formData.value, numSuggestions: 3, previousJobs: [] },
+      body,
     });
-    console.log('Response from /api/numerology/career:', response);
-    result.value = response;
-    toast.success('Định hướng nghề nghiệp đã hoàn tất!', { position: 'top-center' });
+    console.log(`Response from ${endpoint}:`, response);
+    personalDayNumber.value = response.personalDayNumber;
+    recommendations.value = response.recommendations;
+    toast.success('Gợi ý hôm nay đã được tải thành công!', { position: 'top-center' });
     setTimeout(() => {
-      const resultElement = document.querySelector('[v-if="isContentAccessible && result"]');
+      const resultElement = document.querySelector('[v-if="isContentAccessible && recommendations"]');
       if (resultElement) {
         resultElement.scrollIntoView({ behavior: 'smooth' });
       }
@@ -521,29 +756,29 @@ const fetchCareerGuidance = async () => {
     await checkAuthAndAccess();
     await checkAuthAndAccessMore();
   } catch (error) {
-    console.error('Error in fetchCareerGuidance:', error);
-    errors.value.general = error.data?.message || 'Có lỗi xảy ra khi lấy định hướng nghề nghiệp!';
+    console.error('Error in fetchRecommendations:', error);
+    errors.value.general = error.data?.message || 'Có lỗi xảy ra khi lấy gợi ý!';
     toast.error(errors.value.general, { position: 'top-center' });
   } finally {
     loading.value = false;
   }
 };
 
-// Hàm tải thêm nghề nghiệp
-const loadMoreCareers = async () => {
+// Hàm tải thêm gợi ý
+const loadMoreRecommendations = async (type) => {
   if (!process.client) {
-    console.warn('loadMoreCareers called on server-side, ignoring.');
+    console.warn('loadMoreRecommendations called on server-side, ignoring.');
     return;
   }
-  if (!result.value) return;
+  if (!recommendations.value) return;
 
   if (isContentAccessibleMore.value) {
-    await fetchMoreCareers();
+    await fetchMoreRecommendations(type);
   } else {
     try {
       await performActionMore();
       if (isContentAccessibleMore.value) {
-        await fetchMoreCareers();
+        await fetchMoreRecommendations(type);
       } else {
         toast.error(errorMessageMore.value, { position: 'top-center' });
       }
@@ -554,38 +789,67 @@ const loadMoreCareers = async () => {
   }
 };
 
-// Hàm gọi API tải thêm nghề nghiệp
-const fetchMoreCareers = async () => {
+// Hàm gọi API tải thêm gợi ý
+const fetchMoreRecommendations = async (type) => {
   loadingMore.value = true;
   try {
     const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
-    const numSuggestions = Math.min(result.value.careerSuggestions.length + 3, maxSuggestions.value);
-    const previousJobs = result.value.careerSuggestions.map((s) => s.job);
-    console.log('Sending request to /api/numerology/career for more suggestions, numSuggestions:', numSuggestions);
-    const response = await $fetch('/api/numerology/career', {
+    let endpoint;
+    let body = { birthDate: formData.value.birthDate };
+    let previousItems = [];
+    if (type === 'food') {
+      endpoint = '/api/numerology/food';
+      body.preferences = formData.value.foodPreferences;
+      previousItems = recommendations.value.food ? recommendations.value.food.map((item) => item.item) : [];
+    } else if (type === 'drink') {
+      endpoint = '/api/numerology/drinks';
+      body.preferences = formData.value.drinkPreferences;
+      previousItems = recommendations.value.drink ? recommendations.value.drink.map((item) => item.item) : [];
+    } else {
+      endpoint = '/api/numerology/insights';
+      body.plans = formData.value.plans;
+      previousItems = recommendations.value.insight
+        ? recommendations.value.insight.doToday.concat(recommendations.value.insight.avoidToday).map((item) => item.activity)
+        : [];
+    }
+    body.numSuggestions = Math.min((previousItems.length || 0) + 3, maxSuggestions.value);
+    body.previousItems = previousItems;
+    console.log(`Sending request to ${endpoint} for more suggestions, numSuggestions:`, body.numSuggestions);
+    const response = await $fetch(endpoint, {
       method: 'POST',
       headers: {
         'x-username': encodeURIComponent(username),
         'Content-Type': 'application/json; charset=utf-8',
       },
-      body: { ...formData.value, numSuggestions, previousJobs },
+      body,
     });
-    console.log('Response from /api/numerology/career (more suggestions):', response);
-    result.value = response;
-    toast.success(
-      `Đã tải thêm ${response.careerSuggestions.length - (result.value.careerSuggestions.length - 3)} nghề nghiệp phù hợp!`,
-      { position: 'top-center' }
-    );
+    console.log(`Response from ${endpoint} (more suggestions):`, response);
+    recommendations.value = {
+      ...recommendations.value,
+      [type]: type === 'insight' ? response.recommendations.insight : response.recommendations[type],
+    };
+    toast.success(`Đã tải thêm gợi ý ${type === 'food' ? 'món ăn' : type === 'drink' ? 'đồ uống' : 'insight'} thành công!`, {
+      position: 'top-center',
+    });
     await checkAuthAndAccess();
     await checkAuthAndAccessMore();
   } catch (error) {
-    console.error('Error loading more careers:', error);
-    errors.value.general = error.data?.message || 'Có lỗi khi tải thêm nghề nghiệp!';
+    console.error('Error loading more recommendations:', error);
+    errors.value.general = error.data?.message || 'Có lỗi khi tải thêm gợi ý!';
     toast.error(errors.value.general, { position: 'top-center' });
   } finally {
     loadingMore.value = false;
   }
 };
+
+// Load dữ liệu khi component được mount
+onMounted(() => {
+  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
+  if (userStore.isStoreInitialized) {
+    initializeAuth();
+    fetchUserData();
+  }
+});
 </script>
 
 <style scoped>
@@ -611,6 +875,11 @@ const fetchMoreCareers = async () => {
 }
 
 .action-button {
-  @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap mx-2;
+  @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white transition-all duration-300 shadow-md whitespace-nowrap;
+}
+
+.action-button.inline {
+  @apply mx-1;
 }
 </style>
+```
