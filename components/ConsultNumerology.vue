@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
     <div class="container mx-auto p-4">
-      <!-- Header (không bảo vệ) -->
+      <!-- Header -->
       <div class="text-center mb-8">
         <h2 class="text-3xl md:text-4xl font-bold text-blue-800 mb-2">Giải Đáp Thắc Mắc - Thần Số Học</h2>
         <p class="text-gray-600">Hỏi đáp dựa trên năng lượng số của bạn</p>
@@ -9,7 +9,7 @@
 
       <!-- Main Content -->
       <div class="bg-white p-6 rounded-xl shadow-lg mb-8 border border-gray-100">
-        <!-- Form (không bảo vệ) -->
+        <!-- Form -->
         <div class="space-y-6">
           <h3 class="text-lg font-semibold text-purple-700 mb-4">Nhập thông tin và câu hỏi</h3>
           <!-- Input Form for Name and Birth Date in Two Columns -->
@@ -43,7 +43,7 @@
             <textarea
               v-model="formData.question"
               id="question"
-              placeholder="Ví dụ: Tôi có nên học thạc sĩ trong năm nay không?"
+              placeholder="Ví dụ: Tôi có nên mua nhà trong năm nay không?"
               :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition h-24 resize-none', errors.question ? 'border-red-500' : 'border-gray-300']"
             ></textarea>
             <p v-if="errors.question" class="text-red-600 text-sm mt-1">{{ errors.question }}</p>
@@ -97,66 +97,9 @@
           </div>
         </div>
 
-        <!-- Results Section (bảo vệ) -->
+        <!-- Results Section -->
         <transition name="slide-fade">
-          <div v-if="result && isContentAccessible" class="mt-8 space-y-6">
-            <!-- Số chủ đạo -->
-            <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
-              <div class="flex items-center">
-                <div class="bg-purple-100 p-2 rounded-lg mr-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6 text-purple-600"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="text-lg font-semibold text-purple-800">
-                    Số chủ đạo: <span class="text-2xl font-bold">{{ result.lifePath }}</span>
-                  </h3>
-                  <p v-text="result.lifePathDesc" class="text-gray-600 mt-1"></p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Số năm cá nhân -->
-            <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
-              <div class="flex items-center">
-                <div class="bg-purple-100 p-2 rounded-lg mr-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6 text-purple-600"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="text-lg font-semibold text-purple-800">
-                    Số năm cá nhân {{ currentYear }}: <span class="text-2xl font-bold">{{ result.personalYear }}</span>
-                  </h3>
-                  <p v-text="result.personalYearDesc" class="text-gray-600 mt-1"></p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Phân tích -->
+          <div v-if="result && isContentAccessible" class="mt-8">
             <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
               <h3 class="font-medium text-purple-700 flex items-center">
                 <span class="bg-purple-100 rounded-full p-2 mr-2">
@@ -173,76 +116,9 @@
                     />
                   </svg>
                 </span>
-                Phân tích tổng quan
+                Giải đáp
               </h3>
-              <p v-text="result.analysis" class="text-gray-600 mt-2"></p>
-            </div>
-
-            <!-- Cơ hội -->
-            <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-              <h3 class="font-medium text-purple-700 flex items-center">
-                <span class="bg-purple-100 rounded-full p-2 mr-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 text-purple-600"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-                    <path
-                      fill-rule="evenodd"
-                      d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </span>
-                Cơ hội
-              </h3>
-              <p v-text="result.opportunities" class="text-gray-600 mt-2"></p>
-            </div>
-
-            <!-- Thách thức -->
-            <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-              <h3 class="font-medium text-purple-700 flex items-center">
-                <span class="bg-purple-100 rounded-full p-2 mr-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 text-purple-600"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M7 2a1 1 0 00-.707 1.707L7 4.414v3.758a1 1 0 01-.293.707l-4 4C.817 14.769 2.156 18 4.828 18h10.343c2.673 0 4.012-3.231 2.122-5.121l-4-4A1 1 0 0113 8.172V4.414l.707-.707A1 1 0 0013 2H7zm2 6.172V4h2v4.172a3 3 0 00.879 2.12l1.027 1.028a4 4 0 00-2.171.102l-.47.156a4 4 0 01-2.53 0l-.563-.187a1.993 1.993 0 00-.114-.035l1.063-1.063A3 3 0 009 8.172z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </span>
-                Thách thức
-              </h3>
-              <p v-text="result.challenges" class="text-gray-600 mt-2"></p>
-            </div>
-
-            <!-- Lời khuyên -->
-            <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
-              <h3 class="font-medium text-purple-700 flex items-center">
-                <span class="bg-purple-100 rounded-full p-2 mr-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 text-purple-600"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </span>
-                Lời khuyên
-              </h3>
-              <p v-text="result.advice" class="text-gray-600 mt-2"></p>
+              <p v-text="result.answer" class="text-gray-600 mt-2"></p>
             </div>
           </div>
         </transition>
@@ -275,9 +151,8 @@ const errors = ref({
   question: '',
   general: '',
 });
-const currentYear = new Date().getFullYear();
 const tokenCost = ref(15);
-const description = 'Access to detailed numerology consultation results';
+const description = 'Access to numerology consultation results';
 const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, performAction, errorAction, navigateToTopup } = useProtectedContent(tokenCost.value, description);
 
 // Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
@@ -310,21 +185,6 @@ const cleanedFormData = computed({
     };
   },
 });
-
-// Làm sạch dữ liệu result từ API
-const cleanResult = (data) => {
-  if (!data) return null;
-  return {
-    lifePath: cleanString(data.lifePath),
-    lifePathDesc: cleanString(data.lifePathDesc),
-    personalYear: cleanString(data.personalYear),
-    personalYearDesc: cleanString(data.personalYearDesc),
-    analysis: cleanString(data.analysis),
-    opportunities: cleanString(data.opportunities),
-    challenges: cleanString(data.challenges),
-    advice: cleanString(data.advice),
-  };
-};
 
 // Hàm validate form
 const validateForm = () => {
@@ -448,7 +308,7 @@ const getConsultation = async () => {
       body: cleanedFormData.value,
     });
     console.log('Response from /api/numerology/consult:', response);
-    result.value = cleanResult(response.consult);
+    result.value = response.consult;
     toast.success('Giải đáp hoàn tất!', { position: 'top-center' });
     setTimeout(() => {
       const resultElement = document.querySelector('[v-if="result && isContentAccessible"]');
