@@ -1,117 +1,142 @@
+```vue
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
     <div class="container mx-auto p-4">
       <!-- Header Section -->
-      <div class="text-center mb-8 relative">
-        <h1 class="text-3xl md:text-4xl font-bold text-blue-800 mb-2">Thần Số Học Hôm Nay - Khám Phá Vận Mệnh Ngày Mới</h1>
-        <p class="text-gray-600">Mỗi ngày là một con số khác nhau - Hãy xem hôm nay vũ trụ dành điều gì cho bạn!</p>
-        <p class="text-gray-600 mt-2">Hôm nay: <span class="font-medium">{{ currentDate }}</span></p>
-        <div v-if="personalDayNumber" class="mt-4 inline-flex items-center px-4 py-2 bg-purple-100 text-purple-600 rounded-full text-sm font-medium">
-          Số ngày cá nhân hôm nay của bạn: <span class="font-bold ml-1">{{ personalDayNumber }}</span>
+      <div v-for="section in introSection" :key="section.title" class="space-y-6">
+        <div v-if="section.type === 'header'" class="text-center mb-8 relative">
+          <h1 class="text-3xl md:text-4xl font-bold text-blue-800 mb-2">{{ section.title }}</h1>
+          <p class="text-gray-600">{{ section.description }}</p>
+          <p class="text-gray-600 mt-2">Hôm nay: <span class="font-medium">{{ currentDate }}</span></p>
+          <div v-if="personalDayNumber" class="mt-4 inline-flex items-center px-4 py-2 bg-purple-100 text-purple-600 rounded-full text-sm font-medium">
+            Số ngày cá nhân hôm nay của bạn: <span class="font-bold ml-1">{{ personalDayNumber }}</span>
+          </div>
+        </div>
+
+        <!-- Input Form -->
+        <div v-if="section.type === 'form'" class="bg-white p-6 rounded-xl shadow-lg mb-8 border border-gray-100">
+          <h3 class="text-xl font-semibold text-purple-700 mb-4">Nhập thông tin cá nhân</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Họ và tên</label>
+              <input
+                v-model="formData.name"
+                type="text"
+                id="name"
+                placeholder="VD: Nguyễn Văn A"
+                :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.name ? 'border-red-500' : 'border-gray-300']"
+              />
+              <p v-if="errors.name" class="text-red-600 text-sm mt-1">{{ errors.name }}</p>
+            </div>
+            <div>
+              <label for="birthDate" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh (DD/MM/YYYY)</label>
+              <input
+                v-model="formData.birthDate"
+                type="text"
+                id="birthDate"
+                placeholder="VD: 01/01/1990"
+                :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.birthDate ? 'border-red-500' : 'border-gray-300']"
+              />
+              <p v-if="errors.birthDate" class="text-red-600 text-sm mt-1">{{ errors.birthDate }}</p>
+            </div>
+          </div>
+
+          <!-- Tabs Navigation -->
+          <div class="mb-6">
+            <nav class="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+              <button
+                v-for="tab in tabs"
+                :key="tab"
+                @click="switchTab(tab)"
+                :class="[
+                  activeTab === tab
+                    ? 'bg-white text-purple-600 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-700',
+                  'px-4 py-2 text-sm font-medium rounded-md transition-all duration-200'
+                ]"
+              >
+                {{ tab }}
+              </button>
+            </nav>
+          </div>
+
+          <!-- Input Form for Preferences/Plans -->
+          <form @submit.prevent="getRecommendations" class="space-y-6">
+            <div v-if="activeTab === 'Đồ ăn'">
+              <label for="foodPreferences" class="block text-sm font-medium text-gray-700 mb-3">Món ăn yêu thích (phân cách bằng dấu phẩy, nếu không có bỏ trống)</label>
+              <input
+                v-model="formData.foodPreferences"
+                type="text"
+                id="foodPreferences"
+                placeholder="VD: phở, bún, cơm tấm"
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+              />
+            </div>
+            <div v-else-if="activeTab === 'Đồ uống'">
+              <label for="drinkPreferences" class="block text-sm font-medium text-gray-700 mb-3">Đồ uống yêu thích (phân cách bằng dấu phẩy, nếu không có bỏ trống)</label>
+              <input
+                v-model="formData.drinkPreferences"
+                type="text"
+                id="drinkPreferences"
+                placeholder="VD: trà sữa, cà phê, nước cam"
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+              />
+            </div>
+            <div v-else>
+              <label for="plans" class="block text-sm font-medium text-gray-700 mb-3">Dự định hôm nay (phân cách bằng dấu phẩy, nếu không có bỏ trống)</label>
+              <input
+                v-model="formData.plans"
+                type="text"
+                id="plans"
+                placeholder="VD: gặp khách hàng, hoàn thành báo cáo, đi tập gym"
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+              />
+            </div>
+
+            <!-- Action Button for Get Recommendations -->
+            <div class="text-center p-6">
+              <button
+                @click="getRecommendations"
+                :disabled="isLoading || loading"
+                :class="[
+                  'action-button',
+                  (isLoading || loading) ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
+                ]"
+              >
+                {{ isLoading || loading ? 'Đang tải...' : `Xem gợi ý hôm nay (Cần ${tokenCost} token)` }}
+              </button>
+              <div v-if="errorMessage" class="text-red-600 text-center font-medium mt-4">
+                <template v-if="errorType === 'login'">
+                  Vui lòng <button @click="errorAction" class="action-button inline">Đăng Nhập</button> để xem gợi ý hôm nay.
+                </template>
+                <template v-else-if="errorType === 'topup'">
+                  Không đủ token để xem gợi ý hôm nay. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                </template>
+                <template v-else>
+                  {{ errorMessage }}
+                </template>
+              </div>
+              <div v-else-if="errors.general" class="text-red-600 text-center font-medium mt-4">
+                {{ errors.general }}
+              </div>
+              <div v-else-if="!isContentAccessible && !isLoading && !loading" class="text-red-600 text-center font-medium mt-4">
+                <template v-if="!userStore.isAuthenticated">
+                  Vui lòng <button @click="errorAction" class="action-button inline">Đăng Nhập</button> để xem gợi ý hôm nay.
+                </template>
+                <template v-else-if="userStore.isAuthenticated && !hasSufficientTokens">
+                  Không đủ token để xem gợi ý hôm nay. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                </template>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
 
-      <!-- Main Content -->
-      <div class="bg-white p-6 rounded-xl shadow-lg mb-8 border border-gray-100">
-        <div v-if="userStore.isStoreInitialized" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div>
-            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Họ và tên</label>
-            <input
-              v-model="name"
-              type="text"
-              id="name"
-              placeholder="VD: Nguyễn Văn A"
-              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
-            />
-          </div>
-          <div>
-            <label for="birthDate" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh (DD/MM/YYYY)</label>
-            <input
-              v-model="birthDateInput"
-              type="text"
-              id="birthDate"
-              placeholder="VD: 01/01/1990"
-              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
-            />
-          </div>
-        </div>
-
-        <!-- Tabs Navigation -->
-        <div class="mb-6">
-          <nav class="flex space-x-1 bg-gray-100 p-1 rounded-lg">
-            <button
-              v-for="tab in tabs"
-              :key="tab"
-              @click="activeTab = tab"
-              :class="[
-                activeTab === tab
-                  ? 'bg-white text-purple-600 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-700',
-                'px-4 py-2 text-sm font-medium rounded-md transition-all duration-200'
-              ]"
-            >
-              {{ tab }}
-            </button>
-          </nav>
-        </div>
-
-        <!-- Input Form for Preferences/Plans -->
-        <form @submit.prevent="handleSubmit" class="space-y-6">
-          <div v-if="activeTab === 'Đồ ăn'">
-            <label for="foodPreferences" class="block text-sm font-medium text-gray-700 mb-3">Món ăn yêu thích (phân cách bằng , nếu không có bỏ trống)</label>
-            <input
-              v-model="foodPreferences"
-              type="text"
-              id="foodPreferences"
-              placeholder="VD: phở,bún,cơm tấm"
-              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
-            />
-          </div>
-
-          <div v-else-if="activeTab === 'Đồ uống'">
-            <label for="drinkPreferences" class="block text-sm font-medium text-gray-700 mb-3">Đồ uống yêu thích (phân cách bằng , nếu không có bỏ trống)</label>
-            <input
-              v-model="drinkPreferences"
-              type="text"
-              id="drinkPreferences"
-              placeholder="VD: trà sữa,cà phê,nước cam"
-              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
-            />
-          </div>
-
-          <div v-else>
-            <label for="plans" class="block text-sm font-medium text-gray-700 mb-3">Dự định hôm nay (phân cách bằng , nếu không có bỏ trống)</label>
-            <input
-              v-model="plans"
-              type="text"
-              id="plans"
-              placeholder="VD: gặp khách hàng,hoàn thành báo cáo,đi tập gym"
-              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
-            />
-          </div>
-
-          <!-- Button -->
-          <div class="flex flex-col items-center">
-            <button
-              type="submit"
-              :disabled="isLoading || !hasSufficientTokens"
-              class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
-            >
-              <span v-if="isLoading">Đang xử lý...</span>
-              <span v-else>{{ isLoggedIn ? `Xem gợi ý (Cần ${tokenCost} tokens)` : 'Đăng nhập để xem gợi ý' }}</span>
-            </button>
-          </div>
-
-          <!-- Error Messages -->
-          <div v-if="error || errorMessage" class="mt-6 p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
-            <p v-if="error">{{ error }}</p>
-            <p v-if="errorMessage">{{ errorMessage }}</p>
-            <p v-if="hasSufficientTokens === false" class="text-sm mt-1">Bạn không có đủ token. Vui lòng nạp thêm.</p>
-          </div>
-
-          <!-- Results Section -->
-          <div v-if="recommendations" class="mt-8 space-y-6">
-            <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
+      <!-- Results Section -->
+      <transition name="slide-fade">
+        <div v-if="isContentAccessible && recommendations" class="space-y-8">
+          <div v-for="section in resultSections" :key="section.title" class="space-y-6">
+            <div v-if="section.type === 'personalDay'" class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
               <div class="flex items-center">
                 <div class="bg-purple-100 p-2 rounded-lg mr-4">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -124,9 +149,7 @@
                 </div>
               </div>
             </div>
-
-            <!-- Food Recommendations -->
-            <div v-if="activeTab === 'Đồ ăn' && recommendations.food" class="space-y-4">
+            <div v-if="section.type === 'food' && activeTab === 'Đồ ăn' && recommendations.food" class="space-y-4">
               <h3 class="font-medium text-purple-700 flex items-center">
                 <span class="bg-purple-100 rounded-full p-2 mr-2">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
@@ -149,10 +172,39 @@
                 <p class="font-medium text-gray-800">{{ recommendations.food.item }}</p>
                 <p class="text-gray-600 text-sm mt-2">{{ recommendations.food.explanation }}</p>
               </div>
+              <div v-if="section.type === 'food' && recommendations.food && recommendations.food.length < maxSuggestions" class="text-center p-6">
+                <button
+                  @click="loadMoreRecommendations('food')"
+                  :disabled="isLoadingMore || loadingMore"
+                  :class="[
+                    'action-button',
+                    (isLoadingMore || loadingMore) ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
+                  ]"
+                >
+                  {{ isLoadingMore || loadingMore ? 'Đang tải...' : `Xem thêm gợi ý món ăn (Cần ${tokenCostMore} token)` }}
+                </button>
+                <div v-if="errorMessageMore" class="text-red-600 text-center font-medium mt-4">
+                  <template v-if="errorTypeMore === 'login'">
+                    Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý món ăn.
+                  </template>
+                  <template v-else-if="errorTypeMore === 'topup'">
+                    Không đủ token để xem thêm gợi ý món ăn. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                  </template>
+                  <template v-else>
+                    {{ errorMessageMore }}
+                  </template>
+                </div>
+                <div v-else-if="!isContentAccessibleMore && !isLoadingMore && !loadingMore" class="text-red-600 text-center font-medium mt-4">
+                  <template v-if="!userStore.isAuthenticated">
+                    Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý món ăn.
+                  </template>
+                  <template v-else-if="userStore.isAuthenticated && !hasSufficientTokensMore">
+                    Không đủ token để xem thêm gợi ý món ăn. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                  </template>
+                </div>
+              </div>
             </div>
-
-            <!-- Drink Recommendations -->
-            <div v-if="activeTab === 'Đồ uống' && recommendations.drink" class="space-y-4">
+            <div v-if="section.type === 'drink' && activeTab === 'Đồ uống' && recommendations.drink" class="space-y-4">
               <h3 class="font-medium text-purple-700 flex items-center">
                 <span class="bg-purple-100 rounded-full p-2 mr-2">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
@@ -174,10 +226,39 @@
                 <p class="font-medium text-gray-800">{{ recommendations.drink.item }}</p>
                 <p class="text-gray-600 text-sm mt-2">{{ recommendations.drink.explanation }}</p>
               </div>
+              <div v-if="section.type === 'drink' && recommendations.drink && recommendations.drink.length < maxSuggestions" class="text-center p-6">
+                <button
+                  @click="loadMoreRecommendations('drink')"
+                  :disabled="isLoadingMore || loadingMore"
+                  :class="[
+                    'action-button',
+                    (isLoadingMore || loadingMore) ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
+                  ]"
+                >
+                  {{ isLoadingMore || loadingMore ? 'Đang tải...' : `Xem thêm gợi ý đồ uống (Cần ${tokenCostMore} token)` }}
+                </button>
+                <div v-if="errorMessageMore" class="text-red-600 text-center font-medium mt-4">
+                  <template v-if="errorTypeMore === 'login'">
+                    Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý đồ uống.
+                  </template>
+                  <template v-else-if="errorTypeMore === 'topup'">
+                    Không đủ token để xem thêm gợi ý đồ uống. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                  </template>
+                  <template v-else>
+                    {{ errorMessageMore }}
+                  </template>
+                </div>
+                <div v-else-if="!isContentAccessibleMore && !isLoadingMore && !loadingMore" class="text-red-600 text-center font-medium mt-4">
+                  <template v-if="!userStore.isAuthenticated">
+                    Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý đồ uống.
+                  </template>
+                  <template v-else-if="userStore.isAuthenticated && !hasSufficientTokensMore">
+                    Không đủ token để xem thêm gợi ý đồ uống. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                  </template>
+                </div>
+              </div>
             </div>
-
-            <!-- Insight Recommendations -->
-            <div v-if="activeTab === 'Insight hôm nay' && recommendations.insight" class="space-y-6">
+            <div v-if="section.type === 'insight' && activeTab === 'Insight hôm nay' && recommendations.insight" class="space-y-6">
               <h3 class="font-medium text-purple-700 flex items-center">
                 <span class="bg-purple-100 rounded-full p-2 mr-2">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
@@ -232,38 +313,102 @@
                     </div>
                   </div>
                 </div>
+                <div v-if="section.type === 'insight' && recommendations.insight && recommendations.insight.doToday.length < maxSuggestions" class="text-center p-6">
+                  <button
+                    @click="loadMoreRecommendations('insight')"
+                    :disabled="isLoadingMore || loadingMore"
+                    :class="[
+                      'action-button',
+                      (isLoadingMore || loadingMore) ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
+                    ]"
+                  >
+                    {{ isLoadingMore || loadingMore ? 'Đang tải...' : `Xem thêm gợi ý insight (Cần ${tokenCostMore} token)` }}
+                  </button>
+                  <div v-if="errorMessageMore" class="text-red-600 text-center font-medium mt-4">
+                    <template v-if="errorTypeMore === 'login'">
+                      Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý insight.
+                    </template>
+                    <template v-else-if="errorTypeMore === 'topup'">
+                      Không đủ token để xem thêm gợi ý insight. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                    </template>
+                    <template v-else>
+                      {{ errorMessageMore }}
+                    </template>
+                  </div>
+                  <div v-else-if="!isContentAccessibleMore && !isLoadingMore && !loadingMore" class="text-red-600 text-center font-medium mt-4">
+                    <template v-if="!userStore.isAuthenticated">
+                      Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý insight.
+                    </template>
+                    <template v-else-if="userStore.isAuthenticated && !hasSufficientTokensMore">
+                      Không đủ token để xem thêm gợi ý insight. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+                    </template>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </form>
-      </div>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
-import { useUserStore } from '@/stores/user';
-import { useProtectedContent } from '~/composables/useProtectedContent';
+import { ref, computed, onMounted, watch } from 'vue';
 import { toast } from 'vue3-toastify';
+import { useProtectedContent } from '~/composables/useProtectedContent';
+import { useUserStore } from '~/stores/user';
+import { useRouter } from 'vue-router';
 
-// Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
-const formatDateToDDMMYYYY = (dateStr) => {
-  if (!dateStr || !/^\d{4}-\d{2}-\d{2}(T.*)?$/.test(dateStr)) {
-    return '';
-  }
-  const [year, month, day] = dateStr.split('T')[0].split('-');
-  return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
-};
+definePageMeta({ layout: 'view' });
 
-// Hàm chuyển đổi định dạng ngày từ DD/MM/YYYY sang YYYY-MM-DD
-const formatDateToYYYYMMDD = (dateStr) => {
-  if (!dateStr || !/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
-    return '';
-  }
-  const [day, month, year] = dateStr.split('/').map(Number);
-  return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-};
+const router = useRouter();
+const userStore = useUserStore();
+const formData = ref({
+  name: '',
+  birthDate: '',
+  foodPreferences: '',
+  drinkPreferences: '',
+  plans: '',
+});
+const personalDayNumber = ref(null);
+const recommendations = ref(null);
+const loading = ref(false);
+const loadingMore = ref(false);
+const errors = ref({
+  name: '',
+  birthDate: '',
+  general: '',
+});
+const activeTab = ref('Insight hôm nay');
+const tabs = ['Insight hôm nay', 'Đồ ăn', 'Đồ uống'];
+const tokenCost = ref(10);
+const tokenCostMore = ref(5);
+const maxSuggestions = ref(12);
+const description = 'Access to daily numerology recommendations';
+const {
+  isLoading,
+  errorMessage,
+  errorType,
+  isContentAccessible,
+  hasSufficientTokens,
+  checkAuthAndAccess,
+  performAction,
+  errorAction,
+  navigateToTopup,
+} = useProtectedContent(tokenCost.value, description);
+const {
+  isLoading: isLoadingMore,
+  errorMessage: errorMessageMore,
+  errorType: errorTypeMore,
+  isContentAccessible: isContentAccessibleMore,
+  hasSufficientTokens: hasSufficientTokensMore,
+  checkAuthAndAccess: checkAuthAndAccessMore,
+  performAction: performActionMore,
+  errorAction: errorActionMore,
+} = useProtectedContent(tokenCostMore.value, 'Load more numerology recommendations');
+
+// Hàm điều hướng đến trang nạp token
 
 // Hàm lấy ngày hiện tại định dạng DD/MM/YYYY
 const getCurrentDate = () => {
@@ -273,16 +418,29 @@ const getCurrentDate = () => {
   const year = today.getFullYear();
   return `${day}/${month}/${year}`;
 };
+const currentDate = ref(getCurrentDate());
+
+// Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
+const formatDateToDDMMYYYY = (dateStr) => {
+  if (!dateStr || !/^\d{4}-\d{2}-\d{2}(T.*)?$/.test(dateStr)) return '';
+  const [year, month, day] = dateStr.split('T')[0].split('-');
+  return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+};
+
+// Hàm chuyển đổi định dạng ngày từ DD/MM/YYYY sang YYYY-MM-DD
+const formatDateToYYYYMMDD = (dateStr) => {
+  if (!dateStr || !/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) return '';
+  const [day, month, year] = dateStr.split('/').map(Number);
+  return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+};
 
 // Hàm tính số ngày cá nhân
 const calculatePersonalDayNumber = (birthDate, currentDate) => {
   if (!birthDate || !currentDate || !/^\d{2}\/\d{2}\/\d{4}$/.test(birthDate) || !/^\d{2}\/\d{2}\/\d{4}$/.test(currentDate)) {
     return null;
   }
-
   const [birthDay, birthMonth, birthYear] = birthDate.split('/').map(Number);
   const [currentDay, currentMonth, currentYear] = currentDate.split('/').map(Number);
-
   const sumBirth = (birthDay + birthMonth + birthYear)
     .toString()
     .split('')
@@ -291,89 +449,115 @@ const calculatePersonalDayNumber = (birthDate, currentDate) => {
     .toString()
     .split('')
     .reduce((sum, digit) => sum + Number(digit), 0);
-
   let personalDay = (sumBirth + sumCurrent) % 9;
   if (personalDay === 0) personalDay = 9;
   return personalDay;
 };
 
-// Khởi tạo state
-const userStore = useUserStore();
-const name = ref('');
-const birthDateInput = ref('');
-const userId = ref(null);
-const foodPreferences = ref('');
-const drinkPreferences = ref('');
-const plans = ref('');
-const personalDayNumber = ref(null);
-const recommendations = ref(null);
-const loading = ref(false);
-const error = ref(null);
-const activeTab = ref('Insight hôm nay');
-const tabs = ['Insight hôm nay', 'Đồ ăn', 'Đồ uống'];
-const currentDate = ref(getCurrentDate());
+// Phần không bảo vệ (Tiêu đề và form nhập thông tin)
+const introSection = computed(() => [
+  {
+    title: 'Thần Số Học Hôm Nay - Khám Phá Vận Mệnh Ngày Mới',
+    description: 'Mỗi ngày là một con số khác nhau - Hãy xem hôm nay vũ trụ dành điều gì cho bạn!',
+    type: 'header',
+  },
+  {
+    title: 'Nhập thông tin cá nhân',
+    type: 'form',
+  },
+]);
 
-// Khởi tạo useProtectedContent
-const tokenCost = ref(10);
-const description = 'Access to daily numerology recommendations';
-const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
-const isLoggedIn = ref(false);
-let handleAction = () => {};
+// Phần được bảo vệ (Kết quả gợi ý)
+const resultSections = computed(() => {
+  if (!recommendations.value) return [];
+  return [
+    {
+      title: 'Số ngày cá nhân',
+      type: 'personalDay',
+    },
+    {
+      title: 'Gợi ý món ăn',
+      type: 'food',
+    },
+    {
+      title: 'Gợi ý đồ uống',
+      type: 'drink',
+    },
+    {
+      title: 'Insight hôm nay',
+      type: 'insight',
+    },
+  ];
+});
 
 // Hàm lấy thông tin người dùng từ API
 const fetchUserData = async () => {
   if (!userStore.isAuthenticated || !userStore.user?.id) {
-    // Không chuyển hướng, để input trống để người dùng nhập thủ công
+    console.log('User not authenticated, skipping fetchUserData');
     return;
   }
-
   try {
     const userIdValue = String(userStore.user.id);
     console.log('Fetching user data for userId:', userIdValue);
     const response = await $fetch(`/api/users/${userIdValue}`, {
       method: 'GET',
     });
-    console.log('API response:', response);
-    userId.value = userIdValue;
-    name.value = response.user.fullname?.trim() || '';
-    birthDateInput.value = response.user.birthdate ? formatDateToDDMMYYYY(response.user.birthdate) : '';
+    console.log('API /api/users response:', response);
+    const { fullname, birthdate } = response.user;
+    formData.value.name = fullname?.trim() || '';
+    formData.value.birthDate = birthdate ? formatDateToDDMMYYYY(birthdate.split('T')[0]) : '';
+    if (formData.value.birthDate) {
+      personalDayNumber.value = calculatePersonalDayNumber(formData.value.birthDate, currentDate.value);
+    }
   } catch (err) {
-    console.error('API error:', err);
-    error.value = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng thử lại.';
-    toast.error(error.value, {
-      position: 'top-center',
-      theme: 'colored',
-    });
+    console.error('Error fetching user data:', err);
+    errors.value.general = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
+    toast.error(errors.value.general, { position: 'top-center' });
   }
 };
 
-// Khởi tạo trạng thái đăng nhập và hành động
+// Khởi tạo trạng thái đăng nhập và kiểm tra token
 const initializeAuth = async () => {
-  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
-  isLoggedIn.value = authStatus;
-  handleAction = action;
+  console.log('Initializing auth for DailyNumerology...');
+  try {
+    await userStore.initialize();
+    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
+    await checkAuthAndAccess();
+    await checkAuthAndAccessMore();
+    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
+    console.log('Auth checked for more, isContentAccessibleMore:', isContentAccessibleMore.value, 'hasSufficientTokensMore:', hasSufficientTokensMore.value);
+  } catch (err) {
+    console.error('Lỗi khi khởi tạo auth:', err);
+    errors.value.general = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
+    toast.error(errors.value.general, { position: 'top-center' });
+  }
+};
+
+// Hàm chuyển tab và kiểm tra quyền truy cập
+const switchTab = async (tab) => {
+  activeTab.value = tab;
+  loadingMore.value = false; // Reset trạng thái loading khi chuyển tab
+  await checkAuthAndAccessMore();
+  console.log(`Switched to tab: ${tab}, isContentAccessibleMore:`, isContentAccessibleMore.value, 'hasSufficientTokensMore:', hasSufficientTokensMore.value);
 };
 
 // Cập nhật thông tin người dùng khi thay đổi name hoặc birthDate
-watch([name, birthDateInput], async ([newName, newBirthDate]) => {
-  if (!userStore.isStoreInitialized || !userId.value) return;
-
+watch([() => formData.value.name, () => formData.value.birthDate], async ([newName, newBirthDate]) => {
+  if (!userStore.isStoreInitialized || !userStore.user?.id) return;
   const currentBirthDate = userStore.user?.birthdate || '';
   const formattedNewBirthDate = formatDateToYYYYMMDD(newBirthDate);
-
   if (newName !== userStore.user?.fullname || formattedNewBirthDate !== currentBirthDate) {
     try {
-      const response = await $fetch(`/api/users/${userId.value}`, {
+      const response = await $fetch(`/api/users/${userStore.user.id}`, {
         method: 'PATCH',
         body: {
           fullname: newName.trim(),
           birthdate: formattedNewBirthDate,
         },
       });
-
       if (response.success) {
         userStore.setUser({
-          id: userId.value,
+          id: userStore.user.id,
           email: userStore.user?.email || '',
           fullname: newName.trim(),
           birthdate: formattedNewBirthDate,
@@ -385,107 +569,224 @@ watch([name, birthDateInput], async ([newName, newBirthDate]) => {
       }
     } catch (err) {
       console.error('Lỗi cập nhật thông tin người dùng:', err);
-      error.value = 'Không thể cập nhật thông tin. Vui lòng thử lại.';
-      toast.error(error.value, {
-        position: 'top-center',
-        theme: 'colored',
-      });
+      errors.value.general = 'Không thể cập nhật thông tin. Vui lòng thử lại.';
+      toast.error(errors.value.general, { position: 'top-center' });
     }
   }
 });
-
-// Hàm xử lý submit form
-const handleSubmit = async () => {
-  error.value = null;
-  errorMessage.value = null;
-
-  if (isContentAccessible.value) {
-    await getRecommendations();
-  } else {
-    await handleAction();
-    if (isContentAccessible.value) {
-      await getRecommendations();
-    }
-  }
-};
-
-async function getRecommendations() {
-  error.value = null;
-  recommendations.value = null;
-  loading.value = true;
-
-  try {
-    if (!userStore.isStoreInitialized) {
-      throw new Error('Đang tải thông tin người dùng, vui lòng thử lại');
-    }
-
-    if (!userId.value) {
-      throw new Error('Vui lòng đăng nhập để sử dụng tính năng này');
-    }
-
-    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthDateInput.value)) {
-      throw new Error('Vui lòng nhập ngày sinh đúng định dạng DD/MM/YYYY');
-    }
-
-    let endpoint;
-    let body = { birthDate: birthDateInput.value };
-
-    if (activeTab.value === 'Đồ ăn') {
-      endpoint = '/api/numerology/food';
-      body.preferences = foodPreferences.value;
-    } else if (activeTab.value === 'Đồ uống') {
-      endpoint = '/api/numerology/drinks';
-      body.preferences = drinkPreferences.value;
-    } else {
-      endpoint = '/api/numerology/insights';
-      body.plans = plans.value;
-    }
-
-    const response = await $fetch(endpoint, {
-      method: 'POST',
-      body,
-    });
-
-    personalDayNumber.value = response.personalDayNumber;
-    recommendations.value = response.recommendations;
-  } catch (err) {
-    error.value =
-      err.message === 'Không tìm thấy người dùng'
-        ? 'Tài khoản không tồn tại, vui lòng đăng nhập lại'
-        : err.message === 'Cơ sở dữ liệu chỉ đọc, không thể ghi'
-        ? 'Hệ thống gặp lỗi, vui lòng thử lại sau'
-        : err.message || 'Có lỗi xảy ra khi lấy gợi ý';
-    toast.error(error.value, {
-      position: 'top-center',
-      theme: 'colored',
-    });
-  } finally {
-    loading.value = false;
-  }
-}
 
 // Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
 watch(() => userStore.isStoreInitialized, (initialized) => {
   if (initialized && process.client) {
+    console.log('User store initialized, running initializeAuth and fetchUserData');
     initializeAuth();
-    fetchUserData().then(() => {
-      // Tự động tính toán personalDayNumber nếu birthDateInput hợp lệ
-      if (birthDateInput.value && /^\d{2}\/\d{2}\/\d{4}$/.test(birthDateInput.value)) {
-        personalDayNumber.value = calculatePersonalDayNumber(birthDateInput.value, currentDate.value);
-      }
-    });
+    fetchUserData();
   }
 });
 
+// Theo dõi activeTab để kiểm tra quyền truy cập khi chuyển tab
+watch(activeTab, async () => {
+  await checkAuthAndAccessMore();
+  console.log('Active tab changed, rechecked auth for more:', isContentAccessibleMore.value, hasSufficientTokensMore.value);
+});
+
+// Validate form
+const validateForm = () => {
+  errors.value = {
+    name: '',
+    birthDate: '',
+    general: '',
+  };
+  let isValid = true;
+  if (!formData.value.name.trim()) {
+    errors.value.name = 'Vui lòng nhập họ và tên';
+    isValid = false;
+  }
+  if (!formData.value.birthDate.trim()) {
+    errors.value.birthDate = 'Vui lòng nhập ngày sinh';
+    isValid = false;
+  } else if (!/^\d{2}\/\d{2}\/\d{4}$/.test(formData.value.birthDate)) {
+    errors.value.birthDate = 'Vui lòng nhập ngày sinh đúng định dạng DD/MM/YYYY';
+    isValid = false;
+  } else {
+    const match = formData.value.birthDate.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    const day = parseInt(match[1], 10);
+    const month = parseInt(match[2], 10);
+    const year = parseInt(match[3], 10);
+    const date = new Date(year, month - 1, day);
+    if (
+      date.getDate() !== day ||
+      date.getMonth() + 1 !== month ||
+      date.getFullYear() !== year ||
+      year < 1900 ||
+      year > new Date().getFullYear()
+    ) {
+      errors.value.birthDate = 'Ngày sinh không hợp lệ';
+      isValid = false;
+    }
+  }
+  return isValid;
+};
+
+// Hàm lấy gợi ý
+const getRecommendations = async () => {
+  if (!process.client) {
+    console.warn('getRecommendations called on server-side, ignoring.');
+    return;
+  }
+  if (!validateForm()) {
+    toast.error('Vui lòng kiểm tra lại thông tin nhập', { position: 'top-center' });
+    return;
+  }
+  if (isContentAccessible.value) {
+    await fetchRecommendations();
+  } else {
+    try {
+      await performAction();
+      if (isContentAccessible.value) {
+        await fetchRecommendations();
+      } else {
+        toast.error(errorMessage.value, { position: 'top-center' });
+      }
+    } catch (err) {
+      console.error('Error in performAction:', err);
+      toast.error(errorMessage.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
+    }
+  }
+};
+
+// Hàm gọi API lấy gợi ý
+const fetchRecommendations = async () => {
+  loading.value = true;
+  errors.value.general = '';
+  try {
+    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    let endpoint;
+    let body = { birthDate: formData.value.birthDate, numSuggestions: 3, previousItems: [] };
+    if (activeTab.value === 'Đồ ăn') {
+      endpoint = '/api/numerology/food';
+      body.preferences = formData.value.foodPreferences;
+    } else if (activeTab.value === 'Đồ uống') {
+      endpoint = '/api/numerology/drinks';
+      body.preferences = formData.value.drinkPreferences;
+    } else {
+      endpoint = '/api/numerology/insights';
+      body.plans = formData.value.plans;
+    }
+    console.log(`Sending request to ${endpoint} with data:`, body);
+    const response = await $fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'x-username': encodeURIComponent(username),
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body,
+    });
+    console.log(`Response from ${endpoint}:`, response);
+    personalDayNumber.value = response.personalDayNumber;
+    recommendations.value = response.recommendations;
+    toast.success('Gợi ý hôm nay đã được tải thành công!', { position: 'top-center' });
+    setTimeout(() => {
+      const resultElement = document.querySelector('[v-if="isContentAccessible && recommendations"]');
+      if (resultElement) {
+        resultElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+    await checkAuthAndAccess();
+    await checkAuthAndAccessMore();
+  } catch (error) {
+    console.error('Error in fetchRecommendations:', error);
+    errors.value.general = error.data?.message || 'Có lỗi xảy ra khi lấy gợi ý!';
+    toast.error(errors.value.general, { position: 'top-center' });
+  } finally {
+    loading.value = false;
+  }
+};
+
+// Hàm tải thêm gợi ý
+const loadMoreRecommendations = async (type) => {
+  if (!process.client) {
+    console.warn('loadMoreRecommendations called on server-side, ignoring.');
+    return;
+  }
+  if (!recommendations.value) return;
+
+  if (isContentAccessibleMore.value) {
+    await fetchMoreRecommendations(type);
+  } else {
+    try {
+      await performActionMore();
+      if (isContentAccessibleMore.value) {
+        await fetchMoreRecommendations(type);
+      } else {
+        toast.error(errorMessageMore.value, { position: 'top-center' });
+      }
+    } catch (err) {
+      console.error('Error in performActionMore:', err);
+      toast.error(errorMessageMore.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
+    }
+  }
+};
+
+// Hàm gọi API tải thêm gợi ý
+const fetchMoreRecommendations = async (type) => {
+  loadingMore.value = true;
+  try {
+    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    let endpoint;
+    let body = { birthDate: formData.value.birthDate };
+    let previousItems = [];
+    if (type === 'food') {
+      endpoint = '/api/numerology/food';
+      body.preferences = formData.value.foodPreferences;
+      previousItems = recommendations.value.food ? recommendations.value.food.map((item) => item.item) : [];
+    } else if (type === 'drink') {
+      endpoint = '/api/numerology/drinks';
+      body.preferences = formData.value.drinkPreferences;
+      previousItems = recommendations.value.drink ? recommendations.value.drink.map((item) => item.item) : [];
+    } else {
+      endpoint = '/api/numerology/insights';
+      body.plans = formData.value.plans;
+      previousItems = recommendations.value.insight
+        ? recommendations.value.insight.doToday.concat(recommendations.value.insight.avoidToday).map((item) => item.activity)
+        : [];
+    }
+    body.numSuggestions = Math.min((previousItems.length || 0) + 3, maxSuggestions.value);
+    body.previousItems = previousItems;
+    console.log(`Sending request to ${endpoint} for more suggestions, numSuggestions:`, body.numSuggestions);
+    const response = await $fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'x-username': encodeURIComponent(username),
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body,
+    });
+    console.log(`Response from ${endpoint} (more suggestions):`, response);
+    recommendations.value = {
+      ...recommendations.value,
+      [type]: type === 'insight' ? response.recommendations.insight : response.recommendations[type],
+    };
+    toast.success(`Đã tải thêm gợi ý ${type === 'food' ? 'món ăn' : type === 'drink' ? 'đồ uống' : 'insight'} thành công!`, {
+      position: 'top-center',
+    });
+    await checkAuthAndAccess();
+    await checkAuthAndAccessMore();
+  } catch (error) {
+    console.error('Error loading more recommendations:', error);
+    errors.value.general = error.data?.message || 'Có lỗi khi tải thêm gợi ý!';
+    toast.error(errors.value.general, { position: 'top-center' });
+  } finally {
+    loadingMore.value = false;
+  }
+};
+
+// Load dữ liệu khi component được mount
 onMounted(() => {
+  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
   if (userStore.isStoreInitialized) {
     initializeAuth();
-    fetchUserData().then(() => {
-      // Tự động tính toán personalDayNumber nếu birthDateInput hợp lệ
-      if (birthDateInput.value && /^\d{2}\/\d{2}\/\d{4}$/.test(birthDateInput.value)) {
-        personalDayNumber.value = calculatePersonalDayNumber(birthDateInput.value, currentDate.value);
-      }
-    });
+    fetchUserData();
   }
 });
 </script>
@@ -511,4 +812,13 @@ onMounted(() => {
   transform: translateY(10px);
   opacity: 0;
 }
+
+.action-button {
+  @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white transition-all duration-300 shadow-md whitespace-nowrap;
+}
+
+.action-button.inline {
+  @apply mx-1;
+}
 </style>
+```
