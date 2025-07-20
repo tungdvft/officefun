@@ -814,9 +814,7 @@ onMounted(() => {
   opacity: 0;
 }
 
-.action-button {
-  @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white transition-all duration-300 shadow-md whitespace-nowrap flex items-center justify-center;
-}
+
 
 .action-button.inline {
   @apply mx-1;
