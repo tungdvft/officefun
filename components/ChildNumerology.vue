@@ -1,3 +1,4 @@
+```vue
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
     <div class="container mx-auto p-4">
@@ -41,23 +42,30 @@
           <div v-if="errors.general || errorMessage" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
             <span v-if="errors.general">{{ errors.general }}</span>
             <span v-else-if="errorMessage" class="inline">
-              {{ errorMessage.split('Hãy nạp thêm token')[0] }}
+              {{ errorMessage.split('Hãy')[0] }}
               <button
-                v-if="errorMessage.includes('Hãy nạp thêm token')"
+                v-if="errorType === 'login'"
                 @click="errorAction"
                 class="underline text-blue-600 hover:text-blue-800"
               >
-                nạp thêm token
+                Đăng Nhập
               </button>
-              {{ errorMessage.includes('Hãy nạp thêm token') ? 'để trải nghiệm full tính năng nhé!' : '' }}
+              <button
+                v-else-if="errorType === 'topup'"
+                @click="navigateToTopup"
+                class="underline text-blue-600 hover:text-blue-800"
+              >
+                Nạp thêm token
+              </button>
+              {{ errorMessage.includes('Hãy') ? 'để trải nghiệm đầy đủ tính năng nhé!' : '' }}
             </span>
           </div>
           <!-- Button -->
-          <div v-if="hasSufficientTokens || !isLoggedIn" class="flex justify-center">
+          <div class="flex justify-center">
             <button
               @click="analyzeChild"
               :disabled="loading || isLoading"
-              class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
+              class="action-button"
             >
               <span v-if="loading || isLoading" class="flex items-center justify-center">
                 <svg
@@ -75,7 +83,7 @@
                 </svg>
                 {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang phân tích...' }}
               </span>
-              <span v-else>{{ isLoggedIn ? `Phân tích ngay (Cần ${tokenCost} tokens)` : 'Đăng nhập để phân tích' }}</span>
+              <span v-else>{{ userStore.isAuthenticated ? `Phân tích ngay (Cần ${tokenCost} tokens)` : 'Đăng nhập để phân tích' }}</span>
             </button>
           </div>
         </div>
@@ -105,50 +113,50 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                 <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
                   <h4 class="font-semibold text-gray-800 flex items-center">
-                    <span class="mr-2 text-purple-600">{{ result.numbers.lifePath.symbol }}</span> Số Đường đời: {{ result.numbers.lifePath.number }}
+                    <span class="mr-2 text-purple-600">{{ result?.numbers?.lifePath?.symbol || '' }}</span> Số Đường đời: {{ result?.numbers?.lifePath?.number || '' }}
                   </h4>
-                  <p class="text-sm text-gray-600">{{ result.numbers.lifePath.theme }}</p>
+                  <p class="text-sm text-gray-600">{{ result?.numbers?.lifePath?.theme || '' }}</p>
                   <div class="mt-2">
                     <h5 class="text-sm font-semibold text-gray-800">Điểm mạnh:</h5>
                     <ul class="list-disc pl-5 text-gray-600 text-sm">
-                      <li v-for="strength in (Array.isArray(result.numbers.lifePath.strengths) ? result.numbers.lifePath.strengths : result.numbers.lifePath.strengths.split(', '))" :key="strength">{{ strength }}</li>
+                      <li v-for="strength in (Array.isArray(result?.numbers?.lifePath?.strengths) ? result.numbers.lifePath.strengths : (result?.numbers?.lifePath?.strengths?.split(', ') || []))" :key="strength">{{ strength }}</li>
                     </ul>
                   </div>
                   <div class="mt-2">
                     <h5 class="text-sm font-semibold text-gray-800">Thách thức:</h5>
                     <ul class="list-disc pl-5 text-gray-600 text-sm">
-                      <li v-for="challenge in (Array.isArray(result.numbers.lifePath.challenges) ? result.numbers.lifePath.challenges : result.numbers.lifePath.challenges.split(', '))" :key="challenge">{{ challenge }}</li>
+                      <li v-for="challenge in (Array.isArray(result?.numbers?.lifePath?.challenges) ? result.numbers.lifePath.challenges : (result?.numbers?.lifePath?.challenges?.split(', ') || []))" :key="challenge">{{ challenge }}</li>
                     </ul>
                   </div>
                 </div>
                 <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
                   <h4 class="font-semibold text-gray-800 flex items-center">
-                    <span class="mr-2 text-purple-600">{{ result.numbers.soulUrge.symbol }}</span> Số Linh hồn: {{ result.numbers.soulUrge.number }}
+                    <span class="mr-2 text-purple-600">{{ result?.numbers?.soulUrge?.symbol || '' }}</span> Số Linh hồn: {{ result?.numbers?.soulUrge?.number || '' }}
                   </h4>
-                  <p class="text-sm text-gray-600">{{ result.numbers.soulUrge.desire }}</p>
-                  <p class="text-sm text-gray-600 mt-1"><strong>Động lực:</strong> {{ result.numbers.soulUrge.motivation }}</p>
+                  <p class="text-sm text-gray-600">{{ result?.numbers?.soulUrge?.desire || '' }}</p>
+                  <p class="text-sm text-gray-600 mt-1"><strong>Động lực:</strong> {{ result?.numbers?.soulUrge?.motivation || '' }}</p>
                 </div>
                 <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
                   <h4 class="font-semibold text-gray-800 flex items-center">
-                    <span class="mr-2 text-purple-600">{{ result.numbers.personality.symbol }}</span> Số Nhân cách: {{ result.numbers.personality.number }}
+                    <span class="mr-2 text-purple-600">{{ result?.numbers?.personality?.symbol || '' }}</span> Số Nhân cách: {{ result?.numbers?.personality?.number || '' }}
                   </h4>
-                  <p class="text-sm text-gray-600">{{ result.numbers.personality.theme }}</p>
+                  <p class="text-sm text-gray-600">{{ result?.numbers?.personality?.theme || '' }}</p>
                   <div class="mt-2">
                     <h5 class="text-sm font-semibold text-gray-800">Điểm mạnh:</h5>
                     <ul class="list-disc pl-5 text-gray-600 text-sm">
-                      <li v-for="strength in (Array.isArray(result.numbers.personality.strengths) ? result.numbers.personality.strengths : result.numbers.personality.strengths.split(', '))" :key="strength">{{ strength }}</li>
+                      <li v-for="strength in (Array.isArray(result?.numbers?.personality?.strengths) ? result.numbers.personality.strengths : (result?.numbers?.personality?.strengths?.split(', ') || []))" :key="strength">{{ strength }}</li>
                     </ul>
                   </div>
                 </div>
                 <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
                   <h4 class="font-semibold text-gray-800 flex items-center">
-                    <span class="mr-2 text-purple-600">{{ result.numbers.destiny.symbol }}</span> Số Sứ mệnh: {{ result.numbers.destiny.number }}
+                    <span class="mr-2 text-purple-600">{{ result?.numbers?.destiny?.symbol || '' }}</span> Số Sứ mệnh: {{ result?.numbers?.destiny?.number || '' }}
                   </h4>
-                  <p class="text-sm text-gray-600">{{ result.numbers.destiny.theme }}</p>
+                  <p class="text-sm text-gray-600">{{ result?.numbers?.destiny?.theme || '' }}</p>
                   <div class="mt-2">
                     <h5 class="text-sm font-semibold text-gray-800">Tài năng:</h5>
                     <ul class="list-disc pl-5 text-gray-600 text-sm">
-                      <li v-for="talent in (Array.isArray(result.numbers.destiny.talents) ? result.numbers.destiny.talents : result.numbers.destiny.talents.split(', '))" :key="talent">{{ talent }}</li>
+                      <li v-for="talent in (Array.isArray(result?.numbers?.destiny?.talents) ? result.numbers.destiny.talents : (result?.numbers?.destiny?.talents?.split(', ') || []))" :key="talent">{{ talent }}</li>
                     </ul>
                   </div>
                 </div>
@@ -175,19 +183,19 @@
                 Năm cá nhân {{ currentYear }}
               </h3>
               <div class="flex items-center mb-2 mt-4">
-                <span class="text-3xl font-bold text-purple-600 mr-3">{{ result.personalYear.number }}</span>
+                <span class="text-3xl font-bold text-purple-600 mr-3">{{ result?.personalYear?.number || '' }}</span>
                 <div>
-                  <h4 class="font-semibold text-gray-800">{{ result.personalYear.theme }}</h4>
+                  <h4 class="font-semibold text-gray-800">{{ result?.personalYear?.theme || '' }}</h4>
                   <div class="mt-2">
                     <h5 class="text-sm font-semibold text-gray-800">Trọng tâm:</h5>
                     <ul class="list-disc pl-5 text-gray-600 text-sm">
-                      <li v-for="focus in (Array.isArray(result.personalYear.focus) ? result.personalYear.focus : result.personalYear.focus.split(', '))" :key="focus">{{ focus }}</li>
+                      <li v-for="focus in (Array.isArray(result?.personalYear?.focus) ? result.personalYear.focus : (result?.personalYear?.focus?.split(', ') || []))" :key="focus">{{ focus }}</li>
                     </ul>
                   </div>
                   <div class="mt-2">
                     <h5 class="text-sm font-semibold text-gray-800">Từ khóa:</h5>
                     <ul class="list-disc pl-5 text-gray-600 text-sm">
-                      <li v-for="keyword in (Array.isArray(result.personalYear.keywords) ? result.personalYear.keywords : result.personalYear.keywords.split(', '))" :key="keyword">{{ keyword }}</li>
+                      <li v-for="keyword in (Array.isArray(result?.personalYear?.keywords) ? result.personalYear.keywords : (result?.personalYear?.keywords?.split(', ') || []))" :key="keyword">{{ keyword }}</li>
                     </ul>
                   </div>
                 </div>
@@ -204,7 +212,7 @@
                 </span>
                 Tính cách của bé
               </h3>
-              <p class="text-gray-600 mt-2 whitespace-pre-wrap">{{ result.personalityTraits }}</p>
+              <p class="text-gray-600 mt-2 whitespace-pre-wrap">{{ result?.personalityTraits || '' }}</p>
             </div>
 
             <!-- Tiềm năng -->
@@ -217,7 +225,7 @@
                 </span>
                 Tiềm năng của bé
               </h3>
-              <p class="text-gray-600 mt-2 whitespace-pre-wrap">{{ result.potential }}</p>
+              <p class="text-gray-600 mt-2 whitespace-pre-wrap">{{ result?.potential || '' }}</p>
             </div>
 
             <!-- Thách thức -->
@@ -230,7 +238,7 @@
                 </span>
                 Thách thức của bé
               </h3>
-              <p class="text-gray-600 mt-2 whitespace-pre-wrap">{{ result.challenges }}</p>
+              <p class="text-gray-600 mt-2 whitespace-pre-wrap">{{ result?.challenges || '' }}</p>
             </div>
 
             <!-- Ngắn hạn -->
@@ -243,7 +251,7 @@
                 </span>
                 Ngắn hạn (Tháng {{ currentMonthVietnamese }})
               </h3>
-              <p class="text-gray-600 mt-2 whitespace-pre-wrap">{{ result.shortTerm }}</p>
+              <p class="text-gray-600 mt-2 whitespace-pre-wrap">{{ result?.shortTerm || '' }}</p>
             </div>
 
             <!-- Trung hạn -->
@@ -256,7 +264,7 @@
                 </span>
                 Trung hạn (Năm {{ currentYear }})
               </h3>
-              <p class="text-gray-600 mt-2 whitespace-pre-wrap">{{ result.mediumTerm }}</p>
+              <p class="text-gray-600 mt-2 whitespace-pre-wrap">{{ result?.mediumTerm || '' }}</p>
             </div>
 
             <!-- Dài hạn -->
@@ -269,7 +277,7 @@
                 </span>
                 Dài hạn (Tương lai xa)
               </h3>
-              <p class="text-gray-600 mt-2 whitespace-pre-wrap">{{ result.longTerm }}</p>
+              <p class="text-gray-600 mt-2 whitespace-pre-wrap">{{ result?.longTerm || '' }}</p>
             </div>
 
             <!-- Bản đồ 10 năm tới (Chart) -->
@@ -301,12 +309,15 @@ import { toast } from 'vue3-toastify';
 import Chart from 'chart.js/auto';
 import { useProtectedContent } from '~/composables/useProtectedContent';
 import { useUserStore } from '@/stores/user';
+import { useRouter } from 'vue-router';
 
 definePageMeta({ layout: 'view' });
 
+const router = useRouter();
+const userStore = useUserStore();
 const formData = ref({
   childName: '',
-  birthDate: ''
+  birthDate: '',
 });
 const result = ref(null);
 const loading = ref(false);
@@ -314,14 +325,21 @@ const chartCanvas = ref(null);
 const errors = ref({
   childName: '',
   birthDate: '',
-  general: ''
+  general: '',
 });
 const tokenCost = ref(15);
 const description = 'Access to child numerology analysis';
-const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, errorAction } = useProtectedContent(tokenCost.value, description);
-const isLoggedIn = ref(false);
-const userStore = useUserStore();
-let handleAction = () => {};
+const {
+  isLoading,
+  errorMessage,
+  errorType,
+  isContentAccessible,
+  hasSufficientTokens,
+  checkAuthAndAccess,
+  performAction,
+  errorAction,
+  navigateToTopup,
+} = useProtectedContent(tokenCost.value, description);
 
 const currentYear = new Date().getFullYear();
 const currentMonth = new Date().getMonth();
@@ -330,16 +348,22 @@ const currentMonthVietnamese = computed(() => {
   return months[currentMonth];
 });
 
-// Khởi tạo trạng thái đăng nhập
+// Initialize authentication and check token balance
 const initializeAuth = async () => {
-  console.log('initializeAuth: Checking token balance for Child Numerology, tokenCost:', tokenCost.value);
-  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess(tokenCost.value, description);
-  isLoggedIn.value = authStatus;
-  handleAction = action;
-  console.log('initializeAuth: hasSufficientTokens:', hasSufficientTokens.value);
+  console.log('Initializing auth for Child Numerology, tokenCost:', tokenCost.value);
+  try {
+    await userStore.initialize();
+    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
+    await checkAuthAndAccess();
+    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
+  } catch (err) {
+    console.error('Error initializing auth:', err);
+    errors.value.general = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
+    toast.error(errors.value.general, { position: 'top-center' });
+  }
 };
 
-// Khởi tạo auth khi component được mount
+// Initialize auth on mount
 onMounted(() => {
   console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
   if (userStore.isStoreInitialized) {
@@ -347,7 +371,7 @@ onMounted(() => {
   }
 });
 
-// Theo dõi isStoreInitialized để khởi tạo auth khi store sẵn sàng
+// Watch for store initialization
 watch(() => userStore.isStoreInitialized, (initialized) => {
   if (initialized && process.client) {
     console.log('User store initialized, running initializeAuth');
@@ -360,7 +384,7 @@ const validateForm = () => {
   errors.value = {
     childName: '',
     birthDate: '',
-    general: ''
+    general: '',
   };
   let isValid = true;
 
@@ -395,22 +419,36 @@ const validateForm = () => {
   return isValid;
 };
 
+// Analyze child numerology
 const analyzeChild = async () => {
-  if (!validateForm()) return;
+  if (!process.client) {
+    console.warn('analyzeChild called on server-side, ignoring.');
+    return;
+  }
+  if (!validateForm()) {
+    toast.error('Vui lòng kiểm tra lại thông tin nhập', { position: 'top-center' });
+    return;
+  }
 
   if (isContentAccessible.value) {
     await fetchChildAnalysis();
   } else {
-    const { success } = await handleAction();
-    if (success || isContentAccessible.value) {
-      await fetchChildAnalysis();
-    } else {
-      toast.error(errorMessage.value, { position: 'top-center' });
+    try {
+      await performAction();
+      if (isContentAccessible.value) {
+        await fetchChildAnalysis();
+      } else {
+        toast.error(errorMessage.value, { position: 'top-center' });
+      }
+    } catch (err) {
+      console.error('Error in performAction:', err);
+      toast.error(errorMessage.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
     }
   }
 };
 
-async function fetchChildAnalysis() {
+// Fetch child analysis from API
+const fetchChildAnalysis = async () => {
   loading.value = true;
   errors.value.general = '';
   try {
@@ -420,56 +458,58 @@ async function fetchChildAnalysis() {
       method: 'POST',
       headers: {
         'x-username': encodeURIComponent(username),
-        'Content-Type': 'application/json; charset=utf-8'
+        'Content-Type': 'application/json; charset=utf-8',
       },
-      body: formData.value
+      body: formData.value,
     });
     console.log('Response from /api/numerology/child:', response);
     result.value = response.childAnalysis;
     toast.success('Phân tích hoàn tất!', { position: 'top-center' });
-    setTimeout(() => renderChart(), 100); // Vẽ chart sau khi có dữ liệu
-    // Scroll to result
     setTimeout(() => {
+      renderChart();
       const resultElement = document.querySelector('[v-if="result && isContentAccessible"]');
       if (resultElement) {
         resultElement.scrollIntoView({ behavior: 'smooth' });
       }
     }, 100);
+    await checkAuthAndAccess();
   } catch (error) {
     console.error('Error analyzing child:', error);
-    errorMessage.value = error.data?.message || 'Có lỗi xảy ra khi phân tích!';
-    toast.error(errorMessage.value, { position: 'top-center' });
+    errors.value.general = error.data?.message || 'Có lỗi xảy ra khi phân tích!';
+    toast.error(errors.value.general, { position: 'top-center' });
   } finally {
     loading.value = false;
   }
-}
+};
 
-// Vẽ biểu đồ
+// Render chart
 const renderChart = () => {
   if (!result.value || !result.value.tenYearMap || !chartCanvas.value) return;
 
   const ctx = chartCanvas.value.getContext('2d');
   if (!ctx) return;
 
-  const years = result.value.tenYearMap.map(y => y.year);
-  const numbers = result.value.tenYearMap.map(y => y.personalYear);
+  const years = result.value.tenYearMap.map((y) => y.year);
+  const numbers = result.value.tenYearMap.map((y) => y.personalYear);
 
   new Chart(ctx, {
     type: 'line',
     data: {
       labels: years,
-      datasets: [{
-        label: 'Số cá nhân',
-        data: numbers,
-        borderColor: '#8b5cf6',
-        backgroundColor: 'rgba(139, 92, 246, 0.2)',
-        borderWidth: 3,
-        pointBackgroundColor: '#8b5cf6',
-        pointRadius: 5,
-        pointHoverRadius: 7,
-        fill: true,
-        tension: 0.4
-      }]
+      datasets: [
+        {
+          label: 'Số cá nhân',
+          data: numbers,
+          borderColor: '#8b5cf6',
+          backgroundColor: 'rgba(139, 92, 246, 0.2)',
+          borderWidth: 3,
+          pointBackgroundColor: '#8b5cf6',
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          fill: true,
+          tension: 0.4,
+        },
+      ],
     },
     options: {
       responsive: true,
@@ -479,12 +519,12 @@ const renderChart = () => {
           beginAtZero: true,
           max: 33,
           title: { display: true, text: 'Số cá nhân', font: { weight: 'bold' } },
-          grid: { color: 'rgba(0, 0, 0, 0.05)' }
+          grid: { color: 'rgba(0, 0, 0, 0.05)' },
         },
         x: {
           title: { display: true, text: 'Năm', font: { weight: 'bold' } },
-          grid: { display: false }
-        }
+          grid: { display: false },
+        },
       },
       plugins: {
         legend: { display: true, position: 'top', labels: { font: { size: 14 } } },
@@ -498,19 +538,18 @@ const renderChart = () => {
               return [
                 `Số: ${yearData.personalYear}`,
                 `Chủ đề: ${yearData.theme}`,
-                `Lời khuyên: ${yearData.advice}`
+                `Lời khuyên: ${yearData.advice}`,
               ];
-            }
-          }
-        }
-      }
-    }
+            },
+          },
+        },
+      },
+    },
   });
 };
 </script>
 
 <style scoped>
-/* Custom transitions */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
@@ -531,4 +570,9 @@ const renderChart = () => {
   transform: translateY(10px);
   opacity: 0;
 }
+
+.action-button {
+  @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap;
+}
 </style>
+```
