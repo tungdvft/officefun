@@ -71,36 +71,49 @@
               />
             </div>
           </div>
-          <div class="flex justify-center">
-            <button
-              @click="generateNickname"
-              :disabled="loading || isLoading || !hasSufficientTokens"
-              class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
+          <!-- Action Button and Error Messages -->
+          <div v-if="isLoading || loading" class="flex justify-center">
+            <svg
+              class="animate-spin h-8 w-8 text-purple-600"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
             >
-              <span v-if="loading || isLoading" class="flex items-center justify-center">
-                <svg
-                  class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path
-                    class="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang xử lý...' }}
-              </span>
-              <span v-else>{{ isLoggedIn ? `Tạo danh xưng (Cần ${tokenCost} tokens)` : 'Đăng nhập để tạo danh xưng' }}</span>
-            </button>
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
           </div>
-          <!-- Error Messages -->
-          <div v-if="errorMessage" class="mt-6 p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
-            <p>{{ errorMessage }}</p>
-            <p v-if="hasSufficientTokens === false" class="text-sm mt-1">Bạn không có đủ token. Vui lòng nạp thêm.</p>
-            <p v-if="hasSufficientTokensForMore === false" class="text-sm mt-1">Bạn không có đủ token để xem thêm gợi ý. Vui lòng nạp thêm.</p>
+          <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
+            <template v-if="errorType === 'login'">
+              Vui lòng <button @click="errorAction" class="action-button inline">Đăng Nhập</button> để tạo danh xưng.
+            </template>
+            <template v-else-if="errorType === 'topup'">
+              Không đủ token để tạo danh xưng. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để tiếp tục.
+            </template>
+            <template v-else>
+              {{ errorMessage }}
+            </template>
+          </div>
+          <div v-else class="text-center p-6">
+            <template v-if="!userStore.isAuthenticated">
+              <p class="text-red-600 font-medium mb-4">
+                Vui lòng <button @click="errorAction" class="action-button inline">Đăng Nhập</button> để tạo danh xưng.
+              </p>
+            </template>
+            <template v-else-if="userStore.isAuthenticated && !hasSufficientTokens">
+              <p class="text-red-600 font-medium mb-4">
+                Không đủ token để tạo danh xưng. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để tiếp tục.
+              </p>
+            </template>
+            <template v-else>
+              <button @click="generateNickname" class="action-button">
+                Tạo danh xưng (Cần {{ tokenCost }} token)
+              </button>
+            </template>
           </div>
         </div>
 
@@ -153,7 +166,7 @@
                       d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                       clip-rule="evenodd"
                     />
-                  </svg>
+                </svg>
                 </span>
                 Các con số chính
               </h3>
@@ -243,30 +256,50 @@
                   <p class="text-sm text-gray-500 italic">Ví dụ: {{ suggestion.famous }}</p>
                 </div>
               </transition-group>
-              <div v-if="numerologyData && totalSuggestions < 30" class="flex justify-center mt-6">
-                <button
-                  @click="showMoreSuggestions"
-                  :disabled="loadingMore || isLoading || hasSufficientTokensForMore"
-                  class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
-                >
-                  <span v-if="loadingMore" class="flex items-center justify-center">
-                    <svg
-                      class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                      <path
-                        class="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    Đang tải...
-                  </span>
-                  <span v-else>{{ isLoggedIn ? `Xem thêm gợi ý (Cần 5 tokens)` : 'Đăng nhập để xem thêm' }}</span>
-                </button>
+              <div v-if="numerologyData && totalSuggestions < 30" class="text-center p-6">
+                <div v-if="isLoading || loadingMore" class="flex justify-center">
+                  <svg
+                    class="animate-spin h-8 w-8 text-purple-600"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path
+                      class="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                </div>
+                <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
+                  <template v-if="errorType === 'login'">
+                    Vui lòng <button @click="errorAction" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý.
+                  </template>
+                  <template v-else-if="errorType === 'topup'">
+                    Không đủ token để xem thêm gợi ý. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để tiếp tục.
+                  </template>
+                  <template v-else>
+                    {{ errorMessage }}
+                  </template>
+                </div>
+                <div v-else class="text-center p-6">
+                  <template v-if="!userStore.isAuthenticated">
+                    <p class="text-red-600 font-medium mb-4">
+                      Vui lòng <button @click="errorAction" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý.
+                    </p>
+                  </template>
+                  <template v-else-if="userStore.isAuthenticated && !hasSufficientTokensForMore">
+                    <p class="text-red-600 font-medium mb-4">
+                      Không đủ token để xem thêm gợi ý. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để tiếp tục.
+                    </p>
+                  </template>
+                  <template v-else>
+                    <button @click="showMoreSuggestions" class="action-button">
+                      Xem thêm gợi ý (Cần {{ tokenCostMore }} token)
+                    </button>
+                  </template>
+                </div>
               </div>
             </div>
 
@@ -303,7 +336,9 @@ import { ref, watch, onMounted } from 'vue';
 import { toast } from 'vue3-toastify';
 import { useProtectedContent } from '~/composables/useProtectedContent';
 import { useUserStore } from '@/stores/user';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const formData = ref({
   name: '',
   birthdate: '',
@@ -317,11 +352,9 @@ const totalSuggestions = ref(3);
 const tokenCost = ref(15);
 const tokenCostMore = ref(5);
 const description = 'Access to detailed numerology nickname generation results';
-const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
-const isLoggedIn = ref(false);
-const hasSufficientTokensForMore = ref(true);
-let handleAction = () => {};
+const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, performAction, errorAction, navigateToTopup } = useProtectedContent(tokenCost.value, description);
 const userStore = useUserStore();
+const hasSufficientTokensForMore = ref(true);
 
 // Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
 const formatDateToDDMMYYYY = (dateStr) => {
@@ -415,12 +448,19 @@ const fetchUserData = async () => {
 
 // Khởi tạo trạng thái đăng nhập và kiểm tra token
 const initializeAuth = async () => {
-  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
-  isLoggedIn.value = authStatus;
-  handleAction = action;
-  // Kiểm tra số dư token khi khởi tạo
-  if (authStatus) {
-    await checkTokenBalance(tokenCostMore.value);
+  try {
+    await userStore.initialize();
+    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
+    await checkAuthAndAccess();
+    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
+    // Kiểm tra số dư token cho "Xem thêm gợi ý"
+    if (userStore.isAuthenticated) {
+      await checkTokenBalance(tokenCostMore.value);
+    }
+  } catch (err) {
+    console.error('Lỗi khi khởi tạo auth:', err);
+    errorMessage.value = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
+    toast.error(errorMessage.value, { position: 'top-center' });
   }
 };
 
@@ -438,9 +478,16 @@ const generateNickname = async () => {
   if (isContentAccessible.value) {
     await getNickname();
   } else {
-    await handleAction();
-    if (isContentAccessible.value) {
-      await getNickname();
+    try {
+      await performAction();
+      if (isContentAccessible.value) {
+        await getNickname();
+      } else {
+        toast.error(errorMessage.value || 'Không đủ quyền truy cập hoặc token!', { position: 'top-center' });
+      }
+    } catch (err) {
+      console.error('Error in performAction:', err);
+      toast.error(errorMessage.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
     }
   }
 };
@@ -572,5 +619,13 @@ onMounted(() => {
 .slide-fade-leave-to {
   transform: translateY(10px);
   opacity: 0;
+}
+
+.action-button {
+  @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap;
+}
+
+.action-button.inline {
+  @apply mx-2 px-4 py-2 text-sm;
 }
 </style>
