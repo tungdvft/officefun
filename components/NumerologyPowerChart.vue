@@ -1,6 +1,6 @@
 <template>
   <div class="container numerology-charts mx-auto p-6 bg-white rounded-xl shadow-lg font-inter">
-    <!-- Tiêu đề chính (không bảo vệ) -->
+    <!-- Tiêu đề chính -->
     <div class="text-center mb-8">
       <h2 class="text-4xl font-bold text-teal-700 mb-3">
         Biểu đồ sức mạnh của bạn
@@ -58,7 +58,7 @@
       <p class="text-gray-600 mt-1">Vui lòng nhập họ tên và ngày sinh hợp lệ để xem thông tin.</p>
     </div>
 
-    <!-- Biểu đồ (không bảo vệ) -->
+    <!-- Biểu đồ -->
     <div v-else class="charts-container grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
       <!-- Biểu đồ Tên -->
       <div
@@ -203,130 +203,10 @@
       </div>
     </div>
 
-    <!-- Diễn giải chi tiết (bảo vệ) -->
+    <!-- Diễn giải chi tiết -->
     <div v-if="!loading && hasValidData">
-      <div v-if="isLoading" class="text-center py-12">
-        <div class="inline-flex items-center">
-          <svg
-            class="animate-spin -ml-1 mr-3 h-8 w-8 text-teal-500"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              class="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              stroke-width="4"
-            ></circle>
-            <path
-              class="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            ></path>
-          </svg>
-          <span class="text-gray-600">Đang kiểm tra quyền truy cập...</span>
-        </div>
-      </div>
-      <div
-        v-else-if="errorMessage && errorType === 'login'"
-        class="text-center py-12 bg-red-50 rounded-lg"
-      >
-        <svg
-          class="h-12 w-12 mx-auto text-red-500 mb-3"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-          />
-        </svg>
-        <h4 class="text-red-600 font-medium text-lg">Vui lòng đăng nhập để xem tiếp</h4>
-        <button
-          @click="errorAction"
-          class="mt-4 px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
-        >
-          Đăng nhập
-        </button>
-      </div>
-      <div
-        v-else-if="errorMessage && errorType === 'topup'"
-        class="text-center py-12 bg-red-50 rounded-lg"
-      >
-        <svg
-          class="h-12 w-12 mx-auto text-red-500 mb-3"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-          />
-        </svg>
-        <h4 class="text-red-600 font-medium text-lg">Không đủ token để xem tiếp</h4>
-        <p class="text-gray-600 mt-1">Cần {{ tokenCost }} token. Vui lòng nạp thêm.</p>
-        <button
-          @click="navigateToTopup"
-          class="mt-4 px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
-        >
-          Nạp thêm token
-        </button>
-      </div>
-      <div v-else-if="errorMessage" class="text-center py-12 bg-red-50 rounded-lg">
-        <svg
-          class="h-12 w-12 mx-auto text-red-500 mb-3"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-          />
-        </svg>
-        <h4 class="text-red-600 font-medium text-lg">{{ errorMessage }}</h4>
-      </div>
-      <div v-else-if="!isContentAccessible" class="text-center py-12">
-        <div v-if="!userStore.isAuthenticated">
-          <p class="text-gray-600 mb-4">Vui lòng đăng nhập để xem giải thích chi tiết.</p>
-          <button
-            @click="errorAction"
-            class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
-            :disabled="isLoading"
-          >
-            Đăng nhập để xem tiếp
-          </button>
-        </div>
-        <div v-else-if="!hasSufficientTokens" class="text-red-600 text-center font-medium ">
-              Không đủ token cho tính năng này. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-              <!-- <p class="text-gray-600 mt-2">Số dư token: {{ userStore.user?.tokens || 0 }}</p> -->
-            </div>
-        <div v-else>
-          <button
-            @click="performAction"
-            class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
-            :disabled="isLoading"
-          >
-            Xem tiếp (Cần {{ tokenCost }} token)
-          </button>
-        </div>
-      </div>
       <transition name="fade-slide">
-        <div v-if="isContentAccessible" class="interpretations mt-12">
+        <div class="interpretations mt-12">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div
               v-for="number in activeNumbers"
@@ -541,9 +421,6 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useUserStore } from '~/stores/user';
-import { useProtectedContent } from '~/composables/useProtectedContent';
 import {
   calculateLifePathNumber,
   calculateExpressionNumber,
@@ -551,8 +428,8 @@ import {
   calculatePersonalityNumber,
   calculateBirthDayNumber,
   calculatePeakNumbers,
-} from '~/utils/numerology-calculations';
-import chartData from '~/data/powerChart.json';
+} from '@/utils/numerology-calculations';
+import chartData from '@/data/powerChart.json';
 
 // Bảng Pythagorean chuẩn
 const pythagoreanGrid = [
@@ -593,26 +470,11 @@ const props = defineProps({
   },
 });
 
-const router = useRouter();
-const userStore = useUserStore();
 const loading = ref(false);
 const error = ref(null);
 const nameChartData = ref({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 99: 0 });
 const combinedChartData = ref({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 99: 0 });
 const powerChartData = ref({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 });
-const tokenCost = ref(10);
-const description = 'Access to detailed numerology chart interpretations';
-const {
-  isLoading,
-  errorMessage,
-  errorType,
-  isContentAccessible,
-  hasSufficientTokens,
-  checkAuthAndAccess,
-  performAction,
-  errorAction,
-  navigateToTopup,
-} = useProtectedContent(tokenCost.value, description);
 
 // Kiểm tra dữ liệu hợp lệ
 const hasValidData = computed(() => {
@@ -733,21 +595,8 @@ const calculateCharts = async () => {
     });
   } catch (err) {
     error.value = err.message;
-    errorMessage.value = err.message;
-    errorType.value = '';
   } finally {
     loading.value = false;
-  }
-};
-
-// Khởi tạo trạng thái đăng nhập và hành động
-const initializeAuth = async () => {
-  try {
-    await userStore.initialize();
-    await checkAuthAndAccess();
-  } catch (err) {
-    errorMessage.value = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
-    errorType.value = '';
   }
 };
 
@@ -851,14 +700,11 @@ watch(
   () => {
     if (props.fullName && props.birthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
       calculateCharts();
-      initializeAuth();
     } else {
       nameChartData.value = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 99: 0 };
       combinedChartData.value = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 99: 0 };
       powerChartData.value = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
       error.value = 'Vui lòng nhập đầy đủ họ tên và ngày sinh hợp lệ';
-      errorMessage.value = 'Vui lòng nhập đầy đủ họ tên và ngày sinh hợp lệ';
-      errorType.value = '';
     }
   },
   { immediate: true }
@@ -867,7 +713,6 @@ watch(
 onMounted(() => {
   if (props.fullName && props.birthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
     calculateCharts();
-    initializeAuth();
   }
 });
 </script>

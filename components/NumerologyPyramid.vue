@@ -1,4 +1,3 @@
-
 <template>
   <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
     <div class="p-6 space-y-6">
@@ -16,53 +15,11 @@
         </div>
       </div>
 
-      <!-- Phần thông báo lỗi, trạng thái tải, hoặc nội dung được bảo vệ -->
+      <!-- Phần thông báo lỗi, trạng thái tải, hoặc nội dung -->
       <transition name="fade-slide">
         <div>
           <!-- Trạng thái đang tải -->
-          <div v-if="isLoading" class="text-center py-12">
-            <div class="inline-flex items-center">
-              <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              <span class="text-gray-600">Đang kiểm tra quyền truy cập...</span>
-            </div>
-          </div>
-
-          <!-- Lỗi đăng nhập -->
-          <div v-else-if="errorMessage && errorType === 'login'" class="text-center py-12 bg-red-50 rounded-lg">
-            <svg class="h-12 w-12 mx-auto text-red-500 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-            </svg>
-            <h4 class="text-red-600 font-medium text-lg">Vui lòng đăng nhập để xem tiếp</h4>
-            <button @click="errorAction" class="mt-4 px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap">
-              Đăng nhập
-            </button>
-          </div>
-
-          <!-- Lỗi thiếu token -->
-          <div v-else-if="errorMessage && errorType === 'topup'" class="text-center py-12 bg-red-50 rounded-lg">
-            <svg class="h-12 w-12 mx-auto text-red-500 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-            </svg>
-            <h4 class="text-red-600 font-medium text-lg">Không đủ token để xem tiếp</h4>
-            <p class="text-gray-600 mt-1">Cần {{ tokenCost }} token. Vui lòng nạp thêm.</p>
-            <button @click="navigateToTopup" class="mt-4 px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap">
-              Nạp thêm token
-            </button>
-          </div>
-
-          <!-- Lỗi chung -->
-          <div v-else-if="errorMessage" class="text-center py-12 bg-red-50 rounded-lg">
-            <svg class="h-12 w-12 mx-auto text-red-500 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-            </svg>
-            <h4 class="text-red-600 font-medium text-lg">{{ errorMessage }}</h4>
-          </div>
-
-          <!-- Đang tải dữ liệu kim tự tháp -->
-          <div v-else-if="loading" class="text-center py-12">
+          <div v-if="loading" class="text-center py-12">
             <div class="inline-flex items-center">
               <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -72,44 +29,17 @@
             </div>
           </div>
 
-          <!-- Lỗi dữ liệu -->
-          <div v-else-if="!peaksData || !peaksData.length" class="text-center py-12 bg-red-50 rounded-lg">
+          <!-- Lỗi dữ liệu ngày sinh -->
+          <div v-else-if="error" class="text-center py-12 bg-red-50 rounded-lg">
             <svg class="h-12 w-12 mx-auto text-red-500 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
             </svg>
             <h4 class="text-red-600 font-medium text-lg">Lỗi dữ liệu</h4>
-            <p class="text-gray-600 mt-1">Vui lòng nhập ngày sinh hợp lệ để xem kim tự tháp.</p>
+            <p class="text-gray-600 mt-1">{{ error }}</p>
           </div>
 
-          <!-- Yêu cầu đăng nhập hoặc mở khóa nội dung -->
-          <div v-else-if="!isContentAccessible" class="text-center py-12">
-            <div v-if="!userStore.isAuthenticated">
-              <p class="text-gray-600 mb-4">Vui lòng đăng nhập để xem biểu đồ và giải thích chi tiết.</p>
-              <button
-                @click="errorAction"
-                class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
-                :disabled="isLoading"
-              >
-                Đăng nhập để xem tiếp
-              </button>
-            </div>
-            <div v-else-if="!hasSufficientTokens" class="text-red-600 text-center font-medium ">
-              Không đủ token cho tính năng này. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-              <!-- <p class="text-gray-600 mt-2">Số dư token: {{ userStore.user?.tokens || 0 }}</p> -->
-            </div>
-            <div v-else>
-              <button
-                @click="performAction"
-                class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
-                :disabled="isLoading"
-              >
-                Xem tiếp (Cần {{ tokenCost }} token)
-              </button>
-            </div>
-          </div>
-
-          <!-- Nội dung được bảo vệ (Biểu đồ SVG và Giải thích chi tiết) -->
-          <div v-else class="space-y-8">
+          <!-- Nội dung (Biểu đồ SVG và Giải thích chi tiết) -->
+          <div v-else-if="peaksData && peaksData.length" class="space-y-8">
             <div v-for="section in protectedSections" :key="section.title">
               <!-- Biểu đồ SVG -->
               <div v-if="section.type === 'svg'" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
@@ -148,7 +78,6 @@
                     <line class="line" x1="350" y1="400" x2="600" y2="200" />
 
                     <!-- Nodes -->
-                    <!-- Topmost node (Đỉnh cao giai đoạn 4) -->
                     <g class="node" transform="translate(350,0)">
                       <circle r="20" fill="#b96cc4" />
                       <text y="5" text-anchor="middle" x="0">{{ peaksData[3].peak }}</text>
@@ -156,7 +85,6 @@
                       <text y="50" text-anchor="middle" x="0">({{ peaksData[3].age_range.match(/\d{4}–\d{4}/)?.[0] || '' }})</text>
                     </g>
 
-                    <!-- Peak Stage 3 -->
                     <g class="node" transform="translate(350,80)">
                       <circle r="20" fill="#b96cc4" />
                       <text y="5" text-anchor="middle" x="0">{{ peaksData[2].peak }}</text>
@@ -164,7 +92,6 @@
                       <text y="50" text-anchor="middle" x="0">({{ peaksData[2].age_range.match(/\d{4}–\d{4}/)?.[0] || '' }})</text>
                     </g>
 
-                    <!-- Peak Stage 1 -->
                     <g class="node" transform="translate(250,140)">
                       <circle r="20" fill="#b96cc4" />
                       <text y="5" text-anchor="middle" x="0">{{ peaksData[0].peak }}</text>
@@ -172,7 +99,6 @@
                       <text y="50" text-anchor="middle" x="0">({{ peaksData[0].age_range.match(/\d{4}–\d{4}/)?.[0] || '' }})</text>
                     </g>
 
-                    <!-- Peak Stage 2 -->
                     <g class="node" transform="translate(450,140)">
                       <circle r="20" fill="#b96cc4" />
                       <text y="5" text-anchor="middle" x="0">{{ peaksData[1].peak }}</text>
@@ -180,46 +106,39 @@
                       <text y="50" text-anchor="middle" x="0">({{ peaksData[1].age_range.match(/\d{4}–\d{4}/)?.[0] || '' }})</text>
                     </g>
 
-                    <!-- Birth Month -->
                     <g class="node" transform="translate(100,200)">
                       <circle r="20" fill="#c0e6f8" />
                       <text y="5" text-anchor="middle" x="0">{{ birthDigits.month }}</text>
                       <text y="35" text-anchor="middle" x="0">Tháng {{ birthDate.split('/')[1] }}</text>
                     </g>
 
-                    <!-- Birth Day -->
                     <g class="node" transform="translate(350,200)">
                       <circle r="20" fill="#c0e6f8" />
                       <text y="5" text-anchor="middle" x="0">{{ birthDigits.day }}</text>
                       <text y="35" text-anchor="middle" x="0">Ngày {{ birthDate.split('/')[0] }}</text>
                     </g>
 
-                    <!-- Birth Year -->
                     <g class="node" transform="translate(600,200)">
                       <circle r="20" fill="#c0e6f8" />
                       <text y="5" text-anchor="middle" x="0">{{ birthDigits.year }}</text>
                       <text y="35" text-anchor="middle" x="0">{{ birthDate.split('/')[2] }}</text>
                     </g>
 
-                    <!-- Challenge Stage 1 -->
                     <g class="node" transform="translate(250,260)">
                       <circle r="20" fill="#b96cc4" />
                       <text y="5" text-anchor="middle" x="0">{{ peaksData[0].challenge }}</text>
                     </g>
 
-                    <!-- Challenge Stage 2 -->
                     <g class="node" transform="translate(450,260)">
                       <circle r="20" fill="#b96cc4" />
                       <text y="5" text-anchor="middle" x="0">{{ peaksData[1].challenge }}</text>
                     </g>
 
-                    <!-- Challenge Stage 3 -->
                     <g class="node" transform="translate(350,320)">
                       <circle r="20" fill="#b96cc4" />
                       <text y="5" text-anchor="middle" x="0">{{ peaksData[2].challenge }}</text>
                     </g>
 
-                    <!-- Bottommost node (Thử thách giai đoạn 4) -->
                     <g class="node" transform="translate(350,400)">
                       <circle r="20" fill="#b96cc4" />
                       <text y="5" text-anchor="middle" x="0">{{ peaksData[3].challenge }}</text>
@@ -242,7 +161,6 @@
                     class="relative bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all hover:shadow-lg"
                     :style="`--i: ${index}`"
                   >
-                    <!-- Header với số giai đoạn -->
                     <div class="flex items-center px-6 pt-6 pb-4 border-b border-gray-100">
                       <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold text-lg mr-4">
                         {{ index + 1 }}
@@ -253,9 +171,7 @@
                       </div>
                     </div>
 
-                    <!-- Nội dung -->
                     <div class="p-6 space-y-4">
-                      <!-- Đỉnh cao -->
                       <div class="flex items-start">
                         <div class="flex-shrink-0 mt-1">
                           <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-teal-100 text-teal-700 font-bold text-sm">
@@ -268,7 +184,6 @@
                         </div>
                       </div>
 
-                      <!-- Thử thách -->
                       <div class="flex items-start">
                         <div class="flex-shrink-0 mt-1">
                           <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-amber-100 text-amber-700 font-bold text-sm">
@@ -281,13 +196,11 @@
                         </div>
                       </div>
 
-                      <!-- Mô tả -->
                       <div class="pt-3 mt-3 border-t border-gray-100">
                         <p class="text-gray-700 text-sm leading-relaxed">{{ stage.description }}</p>
                       </div>
                     </div>
 
-                    <!-- Góc trang trí -->
                     <div class="absolute top-0 right-0 w-16 h-16 overflow-hidden">
                       <div class="absolute top-0 right-0 w-full h-full bg-teal-50 transform translate-x-1/2 -translate-y-1/2 rotate-45 origin-bottom-left"></div>
                     </div>
@@ -306,38 +219,25 @@
 import { ref, computed, watch, onMounted } from 'vue';
 import { calculateLifePathNumber } from '~/utils/numerology-calculations';
 import peaksAndChallengesData from '~/data/PeaksandChallenges.json';
-import { useProtectedContent } from '~/composables/useProtectedContent';
-import { useUserStore } from '~/stores/user';
-import { useRouter } from 'vue-router';
 
 const props = defineProps({
   birthDate: {
     type: String,
-    default: '25/03/1988',
-    validator: (value) => {
-      if (!value) return true;
-      return /^\d{2}\/\d{2}\/\d{4}$/.test(value);
-    },
+    default: '',
+    validator: (value) => !value || /^\d{2}\/\d{2}\/\d{4}$/.test(value),
   },
   fullName: {
     type: String,
-    default: 'Nguyễn Văn A',
+    default: '',
   },
 });
 
-const router = useRouter();
-const userStore = useUserStore();
 const peaksData = ref(null);
 const loading = ref(false);
 const lifePath = ref(null);
 const birthDigits = ref({ day: null, month: null, year: null });
+const error = ref('');
 
-// Protected content setup
-const tokenCost = ref(20); // Cập nhật chi phí thành 20 token
-const description = 'Access to numerology pyramid data';
-const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, performAction, errorAction, navigateToTopup } = useProtectedContent(tokenCost.value, description);
-
-// Phần không bảo vệ (Tiêu đề và mô tả)
 const introSection = computed(() => [
   {
     title: 'Kim Tự Tháp Thần Số Học',
@@ -367,7 +267,6 @@ const introSection = computed(() => [
   },
 ]);
 
-// Phần được bảo vệ (Biểu đồ SVG và Giải thích chi tiết)
 const protectedSections = computed(() => [
   {
     title: 'Biểu Đồ Thể Hiện 4 Giai Đoạn Đỉnh Cao Kèm Thử Thách Tương Ứng',
@@ -380,7 +279,6 @@ const protectedSections = computed(() => [
   },
 ]);
 
-// Bảng ánh xạ mô tả
 const getPeakDescription = (peak) => {
   const descriptions = {
     1: 'Khẳng định bản thân, độc lập và lãnh đạo.',
@@ -416,7 +314,6 @@ const getChallengeDescription = (challenge) => {
   return descriptions[challenge] || 'Đặc biệt';
 };
 
-// Tính số rút gọn
 const reduceToSingleDigit = (number) => {
   if ([11, 22].includes(number)) return number;
   let sum = number;
@@ -426,60 +323,56 @@ const reduceToSingleDigit = (number) => {
   return sum;
 };
 
-// Lấy và xử lý dữ liệu
 const fetchPeaksAndChallenges = async () => {
-  console.log('fetchPeaksAndChallenges called with birthDate:', props.birthDate);
+  loading.value = true;
+  error.value = '';
+  peaksData.value = null;
 
   if (!props.birthDate) {
+    error.value = 'Vui lòng nhập ngày sinh hợp lệ!';
     loading.value = false;
-    peaksData.value = null;
     return;
   }
 
   if (!/^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
+    error.value = 'Ngày sinh không hợp lệ! Vui lòng nhập định dạng dd/mm/yyyy.';
     loading.value = false;
-    peaksData.value = null;
     return;
   }
 
   const [day, month, year] = props.birthDate.split('/').map(Number);
   const dateObj = new Date(year, month - 1, day);
   if (
+    isNaN(dateObj.getTime()) ||
     dateObj.getDate() !== day ||
     dateObj.getMonth() + 1 !== month ||
     year < 1900 ||
     year > 2025
   ) {
+    error.value = 'Ngày sinh không hợp lệ! Vui lòng kiểm tra lại.';
     loading.value = false;
-    peaksData.value = null;
     return;
   }
 
-  loading.value = true;
-  peaksData.value = null;
-
   try {
-    // Tính số ngày, tháng, năm
     const daySum = reduceToSingleDigit(day);
     const monthSum = reduceToSingleDigit(month);
     const yearSum = reduceToSingleDigit(year.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0));
     birthDigits.value = { day: daySum, month: monthSum, year: yearSum };
 
-    // Tính số đường đời
     lifePath.value = calculateLifePathNumber(props.birthDate);
-    console.log('lifePath:', lifePath.value);
     const lifePathStr = lifePath.value === 22 ? '22/4' : lifePath.value.toString();
 
-    // Lấy dữ liệu từ JSON
     const lifePathData = peaksAndChallengesData.numerology_peaks_and_challenges.life_paths.find(
       (path) => path.life_path.toString() === lifePathStr
     );
 
     if (!lifePathData) {
-      throw new Error(`Không tìm thấy dữ liệu cho số đường đời ${lifePathStr}`);
+      error.value = `Không tìm thấy dữ liệu cho số đường đời ${lifePathStr}`;
+      loading.value = false;
+      return;
     }
 
-    // Điều chỉnh age_range
     const birthYear = year;
     const stages = lifePathData.stages.map((stage) => {
       const [startAge, endAge] = stage.age_range.match(/\d+/g).map(Number);
@@ -492,76 +385,28 @@ const fetchPeaksAndChallenges = async () => {
     });
 
     peaksData.value = stages;
-    console.log('Dữ liệu đỉnh cao và thử thách:', peaksData.value);
   } catch (err) {
+    error.value = 'Lỗi khi tải dữ liệu kim tự tháp. Vui lòng thử lại.';
     console.error('Lỗi trong fetchPeaksAndChallenges:', err);
-    peaksData.value = [
-      {
-        stage: '9.1',
-        age_range: '27–35 (2015–2023)',
-        peak: 1,
-        challenge: 4,
-        description: 'Giai đoạn đỉnh cao đầu tiên. Đỉnh cao số 1 mang năng lượng lãnh đạo. Thử thách số 4 yêu cầu kỷ luật.',
-      },
-      {
-        stage: '9.2',
-        age_range: '36–44 (2024–2032)',
-        peak: 8,
-        challenge: 0,
-        description: 'Giai đoạn đỉnh cao thứ 2. Đỉnh cao số 8 thúc đẩy thành công. Thử thách số 0 đòi hỏi tìm hướng đi.',
-      },
-      {
-        stage: '9.3',
-        age_range: '45–53 (2033–2041)',
-        peak: 9,
-        challenge: 4,
-        description: 'Giai đoạn đỉnh cao thứ 3. Đỉnh cao số 9 tiếp tục nhân đạo. Thử thách số 4 yêu cầu tổ chức.',
-      },
-      {
-        stage: '9.4',
-        age_range: '54–62 (2042–2050)',
-        peak: 1,
-        challenge: 4,
-        description: 'Giai đoạn đỉnh cao 4. Đỉnh cao số 1 khuyến khích độc lập. Thử thách số 4 đòi hỏi nền tảng.',
-      },
-    ];
   } finally {
     loading.value = false;
   }
 };
 
-// Khởi tạo trạng thái đăng nhập và hành động
-const initializeAuth = async () => {
-  console.log('Initializing auth for NumerologyPyramid...');
-  try {
-    await userStore.initialize();
-    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
-    await checkAuthAndAccess();
-    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
-  } catch (err) {
-    console.error('Lỗi khi khởi tạo auth:', err);
-    errorMessage.value = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
-    errorType.value = '';
-  }
-};
-
-// Theo dõi birthDate
 watch(() => props.birthDate, (newValue) => {
-  console.log('watch birthDate triggered:', newValue);
   if (newValue && /^\d{2}\/\d{2}\/\d{4}$/.test(newValue)) {
     fetchPeaksAndChallenges();
   } else {
-    console.log('birthDate không hợp lệ khi watch:', newValue);
     peaksData.value = null;
+    error.value = 'Vui lòng nhập ngày sinh hợp lệ!';
   }
 });
 
-// Gọi khi mount
 onMounted(() => {
-  console.log('Component mounted, birthDate:', props.birthDate);
   if (props.birthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
     fetchPeaksAndChallenges();
-    initializeAuth();
+  } else {
+    error.value = 'Vui lòng nhập ngày sinh hợp lệ!';
   }
 });
 </script>

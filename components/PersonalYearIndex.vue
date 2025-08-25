@@ -44,53 +44,11 @@
         </div>
       </div>
 
-      <!-- Phần thông báo lỗi, trạng thái tải, hoặc nội dung được bảo vệ -->
+      <!-- Phần thông báo lỗi, trạng thái tải, hoặc nội dung -->
       <transition name="fade">
         <div>
           <!-- Trạng thái đang tải -->
-          <div v-if="isLoading" class="text-center py-10">
-            <div class="inline-flex items-center px-4 py-2 text-sm font-medium text-teal-700 bg-teal-100 rounded-md">
-              <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Đang kiểm tra quyền truy cập...
-            </div>
-          </div>
-
-          <!-- Lỗi đăng nhập -->
-          <div v-else-if="errorMessage && errorType === 'login'" class="text-center py-10 bg-red-50 rounded-lg">
-            <svg class="h-8 w-8 mx-auto text-red-500 mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-            </svg>
-            <p class="text-red-600 font-medium">Vui lòng đăng nhập để xem tiếp</p>
-            <button @click="errorAction" class="mt-4 px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap">
-              Đăng nhập
-            </button>
-          </div>
-
-          <!-- Lỗi thiếu token -->
-          <div v-else-if="errorMessage && errorType === 'topup'" class="text-center py-10 bg-red-50 rounded-lg">
-            <svg class="h-8 w-8 mx-auto text-red-500 mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-            </svg>
-            <p class="text-red-600 font-medium">Không đủ token để xem tiếp</p>
-            <p class="text-gray-600 text-sm mt-1">Cần {{ tokenCost }} token. Vui lòng nạp thêm.</p>
-            <button @click="navigateToTopup" class="mt-4 px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap">
-              Nạp thêm token
-            </button>
-          </div>
-
-          <!-- Lỗi chung -->
-          <div v-else-if="errorMessage" class="text-center py-10 bg-red-50 rounded-lg">
-            <svg class="h-8 w-8 mx-auto text-red-500 mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-            </svg>
-            <p class="text-red-600 font-medium">{{ errorMessage }}</p>
-          </div>
-
-          <!-- Đang tải dữ liệu -->
-          <div v-else-if="loading" class="text-center py-10">
+          <div v-if="loading" class="text-center py-10">
             <div class="inline-flex items-center px-4 py-2 text-sm font-medium text-teal-700 bg-teal-100 rounded-md">
               <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -101,44 +59,15 @@
           </div>
 
           <!-- Lỗi dữ liệu -->
-          <div v-else-if="!yearData || !yearData.length" class="text-center py-10">
-            <div class="inline-flex flex-col items-center px-6 py-4 bg-gray-50 rounded-lg">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-              </svg>
-              <p class="text-gray-500">Vui lòng nhập ngày sinh để xem phân tích</p>
-            </div>
+          <div v-else-if="error" class="text-center py-10 bg-red-50 rounded-lg">
+            <svg class="h-8 w-8 mx-auto text-red-500 mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+            <p class="text-red-600 font-medium">{{ error }}</p>
           </div>
 
-          <!-- Yêu cầu đăng nhập hoặc mở khóa nội dung -->
-          <div v-else-if="!isContentAccessible" class="text-center py-10">
-            <div v-if="!userStore.isAuthenticated">
-              <p class="text-gray-600 mb-4">Vui lòng đăng nhập để xem giải thích chi tiết.</p>
-              <button
-                @click="errorAction"
-                class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
-                :disabled="isLoading"
-              >
-                Đăng nhập để xem tiếp
-              </button>
-            </div>
-            <div v-else-if="!hasSufficientTokens" class="text-red-600 text-center font-medium ">
-            Không đủ token cho tính năng này. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-            <!-- <p class="text-gray-600 mt-2">Số dư token: {{ userStore.user?.tokens || 0 }}</p> -->
-          </div>
-            <div v-else>
-              <button
-                @click="performAction"
-                class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
-                :disabled="isLoading"
-              >
-                Xem tiếp (Cần {{ tokenCost }} token)
-              </button>
-            </div>
-          </div>
-
-          <!-- Nội dung được bảo vệ (Giải thích chi tiết) -->
-          <div v-else class="space-y-8">
+          <!-- Nội dung (Giải thích chi tiết) -->
+          <div v-else-if="yearData && yearData.length" class="space-y-8">
             <div v-for="section in protectedSections" :key="section.title">
               <div class="text-center mb-6">
                 <h3 class="text-xl font-bold text-teal-800">{{ section.title }}</h3>
@@ -195,7 +124,7 @@
                         Thách Thức Cần Vượt Qua
                       </h4>
                       <ul class="text-gray-700 space-y-2">
-                        <li v-for="(item, i) in year.opportunities.split('\n')" :key="i" class="flex items-start">
+                        <li v-for="(item, i) in year.challenges.split('\n')" :key="i" class="flex items-start">
                           <span class="text-amber-500 mr-2 mt-1">•</span>
                           <span>{{ item }}</span>
                         </li>
@@ -223,28 +152,18 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
-import { useProtectedContent } from '~/composables/useProtectedContent';
-import { useUserStore } from '~/stores/user';
-import { useRouter } from 'vue-router';
 
 const props = defineProps({
   birthDate: {
     type: String,
     default: '',
-    validator: (value) => {
-      if (!value) return true;
-      return /^\d{2}\/\d{2}\/\d{4}$/.test(value);
-    },
+    validator: (value) => !value || /^\d{2}\/\d{2}\/\d{4}$/.test(value),
   },
 });
 
-const router = useRouter();
-const userStore = useUserStore();
 const yearData = ref(null);
 const loading = ref(false);
-const tokenCost = ref(10);
-const description = 'Access to detailed yearly numerology predictions';
-const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, performAction, errorAction, navigateToTopup } = useProtectedContent(tokenCost.value, description);
+const error = ref('');
 
 // Phần không bảo vệ (Tiêu đề, mô tả, bảng chỉ số năm)
 const introSection = computed(() => [
@@ -259,7 +178,7 @@ const introSection = computed(() => [
   },
 ]);
 
-// Phần được bảo vệ (Giải thích chi tiết)
+// Phần nội dung (Giải thích chi tiết)
 const protectedSections = computed(() => [
   {
     title: 'Luận Giải Chi Tiết',
@@ -334,35 +253,35 @@ const calculatePersonalYear = (day, month, year) => {
 
 // Lấy và xử lý dữ liệu
 const fetchPersonalYearData = async () => {
-  console.log('fetchPersonalYearData called with birthDate:', props.birthDate);
+  loading.value = true;
+  error.value = '';
+  yearData.value = null;
 
   if (!props.birthDate) {
+    error.value = 'Vui lòng nhập ngày sinh hợp lệ!';
     loading.value = false;
-    yearData.value = null;
     return;
   }
 
   if (!/^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
+    error.value = 'Ngày sinh không hợp lệ! Vui lòng nhập định dạng dd/mm/yyyy.';
     loading.value = false;
-    yearData.value = null;
     return;
   }
 
   const [day, month, year] = props.birthDate.split('/').map(Number);
   const dateObj = new Date(year, month - 1, day);
   if (
+    isNaN(dateObj.getTime()) ||
     dateObj.getDate() !== day ||
     dateObj.getMonth() + 1 !== month ||
     year < 1900 ||
     year > 2025
   ) {
+    error.value = 'Ngày sinh không hợp lệ! Vui lòng kiểm tra lại.';
     loading.value = false;
-    yearData.value = null;
     return;
   }
-
-  loading.value = true;
-  yearData.value = null;
 
   try {
     // Giả lập API call với timeout
@@ -410,48 +329,30 @@ const fetchPersonalYearData = async () => {
     ];
 
     yearData.value = sampleData;
-    console.log('yearData:', yearData.value);
   } catch (err) {
+    error.value = 'Lỗi khi tải dữ liệu chu kỳ vận số. Vui lòng thử lại.';
     console.error('Lỗi khi lấy dữ liệu:', err);
-    yearData.value = null;
   } finally {
     loading.value = false;
   }
 };
 
-// Khởi tạo trạng thái đăng nhập và hành động
-const initializeAuth = async () => {
-  console.log('Initializing auth for YearlyNumerology...');
-  try {
-    await userStore.initialize();
-    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
-    await checkAuthAndAccess();
-    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
-  } catch (err) {
-    console.error('Lỗi khi khởi tạo auth:', err);
-    errorMessage.value = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
-    errorType.value = '';
-  }
-};
-
 // Theo dõi props.birthDate
 watch(() => props.birthDate, (newVal) => {
-  console.log('watch birthDate triggered:', newVal);
   if (newVal && /^\d{2}\/\d{2}\/\d{4}$/.test(newVal)) {
     fetchPersonalYearData();
-    initializeAuth();
   } else {
-    console.log('birthDate không hợp lệ khi watch:', newVal);
     yearData.value = null;
+    error.value = 'Vui lòng nhập ngày sinh hợp lệ!';
   }
 });
 
 // Gọi khi mount
 onMounted(() => {
-  console.log('Component mounted, birthDate:', props.birthDate);
   if (props.birthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
     fetchPersonalYearData();
-    initializeAuth();
+  } else {
+    error.value = 'Vui lòng nhập ngày sinh hợp lệ!';
   }
 });
 </script>

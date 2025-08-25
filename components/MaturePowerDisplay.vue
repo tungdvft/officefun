@@ -1,14 +1,13 @@
-
 <template>
   <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
     <div class="p-6 space-y-8">
-      <!-- Header section (không bảo vệ) -->
+      <!-- Header section -->
       <div class="text-center">
         <h2 class="text-3xl font-bold text-teal-700 mb-2">Chỉ Số Năng Lực Trưởng Thành</h2>
         <p class="text-lg text-gray-600">Khám phá năng lực trưởng thành tiềm ẩn của bạn</p>
       </div>
 
-      <!-- Maturity power number card (không bảo vệ) -->
+      <!-- Maturity power number card -->
       <div v-if="number && data" class="bg-gradient-to-r from-teal-50 to-blue-50 p-8 rounded-2xl border border-teal-100 shadow-sm text-center">
         <div class="flex flex-col items-center">
           <div class="relative">
@@ -32,120 +31,8 @@
 
       <transition name="fade-slide">
         <div>
-          <!-- Trạng thái đang tải quyền truy cập -->
-          <div v-if="isLoading" class="text-center py-12">
-            <div class="inline-flex items-center">
-              <svg
-                class="animate-spin -ml-1 mr-3 h-8 w-8 text-teal-500"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  class="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                ></circle>
-                <path
-                  class="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-              <span class="text-gray-600">Đang kiểm tra quyền truy cập...</span>
-            </div>
-          </div>
-
-          <!-- Lỗi đăng nhập -->
-          <div
-            v-else-if="errorMessage && errorType === 'login'"
-            class="text-center py-12 bg-red-50 rounded-lg"
-          >
-            <svg
-              class="h-12 w-12 mx-auto text-red-500 mb-3"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
-            </svg>
-            <h4 class="text-red-600 font-medium text-lg">
-              Vui lòng đăng nhập để xem tiếp
-            </h4>
-            <button
-              @click="errorAction"
-              class="mt-4 px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
-            >
-              Đăng nhập
-            </button>
-          </div>
-
-          <!-- Lỗi thiếu token -->
-          <div
-            v-else-if="errorMessage && errorType === 'topup'"
-            class="text-center py-12 bg-red-50 rounded-lg"
-          >
-            <svg
-              class="h-12 w-12 mx-auto text-red-500 mb-3"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
-            </svg>
-            <h4 class="text-red-600 font-medium text-lg">
-              Không đủ token để xem tiếp
-            </h4>
-            <p class="text-gray-600 mt-1">
-              Cần {{ tokenCost }} token. Vui lòng nạp thêm.
-            </p>
-            <button
-              @click="navigateToTopup"
-              class="mt-4 px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
-            >
-              Nạp thêm token
-            </button>
-          </div>
-
-          <!-- Lỗi chung -->
-          <div
-            v-else-if="errorMessage"
-            class="text-center py-12 bg-red-50 rounded-lg"
-          >
-            <svg
-              class="h-12 w-12 mx-auto text-red-500 mb-3"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
-            </svg>
-            <h4 class="text-red-600 font-medium text-lg">{{ errorMessage }}</h4>
-          </div>
-
           <!-- Đang tải dữ liệu -->
-          <div v-else-if="loading" class="text-center py-12">
+          <div v-if="loading" class="text-center py-12">
             <div class="inline-flex items-center">
               <svg
                 class="animate-spin -ml-1 mr-3 h-8 w-8 text-teal-500"
@@ -172,10 +59,7 @@
           </div>
 
           <!-- Lỗi dữ liệu -->
-          <div
-            v-else-if="!number || !data"
-            class="text-center py-12 bg-red-50 rounded-lg"
-          >
+          <div v-else-if="!number || !data" class="text-center py-12 bg-red-50 rounded-lg">
             <svg
               class="h-12 w-12 mx-auto text-red-500 mb-3"
               xmlns="http://www.w3.org/2000/svg"
@@ -196,36 +80,7 @@
             </p>
           </div>
 
-          <!-- Yêu cầu đăng nhập hoặc mở khóa nội dung -->
-          <div v-else-if="!isContentAccessible" class="text-center py-12">
-            <div v-if="!userStore.isAuthenticated">
-              <p class="text-gray-600 mb-4">
-                Vui lòng đăng nhập để xem giải thích chi tiết.
-              </p>
-              <button
-                @click="errorAction"
-                class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
-                :disabled="isLoading"
-              >
-                Đăng nhập để xem tiếp
-              </button>
-            </div>
-            <div v-else-if="!hasSufficientTokens" class="text-red-600 text-center font-medium ">
-              Không đủ token cho tính năng này. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-              <!-- <p class="text-gray-600 mt-2">Số dư token: {{ userStore.user?.tokens || 0 }}</p> -->
-            </div>
-            <div v-else>
-              <button
-                @click="performAction"
-                class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
-                :disabled="isLoading"
-              >
-                Xem tiếp (Cần {{ tokenCost }} token)
-              </button>
-            </div>
-          </div>
-
-          <!-- Nội dung được bảo vệ -->
+          <!-- Nội dung chi tiết -->
           <div v-else class="space-y-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <!-- Mô tả card -->
@@ -297,9 +152,6 @@
 
 <script setup>
 import { ref, watch, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useUserStore } from '~/stores/user';
-import { useProtectedContent } from '~/composables/useProtectedContent';
 import { useNumerologyData } from '@/composables/useNumerologyData';
 
 const props = defineProps({
@@ -317,49 +169,9 @@ const props = defineProps({
   },
 });
 
-const router = useRouter();
-const userStore = useUserStore();
 const birthDate = ref(props.birthDate);
 const fullName = ref(props.fullName);
 const { number, data, loading } = useNumerologyData('maturePower', birthDate, fullName);
-const tokenCost = ref(10);
-const description = 'Access to detailed mature power number interpretation';
-const {
-  isLoading,
-  errorMessage,
-  errorType,
-  isContentAccessible,
-  hasSufficientTokens,
-  checkAuthAndAccess,
-  performAction,
-  errorAction,
-  navigateToTopup,
-} = useProtectedContent(tokenCost.value, description);
-
-// Khởi tạo trạng thái đăng nhập và hành động
-const initializeAuth = async () => {
-  console.log('Initializing auth for MaturePowerNumber...');
-  try {
-    await userStore.initialize();
-    console.log(
-      'User Store Initialized, isAuthenticated:',
-      userStore.isAuthenticated,
-      'tokenBalance:',
-      userStore.user?.tokens
-    );
-    await checkAuthAndAccess();
-    console.log(
-      'Auth checked, isContentAccessible:',
-      isContentAccessible.value,
-      'hasSufficientTokens:',
-      hasSufficientTokens.value
-    );
-  } catch (err) {
-    console.error('Lỗi khi khởi tạo auth:', err);
-    errorMessage.value = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
-    errorType.value = '';
-  }
-};
 
 // Theo dõi props.birthDate và props.fullName
 watch(
@@ -374,12 +186,10 @@ watch(
     birthDate.value = newBirthDate;
     fullName.value = newFullName;
     if (
-      newBirthDate &&
-      newFullName &&
-      /^\d{2}\/\d{2}\/\d{4}$/.test(newBirthDate)
+      !newBirthDate ||
+      !newFullName ||
+      !/^\d{2}\/\d{2}\/\d{4}$/.test(newBirthDate)
     ) {
-      initializeAuth();
-    } else {
       console.log('Dữ liệu không hợp lệ khi watch:', {
         newBirthDate,
         newFullName,
@@ -399,13 +209,6 @@ onMounted(() => {
     'fullName:',
     props.fullName
   );
-  if (
-    props.birthDate &&
-    props.fullName &&
-    /^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)
-  ) {
-    initializeAuth();
-  }
 });
 </script>
 

@@ -1,4 +1,3 @@
-
 <template>
   <div class="container mx-auto bg-white rounded-2xl shadow-xl overflow-hidden max-w-5xl">
     <div class="p-8 space-y-10">
@@ -81,81 +80,8 @@
               </div>
             </div>
 
-            <!-- Trạng thái đang tải quyền truy cập -->
-            <div v-if="isLoading" class="text-center py-12">
-              <div class="inline-flex items-center gap-3">
-                <svg class="animate-spin h-8 w-8 text-teal-500" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <span class="text-gray-600 text-lg">Đang kiểm tra quyền truy cập...</span>
-              </div>
-            </div>
-
-            <!-- Lỗi đăng nhập -->
-            <div v-else-if="errorMessage && errorType === 'login'" class="text-center py-12 bg-red-50 rounded-lg">
-              <svg class="h-12 w-12 mx-auto text-red-500 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-              <h4 class="text-red-600 font-medium text-lg">Vui lòng đăng nhập để xem tiếp</h4>
-              <button @click="errorAction" class="mt-4 px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md">Đăng nhập</button>
-            </div>
-
-            <!-- Lỗi thiếu token -->
-            <div v-else-if="errorMessage && errorType === 'topup'" class="text-center py-12 bg-red-50 rounded-lg">
-              <svg class="h-12 w-12 mx-auto text-red-500 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-              <h4 class="text-red-600 font-medium text-lg">Không đủ token để xem tiếp</h4>
-              <p class="text-gray-600 mt-1">Cần {{ tokenCost }} token. Vui lòng nạp thêm.</p>
-              <button @click="navigateToTopup" class="mt-4 px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md">Nạp thêm token</button>
-            </div>
-
-            <!-- Lỗi chung -->
-            <div v-else-if="errorMessage" class="text-center py-12 bg-red-50 rounded-lg">
-              <svg class="h-12 w-12 mx-auto text-red-500 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-              <h4 class="text-red-600 font-medium text-lg">{{ errorMessage }}</h4>
-            </div>
-
-            <!-- Đang tải dữ liệu -->
-            <div v-else-if="loading" class="text-center py-12">
-              <div class="inline-flex items-center gap-3">
-                <svg class="animate-spin h-8 w-8 text-teal-500" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <span class="text-gray-600 text-lg">Đang phân tích tương quan...</span>
-              </div>
-            </div>
-
-            <!-- Lỗi dữ liệu -->
-            <div v-else-if="error" class="text-center py-12 bg-red-50 rounded-lg">
-              <svg class="h-12 w-12 mx-auto text-red-500 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-              <h4 class="text-red-600 font-medium text-lg">Đã xảy ra lỗi</h4>
-              <p class="text-gray-600 mt-1">{{ error }}</p>
-            </div>
-
-            <!-- Yêu cầu đăng nhập hoặc mở khóa nội dung -->
-            <div v-else-if="showResult && !isContentAccessible" class="text-center py-12 bg-gray-50 rounded-lg">
-              <div v-if="!userStore.isAuthenticated">
-                <p class="text-gray-600 mb-4 text-lg">Vui lòng đăng nhập để xem giải thích chi tiết.</p>
-                <button @click="errorAction" class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md" :disabled="isLoading">Đăng nhập để xem tiếp</button>
-              </div>
-              <div v-else-if="!hasSufficientTokens" class="text-red-600 text-center font-medium ">
-              Không đủ token cho tính năng này. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-              <!-- <p class="text-gray-600 mt-2">Số dư token: {{ userStore.user?.tokens || 0 }}</p> -->
-            </div>
-              <div v-else>
-                <button @click="performAction" class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md" :disabled="isLoading">Xem tiếp (Cần {{ tokenCost }} token)</button>
-              </div>
-            </div>
-
-            <!-- Nội dung được bảo vệ -->
-            <div v-else-if="isContentAccessible" class="space-y-10">
+            <!-- Nội dung chi tiết -->
+            <div class="space-y-10">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Challenges card -->
                 <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-300">
@@ -198,6 +124,15 @@
             <h4 class="text-yellow-700 font-medium text-lg">Thông tin cần thiết</h4>
             <p class="text-gray-600 mt-1">Vui lòng nhập ngày sinh và họ tên đầy đủ</p>
           </div>
+
+          <!-- Lỗi dữ liệu -->
+          <div v-else-if="error" class="text-center py-12 bg-red-50 rounded-lg">
+            <svg class="h-12 w-12 mx-auto text-red-500 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <h4 class="text-red-600 font-medium text-lg">Đã xảy ra lỗi</h4>
+            <p class="text-gray-600 mt-1">{{ error }}</p>
+          </div>
         </div>
       </transition>
     </div>
@@ -206,9 +141,6 @@
 
 <script setup>
 import { ref, watch, onMounted, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { useUserStore } from '~/stores/user';
-import { useProtectedContent } from '~/composables/useProtectedContent';
 import { calculateLifePathNumber, calculateSoulUrgeNumber } from '@/utils/numerology-calculations';
 import { soulUrgeData } from '@/data/lifePathSoulUrgeData';
 
@@ -224,26 +156,11 @@ const props = defineProps({
   },
 });
 
-const router = useRouter();
-const userStore = useUserStore();
 const lifePathNumber = ref(null);
 const soulUrgeNumber = ref(null);
 const combinationData = ref(null);
 const loading = ref(false);
 const error = ref(null);
-const tokenCost = ref(20);
-const description = 'Truy cập giải thích chi tiết về tương quan Số Đường Đời và Số Linh Hồn';
-const {
-  isLoading,
-  errorMessage,
-  errorType,
-  isContentAccessible,
-  hasSufficientTokens,
-  checkAuthAndAccess,
-  performAction,
-  errorAction,
-  navigateToTopup,
-} = useProtectedContent(tokenCost.value, description);
 
 const showResult = computed(() => {
   return combinationData.value && lifePathNumber.value !== null && soulUrgeNumber.value !== null;
@@ -329,23 +246,11 @@ const loadCombinationData = async () => {
   }
 };
 
-const initializeAuth = async () => {
-  try {
-    await userStore.initialize();
-    await checkAuthAndAccess();
-  } catch (err) {
-    console.error('Lỗi khi khởi tạo auth:', err);
-    errorMessage.value = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
-    errorType.value = '';
-  }
-};
-
 watch(
   [() => props.birthDate, () => props.fullName],
   ([newBirthDate, newFullName]) => {
     if (newBirthDate && newFullName && /^\d{2}\/\d{2}\/\d{4}$/.test(newBirthDate)) {
       loadCombinationData();
-      initializeAuth();
     } else {
       lifePathNumber.value = null;
       soulUrgeNumber.value = null;
@@ -359,7 +264,6 @@ watch(
 onMounted(() => {
   if (props.birthDate && props.fullName && /^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
     loadCombinationData();
-    initializeAuth();
   }
 });
 </script>
