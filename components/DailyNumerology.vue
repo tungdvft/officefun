@@ -70,7 +70,7 @@
       </div>
     </section>
 
-    <!-- Phần thông báo lỗi, trạng thái tải, hoặc nút hành động -->
+    <!-- Loading indicator -->
     <div v-if="isLoading" class="flex justify-center">
       <svg
         class="animate-spin h-8 w-8 text-teal-600"
@@ -86,32 +86,13 @@
         ></path>
       </svg>
     </div>
-    <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
-      <template v-if="errorType === 'login'">
-        Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để sử dụng tính năng này.
-      </template>
-      <template v-else-if="errorType === 'topup'">
-        Không đủ token cho tính năng này. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-      </template>
-      <template v-else>
-        {{ errorMessage }}
-      </template>
-    </div>
+    <!-- Error message -->
     <div v-else-if="error" class="text-red-600 text-center font-medium p-6">
       {{ error }}
     </div>
-    <div v-else-if="!isContentAccessible" class="text-center p-6">
-      <template v-if="!userStore.isAuthenticated">
-        <p class="text-red-600 font-medium mb-4">Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để sử dụng tính năng này.</p>
-      </template>
-      <template v-else-if="userStore.isAuthenticated && !hasSufficientTokens">
-        <p class="text-red-600 font-medium mb-4">Không đủ token cho tính năng này. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!</p>
-      </template>
-      <template v-else>
-        <button @click="performAction" class="action-button">Xem dự đoán chi tiết (Cần {{ tokenCost }} token)</button>
-      </template>
-    </div>
-    <div v-else-if="isContentAccessible && dailyPrediction" class="space-y-10">
+
+    <!-- All content sections displayed unconditionally -->
+    <div v-if="dailyPrediction" class="space-y-10">
       <!-- Hồ sơ cá nhân -->
       <section class="p-6 bg-blue-50 rounded-xl">
         <h3 class="text-xl font-semibold text-blue-700 mb-4 flex items-center">
@@ -390,22 +371,13 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue';
-import { useRouter } from 'vue-router';
 import personalDayData from '~/data/personal-day-data.js';
-import { useProtectedContent } from '~/composables/useProtectedContent';
-import { useUserStore } from '~/stores/user';
 
 const props = defineProps({
   birthDate: { type: String, required: true },
 });
 
-const router = useRouter();
-const tokenCost = ref(10);
-const description = 'Access to daily numerology prediction';
-const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, performAction, errorAction, navigateToTopup } = useProtectedContent(tokenCost.value, description);
-
-const userStore = useUserStore();
-const isInitialLoad = ref(true);
+const isLoading = ref(true);
 const error = ref('');
 const dailyPrediction = ref(null);
 const personalDay = ref(null);
@@ -417,12 +389,6 @@ const currentDate = computed(() => {
   const today = new Date();
   return `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
 });
-
-// Hàm điều hướng đến trang nạp token
-// const navigateToTopup = () => {
-//   console.log('Navigating to /nap-token');
-//   router.push('/nap-token');
-// };
 
 // Hàm tính Số đường đời
 const calculateLifePath = (birthDate) => {
@@ -447,18 +413,11 @@ const calculatePersonalDay = (birthDate, currentDate) => {
   return reduced;
 };
 
-// Khởi tạo trạng thái đăng nhập và kiểm tra token
-const initializeAuth = async () => {
-  console.log('Initializing auth for DailyNumerology...');
-  await userStore.initialize();
-  await checkAuthAndAccess();
-  console.log('Auth initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
-};
-
 // Tải dự đoán khi birthDate thay đổi
 watch(
   () => props.birthDate,
   async (newBirthDate) => {
+    isLoading.value = true;
     error.value = '';
     dailyPrediction.value = null;
     universalTheme.value = '';
@@ -503,15 +462,11 @@ watch(
         throw new Error(`Không tìm thấy dự đoán cho Số đường đời ${lifePath.value} với Số ngày cá nhân ${personalDay.value}.`);
       }
       console.log('Daily Prediction:', dailyPrediction.value);
-
-      // Chỉ khởi tạo auth sau khi dữ liệu dự đoán được tải lần đầu
-      if (isInitialLoad.value) {
-        await initializeAuth();
-        isInitialLoad.value = false;
-      }
     } catch (err) {
       console.error('Lỗi khi xử lý dự đoán hàng ngày:', err);
       error.value = err.message || 'Đã xảy ra lỗi khi tải dự đoán. Vui lòng thử lại.';
+    } finally {
+      isLoading.value = false;
     }
   },
   { immediate: true }

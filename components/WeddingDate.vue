@@ -1,3 +1,4 @@
+```vue
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center py-8">
     <div class="container mx-auto px-4">
@@ -15,11 +16,11 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </span>
-          <h2 class="text-xl font-semibold text-purple-700">Thông tin cô dâu và chú rể</h2>
+          <h2 class="text-xl font-semibold text-purple-700">Thông tin hai người</h2>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Thông tin cô dâu -->
+          <!-- Thông tin người thứ nhất -->
           <div class="space-y-4">
             <div class="bg-white p-4 rounded-lg border border-gray-200 hover:border-purple-300 transition-colors">
               <h3 class="text-sm font-medium text-purple-700 mb-3 flex items-center">
@@ -28,34 +29,34 @@
                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                   </svg>
                 </span>
-                Thông tin cô dâu
+                Thông tin người thứ nhất
               </h3>
               <div>
-                <label for="brideName" class="block text-sm font-medium text-gray-700 mb-4">Tên cô dâu</label>
+                <label for="brideName" class="block text-sm font-medium text-gray-700 mb-2">Họ tên</label>
                 <input
                   v-model="formData.brideName"
                   type="text"
                   id="brideName"
-                  placeholder="VD: Nguyễn Thị A"
                   :class="['w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.brideName ? 'border-red-500' : 'border-gray-300']"
+                  @focus="clearError"
                 />
                 <p v-if="errors.brideName" class="text-red-600 text-sm mt-1">{{ errors.brideName }}</p>
               </div>
               <div>
-                <label for="brideBirthdate" class="block text-sm font-medium text-gray-700 mt-3 mb-3">Ngày sinh cô dâu (DD/MM/YYYY)</label>
+                <label for="brideBirthdate" class="block text-sm font-medium text-gray-700 mt-3 mb-2">Ngày sinh (DD/MM/YYYY)</label>
                 <input
                   v-model="formData.brideBirthdate"
                   type="text"
                   id="brideBirthdate"
-                  placeholder="VD: 15/03/1995"
                   :class="['w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.brideBirthdate ? 'border-red-500' : 'border-gray-300']"
+                  @focus="clearError"
                 />
                 <p v-if="errors.brideBirthdate" class="text-red-600 text-sm mt-1">{{ errors.brideBirthdate }}</p>
               </div>
             </div>
           </div>
 
-          <!-- Thông tin chú rể -->
+          <!-- Thông tin người thứ hai -->
           <div class="space-y-4">
             <div class="bg-white p-4 rounded-lg border border-gray-200 hover:border-purple-300 transition-colors">
               <h3 class="text-sm font-medium text-purple-700 mb-3 flex items-center">
@@ -64,27 +65,28 @@
                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                   </svg>
                 </span>
-                Thông tin chú rể
+                Thông tin người thứ hai
               </h3>
               <div>
-                <label for="groomName" class="block text-sm font-medium text-gray-700 mb-4">Tên chú rể</label>
+                <label for="groomName" class="block text-sm font-medium text-gray-700 mb-2">Họ tên</label>
                 <input
                   v-model="formData.groomName"
                   type="text"
                   id="groomName"
-                  placeholder="VD: Trần Văn B"
+  
                   :class="['w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.groomName ? 'border-red-500' : 'border-gray-300']"
+                  @focus="clearError"
                 />
                 <p v-if="errors.groomName" class="text-red-600 text-sm mt-1">{{ errors.groomName }}</p>
               </div>
               <div>
-                <label for="groomBirthdate" class="block text-sm font-medium text-gray-700 mt-3 mb-3">Ngày sinh chú rể (DD/MM/YYYY)</label>
+                <label for="groomBirthdate" class="block text-sm font-medium text-gray-700 mt-3 mb-2">Ngày sinh (DD/MM/YYYY)</label>
                 <input
                   v-model="formData.groomBirthdate"
                   type="text"
                   id="groomBirthdate"
-                  placeholder="VD: 22/07/1994"
                   :class="['w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.groomBirthdate ? 'border-red-500' : 'border-gray-300']"
+                  @focus="clearError"
                 />
                 <p v-if="errors.groomBirthdate" class="text-red-600 text-sm mt-1">{{ errors.groomBirthdate }}</p>
               </div>
@@ -103,24 +105,26 @@
                 Khoảng thời gian
               </h3>
               <div>
-                <label for="startDate" class="block text-sm font-medium text-gray-700 mb-4">Từ ngày (DD/MM/YYYY)</label>
+                <label for="startDate" class="block text-sm font-medium text-gray-700 mb-2">Từ ngày (DD/MM/YYYY)</label>
                 <input
                   v-model="formData.startDate"
                   type="text"
                   id="startDate"
                   placeholder="VD: 01/06/2025"
                   :class="['w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.startDate ? 'border-red-500' : 'border-gray-300']"
+                  @focus="clearError"
                 />
                 <p v-if="errors.startDate" class="text-red-600 text-sm mt-1">{{ errors.startDate }}</p>
               </div>
               <div>
-                <label for="endDate" class="block text-sm font-medium text-gray-700 mt-3 mb-3">Đến ngày (DD/MM/YYYY)</label>
+                <label for="endDate" class="block text-sm font-medium text-gray-700 mt-3 mb-2">Đến ngày (DD/MM/YYYY)</label>
                 <input
                   v-model="formData.endDate"
                   type="text"
                   id="endDate"
                   placeholder="VD: 30/06/2025"
                   :class="['w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.endDate ? 'border-red-500' : 'border-gray-300']"
+                  @focus="clearError"
                 />
                 <p v-if="errors.endDate" class="text-red-600 text-sm mt-1">{{ errors.endDate }}</p>
               </div>
@@ -128,38 +132,35 @@
           </div>
         </div>
 
-        <!-- Nút tìm ngày -->
-        <div class="mt-6 flex justify-center">
+        <!-- Nút tìm ngày và thông báo lỗi -->
+        <div v-if="isLoading || loading" class="flex justify-center pt-4">
+          <svg class="animate-spin h-8 w-8 text-purple-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        </div>
+        <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
+          <template v-if="errorType === 'login'">
+            Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để tìm ngày cưới.
+          </template>
+          <template v-else-if="errorType === 'topup'">
+            Không đủ token để tìm ngày cưới. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
+          </template>
+          <template v-else>
+            {{ errorMessage }}
+          </template>
+        </div>
+        <div v-else-if="errors.general" class="text-red-600 text-center font-medium p-6">
+          {{ errors.general }}
+        </div>
+        <div v-else class="flex justify-center pt-4">
           <button
             @click="fetchWeddingDates"
-            :disabled="loading || !hasSufficientTokens"
-            class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 shadow-md disabled:opacity-70"
+            class="action-button"
           >
-            <span class="flex items-center justify-center gap-2">
-              <svg v-if="loading || isLoading" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              <span v-if="isLoading">{{ 'Đang kiểm tra quyền truy cập...' }}</span>
-              <span v-else-if="loading">{{ 'Đang tìm ngày tốt...' }}</span>
-              <span v-else>{{ isLoggedIn ? `Tìm ngày cưới tốt nhất (Cần ${tokenCost} tokens)` : 'Đăng nhập để tìm ngày cưới' }}</span>
-            </span>
+            {{ userStore.isAuthenticated ? `Tìm ngày cưới tốt nhất (Cần ${tokenCost} tokens)` : 'Đăng nhập để tìm ngày cưới' }}
           </button>
         </div>
-
-        <!-- Error Message -->
-        <transition name="slide-fade">
-          <div v-if="errorMessage" class="mt-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-md">
-            <div class="flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-              </svg>
-              <strong class="font-medium">Lỗi:</strong>
-            </div>
-            <p class="mt-1 ml-7">{{ errorMessage }}</p>
-            <p v-if="hasSufficientTokens === false" class="mt-1 ml-7 text-sm">Bạn không có đủ token. Vui lòng nạp thêm.</p>
-          </div>
-        </transition>
       </div>
 
       <!-- Kết quả -->
@@ -183,12 +184,12 @@
                   <svg class="w-5 h-5 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  Cô dâu: {{ formData.brideName }}
+                  Người thứ nhất: {{ formData.brideName }}
                 </h4>
                 <ul class="space-y-1">
                   <li class="flex justify-between"><span class="text-gray-600">Đường đời:</span> <span class="font-medium">{{ result.numerology.bride.lifePath }}</span></li>
-                  <li class="flex justify-between"><span class="text-gray-600">Linh hồn:</span> <span class="font-medium">{{ result.numerology.bride.soul }}</span></li>
-                  <li class="flex justify-between"><span class="text-gray-600">Định mệnh:</span> <span class="font-medium">{{ result.numerology.bride.destiny }}</span></li>
+                  <li class="flex justify-between"><span class="text-gray-600">Số linh hồn:</span> <span class="font-medium">{{ result.numerology.bride.soul }}</span></li>
+                  <li class="flex justify-between"><span class="text-gray-600">Số định mệnh:</span> <span class="font-medium">{{ result.numerology.bride.destiny }}</span></li>
                 </ul>
               </div>
               <div class="bg-white p-4 rounded-lg shadow-sm">
@@ -196,12 +197,12 @@
                   <svg class="w-5 h-5 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
-                  Chú rể: {{ formData.groomName }}
+                  Người thứ hai: {{ formData.groomName }}
                 </h4>
                 <ul class="space-y-1">
                   <li class="flex justify-between"><span class="text-gray-600">Đường đời:</span> <span class="font-medium">{{ result.numerology.groom.lifePath }}</span></li>
-                  <li class="flex justify-between"><span class="text-gray-600">Linh hồn:</span> <span class="font-medium">{{ result.numerology.groom.soul }}</span></li>
-                  <li class="flex justify-between"><span class="text-gray-600">Định mệnh:</span> <span class="font-medium">{{ result.numerology.groom.destiny }}</span></li>
+                  <li class="flex justify-between"><span class="text-gray-600">Số linh hồn:</span> <span class="font-medium">{{ result.numerology.groom.soul }}</span></li>
+                  <li class="flex justify-between"><span class="text-gray-600">Số định mệnh:</span> <span class="font-medium">{{ result.numerology.groom.destiny }}</span></li>
                 </ul>
               </div>
             </div>
@@ -219,14 +220,15 @@
                   <div class="mt-2">
                     <span class="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium"
                           :class="{
-                            'bg-green-100 text-green-800': suggestion.compatibilityScore >= 8,
-                            'bg-yellow-100 text-yellow-800': suggestion.compatibilityScore >= 6 && suggestion.compatibilityScore < 8,
-                            'bg-red-100 text-red-800': suggestion.compatibilityScore < 6
+                            'bg-green-100 text-green-800': suggestion.compatibilityScore * 10 >= 80,
+                            'bg-blue-100 text-blue-800': suggestion.compatibilityScore * 10 >= 60 && suggestion.compatibilityScore * 10 < 80,
+                            'bg-yellow-100 text-yellow-800': suggestion.compatibilityScore * 10 >= 40 && suggestion.compatibilityScore * 10 < 60,
+                            'bg-red-100 text-red-800': suggestion.compatibilityScore * 10 < 40
                           }">
                       <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                       </svg>
-                      {{ suggestion.compatibilityScore }}/10
+                      {{ suggestion.compatibilityScore * 10 }}/100
                     </span>
                   </div>
                 </div>
@@ -247,20 +249,17 @@
           </div>
 
           <!-- Nút xem thêm gợi ý -->
-          <div v-if="result?.numerology && totalSuggestions < maxSuggestions" class="flex justify-center mt-6">
+          <div v-if="result.numerology && isContentAccessible && totalSuggestions < maxSuggestions" class="flex justify-center mt-6">
             <button
               @click="showMoreSuggestions"
-              :disabled="loadingMore || isLoading || !hasSufficientTokensForMore"
-              class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-3 px-8 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 shadow-md"
+              class="action-button"
+              :disabled="loadingMore || !hasSufficientTokensForMore"
             >
-              <span class="flex items-center justify-center gap-2">
-                <svg v-if="loadingMore" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <span v-if="loadingMore">Đang tải...</span>
-                <span v-else>{{ isLoggedIn ? `Xem thêm gợi ý (Cần ${tokenCostMore} tokens)` : 'Đăng nhập để xem thêm' }}</span>
-              </span>
+              <svg v-if="loadingMore" class="animate-spin h-5 w-5 mr-2 inline-block text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              {{ loadingMore ? 'Đang tải...' : userStore.isAuthenticated ? `Xem thêm gợi ý (Cần ${tokenCostMore} tokens)` : 'Đăng nhập để xem thêm' }}
             </button>
           </div>
         </div>
@@ -273,8 +272,15 @@
 import { ref, watch, onMounted } from 'vue';
 import { toast } from 'vue3-toastify';
 import { useProtectedContent } from '~/composables/useProtectedContent';
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '~/stores/user';
+import { useRouter } from 'vue-router';
 
+definePageMeta({ layout: 'view' });
+
+const router = useRouter();
+const userStore = useUserStore();
+
+// Form state
 const formData = ref({
   brideName: '',
   brideBirthdate: '',
@@ -283,29 +289,35 @@ const formData = ref({
   startDate: '',
   endDate: ''
 });
-
 const errors = ref({
   brideName: '',
   brideBirthdate: '',
   groomName: '',
   groomBirthdate: '',
   startDate: '',
-  endDate: ''
+  endDate: '',
+  general: ''
 });
-
 const result = ref(null);
 const loading = ref(false);
 const loadingMore = ref(false);
 const totalSuggestions = ref(0);
 const maxSuggestions = ref(5);
-const tokenCost = ref(15);
+const tokenCost = ref(30);
 const tokenCostMore = ref(5);
 const description = 'Access to wedding date selection based on numerology';
-const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess } = useProtectedContent(tokenCost.value, description);
-const isLoggedIn = ref(false);
+const {
+  isLoading,
+  errorMessage,
+  errorType,
+  isContentAccessible,
+  hasSufficientTokens,
+  checkAuthAndAccess,
+  performAction,
+  errorAction,
+  navigateToTopup
+} = useProtectedContent(tokenCost.value, description);
 const hasSufficientTokensForMore = ref(true);
-let handleAction = () => {};
-const userStore = useUserStore();
 
 // Hàm lưu vào localStorage
 const saveToLocalStorage = () => {
@@ -329,8 +341,24 @@ const loadFromLocalStorage = () => {
 // Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
 const formatDateToDDMMYYYY = (dateStr) => {
   if (!dateStr) return '';
-  const [year, month, day] = dateStr.split('-').map(Number);
-  return `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
+  const match = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return dateStr;
+  const [_, year, month, day] = match;
+  return `${day}/${month}/${year}`;
+};
+
+// Hàm xóa lỗi
+const clearError = () => {
+  errors.value = {
+    brideName: '',
+    brideBirthdate: '',
+    groomName: '',
+    groomBirthdate: '',
+    startDate: '',
+    endDate: '',
+    general: ''
+  };
+  errorMessage.value = '';
 };
 
 // Hàm lấy thông tin người dùng từ API
@@ -344,21 +372,15 @@ const fetchUserData = async () => {
     const userIdValue = String(userStore.user.id);
     console.log('Fetching user data for userId:', userIdValue);
     const response = await $fetch(`/api/users/${userIdValue}`, {
-      method: 'GET',
+      method: 'GET'
     });
     console.log('API /api/users response:', response);
-    const { fullname, birthdate, gender } = response.user;
-    if (gender === 'female') {
-      formData.value.brideName = fullname?.trim() || '';
-      formData.value.brideBirthdate = birthdate ? formatDateToDDMMYYYY(birthdate.split('T')[0]) : '';
-    } else if (gender === 'male') {
-      formData.value.groomName = fullname?.trim() || '';
-      formData.value.groomBirthdate = birthdate ? formatDateToDDMMYYYY(birthdate.split('T')[0]) : '';
-    }
+    formData.value.brideName = response.user.fullname?.trim() || '';
+    formData.value.brideBirthdate = response.user.birthdate ? formatDateToDDMMYYYY(response.user.birthdate.split('T')[0]) : '';
   } catch (err) {
     console.error('Error fetching user data:', err);
-    errorMessage.value = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
-    toast.error(errorMessage.value, { position: 'top-center' });
+    errors.value.general = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
+    toast.error(errors.value.general, { position: 'top-center' });
   }
 };
 
@@ -384,8 +406,8 @@ const checkTokenBalance = async (requiredTokens) => {
     return response.hasSufficientTokens;
   } catch (error) {
     console.error('Error checking token balance:', error);
-    errorMessage.value = error.data?.message || 'Không thể kiểm tra số dư token!';
-    toast.error(errorMessage.value, { position: 'top-center' });
+    errors.value.general = error.data?.message || 'Không thể kiểm tra số dư token!';
+    toast.error(errors.value.general, { position: 'top-center' });
     hasSufficientTokensForMore.value = false;
     return false;
   }
@@ -393,11 +415,19 @@ const checkTokenBalance = async (requiredTokens) => {
 
 // Khởi tạo trạng thái đăng nhập và kiểm tra token
 const initializeAuth = async () => {
-  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
-  isLoggedIn.value = authStatus;
-  handleAction = action;
-  if (authStatus) {
-    await checkTokenBalance(tokenCostMore.value);
+  console.log('Initializing auth for WeddingDateSelector...');
+  try {
+    await userStore.initialize();
+    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
+    await checkAuthAndAccess();
+    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
+    if (userStore.isAuthenticated) {
+      await checkTokenBalance(tokenCostMore.value);
+    }
+  } catch (err) {
+    console.error('Error initializing auth:', err);
+    errors.value.general = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
+    toast.error(errors.value.general, { position: 'top-center' });
   }
 };
 
@@ -409,25 +439,26 @@ const validateForm = () => {
     groomName: '',
     groomBirthdate: '',
     startDate: '',
-    endDate: ''
+    endDate: '',
+    general: ''
   };
   let isValid = true;
 
   // Kiểm tra trường trống
   if (!formData.value.brideName.trim()) {
-    errors.value.brideName = 'Vui lòng nhập tên cô dâu';
+    errors.value.brideName = 'Vui lòng nhập họ tên người thứ nhất';
     isValid = false;
   }
   if (!formData.value.brideBirthdate.trim()) {
-    errors.value.brideBirthdate = 'Vui lòng nhập ngày sinh cô dâu';
+    errors.value.brideBirthdate = 'Vui lòng nhập ngày sinh người thứ nhất';
     isValid = false;
   }
   if (!formData.value.groomName.trim()) {
-    errors.value.groomName = 'Vui lòng nhập tên chú rể';
+    errors.value.groomName = 'Vui lòng nhập họ tên người thứ hai';
     isValid = false;
   }
   if (!formData.value.groomBirthdate.trim()) {
-    errors.value.groomBirthdate = 'Vui lòng nhập ngày sinh chú rể';
+    errors.value.groomBirthdate = 'Vui lòng nhập ngày sinh người thứ hai';
     isValid = false;
   }
   if (!formData.value.startDate.trim()) {
@@ -497,20 +528,35 @@ const validateForm = () => {
 
 // Hàm tìm ngày cưới
 const fetchWeddingDates = async () => {
-  if (!validateForm()) return;
+  if (!process.client) {
+    console.warn('fetchWeddingDates called on server-side, ignoring.');
+    return;
+  }
+  if (!validateForm()) {
+    return;
+  }
 
   if (isContentAccessible.value) {
     await getWeddingDates();
   } else {
-    await handleAction();
-    if (isContentAccessible.value) {
-      await getWeddingDates();
+    try {
+      await performAction();
+      if (isContentAccessible.value) {
+        await getWeddingDates();
+      } else {
+        toast.error(errorMessage.value, { position: 'top-center' });
+      }
+    } catch (err) {
+      console.error('Error in performAction:', err);
+      toast.error(errorMessage.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
     }
   }
 };
 
+// Hàm lấy dữ liệu ngày cưới từ API
 async function getWeddingDates() {
   loading.value = true;
+  errors.value.general = '';
   try {
     const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
     console.log('Sending request to /api/numerology/wedding-date with data:', formData.value);
@@ -527,7 +573,6 @@ async function getWeddingDates() {
     totalSuggestions.value = response.numerology.suggestions.length;
     await checkTokenBalance(tokenCostMore.value);
     toast.success('Đã tìm thấy ngày cưới tốt nhất!', { position: 'top-center' });
-    // Scroll to result
     setTimeout(() => {
       const resultElement = document.querySelector('[v-if="result?.numerology && isContentAccessible"]');
       if (resultElement) {
@@ -536,8 +581,8 @@ async function getWeddingDates() {
     }, 100);
   } catch (error) {
     console.error('Error in getWeddingDates:', error);
-    errorMessage.value = error.data?.message || 'Không thể tìm ngày cưới!';
-    toast.error(errorMessage.value, { position: 'top-center' });
+    errors.value.general = error.data?.message || 'Không thể tìm ngày cưới!';
+    toast.error(errors.value.general, { position: 'top-center' });
   } finally {
     loading.value = false;
   }
@@ -547,17 +592,21 @@ async function getWeddingDates() {
 async function showMoreSuggestions() {
   if (totalSuggestions.value >= maxSuggestions.value) {
     console.log('Reached maximum suggestions:', maxSuggestions.value);
+    errors.value.general = 'Đã đạt số lượng gợi ý tối đa!';
+    toast.error(errors.value.general, { position: 'top-center' });
     return;
   }
 
-  errorMessage.value = '';
-  console.log('Starting showMoreSuggestions, checking token balance...');
+  if (!process.client) {
+    console.warn('showMoreSuggestions called on server-side, ignoring.');
+    return;
+  }
 
   const sufficientTokens = await checkTokenBalance(tokenCostMore.value);
   console.log('Token balance sufficient:', sufficientTokens);
   if (!sufficientTokens) {
-    errorMessage.value = 'Bạn không có đủ token để xem thêm gợi ý!';
-    toast.error(errorMessage.value, { position: 'top-center' });
+    errors.value.general = 'Bạn không có đủ token để xem thêm gợi ý! Hãy nạp thêm token.';
+    toast.error(errors.value.general, { position: 'top-center' });
     return;
   }
 
@@ -572,10 +621,15 @@ async function showMoreSuggestions() {
         'Content-Type': 'application/json; charset=utf-8'
       },
       body: {
-        ...formData.value,
+        brideName: formData.value.brideName,
+        brideBirthdate: formData.value.brideBirthdate,
+        groomName: formData.value.groomName,
+        groomBirthdate: formData.value.groomBirthdate,
+        startDate: formData.value.startDate,
+        endDate: formData.value.endDate,
         suggestionCount: 1,
         excludeSuggestions: result.value.numerology.suggestions.map(s => s.date)
-      },
+      }
     });
     console.log('Response from /api/numerology/wedding-date (more suggestions):', response);
     result.value.numerology.suggestions.push(...response.numerology.suggestions);
@@ -584,8 +638,8 @@ async function showMoreSuggestions() {
     toast.success('Đã tải thêm gợi ý ngày cưới!', { position: 'top-center' });
   } catch (error) {
     console.error('Error in showMoreSuggestions:', error);
-    errorMessage.value = error.data?.message || 'Không thể tải thêm gợi ý!';
-    toast.error(errorMessage.value, { position: 'top-center' });
+    errors.value.general = error.data?.message || 'Không thể tải thêm gợi ý!';
+    toast.error(errors.value.general, { position: 'top-center' });
   } finally {
     loadingMore.value = false;
     console.log('showMoreSuggestions completed, loadingMore:', loadingMore.value);
@@ -634,6 +688,10 @@ watch(() => userStore.isStoreInitialized, (initialized) => {
   opacity: 0;
 }
 
+.action-button {
+  @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -664,3 +722,4 @@ watch(() => userStore.isStoreInitialized, (initialized) => {
   }
 }
 </style>
+```

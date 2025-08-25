@@ -1,18 +1,13 @@
-```vue
 <template>
   <div class="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
     <div class="p-4 space-y-6 md:p-6">
-      <!-- Nội dung chu kỳ vận số -->
       <transition name="fade-slide">
         <div v-if="numerologyData && Object.keys(numerologyData.cycles).length" class="mt-6">
           <div class="space-y-8">
-            <!-- Biểu đồ chu kỳ vận số -->
             <div class="text-center mb-8">
               <h2 class="text-3xl font-bold text-teal-700 mb-3">Biểu đồ chu kỳ vận số</h2>
               <div class="w-24 h-1 bg-teal-500 mx-auto mb-4 rounded-full"></div>
-              <p class="text-base text-gray-600 max-w-2xl mx-auto">
-                Khám phá hành trình cuộc đời qua các chu kỳ số, từ những giai đoạn thịnh vượng đến thử thách.
-              </p>
+              <p class="text-base text-gray-600 max-w-2xl mx-auto">Khám phá hành trình cuộc đời qua các chu kỳ số, từ những giai đoạn thịnh vượng đến thử thách.</p>
               <div class="text-sm text-gray-600 mt-2">
                 <p>Năm cá nhân được tính từ ngày sinh và năm hiện tại, thể hiện chu kỳ năng lượng riêng.</p>
               </div>
@@ -32,7 +27,6 @@
               <div class="mt-4 text-sm text-gray-500">
                 <p>Biểu đồ thể hiện mức năng lượng và xu hướng của từng năm cá nhân trong chu kỳ 15 năm.</p>
               </div>
-              <!-- Thông tin chi tiết khi click -->
               <div v-if="selectedYear" class="mt-4 bg-teal-50 p-4 rounded-lg">
                 <h5 class="font-semibold text-teal-700 mb-2">Chi tiết năm {{ selectedYear }}</h5>
                 <p class="text-gray-700 mb-2">{{ numerologyData.cycles[selectedYear].description }}</p>
@@ -58,60 +52,39 @@
                 </div>
               </div>
             </div>
-
-            <!-- Danh sách các năm -->
             <div class="space-y-6">
-              <!-- 2 năm đầu tiên (luôn hiển thị) -->
-              <div v-for="(yearData, year) in firstTwoYears" :key="year"
-                   class="bg-white p-4 sm:p-6 rounded-xl border border-gray-200 shadow-sm"
-                   :class="{ 'ring-2 ring-teal-500': highlightedYear === year }">
-                <!-- Tiêu đề accordion (chỉ trên mobile) -->
-                <div class="flex justify-between items-center sm:hidden cursor-pointer"
-                     @click="toggleYear(year)">
+              <div v-for="(yearData, year) in sortedCycles" :key="year" class="bg-white p-4 sm:p-6 rounded-xl border border-gray-200 shadow-sm" :class="{ 'ring-2 ring-teal-500': highlightedYear === year }">
+                <div class="flex justify-between items-center sm:hidden cursor-pointer" @click="toggleYear(year)">
                   <div class="flex items-center">
                     <span class="w-10 h-10 flex items-center justify-center bg-teal-100 text-teal-700 rounded-full font-bold mr-3">{{ year }}</span>
                     <div>
                       <h4 class="text-lg font-semibold text-gray-800">Năm {{ year }}</h4>
                       <div class="flex items-center mt-1">
-                        <span class="text-sm font-medium px-2 py-1 rounded"
-                              :class="getNumberClass(yearData.number)">
-                          Số {{ yearData.number }}
-                        </span>
-                        <span class="ml-2 text-sm text-gray-500">
-                          Năng lượng: {{ yearData.energyLevel }}/10
-                        </span>
+                        <span class="text-sm font-medium px-2 py-1 rounded" :class="getNumberClass(yearData.number)">Số {{ yearData.number }}</span>
+                        <span class="ml-2 text-sm text-gray-500">Năng lượng: {{ yearData.energyLevel }}/10</span>
                       </div>
                     </div>
                   </div>
-                  <svg :class="{ 'rotate-180': expandedYears.includes(year) }"
-                       class="w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg :class="{ 'rotate-180': expandedYears.includes(year) }" class="w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
-                <!-- Nội dung chi tiết -->
                 <transition name="accordion-slide">
                   <div v-if="expandedYears.includes(year) || !isMobile" class="mt-4 sm:mt-0">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:block"
-                         :class="{ 'hidden': !isMobile }">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:block" :class="{ 'hidden': !isMobile }">
                       <div class="flex items-center mb-3 sm:mb-0 sm:hidden">
                         <span class="w-10 h-10 flex items-center justify-center bg-teal-100 text-teal-700 rounded-full font-bold mr-3">{{ year }}</span>
                         <div>
                           <h4 class="text-lg font-semibold text-gray-800">Năm {{ year }}</h4>
                           <div class="flex items-center mt-1">
-                            <span class="text-sm font-medium px-2 py-1 rounded"
-                                  :class="getNumberClass(yearData.number)">
-                              Số {{ yearData.number }}
-                            </span>
-                            <span class="ml-2 text-sm text-gray-500">
-                              Năng lượng: {{ yearData.energyLevel }}/10
-                            </span>
+                            <span class="text-sm font-medium px-2 py-1 rounded" :class="getNumberClass(yearData.number)">Số {{ yearData.number }}</span>
+                            <span class="ml-2 text-sm text-gray-500">Năng lượng: {{ yearData.energyLevel }}/10</span>
                           </div>
                         </div>
                       </div>
                       <div class="flex items-center sm:mt-2">
                         <div class="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
-                          <div class="h-full bg-teal-500"
-                               :style="{ width: `${(yearData.energyLevel / 10) * 100}%` }"></div>
+                          <div class="h-full bg-teal-500" :style="{ width: `${(yearData.energyLevel / 10) * 100}%` }"></div>
                         </div>
                       </div>
                     </div>
@@ -165,156 +138,6 @@
                   </div>
                 </transition>
               </div>
-
-              <!-- Các năm còn lại (hiển thị khi isContentAccessible) -->
-              <template v-if="isContentAccessible">
-                <div v-for="(yearData, year) in remainingYears" :key="year"
-                     class="bg-white p-4 sm:p-6 rounded-xl border border-gray-200 shadow-sm"
-                     :class="{ 'ring-2 ring-teal-500': highlightedYear === year }">
-                  <!-- Tiêu đề accordion (chỉ trên mobile) -->
-                  <div class="flex justify-between items-center sm:hidden cursor-pointer"
-                       @click="toggleYear(year)">
-                    <div class="flex items-center">
-                      <span class="w-10 h-10 flex items-center justify-center bg-teal-100 text-teal-700 rounded-full font-bold mr-3">{{ year }}</span>
-                      <div>
-                        <h4 class="text-lg font-semibold text-gray-800">Năm {{ year }}</h4>
-                        <div class="flex items-center mt-1">
-                          <span class="text-sm font-medium px-2 py-1 rounded"
-                                :class="getNumberClass(yearData.number)">
-                            Số {{ yearData.number }}
-                          </span>
-                          <span class="ml-2 text-sm text-gray-500">
-                            Năng lượng: {{ yearData.energyLevel }}/10
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <svg :class="{ 'rotate-180': expandedYears.includes(year) }"
-                         class="w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
-                  <!-- Nội dung chi tiết -->
-                  <transition name="accordion-slide">
-                    <div v-if="expandedYears.includes(year) || !isMobile" class="mt-4 sm:mt-0">
-                      <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:block"
-                           :class="{ 'hidden': !isMobile }">
-                        <div class="flex items-center mb-3 sm:mb-0 sm:hidden">
-                          <span class="w-10 h-10 flex items-center justify-center bg-teal-100 text-teal-700 rounded-full font-bold mr-3">{{ year }}</span>
-                          <div>
-                            <h4 class="text-lg font-semibold text-gray-800">Năm {{ year }}</h4>
-                            <div class="flex items-center mt-1">
-                              <span class="text-sm font-medium px-2 py-1 rounded"
-                                    :class="getNumberClass(yearData.number)">
-                                Số {{ yearData.number }}
-                              </span>
-                              <span class="ml-2 text-sm text-gray-500">
-                                Năng lượng: {{ yearData.energyLevel }}/10
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="flex items-center sm:mt-2">
-                          <div class="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
-                            <div class="h-full bg-teal-500"
-                                 :style="{ width: `${(yearData.energyLevel / 10) * 100}%` }"></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="prose prose-teal max-w-none">
-                        <p class="text-gray-700 mb-4">{{ yearData.description }}</p>
-                        <div class="grid md:grid-cols-2 gap-6">
-                          <div class="bg-green-50 p-4 rounded-lg">
-                            <h5 class="font-semibold text-green-700 flex items-center mb-2">
-                              <svg class="w-4 h-4 mr-1 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                              </svg>
-                              Điểm mạnh
-                            </h5>
-                            <ul class="space-y-2 text-gray-700">
-                              <li v-for="(strength, index) in yearData.strengths" :key="index" class="flex items-start">
-                                <span class="text-green-500 mr-2 mt-1">•</span>
-                                <span>{{ strength }}</span>
-                              </li>
-                            </ul>
-                          </div>
-                          <div class="bg-amber-50 p-4 rounded-lg">
-                            <h5 class="font-semibold text-amber-700 flex items-center mb-2">
-                              <svg class="w-4 h-4 mr-1 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                              </svg>
-                              Điểm yếu
-                            </h5>
-                            <ul class="space-y-2 text-gray-700">
-                              <li v-for="(weakness, index) in yearData.weaknesses" :key="index" class="flex items-start">
-                                <span class="text-amber-500 mr-2 mt-1">•</span>
-                                <span>{{ weakness }}</span>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div class="mt-6 bg-blue-50 p-4 rounded-lg">
-                          <h5 class="font-semibold text-blue-700 flex items-center mb-2">
-                            <svg class="w-4 h-4 mr-1 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                            </svg>
-                            Lời khuyên năm {{ year }}
-                          </h5>
-                          <ul class="space-y-2 text-gray-700">
-                            <li v-for="(advice, index) in yearData.advice" :key="index" class="flex items-start">
-                              <span class="text-blue-500 mr-2 mt-1">•</span>
-                              <span>{{ advice }}</span>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </transition>
-                </div>
-              </template>
-
-              <!-- Phần thông báo lỗi, trạng thái tải, hoặc nút hành động cho các năm còn lại -->
-              <div v-if="Object.keys(remainingYears).length > 0 && !isContentAccessible" class="text-center p-6">
-                <div v-if="isLoading" class="inline-flex items-center px-4 py-2 text-sm font-medium text-teal-700 bg-teal-100 rounded-md">
-                  <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Đang kiểm tra quyền truy cập...
-                </div>
-                <div v-else-if="errorMessage && errorType === 'login'" class="text-red-600 font-medium">
-                  Vui lòng <button @click="errorAction" class="px-4 py-2 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md">Đăng nhập</button> để xem tiếp.
-                </div>
-                <div v-else-if="errorMessage && errorType === 'topup'" class="text-red-600 font-medium">
-                  Không đủ token để xem tiếp. Hãy <button @click="navigateToTopup" class="px-4 py-2 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md">Nạp thêm token</button>.
-                </div>
-                <div v-else-if="errorMessage" class="text-red-600 font-medium">
-                  {{ errorMessage }}
-                </div>
-                <div v-else-if="!userStore.isAuthenticated" class="text-center">
-                  <button
-                    @click="errorAction"
-                    class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md"
-                    :disabled="isLoading"
-                  >
-                    Đăng nhập để xem tiếp
-                  </button>
-                </div>
-                <div v-else-if="!hasSufficientTokens" class="text-red-600 text-center font-medium ">
-                Không đủ token cho tính năng này. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-                <!-- <p class="text-gray-600 mt-2">Số dư token: {{ userStore.user?.tokens || 0 }}</p> -->
-              </div>
-                <div v-else class="text-center">
-                  <button
-                    @click="performAction"
-                    class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md"
-                    :disabled="isLoading"
-                  >
-                    Xem tiếp (Cần {{ tokenCost }} token)
-                  </button>
-                 
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -346,9 +169,6 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
 import Chart from 'chart.js/auto';
 import { nextTick } from 'vue';
 import 'chartjs-plugin-annotation';
-import { useProtectedContent } from '~/composables/useProtectedContent';
-import { useUserStore } from '~/stores/user';
-import { useRouter } from 'vue-router';
 
 const energyLevelMap = {
   1: 7, 2: 4, 3: 6, 4: 5, 5: 8, 6: 5, 7: 7, 8: 9, 9: 4, 11: 8, 22: 10
@@ -358,8 +178,6 @@ const props = defineProps({
   birthDate: { type: String, default: '' }
 });
 
-const router = useRouter();
-const userStore = useUserStore();
 const numerologyData = ref(null);
 const loading = ref(false);
 const cycleChart = ref(null);
@@ -367,52 +185,8 @@ const selectedYear = ref(null);
 const highlightedYear = ref(null);
 const expandedYears = ref([]);
 const isMobile = ref(window.innerWidth < 640);
-const tokenCost = ref(25);
-const description = 'Access to numerology cycle prediction';
-const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, performAction, errorAction, navigateToTopup } = useProtectedContent(tokenCost.value, description);
 
 let chartInstance = null;
-
-// Tạo hai mảng cho các năm
-const firstTwoYears = computed(() => {
-  const allCycles = sortedCycles.value;
-  return Object.fromEntries(
-    Object.entries(allCycles).slice(0, 1)
-  );
-});
-
-const remainingYears = computed(() => {
-  const allCycles = sortedCycles.value;
-  return Object.fromEntries(
-    Object.entries(allCycles).slice(2)
-  );
-});
-
-const handleResize = () => {
-  isMobile.value = window.innerWidth < 640;
-};
-
-const toggleYear = (year) => {
-  if (expandedYears.value.includes(year)) {
-    expandedYears.value = expandedYears.value.filter(y => y !== year);
-  } else {
-    expandedYears.value = [year];
-  }
-};
-
-const reduceToSingleDigit = (num) => {
-  if (num === 11 || num === 22) return num;
-  while (num > 9) {
-    num = String(num).split('').reduce((sum, digit) => sum + Number(digit), 0);
-  }
-  return num || 9;
-};
-
-const calculatePersonalYear = (day, month, targetYear) => {
-  const dayMonthSum = reduceToSingleDigit(day + month);
-  const yearSum = reduceToSingleDigit(targetYear);
-  return reduceToSingleDigit(dayMonthSum + yearSum);
-};
 
 const sortedCycles = computed(() => {
   if (!numerologyData.value?.cycles) return {};
@@ -604,6 +378,32 @@ const createCycleChart = () => {
   });
 };
 
+const handleResize = () => {
+  isMobile.value = window.innerWidth < 640;
+};
+
+const toggleYear = (year) => {
+  if (expandedYears.value.includes(year)) {
+    expandedYears.value = expandedYears.value.filter(y => y !== year);
+  } else {
+    expandedYears.value = [year];
+  }
+};
+
+const reduceToSingleDigit = (num) => {
+  if (num === 11 || num === 22) return num;
+  while (num > 9) {
+    num = String(num).split('').reduce((sum, digit) => sum + Number(digit), 0);
+  }
+  return num || 9;
+};
+
+const calculatePersonalYear = (day, month, targetYear) => {
+  const dayMonthSum = reduceToSingleDigit(day + month);
+  const yearSum = reduceToSingleDigit(targetYear);
+  return reduceToSingleDigit(dayMonthSum + yearSum);
+};
+
 const fetchNumerologyData = async () => {
   if (!props.birthDate || !/^\d{2}\/\d{2}\/\d{4}$/.test(props.birthDate)) {
     numerologyData.value = null;
@@ -702,24 +502,9 @@ const generateYearData = (year, number, energyLevel) => {
   };
 };
 
-const initializeAuth = async () => {
-  console.log('Initializing auth for NumerologyCycle...');
-  try {
-    await userStore.initialize();
-    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
-    await checkAuthAndAccess();
-    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
-  } catch (err) {
-    console.error('Lỗi khi khởi tạo auth:', err);
-    errorMessage.value = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
-    errorType.value = '';
-  }
-};
-
 onMounted(() => {
   window.addEventListener('resize', handleResize);
   fetchNumerologyData();
-  initializeAuth();
 });
 
 onUnmounted(() => {
@@ -728,7 +513,6 @@ onUnmounted(() => {
 });
 
 watch(() => props.birthDate, () => {
-  errorMessage.value = '';
   fetchNumerologyData();
 });
 

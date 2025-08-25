@@ -1,23 +1,14 @@
-
 <template>
   <div class="p-6 bg-white rounded-xl shadow-lg sm:p-4">
-    <!-- Header với ngày sinh -->
     <div v-if="birthDate" class="mb-8 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100">
       <h1 class="text-2xl font-bold text-indigo-700">Tổng quan về bạn</h1>
       <p class="text-indigo-600 mt-1">Ngày sinh: {{ birthDate }}</p>
     </div>
-
-    <!-- Kết quả -->
     <div v-if="result" class="space-y-10">
       <div class="bg-gradient-to-r from-teal-50 to-blue-50 p-8 rounded-2xl border border-teal-100 shadow-sm text-center">
         <div class="flex flex-col items-center">
           <div class="relative">
-            <!-- Background hình tròn với hiệu ứng glow -->
-            <div
-              :class="['w-40 h-40 rounded-full bg-cover bg-center animate-glow']"
-              :style="{ backgroundImage: 'url(/numerology-background.jpg)' }"
-            ></div>
-            <!-- Number and Symbol display -->
+            <div :class="['w-40 h-40 rounded-full bg-cover bg-center animate-glow']" :style="{ backgroundImage: 'url(/numerology-background.jpg)' }"></div>
             <div class="absolute inset-0 flex flex-col items-center justify-center">
               <span :class="['text-6xl font-bold', numberTextColorClass]" style="text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);">{{ result.number }}</span>
             </div>
@@ -27,8 +18,6 @@
           <p class="text-gray-600 mt-2 max-w-lg">{{ result.meaning }}</p>
         </div>
       </div>
-
-      <!-- Các phần luôn hiển thị (Điểm mạnh, Điểm yếu) -->
       <div class="grid md:grid-cols-2 gap-6">
         <section v-for="section in freeSections" :key="section.title" :class="section.class">
           <div class="flex items-center mb-3">
@@ -45,9 +34,7 @@
           </ul>
         </section>
       </div>
-
-      <!-- Các phần được bảo vệ (Tình duyên, Nghề nghiệp, Mối quan hệ tương thích, Người nổi tiếng) -->
-      <div v-if="isContentAccessible" class="space-y-10">
+      <div class="space-y-10">
         <section v-for="section in protectedSections" :key="section.title" :class="section.class">
           <div class="flex items-center mb-3">
             <svg class="h-6 w-6 mr-2" :class="section.iconClass" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -55,14 +42,12 @@
             </svg>
             <h3 class="text-xl font-semibold" :class="section.titleClass">{{ section.title }}</h3>
           </div>
-          <!-- Tình duyên và Nghề nghiệp -->
           <ul v-if="section.type === 'list'" class="space-y-3 text-gray-700">
             <li v-for="(item, index) in section.items" :key="index" class="flex items-start">
               <span :class="section.bulletClass">•</span>
               <span>{{ item }}</span>
             </li>
           </ul>
-          <!-- Mối quan hệ tương thích -->
           <div v-if="section.type === 'compatibility'" class="grid md:grid-cols-2 gap-6">
             <div v-for="compat in section.items" :key="compat.title" class="bg-white p-4 rounded-lg shadow-sm">
               <h4 class="text-lg font-medium mb-2 flex items-center" :class="compat.titleClass">
@@ -78,7 +63,6 @@
               </ul>
             </div>
           </div>
-          <!-- Người nổi tiếng -->
           <div v-if="section.type === 'famousPeople'" class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
             <div v-for="(person, index) in section.items" :key="index" class="bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow">
               <p class="text-gray-700">{{ person }}</p>
@@ -86,60 +70,13 @@
           </div>
         </section>
       </div>
-
-      <!-- Phần thông báo lỗi, trạng thái tải, hoặc nút hành động -->
-      <div v-if="protectedSections.length > 0 && !isContentAccessible" class="text-center p-6">
-        <div v-if="isLoading" class="inline-flex items-center px-4 py-2 text-sm font-medium text-teal-700 bg-teal-100 rounded-md">
-          <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          Đang kiểm tra quyền truy cập...
-        </div>
-        <div v-else-if="errorMessage && errorType === 'login'" class="text-red-600 font-medium">
-          Vui lòng <button @click="errorAction" class="action-button">Đăng nhập</button> để xem tiếp.
-        </div>
-        <div v-else-if="errorMessage && errorType === 'topup'" class="text-red-600 font-medium">
-          Không đủ token để xem tiếp. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button>.
-        </div>
-        <div v-else-if="errorMessage" class="text-red-600 font-medium">
-          {{ errorMessage }}
-        </div>
-        <div v-else-if="!userStore.isAuthenticated" class="text-center">
-          <button
-            @click="errorAction"
-            class="action-button"
-            :disabled="isLoading"
-          >
-            Đăng nhập để xem tiếp
-          </button>
-        </div>
-        <div v-else-if="!hasSufficientTokens" class="text-red-600 text-center font-medium ">
-          Không đủ token cho tính năng này. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-          <!-- <p class="text-gray-600 mt-2">Số dư token: {{ userStore.user?.tokens || 0 }}</p> -->
-        </div>
-        <div v-else class="text-center">
-          <button
-            @click="performAction"
-            class="action-button"
-            :disabled="isLoading"
-          >
-            Xem tiếp (Cần {{ tokenCost }} token)
-          </button>
-          <!-- <p class="text-gray-600 mt-2">Số dư token: {{ userStore.user?.tokens || 0 }}</p> -->
-        </div>
-      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
-import { useProtectedContent } from '~/composables/useProtectedContent';
-import { useUserStore } from '~/stores/user';
-import { useRouter } from 'vue-router';
+import { computed } from 'vue';
 
-// Define props
 const props = defineProps({
   birthDate: {
     type: String,
@@ -151,33 +88,6 @@ const props = defineProps({
   }
 });
 
-// Token configuration
-const tokenCost = ref(30); // Cập nhật chi phí thành 30 token
-const description = 'Access to life path details';
-const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, performAction, errorAction, navigateToTopup } = useProtectedContent(tokenCost.value, description);
-
-const router = useRouter();
-const userStore = useUserStore();
-
-// Initialize authentication and token check
-const initializeAuth = async () => {
-  console.log('Initializing auth for LifePathOverview...');
-  try {
-    await userStore.initialize();
-    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
-    await checkAuthAndAccess();
-    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
-  } catch (err) {
-    console.error('Lỗi khi khởi tạo auth:', err);
-    errorMessage.value = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
-    errorType.value = '';
-  }
-};
-
-// Run initialization on mount
-initializeAuth();
-
-// Dữ liệu lifePath với symbol
 const lifePath = {
   1: { theme: "Người lãnh đạo", symbol: "♈", strengths: ["Độc lập", "Sáng tạo", "Quyết đoán"], weaknesses: ["Cứng đầu", "Thiếu kiên nhẫn", "Độc đoán"], careers: ["Doanh nhân", "Quản lý", "Nhà sáng chế"], romance: ["Năng động trong tình yêu", "Thích dẫn dắt"], compatibility: { best: [{ number: 3, description: "Sáng tạo và năng lượng cao" }, { number: 5, description: "Thích phiêu lưu" }], least: [{ number: 4, description: "Quá cứng nhắc" }] }, famousPeople: ["Steve Jobs", "Oprah Winfrey"] },
   2: { theme: "Người hòa giải", symbol: "♉", strengths: ["Nhạy cảm", "Hợp tác", "Kiên nhẫn"], weaknesses: ["Thiếu quyết đoán", "Dễ bị tổn thương", "Phụ thuộc"], careers: ["Nhà ngoại giao", "Tư vấn", "Giáo viên"], romance: ["Lãng mạn và chu đáo", "Tìm kiếm sự ổn định"], compatibility: { best: [{ number: 6, description: "Chăm sóc và yêu thương" }], least: [{ number: 8, description: "Quá tham vọng" }] }, famousPeople: ["Madonna", "Bill Clinton"] },
@@ -190,27 +100,13 @@ const lifePath = {
   9: { theme: "Nhà nhân đạo", symbol: "♐", strengths: ["Rộng lượng", "Sáng suốt", "Lý tưởng"], weaknesses: ["Mơ mộng", "Bi quan", "Hy sinh quá mức"], careers: ["Từ thiện", "Nghệ thuật", "Hoạt động xã hội"], romance: ["Lý tưởng và tận tâm", "Tìm kiếm ý nghĩa sâu sắc"], compatibility: { best: [{ number: 7, description: "Chia sẻ chiều sâu" }], least: [{ number: 6, description: "Quá kiểm soát" }] }, famousPeople: ["Mahatma Gandhi", "Mother Teresa"] },
   11: { theme: "Bậc thầy tâm linh", symbol: "⚡", strengths: ["Truyền cảm hứng", "Nhạy cảm", "Tầm nhìn"], weaknesses: ["Căng thẳng", "Nhạy cảm quá mức", "Khó thực tế"], careers: ["Nhà tâm linh", "Cố vấn", "Nghệ sĩ"], romance: ["Sâu sắc và tâm linh", "Cần sự kết nối tinh thần"], compatibility: { best: [{ number: 22, description: "Chia sẻ tầm nhìn lớn" }], least: [{ number: 8, description: "Quá vật chất" }] }, famousPeople: ["Albert Einstein", "Deepak Chopra"] },
   22: { theme: "Kiến trúc sư vĩ đại", symbol: "🏛️", strengths: ["Thực tế hóa", "Xây dựng", "Tầm nhìn lớn"], weaknesses: ["Áp lực", "Cầu toàn", "Quá tải"], careers: ["Kiến trúc sư", "Nhà quy hoạch", "Lãnh đạo"], romance: ["Ổn định và tận tâm", "Tìm kiếm mục tiêu chung"], compatibility: { best: [{ number: 11, description: "Chia sẻ tầm nhìn" }], least: [{ number: 5, description: "Quá tự do" }] }, famousPeople: ["Bill Gates", "Nikola Tesla"] },
-  33: { 
-    theme: "Bậc thầy giáo dục", 
-    symbol: "🎓", 
-    strengths: ["Yêu thương", "Sáng tạo", "Truyền cảm hứng"], 
-    weaknesses: ["Quá lý tưởng", "Kiệt sức", "Khó thực tế"], 
-    careers: ["Giáo viên", "Nhà trị liệu", "Nhà hoạt động xã hội"], 
-    romance: ["Yêu thương và lý tưởng", "Tìm kiếm sự kết nối sâu sắc"], 
-    compatibility: { 
-      best: [{ number: 6, description: "Chia sẻ sự chăm sóc" }], 
-      least: [{ number: 8, description: "Quá vật chất" }] 
-    }, 
-    famousPeople: ["Dalai Lama", "Nelson Mandela"] 
-  }
+  33: { theme: "Bậc thầy giáo dục", symbol: "🎓", strengths: ["Yêu thương", "Sáng tạo", "Truyền cảm hứng"], weaknesses: ["Quá lý tưởng", "Kiệt sức", "Khó thực tế"], careers: ["Giáo viên", "Nhà trị liệu", "Nhà hoạt động xã hội"], romance: ["Yêu thương và lý tưởng", "Tìm kiếm sự kết nối sâu sắc"], compatibility: { best: [{ number: 6, description: "Chia sẻ sự chăm sóc" }], least: [{ number: 8, description: "Quá vật chất" }] }, famousPeople: ["Dalai Lama", "Nelson Mandela"] }
 };
 
-// Computed property để lấy symbol dựa trên result.number
 const numberSymbol = computed(() => {
   return lifePath[props.result?.number]?.symbol || '?';
 });
 
-// Computed property để gán màu chữ cho số đường đời
 const numberTextColorClass = computed(() => {
   const colors = {
     1: 'text-red-500',
@@ -229,7 +125,6 @@ const numberTextColorClass = computed(() => {
   return colors[props.result?.number] || 'text-teal-500';
 });
 
-// Tạo mảng cho các phần luôn hiển thị (Điểm mạnh, Điểm yếu)
 const freeSections = computed(() => [
   {
     title: 'Điểm mạnh',
@@ -249,7 +144,6 @@ const freeSections = computed(() => [
   }
 ]);
 
-// Tạo mảng cho các phần được bảo vệ (Tình duyên, Nghề nghiệp, Mối quan hệ tương thích, Người nổi tiếng)
 const protectedSections = computed(() => [
   {
     title: 'Tình duyên',
@@ -304,7 +198,6 @@ const protectedSections = computed(() => [
 </script>
 
 <style scoped>
-/* Animation glow nhẹ cho background hình tròn */
 @keyframes glow {
   0%, 100% {
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
@@ -318,12 +211,10 @@ const protectedSections = computed(() => [
   animation: glow 2s ease-in-out infinite;
 }
 
-/* Style cho nút hành động */
 .action-button {
   @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap mx-2;
 }
 
-/* Responsive adjustments */
 @media (max-width: 640px) {
   .mx-auto {
     padding-left: 1rem;
