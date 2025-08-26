@@ -57,67 +57,6 @@
           </div>
         </nav>
 
-        <!-- Auth Buttons Desktop -->
-        <div v-if="userStore.isStoreInitialized" class="hidden lg:flex items-center space-x-3 ml-4">
-          <template v-if="!userStore.user">
-            <NuxtLink 
-              to="/dang-nhap"
-              class="px-4 py-2 rounded-lg font-medium text-sm text-gray-700 hover:text-purple-600 transition-colors duration-200 whitespace-nowrap"
-            >
-              Đăng nhập
-            </NuxtLink>
-            <NuxtLink 
-              to="/dang-ky"
-              class="px-4 py-2.5 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap"
-            >
-              Đăng ký
-            </NuxtLink>
-          </template>
-          <template v-else>
-            <div class="relative">
-              <button 
-                @click="toggleUserMenu"
-                class="flex flex-col items-center space-y-1 focus:outline-none group"
-                aria-label="User menu"
-              >
-                <div class="flex items-center space-x-2">
-                  <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-sm">
-                    <span class="text-white text-sm font-bold">
-                      {{ getInitialLetter(userStore.user.fullname) }}
-                    </span>
-                  </div>
-                  <font-awesome-icon 
-                    :icon="['fas', 'chevron-down']" 
-                    class="w-3 h-3 text-purple-600 group-hover:text-purple-600 transition-transform duration-200"
-                    :class="{ 'rotate-180': userMenuOpen }"
-                  />
-                </div>
-                <div class="px-2 py-1 border border-gray-300 rounded-lg bg-purple-50 text-purple-600 font-medium text-xs whitespace-nowrap">
-                  {{ userStore.user.tokens ?? '0' }} Tokens
-                </div>
-              </button>
-              <div 
-                class="dropdown-menu absolute top-full right-0 bg-white shadow-xl rounded-xl py-2 w-48 z-30 border border-gray-100 mt-1"
-                :class="{ 'block': userMenuOpen, 'hidden': !userMenuOpen }"
-              >
-                <NuxtLink 
-                  to="/tai-khoan"
-                  class="block px-4 py-2 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200 text-sm"
-                >
-                  <font-awesome-icon :icon="['fas', 'user']" class="mr-2" />
-                  Tài khoản
-                </NuxtLink>
-                <button
-                  @click="logout"
-                  class="block w-full text-left px-4 py-2 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors duration-200 text-sm"
-                >
-                  Đăng xuất
-                </button>
-              </div>
-            </div>
-          </template>
-        </div>
-
         <!-- Mobile menu button -->
         <button 
           @click="toggleMobileMenu" 
@@ -145,31 +84,22 @@
           class="lg:hidden fixed inset-x-0 top-16 bg-white/95 backdrop-blur-sm shadow-lg z-40 overflow-y-auto"
           style="max-height: calc(100vh - 64px)"
         >
-          <div class="px-2 pt-2 pb-4 space-y-1">
+          <div class="px-2 pt-2 pb-4 space-y-1 flex flex-col items-center">
             <!-- Main menu items -->
             <div 
-              v-for="(item, index) in computedNavItems"
+              v-for="(item, index) in navItems"
               :key="index"
-              class="relative"
+              class="relative w-full max-w-md"
             >
               <button 
-                v-if="item.submenu || item.isUserMenu"
+                v-if="item.submenu"
                 @click="toggleMobileSubmenu(item.name)"
                 class="w-full flex justify-between items-center px-4 py-3 rounded-lg font-medium text-sm hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200"
-                :class="{ 'text-purple-600 bg-purple-50': route.path === item.path || (item.submenu && mobileSubmenuOpen[item.name]) || (item.isUserMenu && mobileSubmenuOpen[item.name]) }"
+                :class="{ 'text-purple-600 bg-purple-50': route.path === item.path || (item.submenu && mobileSubmenuOpen[item.name]) }"
               >
                 <div class="flex items-center">
                   <span class="w-2 h-5 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full mr-3" :class="{ 'opacity-0': !(route.path === item.path || mobileSubmenuOpen[item.name]) }"></span>
-                  <template v-if="item.isUserMenu && userStore.isStoreInitialized && userStore.user && Object.keys(userStore.user).length > 0">
-                    <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-sm">
-                      <span class="text-white text-sm font-bold">
-                        {{ getInitialLetter(userStore.user.fullname) }}
-                      </span>
-                    </div>
-                  </template>
-                  <template v-else>
-                    <span>{{ item.name }}</span>
-                  </template>
+                  <span>{{ item.name }}</span>
                 </div>
                 <font-awesome-icon 
                   :icon="['fas', mobileSubmenuOpen[item.name] ? 'chevron-up' : 'chevron-down']" 
@@ -187,7 +117,7 @@
                 {{ item.name }}
               </NuxtLink>
               <transition
-                v-if="item.submenu || item.isUserMenu"
+                v-if="item.submenu"
                 enter-active-class="transition-all duration-200 ease-out"
                 leave-active-class="transition-all duration-150 ease-in"
                 enter-from-class="opacity-0 max-h-0"
@@ -196,57 +126,17 @@
                 leave-to-class="opacity-0 max-h-0"
               >
                 <div v-show="mobileSubmenuOpen[item.name]" class="pl-6 mt-1 space-y-1">
-                  <template v-if="item.isUserMenu && userStore.isStoreInitialized && userStore.user && Object.keys(userStore.user).length > 0">
-                    <NuxtLink 
-                      to="/tai-khoan"
-                      @click="mobileMenuOpen = false"
-                      class="block px-4 py-2.5 rounded-lg font-medium text-sm hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200 border border-gray-200 flex items-center"
-                    >
-                      <span class="w-2 h-5 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full mr-3" :class="{ 'opacity-0': route.path !== '/tai-khoan' }"></span>
-                      Tài khoản
-                    </NuxtLink>
-                    <div class="px-2 py-1 border border-gray-300 rounded-lg bg-purple-50 text-purple-600 font-medium text-xs whitespace-nowrap">
-                      {{ userStore.user.tokens ?? '0' }} Tokens
-                    </div>
-                    <button
-                      @click="logout"
-                      class="block w-full text-left px-4 py-2.5 rounded-lg font-medium text-sm hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200 flex items-center"
-                    >
-                      <span class="w-2 h-5 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full mr-3"></span>
-                      Đăng xuất
-                    </button>
-                  </template>
-                  <template v-else-if="item.isUserMenu">
-                    <NuxtLink 
-                      to="/dang-nhap"
-                      @click="mobileMenuOpen = false"
-                      class="block px-4 py-2.5 rounded-lg font-medium text-sm hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200 flex items-center"
-                    >
-                      <span class="w-2 h-5 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full mr-3" :class="{ 'opacity-0': route.path !== '/dang-nhap' }"></span>
-                      Đăng nhập
-                    </NuxtLink>
-                    <NuxtLink 
-                      to="/dang-ky"
-                      @click="mobileMenuOpen = false"
-                      class="block px-4 py-2.5 rounded-lg font-medium text-sm hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200 flex items-center"
-                    >
-                      <span class="w-2 h-5 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full mr-3" :class="{ 'opacity-0': route.path !== '/dang-ky' }"></span>
-                      Đăng ký
-                    </NuxtLink>
-                  </template>
-                  <template v-else>
-                    <NuxtLink 
-                      v-for="(test, idx) in item.submenu"
-                      :key="idx"
-                      :to="test.path"
-                      @click="mobileMenuOpen = false"
-                      class="block px-4 py-2.5 rounded-lg font-medium text-sm hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200 flex items-center"
-                      :class="{ 'text-purple-600 bg-purple-50': route.path === test.path }"
-                    >
-                      <span class="w-2 h-5 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full mr-3" :class="{ 'opacity-0': route.path !== test.path }"></span>
-                      {{ test.name }}
-                    </NuxtLink>
-                  </template>
+                  <NuxtLink 
+                    v-for="(test, idx) in item.submenu"
+                    :key="idx"
+                    :to="test.path"
+                    @click="mobileMenuOpen = false"
+                    class="block px-4 py-2.5 rounded-lg font-medium text-sm hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200 flex items-center"
+                    :class="{ 'text-purple-600 bg-purple-50': route.path === test.path }"
+                  >
+                    <span class="w-2 h-5 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full mr-3" :class="{ 'opacity-0': route.path !== test.path }"></span>
+                    {{ test.name }}
+                  </NuxtLink>
                 </div>
               </transition>
             </div>
@@ -258,12 +148,10 @@
 </template>
 
 <script setup>
-import { useUserStore } from '~/stores/user';
-import { useRoute, navigateTo } from '#app';
-import { ref, computed, onBeforeMount, onUnmounted, watch } from 'vue';
-import { toast } from 'vue3-toastify';
+import { useRoute } from '#app';
+import { ref, computed, onBeforeMount, onUnmounted } from 'vue';
 
-// Data-learn
+// Data
 const navItems = [
   { name: 'Trang Chủ', path: '/' },
   {
@@ -282,36 +170,13 @@ const navItems = [
 // State
 const mobileMenuOpen = ref(false);
 const mobileSubmenuOpen = ref({});
-const userMenuOpen = ref(false);
 const activeMenu = ref(null);
 const isSticky = ref(false);
 const header = ref(null);
 const menuTimeout = ref(null);
-const userStore = useUserStore();
 const route = useRoute();
 
 // Computed
-const computedNavItems = computed(() => {
-  const items = [...navItems];
-  if (userStore.isStoreInitialized) {
-    items.push({
-      name: 'Tài khoản người dùng',
-      isUserMenu: true,
-      submenu: userStore.user && Object.keys(userStore.user).length > 0 
-        ? [
-            { name: 'Tài khoản', path: '/tai-khoan' },
-            { name: 'Số token', isToken: true },
-            { name: 'Đăng xuất', isLogout: true }
-          ] 
-        : [
-            { name: 'Đăng nhập', path: '/dang-nhap' },
-            { name: 'Đăng ký', path: '/dang-ky' }
-          ]
-    });
-  }
-  return items;
-});
-
 const activeTestMenu = computed(() => {
   return navItems
     .find(item => item.name === 'Trắc nghiệm')
@@ -319,17 +184,10 @@ const activeTestMenu = computed(() => {
 });
 
 // Methods
-const getInitialLetter = (fullname) => {
-  if (!fullname || typeof fullname !== 'string' || !fullname.trim()) return 'U';
-  const firstChar = fullname.trim().charAt(0);
-  return /[a-zA-Z\u00C0-\u1EF9]/.test(firstChar) ? firstChar.toUpperCase() : 'U';
-};
-
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value;
   if (!mobileMenuOpen.value) {
     mobileSubmenuOpen.value = {};
-    userMenuOpen.value = false;
   }
 };
 
@@ -338,10 +196,6 @@ const toggleMobileSubmenu = (menuName) => {
     ...mobileSubmenuOpen.value,
     [menuName]: !mobileSubmenuOpen.value[menuName]
   };
-};
-
-const toggleUserMenu = () => {
-  userMenuOpen.value = !userMenuOpen.value;
 };
 
 const openMenu = (menu) => {
@@ -357,46 +211,9 @@ const closeMenu = (menu) => {
   }, 200);
 };
 
-const logout = async () => {
-  try {
-    await userStore.logout();
-    mobileMenuOpen.value = false;
-    userMenuOpen.value = false;
-    await navigateTo('/dang-nhap');
-    toast.success('Đăng xuất thành công!', {
-      position: 'top-center',
-      theme: 'colored'
-    });
-  } catch (error) {
-    console.error('Logout error:', error);
-    toast.error('Đăng xuất thất bại. Vui lòng thử lại.', {
-      position: 'top-center',
-      theme: 'colored'
-    });
-  }
-};
-
-// Làm mới token từ API nếu chưa có
-const refreshUserData = async () => {
-  if (userStore.isAuthenticated && userStore.user?.id) {
-    try {
-      const response = await $fetch(`/api/users/${String(userStore.user.id)}`, { method: 'GET' });
-      await userStore.updateTokens(response.user.tokens);
-      
-    } catch (error) {
-      console.error('Failed to refresh user data:', error);
-     
-      await userStore.logout();
-      await navigateTo('/dang-nhap');
-    }
-  }
-};
-
 // Lifecycle
 onBeforeMount(() => {
   if (process.client) {
-    userStore.initialize();
-    refreshUserData();
     window.addEventListener('scroll', handleScroll);
   }
 });
@@ -406,16 +223,6 @@ onUnmounted(() => {
     window.removeEventListener('scroll', handleScroll);
   }
 });
-
-// Theo dõi thay đổi token
-watch(
-  () => userStore.user?.tokens,
-  (newTokens) => {
-    if (newTokens !== undefined && newTokens !== null) {
-      console.log('Tokens updated:', newTokens);
-    }
-  }
-);
 
 const handleScroll = () => {
   isSticky.value = window.scrollY > 10;
