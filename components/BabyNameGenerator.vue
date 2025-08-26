@@ -19,30 +19,8 @@
         </div>
 
         <!-- Error Message -->
-        <div v-if="errors.general || errorMessage || errorMessageMore" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200 mb-6">
-          <span v-if="errors.general">{{ errors.general }}</span>
-          <span v-else-if="errorMessage" class="inline">
-            {{ errorMessage.split('Hãy nạp thêm token')[0] }}
-            <button
-              v-if="errorMessage.includes('Hãy nạp thêm token')"
-              @click="errorActionInitial"
-              class="underline text-blue-600 hover:text-blue-800"
-            >
-              nạp thêm token
-            </button>
-            {{ errorMessage.includes('Hãy nạp thêm token') ? 'để trải nghiệm full tính năng nhé!' : '' }}
-          </span>
-          <span v-else-if="errorMessageMore" class="inline">
-            {{ errorMessageMore.split('Hãy nạp thêm token')[0] }}
-            <button
-              v-if="errorMessageMore.includes('Hãy nạp thêm token')"
-              @click="errorActionMore"
-              class="underline text-blue-600 hover:text-blue-800"
-            >
-              nạp thêm token
-            </button>
-            {{ errorMessageMore.includes('Hãy nạp thêm token') ? 'để trải nghiệm full tính năng nhé!' : '' }}
-          </span>
+        <div v-if="errors.general" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200 mb-6">
+          {{ errors.general }}
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -179,24 +157,24 @@
         </div>
 
         <!-- Nút gợi ý tên -->
-        <div v-if="hasSufficientTokens || !isLoggedIn" class="mt-6 flex justify-center">
+        <div class="mt-6 flex justify-center">
           <button
             @click="suggestNames"
-            :disabled="loading || isLoading"
+            :disabled="loading"
             class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 shadow-md disabled:opacity-50"
           >
-            <span v-if="loading || isLoading" class="flex items-center justify-center gap-2">
+            <span v-if="loading" class="flex items-center justify-center gap-2">
               <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
-              {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang gợi ý tên...' }}
+              Đang gợi ý tên...
             </span>
             <span v-else class="flex items-center justify-center gap-2">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
-              {{ isLoggedIn ? `Gợi ý tên (Cần ${tokenCostInitial} tokens)` : 'Đăng nhập để gợi ý tên' }}
+              Gợi ý tên
             </span>
           </button>
         </div>
@@ -204,7 +182,7 @@
 
       <!-- Kết quả gợi ý tên -->
       <transition name="slide-fade">
-        <div v-if="suggestedNames.length && isContentAccessible" class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+        <div v-if="suggestedNames.length" class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
           <div class="flex items-center mb-4">
             <span class="bg-purple-100 p-2 rounded-full mr-2">
               <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -261,25 +239,25 @@
           </div>
 
           <!-- Nút gợi ý thêm -->
-          <div v-if="canSuggestMore && isContentAccessible && (hasSufficientTokensMore || !isLoggedIn)" class="mt-6 flex justify-center">
+          <div v-if="canSuggestMore" class="mt-6 flex justify-center">
             <button
               @click="suggestMoreNames"
-              :disabled="loadingMore || isLoadingMore"
+              :disabled="loadingMore"
               class="w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 shadow-md disabled:opacity-50"
             >
-              <span v-if="loadingMore || isLoadingMore" class="flex items-center justify-center gap-2">
+              <span v-if="loadingMore" class="flex items-center justify-center gap-2">
                 <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                {{ isLoadingMore ? 'Đang kiểm tra quyền truy cập...' : 'Đang gợi ý thêm...' }}
-              </span>
-              <span v-else class="flex items-center justify-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                {{ isLoggedIn ? `Gợi ý thêm (Cần ${tokenCostMore} tokens)` : 'Đăng nhập để gợi ý thêm' }}
-              </span>
+              </svg>
+              Đang gợi ý thêm...
+            </span>
+            <span v-else class="flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              Gợi ý thêm
+            </span>
             </button>
           </div>
         </div>
@@ -289,17 +267,13 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { toast } from 'vue3-toastify';
 import { calculateLifePathNumber } from '~/utils/numerology-calculations';
 import { ExpressionNumbers, SoulUrgeNumbers } from '~/utils/numerology-meanings';
 import babyMaleNames from '~/data/baby_male_name.json';
 import babyFemaleNames from '~/data/baby_female_name.json';
 import nameCompatibility from '~/data/name_compatibility.json';
-import { useProtectedContent } from '~/composables/useProtectedContent';
-import { useUserStore } from '@/stores/user';
-
-definePageMeta({ layout: 'view' });
 
 // Form dữ liệu
 const form = ref({
@@ -325,47 +299,8 @@ const errors = ref({
 // Danh sách tên gợi ý và tên đã sử dụng
 const suggestedNames = ref([]);
 const usedNames = ref([]);
-
-// Token và trạng thái xác thực
-const tokenCostInitial = ref(15);
-const tokenCostMore = ref(5);
-const descriptionInitial = 'Access to baby name suggestion';
-const descriptionMore = 'Access to additional baby name suggestions';
-const { isLoading, errorMessage, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, errorAction: errorActionInitial } = useProtectedContent(tokenCostInitial.value, descriptionInitial);
-const { isLoading: isLoadingMore, errorMessage: errorMessageMore, isContentAccessible: isContentAccessibleMore, hasSufficientTokens: hasSufficientTokensMore, checkAuthAndAccess: checkAuthAndAccessMore, errorAction: errorActionMore } = useProtectedContent(tokenCostMore.value, descriptionMore);
-const isLoggedIn = ref(false);
-const userStore = useUserStore();
-let handleActionInitial = () => {};
-let handleActionMore = () => {};
 const loading = ref(false);
 const loadingMore = ref(false);
-
-// Khởi tạo trạng thái đăng nhập
-const initializeAuth = async () => {
-  console.log('initializeAuth: Checking token balance for Baby Name Suggestor, tokenCostInitial:', tokenCostInitial.value, 'tokenCostMore:', tokenCostMore.value);
-  const { isLoggedIn: authStatus, action } = await checkAuthAndAccess();
-  const { action: actionMore } = await checkAuthAndAccessMore();
-  isLoggedIn.value = authStatus;
-  handleActionInitial = action;
-  handleActionMore = actionMore;
-  console.log('initializeAuth: hasSufficientTokens:', hasSufficientTokens.value, 'hasSufficientTokensMore:', hasSufficientTokensMore.value);
-};
-
-// Khởi tạo auth khi component được mount
-onMounted(() => {
-  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
-  if (userStore.isStoreInitialized) {
-    initializeAuth();
-  }
-});
-
-// Theo dõi isStoreInitialized để khởi tạo auth khi store sẵn sàng
-watch(() => userStore.isStoreInitialized, (initialized) => {
-  if (initialized && process.client) {
-    console.log('User store initialized, running initializeAuth');
-    initializeAuth();
-  }
-});
 
 // Kiểm tra xem còn tên để gợi ý không
 const canSuggestMore = computed(() => {
@@ -458,18 +393,11 @@ const validateForm = () => {
 
 // Hàm gợi ý tên (khởi tạo danh sách mới)
 const suggestNames = async () => {
-  if (!validateForm()) return;
-
-  if (isContentAccessible.value) {
-    await fetchSuggestedNames();
-  } else {
-    const { success } = await handleActionInitial();
-    if (success || isContentAccessible.value) {
-      await fetchSuggestedNames();
-    } else {
-      toast.error(errorMessage.value, { position: 'top-center' });
-    }
+  if (!validateForm()) {
+    toast.error('Vui lòng kiểm tra lại thông tin nhập', { position: 'top-center' });
+    return;
   }
+  await fetchSuggestedNames();
 };
 
 async function fetchSuggestedNames() {
@@ -538,7 +466,7 @@ async function fetchSuggestedNames() {
       toast.success('Gợi ý tên hoàn tất!', { position: 'top-center' });
       // Scroll to result
       setTimeout(() => {
-        const resultElement = document.querySelector('[v-if="suggestedNames.length && isContentAccessible"]');
+        const resultElement = document.querySelector('[v-if="suggestedNames.length"]');
         if (resultElement) {
           resultElement.scrollIntoView({ behavior: 'smooth' });
         }
@@ -555,18 +483,11 @@ async function fetchSuggestedNames() {
 
 // Hàm gợi ý thêm 5 tên
 const suggestMoreNames = async () => {
-  if (!validateForm()) return;
-
-  if (isContentAccessibleMore.value) {
-    await fetchMoreSuggestedNames();
-  } else {
-    const { success } = await handleActionMore();
-    if (success || isContentAccessibleMore.value) {
-      await fetchMoreSuggestedNames();
-    } else {
-      toast.error(errorMessageMore.value, { position: 'top-center' });
-    }
+  if (!validateForm()) {
+    toast.error('Vui lòng kiểm tra lại thông tin nhập', { position: 'top-center' });
+    return;
   }
+  await fetchMoreSuggestedNames();
 };
 
 async function fetchMoreSuggestedNames() {
@@ -635,7 +556,7 @@ async function fetchMoreSuggestedNames() {
       toast.success('Gợi ý thêm tên hoàn tất!', { position: 'top-center' });
       // Scroll to result
       setTimeout(() => {
-        const resultElement = document.querySelector('[v-if="suggestedNames.length && isContentAccessible"]');
+        const resultElement = document.querySelector('[v-if="suggestedNames.length"]');
         if (resultElement) {
           resultElement.scrollIntoView({ behavior: 'smooth' });
         }
@@ -669,7 +590,7 @@ async function fetchMoreSuggestedNames() {
   transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
 }
 .slide-fade-enter-from,
-.slide-fade-leave-to {
+.slide-leave-to {
   transform: translateY(10px);
   opacity: 0;
 }

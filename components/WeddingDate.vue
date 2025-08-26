@@ -1,4 +1,3 @@
-```vue
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center py-8">
     <div class="container mx-auto px-4">
@@ -37,8 +36,9 @@
                   v-model="formData.brideName"
                   type="text"
                   id="brideName"
+                  placeholder="Nhập họ tên"
                   :class="['w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.brideName ? 'border-red-500' : 'border-gray-300']"
-                  @focus="clearError"
+                  @input="clearError('brideName')"
                 />
                 <p v-if="errors.brideName" class="text-red-600 text-sm mt-1">{{ errors.brideName }}</p>
               </div>
@@ -48,8 +48,9 @@
                   v-model="formData.brideBirthdate"
                   type="text"
                   id="brideBirthdate"
+                  placeholder="VD: 15/03/1995"
                   :class="['w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.brideBirthdate ? 'border-red-500' : 'border-gray-300']"
-                  @focus="clearError"
+                  @input="clearError('brideBirthdate')"
                 />
                 <p v-if="errors.brideBirthdate" class="text-red-600 text-sm mt-1">{{ errors.brideBirthdate }}</p>
               </div>
@@ -73,9 +74,9 @@
                   v-model="formData.groomName"
                   type="text"
                   id="groomName"
-  
+                  placeholder="Nhập họ tên"
                   :class="['w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.groomName ? 'border-red-500' : 'border-gray-300']"
-                  @focus="clearError"
+                  @input="clearError('groomName')"
                 />
                 <p v-if="errors.groomName" class="text-red-600 text-sm mt-1">{{ errors.groomName }}</p>
               </div>
@@ -85,8 +86,9 @@
                   v-model="formData.groomBirthdate"
                   type="text"
                   id="groomBirthdate"
+                  placeholder="VD: 15/03/1995"
                   :class="['w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.groomBirthdate ? 'border-red-500' : 'border-gray-300']"
-                  @focus="clearError"
+                  @input="clearError('groomBirthdate')"
                 />
                 <p v-if="errors.groomBirthdate" class="text-red-600 text-sm mt-1">{{ errors.groomBirthdate }}</p>
               </div>
@@ -112,7 +114,7 @@
                   id="startDate"
                   placeholder="VD: 01/06/2025"
                   :class="['w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.startDate ? 'border-red-500' : 'border-gray-300']"
-                  @focus="clearError"
+                  @input="clearError('startDate')"
                 />
                 <p v-if="errors.startDate" class="text-red-600 text-sm mt-1">{{ errors.startDate }}</p>
               </div>
@@ -124,7 +126,7 @@
                   id="endDate"
                   placeholder="VD: 30/06/2025"
                   :class="['w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.endDate ? 'border-red-500' : 'border-gray-300']"
-                  @focus="clearError"
+                  @input="clearError('endDate')"
                 />
                 <p v-if="errors.endDate" class="text-red-600 text-sm mt-1">{{ errors.endDate }}</p>
               </div>
@@ -139,17 +141,6 @@
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
         </div>
-        <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
-          <template v-if="errorType === 'login'">
-            Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để tìm ngày cưới.
-          </template>
-          <template v-else-if="errorType === 'topup'">
-            Không đủ token để tìm ngày cưới. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-          </template>
-          <template v-else>
-            {{ errorMessage }}
-          </template>
-        </div>
         <div v-else-if="errors.general" class="text-red-600 text-center font-medium p-6">
           {{ errors.general }}
         </div>
@@ -158,14 +149,14 @@
             @click="fetchWeddingDates"
             class="action-button"
           >
-            {{ userStore.isAuthenticated ? `Tìm ngày cưới tốt nhất (Cần ${tokenCost} tokens)` : 'Đăng nhập để tìm ngày cưới' }}
+            Tìm ngày cưới tốt nhất
           </button>
         </div>
       </div>
 
       <!-- Kết quả -->
       <transition name="slide-fade">
-        <div v-if="result?.numerology && isContentAccessible" class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+        <div v-if="result?.numerology" class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
           <div class="flex items-center mb-4">
             <span class="bg-purple-100 p-2 rounded-full mr-2">
               <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -249,17 +240,17 @@
           </div>
 
           <!-- Nút xem thêm gợi ý -->
-          <div v-if="result.numerology && isContentAccessible && totalSuggestions < maxSuggestions" class="flex justify-center mt-6">
+          <div v-if="result.numerology && totalSuggestions < maxSuggestions" class="flex justify-center mt-6">
             <button
               @click="showMoreSuggestions"
               class="action-button"
-              :disabled="loadingMore || !hasSufficientTokensForMore"
+              :disabled="loadingMore"
             >
               <svg v-if="loadingMore" class="animate-spin h-5 w-5 mr-2 inline-block text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
-              {{ loadingMore ? 'Đang tải...' : userStore.isAuthenticated ? `Xem thêm gợi ý (Cần ${tokenCostMore} tokens)` : 'Đăng nhập để xem thêm' }}
+              {{ loadingMore ? 'Đang tải...' : 'Xem thêm gợi ý' }}
             </button>
           </div>
         </div>
@@ -269,16 +260,10 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { toast } from 'vue3-toastify';
-import { useProtectedContent } from '~/composables/useProtectedContent';
-import { useUserStore } from '~/stores/user';
-import { useRouter } from 'vue-router';
 
 definePageMeta({ layout: 'view' });
-
-const router = useRouter();
-const userStore = useUserStore();
 
 // Form state
 const formData = ref({
@@ -303,132 +288,62 @@ const loading = ref(false);
 const loadingMore = ref(false);
 const totalSuggestions = ref(0);
 const maxSuggestions = ref(5);
-const tokenCost = ref(30);
-const tokenCostMore = ref(5);
-const description = 'Access to wedding date selection based on numerology';
-const {
-  isLoading,
-  errorMessage,
-  errorType,
-  isContentAccessible,
-  hasSufficientTokens,
-  checkAuthAndAccess,
-  performAction,
-  errorAction,
-  navigateToTopup
-} = useProtectedContent(tokenCost.value, description);
-const hasSufficientTokensForMore = ref(true);
-
-// Hàm lưu vào localStorage
-const saveToLocalStorage = () => {
-  localStorage.setItem('weddingDateSelectorForm', JSON.stringify(formData.value));
-  localStorage.setItem('weddingDateSelectorResult', JSON.stringify(result.value));
-};
-
-// Hàm tải từ localStorage
-const loadFromLocalStorage = () => {
-  const savedForm = localStorage.getItem('weddingDateSelectorForm');
-  const savedResult = localStorage.getItem('weddingDateSelectorResult');
-  if (savedForm) {
-    formData.value = JSON.parse(savedForm);
-  }
-  if (savedResult) {
-    result.value = JSON.parse(savedResult);
-    totalSuggestions.value = result.value?.numerology?.suggestions?.length || 0;
-  }
-};
-
-// Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
-const formatDateToDDMMYYYY = (dateStr) => {
-  if (!dateStr) return '';
-  const match = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  if (!match) return dateStr;
-  const [_, year, month, day] = match;
-  return `${day}/${month}/${year}`;
-};
+const isLoading = ref(false);
 
 // Hàm xóa lỗi
-const clearError = () => {
-  errors.value = {
-    brideName: '',
-    brideBirthdate: '',
-    groomName: '',
-    groomBirthdate: '',
-    startDate: '',
-    endDate: '',
-    general: ''
+const clearError = (field) => {
+  errors.value[field] = '';
+  errors.value.general = '';
+};
+
+// Hàm tính số đường đời
+const calculateLifePath = (dob) => {
+  if (!dob || !/^\d{2}\/\d{2}\/\d{4}$/.test(dob)) return null;
+  const [day, month, year] = dob.split('/').map(Number);
+  const daySum = Math.floor(day / 10) + (day % 10);
+  const monthSum = Math.floor(month / 10) + (month % 10);
+  const yearSum = year.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
+  let sum = daySum + monthSum + yearSum;
+  while (sum > 9 && sum !== 11 && sum !== 22) {
+    sum = sum.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
+  }
+  return sum;
+};
+
+// Hàm tính số linh hồn (dựa trên nguyên âm trong tên)
+const calculateSoulNumber = (name) => {
+  if (!name) return null;
+  const vowels = ['a', 'e', 'i', 'o', 'u', 'ă', 'â', 'ê', 'ô', 'ơ', 'ư'];
+  const vowelSum = name.toLowerCase().split('')
+    .filter(char => vowels.includes(char))
+    .map(char => {
+      const values = { 'a': 1, 'ă': 1, 'â': 1, 'e': 5, 'ê': 5, 'i': 9, 'o': 6, 'ô': 6, 'ơ': 6, 'u': 3, 'ư': 3 };
+      return values[char] || 0;
+    })
+    .reduce((acc, val) => acc + val, 0);
+  let sum = vowelSum;
+  while (sum > 9 && sum !== 11 && sum !== 22) {
+    sum = sum.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
+  }
+  return sum;
+};
+
+// Hàm tính số định mệnh (dựa trên toàn bộ tên)
+const calculateDestinyNumber = (name) => {
+  if (!name) return null;
+  const letterValues = {
+    'a': 1, 'ă': 1, 'â': 1, 'b': 2, 'c': 3, 'd': 4, 'đ': 4, 'e': 5, 'ê': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9,
+    'j': 1, 'k': 2, 'l': 3, 'm': 4, 'n': 5, 'o': 6, 'ô': 6, 'ơ': 6, 'p': 7, 'q': 8, 'r': 9, 's': 1, 't': 2,
+    'u': 3, 'ư': 3, 'v': 4, 'w': 5, 'x': 6, 'y': 7, 'z': 8
   };
-  errorMessage.value = '';
-};
-
-// Hàm lấy thông tin người dùng từ API
-const fetchUserData = async () => {
-  if (!userStore.isAuthenticated || !userStore.user?.id) {
-    console.log('User not authenticated, skipping fetchUserData');
-    return;
+  const nameSum = name.toLowerCase().split('')
+    .map(char => letterValues[char] || 0)
+    .reduce((acc, val) => acc + val, 0);
+  let sum = nameSum;
+  while (sum > 9 && sum !== 11 && sum !== 22) {
+    sum = sum.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
   }
-
-  try {
-    const userIdValue = String(userStore.user.id);
-    console.log('Fetching user data for userId:', userIdValue);
-    const response = await $fetch(`/api/users/${userIdValue}`, {
-      method: 'GET'
-    });
-    console.log('API /api/users response:', response);
-    formData.value.brideName = response.user.fullname?.trim() || '';
-    formData.value.brideBirthdate = response.user.birthdate ? formatDateToDDMMYYYY(response.user.birthdate.split('T')[0]) : '';
-  } catch (err) {
-    console.error('Error fetching user data:', err);
-    errors.value.general = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
-    toast.error(errors.value.general, { position: 'top-center' });
-  }
-};
-
-// Hàm kiểm tra số dư token
-const checkTokenBalance = async (requiredTokens) => {
-  if (!userStore.isAuthenticated || !userStore.user?.id) {
-    console.log('User not authenticated, setting hasSufficientTokensForMore to false');
-    hasSufficientTokensForMore.value = false;
-    return false;
-  }
-
-  try {
-    const response = await $fetch('/api/check-token-balance', {
-      method: 'POST',
-      headers: {
-        'x-username': encodeURIComponent(userStore.user.email),
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-      body: { userId: String(userStore.user.id), requiredTokens }
-    });
-    console.log(`Check token balance response:`, response);
-    hasSufficientTokensForMore.value = response.hasSufficientTokens;
-    return response.hasSufficientTokens;
-  } catch (error) {
-    console.error('Error checking token balance:', error);
-    errors.value.general = error.data?.message || 'Không thể kiểm tra số dư token!';
-    toast.error(errors.value.general, { position: 'top-center' });
-    hasSufficientTokensForMore.value = false;
-    return false;
-  }
-};
-
-// Khởi tạo trạng thái đăng nhập và kiểm tra token
-const initializeAuth = async () => {
-  console.log('Initializing auth for WeddingDateSelector...');
-  try {
-    await userStore.initialize();
-    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
-    await checkAuthAndAccess();
-    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
-    if (userStore.isAuthenticated) {
-      await checkTokenBalance(tokenCostMore.value);
-    }
-  } catch (err) {
-    console.error('Error initializing auth:', err);
-    errors.value.general = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
-    toast.error(errors.value.general, { position: 'top-center' });
-  }
+  return sum;
 };
 
 // Hàm validate form
@@ -526,6 +441,137 @@ const validateForm = () => {
   return isValid;
 };
 
+// Hàm tính toán ngày cưới giả lập
+const getWeddingDates = async () => {
+  loading.value = true;
+  errors.value.general = '';
+  try {
+    const brideLifePath = calculateLifePath(formData.value.brideBirthdate);
+    const groomLifePath = calculateLifePath(formData.value.groomBirthdate);
+    if (!brideLifePath || !groomLifePath) {
+      throw new Error('Không thể tính toán số đường đời từ ngày sinh.');
+    }
+
+    const startMatch = formData.value.startDate.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    const endMatch = formData.value.endDate.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if (!startMatch || !endMatch) {
+      throw new Error('Ngày bắt đầu hoặc kết thúc không hợp lệ.');
+    }
+    const startDate = new Date(parseInt(startMatch[3]), parseInt(startMatch[2]) - 1, parseInt(startMatch[1]));
+    const endDate = new Date(parseInt(endMatch[3]), parseInt(endMatch[2]) - 1, parseInt(endMatch[1]));
+
+    // Tạo danh sách ngày giả lập
+    const suggestions = [];
+    let currentDate = new Date(startDate);
+    const compatibleNumbers = [(brideLifePath + groomLifePath) % 9 || 9, brideLifePath, groomLifePath];
+    while (currentDate <= endDate && suggestions.length < 3) {
+      const dayNumber = calculateLifePath(`${String(currentDate.getDate()).padStart(2, '0')}/${String(currentDate.getMonth() + 1).padStart(2, '0')}/${currentDate.getFullYear()}`);
+      if (compatibleNumbers.includes(dayNumber)) {
+        suggestions.push({
+          date: `${String(currentDate.getDate()).padStart(2, '0')}/${String(currentDate.getMonth() + 1).padStart(2, '0')}/${currentDate.getFullYear()}`,
+          dayNumber,
+          compatibilityScore: Math.random() * 0.4 + 0.6, // Điểm từ 60-100
+          desc: `Ngày này phù hợp với số đường đời của cả hai (${brideLifePath} và ${groomLifePath}).`
+        });
+      }
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    result.value = {
+      numerology: {
+        bride: {
+          lifePath: brideLifePath,
+          soul: calculateSoulNumber(formData.value.brideName),
+          destiny: calculateDestinyNumber(formData.value.brideName)
+        },
+        groom: {
+          lifePath: groomLifePath,
+          soul: calculateSoulNumber(formData.value.groomName),
+          destiny: calculateDestinyNumber(formData.value.groomName)
+        },
+        suggestions,
+        advice: `Dựa trên số đường đời (${brideLifePath} và ${groomLifePath}), hãy chọn ngày cưới phù hợp để tối ưu hóa sự hòa hợp và hạnh phúc lâu dài.`
+      }
+    };
+    totalSuggestions.value = suggestions.length;
+
+    toast.success('Đã tìm thấy ngày cưới tốt nhất!', { position: 'top-center' });
+    setTimeout(() => {
+      const resultElement = document.querySelector('[v-if="result?.numerology"]');
+      if (resultElement) {
+        resultElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  } catch (error) {
+    console.error('Error in getWeddingDates:', error);
+    errors.value.general = error.message || 'Không thể tìm ngày cưới!';
+    toast.error(errors.value.general, { position: 'top-center' });
+  } finally {
+    loading.value = false;
+  }
+};
+
+// Hàm xem thêm gợi ý giả lập
+const showMoreSuggestions = async () => {
+  if (totalSuggestions.value >= maxSuggestions.value) {
+    errors.value.general = 'Đã đạt số lượng gợi ý tối đa!';
+    toast.error(errors.value.general, { position: 'top-center' });
+    return;
+  }
+  if (!process.client) {
+    console.warn('showMoreSuggestions called on server-side, ignoring.');
+    return;
+  }
+
+  loadingMore.value = true;
+  try {
+    const startMatch = formData.value.startDate.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    const endMatch = formData.value.endDate.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if (!startMatch || !endMatch) {
+      throw new Error('Ngày bắt đầu hoặc kết thúc không hợp lệ.');
+    }
+    const startDate = new Date(parseInt(startMatch[3]), parseInt(startMatch[2]) - 1, parseInt(startMatch[1]));
+    const endDate = new Date(parseInt(endMatch[3]), parseInt(endMatch[2]) - 1, parseInt(endMatch[1]));
+    const brideLifePath = calculateLifePath(formData.value.brideBirthdate);
+    const groomLifePath = calculateLifePath(formData.value.groomBirthdate);
+    const compatibleNumbers = [(brideLifePath + groomLifePath) % 9 || 9, brideLifePath, groomLifePath];
+    const excludeDates = result.value.numerology.suggestions.map(s => s.date);
+
+    // Tạo thêm 1 gợi ý
+    let currentDate = new Date(startDate);
+    let newSuggestion = null;
+    while (currentDate <= endDate && !newSuggestion) {
+      const dateStr = `${String(currentDate.getDate()).padStart(2, '0')}/${String(currentDate.getMonth() + 1).padStart(2, '0')}/${currentDate.getFullYear()}`;
+      if (!excludeDates.includes(dateStr)) {
+        const dayNumber = calculateLifePath(dateStr);
+        if (compatibleNumbers.includes(dayNumber)) {
+          newSuggestion = {
+            date: dateStr,
+            dayNumber,
+            compatibilityScore: Math.random() * 0.4 + 0.6,
+            desc: `Ngày này phù hợp với số đường đời của cả hai (${brideLifePath} và ${groomLifePath}).`
+          };
+        }
+      }
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    if (newSuggestion) {
+      result.value.numerology.suggestions.push(newSuggestion);
+      totalSuggestions.value += 1;
+      toast.success('Đã tải thêm gợi ý ngày cưới!', { position: 'top-center' });
+    } else {
+      throw new Error('Không tìm thấy ngày phù hợp để thêm gợi ý.');
+    }
+  } catch (error) {
+    console.error('Error in showMoreSuggestions:', error);
+    errors.value.general = error.message || 'Không thể tải thêm gợi ý!';
+    toast.error(errors.value.general, { position: 'top-center' });
+  } finally {
+    loadingMore.value = false;
+  }
+};
+
 // Hàm tìm ngày cưới
 const fetchWeddingDates = async () => {
   if (!process.client) {
@@ -533,146 +579,11 @@ const fetchWeddingDates = async () => {
     return;
   }
   if (!validateForm()) {
+    toast.error('Vui lòng kiểm tra lại thông tin nhập', { position: 'top-center' });
     return;
   }
-
-  if (isContentAccessible.value) {
-    await getWeddingDates();
-  } else {
-    try {
-      await performAction();
-      if (isContentAccessible.value) {
-        await getWeddingDates();
-      } else {
-        toast.error(errorMessage.value, { position: 'top-center' });
-      }
-    } catch (err) {
-      console.error('Error in performAction:', err);
-      toast.error(errorMessage.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
-    }
-  }
+  await getWeddingDates();
 };
-
-// Hàm lấy dữ liệu ngày cưới từ API
-async function getWeddingDates() {
-  loading.value = true;
-  errors.value.general = '';
-  try {
-    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
-    console.log('Sending request to /api/numerology/wedding-date with data:', formData.value);
-    const response = await $fetch('/api/numerology/wedding-date', {
-      method: 'POST',
-      headers: {
-        'x-username': encodeURIComponent(username),
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-      body: { ...formData.value, suggestionCount: 3 }
-    });
-    console.log('Response from /api/numerology/wedding-date:', response);
-    result.value = response;
-    totalSuggestions.value = response.numerology.suggestions.length;
-    await checkTokenBalance(tokenCostMore.value);
-    toast.success('Đã tìm thấy ngày cưới tốt nhất!', { position: 'top-center' });
-    setTimeout(() => {
-      const resultElement = document.querySelector('[v-if="result?.numerology && isContentAccessible"]');
-      if (resultElement) {
-        resultElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
-  } catch (error) {
-    console.error('Error in getWeddingDates:', error);
-    errors.value.general = error.data?.message || 'Không thể tìm ngày cưới!';
-    toast.error(errors.value.general, { position: 'top-center' });
-  } finally {
-    loading.value = false;
-  }
-}
-
-// Hàm xem thêm gợi ý
-async function showMoreSuggestions() {
-  if (totalSuggestions.value >= maxSuggestions.value) {
-    console.log('Reached maximum suggestions:', maxSuggestions.value);
-    errors.value.general = 'Đã đạt số lượng gợi ý tối đa!';
-    toast.error(errors.value.general, { position: 'top-center' });
-    return;
-  }
-
-  if (!process.client) {
-    console.warn('showMoreSuggestions called on server-side, ignoring.');
-    return;
-  }
-
-  const sufficientTokens = await checkTokenBalance(tokenCostMore.value);
-  console.log('Token balance sufficient:', sufficientTokens);
-  if (!sufficientTokens) {
-    errors.value.general = 'Bạn không có đủ token để xem thêm gợi ý! Hãy nạp thêm token.';
-    toast.error(errors.value.general, { position: 'top-center' });
-    return;
-  }
-
-  loadingMore.value = true;
-  try {
-    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
-    console.log('Sending request to /api/numerology/wedding-date for more suggestions');
-    const response = await $fetch('/api/numerology/wedding-date', {
-      method: 'POST',
-      headers: {
-        'x-username': encodeURIComponent(username),
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-      body: {
-        brideName: formData.value.brideName,
-        brideBirthdate: formData.value.brideBirthdate,
-        groomName: formData.value.groomName,
-        groomBirthdate: formData.value.groomBirthdate,
-        startDate: formData.value.startDate,
-        endDate: formData.value.endDate,
-        suggestionCount: 1,
-        excludeSuggestions: result.value.numerology.suggestions.map(s => s.date)
-      }
-    });
-    console.log('Response from /api/numerology/wedding-date (more suggestions):', response);
-    result.value.numerology.suggestions.push(...response.numerology.suggestions);
-    totalSuggestions.value += response.numerology.suggestions.length;
-    await checkTokenBalance(tokenCostMore.value);
-    toast.success('Đã tải thêm gợi ý ngày cưới!', { position: 'top-center' });
-  } catch (error) {
-    console.error('Error in showMoreSuggestions:', error);
-    errors.value.general = error.data?.message || 'Không thể tải thêm gợi ý!';
-    toast.error(errors.value.general, { position: 'top-center' });
-  } finally {
-    loadingMore.value = false;
-    console.log('showMoreSuggestions completed, loadingMore:', loadingMore.value);
-  }
-}
-
-// Tải dữ liệu khi component được mounted
-onMounted(() => {
-  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
-  loadFromLocalStorage();
-  if (userStore.isStoreInitialized) {
-    initializeAuth();
-    fetchUserData();
-  }
-});
-
-// Theo dõi thay đổi để lưu vào localStorage
-watch(formData, () => {
-  saveToLocalStorage();
-}, { deep: true });
-
-watch(result, () => {
-  saveToLocalStorage();
-}, { deep: true });
-
-// Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
-watch(() => userStore.isStoreInitialized, (initialized) => {
-  if (initialized && process.client) {
-    console.log('User store initialized, running initializeAuth and fetchUserData');
-    initializeAuth();
-    fetchUserData();
-  }
-});
 </script>
 
 <style scoped>
@@ -722,4 +633,3 @@ watch(() => userStore.isStoreInitialized, (initialized) => {
   }
 }
 </style>
-```

@@ -64,42 +64,19 @@
               ></path>
             </svg>
           </div>
-          <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
-            <template v-if="errorType === 'login'">
-              Vui lòng <button @click="errorAction" class="action-button inline">Đăng Nhập</button> để gửi câu hỏi.
-            </template>
-            <template v-else-if="errorType === 'topup'">
-              Không đủ token để gửi câu hỏi. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để tiếp tục.
-            </template>
-            <template v-else>
-              {{ errorMessage }}
-            </template>
-          </div>
           <div v-else-if="errors.general" class="text-red-600 text-center font-medium p-6">
             {{ errors.general }}
           </div>
           <div v-else class="text-center p-6">
-            <template v-if="!userStore.isAuthenticated">
-              <p class="text-red-600 font-medium mb-4">
-                Vui lòng <button @click="errorAction" class="action-button inline">Đăng Nhập</button> để gửi câu hỏi.
-              </p>
-            </template>
-            <template v-else-if="userStore.isAuthenticated && !hasSufficientTokens">
-              <p class="text-red-600 font-medium mb-4">
-                Không đủ token để gửi câu hỏi. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để tiếp tục.
-              </p>
-            </template>
-            <template v-else>
-              <button @click="consult" class="action-button">
-                Gửi câu hỏi (Cần {{ tokenCost }} token)
-              </button>
-            </template>
+            <button @click="consult" class="action-button">
+              Gửi câu hỏi
+            </button>
           </div>
         </div>
 
         <!-- Results Section -->
         <transition name="slide-fade">
-          <div v-if="result && isContentAccessible" class="mt-8">
+          <div v-if="result" class="mt-8">
             <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
               <h3 class="font-medium text-purple-700 flex items-center">
                 <span class="bg-purple-100 rounded-full p-2 mr-2">
@@ -151,9 +128,7 @@ const errors = ref({
   question: '',
   general: '',
 });
-const tokenCost = ref(15);
-const description = 'Access to numerology consultation results';
-const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, performAction, errorAction, navigateToTopup } = useProtectedContent(tokenCost.value, description);
+const isLoading = ref(false);
 
 // Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
 const formatDateToDDMMYYYY = (dateStr) => {
@@ -162,6 +137,13 @@ const formatDateToDDMMYYYY = (dateStr) => {
   }
   const [year, month, day] = dateStr.split('T')[0].split('-');
   return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+};
+
+// Hàm chuyển đổi định dạng ngày từ DD/MM/YYYY sang YYYY-MM-DD
+const formatDateToYYYYMMDD = (dateStr) => {
+  if (!dateStr || !/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) return '';
+  const [day, month, year] = dateStr.split('/').map(Number);
+  return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 };
 
 // Hàm làm sạch dữ liệu, loại bỏ ký tự không hợp lệ
@@ -229,43 +211,6 @@ const validateForm = () => {
   return isValid;
 };
 
-// Hàm lấy thông tin người dùng từ API
-const fetchUserData = async () => {
-  if (!userStore.isAuthenticated || !userStore.user?.id) {
-    console.log('User not authenticated, skipping fetchUserData');
-    return;
-  }
-  try {
-    const userIdValue = String(userStore.user.id);
-    console.log('Fetching user data for userId:', userIdValue);
-    const response = await $fetch(`/api/users/${userIdValue}`, {
-      method: 'GET',
-    });
-    console.log('API /api/users response:', response);
-    formData.value.name = response.user.fullname?.trim() || '';
-    formData.value.birthDate = response.user.birthdate ? formatDateToDDMMYYYY(response.user.birthdate) : '';
-  } catch (err) {
-    console.error('Error fetching user data:', err);
-    errors.value.general = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
-    toast.error(errors.value.general, { position: 'top-center' });
-  }
-};
-
-// Khởi tạo trạng thái đăng nhập và kiểm tra token
-const initializeAuth = async () => {
-  console.log('Initializing auth for NumerologyConsultation...');
-  try {
-    await userStore.initialize();
-    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
-    await checkAuthAndAccess();
-    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
-  } catch (err) {
-    console.error('Lỗi khi khởi tạo auth:', err);
-    errors.value.general = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
-    toast.error(errors.value.general, { position: 'top-center' });
-  }
-};
-
 // Xử lý gửi câu hỏi
 const consult = async () => {
   if (!process.client) {
@@ -276,21 +221,7 @@ const consult = async () => {
     toast.error('Vui lòng kiểm tra lại thông tin nhập', { position: 'top-center' });
     return;
   }
-  if (isContentAccessible.value) {
-    await getConsultation();
-  } else {
-    try {
-      await performAction();
-      if (isContentAccessible.value) {
-        await getConsultation();
-      } else {
-        toast.error(errorMessage.value || 'Không đủ quyền truy cập hoặc token!', { position: 'top-center' });
-      }
-    } catch (err) {
-      console.error('Error in performAction:', err);
-      toast.error(errorMessage.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
-    }
-  }
+  await getConsultation();
 };
 
 // Hàm gọi API lấy giải đáp
@@ -298,7 +229,7 @@ const getConsultation = async () => {
   loading.value = true;
   errors.value.general = '';
   try {
-    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    const username = 'guest'; // Không cần đăng nhập, sử dụng 'guest'
     const response = await $fetch('/api/numerology/consult', {
       method: 'POST',
       headers: {
@@ -311,12 +242,11 @@ const getConsultation = async () => {
     result.value = response.consult;
     toast.success('Giải đáp hoàn tất!', { position: 'top-center' });
     setTimeout(() => {
-      const resultElement = document.querySelector('[v-if="result && isContentAccessible"]');
+      const resultElement = document.querySelector('[v-if="result"]');
       if (resultElement) {
         resultElement.scrollIntoView({ behavior: 'smooth' });
       }
     }, 100);
-    await checkAuthAndAccess();
   } catch (error) {
     console.error('Error in getConsultation:', error);
     errors.value.general = error.data?.message || 'Có lỗi xảy ra khi lấy giải đáp!';
@@ -326,60 +256,9 @@ const getConsultation = async () => {
   }
 };
 
-// Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
-watch(() => userStore.isStoreInitialized, (initialized) => {
-  if (initialized && process.client) {
-    console.log('User store initialized, running initializeAuth and fetchUserData');
-    initializeAuth();
-    fetchUserData();
-  }
-});
-
-// Cập nhật thông tin người dùng khi thay đổi name hoặc birthDate
-watch([() => formData.value.name, () => formData.value.birthDate], async ([newName, newBirthDate]) => {
-  if (!userStore.isStoreInitialized || !userStore.user?.id) return;
-  const currentBirthDate = userStore.user?.birthdate || '';
-  const formattedNewBirthDate = formatDateToYYYYMMDD(newBirthDate);
-  if (newName !== userStore.user?.fullname || formattedNewBirthDate !== currentBirthDate) {
-    try {
-      const response = await $fetch(`/api/users/${userStore.user.id}`, {
-        method: 'PATCH',
-        body: {
-          fullname: newName.trim(),
-          birthdate: formattedNewBirthDate,
-        },
-      });
-      if (response.success) {
-        userStore.setUser({
-          id: userStore.user.id,
-          email: userStore.user?.email || '',
-          fullname: newName.trim(),
-          birthdate: formattedNewBirthDate,
-          tokens: userStore.user?.tokens || 0,
-        });
-      }
-    } catch (err) {
-      console.error('Lỗi cập nhật thông tin người dùng:', err);
-      errors.value.general = 'Không thể cập nhật thông tin. Vui lòng thử lại.';
-      toast.error(errors.value.general, { position: 'top-center' });
-    }
-  }
-});
-
-// Hàm chuyển đổi định dạng ngày từ DD/MM/YYYY sang YYYY-MM-DD
-const formatDateToYYYYMMDD = (dateStr) => {
-  if (!dateStr || !/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) return '';
-  const [day, month, year] = dateStr.split('/').map(Number);
-  return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-};
-
 // Load dữ liệu khi component được mount
 onMounted(() => {
-  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
-  if (userStore.isStoreInitialized) {
-    initializeAuth();
-    fetchUserData();
-  }
+  console.log('Component mounted');
 });
 </script>
 

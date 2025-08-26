@@ -30,23 +30,24 @@
                   type="text"
                   :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.name1 ? 'border-red-500' : 'border-gray-300']"
                   placeholder="Nhập họ tên"
-                  @focus="clearError"
+                  @input="clearError('name1')"
                 />
                 <p v-if="errors.name1" class="text-red-600 text-sm mt-1">{{ errors.name1 }}</p>
               </div>
               <div>
-                <label for="dob1" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh</label>
+                <label for="dob1" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh (DD/MM/YYYY)</label>
                 <input
                   v-model="formData.dob1"
                   id="dob1"
-                  type="date"
+                  type="text"
                   :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.dob1 ? 'border-red-500' : 'border-gray-300']"
-                  :max="maxDate"
-                  @focus="clearError"
+                  placeholder="Ví dụ: 15/03/1995"
+                  @input="clearError('dob1')"
                 />
                 <p v-if="formData.dob1 && lifePath1" class="text-sm mt-2 text-purple-600">
                   Số đường đời: {{ lifePath1 }} {{ isMasterNumber(lifePath1) ? '(Số đặc biệt)' : '' }}
                 </p>
+                <p v-if="errors.dob1" class="text-red-600 text-sm mt-1">{{ errors.dob1 }}</p>
               </div>
             </div>
 
@@ -68,23 +69,24 @@
                   type="text"
                   :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.name2 ? 'border-red-500' : 'border-gray-300']"
                   placeholder="Nhập họ tên"
-                  @focus="clearError"
+                  @input="clearError('name2')"
                 />
                 <p v-if="errors.name2" class="text-red-600 text-sm mt-1">{{ errors.name2 }}</p>
               </div>
               <div>
-                <label for="dob2" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh</label>
+                <label for="dob2" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh (DD/MM/YYYY)</label>
                 <input
                   v-model="formData.dob2"
                   id="dob2"
-                  type="date"
+                  type="text"
                   :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-base', errors.dob2 ? 'border-red-500' : 'border-gray-300']"
-                  :max="maxDate"
-                  @focus="clearError"
+                  placeholder="Ví dụ: 15/03/1995"
+                  @input="clearError('dob2')"
                 />
                 <p v-if="formData.dob2 && lifePath2" class="text-sm mt-2 text-purple-600">
                   Số đường đời: {{ lifePath2 }} {{ isMasterNumber(lifePath2) ? '(Số đặc biệt)' : '' }}
                 </p>
+                <p v-if="errors.dob2" class="text-red-600 text-sm mt-1">{{ errors.dob2 }}</p>
               </div>
             </div>
           </div>
@@ -107,7 +109,7 @@
                   type="radio"
                   value="Người yêu"
                   class="mr-2 text-purple-600 focus:ring-purple-500"
-                  @focus="clearError"
+                  @input="clearError('relationshipType')"
                 />
                 <div>
                   <p class="font-medium text-gray-800">Người yêu</p>
@@ -121,7 +123,7 @@
                   type="radio"
                   value="Vợ chồng"
                   class="mr-2 text-purple-600 focus:ring-purple-500"
-                  @focus="clearError"
+                  @input="clearError('relationshipType')"
                 />
                 <div>
                   <p class="font-medium text-gray-800">Vợ chồng</p>
@@ -135,7 +137,7 @@
                   type="radio"
                   value="Đối tác"
                   class="mr-2 text-purple-600 focus:ring-purple-500"
-                  @focus="clearError"
+                  @input="clearError('relationshipType')"
                 />
                 <div>
                   <p class="font-medium text-gray-800">Đối tác</p>
@@ -162,17 +164,6 @@
               ></path>
             </svg>
           </div>
-          <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
-            <template v-if="errorType === 'login'">
-              Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để xem kết quả hòa hợp.
-            </template>
-            <template v-else-if="errorType === 'topup'">
-              Không đủ token để xem kết quả hòa hợp. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-            </template>
-            <template v-else>
-              {{ errorMessage }}
-            </template>
-          </div>
           <div v-else-if="errors.general" class="text-red-600 text-center font-medium p-6">
             {{ errors.general }}
           </div>
@@ -181,7 +172,7 @@
               @click="handleSubmit"
               class="action-button"
             >
-              {{ userStore.isAuthenticated ? `Xem kết quả (Cần ${tokenCost} tokens)` : 'Đăng nhập để xem kết quả' }}
+              Xem kết quả
             </button>
           </div>
         </div>
@@ -189,7 +180,7 @@
 
       <!-- Result -->
       <transition name="slide-fade">
-        <div v-if="result && isContentAccessible" class="p-6 bg-white rounded-xl shadow-lg border border-gray-100">
+        <div v-if="result" class="p-6 bg-white rounded-xl shadow-lg border border-gray-100">
           <div class="text-center mb-6">
             <h2 class="text-xl md:text-2xl font-bold text-purple-800">
               Kết quả hòa hợp giữa
@@ -336,53 +327,18 @@ const errors = ref({
   general: ''
 });
 const loading = ref(false);
-const tokenCost = ref(15);
-const description = 'Access to detailed compatibility analysis results';
-const {
-  isLoading,
-  errorMessage,
-  errorType,
-  isContentAccessible,
-  hasSufficientTokens,
-  checkAuthAndAccess,
-  performAction,
-  errorAction,
-  navigateToTopup
-} = useProtectedContent(tokenCost.value, description);
+const isLoading = ref(false);
 
-// Navigate to top-up page
-// const navigateToTopup = () => {
-//   if (process.client) {
-//     console.log('Navigating to /nap-token');
-//     try {
-//       router.push('/nap-token').catch((err) => {
-//         console.error('Navigation error:', err);
-//         toast.error('Không thể điều hướng đến trang nạp token. Vui lòng thử lại.', { position: 'top-center' });
-//       });
-//     } catch (err) {
-//       console.error('Error in navigateToTopup:', err);
-//       toast.error('Có lỗi khi điều hướng. Vui lòng kiểm tra lại.', { position: 'top-center' });
-//     }
-//   } else {
-//     console.warn('navigateToTopup called on server-side, ignoring.');
-//   }
-// };
-
-// Get current date for max date input
-const maxDate = computed(() => {
-  const today = new Date();
-  return today.toISOString().split('T')[0];
-});
-
-// Check if number is master number (11, 22)
-const isMasterNumber = (num) => {
-  return num === 11 || num === 22;
+// Clear error messages
+const clearError = (field) => {
+  errors.value[field] = '';
+  errors.value.general = '';
 };
 
-// Calculate life path number from date of birth (YYYY-MM-DD)
+// Calculate life path number from date of birth (DD/MM/YYYY)
 const calculateLifePath = (dob) => {
-  if (!dob) return null;
-  const [year, month, day] = dob.split('-').map(Number);
+  if (!dob || !/^\d{2}\/\d{2}\/\d{4}$/.test(dob)) return null;
+  const [day, month, year] = dob.split('/').map(Number);
   const daySum = Math.floor(day / 10) + (day % 10);
   const monthSum = Math.floor(month / 10) + (month % 10);
   const yearSum = year.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
@@ -391,6 +347,11 @@ const calculateLifePath = (dob) => {
     sum = sum.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
   }
   return sum;
+};
+
+// Check if number is master number (11, 22)
+const isMasterNumber = (num) => {
+  return num === 11 || num === 22;
 };
 
 // Computed properties for life path numbers
@@ -413,75 +374,6 @@ const getScoreBarColorClass = (score) => {
   return 'bg-red-500';
 };
 
-// Clear error messages
-const clearError = () => {
-  errors.value = {
-    name1: '',
-    dob1: '',
-    name2: '',
-    dob2: '',
-    relationshipType: '',
-    general: ''
-  };
-  errorMessage.value = '';
-};
-
-// Fetch user data from API
-const fetchUserData = async () => {
-  if (!userStore.isAuthenticated || !userStore.user?.id) {
-    console.log('User not authenticated, skipping fetchUserData');
-    return;
-  }
-
-  try {
-    const userIdValue = String(userStore.user.id);
-    console.log('Fetching user data for userId:', userIdValue);
-    const response = await $fetch(`/api/users/${userIdValue}`, {
-      method: 'GET'
-    });
-    console.log('API /api/users response:', response);
-    formData.value.name1 = response.user.fullname?.trim() || '';
-    formData.value.dob1 = response.user.birthdate?.split('T')[0] || '';
-  } catch (err) {
-    console.error('Error fetching user data:', err);
-    errors.value.general = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
-    toast.error(errors.value.general, { position: 'top-center' });
-  }
-};
-
-// Initialize authentication and check tokens
-const initializeAuth = async () => {
-  console.log('Initializing auth for CompatibilityAnalysis...');
-  try {
-    await userStore.initialize();
-    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
-    await checkAuthAndAccess();
-    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
-  } catch (err) {
-    console.error('Error initializing auth:', err);
-    errors.value.general = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
-    toast.error(errors.value.general, { position: 'top-center' });
-  }
-};
-
-// Load data on component mount
-onMounted(() => {
-  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
-  if (userStore.isStoreInitialized) {
-    initializeAuth();
-    fetchUserData();
-  }
-});
-
-// Watch for store initialization
-watch(() => userStore.isStoreInitialized, (initialized) => {
-  if (initialized && process.client) {
-    console.log('User store initialized, running initializeAuth and fetchUserData');
-    initializeAuth();
-    fetchUserData();
-  }
-});
-
 // Validate form
 const validateForm = () => {
   errors.value = {
@@ -501,10 +393,22 @@ const validateForm = () => {
   if (!formData.value.dob1) {
     errors.value.dob1 = 'Vui lòng nhập ngày sinh người thứ nhất';
     isValid = false;
+  } else if (!/^\d{2}\/\d{2}\/\d{4}$/.test(formData.value.dob1)) {
+    errors.value.dob1 = 'Vui lòng nhập ngày sinh đúng định dạng DD/MM/YYYY';
+    isValid = false;
   } else {
-    const date = new Date(formData.value.dob1);
-    const today = new Date();
-    if (isNaN(date.getTime()) || date > today) {
+    const match = formData.value.dob1.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    const day = parseInt(match[1], 10);
+    const month = parseInt(match[2], 10);
+    const year = parseInt(match[3], 10);
+    const date = new Date(year, month - 1, day);
+    if (
+      date.getDate() !== day ||
+      date.getMonth() + 1 !== month ||
+      date.getFullYear() !== year ||
+      year < 1900 ||
+      year > new Date().getFullYear()
+    ) {
       errors.value.dob1 = 'Ngày sinh không hợp lệ';
       isValid = false;
     }
@@ -516,10 +420,22 @@ const validateForm = () => {
   if (!formData.value.dob2) {
     errors.value.dob2 = 'Vui lòng nhập ngày sinh người thứ hai';
     isValid = false;
+  } else if (!/^\d{2}\/\d{2}\/\d{4}$/.test(formData.value.dob2)) {
+    errors.value.dob2 = 'Vui lòng nhập ngày sinh đúng định dạng DD/MM/YYYY';
+    isValid = false;
   } else {
-    const date = new Date(formData.value.dob2);
-    const today = new Date();
-    if (isNaN(date.getTime()) || date > today) {
+    const match = formData.value.dob2.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    const day = parseInt(match[1], 10);
+    const month = parseInt(match[2], 10);
+    const year = parseInt(match[3], 10);
+    const date = new Date(year, month - 1, day);
+    if (
+      date.getDate() !== day ||
+      date.getMonth() + 1 !== month ||
+      date.getFullYear() !== year ||
+      year < 1900 ||
+      year > new Date().getFullYear()
+    ) {
       errors.value.dob2 = 'Ngày sinh không hợp lệ';
       isValid = false;
     }
@@ -539,24 +455,10 @@ const handleSubmit = async () => {
     return;
   }
   if (!validateForm()) {
+    toast.error('Vui lòng kiểm tra lại thông tin nhập', { position: 'top-center' });
     return;
   }
-
-  if (isContentAccessible.value) {
-    await getCompatibility();
-  } else {
-    try {
-      await performAction();
-      if (isContentAccessible.value) {
-        await getCompatibility();
-      } else {
-        toast.error(errorMessage.value, { position: 'top-center' });
-      }
-    } catch (err) {
-      console.error('Error in performAction:', err);
-      toast.error(errorMessage.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
-    }
-  }
+  await getCompatibility();
 };
 
 // Get compatibility data from static source
@@ -587,12 +489,11 @@ async function getCompatibility() {
     result.value = compatibilityEntry;
     toast.success('Tính toán hòa hợp hoàn tất!', { position: 'top-center' });
     setTimeout(() => {
-      const resultElement = document.querySelector('[v-if="result && isContentAccessible"]');
+      const resultElement = document.querySelector('[v-if="result"]');
       if (resultElement) {
         resultElement.scrollIntoView({ behavior: 'smooth' });
       }
     }, 100);
-    await checkAuthAndAccess();
   } catch (error) {
     console.error('Error in getCompatibility:', error);
     errors.value.general = error.message || 'Không thể tính toán mức độ hòa hợp!';

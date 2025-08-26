@@ -1,4 +1,3 @@
-```vue
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
     <div class="container mx-auto p-4">
@@ -103,29 +102,10 @@
                   (isLoading || loading) ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
                 ]"
               >
-                {{ isLoading || loading ? 'Đang tải...' : `Xem gợi ý hôm nay (Cần ${tokenCost} token)` }}
+                {{ isLoading || loading ? 'Đang tải...' : 'Xem gợi ý hôm nay' }}
               </button>
-              <div v-if="errorMessage" class="text-red-600 text-center font-medium mt-4">
-                <template v-if="errorType === 'login'">
-                  Vui lòng <button @click="errorAction" class="action-button inline">Đăng Nhập</button> để xem gợi ý hôm nay.
-                </template>
-                <template v-else-if="errorType === 'topup'">
-                  Không đủ token để xem gợi ý hôm nay. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-                </template>
-                <template v-else>
-                  {{ errorMessage }}
-                </template>
-              </div>
-              <div v-else-if="errors.general" class="text-red-600 text-center font-medium mt-4">
+              <div v-if="errors.general" class="text-red-600 text-center font-medium mt-4">
                 {{ errors.general }}
-              </div>
-              <div v-else-if="!isContentAccessible && !isLoading && !loading" class="text-red-600 text-center font-medium mt-4">
-                <template v-if="!userStore.isAuthenticated">
-                  Vui lòng <button @click="errorAction" class="action-button inline">Đăng Nhập</button> để xem gợi ý hôm nay.
-                </template>
-                <template v-else-if="userStore.isAuthenticated && !hasSufficientTokens">
-                  Không đủ token để xem gợi ý hôm nay. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-                </template>
               </div>
             </div>
           </form>
@@ -134,7 +114,7 @@
 
       <!-- Results Section -->
       <transition name="slide-fade">
-        <div v-if="isContentAccessible && recommendations" class="space-y-8">
+        <div v-if="recommendations" class="space-y-8">
           <div v-for="section in resultSections" :key="section.title" class="space-y-6">
             <div v-if="section.type === 'personalDay'" class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
               <div class="flex items-center">
@@ -181,26 +161,10 @@
                     (isLoadingMore || loadingMore) ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
                   ]"
                 >
-                  {{ isLoadingMore || loadingMore ? 'Đang tải...' : `Xem thêm gợi ý món ăn (Cần ${tokenCostMore} token)` }}
+                  {{ isLoadingMore || loadingMore ? 'Đang tải...' : 'Xem thêm gợi ý món ăn' }}
                 </button>
-                <div v-if="errorMessageMore" class="text-red-600 text-center font-medium mt-4">
-                  <template v-if="errorTypeMore === 'login'">
-                    Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý món ăn.
-                  </template>
-                  <template v-else-if="errorTypeMore === 'topup'">
-                    Không đủ token để xem thêm gợi ý món ăn. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-                  </template>
-                  <template v-else>
-                    {{ errorMessageMore }}
-                  </template>
-                </div>
-                <div v-else-if="!isContentAccessibleMore && !isLoadingMore && !loadingMore" class="text-red-600 text-center font-medium mt-4">
-                  <template v-if="!userStore.isAuthenticated">
-                    Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý món ăn.
-                  </template>
-                  <template v-else-if="userStore.isAuthenticated && !hasSufficientTokensMore">
-                    Không đủ token để xem thêm gợi ý món ăn. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-                  </template>
+                <div v-if="errors.general" class="text-red-600 text-center font-medium mt-4">
+                  {{ errors.general }}
                 </div>
               </div>
             </div>
@@ -235,26 +199,10 @@
                     (isLoadingMore || loadingMore) ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
                   ]"
                 >
-                  {{ isLoadingMore || loadingMore ? 'Đang tải...' : `Xem thêm gợi ý đồ uống (Cần ${tokenCostMore} token)` }}
+                  {{ isLoadingMore || loadingMore ? 'Đang tải...' : 'Xem thêm gợi ý đồ uống' }}
                 </button>
-                <div v-if="errorMessageMore" class="text-red-600 text-center font-medium mt-4">
-                  <template v-if="errorTypeMore === 'login'">
-                    Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý đồ uống.
-                  </template>
-                  <template v-else-if="errorTypeMore === 'topup'">
-                    Không đủ token để xem thêm gợi ý đồ uống. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-                  </template>
-                  <template v-else>
-                    {{ errorMessageMore }}
-                  </template>
-                </div>
-                <div v-else-if="!isContentAccessibleMore && !isLoadingMore && !loadingMore" class="text-red-600 text-center font-medium mt-4">
-                  <template v-if="!userStore.isAuthenticated">
-                    Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý đồ uống.
-                  </template>
-                  <template v-else-if="userStore.isAuthenticated && !hasSufficientTokensMore">
-                    Không đủ token để xem thêm gợi ý đồ uống. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-                  </template>
+                <div v-if="errors.general" class="text-red-600 text-center font-medium mt-4">
+                  {{ errors.general }}
                 </div>
               </div>
             </div>
@@ -322,26 +270,10 @@
                       (isLoadingMore || loadingMore) ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
                     ]"
                   >
-                    {{ isLoadingMore || loadingMore ? 'Đang tải...' : `Xem thêm gợi ý insight (Cần ${tokenCostMore} token)` }}
+                    {{ isLoadingMore || loadingMore ? 'Đang tải...' : 'Xem thêm gợi ý insight' }}
                   </button>
-                  <div v-if="errorMessageMore" class="text-red-600 text-center font-medium mt-4">
-                    <template v-if="errorTypeMore === 'login'">
-                      Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý insight.
-                    </template>
-                    <template v-else-if="errorTypeMore === 'topup'">
-                      Không đủ token để xem thêm gợi ý insight. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-                    </template>
-                    <template v-else>
-                      {{ errorMessageMore }}
-                    </template>
-                  </div>
-                  <div v-else-if="!isContentAccessibleMore && !isLoadingMore && !loadingMore" class="text-red-600 text-center font-medium mt-4">
-                    <template v-if="!userStore.isAuthenticated">
-                      Vui lòng <button @click="errorActionMore" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý insight.
-                    </template>
-                    <template v-else-if="userStore.isAuthenticated && !hasSufficientTokensMore">
-                      Không đủ token để xem thêm gợi ý insight. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-                    </template>
+                  <div v-if="errors.general" class="text-red-600 text-center font-medium mt-4">
+                    {{ errors.general }}
                   </div>
                 </div>
               </div>
@@ -382,34 +314,9 @@ const errors = ref({
 });
 const activeTab = ref('Insight hôm nay');
 const tabs = ['Insight hôm nay', 'Đồ ăn', 'Đồ uống'];
-const tokenCost = ref(10);
-const tokenCostMore = ref(5);
 const maxSuggestions = ref(12);
-const description = 'Access to daily numerology recommendations';
-const {
-  isLoading,
-  errorMessage,
-  errorType,
-  isContentAccessible,
-  hasSufficientTokens,
-  checkAuthAndAccess,
-  performAction,
-  errorAction,
-  navigateToTopup,
-} = useProtectedContent(tokenCost.value, description);
-const {
-  isLoading: isLoadingMore,
-  errorMessage: errorMessageMore,
-  errorType: errorTypeMore,
-  isContentAccessible: isContentAccessibleMore,
-  hasSufficientTokens: hasSufficientTokensMore,
-  checkAuthAndAccess: checkAuthAndAccessMore,
-  performAction: performActionMore,
-  errorAction: errorActionMore,
-} = useProtectedContent(tokenCostMore.value, 'Load more numerology recommendations');
-
-// Hàm điều hướng đến trang nạp token
-
+const isLoading = ref(false);
+const isLoadingMore = ref(false);
 
 // Hàm lấy ngày hiện tại định dạng DD/MM/YYYY
 const getCurrentDate = () => {
@@ -468,7 +375,7 @@ const introSection = computed(() => [
   },
 ]);
 
-// Phần được bảo vệ (Kết quả gợi ý)
+// Phần kết quả gợi ý
 const resultSections = computed(() => {
   if (!recommendations.value) return [];
   return [
@@ -491,105 +398,11 @@ const resultSections = computed(() => {
   ];
 });
 
-// Hàm lấy thông tin người dùng từ API
-const fetchUserData = async () => {
-  if (!userStore.isAuthenticated || !userStore.user?.id) {
-    console.log('User not authenticated, skipping fetchUserData');
-    return;
-  }
-  try {
-    const userIdValue = String(userStore.user.id);
-    console.log('Fetching user data for userId:', userIdValue);
-    const response = await $fetch(`/api/users/${userIdValue}`, {
-      method: 'GET',
-    });
-    console.log('API /api/users response:', response);
-    const { fullname, birthdate } = response.user;
-    formData.value.name = fullname?.trim() || '';
-    formData.value.birthDate = birthdate ? formatDateToDDMMYYYY(birthdate.split('T')[0]) : '';
-    if (formData.value.birthDate) {
-      personalDayNumber.value = calculatePersonalDayNumber(formData.value.birthDate, currentDate.value);
-    }
-  } catch (err) {
-    console.error('Error fetching user data:', err);
-    errors.value.general = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
-    toast.error(errors.value.general, { position: 'top-center' });
-  }
-};
-
-// Khởi tạo trạng thái đăng nhập và kiểm tra token
-const initializeAuth = async () => {
-  console.log('Initializing auth for DailyNumerology...');
-  try {
-    await userStore.initialize();
-    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
-    await checkAuthAndAccess();
-    await checkAuthAndAccessMore();
-    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
-    console.log('Auth checked for more, isContentAccessibleMore:', isContentAccessibleMore.value, 'hasSufficientTokensMore:', hasSufficientTokensMore.value);
-  } catch (err) {
-    console.error('Lỗi khi khởi tạo auth:', err);
-    errors.value.general = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
-    toast.error(errors.value.general, { position: 'top-center' });
-  }
-};
-
-// Hàm chuyển tab và kiểm tra quyền truy cập
-const switchTab = async (tab) => {
+// Hàm chuyển tab
+const switchTab = (tab) => {
   activeTab.value = tab;
   loadingMore.value = false; // Reset trạng thái loading khi chuyển tab
-  await checkAuthAndAccessMore();
-  console.log(`Switched to tab: ${tab}, isContentAccessibleMore:`, isContentAccessibleMore.value, 'hasSufficientTokensMore:', hasSufficientTokensMore.value);
 };
-
-// Cập nhật thông tin người dùng khi thay đổi name hoặc birthDate
-watch([() => formData.value.name, () => formData.value.birthDate], async ([newName, newBirthDate]) => {
-  if (!userStore.isStoreInitialized || !userStore.user?.id) return;
-  const currentBirthDate = userStore.user?.birthdate || '';
-  const formattedNewBirthDate = formatDateToYYYYMMDD(newBirthDate);
-  if (newName !== userStore.user?.fullname || formattedNewBirthDate !== currentBirthDate) {
-    try {
-      const response = await $fetch(`/api/users/${userStore.user.id}`, {
-        method: 'PATCH',
-        body: {
-          fullname: newName.trim(),
-          birthdate: formattedNewBirthDate,
-        },
-      });
-      if (response.success) {
-        userStore.setUser({
-          id: userStore.user.id,
-          email: userStore.user?.email || '',
-          fullname: newName.trim(),
-          birthdate: formattedNewBirthDate,
-          tokens: userStore.user?.tokens || 0,
-        });
-        if (newBirthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(newBirthDate)) {
-          personalDayNumber.value = calculatePersonalDayNumber(newBirthDate, currentDate.value);
-        }
-      }
-    } catch (err) {
-      console.error('Lỗi cập nhật thông tin người dùng:', err);
-      errors.value.general = 'Không thể cập nhật thông tin. Vui lòng thử lại.';
-      toast.error(errors.value.general, { position: 'top-center' });
-    }
-  }
-});
-
-// Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
-watch(() => userStore.isStoreInitialized, (initialized) => {
-  if (initialized && process.client) {
-    console.log('User store initialized, running initializeAuth and fetchUserData');
-    initializeAuth();
-    fetchUserData();
-  }
-});
-
-// Theo dõi activeTab để kiểm tra quyền truy cập khi chuyển tab
-watch(activeTab, async () => {
-  await checkAuthAndAccessMore();
-  console.log('Active tab changed, rechecked auth for more:', isContentAccessibleMore.value, hasSufficientTokensMore.value);
-});
 
 // Validate form
 const validateForm = () => {
@@ -639,21 +452,7 @@ const getRecommendations = async () => {
     toast.error('Vui lòng kiểm tra lại thông tin nhập', { position: 'top-center' });
     return;
   }
-  if (isContentAccessible.value) {
-    await fetchRecommendations();
-  } else {
-    try {
-      await performAction();
-      if (isContentAccessible.value) {
-        await fetchRecommendations();
-      } else {
-        toast.error(errorMessage.value, { position: 'top-center' });
-      }
-    } catch (err) {
-      console.error('Error in performAction:', err);
-      toast.error(errorMessage.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
-    }
-  }
+  await fetchRecommendations();
 };
 
 // Hàm gọi API lấy gợi ý
@@ -661,7 +460,7 @@ const fetchRecommendations = async () => {
   loading.value = true;
   errors.value.general = '';
   try {
-    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    const username = 'guest'; // Không cần đăng nhập, sử dụng 'guest'
     let endpoint;
     let body = { birthDate: formData.value.birthDate, numSuggestions: 3, previousItems: [] };
     if (activeTab.value === 'Đồ ăn') {
@@ -688,13 +487,11 @@ const fetchRecommendations = async () => {
     recommendations.value = response.recommendations;
     toast.success('Gợi ý hôm nay đã được tải thành công!', { position: 'top-center' });
     setTimeout(() => {
-      const resultElement = document.querySelector('[v-if="isContentAccessible && recommendations"]');
+      const resultElement = document.querySelector('[v-if="recommendations"]');
       if (resultElement) {
         resultElement.scrollIntoView({ behavior: 'smooth' });
       }
     }, 100);
-    await checkAuthAndAccess();
-    await checkAuthAndAccessMore();
   } catch (error) {
     console.error('Error in fetchRecommendations:', error);
     errors.value.general = error.data?.message || 'Có lỗi xảy ra khi lấy gợi ý!';
@@ -711,29 +508,15 @@ const loadMoreRecommendations = async (type) => {
     return;
   }
   if (!recommendations.value) return;
-
-  if (isContentAccessibleMore.value) {
-    await fetchMoreRecommendations(type);
-  } else {
-    try {
-      await performActionMore();
-      if (isContentAccessibleMore.value) {
-        await fetchMoreRecommendations(type);
-      } else {
-        toast.error(errorMessageMore.value, { position: 'top-center' });
-      }
-    } catch (err) {
-      console.error('Error in performActionMore:', err);
-      toast.error(errorMessageMore.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
-    }
-  }
+  await fetchMoreRecommendations(type);
 };
 
 // Hàm gọi API tải thêm gợi ý
 const fetchMoreRecommendations = async (type) => {
   loadingMore.value = true;
+  errors.value.general = '';
   try {
-    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    const username = 'guest'; // Không cần đăng nhập, sử dụng 'guest'
     let endpoint;
     let body = { birthDate: formData.value.birthDate };
     let previousItems = [];
@@ -771,8 +554,6 @@ const fetchMoreRecommendations = async (type) => {
     toast.success(`Đã tải thêm gợi ý ${type === 'food' ? 'món ăn' : type === 'drink' ? 'đồ uống' : 'insight'} thành công!`, {
       position: 'top-center',
     });
-    await checkAuthAndAccess();
-    await checkAuthAndAccessMore();
   } catch (error) {
     console.error('Error loading more recommendations:', error);
     errors.value.general = error.data?.message || 'Có lỗi khi tải thêm gợi ý!';
@@ -782,12 +563,20 @@ const fetchMoreRecommendations = async (type) => {
   }
 };
 
+// Cập nhật số ngày cá nhân khi birthDate thay đổi
+watch(() => formData.value.birthDate, (newBirthDate) => {
+  if (newBirthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(newBirthDate)) {
+    personalDayNumber.value = calculatePersonalDayNumber(newBirthDate, currentDate.value);
+  } else {
+    personalDayNumber.value = null;
+  }
+});
+
 // Load dữ liệu khi component được mount
 onMounted(() => {
-  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
-  if (userStore.isStoreInitialized) {
-    initializeAuth();
-    fetchUserData();
+  console.log('Component mounted');
+  if (formData.value.birthDate && /^\d{2}\/\d{2}\/\d{4}$/.test(formData.value.birthDate)) {
+    personalDayNumber.value = calculatePersonalDayNumber(formData.value.birthDate, currentDate.value);
   }
 });
 </script>
@@ -814,10 +603,11 @@ onMounted(() => {
   opacity: 0;
 }
 
-
+.action-button {
+  @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white transition-all duration-300 shadow-md;
+}
 
 .action-button.inline {
   @apply mx-1;
 }
 </style>
-```

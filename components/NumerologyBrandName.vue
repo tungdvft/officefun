@@ -22,6 +22,7 @@
                 id="industry"
                 placeholder="Ví dụ: Công nghệ, Thời trang"
                 :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.industry ? 'border-red-500' : 'border-gray-300']"
+                @input="clearError('industry')"
               />
               <p v-if="errors.industry" class="text-red-600 text-sm mt-1">{{ errors.industry }}</p>
             </div>
@@ -33,6 +34,7 @@
                 id="date"
                 placeholder="15/03/2020"
                 :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.date ? 'border-red-500' : 'border-gray-300']"
+                @input="clearError('date')"
               />
               <p v-if="errors.date" class="text-red-600 text-sm mt-1">{{ errors.date }}</p>
             </div>
@@ -45,6 +47,7 @@
               id="ownerName"
               placeholder="Nguyễn Văn A"
               :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.ownerName ? 'border-red-500' : 'border-gray-300']"
+              @input="clearError('ownerName')"
             />
             <p v-if="errors.ownerName" class="text-red-600 text-sm mt-1">{{ errors.ownerName }}</p>
           </div>
@@ -56,6 +59,7 @@
               rows="3"
               placeholder="Ví dụ: Có chữ 'hot', ngắn gọn, sang trọng..."
               class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition resize-none"
+              @input="clearError('general')"
             ></textarea>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -106,42 +110,19 @@
               ></path>
             </svg>
           </div>
-          <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
-            <template v-if="errorType === 'login'">
-              Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để tạo gợi ý tên thương hiệu.
-            </template>
-            <template v-else-if="errorType === 'topup'">
-              Không đủ token để tạo gợi ý tên thương hiệu. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-            </template>
-            <template v-else>
-              {{ errorMessage }}
-            </template>
-          </div>
           <div v-else-if="errors.general" class="text-red-600 text-center font-medium p-6">
             {{ errors.general }}
           </div>
-          <div v-else-if="!isContentAccessible" class="text-center p-6">
-            <template v-if="!userStore.isAuthenticated">
-              <p class="text-red-600 font-medium mb-4">
-                Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để tạo gợi ý tên thương hiệu.
-              </p>
-            </template>
-            <template v-else-if="userStore.isAuthenticated && !hasSufficientTokens">
-              <p class="text-red-600 font-medium mb-4">
-                Không đủ token để tạo gợi ý tên thương hiệu. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-              </p>
-            </template>
-            <template v-else>
-              <button @click="generateReport" class="action-button">
-                Tạo gợi ý tên thương hiệu (Cần {{ tokenCost }} tokens)
-              </button>
-            </template>
+          <div v-else class="text-center p-6">
+            <button @click="generateReport" class="action-button">
+              Tạo gợi ý tên thương hiệu
+            </button>
           </div>
         </div>
 
         <!-- Results Section -->
         <transition name="slide-fade">
-          <div v-if="numerologyData && isContentAccessible" class="mt-8 space-y-6">
+          <div v-if="numerologyData" class="mt-8 space-y-6">
             <!-- Thông tin đầu vào -->
             <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
               <h3 class="text-lg font-semibold text-purple-700 flex items-center">
@@ -325,7 +306,7 @@
                 </div>
               </div>
               <!-- Show More Suggestions Button -->
-              <div v-if="numerologyData.suggestions.length < maxSuggestions && isContentAccessible" class="text-center p-6">
+              <div v-if="numerologyData.suggestions.length < maxSuggestions" class="text-center p-6">
                 <div v-if="isLoadingMore || loadingMore" class="flex justify-center">
                   <svg
                     class="animate-spin h-8 w-8 text-teal-600"
@@ -341,33 +322,10 @@
                     ></path>
                   </svg>
                 </div>
-                <div v-else-if="errorMessageMore" class="text-red-600 text-center font-medium p-6">
-                  <template v-if="errorTypeMore === 'login'">
-                    Vui lòng <button @click="errorActionMore" class="action-button">Đăng Nhập</button> để xem thêm gợi ý.
-                  </template>
-                  <template v-else-if="errorTypeMore === 'topup'">
-                    Không đủ token để xem thêm gợi ý. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-                  </template>
-                  <template v-else>
-                    {{ errorMessageMore }}
-                  </template>
-                </div>
-                <div v-else-if="!isContentAccessibleMore" class="text-center p-6">
-                  <template v-if="!userStore.isAuthenticated">
-                    <p class="text-red-600 font-medium mb-4">
-                      Vui lòng <button @click="errorActionMore" class="action-button">Đăng Nhập</button> để xem thêm gợi ý.
-                    </p>
-                  </template>
-                  <template v-else-if="userStore.isAuthenticated && !hasSufficientTokensForMore">
-                    <p class="text-red-600 font-medium mb-4">
-                      Không đủ token để xem thêm gợi ý. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-                    </p>
-                  </template>
-                  <template v-else>
-                    <button @click="showMoreSuggestions" class="action-button">
-                      Xem thêm gợi ý (Cần {{ tokenCostMore }} tokens)
-                    </button>
-                  </template>
+                <div v-else class="text-center p-6">
+                  <button @click="showMoreSuggestions" class="action-button">
+                    Xem thêm gợi ý
+                  </button>
                 </div>
               </div>
             </div>
@@ -403,14 +361,9 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { toast } from 'vue3-toastify';
-import { useProtectedContent } from '~/composables/useProtectedContent';
-import { useUserStore } from '~/stores/user';
-import { useRouter } from 'vue-router';
 
 definePageMeta({ layout: 'view' });
 
-const router = useRouter();
-const userStore = useUserStore();
 const formData = ref({
   industry: '',
   date: '',
@@ -430,94 +383,12 @@ const errors = ref({
 });
 const totalSuggestions = ref(0);
 const existingNames = ref([]);
-const tokenCost = ref(50); // Lần đầu: 50 tokens
-const tokenCostMore = ref(10); // Tải thêm: 10 tokens
 const maxSuggestions = ref(30);
-const description = 'Access to brand name generation based on numerology';
-const {
-  isLoading,
-  errorMessage,
-  errorType,
-  isContentAccessible,
-  hasSufficientTokens,
-  checkAuthAndAccess,
-  performAction,
-  errorAction,
-  navigateToTopup: navigateToTopupMain,
-} = useProtectedContent(tokenCost.value, description);
-const {
-  isLoading: isLoadingMore,
-  errorMessage: errorMessageMore,
-  errorType: errorTypeMore,
-  isContentAccessible: isContentAccessibleMore,
-  hasSufficientTokens: hasSufficientTokensForMore,
-  checkAuthAndAccess: checkAuthAndAccessMore,
-  performAction: performActionMore,
-  errorAction: errorActionMore,
-  navigateToTopup: navigateToTopupMore,
-} = useProtectedContent(tokenCostMore.value, 'Load more brand name suggestions');
-
-// Hàm điều hướng đến trang nạp token
-const navigateToTopup = () => {
-  if (process.client) {
-    console.log('Navigating to /nap-token');
-    try {
-      router.push('/nap-token').catch((err) => {
-        console.error('Navigation error:', err);
-        toast.error('Không thể điều hướng đến trang nạp token. Vui lòng thử lại.', { position: 'top-center' });
-      });
-    } catch (err) {
-      console.error('Error in navigateToTopup:', err);
-      toast.error('Có lỗi khi điều hướng. Vui lòng kiểm tra lại.', { position: 'top-center' });
-    }
-  } else {
-    console.warn('navigateToTopup called on server-side, ignoring.');
-  }
-};
-
-// Hàm lấy thông tin người dùng từ API
-const fetchUserData = async () => {
-  if (!userStore.isAuthenticated || !userStore.user?.id) {
-    console.log('User not authenticated, skipping fetchUserData');
-    return;
-  }
-
-  try {
-    const userIdValue = String(userStore.user.id);
-    console.log('Fetching user data for userId:', userIdValue);
-    const response = await $fetch(`/api/users/${userIdValue}`, {
-      method: 'GET',
-    });
-    console.log('API /api/users response:', response);
-    const { fullname } = response.user;
-    formData.value.ownerName = fullname?.trim() || '';
-  } catch (err) {
-    console.error('Error fetching user data:', err);
-    errors.value.general = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
-    toast.error(errors.value.general, { position: 'top-center' });
-  }
-};
-
-// Khởi tạo trạng thái đăng nhập và kiểm tra token
-const initializeAuth = async () => {
-  console.log('Initializing auth for BrandNumerology...');
-  try {
-    await userStore.initialize();
-    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
-    await checkAuthAndAccess();
-    await checkAuthAndAccessMore();
-    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
-    console.log('Auth checked for more, isContentAccessibleMore:', isContentAccessibleMore.value, 'hasSufficientTokensForMore:', hasSufficientTokensForMore.value);
-  } catch (err) {
-    console.error('Lỗi khi khởi tạo auth:', err);
-    errors.value.general = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
-    toast.error(errors.value.general, { position: 'top-center' });
-  }
-};
+const isLoading = ref(false);
+const isLoadingMore = ref(false);
 
 // Load saved data from localStorage on mount
 onMounted(() => {
-  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
   const savedData = localStorage.getItem('brandNumerologyData');
   if (savedData) {
     const parsed = JSON.parse(savedData);
@@ -535,10 +406,6 @@ onMounted(() => {
       existingNames.value = numerologyData.value.suggestions.map((s) => s.name);
     }
   }
-  if (userStore.isStoreInitialized) {
-    initializeAuth();
-    fetchUserData();
-  }
 });
 
 // Save data to localStorage on change
@@ -549,14 +416,81 @@ watch([formData, numerologyData], () => {
   }));
 }, { deep: true });
 
-// Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
-watch(() => userStore.isStoreInitialized, (initialized) => {
-  if (initialized && process.client) {
-    console.log('User store initialized, running initializeAuth and fetchUserData');
-    initializeAuth();
-    fetchUserData();
+// Hàm xóa lỗi
+const clearError = (field) => {
+  errors.value[field] = '';
+  errors.value.general = '';
+};
+
+// Hàm tính số đường đời
+const calculateLifePath = (dob) => {
+  if (!dob || !/^\d{2}\/\d{2}\/\d{4}$/.test(dob)) return null;
+  const [day, month, year] = dob.split('/').map(Number);
+  const daySum = Math.floor(day / 10) + (day % 10);
+  const monthSum = Math.floor(month / 10) + (month % 10);
+  const yearSum = year.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
+  let sum = daySum + monthSum + yearSum;
+  while (sum > 9 && sum !== 11 && sum !== 22) {
+    sum = sum.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
   }
-});
+  return sum;
+};
+
+// Hàm tính số linh hồn (dựa trên nguyên âm trong tên)
+const calculateSoulNumber = (name) => {
+  if (!name) return null;
+  const vowels = ['a', 'e', 'i', 'o', 'u', 'ă', 'â', 'ê', 'ô', 'ơ', 'ư'];
+  const vowelSum = name.toLowerCase().split('')
+    .filter(char => vowels.includes(char))
+    .map(char => {
+      const values = { 'a': 1, 'ă': 1, 'â': 1, 'e': 5, 'ê': 5, 'i': 9, 'o': 6, 'ô': 6, 'ơ': 6, 'u': 3, 'ư': 3 };
+      return values[char] || 0;
+    })
+    .reduce((acc, val) => acc + val, 0);
+  let sum = vowelSum;
+  while (sum > 9 && sum !== 11 && sum !== 22) {
+    sum = sum.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
+  }
+  return sum;
+};
+
+// Hàm tính số định mệnh (dựa trên toàn bộ tên)
+const calculateDestinyNumber = (name) => {
+  if (!name) return null;
+  const letterValues = {
+    'a': 1, 'ă': 1, 'â': 1, 'b': 2, 'c': 3, 'd': 4, 'đ': 4, 'e': 5, 'ê': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9,
+    'j': 1, 'k': 2, 'l': 3, 'm': 4, 'n': 5, 'o': 6, 'ô': 6, 'ơ': 6, 'p': 7, 'q': 8, 'r': 9, 's': 1, 't': 2,
+    'u': 3, 'ư': 3, 'v': 4, 'w': 5, 'x': 6, 'y': 7, 'z': 8
+  };
+  const nameSum = name.toLowerCase().split('')
+    .map(char => letterValues[char] || 0)
+    .reduce((acc, val) => acc + val, 0);
+  let sum = nameSum;
+  while (sum > 9 && sum !== 11 && sum !== 22) {
+    sum = sum.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
+  }
+  return sum;
+};
+
+// Hàm tính số nhân cách (dựa trên phụ âm trong tên)
+const calculatePersonalityNumber = (name) => {
+  if (!name) return null;
+  const vowels = ['a', 'e', 'i', 'o', 'u', 'ă', 'â', 'ê', 'ô', 'ơ', 'ư'];
+  const letterValues = {
+    'a': 1, 'ă': 1, 'â': 1, 'b': 2, 'c': 3, 'd': 4, 'đ': 4, 'e': 5, 'ê': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9,
+    'j': 1, 'k': 2, 'l': 3, 'm': 4, 'n': 5, 'o': 6, 'ô': 6, 'ơ': 6, 'p': 7, 'q': 8, 'r': 9, 's': 1, 't': 2,
+    'u': 3, 'ư': 3, 'v': 4, 'w': 5, 'x': 6, 'y': 7, 'z': 8
+  };
+  const consonantSum = name.toLowerCase().split('')
+    .filter(char => !vowels.includes(char))
+    .map(char => letterValues[char] || 0)
+    .reduce((acc, val) => acc + val, 0);
+  let sum = consonantSum;
+  while (sum > 9 && sum !== 11 && sum !== 22) {
+    sum = sum.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
+  }
+  return sum;
+};
 
 // Validate form
 const validateForm = () => {
@@ -603,7 +537,7 @@ const validateForm = () => {
   return isValid;
 };
 
-// Hàm tạo gợi ý tên thương hiệu
+// Hàm tạo gợi ý tên thương hiệu (giả lập)
 const generateReport = async () => {
   if (!process.client) {
     console.warn('generateReport called on server-side, ignoring.');
@@ -614,147 +548,137 @@ const generateReport = async () => {
     return;
   }
 
-  if (isContentAccessible.value) {
-    await fetchBrandNames();
-  } else {
-    try {
-      await performAction();
-      if (isContentAccessible.value) {
-        await fetchBrandNames();
-      } else {
-        toast.error(errorMessage.value, { position: 'top-center' });
-      }
-    } catch (err) {
-      console.error('Error in performAction:', err);
-      toast.error(errorMessage.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
-    }
-  }
-};
-
-// Hàm gọi API để tạo gợi ý tên thương hiệu
-async function fetchBrandNames() {
   loading.value = true;
   errors.value.general = '';
   try {
-    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
-    console.log('Sending request to /api/numerology/brand with data:', formData.value);
-    const response = await $fetch('/api/numerology/brand', {
-      method: 'POST',
-      headers: {
-        'x-username': encodeURIComponent(username),
-        'Content-Type': 'application/json; charset=UTF-8',
+    const lifePath = calculateLifePath(formData.value.date);
+    const soul = calculateSoulNumber(formData.value.ownerName);
+    const destiny = calculateDestinyNumber(formData.value.ownerName);
+    const personality = calculatePersonalityNumber(formData.value.ownerName);
+    if (!lifePath || !soul || !destiny || !personality) {
+      throw new Error('Không thể tính toán các con số thần số học từ thông tin nhập.');
+    }
+
+    // Dữ liệu tên thương hiệu giả lập dựa trên số đường đời và ngành nghề
+    const brandNameMap = {
+      1: {
+        suggestions: formData.value.language === 'english' ? [
+          { name: 'NovaLead', soul: 1, destiny: 1, desc: 'Tên thể hiện sự dẫn đầu và đổi mới, phù hợp với ngành công nghệ.', logoSuggestion: 'Logo hình ngôi sao với gradient xanh-tím.' },
+          { name: 'PioneerTech', soul: 5, destiny: 3, desc: 'Tượng trưng cho sự tiên phong và sáng tạo.', logoSuggestion: 'Logo chữ P cách điệu với vòng tròn năng lượng.' },
+          { name: 'VisionPeak', soul: 9, destiny: 7, desc: 'Phù hợp với thương hiệu muốn tạo tầm nhìn lớn.', logoSuggestion: 'Logo hình núi với ánh sáng đỉnh.' },
+        ] : [
+          { name: 'TânLãnh', soul: 1, destiny: 1, desc: 'Tên thể hiện sự dẫn đầu và đổi mới, phù hợp với ngành công nghệ.', logoSuggestion: 'Logo hình ngôi sao với gradient xanh-tím.' },
+          { name: 'TiênPhong', soul: 5, destiny: 3, desc: 'Tượng trưng cho sự tiên phong và sáng tạo.', logoSuggestion: 'Logo chữ T cách điệu với vòng tròn năng lượng.' },
+          { name: 'TầmCao', soul: 9, destiny: 7, desc: 'Phù hợp với thương hiệu muốn tạo tầm nhìn lớn.', logoSuggestion: 'Logo hình núi với ánh sáng đỉnh.' },
+        ],
+        lifePathDesc: 'Số 1 biểu thị sự lãnh đạo, độc lập và sáng tạo.',
+        soulDesc: 'Số linh hồn thể hiện mong muốn dẫn đầu và tạo dấu ấn.',
+        personalityDesc: 'Phong cách bên ngoài mạnh mẽ, tự tin.',
+        destinyDesc: 'Sứ mệnh thương hiệu là tiên phong và đổi mới.',
+        generalAnalysis: `Thương hiệu trong ngành ${formData.value.industry} nên tập trung vào sự đổi mới và dẫn đầu thị trường. Số chủ đạo ${lifePath} cho thấy năng lượng mạnh mẽ, phù hợp với các thương hiệu muốn tạo dấu ấn độc đáo. ${formData.value.extraRequest ? 'Yêu cầu bổ sung: ' + formData.value.extraRequest : ''}`,
+        brandAdvice: 'Xây dựng thương hiệu với hình ảnh mạnh mẽ, sử dụng các yếu tố như logo hình học và màu sắc nổi bật.',
       },
-      body: {
-        ...formData.value,
-        extraRequest: `${formData.value.extraRequest || ''} Tên bằng ${formData.value.language === 'english' ? 'tiếng Anh' : 'tiếng Việt'}`.trim(),
-        count: 3,
-        excludeNames: [],
+      2: {
+        suggestions: formData.value.language === 'english' ? [
+          { name: 'HarmonyCo', soul: 2, destiny: 2, desc: 'Tên gợi sự hòa hợp, phù hợp với ngành thời trang hoặc dịch vụ.', logoSuggestion: 'Logo hình vòng tròn lồng ghép, màu pastel.' },
+          { name: 'UnityVibe', soul: 6, destiny: 4, desc: 'Tạo cảm giác cộng đồng và tin cậy.', logoSuggestion: 'Logo hình lá cây hoặc trái tim.' },
+          { name: 'ConnectSphere', soul: 8, destiny: 6, desc: 'Phù hợp với thương hiệu tập trung vào kết nối.', logoSuggestion: 'Logo hình cầu với các đường liên kết.' },
+        ] : [
+          { name: 'HòaHợp', soul: 2, destiny: 2, desc: 'Tên gợi sự hòa hợp, phù hợp với ngành thời trang hoặc dịch vụ.', logoSuggestion: 'Logo hình vòng tròn lồng ghép, màu pastel.' },
+          { name: 'ĐồngTâm', soul: 6, destiny: 4, desc: 'Tạo cảm giác cộng đồng và tin cậy.', logoSuggestion: 'Logo hình lá cây hoặc trái tim.' },
+          { name: 'KếtNối', soul: 8, destiny: 6, desc: 'Phù hợp với thương hiệu tập trung vào kết nối.', logoSuggestion: 'Logo hình cầu với các đường liên kết.' },
+        ],
+        lifePathDesc: 'Số 2 biểu thị sự hợp tác, hòa hợp và nhạy bén.',
+        soulDesc: 'Số linh hồn thể hiện mong muốn tạo sự gắn kết và hỗ trợ.',
+        personalityDesc: 'Phong cách bên ngoài nhẹ nhàng, dễ gần.',
+        destinyDesc: 'Sứ mệnh thương hiệu là xây dựng cộng đồng và sự tin cậy.',
+        generalAnalysis: `Thương hiệu trong ngành ${formData.value.industry} nên tập trung vào sự kết nối và tạo niềm tin. Số chủ đạo ${lifePath} cho thấy năng lượng hòa hợp, phù hợp với các thương hiệu dịch vụ hoặc cộng đồng. ${formData.value.extraRequest ? 'Yêu cầu bổ sung: ' + formData.value.extraRequest : ''}`,
+        brandAdvice: 'Sử dụng màu sắc nhẹ nhàng và logo mang tính biểu tượng cho sự đoàn kết, như vòng tròn hoặc hình trái tim.',
       },
-    });
-    console.log('Response from /api/numerology/brand:', response);
-    numerologyData.value = response.numerology;
-    totalSuggestions.value = response.numerology.suggestions.length;
-    existingNames.value = response.numerology.suggestions.map((s) => s.name);
-    await checkAuthAndAccess();
-    await checkAuthAndAccessMore();
+      // Thêm các số khác nếu cần
+    };
+
+    numerologyData.value = {
+      lifePath,
+      soul,
+      personality,
+      destiny,
+      lifePathDesc: brandNameMap[lifePath]?.lifePathDesc || 'Năng lượng dẫn đầu và sáng tạo.',
+      soulDesc: brandNameMap[lifePath]?.soulDesc || 'Mong muốn tạo dấu ấn cá nhân.',
+      personalityDesc: brandNameMap[lifePath]?.personalityDesc || 'Phong cách mạnh mẽ, tự tin.',
+      destinyDesc: brandNameMap[lifePath]?.destinyDesc || 'Sứ mệnh tiên phong và đổi mới.',
+      generalAnalysis: brandNameMap[lifePath]?.generalAnalysis || `Thương hiệu trong ngành ${formData.value.industry} nên tập trung vào sự sáng tạo và đổi mới.`,
+      suggestions: brandNameMap[lifePath]?.suggestions || [],
+      brandAdvice: brandNameMap[lifePath]?.brandAdvice || 'Tập trung xây dựng thương hiệu với hình ảnh độc đáo và sáng tạo.',
+    };
+
+    totalSuggestions.value = numerologyData.value.suggestions.length;
+    existingNames.value = numerologyData.value.suggestions.map(s => s.name);
+
     toast.success('Tạo gợi ý tên thương hiệu hoàn tất!', { position: 'top-center' });
-    // Scroll to result
     setTimeout(() => {
-      const resultElement = document.querySelector('[v-if="numerologyData && isContentAccessible"]');
+      const resultElement = document.querySelector('[v-if="numerologyData"]');
       if (resultElement) {
         resultElement.scrollIntoView({ behavior: 'smooth' });
       }
     }, 100);
   } catch (error) {
-    console.error('Error in fetchBrandNames:', error);
-    errors.value.general = error.data?.message || 'Có lỗi xảy ra khi tạo gợi ý tên thương hiệu!';
+    console.error('Error in generateReport:', error);
+    errors.value.general = error.message || 'Có lỗi xảy ra khi tạo gợi ý tên thương hiệu!';
     toast.error(errors.value.general, { position: 'top-center' });
   } finally {
     loading.value = false;
   }
-}
+};
 
-// Hàm tải thêm gợi ý
+// Hàm tải thêm gợi ý (giả lập)
 const showMoreSuggestions = async () => {
   if (!process.client) {
     console.warn('showMoreSuggestions called on server-side, ignoring.');
     return;
   }
+  if (!numerologyData.value) return;
   if (totalSuggestions.value >= maxSuggestions.value) {
     toast.info('Đã đạt số lượng tối đa 30 gợi ý tên thương hiệu!', { position: 'top-center' });
     return;
   }
 
-  if (isContentAccessibleMore.value) {
-    await fetchMoreSuggestions();
-  } else {
-    try {
-      await performActionMore();
-      if (isContentAccessibleMore.value) {
-        await fetchMoreSuggestions();
-      } else {
-        toast.error(errorMessageMore.value, { position: 'top-center' });
-      }
-    } catch (err) {
-      console.error('Error in performActionMore:', err);
-      toast.error(errorMessageMore.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
-    }
-  }
-};
-
-// Hàm gọi API để tải thêm gợi ý
-async function fetchMoreSuggestions() {
   loadingMore.value = true;
-  errors.value.general = '';
   try {
-    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
-    console.log('Sending request to /api/numerology/brand for more suggestions');
-    const response = await $fetch('/api/numerology/brand', {
-      method: 'POST',
-      headers: {
-        'x-username': encodeURIComponent(username),
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: {
-        ...formData.value,
-        extraRequest: `${formData.value.extraRequest || ''} Tên bằng ${formData.value.language === 'english' ? 'tiếng Anh' : 'tiếng Việt'}`.trim(),
-        count: 3,
-        excludeNames: existingNames.value,
-      },
-    });
-    console.log('Response from /api/numerology/brand (more suggestions):', response);
-    if (response.numerology && response.numerology.suggestions) {
-      numerologyData.value.suggestions = [
-        ...numerologyData.value.suggestions,
-        ...response.numerology.suggestions,
-      ];
+    const lifePath = calculateLifePath(formData.value.date);
+    const additionalNames = {
+      1: formData.value.language === 'english' ? [
+        { name: 'InnovateCore', soul: 3, destiny: 5, desc: 'Tên gợi sự sáng tạo và cốt lõi mạnh mẽ.', logoSuggestion: 'Logo hình lõi năng lượng với gradient tím.' },
+      ] : [
+        { name: 'SángTạo', soul: 3, destiny: 5, desc: 'Tên gợi sự sáng tạo và cốt lõi mạnh mẽ.', logoSuggestion: 'Logo hình lõi năng lượng với gradient tím.' },
+      ],
+      2: formData.value.language === 'english' ? [
+        { name: 'SyncWave', soul: 4, destiny: 7, desc: 'Tên gợi sự đồng bộ và năng lượng tích cực.', logoSuggestion: 'Logo hình sóng với màu xanh pastel.' },
+      ] : [
+        { name: 'ĐồngSóng', soul: 4, destiny: 7, desc: 'Tên gợi sự đồng bộ và năng lượng tích cực.', logoSuggestion: 'Logo hình sóng với màu xanh pastel.' },
+      ],
+    };
+
+    const newName = additionalNames[lifePath]?.[0];
+    if (newName && !existingNames.value.includes(newName.name)) {
+      numerologyData.value.suggestions.push(newName);
       totalSuggestions.value = numerologyData.value.suggestions.length;
-      existingNames.value = numerologyData.value.suggestions.map((s) => s.name);
-      await checkAuthAndAccess();
-      await checkAuthAndAccessMore();
-      toast.success(`Đã thêm ${response.numerology.suggestions.length} gợi ý tên mới!`, { position: 'top-center' });
+      existingNames.value = numerologyData.value.suggestions.map(s => s.name);
+      toast.success('Đã thêm gợi ý tên mới!', { position: 'top-center' });
+    } else {
+      throw new Error('Không tìm thấy gợi ý tên phù hợp để thêm.');
     }
   } catch (error) {
-    console.error('Error loading more suggestions:', error);
-    errors.value.general = error.data?.message || 'Không thể tải thêm gợi ý tên!';
+    console.error('Error in showMoreSuggestions:', error);
+    errors.value.general = error.message || 'Không thể tải thêm gợi ý tên!';
     toast.error(errors.value.general, { position: 'top-center' });
   } finally {
     loadingMore.value = false;
   }
-}
+};
 </script>
 
 <style scoped>
-/* Custom transitions */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
 .slide-fade-enter-active {
   transition: all 0.3s ease-out;
 }

@@ -1,4 +1,3 @@
-
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
     <div class="container mx-auto p-4">
@@ -20,6 +19,7 @@
                   id="name"
                   placeholder="Nguyễn Văn A"
                   :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.name ? 'border-red-500' : 'border-gray-300']"
+                  @input="clearError('name')"
                 />
                 <p v-if="errors.name" class="text-red-600 text-sm mt-1">{{ errors.name }}</p>
               </div>
@@ -31,6 +31,7 @@
                   id="birthdate"
                   placeholder="15/03/1995"
                   :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.birthdate ? 'border-red-500' : 'border-gray-300']"
+                  @input="clearError('birthdate')"
                 />
                 <p v-if="errors.birthdate" class="text-red-600 text-sm mt-1">{{ errors.birthdate }}</p>
               </div>
@@ -43,6 +44,7 @@
                 id="currentJob"
                 placeholder="Ví dụ: Lập trình viên, Giáo viên..."
                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+                @input="clearError('general')"
               />
             </div>
             <!-- Phần thông báo lỗi, trạng thái tải, hoặc nút hành động -->
@@ -61,44 +63,21 @@
                 ></path>
               </svg>
             </div>
-            <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
-              <template v-if="errorType === 'login'">
-                Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để xem định hướng nghề nghiệp.
-              </template>
-              <template v-else-if="errorType === 'topup'">
-                Không đủ token để xem định hướng nghề nghiệp. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-              </template>
-              <template v-else>
-                {{ errorMessage }}
-              </template>
-            </div>
             <div v-else-if="errors.general" class="text-red-600 text-center font-medium p-6">
               {{ errors.general }}
             </div>
-            <div v-else-if="!isContentAccessible" class="text-center p-6">
-              <template v-if="!userStore.isAuthenticated">
-                <p class="text-red-600 font-medium mb-4">
-                  Vui lòng <button @click="errorAction" class="action-button">Đăng Nhập</button> để xem định hướng nghề nghiệp.
-                </p>
-              </template>
-              <template v-else-if="userStore.isAuthenticated && !hasSufficientTokens">
-                <p class="text-red-600 font-medium mb-4">
-                  Không đủ token để xem định hướng nghề nghiệp. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-                </p>
-              </template>
-              <template v-else>
-                <button @click="getCareerGuidance" class="action-button">
-                  Xem định hướng nghề nghiệp (Cần {{ tokenCost }} token)
-                </button>
-              </template>
+            <div v-else class="text-center p-6">
+              <button @click="getCareerGuidance" class="action-button">
+                Xem định hướng nghề nghiệp
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Phần được bảo vệ (Kết quả định hướng nghề nghiệp) -->
+      <!-- Phần kết quả định hướng nghề nghiệp -->
       <transition name="slide-fade">
-        <div v-if="isContentAccessible && result" class="space-y-8">
+        <div v-if="result" class="space-y-8">
           <div v-for="section in protectedSections" :key="section.title" class="space-y-6">
             <div v-if="section.type === 'overview' || section.type === 'advice'" class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
               <h3 class="text-xl font-semibold text-purple-700 mb-4 flex items-center">
@@ -161,7 +140,7 @@
                   <p class="text-gray-600"><strong>Xu hướng tương lai:</strong> {{ suggestion.trends }}</p>
                 </div>
               </div>
-              <div v-if="section.suggestions.length < maxSuggestions && isContentAccessible" class="text-center p-6">
+              <div v-if="section.suggestions.length < maxSuggestions" class="text-center p-6">
                 <div v-if="isLoadingMore || loadingMore" class="flex justify-center">
                   <svg
                     class="animate-spin h-8 w-8 text-teal-600"
@@ -177,33 +156,10 @@
                     ></path>
                   </svg>
                 </div>
-                <div v-else-if="errorMessageMore" class="text-red-600 text-center font-medium p-6">
-                  <template v-if="errorTypeMore === 'login'">
-                    Vui lòng <button @click="errorActionMore" class="action-button">Đăng Nhập</button> để xem thêm nghề nghiệp.
-                  </template>
-                  <template v-else-if="errorTypeMore === 'topup'">
-                    Không đủ token để xem thêm nghề nghiệp. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-                  </template>
-                  <template v-else>
-                    {{ errorMessageMore }}
-                  </template>
-                </div>
-                <div v-else-if="!isContentAccessibleMore" class="text-center p-6">
-                  <template v-if="!userStore.isAuthenticated">
-                    <p class="text-red-600 font-medium mb-4">
-                      Vui lòng <button @click="errorActionMore" class="action-button">Đăng Nhập</button> để xem thêm nghề nghiệp.
-                    </p>
-                  </template>
-                  <template v-else-if="userStore.isAuthenticated && !hasSufficientTokensMore">
-                    <p class="text-red-600 font-medium mb-4">
-                      Không đủ token để xem thêm nghề nghiệp. Hãy <button @click="navigateToTopup" class="action-button">Nạp thêm token</button> để trải nghiệm đầy đủ tính năng nhé!
-                    </p>
-                  </template>
-                  <template v-else>
-                    <button @click="loadMoreCareers" class="action-button">
-                      Xem thêm nghề nghiệp phù hợp (Cần {{ tokenCostMore }} token)
-                    </button>
-                  </template>
+                <div v-else class="text-center p-6">
+                  <button @click="loadMoreCareers" class="action-button">
+                    Xem thêm nghề nghiệp phù hợp
+                  </button>
                 </div>
               </div>
             </div>
@@ -215,16 +171,11 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed } from 'vue';
 import { toast } from 'vue3-toastify';
-import { useProtectedContent } from '~/composables/useProtectedContent';
-import { useUserStore } from '~/stores/user';
-import { useRouter } from 'vue-router';
 
 definePageMeta({ layout: 'view' });
 
-const router = useRouter();
-const userStore = useUserStore();
 const formData = ref({
   name: '',
   birthdate: '',
@@ -238,50 +189,9 @@ const errors = ref({
   birthdate: '',
   general: '',
 });
-const tokenCost = ref(30);
-const tokenCostMore = ref(10);
 const maxSuggestions = ref(12);
-const description = 'Access to career guidance based on numerology';
-const {
-  isLoading,
-  errorMessage,
-  errorType,
-  isContentAccessible,
-  hasSufficientTokens,
-  checkAuthAndAccess,
-  performAction,
-  errorAction,
-  navigateToTopup: navigateToTopupMain,
-} = useProtectedContent(tokenCost.value, description);
-const {
-  isLoading: isLoadingMore,
-  errorMessage: errorMessageMore,
-  errorType: errorTypeMore,
-  isContentAccessible: isContentAccessibleMore,
-  hasSufficientTokens: hasSufficientTokensMore,
-  checkAuthAndAccess: checkAuthAndAccessMore,
-  performAction: performActionMore,
-  errorAction: errorActionMore,
-  navigateToTopup: navigateToTopupMore,
-} = useProtectedContent(tokenCostMore.value, 'Load more career suggestions');
-
-// Hàm điều hướng đến trang nạp token
-const navigateToTopup = () => {
-  if (process.client) {
-    console.log('Navigating to /nap-token');
-    try {
-      router.push('/nap-token').catch((err) => {
-        console.error('Navigation error:', err);
-        toast.error('Không thể điều hướng đến trang nạp token. Vui lòng thử lại.', { position: 'top-center' });
-      });
-    } catch (err) {
-      console.error('Error in navigateToTopup:', err);
-      toast.error('Có lỗi khi điều hướng. Vui lòng kiểm tra lại.', { position: 'top-center' });
-    }
-  } else {
-    console.warn('navigateToTopup called on server-side, ignoring.');
-  }
-};
+const isLoading = ref(false);
+const isLoadingMore = ref(false);
 
 // Phần không bảo vệ (Tiêu đề, mô tả, form nhập thông tin)
 const introSection = computed(() => [
@@ -296,7 +206,7 @@ const introSection = computed(() => [
   },
 ]);
 
-// Phần được bảo vệ (Kết quả định hướng nghề nghiệp)
+// Phần kết quả định hướng nghề nghiệp
 const protectedSections = computed(() => {
   if (!result.value) return [];
   return [
@@ -360,71 +270,61 @@ const protectedSections = computed(() => {
   ];
 });
 
-// Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
-const formatDateToDDMMYYYY = (dateStr) => {
-  if (!dateStr) return '';
-  const [year, month, day] = dateStr.split('-').map(Number);
-  return `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
+// Hàm xóa lỗi
+const clearError = (field) => {
+  errors.value[field] = '';
+  errors.value.general = '';
 };
 
-// Hàm lấy thông tin người dùng từ API
-const fetchUserData = async () => {
-  if (!userStore.isAuthenticated || !userStore.user?.id) {
-    console.log('User not authenticated, skipping fetchUserData');
-    return;
+// Hàm tính số đường đời
+const calculateLifePath = (dob) => {
+  if (!dob || !/^\d{2}[\/-]\d{2}[\/-]\d{4}$/.test(dob)) return null;
+  const [day, month, year] = dob.replace('-', '/').split('/').map(Number);
+  const daySum = Math.floor(day / 10) + (day % 10);
+  const monthSum = Math.floor(month / 10) + (month % 10);
+  const yearSum = year.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
+  let sum = daySum + monthSum + yearSum;
+  while (sum > 9 && sum !== 11 && sum !== 22) {
+    sum = sum.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
   }
-
-  try {
-    const userIdValue = String(userStore.user.id);
-    console.log('Fetching user data for userId:', userIdValue);
-    const response = await $fetch(`/api/users/${userIdValue}`, {
-      method: 'GET',
-    });
-    console.log('API /api/users response:', response);
-    const { fullname, birthdate } = response.user;
-    formData.value.name = fullname?.trim() || '';
-    formData.value.birthdate = birthdate ? formatDateToDDMMYYYY(birthdate.split('T')[0]) : '';
-  } catch (err) {
-    console.error('Error fetching user data:', err);
-    errors.value.general = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng nhập thủ công.';
-    toast.error(errors.value.general, { position: 'top-center' });
-  }
+  return sum;
 };
 
-// Khởi tạo trạng thái đăng nhập và kiểm tra token
-const initializeAuth = async () => {
-  console.log('Initializing auth for CareerGuidance...');
-  try {
-    await userStore.initialize();
-    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
-    await checkAuthAndAccess();
-    await checkAuthAndAccessMore();
-    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
-    console.log('Auth checked for more, isContentAccessibleMore:', isContentAccessibleMore.value, 'hasSufficientTokensMore:', hasSufficientTokensMore.value);
-  } catch (err) {
-    console.error('Lỗi khi khởi tạo auth:', err);
-    errors.value.general = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
-    toast.error(errors.value.general, { position: 'top-center' });
+// Hàm tính số linh hồn (dựa trên nguyên âm trong tên)
+const calculateSoulNumber = (name) => {
+  if (!name) return null;
+  const vowels = ['a', 'e', 'i', 'o', 'u', 'ă', 'â', 'ê', 'ô', 'ơ', 'ư'];
+  const vowelSum = name.toLowerCase().split('')
+    .filter(char => vowels.includes(char))
+    .map(char => {
+      const values = { 'a': 1, 'ă': 1, 'â': 1, 'e': 5, 'ê': 5, 'i': 9, 'o': 6, 'ô': 6, 'ơ': 6, 'u': 3, 'ư': 3 };
+      return values[char] || 0;
+    })
+    .reduce((acc, val) => acc + val, 0);
+  let sum = vowelSum;
+  while (sum > 9 && sum !== 11 && sum !== 22) {
+    sum = sum.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
   }
+  return sum;
 };
 
-// Load dữ liệu khi component được mount
-onMounted(() => {
-  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
-  if (userStore.isStoreInitialized) {
-    initializeAuth();
-    fetchUserData();
+// Hàm tính số định mệnh (dựa trên toàn bộ tên)
+const calculateDestinyNumber = (name) => {
+  if (!name) return null;
+  const letterValues = {
+    'a': 1, 'ă': 1, 'â': 1, 'b': 2, 'c': 3, 'd': 4, 'đ': 4, 'e': 5, 'ê': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9,
+    'j': 1, 'k': 2, 'l': 3, 'm': 4, 'n': 5, 'o': 6, 'ô': 6, 'ơ': 6, 'p': 7, 'q': 8, 'r': 9, 's': 1, 't': 2,
+    'u': 3, 'ư': 3, 'v': 4, 'w': 5, 'x': 6, 'y': 7, 'z': 8
+  };
+  const nameSum = name.toLowerCase().split('')
+    .map(char => letterValues[char] || 0)
+    .reduce((acc, val) => acc + val, 0);
+  let sum = nameSum;
+  while (sum > 9 && sum !== 11 && sum !== 22) {
+    sum = sum.toString().split('').reduce((acc, digit) => acc + Number(digit), 0);
   }
-});
-
-// Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
-watch(() => userStore.isStoreInitialized, (initialized) => {
-  if (initialized && process.client) {
-    console.log('User store initialized, running initializeAuth and fetchUserData');
-    initializeAuth();
-    fetchUserData();
-  }
-});
+  return sum;
+};
 
 // Validate form
 const validateForm = () => {
@@ -466,7 +366,7 @@ const validateForm = () => {
   return isValid;
 };
 
-// Hàm lấy định hướng nghề nghiệp
+// Hàm lấy định hướng nghề nghiệp (giả lập)
 const getCareerGuidance = async () => {
   if (!process.client) {
     console.warn('getCareerGuidance called on server-side, ignoring.');
@@ -477,110 +377,108 @@ const getCareerGuidance = async () => {
     return;
   }
 
-  if (isContentAccessible.value) {
-    await fetchCareerGuidance();
-  } else {
-    try {
-      await performAction();
-      if (isContentAccessible.value) {
-        await fetchCareerGuidance();
-      } else {
-        toast.error(errorMessage.value, { position: 'top-center' });
-      }
-    } catch (err) {
-      console.error('Error in performAction:', err);
-      toast.error(errorMessage.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
-    }
-  }
-};
-
-// Hàm gọi API lấy định hướng nghề nghiệp
-const fetchCareerGuidance = async () => {
   loading.value = true;
   errors.value.general = '';
   try {
-    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
-    console.log('Sending request to /api/numerology/career with data:', formData.value);
-    const response = await $fetch('/api/numerology/career', {
-      method: 'POST',
-      headers: {
-        'x-username': encodeURIComponent(username),
-        'Content-Type': 'application/json; charset=utf-8',
+    const lifePath = calculateLifePath(formData.value.birthdate);
+    const soulNumber = calculateSoulNumber(formData.value.name);
+    const destinyNumber = calculateDestinyNumber(formData.value.name);
+    if (!lifePath || !soulNumber || !destinyNumber) {
+      throw new Error('Không thể tính toán các con số thần số học từ thông tin nhập.');
+    }
+
+    // Dữ liệu nghề nghiệp giả lập dựa trên số đường đời
+    const careerMap = {
+      1: {
+        jobs: [
+          { job: 'Doanh nhân', reason: 'Số 1 thể hiện sự lãnh đạo và độc lập', opportunities: 'Khởi nghiệp, quản lý', trends: 'Xu hướng khởi nghiệp công nghệ' },
+          { job: 'Quản lý dự án', reason: 'Khả năng tổ chức và ra quyết định', opportunities: 'Công nghệ, xây dựng', trends: 'Quản lý dự án số hóa' },
+          { job: 'Nhà sáng tạo nội dung', reason: 'Sáng tạo và độc đáo', opportunities: 'Truyền thông, quảng cáo', trends: 'Nội dung số phát triển mạnh' },
+        ],
+        careerGoals: 'Bạn hướng đến việc dẫn đầu và tạo dấu ấn cá nhân trong công việc.',
+        passionAndMotivation: 'Đam mê sáng tạo và thúc đẩy sự đổi mới.',
+        workStyle: 'Tự chủ, quyết đoán, thích làm việc độc lập.',
+        longTermPath: 'Phấn đấu trở thành lãnh đạo hoặc chuyên gia trong lĩnh vực bạn chọn.',
+        currentJobAnalysis: formData.value.currentJob ? `Công việc hiện tại (${formData.value.currentJob}) phù hợp với khả năng lãnh đạo của bạn.` : '',
+        practicalAdvice: 'Hãy phát triển kỹ năng lãnh đạo và tìm kiếm cơ hội khởi nghiệp.',
       },
-      body: { ...formData.value, numSuggestions: 3, previousJobs: [] },
-    });
-    console.log('Response from /api/numerology/career:', response);
-    result.value = response;
+      2: {
+        jobs: [
+          { job: 'Nhà ngoại giao', reason: 'Số 2 giỏi hòa giải và hợp tác', opportunities: 'Quan hệ quốc tế, nhân sự', trends: 'Hợp tác quốc tế tăng' },
+          { job: 'Nhân viên xã hội', reason: 'Nhạy cảm và quan tâm đến cộng đồng', opportunities: 'NGO, dịch vụ công', trends: 'Phát triển cộng đồng bền vững' },
+          { job: 'Chuyên viên tư vấn', reason: 'Khả năng lắng nghe và hỗ trợ', opportunities: 'Tâm lý, giáo dục', trends: 'Tư vấn trực tuyến phát triển' },
+        ],
+        careerGoals: 'Bạn tìm kiếm sự hài hòa và hợp tác trong công việc.',
+        passionAndMotivation: 'Đam mê giúp đỡ người khác và xây dựng mối quan hệ.',
+        workStyle: 'Hợp tác, kiên nhẫn, giỏi làm việc nhóm.',
+        longTermPath: 'Phấn đấu xây dựng môi trường làm việc hòa hợp và hỗ trợ cộng đồng.',
+        currentJobAnalysis: formData.value.currentJob ? `Công việc hiện tại (${formData.value.currentJob}) phù hợp với khả năng hợp tác của bạn.` : '',
+        practicalAdvice: 'Tập trung vào kỹ năng giao tiếp và xây dựng mạng lưới quan hệ.',
+      },
+      // Thêm các số khác tương tự nếu cần
+    };
+
+    result.value = {
+      careerGoals: careerMap[lifePath]?.careerGoals || 'Tìm kiếm sự phát triển cá nhân và chuyên môn.',
+      passionAndMotivation: careerMap[lifePath]?.passionAndMotivation || 'Đam mê học hỏi và phát triển.',
+      workStyle: careerMap[lifePath]?.workStyle || 'Linh hoạt, thích nghi tốt với môi trường làm việc.',
+      longTermPath: careerMap[lifePath]?.longTermPath || 'Xây dựng sự nghiệp ổn định và lâu dài.',
+      currentJobAnalysis: careerMap[lifePath]?.currentJobAnalysis || '',
+      careerSuggestions: careerMap[lifePath]?.jobs || [],
+      practicalAdvice: careerMap[lifePath]?.practicalAdvice || 'Tiếp tục học hỏi và phát triển kỹ năng mềm.',
+    };
+
     toast.success('Định hướng nghề nghiệp đã hoàn tất!', { position: 'top-center' });
     setTimeout(() => {
-      const resultElement = document.querySelector('[v-if="isContentAccessible && result"]');
+      const resultElement = document.querySelector('[v-if="result"]');
       if (resultElement) {
         resultElement.scrollIntoView({ behavior: 'smooth' });
       }
     }, 100);
-    await checkAuthAndAccess();
-    await checkAuthAndAccessMore();
   } catch (error) {
-    console.error('Error in fetchCareerGuidance:', error);
-    errors.value.general = error.data?.message || 'Có lỗi xảy ra khi lấy định hướng nghề nghiệp!';
+    console.error('Error in getCareerGuidance:', error);
+    errors.value.general = error.message || 'Có lỗi xảy ra khi lấy định hướng nghề nghiệp!';
     toast.error(errors.value.general, { position: 'top-center' });
   } finally {
     loading.value = false;
   }
 };
 
-// Hàm tải thêm nghề nghiệp
+// Hàm tải thêm nghề nghiệp (giả lập)
 const loadMoreCareers = async () => {
   if (!process.client) {
     console.warn('loadMoreCareers called on server-side, ignoring.');
     return;
   }
   if (!result.value) return;
-
-  if (isContentAccessibleMore.value) {
-    await fetchMoreCareers();
-  } else {
-    try {
-      await performActionMore();
-      if (isContentAccessibleMore.value) {
-        await fetchMoreCareers();
-      } else {
-        toast.error(errorMessageMore.value, { position: 'top-center' });
-      }
-    } catch (err) {
-      console.error('Error in performActionMore:', err);
-      toast.error(errorMessageMore.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
-    }
+  if (result.value.careerSuggestions.length >= maxSuggestions.value) {
+    errors.value.general = 'Đã đạt số lượng gợi ý tối đa!';
+    toast.error(errors.value.general, { position: 'top-center' });
+    return;
   }
-};
 
-// Hàm gọi API tải thêm nghề nghiệp
-const fetchMoreCareers = async () => {
   loadingMore.value = true;
   try {
-    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
-    const numSuggestions = Math.min(result.value.careerSuggestions.length + 3, maxSuggestions.value);
-    const previousJobs = result.value.careerSuggestions.map((s) => s.job);
-    console.log('Sending request to /api/numerology/career for more suggestions, numSuggestions:', numSuggestions);
-    const response = await $fetch('/api/numerology/career', {
-      method: 'POST',
-      headers: {
-        'x-username': encodeURIComponent(username),
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-      body: { ...formData.value, numSuggestions, previousJobs },
-    });
-    console.log('Response from /api/numerology/career (more suggestions):', response);
-    result.value = response;
-    toast.success(
-      `Đã tải thêm ${response.careerSuggestions.length - (result.value.careerSuggestions.length - 3)} nghề nghiệp phù hợp!`,
-      { position: 'top-center' }
-    );
-    await checkAuthAndAccess();
-    await checkAuthAndAccessMore();
+    const lifePath = calculateLifePath(formData.value.birthdate);
+    const additionalJobs = {
+      1: [
+        { job: 'Nhà thiết kế sản phẩm', reason: 'Sáng tạo và đổi mới', opportunities: 'Công nghệ, thiết kế', trends: 'Thiết kế trải nghiệm người dùng' },
+      ],
+      2: [
+        { job: 'Giáo viên', reason: 'Khả năng truyền đạt và hỗ trợ', opportunities: 'Giáo dục, đào tạo', trends: 'Giáo dục trực tuyến phát triển' },
+      ],
+    };
+
+    const newJob = additionalJobs[lifePath]?.[0];
+    if (newJob) {
+      result.value.careerSuggestions.push(newJob);
+      toast.success('Đã tải thêm nghề nghiệp phù hợp!', { position: 'top-center' });
+    } else {
+      throw new Error('Không tìm thấy nghề nghiệp phù hợp để thêm.');
+    }
   } catch (error) {
-    console.error('Error loading more careers:', error);
-    errors.value.general = error.data?.message || 'Có lỗi khi tải thêm nghề nghiệp!';
+    console.error('Error in loadMoreCareers:', error);
+    errors.value.general = error.message || 'Có lỗi khi tải thêm nghề nghiệp!';
     toast.error(errors.value.general, { position: 'top-center' });
   } finally {
     loadingMore.value = false;
@@ -589,15 +487,6 @@ const fetchMoreCareers = async () => {
 </script>
 
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
 .slide-fade-enter-active {
   transition: all 0.3s ease-out;
 }

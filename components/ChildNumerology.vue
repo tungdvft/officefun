@@ -1,4 +1,3 @@
-```vue
 <template>
   <div class="bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
     <div class="container mx-auto p-4">
@@ -39,35 +38,17 @@
             </div>
           </div>
           <!-- Error Message -->
-          <div v-if="errors.general || errorMessage" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
-            <span v-if="errors.general">{{ errors.general }}</span>
-            <span v-else-if="errorMessage" class="inline">
-              {{ errorMessage.split('Hãy')[0] }}
-              <button
-                v-if="errorType === 'login'"
-                @click="errorAction"
-                class="underline text-blue-600 hover:text-blue-800"
-              >
-                Đăng Nhập
-              </button>
-              <button
-                v-else-if="errorType === 'topup'"
-                @click="navigateToTopup"
-                class="underline text-blue-600 hover:text-blue-800"
-              >
-                Nạp thêm token
-              </button>
-              {{ errorMessage.includes('Hãy') ? 'để trải nghiệm đầy đủ tính năng nhé!' : '' }}
-            </span>
+          <div v-if="errors.general" class="p-4 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
+            {{ errors.general }}
           </div>
           <!-- Button -->
           <div class="flex justify-center">
             <button
               @click="analyzeChild"
-              :disabled="loading || isLoading"
+              :disabled="loading"
               class="action-button"
             >
-              <span v-if="loading || isLoading" class="flex items-center justify-center">
+              <span v-if="loading" class="flex items-center justify-center">
                 <svg
                   class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                   xmlns="http://www.w3.org/2000/svg"
@@ -81,16 +62,16 @@
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   ></path>
                 </svg>
-                {{ isLoading ? 'Đang kiểm tra quyền truy cập...' : 'Đang phân tích...' }}
+                Đang phân tích...
               </span>
-              <span v-else>{{ userStore.isAuthenticated ? `Phân tích ngay (Cần ${tokenCost} tokens)` : 'Đăng nhập để phân tích' }}</span>
+              <span v-else>Phân tích ngay</span>
             </button>
           </div>
         </div>
 
         <!-- Results Section -->
         <transition name="slide-fade">
-          <div v-if="result && isContentAccessible" class="mt-8 space-y-6">
+          <div v-if="result" class="mt-8 space-y-6">
             <!-- Các con số chủ đạo -->
             <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
               <h3 class="text-lg font-semibold text-purple-700 flex items-center">
@@ -304,17 +285,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { toast } from 'vue3-toastify';
 import Chart from 'chart.js/auto';
-import { useProtectedContent } from '~/composables/useProtectedContent';
-import { useUserStore } from '@/stores/user';
-import { useRouter } from 'vue-router';
 
-definePageMeta({ layout: 'view' });
-
-const router = useRouter();
-const userStore = useUserStore();
 const formData = ref({
   childName: '',
   birthDate: '',
@@ -327,56 +301,12 @@ const errors = ref({
   birthDate: '',
   general: '',
 });
-const tokenCost = ref(15);
-const description = 'Access to child numerology analysis';
-const {
-  isLoading,
-  errorMessage,
-  errorType,
-  isContentAccessible,
-  hasSufficientTokens,
-  checkAuthAndAccess,
-  performAction,
-  errorAction,
-  navigateToTopup,
-} = useProtectedContent(tokenCost.value, description);
 
 const currentYear = new Date().getFullYear();
 const currentMonth = new Date().getMonth();
 const currentMonthVietnamese = computed(() => {
   const months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
   return months[currentMonth];
-});
-
-// Initialize authentication and check token balance
-const initializeAuth = async () => {
-  console.log('Initializing auth for Child Numerology, tokenCost:', tokenCost.value);
-  try {
-    await userStore.initialize();
-    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
-    await checkAuthAndAccess();
-    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
-  } catch (err) {
-    console.error('Error initializing auth:', err);
-    errors.value.general = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
-    toast.error(errors.value.general, { position: 'top-center' });
-  }
-};
-
-// Initialize auth on mount
-onMounted(() => {
-  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
-  if (userStore.isStoreInitialized) {
-    initializeAuth();
-  }
-});
-
-// Watch for store initialization
-watch(() => userStore.isStoreInitialized, (initialized) => {
-  if (initialized && process.client) {
-    console.log('User store initialized, running initializeAuth');
-    initializeAuth();
-  }
 });
 
 // Validate form
@@ -430,21 +360,7 @@ const analyzeChild = async () => {
     return;
   }
 
-  if (isContentAccessible.value) {
-    await fetchChildAnalysis();
-  } else {
-    try {
-      await performAction();
-      if (isContentAccessible.value) {
-        await fetchChildAnalysis();
-      } else {
-        toast.error(errorMessage.value, { position: 'top-center' });
-      }
-    } catch (err) {
-      console.error('Error in performAction:', err);
-      toast.error(errorMessage.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
-    }
-  }
+  await fetchChildAnalysis();
 };
 
 // Fetch child analysis from API
@@ -452,12 +368,10 @@ const fetchChildAnalysis = async () => {
   loading.value = true;
   errors.value.general = '';
   try {
-    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
     console.log('Sending request to /api/numerology/child with data:', formData.value);
     const response = await $fetch('/api/numerology/child', {
       method: 'POST',
       headers: {
-        'x-username': encodeURIComponent(username),
         'Content-Type': 'application/json; charset=utf-8',
       },
       body: formData.value,
@@ -467,12 +381,11 @@ const fetchChildAnalysis = async () => {
     toast.success('Phân tích hoàn tất!', { position: 'top-center' });
     setTimeout(() => {
       renderChart();
-      const resultElement = document.querySelector('[v-if="result && isContentAccessible"]');
+      const resultElement = document.querySelector('[v-if="result"]');
       if (resultElement) {
         resultElement.scrollIntoView({ behavior: 'smooth' });
       }
     }, 100);
-    await checkAuthAndAccess();
   } catch (error) {
     console.error('Error analyzing child:', error);
     errors.value.general = error.data?.message || 'Có lỗi xảy ra khi phân tích!';
@@ -575,4 +488,3 @@ const renderChart = () => {
   @apply px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:shadow-lg transition-all duration-300 shadow-md whitespace-nowrap;
 }
 </style>
-```

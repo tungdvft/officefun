@@ -20,8 +20,9 @@
                 type="text"
                 id="name"
                 placeholder="Ví dụ: Nguyễn Văn A"
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+                :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.name ? 'border-red-500' : 'border-gray-300']"
               />
+              <p v-if="errors.name" class="text-red-600 text-sm mt-1">{{ errors.name }}</p>
             </div>
             <div>
               <label for="birthdate" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh (DD/MM/YYYY)</label>
@@ -30,8 +31,9 @@
                 type="text"
                 id="birthdate"
                 placeholder="Ví dụ: 15/03/1995"
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+                :class="['w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition', errors.birthdate ? 'border-red-500' : 'border-gray-300']"
               />
+              <p v-if="errors.birthdate" class="text-red-600 text-sm mt-1">{{ errors.birthdate }}</p>
             </div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -57,6 +59,7 @@
                   <span class="text-gray-700">Nữ</span>
                 </label>
               </div>
+              <p v-if="errors.gender" class="text-red-600 text-sm mt-1">{{ errors.gender }}</p>
             </div>
             <div>
               <label for="startLetter" class="block text-sm font-medium text-gray-700 mb-2">Chữ cái đầu tiên (tùy chọn)</label>
@@ -69,6 +72,7 @@
                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition uppercase tracking-widest text-center"
                 @input="formData.startLetter = formData.startLetter.toUpperCase()"
               />
+              <p v-if="errors.startLetter" class="text-red-600 text-sm mt-1">{{ errors.startLetter }}</p>
             </div>
           </div>
           <!-- Action Button and Error Messages -->
@@ -87,39 +91,19 @@
               ></path>
             </svg>
           </div>
-          <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
-            <template v-if="errorType === 'login'">
-              Vui lòng <button @click="errorAction" class="action-button inline">Đăng Nhập</button> để tạo danh xưng.
-            </template>
-            <template v-else-if="errorType === 'topup'">
-              Không đủ token để tạo danh xưng. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để tiếp tục.
-            </template>
-            <template v-else>
-              {{ errorMessage }}
-            </template>
+          <div v-else-if="errors.general" class="text-red-600 text-center font-medium p-6">
+            {{ errors.general }}
           </div>
           <div v-else class="text-center p-6">
-            <template v-if="!userStore.isAuthenticated">
-              <p class="text-red-600 font-medium mb-4">
-                Vui lòng <button @click="errorAction" class="action-button inline">Đăng Nhập</button> để tạo danh xưng.
-              </p>
-            </template>
-            <template v-else-if="userStore.isAuthenticated && !hasSufficientTokens">
-              <p class="text-red-600 font-medium mb-4">
-                Không đủ token để tạo danh xưng. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để tiếp tục.
-              </p>
-            </template>
-            <template v-else>
-              <button @click="generateNickname" class="action-button">
-                Tạo danh xưng (Cần {{ tokenCost }} token)
-              </button>
-            </template>
+            <button @click="generateNickname" class="action-button">
+              Tạo danh xưng
+            </button>
           </div>
         </div>
 
-        <!-- Kết quả (bảo vệ) -->
+        <!-- Kết quả -->
         <transition name="slide-fade">
-          <div v-if="numerologyData && isContentAccessible" class="mt-8 space-y-8">
+          <div v-if="numerologyData" class="mt-8 space-y-8">
             <!-- Thông tin đầu vào -->
             <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl border border-purple-100">
               <div class="flex items-center">
@@ -166,7 +150,7 @@
                       d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                       clip-rule="evenodd"
                     />
-                </svg>
+                  </svg>
                 </span>
                 Các con số chính
               </h3>
@@ -272,33 +256,13 @@
                     ></path>
                   </svg>
                 </div>
-                <div v-else-if="errorMessage" class="text-red-600 text-center font-medium p-6">
-                  <template v-if="errorType === 'login'">
-                    Vui lòng <button @click="errorAction" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý.
-                  </template>
-                  <template v-else-if="errorType === 'topup'">
-                    Không đủ token để xem thêm gợi ý. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để tiếp tục.
-                  </template>
-                  <template v-else>
-                    {{ errorMessage }}
-                  </template>
+                <div v-else-if="errors.general" class="text-red-600 text-center font-medium p-6">
+                  {{ errors.general }}
                 </div>
                 <div v-else class="text-center p-6">
-                  <template v-if="!userStore.isAuthenticated">
-                    <p class="text-red-600 font-medium mb-4">
-                      Vui lòng <button @click="errorAction" class="action-button inline">Đăng Nhập</button> để xem thêm gợi ý.
-                    </p>
-                  </template>
-                  <template v-else-if="userStore.isAuthenticated && !hasSufficientTokensForMore">
-                    <p class="text-red-600 font-medium mb-4">
-                      Không đủ token để xem thêm gợi ý. Hãy <button @click="navigateToTopup" class="action-button inline">Nạp thêm token</button> để tiếp tục.
-                    </p>
-                  </template>
-                  <template v-else>
-                    <button @click="showMoreSuggestions" class="action-button">
-                      Xem thêm gợi ý (Cần {{ tokenCostMore }} token)
-                    </button>
-                  </template>
+                  <button @click="showMoreSuggestions" class="action-button">
+                    Xem thêm gợi ý
+                  </button>
                 </div>
               </div>
             </div>
@@ -339,22 +303,25 @@ import { useUserStore } from '@/stores/user';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const userStore = useUserStore();
 const formData = ref({
   name: '',
   birthdate: '',
   gender: 'male',
-  startLetter: ''
+  startLetter: '',
 });
 const numerologyData = ref(null);
 const loading = ref(false);
 const loadingMore = ref(false);
 const totalSuggestions = ref(3);
-const tokenCost = ref(15);
-const tokenCostMore = ref(5);
-const description = 'Access to detailed numerology nickname generation results';
-const { isLoading, errorMessage, errorType, isContentAccessible, hasSufficientTokens, checkAuthAndAccess, performAction, errorAction, navigateToTopup } = useProtectedContent(tokenCost.value, description);
-const userStore = useUserStore();
-const hasSufficientTokensForMore = ref(true);
+const errors = ref({
+  name: '',
+  birthdate: '',
+  gender: '',
+  startLetter: '',
+  general: '',
+});
+const isLoading = ref(false);
 
 // Hàm chuyển đổi định dạng ngày từ YYYY-MM-DD sang DD/MM/YYYY
 const formatDateToDDMMYYYY = (dateStr) => {
@@ -363,6 +330,13 @@ const formatDateToDDMMYYYY = (dateStr) => {
   }
   const [year, month, day] = dateStr.split('T')[0].split('-');
   return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+};
+
+// Hàm chuyển đổi định dạng ngày từ DD/MM/YYYY sang YYYY-MM-DD
+const formatDateToYYYYMMDD = (dateStr) => {
+  if (!dateStr || !/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) return '';
+  const [day, month, year] = dateStr.split('/').map(Number);
+  return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 };
 
 // Hàm làm sạch dữ liệu, loại bỏ ký tự không hợp lệ
@@ -383,223 +357,171 @@ const cleanNumerologyData = (data) => {
     personalityDesc: cleanString(data.personalityDesc),
     destiny: cleanString(data.destiny),
     destinyDesc: cleanString(data.destinyDesc),
-    suggestions: data.suggestions.map(suggestion => ({
+    suggestions: data.suggestions.map((suggestion) => ({
       name: cleanString(suggestion.name),
       soul: cleanString(suggestion.soul),
       destiny: cleanString(suggestion.destiny),
       desc: cleanString(suggestion.desc),
-      famous: cleanString(suggestion.famous)
+      famous: cleanString(suggestion.famous),
     })),
-    advice: cleanString(data.advice)
+    advice: cleanString(data.advice),
   };
 };
 
-// Hàm kiểm tra số dư token
-const checkTokenBalance = async (requiredTokens) => {
-  if (!userStore.isAuthenticated || !userStore.user?.id) {
-    console.log('User not authenticated, setting hasSufficientTokensForMore to false');
-    hasSufficientTokensForMore.value = false;
-    return false;
+// Hàm validate form
+const validateForm = () => {
+  errors.value = {
+    name: '',
+    birthdate: '',
+    gender: '',
+    startLetter: '',
+    general: '',
+  };
+  let isValid = true;
+  if (!formData.value.name.trim()) {
+    errors.value.name = 'Vui lòng nhập họ và tên';
+    isValid = false;
   }
-
-  try {
-    const response = await $fetch('/api/check-token-balance', {
-      method: 'POST',
-      headers: {
-        'x-username': encodeURIComponent(userStore.user.email),
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-      body: { userId: String(userStore.user.id), requiredTokens }
-    });
-    console.log(`Check token balance response:`, response);
-    hasSufficientTokensForMore.value = response.hasSufficientTokens;
-    return response.hasSufficientTokens;
-  } catch (error) {
-    console.error('Error checking token balance:', error);
-    errorMessage.value = error.data?.message || 'Không thể kiểm tra số dư token!';
-    toast.error(errorMessage.value, { position: 'top-center' });
-    hasSufficientTokensForMore.value = false;
-    return false;
-  }
-};
-
-// Hàm lấy thông tin người dùng từ API
-const fetchUserData = async () => {
-  if (!userStore.isAuthenticated || !userStore.user?.id) {
-    console.log('User not authenticated, skipping fetchUserData');
-    return;
-  }
-
-  try {
-    const userIdValue = String(userStore.user.id);
-    console.log('Fetching user data for userId:', userIdValue);
-    const response = await $fetch(`/api/users/${userIdValue}`, {
-      method: 'GET',
-    });
-    console.log('API /api/users response:', response);
-    formData.value.name = response.user.fullname?.trim() || '';
-    formData.value.birthdate = response.user.birthdate ? formatDateToDDMMYYYY(response.user.birthdate) : '';
-  } catch (err) {
-    console.error('Error fetching user data:', err);
-    errorMessage.value = err.data?.message || 'Không thể tải thông tin tài khoản. Vui lòng thử lại.';
-    toast.error(errorMessage.value, { position: 'top-center' });
-  }
-};
-
-// Khởi tạo trạng thái đăng nhập và kiểm tra token
-const initializeAuth = async () => {
-  try {
-    await userStore.initialize();
-    console.log('User Store Initialized, isAuthenticated:', userStore.isAuthenticated, 'tokenBalance:', userStore.user?.tokens);
-    await checkAuthAndAccess();
-    console.log('Auth checked, isContentAccessible:', isContentAccessible.value, 'hasSufficientTokens:', hasSufficientTokens.value);
-    // Kiểm tra số dư token cho "Xem thêm gợi ý"
-    if (userStore.isAuthenticated) {
-      await checkTokenBalance(tokenCostMore.value);
+  if (!formData.value.birthdate.trim()) {
+    errors.value.birthdate = 'Vui lòng nhập ngày sinh';
+    isValid = false;
+  } else if (!/^\d{2}\/\d{2}\/\d{4}$/.test(formData.value.birthdate)) {
+    errors.value.birthdate = 'Vui lòng nhập ngày sinh đúng định dạng DD/MM/YYYY';
+    isValid = false;
+  } else {
+    const match = formData.value.birthdate.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    const day = parseInt(match[1], 10);
+    const month = parseInt(match[2], 10);
+    const year = parseInt(match[3], 10);
+    const date = new Date(year, month - 1, day);
+    if (
+      date.getDate() !== day ||
+      date.getMonth() + 1 !== month ||
+      date.getFullYear() !== year ||
+      year < 1900 ||
+      year > new Date().getFullYear()
+    ) {
+      errors.value.birthdate = 'Ngày sinh không hợp lệ';
+      isValid = false;
     }
-  } catch (err) {
-    console.error('Lỗi khi khởi tạo auth:', err);
-    errorMessage.value = 'Không thể khởi tạo trạng thái đăng nhập. Vui lòng thử lại.';
-    toast.error(errorMessage.value, { position: 'top-center' });
   }
+  if (!formData.value.gender) {
+    errors.value.gender = 'Vui lòng chọn giới tính';
+    isValid = false;
+  }
+  if (formData.value.startLetter && !/^[A-Z]$/.test(formData.value.startLetter)) {
+    errors.value.startLetter = 'Chữ cái đầu tiên phải là A-Z';
+    isValid = false;
+  }
+  return isValid;
 };
 
 // Xử lý tạo danh xưng
 const generateNickname = async () => {
-  errorMessage.value = null;
-
-  if (!formData.value.name) return toast.error('Vui lòng nhập họ và tên!', { position: 'top-center' });
-  if (!formData.value.birthdate) return toast.error('Vui lòng nhập ngày sinh!', { position: 'top-center' });
-  if (!formData.value.gender) return toast.error('Vui lòng chọn giới tính!', { position: 'top-center' });
-  if (formData.value.startLetter && !/^[A-Z]$/.test(formData.value.startLetter)) {
-    return toast.error('Chữ cái đầu tiên phải là A-Z!', { position: 'top-center' });
+  if (!process.client) {
+    console.warn('generateNickname called on server-side, ignoring.');
+    return;
   }
-
-  if (isContentAccessible.value) {
-    await getNickname();
-  } else {
-    try {
-      await performAction();
-      if (isContentAccessible.value) {
-        await getNickname();
-      } else {
-        toast.error(errorMessage.value || 'Không đủ quyền truy cập hoặc token!', { position: 'top-center' });
-      }
-    } catch (err) {
-      console.error('Error in performAction:', err);
-      toast.error(errorMessage.value || 'Có lỗi khi kiểm tra quyền truy cập', { position: 'top-center' });
-    }
+  if (!validateForm()) {
+    toast.error('Vui lòng kiểm tra lại thông tin nhập', { position: 'top-center' });
+    return;
   }
+  await getNickname();
 };
 
+// Hàm gọi API tạo danh xưng
 async function getNickname() {
   loading.value = true;
+  errors.value.general = '';
   try {
-    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    const username = 'guest'; // Không cần đăng nhập, sử dụng 'guest'
     console.log('Sending request to /api/numerology/nickname with data:', formData.value);
     const response = await $fetch('/api/numerology/nickname', {
       method: 'POST',
       headers: {
         'x-username': encodeURIComponent(username),
-        'Content-Type': 'application/json; charset=utf-8'
+        'Content-Type': 'application/json; charset=utf-8',
       },
       body: {
         name: formData.value.name,
         birthdate: formData.value.birthdate,
         gender: formData.value.gender,
-        startLetter: formData.startLetter || undefined,
-        count: 3
+        startLetter: formData.value.startLetter || undefined,
+        count: 3,
       },
     });
     console.log('Response from /api/numerology/nickname:', response);
     numerologyData.value = cleanNumerologyData(response.numerology);
     totalSuggestions.value = 3;
-    // Kiểm tra số dư token cho "Xem thêm gợi ý"
-    await checkTokenBalance(tokenCostMore.value);
     toast.success('Tạo danh xưng hoàn tất!', { position: 'top-center' });
+    setTimeout(() => {
+      const resultElement = document.querySelector('[v-if="numerologyData"]');
+      if (resultElement) {
+        resultElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   } catch (error) {
     console.error('Error in getNickname:', error);
-    errorMessage.value = error.data?.message || 'Không thể tạo danh xưng!';
-    toast.error(errorMessage.value, { position: 'top-center' });
+    errors.value.general = error.data?.message || 'Không thể tạo danh xưng!';
+    toast.error(errors.value.general, { position: 'top-center' });
   } finally {
     loading.value = false;
   }
 }
 
+// Hàm tải thêm gợi ý
 async function showMoreSuggestions() {
-  if (totalSuggestions.value >= 30) {
-    console.log('Reached maximum suggestions (30)');
+  if (!process.client) {
+    console.warn('showMoreSuggestions called on server-side, ignoring.');
     return;
   }
-
-  errorMessage.value = null;
-  console.log('Starting showMoreSuggestions, checking token balance...');
-
-  // Kiểm tra số dư token
-  const sufficientTokens = await checkTokenBalance(tokenCostMore.value);
-  console.log('Token balance sufficient:', sufficientTokens);
-  if (!sufficientTokens) {
-    errorMessage.value = 'Bạn không có đủ token để xem thêm gợi ý!';
-    toast.error(errorMessage.value, { position: 'top-center' });
+  if (totalSuggestions.value >= 30) {
+    console.log('Reached maximum suggestions (30)');
+    toast.info('Đã đạt số lượng gợi ý tối đa (30)!', { position: 'top-center' });
     return;
   }
 
   loadingMore.value = true;
+  errors.value.general = '';
   try {
-    const excludeNames = numerologyData.value.suggestions.map(s => s.name);
-    const username = userStore.isAuthenticated ? userStore.user.email : 'guest';
+    const excludeNames = numerologyData.value.suggestions.map((s) => s.name);
+    const username = 'guest'; // Không cần đăng nhập, sử dụng 'guest'
     console.log('Sending request to /api/numerology/nickname with excludeNames:', excludeNames);
     const response = await $fetch('/api/numerology/nickname', {
       method: 'POST',
       headers: {
         'x-username': encodeURIComponent(username),
-        'Content-Type': 'application/json; charset=utf-8'
+        'Content-Type': 'application/json; charset=utf-8',
       },
       body: {
         name: formData.value.name,
         birthdate: formData.value.birthdate,
         gender: formData.value.gender,
-        startLetter: formData.startLetter || undefined,
+        startLetter: formData.value.startLetter || undefined,
         count: 3,
-        excludeNames
+        excludeNames,
       },
     });
     console.log('Response from /api/numerology/nickname (more suggestions):', response);
     numerologyData.value.suggestions.push(...cleanNumerologyData(response.numerology).suggestions);
     totalSuggestions.value += 3;
-    // Kiểm tra lại số dư token sau khi trừ
-    await checkTokenBalance(tokenCostMore.value);
     toast.success('Đã tải thêm gợi ý!', { position: 'top-center' });
   } catch (error) {
     console.error('Error in showMoreSuggestions:', error);
-    errorMessage.value = error.data?.message || 'Không thể tải thêm gợi ý!';
-    toast.error(errorMessage.value, { position: 'top-center' });
+    errors.value.general = error.data?.message || 'Không thể tải thêm gợi ý!';
+    toast.error(errors.value.general, { position: 'top-center' });
   } finally {
     loadingMore.value = false;
-    console.log('showMoreSuggestions completed, loadingMore:', loadingMore.value);
   }
 }
 
-// Theo dõi isStoreInitialized để lấy dữ liệu khi store sẵn sàng
-watch(() => userStore.isStoreInitialized, (initialized) => {
-  if (initialized && process.client) {
-    console.log('User store initialized, running initializeAuth and fetchUserData');
-    initializeAuth();
-    fetchUserData();
-  }
-});
-
+// Load dữ liệu khi component được mount
 onMounted(() => {
-  console.log('Component mounted, isStoreInitialized:', userStore.isStoreInitialized);
-  if (userStore.isStoreInitialized) {
-    initializeAuth();
-    fetchUserData();
-  }
+  console.log('Component mounted');
 });
 </script>
 
 <style scoped>
-/* Custom transitions */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
